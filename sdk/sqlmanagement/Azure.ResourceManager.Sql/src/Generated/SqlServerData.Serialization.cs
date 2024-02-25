@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
+            return new SqlServerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerData>.Write(ModelReaderWriterOptions options)

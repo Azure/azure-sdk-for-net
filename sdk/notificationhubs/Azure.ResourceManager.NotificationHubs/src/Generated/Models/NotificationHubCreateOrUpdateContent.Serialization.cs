@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 return null;
             }
             Optional<NotificationHubSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToNullable(registrationTtl), authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>(), apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value, serializedAdditionalRawData);
+            return new NotificationHubCreateOrUpdateContent(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, name0.Value, Optional.ToNullable(registrationTtl), authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>(), apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

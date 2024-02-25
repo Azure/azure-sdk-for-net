@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Automation
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Automation
             Optional<SystemData> systemData = default;
             Optional<long> executionFrequencyInSeconds = default;
             Optional<string> scriptName = default;
-            Optional<IDictionary<string, string>> scriptParameters = default;
+            IDictionary<string, string> scriptParameters = default;
             Optional<string> scriptRunOn = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> creationTime = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWatcherData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(executionFrequencyInSeconds), scriptName.Value, Optional.ToDictionary(scriptParameters), scriptRunOn.Value, status.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, description.Value, serializedAdditionalRawData);
+            return new AutomationWatcherData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(executionFrequencyInSeconds), scriptName.Value, scriptParameters ?? new ChangeTrackingDictionary<string, string>(), scriptRunOn.Value, status.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, description.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWatcherData>.Write(ModelReaderWriterOptions options)

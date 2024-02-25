@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServiceCreateOrUpdateContent(location, Optional.ToDictionary(tags), Optional.ToNullable(incomingTrafficPolicy), serializedAdditionalRawData);
+            return new StorageSyncServiceCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(incomingTrafficPolicy), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServiceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

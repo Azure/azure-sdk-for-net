@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, Optional.ToNullable(enabled), provisioningState.Value, serializedAdditionalRawData);
+            return new SnapshotPolicyData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, Optional.ToNullable(enabled), provisioningState.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPolicyData>.Write(ModelReaderWriterOptions options)

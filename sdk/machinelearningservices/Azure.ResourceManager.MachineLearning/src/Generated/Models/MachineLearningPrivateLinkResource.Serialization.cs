@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningPrivateLinkResource(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MachineLearningPrivateLinkResource(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, sku.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningPrivateLinkResource>.Write(ModelReaderWriterOptions options)

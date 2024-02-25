@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), ingestionPolicy.Value, emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CollectorPolicyData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), ingestionPolicy.Value, emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options)

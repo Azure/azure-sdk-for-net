@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IList<int> markings = default;
             IList<QosIPRange> sourceIPRanges = default;
             IList<QosIPRange> destinationIPRanges = default;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscpConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), markings ?? new ChangeTrackingList<int>(), sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(), destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(), sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(), destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(), Optional.ToNullable(protocol), qosDefinitionCollection ?? new ChangeTrackingList<DscpQosDefinition>(), qosCollectionId.Value, associatedNetworkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new DscpConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), markings ?? new ChangeTrackingList<int>(), sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(), destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(), sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(), destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(), Optional.ToNullable(protocol), qosDefinitionCollection ?? new ChangeTrackingList<DscpQosDefinition>(), qosCollectionId.Value, associatedNetworkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options)

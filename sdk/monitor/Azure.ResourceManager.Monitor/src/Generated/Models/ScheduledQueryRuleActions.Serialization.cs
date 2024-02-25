@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<string> actionGroups = default;
-            Optional<IDictionary<string, string>> customProperties = default;
+            IDictionary<string, string> customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRuleActions(actionGroups ?? new ChangeTrackingList<string>(), Optional.ToDictionary(customProperties), serializedAdditionalRawData);
+            return new ScheduledQueryRuleActions(actionGroups ?? new ChangeTrackingList<string>(), customProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleActions>.Write(ModelReaderWriterOptions options)

@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecVersionData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), description.Value, linkedTemplates ?? new ChangeTrackingList<LinkedTemplateArtifact>(), metadata.Value, mainTemplate.Value, uiFormDefinition.Value, serializedAdditionalRawData);
+            return new TemplateSpecVersionData(id, name, type, systemData.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, linkedTemplates ?? new ChangeTrackingList<LinkedTemplateArtifact>(), metadata.Value, mainTemplate.Value, uiFormDefinition.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateSpecVersionData>.Write(ModelReaderWriterOptions options)

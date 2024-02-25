@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, storageQoSPolicies ?? new ChangeTrackingList<StorageQoSPolicy>(), provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmCloudData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, storageQoSPolicies ?? new ChangeTrackingList<StorageQoSPolicy>(), provisioningState.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmCloudData>.Write(ModelReaderWriterOptions options)

@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.Blueprint
             Optional<string> description = default;
             Optional<BlueprintStatus> status = default;
             Optional<BlueprintTargetScope> targetScope = default;
-            Optional<IDictionary<string, ParameterDefinition>> parameters = default;
-            Optional<IDictionary<string, ResourceGroupDefinition>> resourceGroups = default;
+            IDictionary<string, ParameterDefinition> parameters = default;
+            IDictionary<string, ResourceGroupDefinition> resourceGroups = default;
             Optional<BinaryData> versions = default;
             Optional<BinaryData> layout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Blueprint
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlueprintData(id, name, type, systemData.Value, displayName.Value, description.Value, status.Value, Optional.ToNullable(targetScope), Optional.ToDictionary(parameters), Optional.ToDictionary(resourceGroups), versions.Value, layout.Value, serializedAdditionalRawData);
+            return new BlueprintData(id, name, type, systemData.Value, displayName.Value, description.Value, status.Value, Optional.ToNullable(targetScope), parameters ?? new ChangeTrackingDictionary<string, ParameterDefinition>(), resourceGroups ?? new ChangeTrackingDictionary<string, ResourceGroupDefinition>(), versions.Value, layout.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlueprintData>.Write(ModelReaderWriterOptions options)

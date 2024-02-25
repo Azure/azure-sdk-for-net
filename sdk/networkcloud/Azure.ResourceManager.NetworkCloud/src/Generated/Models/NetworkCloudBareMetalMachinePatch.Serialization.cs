@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> machineDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBareMetalMachinePatch(Optional.ToDictionary(tags), machineDetails.Value, serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), machineDetails.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachinePatch>.Write(ModelReaderWriterOptions options)

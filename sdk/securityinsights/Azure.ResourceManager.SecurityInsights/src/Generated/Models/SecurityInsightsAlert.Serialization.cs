@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> alertDisplayName = default;
             Optional<string> alertType = default;
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlert(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, alertDisplayName.Value, alertType.Value, compromisedEntity.Value, Optional.ToNullable(confidenceLevel), confidenceReasons ?? new ChangeTrackingList<SecurityInsightsAlertConfidenceReason>(), Optional.ToNullable(confidenceScore), Optional.ToNullable(confidenceScoreStatus), description.Value, Optional.ToNullable(endTimeUtc), Optional.ToNullable(intent), providerAlertId.Value, Optional.ToNullable(processingEndTime), productComponentName.Value, productName.Value, productVersion.Value, remediationSteps ?? new ChangeTrackingList<string>(), Optional.ToNullable(severity), Optional.ToNullable(startTimeUtc), Optional.ToNullable(status), systemAlertId.Value, tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), Optional.ToNullable(timeGenerated), vendorName.Value, alertLink.Value, resourceIdentifiers ?? new ChangeTrackingList<BinaryData>());
+            return new SecurityInsightsAlert(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, alertDisplayName.Value, alertType.Value, compromisedEntity.Value, Optional.ToNullable(confidenceLevel), confidenceReasons ?? new ChangeTrackingList<SecurityInsightsAlertConfidenceReason>(), Optional.ToNullable(confidenceScore), Optional.ToNullable(confidenceScoreStatus), description.Value, Optional.ToNullable(endTimeUtc), Optional.ToNullable(intent), providerAlertId.Value, Optional.ToNullable(processingEndTime), productComponentName.Value, productName.Value, productVersion.Value, remediationSteps ?? new ChangeTrackingList<string>(), Optional.ToNullable(severity), Optional.ToNullable(startTimeUtc), Optional.ToNullable(status), systemAlertId.Value, tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), Optional.ToNullable(timeGenerated), vendorName.Value, alertLink.Value, resourceIdentifiers ?? new ChangeTrackingList<BinaryData>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlert>.Write(ModelReaderWriterOptions options)

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<string> authenticationName = default;
             Optional<ClientCertificateAuthentication> clientCertificateAuthentication = default;
             Optional<EventGridNamespaceClientState> state = default;
-            Optional<IDictionary<string, BinaryData>> attributes = default;
+            IDictionary<string, BinaryData> attributes = default;
             Optional<EventGridNamespaceClientProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespaceClientData(id, name, type, systemData.Value, description.Value, authenticationName.Value, clientCertificateAuthentication.Value, Optional.ToNullable(state), Optional.ToDictionary(attributes), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new EventGridNamespaceClientData(id, name, type, systemData.Value, description.Value, authenticationName.Value, clientCertificateAuthentication.Value, Optional.ToNullable(state), attributes ?? new ChangeTrackingDictionary<string, BinaryData>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespaceClientData>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<UserAssignedServiceIdentity> identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapMonitorPatch(Optional.ToDictionary(tags), identity.Value, serializedAdditionalRawData);
+            return new SapMonitorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapMonitorPatch>.Write(ModelReaderWriterOptions options)

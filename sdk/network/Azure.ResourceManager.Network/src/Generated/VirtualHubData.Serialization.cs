@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<WritableSubResource> virtualWan = default;
             Optional<WritableSubResource> vpnGateway = default;
             Optional<WritableSubResource> p2sVpnGateway = default;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, virtualHubRouteTableV2s ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(), sku.Value, Optional.ToNullable(routingState), bgpConnections ?? new ChangeTrackingList<WritableSubResource>(), ipConfigurations ?? new ChangeTrackingList<WritableSubResource>(), routeMaps ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(virtualRouterAsn), virtualRouterIPs ?? new ChangeTrackingList<string>(), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, virtualHubRouteTableV2s ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(), sku.Value, Optional.ToNullable(routingState), bgpConnections ?? new ChangeTrackingList<WritableSubResource>(), ipConfigurations ?? new ChangeTrackingList<WritableSubResource>(), routeMaps ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(virtualRouterAsn), virtualRouterIPs ?? new ChangeTrackingList<string>(), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
         }
 
         BinaryData IPersistableModel<VirtualHubData>.Write(ModelReaderWriterOptions options)

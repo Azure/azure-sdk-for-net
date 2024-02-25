@@ -81,7 +81,7 @@ namespace Azure.Communication.JobRouter
             }
             string queueId = default;
             int length = default;
-            Optional<IDictionary<int, TimeSpan>> estimatedWaitTimeMinutes = default;
+            IDictionary<int, TimeSpan> estimatedWaitTimeMinutes = default;
             Optional<double> longestJobWaitTimeMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -117,7 +117,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterQueueStatistics(queueId, length, Optional.ToDictionary(estimatedWaitTimeMinutes), Optional.ToNullable(longestJobWaitTimeMinutes), serializedAdditionalRawData);
+            return new RouterQueueStatistics(queueId, length, estimatedWaitTimeMinutes ?? new ChangeTrackingDictionary<int, TimeSpan>(), Optional.ToNullable(longestJobWaitTimeMinutes), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterQueueStatistics>.Write(ModelReaderWriterOptions options)

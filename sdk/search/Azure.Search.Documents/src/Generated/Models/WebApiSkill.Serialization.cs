@@ -143,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string uri = default;
-            Optional<IDictionary<string, string>> httpHeaders = default;
+            IDictionary<string, string> httpHeaders = default;
             Optional<string> httpMethod = default;
             Optional<TimeSpan?> timeout = default;
             Optional<int?> batchSize = default;
@@ -274,7 +274,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new WebApiSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri, Optional.ToDictionary(httpHeaders), httpMethod.Value, Optional.ToNullable(timeout), Optional.ToNullable(batchSize), Optional.ToNullable(degreeOfParallelism), authResourceId.Value, authIdentity.Value);
+            return new WebApiSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri, httpHeaders ?? new ChangeTrackingDictionary<string, string>(), httpMethod.Value, Optional.ToNullable(timeout), Optional.ToNullable(batchSize), Optional.ToNullable(degreeOfParallelism), authResourceId.Value, authIdentity.Value);
         }
     }
 }

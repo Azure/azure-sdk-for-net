@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Qumulo
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Qumulo
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QumuloFileSystemResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, marketplaceDetails, Optional.ToNullable(provisioningState), storageSku, userDetails, delegatedSubnetId, clusterLoginUrl.Value, privateIPs ?? new ChangeTrackingList<IPAddress>(), adminPassword, initialCapacity, availabilityZone.Value, serializedAdditionalRawData);
+            return new QumuloFileSystemResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, marketplaceDetails, Optional.ToNullable(provisioningState), storageSku, userDetails, delegatedSubnetId, clusterLoginUrl.Value, privateIPs ?? new ChangeTrackingList<IPAddress>(), adminPassword, initialCapacity, availabilityZone.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QumuloFileSystemResourceData>.Write(ModelReaderWriterOptions options)

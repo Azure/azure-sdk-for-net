@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudVirtualMachineConsoleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, enabled, Optional.ToNullable(expiration), privateLinkServiceId.Value, Optional.ToNullable(provisioningState), sshPublicKey, Optional.ToNullable(virtualMachineAccessId), serializedAdditionalRawData);
+            return new NetworkCloudVirtualMachineConsoleData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, enabled, Optional.ToNullable(expiration), privateLinkServiceId.Value, Optional.ToNullable(provisioningState), sshPublicKey, Optional.ToNullable(virtualMachineAccessId), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Write(ModelReaderWriterOptions options)

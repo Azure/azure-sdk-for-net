@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> builder = default;
             Optional<string> agentPool = default;
             Optional<AppPlatformBuildProvisioningState> provisioningState = default;
-            Optional<IDictionary<string, string>> env = default;
+            IDictionary<string, string> env = default;
             Optional<SubResource> triggeredBuildResult = default;
             Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), env ?? new ChangeTrackingDictionary<string, string>(), triggeredBuildResult, resourceRequests.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildProperties>.Write(ModelReaderWriterOptions options)

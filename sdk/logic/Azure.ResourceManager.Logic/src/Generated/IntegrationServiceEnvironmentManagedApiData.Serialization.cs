@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> name0 = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> connectionParameters = default;
+            IReadOnlyDictionary<string, BinaryData> connectionParameters = default;
             Optional<LogicApiResourceMetadata> metadata = default;
             IReadOnlyList<Uri> runtimeUrls = default;
             Optional<LogicApiResourceGeneralInformation> generalInformation = default;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, runtimeUrls ?? new ChangeTrackingList<Uri>(), generalInformation.Value, capabilities ?? new ChangeTrackingList<string>(), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, name0.Value, connectionParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), metadata.Value, runtimeUrls ?? new ChangeTrackingList<Uri>(), generalInformation.Value, capabilities ?? new ChangeTrackingList<string>(), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Write(ModelReaderWriterOptions options)

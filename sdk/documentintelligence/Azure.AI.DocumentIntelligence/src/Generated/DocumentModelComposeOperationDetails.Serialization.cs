@@ -117,7 +117,7 @@ namespace Azure.AI.DocumentIntelligence
             OperationKind kind = default;
             Uri resourceLocation = default;
             Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<DocumentIntelligenceError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -205,7 +205,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentModelComposeOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error.Value, serializedAdditionalRawData, result.Value);
+            return new DocumentModelComposeOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), error.Value, serializedAdditionalRawData, result.Value);
         }
 
         BinaryData IPersistableModel<DocumentModelComposeOperationDetails>.Write(ModelReaderWriterOptions options)

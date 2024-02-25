@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Consumption
             Optional<BudgetTimePeriod> timePeriod = default;
             Optional<ConsumptionBudgetFilter> filter = default;
             Optional<BudgetCurrentSpend> currentSpend = default;
-            Optional<IDictionary<string, BudgetAssociatedNotification>> notifications = default;
+            IDictionary<string, BudgetAssociatedNotification> notifications = default;
             Optional<BudgetForecastSpend> forecastSpend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Consumption
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, Optional.ToDictionary(notifications), forecastSpend.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(), forecastSpend.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options)

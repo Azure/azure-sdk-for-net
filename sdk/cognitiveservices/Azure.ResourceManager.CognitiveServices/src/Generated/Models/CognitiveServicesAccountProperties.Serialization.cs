@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<bool> restrictOutboundNetworkAccess = default;
             IList<string> allowedFqdnList = default;
             Optional<bool> disableLocalAuth = default;
-            Optional<IReadOnlyDictionary<string, string>> endpoints = default;
+            IReadOnlyDictionary<string, string> endpoints = default;
             Optional<bool> restore = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<string> scheduledPurgeDate = default;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, capabilities ?? new ChangeTrackingList<CognitiveServicesSkuCapability>(), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>(), privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), allowedFqdnList ?? new ChangeTrackingList<string>(), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(), abusePenalty.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, capabilities ?? new ChangeTrackingList<CognitiveServicesSkuCapability>(), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>(), privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), allowedFqdnList ?? new ChangeTrackingList<string>(), Optional.ToNullable(disableLocalAuth), endpoints ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(), abusePenalty.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountProperties>.Write(ModelReaderWriterOptions options)

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 return null;
             }
             Optional<WebTestKind> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), syntheticMonitorId.Value, name0.Value, description.Value, Optional.ToNullable(enabled), Optional.ToNullable(frequency), Optional.ToNullable(timeout), Optional.ToNullable(kind0), Optional.ToNullable(retryEnabled), locations ?? new ChangeTrackingList<WebTestGeolocation>(), configuration.Value, provisioningState.Value, request.Value, validationRules.Value, serializedAdditionalRawData);
+            return new WebTestData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(kind), syntheticMonitorId.Value, name0.Value, description.Value, Optional.ToNullable(enabled), Optional.ToNullable(frequency), Optional.ToNullable(timeout), Optional.ToNullable(kind0), Optional.ToNullable(retryEnabled), locations ?? new ChangeTrackingList<WebTestGeolocation>(), configuration.Value, provisioningState.Value, request.Value, validationRules.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestData>.Write(ModelReaderWriterOptions options)

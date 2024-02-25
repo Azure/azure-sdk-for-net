@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MySql
             Optional<DateTimeOffset> expirationTime = default;
             Optional<string> reason = default;
             Optional<string> recommendationType = default;
-            Optional<IDictionary<string, string>> details = default;
+            IDictionary<string, string> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(actionId), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, Optional.ToDictionary(details), serializedAdditionalRawData);
+            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(actionId), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, details ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlRecommendationActionData>.Write(ModelReaderWriterOptions options)

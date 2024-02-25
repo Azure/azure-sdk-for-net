@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAccessProfile(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kubeConfig.Value, serializedAdditionalRawData);
+            return new ManagedClusterAccessProfile(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, kubeConfig.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAccessProfile>.Write(ModelReaderWriterOptions options)

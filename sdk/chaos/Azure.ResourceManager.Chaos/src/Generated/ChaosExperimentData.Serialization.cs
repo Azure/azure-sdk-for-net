@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Chaos
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), steps, selectors, serializedAdditionalRawData);
+            return new ChaosExperimentData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(provisioningState), steps, selectors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentData>.Write(ModelReaderWriterOptions options)

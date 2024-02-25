@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<int>> numExecutors = default;
             Optional<DataFactorySparkConfigurationType> configurationType = default;
             Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
-            Optional<IDictionary<string, BinaryData>> sparkConfig = default;
+            IDictionary<string, BinaryData> sparkConfig = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, sparkJob, args ?? new ChangeTrackingList<BinaryData>(), file.Value, scanFolder.Value, className.Value, files ?? new ChangeTrackingList<BinaryData>(), pythonCodeReference ?? new ChangeTrackingList<BinaryData>(), filesV2 ?? new ChangeTrackingList<BinaryData>(), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, sparkJob, args ?? new ChangeTrackingList<BinaryData>(), file.Value, scanFolder.Value, className.Value, files ?? new ChangeTrackingList<BinaryData>(), pythonCodeReference ?? new ChangeTrackingList<BinaryData>(), filesV2 ?? new ChangeTrackingList<BinaryData>(), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<SynapseSparkJobDefinitionActivity>.Write(ModelReaderWriterOptions options)

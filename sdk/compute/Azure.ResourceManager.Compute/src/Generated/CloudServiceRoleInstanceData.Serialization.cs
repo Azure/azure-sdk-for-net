@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<InstanceSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceRoleInstanceData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, networkProfile.Value, instanceView.Value, serializedAdditionalRawData);
+            return new CloudServiceRoleInstanceData(id, name, type, systemData.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, networkProfile.Value, instanceView.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceRoleInstanceData>.Write(ModelReaderWriterOptions options)

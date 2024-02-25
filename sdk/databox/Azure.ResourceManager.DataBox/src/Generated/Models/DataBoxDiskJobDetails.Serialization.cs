@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, int>> preferredDisks = default;
+            IDictionary<string, int> preferredDisks = default;
             IReadOnlyList<DataBoxDiskCopyProgress> copyProgress = default;
             IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress = default;
             IReadOnlyList<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails = default;
-            Optional<IReadOnlyDictionary<string, int>> disksAndSizeDetails = default;
+            IReadOnlyDictionary<string, int> disksAndSizeDetails = default;
             Optional<string> passkey = default;
             IReadOnlyList<DataBoxJobStage> jobStages = default;
             DataBoxContactDetails contactDetails = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskJobDetails(jobStages ?? new ChangeTrackingList<DataBoxJobStage>(), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(), dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(), jobDetailsType, preferences.Value, reverseShippingDetails.Value, copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), actions ?? new ChangeTrackingList<CustomerResolutionCode>(), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, Optional.ToDictionary(preferredDisks), copyProgress ?? new ChangeTrackingList<DataBoxDiskCopyProgress>(), granularCopyProgress ?? new ChangeTrackingList<DataBoxDiskGranularCopyProgress>(), granularCopyLogDetails ?? new ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>(), Optional.ToDictionary(disksAndSizeDetails), passkey.Value);
+            return new DataBoxDiskJobDetails(jobStages ?? new ChangeTrackingList<DataBoxJobStage>(), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(), dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(), jobDetailsType, preferences.Value, reverseShippingDetails.Value, copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), actions ?? new ChangeTrackingList<CustomerResolutionCode>(), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, preferredDisks ?? new ChangeTrackingDictionary<string, int>(), copyProgress ?? new ChangeTrackingList<DataBoxDiskCopyProgress>(), granularCopyProgress ?? new ChangeTrackingList<DataBoxDiskGranularCopyProgress>(), granularCopyLogDetails ?? new ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>(), disksAndSizeDetails ?? new ChangeTrackingDictionary<string, int>(), passkey.Value);
         }
 
         BinaryData IPersistableModel<DataBoxDiskJobDetails>.Write(ModelReaderWriterOptions options)

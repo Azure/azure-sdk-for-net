@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             ReservationRecommendationKind kind = "Unknown";
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<string> sku = default;
             ResourceIdentifier id = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData);
+            return new UnknownReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationRecommendation>.Write(ModelReaderWriterOptions options)
