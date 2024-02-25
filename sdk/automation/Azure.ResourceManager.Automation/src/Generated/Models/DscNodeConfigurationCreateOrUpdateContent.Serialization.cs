@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AutomationContentSource> source = default;
             Optional<DscConfigurationAssociationProperty> configuration = default;
             Optional<bool> incrementNodeConfigurationBuild = default;
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeConfigurationCreateOrUpdateContent(name.Value, Optional.ToDictionary(tags), source.Value, configuration.Value, Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
+            return new DscNodeConfigurationCreateOrUpdateContent(name.Value, tags ?? new ChangeTrackingDictionary<string, string>(), source.Value, configuration.Value, Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeConfigurationCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

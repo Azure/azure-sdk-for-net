@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<BinaryData> connectivityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcSettingPatch(Optional.ToDictionary(tags), connectivityProperties.Value, serializedAdditionalRawData);
+            return new ArcSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), connectivityProperties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcSettingPatch>.Write(ModelReaderWriterOptions options)

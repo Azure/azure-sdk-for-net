@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> logVerbose = default;
             Optional<bool> logProgress = default;
             AutomationRunbookType runbookType = default;
@@ -235,7 +236,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookCreateOrUpdateContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), runbookType, draft.Value, publishContentLink.Value, description.Value, Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new AutomationRunbookCreateOrUpdateContent(name.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), runbookType, draft.Value, publishContentLink.Value, description.Value, Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

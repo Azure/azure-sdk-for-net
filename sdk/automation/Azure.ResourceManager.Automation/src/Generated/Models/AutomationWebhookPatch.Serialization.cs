@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> name = default;
             Optional<bool> isEnabled = default;
             Optional<string> runOn = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            IDictionary<string, string> parameters = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookPatch(name.Value, Optional.ToNullable(isEnabled), runOn.Value, Optional.ToDictionary(parameters), description.Value, serializedAdditionalRawData);
+            return new AutomationWebhookPatch(name.Value, Optional.ToNullable(isEnabled), runOn.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), description.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookPatch>.Write(ModelReaderWriterOptions options)

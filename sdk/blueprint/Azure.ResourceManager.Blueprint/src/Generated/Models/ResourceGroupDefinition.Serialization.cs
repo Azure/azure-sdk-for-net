@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Blueprint;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             IList<string> dependsOn = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> strongType = default;
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), dependsOn ?? new ChangeTrackingList<string>(), Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
+            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), dependsOn ?? new ChangeTrackingList<string>(), tags ?? new ChangeTrackingDictionary<string, string>(), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupDefinition>.Write(ModelReaderWriterOptions options)

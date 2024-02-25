@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Avs
             }
             AvsSku sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(), availability.Value, encryption.Value, extendedNetworkBlocks ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>(), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised), serializedAdditionalRawData);
+            return new AvsPrivateCloudData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(), availability.Value, encryption.Value, extendedNetworkBlocks ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>(), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudData>.Write(ModelReaderWriterOptions options)

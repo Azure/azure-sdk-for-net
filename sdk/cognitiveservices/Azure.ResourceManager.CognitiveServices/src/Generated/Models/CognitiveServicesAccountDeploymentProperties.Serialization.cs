@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CognitiveServicesAccountDeploymentProvisioningState> provisioningState = default;
             Optional<CognitiveServicesAccountDeploymentModel> model = default;
             Optional<CognitiveServicesAccountDeploymentScaleSettings> scaleSettings = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
             Optional<string> raiPolicyName = default;
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             IReadOnlyList<ServiceAccountThrottlingRule> rateLimits = default;
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(), Optional.ToNullable(versionUpgradeOption), serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, capabilities ?? new ChangeTrackingDictionary<string, string>(), raiPolicyName.Value, callRateLimit.Value, rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(), Optional.ToNullable(versionUpgradeOption), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Write(ModelReaderWriterOptions options)

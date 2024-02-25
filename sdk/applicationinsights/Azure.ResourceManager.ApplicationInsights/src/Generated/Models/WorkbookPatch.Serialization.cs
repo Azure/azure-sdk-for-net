@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 return null;
             }
             Optional<WorkbookUpdateSharedTypeKind> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> displayName = default;
             Optional<string> serializedData = default;
             Optional<string> category = default;
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookPatch(Optional.ToNullable(kind), Optional.ToDictionary(tags), displayName.Value, serializedData.Value, category.Value, tags0 ?? new ChangeTrackingList<string>(), description.Value, revision.Value, serializedAdditionalRawData);
+            return new WorkbookPatch(Optional.ToNullable(kind), tags ?? new ChangeTrackingDictionary<string, string>(), displayName.Value, serializedData.Value, category.Value, tags0 ?? new ChangeTrackingList<string>(), description.Value, revision.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookPatch>.Write(ModelReaderWriterOptions options)

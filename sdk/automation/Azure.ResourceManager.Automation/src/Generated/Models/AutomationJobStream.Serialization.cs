@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<AutomationJobStreamType> streamType = default;
             Optional<string> streamText = default;
             Optional<string> summary = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
+            IReadOnlyDictionary<string, BinaryData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobStream(id.Value, jobStreamId.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, summary.Value, Optional.ToDictionary(value), serializedAdditionalRawData);
+            return new AutomationJobStream(id.Value, jobStreamId.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, summary.Value, value ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobStream>.Write(ModelReaderWriterOptions options)

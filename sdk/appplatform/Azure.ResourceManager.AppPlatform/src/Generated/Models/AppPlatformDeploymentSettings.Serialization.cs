@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -140,8 +141,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<AppPlatformDeploymentResourceRequirements> resourceRequests = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
+            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
             Optional<AppInstanceProbe> livenessProbe = default;
             Optional<AppInstanceProbe> readinessProbe = default;
             Optional<AppInstanceProbe> startupProbe = default;
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentSettings(resourceRequests.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(addonConfigs), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value, serializedAdditionalRawData);
+            return new AppPlatformDeploymentSettings(resourceRequests.Value, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentSettings>.Write(ModelReaderWriterOptions options)

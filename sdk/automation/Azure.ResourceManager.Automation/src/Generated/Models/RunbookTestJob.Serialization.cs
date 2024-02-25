@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> exception = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<DateTimeOffset?> lastStatusModifiedTime = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            IReadOnlyDictionary<string, string> parameters = default;
             Optional<int> logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunbookTestJob(Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new RunbookTestJob(Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), parameters ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunbookTestJob>.Write(ModelReaderWriterOptions options)

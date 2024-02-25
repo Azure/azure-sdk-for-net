@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             Optional<RunbookAssociationProperty> runbook = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            IDictionary<string, string> parameters = default;
             Optional<string> runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobCreateOrUpdateContent(runbook.Value, Optional.ToDictionary(parameters), runOn.Value, serializedAdditionalRawData);
+            return new AutomationJobCreateOrUpdateContent(runbook.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), runOn.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -156,8 +157,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<bool> isDefaultVersion = default;
             IList<CognitiveServicesModelSku> skus = default;
             Optional<int> maxCapacity = default;
-            Optional<IDictionary<string, string>> capabilities = default;
-            Optional<IDictionary<string, string>> finetuneCapabilities = default;
+            IDictionary<string, string> capabilities = default;
+            IDictionary<string, string> finetuneCapabilities = default;
             Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
             Optional<ModelLifecycleStatus> lifecycleStatus = default;
             Optional<SystemData> systemData = default;
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData, baseModel.Value, Optional.ToNullable(isDefaultVersion), skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(), Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
+            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData, baseModel.Value, Optional.ToNullable(isDefaultVersion), skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(), Optional.ToNullable(maxCapacity), capabilities ?? new ChangeTrackingDictionary<string, string>(), finetuneCapabilities ?? new ChangeTrackingDictionary<string, string>(), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountModel>.Write(ModelReaderWriterOptions options)

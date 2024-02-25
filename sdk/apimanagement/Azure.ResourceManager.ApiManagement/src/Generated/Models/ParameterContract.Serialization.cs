@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IList<string> values = default;
             Optional<string> schemaId = default;
             Optional<string> typeName = default;
-            Optional<IDictionary<string, ParameterExampleContract>> examples = default;
+            IDictionary<string, ParameterExampleContract> examples = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterContract(name, description.Value, type, defaultValue.Value, Optional.ToNullable(required), values ?? new ChangeTrackingList<string>(), schemaId.Value, typeName.Value, Optional.ToDictionary(examples), serializedAdditionalRawData);
+            return new ParameterContract(name, description.Value, type, defaultValue.Value, Optional.ToNullable(required), values ?? new ChangeTrackingList<string>(), schemaId.Value, typeName.Value, examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterContract>.Write(ModelReaderWriterOptions options)

@@ -12,6 +12,7 @@ using System.Net;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             IList<string> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             IList<AdditionalLocation> additionalLocations = default;
-            Optional<IDictionary<string, string>> customProperties = default;
+            IDictionary<string, string> customProperties = default;
             IList<CertificateConfiguration> certificates = default;
             Optional<bool> enableClientCertificate = default;
             Optional<bool> disableGateway = default;
@@ -731,7 +732,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(), publicIPAddresses ?? new ChangeTrackingList<IPAddress>(), privateIPAddresses ?? new ChangeTrackingList<IPAddress>(), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(), Optional.ToDictionary(customProperties), certificates ?? new ChangeTrackingList<CertificateConfiguration>(), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(), publicIPAddresses ?? new ChangeTrackingList<IPAddress>(), privateIPAddresses ?? new ChangeTrackingList<IPAddress>(), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(), customProperties ?? new ChangeTrackingDictionary<string, string>(), certificates ?? new ChangeTrackingList<CertificateConfiguration>(), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServicePatch>.Write(ModelReaderWriterOptions options)

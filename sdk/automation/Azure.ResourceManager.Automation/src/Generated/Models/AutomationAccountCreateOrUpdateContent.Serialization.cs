@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AutomationSku> sku = default;
             Optional<AutomationEncryptionProperties> encryption = default;
             Optional<bool> publicNetworkAccess = default;
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountCreateOrUpdateContent(name.Value, Optional.ToNullable(location), identity, Optional.ToDictionary(tags), sku.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new AutomationAccountCreateOrUpdateContent(name.Value, Optional.ToNullable(location), identity, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
