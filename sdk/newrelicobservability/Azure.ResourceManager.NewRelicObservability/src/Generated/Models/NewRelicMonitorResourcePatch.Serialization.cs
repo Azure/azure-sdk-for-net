@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
             Optional<NewRelicObservabilityUserInfo> userInfo = default;
             Optional<NewRelicPlanDetails> planData = default;
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicMonitorResourcePatch(identity, Optional.ToDictionary(tags), newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource), serializedAdditionalRawData);
+            return new NewRelicMonitorResourcePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicMonitorResourcePatch>.Write(ModelReaderWriterOptions options)

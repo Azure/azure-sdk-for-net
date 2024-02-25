@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 return null;
             }
             Optional<AutoScaleVCoreSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<int> capacityLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleVCorePatch(sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(capacityLimit), serializedAdditionalRawData);
+            return new AutoScaleVCorePatch(sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(capacityLimit), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoScaleVCorePatch>.Write(ModelReaderWriterOptions options)

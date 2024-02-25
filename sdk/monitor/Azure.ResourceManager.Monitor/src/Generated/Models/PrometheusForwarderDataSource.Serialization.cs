@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> streams = default;
-            Optional<IDictionary<string, string>> labelIncludeFilter = default;
+            IDictionary<string, string> labelIncludeFilter = default;
             Optional<string> name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrometheusForwarderDataSource(streams ?? new ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>(), Optional.ToDictionary(labelIncludeFilter), name.Value, serializedAdditionalRawData);
+            return new PrometheusForwarderDataSource(streams ?? new ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>(), labelIncludeFilter ?? new ChangeTrackingDictionary<string, string>(), name.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrometheusForwarderDataSource>.Write(ModelReaderWriterOptions options)

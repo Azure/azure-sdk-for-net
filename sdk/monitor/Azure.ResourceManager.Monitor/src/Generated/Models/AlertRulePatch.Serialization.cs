@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<string> provisioningState = default;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRulePatch(Optional.ToDictionary(tags), name.Value, description.Value, provisioningState.Value, Optional.ToNullable(isEnabled), condition.Value, action.Value, actions ?? new ChangeTrackingList<AlertRuleAction>(), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
+            return new AlertRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), name.Value, description.Value, provisioningState.Value, Optional.ToNullable(isEnabled), condition.Value, action.Value, actions ?? new ChangeTrackingList<AlertRuleAction>(), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRulePatch>.Write(ModelReaderWriterOptions options)

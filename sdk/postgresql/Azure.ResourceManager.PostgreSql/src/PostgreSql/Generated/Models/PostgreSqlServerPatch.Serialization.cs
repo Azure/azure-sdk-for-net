@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<PostgreSqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<PostgreSqlStorageProfile> storageProfile = default;
             Optional<string> administratorLoginPassword = default;
             Optional<PostgreSqlServerVersion> version = default;
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerPatch(identity, sku.Value, Optional.ToDictionary(tags), storageProfile.Value, administratorLoginPassword.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), replicationRole.Value, serializedAdditionalRawData);
+            return new PostgreSqlServerPatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), storageProfile.Value, administratorLoginPassword.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), replicationRole.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPatch>.Write(ModelReaderWriterOptions options)

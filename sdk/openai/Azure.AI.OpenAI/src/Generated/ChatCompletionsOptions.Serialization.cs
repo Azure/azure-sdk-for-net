@@ -198,7 +198,7 @@ namespace Azure.AI.OpenAI
             Optional<int> maxTokens = default;
             Optional<float> temperature = default;
             Optional<float> topP = default;
-            Optional<IDictionary<int, int>> logitBias = default;
+            IDictionary<int, int> logitBias = default;
             Optional<string> user = default;
             Optional<int> n = default;
             IList<string> stop = default;
@@ -411,7 +411,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatCompletionsOptions(messages, functions ?? new ChangeTrackingList<FunctionDefinition>(), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), stop ?? new ChangeTrackingList<string>(), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(), enhancements.Value, Optional.ToNullable(seed), responseFormat.Value, tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(), toolChoice.Value, serializedAdditionalRawData);
+            return new ChatCompletionsOptions(messages, functions ?? new ChangeTrackingList<FunctionDefinition>(), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), logitBias ?? new ChangeTrackingDictionary<int, int>(), user.Value, Optional.ToNullable(n), stop ?? new ChangeTrackingList<string>(), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(), enhancements.Value, Optional.ToNullable(seed), responseFormat.Value, tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(), toolChoice.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatCompletionsOptions>.Write(ModelReaderWriterOptions options)

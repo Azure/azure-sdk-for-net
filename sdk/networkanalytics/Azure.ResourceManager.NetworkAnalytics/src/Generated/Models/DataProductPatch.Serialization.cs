@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IList<string> owners = default;
             Optional<string> purviewAccount = default;
             Optional<string> purviewCollection = default;
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductPatch(identity, Optional.ToDictionary(tags), owners ?? new ChangeTrackingList<string>(), purviewAccount.Value, purviewCollection.Value, Optional.ToNullable(privateLinksEnabled), currentMinorVersion.Value, serializedAdditionalRawData);
+            return new DataProductPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), owners ?? new ChangeTrackingList<string>(), purviewAccount.Value, purviewCollection.Value, Optional.ToNullable(privateLinksEnabled), currentMinorVersion.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductPatch>.Write(ModelReaderWriterOptions options)

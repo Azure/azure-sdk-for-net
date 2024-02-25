@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 return null;
             }
             Optional<NotificationHubSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubPnsCredentials(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value, serializedAdditionalRawData);
+            return new NotificationHubPnsCredentials(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubPnsCredentials>.Write(ModelReaderWriterOptions options)

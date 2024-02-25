@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> rackLocation = default;
             Optional<string> rackSerialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackPatch(Optional.ToDictionary(tags), rackLocation.Value, rackSerialNumber.Value, serializedAdditionalRawData);
+            return new NetworkCloudRackPatch(tags ?? new ChangeTrackingDictionary<string, string>(), rackLocation.Value, rackSerialNumber.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackPatch>.Write(ModelReaderWriterOptions options)

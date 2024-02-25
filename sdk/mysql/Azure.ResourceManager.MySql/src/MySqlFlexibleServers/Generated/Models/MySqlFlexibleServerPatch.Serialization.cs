@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MySqlFlexibleServerSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> administratorLoginPassword = default;
             Optional<MySqlFlexibleServerVersion> version = default;
             Optional<MySqlFlexibleServerStorage> storage = default;
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerPatch(identity, sku.Value, Optional.ToDictionary(tags), administratorLoginPassword.Value, Optional.ToNullable(version), storage.Value, backup.Value, highAvailability.Value, maintenanceWindow.Value, Optional.ToNullable(replicationRole), dataEncryption.Value, network.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerPatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), administratorLoginPassword.Value, Optional.ToNullable(version), storage.Value, backup.Value, highAvailability.Value, maintenanceWindow.Value, Optional.ToNullable(replicationRole), dataEncryption.Value, network.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerPatch>.Write(ModelReaderWriterOptions options)

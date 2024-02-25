@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionGroupPatch(Optional.ToDictionary(tags), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ActionGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enabled), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionGroupPatch>.Write(ModelReaderWriterOptions options)

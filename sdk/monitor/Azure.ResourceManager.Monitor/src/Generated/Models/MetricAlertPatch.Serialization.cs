@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<int> severity = default;
             Optional<bool> enabled = default;
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertPatch(Optional.ToDictionary(tags), description.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), scopes ?? new ChangeTrackingList<string>(), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria.Value, Optional.ToNullable(autoMitigate), actions ?? new ChangeTrackingList<MetricAlertAction>(), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated), serializedAdditionalRawData);
+            return new MetricAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), scopes ?? new ChangeTrackingList<string>(), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria.Value, Optional.ToNullable(autoMitigate), actions ?? new ChangeTrackingList<MetricAlertAction>(), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertPatch>.Write(ModelReaderWriterOptions options)
