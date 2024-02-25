@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> nodeSelector = default;
+            IDictionary<string, string> nodeSelector = default;
             Optional<MachineLearningInstanceTypeSchemaResources> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningInstanceTypeSchema(Optional.ToDictionary(nodeSelector), resources.Value, serializedAdditionalRawData);
+            return new MachineLearningInstanceTypeSchema(nodeSelector ?? new ChangeTrackingDictionary<string, string>(), resources.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningInstanceTypeSchema>.Write(ModelReaderWriterOptions options)

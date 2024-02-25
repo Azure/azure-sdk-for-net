@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> annotation = default;
             IList<IPPrefixRule> ipPrefixRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricIPPrefixPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>());
+            return new NetworkFabricIPPrefixPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation.Value, ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>());
         }
 
         BinaryData IPersistableModel<NetworkFabricIPPrefixPatch>.Write(ModelReaderWriterOptions options)

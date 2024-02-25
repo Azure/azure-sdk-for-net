@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> itemFullTitlePath = default;
             Optional<string> itemIsParent = default;
             Optional<string> selectableFilter = default;
-            Optional<IDictionary<string, SwaggerCustomDynamicTreeParameterInfo>> parameters = default;
+            IDictionary<string, SwaggerCustomDynamicTreeParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeCommand(operationId.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, itemFullTitlePath.Value, itemIsParent.Value, selectableFilter.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeCommand(operationId.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, itemFullTitlePath.Value, itemIsParent.Value, selectableFilter.Value, parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeCommand>.Write(ModelReaderWriterOptions options)

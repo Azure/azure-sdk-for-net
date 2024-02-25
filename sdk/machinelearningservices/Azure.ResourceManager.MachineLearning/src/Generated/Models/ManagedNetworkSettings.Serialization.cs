@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<IsolationMode> isolationMode = default;
             Optional<string> networkId = default;
-            Optional<IDictionary<string, MachineLearningOutboundRule>> outboundRules = default;
+            IDictionary<string, MachineLearningOutboundRule> outboundRules = default;
             Optional<ManagedNetworkProvisionStatus> status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkSettings(Optional.ToNullable(isolationMode), networkId.Value, Optional.ToDictionary(outboundRules), status.Value, serializedAdditionalRawData);
+            return new ManagedNetworkSettings(Optional.ToNullable(isolationMode), networkId.Value, outboundRules ?? new ChangeTrackingDictionary<string, MachineLearningOutboundRule>(), status.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkSettings>.Write(ModelReaderWriterOptions options)

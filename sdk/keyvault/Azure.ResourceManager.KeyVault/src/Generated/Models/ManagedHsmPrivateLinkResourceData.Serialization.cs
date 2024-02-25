@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             Optional<ManagedHsmSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmPrivateLinkResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), sku.Value, serializedAdditionalRawData);
+            return new ManagedHsmPrivateLinkResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

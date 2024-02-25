@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserAssignedIdentityPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(tenantId), Optional.ToNullable(principalId), Optional.ToNullable(clientId), serializedAdditionalRawData);
+            return new UserAssignedIdentityPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(tenantId), Optional.ToNullable(principalId), Optional.ToNullable(clientId), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserAssignedIdentityPatch>.Write(ModelReaderWriterOptions options)

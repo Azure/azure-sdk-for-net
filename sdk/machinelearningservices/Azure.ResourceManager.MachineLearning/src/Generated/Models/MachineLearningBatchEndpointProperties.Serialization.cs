@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningEndpointAuthMode authMode = default;
             Optional<string> description = default;
             Optional<MachineLearningEndpointAuthKeys> keys = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             Optional<Uri> scoringUri = default;
             Optional<Uri> swaggerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningBatchEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, serializedAdditionalRawData, defaults.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningBatchEndpointProperties(authMode, description.Value, keys.Value, properties ?? new ChangeTrackingDictionary<string, string>(), scoringUri.Value, swaggerUri.Value, serializedAdditionalRawData, defaults.Value, Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<MachineLearningBatchEndpointProperties>.Write(ModelReaderWriterOptions options)

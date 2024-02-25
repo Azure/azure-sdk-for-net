@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> applicationInsights = default;
             Optional<string> containerRegistry = default;
             Optional<string> description = default;
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspacePatch(identity, sku.Value, Optional.ToDictionary(tags), applicationInsights.Value, containerRegistry.Value, description.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, featureStoreSettings.Value, friendlyName.Value, imageBuildCompute.Value, managedNetwork.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(v1LegacyMode), serializedAdditionalRawData);
+            return new MachineLearningWorkspacePatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), applicationInsights.Value, containerRegistry.Value, description.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, featureStoreSettings.Value, friendlyName.Value, imageBuildCompute.Value, managedNetwork.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(v1LegacyMode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspacePatch>.Write(ModelReaderWriterOptions options)

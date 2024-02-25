@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> jobServiceType = default;
             Optional<JobNodes> nodes = default;
             Optional<int?> port = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             Optional<string> status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, nodes.Value, Optional.ToNullable(port), Optional.ToDictionary(properties), status.Value, serializedAdditionalRawData);
+            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, nodes.Value, Optional.ToNullable(port), properties ?? new ChangeTrackingDictionary<string, string>(), status.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningJobService>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<string> operationId = default;
             Optional<string> valuePath = default;
-            Optional<IDictionary<string, SwaggerCustomDynamicProperties>> parameters = default;
+            IDictionary<string, SwaggerCustomDynamicProperties> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicProperties(operationId.Value, valuePath.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicProperties(operationId.Value, valuePath.Value, parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IList<IPCommunityRule> ipCommunityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricIPCommunityPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>());
+            return new NetworkFabricIPCommunityPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>());
         }
 
         BinaryData IPersistableModel<NetworkFabricIPCommunityPatch>.Write(ModelReaderWriterOptions options)

@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), infrastructureServices.Value, workloadServices.Value, managedResourceGroupConfiguration.Value, networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(workloadManagementNetwork), Optional.ToNullable(isWorkloadManagementNetworkEnabled), tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipv4AddressSpace.Value, ipv6AddressSpace.Value, Optional.ToNullable(nfcSku), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricControllerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, annotation.Value, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), infrastructureServices.Value, workloadServices.Value, managedResourceGroupConfiguration.Value, networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(workloadManagementNetwork), Optional.ToNullable(isWorkloadManagementNetworkEnabled), tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipv4AddressSpace.Value, ipv6AddressSpace.Value, Optional.ToNullable(nfcSku), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricControllerData>.Write(ModelReaderWriterOptions options)

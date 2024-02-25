@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.IoT.Hub.Service.Models
             }
             Optional<string> id = default;
             Optional<string> schemaVersion = default;
-            Optional<IDictionary<string, string>> labels = default;
+            IDictionary<string, string> labels = default;
             Optional<ConfigurationContent> content = default;
             Optional<string> targetCondition = default;
             Optional<DateTimeOffset> createdTimeUtc = default;
@@ -189,7 +190,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinConfiguration(id.Value, schemaVersion.Value, Optional.ToDictionary(labels), content.Value, targetCondition.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(priority), systemMetrics.Value, metrics.Value, etag.Value);
+            return new TwinConfiguration(id.Value, schemaVersion.Value, labels ?? new ChangeTrackingDictionary<string, string>(), content.Value, targetCondition.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(priority), systemMetrics.Value, metrics.Value, etag.Value);
         }
     }
 }

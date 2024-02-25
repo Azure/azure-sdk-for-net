@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ArcKindEnum> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<HybridComputeLocation> locationData = default;
             Optional<HybridComputeOSProfile> osProfile = default;
             Optional<HybridComputeCloudMetadata> cloudMetadata = default;
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachinePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToNullable(kind), locationData.Value, osProfile.Value, cloudMetadata.Value, agentUpgrade.Value, parentClusterResourceId.Value, privateLinkScopeResourceId.Value);
+            return new HybridComputeMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, Optional.ToNullable(kind), locationData.Value, osProfile.Value, cloudMetadata.Value, agentUpgrade.Value, parentClusterResourceId.Value, privateLinkScopeResourceId.Value);
         }
 
         BinaryData IPersistableModel<HybridComputeMachinePatch>.Write(ModelReaderWriterOptions options)

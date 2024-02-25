@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LoadTesting;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> description = default;
             Optional<LoadTestingCmkEncryptionProperties> encryption = default;
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingResourcePatch(Optional.ToDictionary(tags), identity, description.Value, encryption.Value, serializedAdditionalRawData);
+            return new LoadTestingResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, description.Value, encryption.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingResourcePatch>.Write(ModelReaderWriterOptions options)

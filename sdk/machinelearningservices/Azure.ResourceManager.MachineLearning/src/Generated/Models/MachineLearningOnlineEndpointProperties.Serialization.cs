@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -191,14 +192,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> compute = default;
-            Optional<IDictionary<string, int>> mirrorTraffic = default;
+            IDictionary<string, int> mirrorTraffic = default;
             Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
             Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IDictionary<string, int>> traffic = default;
+            IDictionary<string, int> traffic = default;
             MachineLearningEndpointAuthMode authMode = default;
             Optional<string> description = default;
             Optional<MachineLearningEndpointAuthKeys> keys = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             Optional<Uri> scoringUri = default;
             Optional<Uri> swaggerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningOnlineEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, serializedAdditionalRawData, compute.Value, Optional.ToDictionary(mirrorTraffic), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(traffic));
+            return new MachineLearningOnlineEndpointProperties(authMode, description.Value, keys.Value, properties ?? new ChangeTrackingDictionary<string, string>(), scoringUri.Value, swaggerUri.Value, serializedAdditionalRawData, compute.Value, mirrorTraffic ?? new ChangeTrackingDictionary<string, int>(), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), traffic ?? new ChangeTrackingDictionary<string, int>());
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineEndpointProperties>.Write(ModelReaderWriterOptions options)

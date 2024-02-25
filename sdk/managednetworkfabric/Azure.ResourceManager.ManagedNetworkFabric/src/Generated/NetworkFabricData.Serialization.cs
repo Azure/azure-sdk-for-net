@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkFabricSku, fabricVersion.Value, routerIds ?? new ChangeTrackingList<string>(), networkFabricControllerId, Optional.ToNullable(rackCount), serverCountPerRack, ipv4Prefix, ipv6Prefix.Value, fabricAsn, terminalServerConfiguration, managementNetworkConfiguration, racks ?? new ChangeTrackingList<string>(), l2IsolationDomains ?? new ChangeTrackingList<string>(), l3IsolationDomains ?? new ChangeTrackingList<string>(), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, annotation.Value, networkFabricSku, fabricVersion.Value, routerIds ?? new ChangeTrackingList<string>(), networkFabricControllerId, Optional.ToNullable(rackCount), serverCountPerRack, ipv4Prefix, ipv6Prefix.Value, fabricAsn, terminalServerConfiguration, managementNetworkConfiguration, racks ?? new ChangeTrackingList<string>(), l2IsolationDomains ?? new ChangeTrackingList<string>(), l3IsolationDomains ?? new ChangeTrackingList<string>(), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricData>.Write(ModelReaderWriterOptions options)

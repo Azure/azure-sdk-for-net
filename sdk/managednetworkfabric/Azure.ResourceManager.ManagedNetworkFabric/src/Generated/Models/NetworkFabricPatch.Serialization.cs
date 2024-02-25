@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> annotation = default;
             Optional<int> rackCount = default;
             Optional<int> serverCountPerRack = default;
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(rackCount), Optional.ToNullable(serverCountPerRack), ipv4Prefix.Value, ipv6Prefix.Value, Optional.ToNullable(fabricAsn), terminalServerConfiguration.Value, managementNetworkConfiguration.Value);
+            return new NetworkFabricPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(rackCount), Optional.ToNullable(serverCountPerRack), ipv4Prefix.Value, ipv6Prefix.Value, Optional.ToNullable(fabricAsn), terminalServerConfiguration.Value, managementNetworkConfiguration.Value);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatch>.Write(ModelReaderWriterOptions options)

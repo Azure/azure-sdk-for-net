@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -156,8 +157,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> typeHandlerVersion = default;
             Optional<bool> enableAutomaticUpgrade = default;
             Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<IDictionary<string, BinaryData>> settings = default;
-            Optional<IDictionary<string, BinaryData>> protectedSettings = default;
+            IDictionary<string, BinaryData> settings = default;
+            IDictionary<string, BinaryData> protectedSettings = default;
             Optional<string> provisioningState = default;
             Optional<MachineExtensionInstanceView> instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToDictionary(settings), Optional.ToDictionary(protectedSettings), provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
+            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), settings ?? new ChangeTrackingDictionary<string, BinaryData>(), protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(), provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineExtensionProperties>.Write(ModelReaderWriterOptions options)

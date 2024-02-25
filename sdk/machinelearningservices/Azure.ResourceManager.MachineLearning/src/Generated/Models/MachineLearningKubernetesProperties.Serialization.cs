@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> vcName = default;
             Optional<string> @namespace = default;
             Optional<string> defaultInstanceType = default;
-            Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
+            IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Optional.ToDictionary(instanceTypes), serializedAdditionalRawData);
+            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningKubernetesProperties>.Write(ModelReaderWriterOptions options)

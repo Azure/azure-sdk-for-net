@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, LabelClass>> classes = default;
+            IDictionary<string, LabelClass> classes = default;
             Optional<string> displayName = default;
             Optional<LabelCategoryMultiSelect> multiSelect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelCategory(Optional.ToDictionary(classes), displayName.Value, Optional.ToNullable(multiSelect), serializedAdditionalRawData);
+            return new LabelCategory(classes ?? new ChangeTrackingDictionary<string, LabelClass>(), displayName.Value, Optional.ToNullable(multiSelect), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelCategory>.Write(ModelReaderWriterOptions options)

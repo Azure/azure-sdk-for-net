@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> configurations = default;
+            IDictionary<string, string> configurations = default;
             Optional<string> entryScript = default;
             Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
             Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnlineInferenceConfiguration(Optional.ToDictionary(configurations), entryScript.Value, livenessRoute.Value, readinessRoute.Value, scoringRoute.Value, serializedAdditionalRawData);
+            return new OnlineInferenceConfiguration(configurations ?? new ChangeTrackingDictionary<string, string>(), entryScript.Value, livenessRoute.Value, readinessRoute.Value, scoringRoute.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OnlineInferenceConfiguration>.Write(ModelReaderWriterOptions options)

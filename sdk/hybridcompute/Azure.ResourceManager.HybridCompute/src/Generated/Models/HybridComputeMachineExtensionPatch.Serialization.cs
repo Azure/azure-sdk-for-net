@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -154,15 +155,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> enableAutomaticUpgrade = default;
             Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<IDictionary<string, BinaryData>> settings = default;
-            Optional<IDictionary<string, BinaryData>> protectedSettings = default;
+            IDictionary<string, BinaryData> settings = default;
+            IDictionary<string, BinaryData> protectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachineExtensionPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToDictionary(settings), Optional.ToDictionary(protectedSettings));
+            return new HybridComputeMachineExtensionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), settings ?? new ChangeTrackingDictionary<string, BinaryData>(), protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HybridComputeMachineExtensionPatch>.Write(ModelReaderWriterOptions options)

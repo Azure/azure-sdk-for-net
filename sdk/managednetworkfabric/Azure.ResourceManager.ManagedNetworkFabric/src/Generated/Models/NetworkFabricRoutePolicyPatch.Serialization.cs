@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<CommunityActionType> defaultAction = default;
             IList<RoutePolicyStatementProperties> statements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricRoutePolicyPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(defaultAction), statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>());
+            return new NetworkFabricRoutePolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(defaultAction), statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>());
         }
 
         BinaryData IPersistableModel<NetworkFabricRoutePolicyPatch>.Write(ModelReaderWriterOptions options)
