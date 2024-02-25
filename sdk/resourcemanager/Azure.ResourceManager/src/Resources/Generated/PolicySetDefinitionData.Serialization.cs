@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<BinaryData> metadata = default;
-            Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
+            IDictionary<string, ArmPolicyParameter> parameters = default;
             IList<PolicyDefinitionReference> policyDefinitions = default;
             IList<PolicyDefinitionGroup> policyDefinitionGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(), policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(), serializedAdditionalRawData);
+            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(), policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(), policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options)

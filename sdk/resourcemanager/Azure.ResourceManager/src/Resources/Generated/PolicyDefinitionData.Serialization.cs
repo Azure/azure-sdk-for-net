@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> description = default;
             Optional<BinaryData> policyRule = default;
             Optional<BinaryData> metadata = default;
-            Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
+            IDictionary<string, ArmPolicyParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), mode.Value, displayName.Value, description.Value, policyRule.Value, metadata.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new PolicyDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), mode.Value, displayName.Value, description.Value, policyRule.Value, metadata.Value, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionData>.Write(ModelReaderWriterOptions options)

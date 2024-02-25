@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<SubProtectionPolicyType> policyType = default;
             Optional<BackupSchedulePolicy> schedulePolicy = default;
             Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
+            IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
             Optional<SnapshotBackupAdditionalDetails> snapshotBackupAdditionalDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubProtectionPolicy(Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, Optional.ToDictionary(tieringPolicy), snapshotBackupAdditionalDetails.Value, serializedAdditionalRawData);
+            return new SubProtectionPolicy(Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(), snapshotBackupAdditionalDetails.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubProtectionPolicy>.Write(ModelReaderWriterOptions options)

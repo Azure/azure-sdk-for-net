@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupProtectionState> protectionState = default;
             Optional<string> lastBackupStatus = default;
             Optional<DateTimeOffset> lastBackupTime = default;
-            Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
+            IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
             Optional<FileshareProtectedItemExtendedInfo> extendedInfo = default;
             string protectedItemType = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -446,7 +447,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileshareProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, protectionStatus.Value, Optional.ToNullable(protectionState), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), Optional.ToDictionary(kpisHealths), extendedInfo.Value);
+            return new FileshareProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, protectionStatus.Value, Optional.ToNullable(protectionState), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(), extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<FileshareProtectedItem>.Write(ModelReaderWriterOptions options)

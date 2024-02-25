@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
             Optional<RestorePointType> type = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
-            Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
+            IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
             Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSqlPointInTimeRecoveryPoint(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, extendedInfo.Value, timeRanges ?? new ChangeTrackingList<PointInTimeRange>());
+            return new WorkloadSqlPointInTimeRecoveryPoint(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(), recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(), recoveryPointProperties.Value, extendedInfo.Value, timeRanges ?? new ChangeTrackingList<PointInTimeRange>());
         }
 
         BinaryData IPersistableModel<WorkloadSqlPointInTimeRecoveryPoint>.Write(ModelReaderWriterOptions options)

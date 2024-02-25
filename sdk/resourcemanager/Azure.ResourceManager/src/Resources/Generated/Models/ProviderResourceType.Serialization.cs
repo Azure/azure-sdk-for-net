@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.Resources.Models
             IReadOnlyList<ZoneMapping> zoneMappings = default;
             IReadOnlyList<ApiProfile> apiProfiles = default;
             Optional<string> capabilities = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderResourceType(resourceType.Value, locations ?? new ChangeTrackingList<string>(), locationMappings ?? new ChangeTrackingList<ProviderExtendedLocation>(), aliases ?? new ChangeTrackingList<ResourceTypeAlias>(), apiVersions ?? new ChangeTrackingList<string>(), defaultApiVersion.Value, zoneMappings ?? new ChangeTrackingList<ZoneMapping>(), apiProfiles ?? new ChangeTrackingList<ApiProfile>(), capabilities.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new ProviderResourceType(resourceType.Value, locations ?? new ChangeTrackingList<string>(), locationMappings ?? new ChangeTrackingList<ProviderExtendedLocation>(), aliases ?? new ChangeTrackingList<ResourceTypeAlias>(), apiVersions ?? new ChangeTrackingList<string>(), defaultApiVersion.Value, zoneMappings ?? new ChangeTrackingList<ZoneMapping>(), apiProfiles ?? new ChangeTrackingList<ApiProfile>(), capabilities.Value, properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)

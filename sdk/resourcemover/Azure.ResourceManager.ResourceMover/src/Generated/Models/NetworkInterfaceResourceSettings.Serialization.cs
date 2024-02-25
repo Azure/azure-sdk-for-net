@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IList<NicIPConfigurationResourceSettings> ipConfigurations = default;
             Optional<bool?> enableAcceleratedNetworking = default;
             string resourceType = default;
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), ipConfigurations ?? new ChangeTrackingList<NicIPConfigurationResourceSettings>(), Optional.ToNullable(enableAcceleratedNetworking));
+            return new NetworkInterfaceResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), ipConfigurations ?? new ChangeTrackingList<NicIPConfigurationResourceSettings>(), Optional.ToNullable(enableAcceleratedNetworking));
         }
 
         BinaryData IPersistableModel<NetworkInterfaceResourceSettings>.Write(ModelReaderWriterOptions options)

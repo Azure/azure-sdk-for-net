@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Relay
                 return null;
             }
             Optional<RelaySku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new RelayNamespaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayNamespaceData>.Write(ModelReaderWriterOptions options)

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, configurationEndpoints ?? new ChangeTrackingList<string>(), frontends ?? new ChangeTrackingList<SubResource>(), associations ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new TrafficControllerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, configurationEndpoints ?? new ChangeTrackingList<string>(), frontends ?? new ChangeTrackingList<SubResource>(), associations ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficControllerData>.Write(ModelReaderWriterOptions options)

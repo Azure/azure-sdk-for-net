@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> recoveryAzureV1ResourceGroupId = default;
             Optional<ResourceIdentifier> recoveryAzureV2ResourceGroupId = default;
             Optional<string> useManagedDisks = default;
-            Optional<IDictionary<string, string>> diskIdToDiskEncryptionMap = default;
+            IDictionary<string, string> diskIdToDiskEncryptionMap = default;
             Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
             Optional<string> targetAvailabilityZone = default;
-            Optional<IDictionary<string, string>> targetVmTags = default;
-            Optional<IDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetNicTags = default;
+            IDictionary<string, string> targetVmTags = default;
+            IDictionary<string, string> targetManagedDiskTags = default;
+            IDictionary<string, string> targetNicTags = default;
             Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
             IList<UpdateDiskContent> vmDisks = default;
             string instanceType = default;
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, recoveryAzureV1ResourceGroupId.Value, recoveryAzureV2ResourceGroupId.Value, useManagedDisks.Value, Optional.ToDictionary(diskIdToDiskEncryptionMap), targetProximityPlacementGroupId.Value, targetAvailabilityZone.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), Optional.ToNullable(sqlServerLicenseType), vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
+            return new HyperVReplicaAzureUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, recoveryAzureV1ResourceGroupId.Value, recoveryAzureV2ResourceGroupId.Value, useManagedDisks.Value, diskIdToDiskEncryptionMap ?? new ChangeTrackingDictionary<string, string>(), targetProximityPlacementGroupId.Value, targetAvailabilityZone.Value, targetVmTags ?? new ChangeTrackingDictionary<string, string>(), targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetNicTags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(sqlServerLicenseType), vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

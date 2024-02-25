@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string policyDefinitionId = default;
-            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
+            IDictionary<string, ArmPolicyParameterValue> parameters = default;
             Optional<string> policyDefinitionReferenceId = default;
             IList<string> groupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionReference(policyDefinitionId, Optional.ToDictionary(parameters), policyDefinitionReferenceId.Value, groupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PolicyDefinitionReference(policyDefinitionId, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(), policyDefinitionReferenceId.Value, groupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionReference>.Write(ModelReaderWriterOptions options)

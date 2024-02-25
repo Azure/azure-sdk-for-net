@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> protectableObjectLoadPath = default;
+            IDictionary<string, string> protectableObjectLoadPath = default;
             Optional<bool> @protected = default;
             Optional<bool> isPresentOnCloud = default;
             Optional<string> lastBackupStatus = default;
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmProtectedItemExtendedInfo(Optional.ToDictionary(protectableObjectLoadPath), Optional.ToNullable(@protected), Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(onPremiseOldestRecoveryPoint), Optional.ToNullable(onPremiseLatestRecoveryPoint), Optional.ToNullable(onPremiseRecoveryPointCount), Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value, serializedAdditionalRawData);
+            return new DpmProtectedItemExtendedInfo(protectableObjectLoadPath ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(@protected), Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(onPremiseOldestRecoveryPoint), Optional.ToNullable(onPremiseLatestRecoveryPoint), Optional.ToNullable(onPremiseRecoveryPointCount), Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DpmProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<NodeTypeSku> sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedNodeTypePatch(Optional.ToDictionary(tags), sku.Value, serializedAdditionalRawData);
+            return new ServiceFabricManagedNodeTypePatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedNodeTypePatch>.Write(ModelReaderWriterOptions options)

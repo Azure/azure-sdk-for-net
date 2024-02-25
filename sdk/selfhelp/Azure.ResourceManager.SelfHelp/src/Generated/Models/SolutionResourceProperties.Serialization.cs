@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             IList<TriggerCriterion> triggerCriteria = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            IDictionary<string, string> parameters = default;
             Optional<string> solutionId = default;
             Optional<SolutionProvisioningState> provisioningState = default;
             Optional<string> title = default;
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionResourceProperties(triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(), Optional.ToDictionary(parameters), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, sections ?? new ChangeTrackingList<SelfHelpSection>(), serializedAdditionalRawData);
+            return new SolutionResourceProperties(triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(), parameters ?? new ChangeTrackingDictionary<string, string>(), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, sections ?? new ChangeTrackingList<SelfHelpSection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourceProperties>.Write(ModelReaderWriterOptions options)

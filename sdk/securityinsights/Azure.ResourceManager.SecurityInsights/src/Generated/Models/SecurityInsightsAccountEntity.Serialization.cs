@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> aadTenantId = default;
             Optional<string> aadUserId = default;
@@ -342,7 +343,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAccountEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, aadTenantId.Value, aadUserId.Value, accountName.Value, displayName.Value, hostEntityId.Value, Optional.ToNullable(isDomainJoined), ntDomain.Value, Optional.ToNullable(objectGuid), puid.Value, sid.Value, upnSuffix.Value, dnsDomain.Value);
+            return new SecurityInsightsAccountEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, aadTenantId.Value, aadUserId.Value, accountName.Value, displayName.Value, hostEntityId.Value, Optional.ToNullable(isDomainJoined), ntDomain.Value, Optional.ToNullable(objectGuid), puid.Value, sid.Value, upnSuffix.Value, dnsDomain.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAccountEntity>.Write(ModelReaderWriterOptions options)

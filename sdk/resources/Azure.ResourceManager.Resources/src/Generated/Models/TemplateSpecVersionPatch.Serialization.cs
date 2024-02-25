@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecVersionPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new TemplateSpecVersionPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateSpecVersionPatch>.Write(ModelReaderWriterOptions options)

@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricServicePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, correlationScheme ?? new ChangeTrackingList<ServiceCorrelationDescription>(), serviceLoadMetrics ?? new ChangeTrackingList<ServiceLoadMetricDescription>(), servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>(), Optional.ToNullable(defaultMoveCost), Optional.ToNullable(serviceKind), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricServicePatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, placementConstraints.Value, correlationScheme ?? new ChangeTrackingList<ServiceCorrelationDescription>(), serviceLoadMetrics ?? new ChangeTrackingList<ServiceLoadMetricDescription>(), servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>(), Optional.ToNullable(defaultMoveCost), Optional.ToNullable(serviceKind), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricServicePatch>.Write(ModelReaderWriterOptions options)

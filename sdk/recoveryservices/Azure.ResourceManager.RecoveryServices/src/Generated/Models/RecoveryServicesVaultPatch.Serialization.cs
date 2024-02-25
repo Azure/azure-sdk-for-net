@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<RecoveryServicesSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new RecoveryServicesVaultPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, sku.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultPatch>.Write(ModelReaderWriterOptions options)

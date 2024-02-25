@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             }
             Optional<SpringBootSiteProperties> properties = default;
             Optional<SpringBootSiteModelExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, extendedLocation.Value, serializedAdditionalRawData);
+            return new SpringBootSiteData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, extendedLocation.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteData>.Write(ModelReaderWriterOptions options)

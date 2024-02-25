@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -126,8 +127,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> lastModifiedUtc = default;
             Optional<string> version = default;
-            Optional<IDictionary<string, SensitivityLabel>> labels = default;
-            Optional<IDictionary<string, SecurityInformationTypeInfo>> informationTypes = default;
+            IDictionary<string, SensitivityLabel> labels = default;
+            IDictionary<string, SecurityInformationTypeInfo> informationTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionPolicy(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedUtc), version.Value, Optional.ToDictionary(labels), Optional.ToDictionary(informationTypes), serializedAdditionalRawData);
+            return new InformationProtectionPolicy(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedUtc), version.Value, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InformationProtectionPolicy>.Write(ModelReaderWriterOptions options)
