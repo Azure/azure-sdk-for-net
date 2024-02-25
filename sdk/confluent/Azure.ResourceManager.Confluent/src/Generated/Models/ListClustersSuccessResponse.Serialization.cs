@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SCClusterRecord>> value = default;
+            IReadOnlyList<SCClusterRecord> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListClustersSuccessResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListClustersSuccessResponse(value ?? new ChangeTrackingList<SCClusterRecord>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListClustersSuccessResponse>.Write(ModelReaderWriterOptions options)

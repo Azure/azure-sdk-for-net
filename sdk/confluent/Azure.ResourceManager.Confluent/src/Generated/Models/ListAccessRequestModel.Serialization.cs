@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> searchFilters = default;
+            IDictionary<string, string> searchFilters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListAccessRequestModel(Optional.ToDictionary(searchFilters), serializedAdditionalRawData);
+            return new ListAccessRequestModel(searchFilters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListAccessRequestModel>.Write(ModelReaderWriterOptions options)

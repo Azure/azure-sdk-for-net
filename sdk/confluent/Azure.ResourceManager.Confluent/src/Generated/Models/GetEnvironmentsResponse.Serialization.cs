@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SCEnvironmentRecord>> value = default;
+            IReadOnlyList<SCEnvironmentRecord> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetEnvironmentsResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GetEnvironmentsResponse(value ?? new ChangeTrackingList<SCEnvironmentRecord>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetEnvironmentsResponse>.Write(ModelReaderWriterOptions options)

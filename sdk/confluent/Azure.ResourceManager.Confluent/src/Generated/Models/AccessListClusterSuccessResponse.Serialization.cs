@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             Optional<string> kind = default;
             Optional<ConfluentListMetadata> metadata = default;
-            Optional<IReadOnlyList<ClusterRecord>> data = default;
+            IReadOnlyList<ClusterRecord> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessListClusterSuccessResponse(kind.Value, metadata.Value, Optional.ToList(data), serializedAdditionalRawData);
+            return new AccessListClusterSuccessResponse(kind.Value, metadata.Value, data ?? new ChangeTrackingList<ClusterRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessListClusterSuccessResponse>.Write(ModelReaderWriterOptions options)

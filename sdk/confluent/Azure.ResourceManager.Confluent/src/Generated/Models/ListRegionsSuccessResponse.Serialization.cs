@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RegionRecord>> data = default;
+            IReadOnlyList<RegionRecord> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListRegionsSuccessResponse(Optional.ToList(data), serializedAdditionalRawData);
+            return new ListRegionsSuccessResponse(data ?? new ChangeTrackingList<RegionRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListRegionsSuccessResponse>.Write(ModelReaderWriterOptions options)

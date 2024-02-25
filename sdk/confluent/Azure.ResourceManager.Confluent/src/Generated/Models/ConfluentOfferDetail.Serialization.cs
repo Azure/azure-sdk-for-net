@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Confluent.Models
             string termUnit = default;
             Optional<string> termId = default;
             Optional<string> privateOfferId = default;
-            Optional<IList<string>> privateOfferIds = default;
+            IList<string> privateOfferIds = default;
             Optional<ConfluentSaaSOfferStatus> status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, termId.Value, privateOfferId.Value, Optional.ToList(privateOfferIds), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, termId.Value, privateOfferId.Value, privateOfferIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(status), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOfferDetail>.Write(ModelReaderWriterOptions options)

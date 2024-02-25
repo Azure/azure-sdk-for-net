@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> info = default;
+            IReadOnlyDictionary<string, string> info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidationResponse(Optional.ToDictionary(info), serializedAdditionalRawData);
+            return new ValidationResponse(info ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidationResponse>.Write(ModelReaderWriterOptions options)
