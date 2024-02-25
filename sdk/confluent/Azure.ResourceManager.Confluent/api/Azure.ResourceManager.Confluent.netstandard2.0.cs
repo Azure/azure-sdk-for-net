@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.Confluent
 {
+    // cspell:ignore Acces, byok,Byok
     public static partial class ConfluentExtensions
     {
         public static Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> CreateMarketplaceAgreement(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Confluent.Models.ConfluentAgreement body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
