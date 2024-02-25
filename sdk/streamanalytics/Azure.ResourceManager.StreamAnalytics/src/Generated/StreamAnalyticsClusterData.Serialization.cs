@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<StreamAnalyticsClusterSku> sku = default;
             Optional<ETag> etag = default;
             Optional<StreamAnalyticsClusterProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), properties.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, Optional.ToNullable(etag), properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsClusterData>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -196,7 +197,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<LinkedServiceReference> fileLinkedService = default;
             Optional<object> combiner = default;
             IList<object> commandEnvironment = default;
-            Optional<IDictionary<string, object>> defines = default;
+            IDictionary<string, object> defines = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -436,7 +437,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightStreamingActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), arguments ?? new ChangeTrackingList<object>(), Optional.ToNullable(getDebugInfo), mapper, reducer, input, output, filePaths, fileLinkedService.Value, combiner.Value, commandEnvironment ?? new ChangeTrackingList<object>(), Optional.ToDictionary(defines));
+            return new HDInsightStreamingActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), arguments ?? new ChangeTrackingList<object>(), Optional.ToNullable(getDebugInfo), mapper, reducer, input, output, filePaths, fileLinkedService.Value, combiner.Value, commandEnvironment ?? new ChangeTrackingList<object>(), defines ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class HDInsightStreamingActivityConverter : JsonConverter<HDInsightStreamingActivity>

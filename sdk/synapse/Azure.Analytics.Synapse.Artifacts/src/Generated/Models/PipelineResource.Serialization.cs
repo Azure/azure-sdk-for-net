@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -120,11 +121,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> type = default;
             Optional<string> description = default;
             IList<Activity> activities = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IDictionary<string, VariableSpecification>> variables = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IDictionary<string, VariableSpecification> variables = default;
             Optional<int> concurrency = default;
             IList<object> annotations = default;
-            Optional<IDictionary<string, object>> runDimensions = default;
+            IDictionary<string, object> runDimensions = default;
             Optional<PipelineFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -272,7 +273,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, activities ?? new ChangeTrackingList<Activity>(), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), annotations ?? new ChangeTrackingList<object>(), Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
+            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, activities ?? new ChangeTrackingList<Activity>(), parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), variables ?? new ChangeTrackingDictionary<string, VariableSpecification>(), Optional.ToNullable(concurrency), annotations ?? new ChangeTrackingList<object>(), runDimensions ?? new ChangeTrackingDictionary<string, object>(), folder.Value, additionalProperties);
         }
 
         internal partial class PipelineResourceConverter : JsonConverter<PipelineResource>

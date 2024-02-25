@@ -22,7 +22,7 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             Optional<DateTimeRange> range = default;
             Optional<TimeSpan> intervalSize = default;
-            Optional<IReadOnlyDictionary<string, int>> distribution = default;
+            IReadOnlyDictionary<string, int> distribution = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("range"u8))
@@ -58,7 +58,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new Availability(range.Value, Optional.ToNullable(intervalSize), Optional.ToDictionary(distribution));
+            return new Availability(range.Value, Optional.ToNullable(intervalSize), distribution ?? new ChangeTrackingDictionary<string, int>());
         }
     }
 }

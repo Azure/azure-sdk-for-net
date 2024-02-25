@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -145,7 +146,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> kind = default;
             Optional<string> proxyUser = default;
             Optional<string> name = default;
@@ -154,7 +155,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IList<string> files = default;
             IList<string> archives = default;
             Optional<object> queue = default;
-            Optional<IDictionary<string, string>> conf = default;
+            IDictionary<string, string> conf = default;
             Optional<string> driverMemory = default;
             Optional<int> driverCores = default;
             Optional<string> executorMemory = default;
@@ -328,7 +329,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSparkSessionOptions(Optional.ToDictionary(tags), kind.Value, proxyUser.Value, name.Value, jars ?? new ChangeTrackingList<string>(), pyFiles ?? new ChangeTrackingList<string>(), files ?? new ChangeTrackingList<string>(), archives ?? new ChangeTrackingList<string>(), queue.Value, Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), Optional.ToNullable(isQueueable), Optional.ToNullable(heartbeatTimeoutInSecond));
+            return new RunNotebookSparkSessionOptions(tags ?? new ChangeTrackingDictionary<string, string>(), kind.Value, proxyUser.Value, name.Value, jars ?? new ChangeTrackingList<string>(), pyFiles ?? new ChangeTrackingList<string>(), files ?? new ChangeTrackingList<string>(), archives ?? new ChangeTrackingList<string>(), queue.Value, conf ?? new ChangeTrackingDictionary<string, string>(), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), Optional.ToNullable(isQueueable), Optional.ToNullable(heartbeatTimeoutInSecond));
         }
 
         internal partial class RunNotebookSparkSessionOptionsConverter : JsonConverter<RunNotebookSparkSessionOptions>

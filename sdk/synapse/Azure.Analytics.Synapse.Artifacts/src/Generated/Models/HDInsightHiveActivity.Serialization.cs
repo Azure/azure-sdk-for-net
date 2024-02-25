@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -175,7 +176,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
             Optional<object> scriptPath = default;
             Optional<LinkedServiceReference> scriptLinkedService = default;
-            Optional<IDictionary<string, object>> defines = default;
+            IDictionary<string, object> defines = default;
             IList<object> variables = default;
             Optional<int> queryTimeout = default;
             IDictionary<string, object> additionalProperties = default;
@@ -389,7 +390,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightHiveActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), arguments ?? new ChangeTrackingList<object>(), Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService.Value, Optional.ToDictionary(defines), variables ?? new ChangeTrackingList<object>(), Optional.ToNullable(queryTimeout));
+            return new HDInsightHiveActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), arguments ?? new ChangeTrackingList<object>(), Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService.Value, defines ?? new ChangeTrackingDictionary<string, object>(), variables ?? new ChangeTrackingList<object>(), Optional.ToNullable(queryTimeout));
         }
 
         internal partial class HDInsightHiveActivityConverter : JsonConverter<HDInsightHiveActivity>

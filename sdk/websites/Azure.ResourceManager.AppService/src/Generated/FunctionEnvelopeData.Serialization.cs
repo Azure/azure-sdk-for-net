@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> secretsFileHref = default;
             Optional<string> href = default;
             Optional<BinaryData> config = default;
-            Optional<IDictionary<string, string>> files = default;
+            IDictionary<string, string> files = default;
             Optional<string> testData = default;
             Optional<string> invokeUrlTemplate = default;
             Optional<string> language = default;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value, serializedAdditionalRawData);
+            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, files ?? new ChangeTrackingDictionary<string, string>(), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options)
