@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             Optional<ClientGroupInfo> clientGroupInfo = default;
-            Optional<IDictionary<string, string>> configurationOverride = default;
+            IDictionary<string, string> configurationOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KafkaRestProperties(clientGroupInfo.Value, Optional.ToDictionary(configurationOverride), serializedAdditionalRawData);
+            return new KafkaRestProperties(clientGroupInfo.Value, configurationOverride ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KafkaRestProperties>.Write(ModelReaderWriterOptions options)

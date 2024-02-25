@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana.Models
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
             Optional<ManagedGrafanaSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedGrafanaPatchProperties> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedGrafanaPatch(sku.Value, identity, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new ManagedGrafanaPatch(sku.Value, identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedGrafanaPatch>.Write(ModelReaderWriterOptions options)

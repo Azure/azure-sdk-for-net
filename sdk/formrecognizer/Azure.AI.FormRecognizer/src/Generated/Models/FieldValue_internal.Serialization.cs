@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -28,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<float> valueNumber = default;
             Optional<long> valueInteger = default;
             IReadOnlyList<FieldValue_internal> valueArray = default;
-            Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
+            IReadOnlyDictionary<string, FieldValue_internal> valueObject = default;
             Optional<SelectionMarkState> valueSelectionMark = default;
             Optional<string> valueCountryRegion = default;
             Optional<string> text = default;
@@ -183,7 +184,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), valueArray ?? new ChangeTrackingList<FieldValue_internal>(), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, boundingBox ?? new ChangeTrackingList<float>(), Optional.ToNullable(confidence), elements ?? new ChangeTrackingList<string>(), Optional.ToNullable(page));
+            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), valueArray ?? new ChangeTrackingList<FieldValue_internal>(), valueObject ?? new ChangeTrackingDictionary<string, FieldValue_internal>(), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, boundingBox ?? new ChangeTrackingList<float>(), Optional.ToNullable(confidence), elements ?? new ChangeTrackingList<string>(), Optional.ToNullable(page));
         }
     }
 }

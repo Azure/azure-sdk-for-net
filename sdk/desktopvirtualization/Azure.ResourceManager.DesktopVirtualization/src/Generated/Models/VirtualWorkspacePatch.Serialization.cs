@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             IList<string> applicationGroupReferences = default;
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWorkspacePatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, applicationGroupReferences ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new VirtualWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, friendlyName.Value, applicationGroupReferences ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWorkspacePatch>.Write(ModelReaderWriterOptions options)

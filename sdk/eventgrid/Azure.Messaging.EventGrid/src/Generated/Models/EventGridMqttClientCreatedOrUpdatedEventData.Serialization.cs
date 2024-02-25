@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -25,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<EventGridMqttClientState> state = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> updatedOn = default;
-            Optional<IReadOnlyDictionary<string, string>> attributes = default;
+            IReadOnlyDictionary<string, string> attributes = default;
             Optional<string> clientAuthenticationName = default;
             Optional<string> clientName = default;
             Optional<string> namespaceName = default;
@@ -88,7 +89,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventGridMqttClientCreatedOrUpdatedEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, Optional.ToNullable(state), Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), Optional.ToDictionary(attributes));
+            return new EventGridMqttClientCreatedOrUpdatedEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, Optional.ToNullable(state), Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), attributes ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class EventGridMqttClientCreatedOrUpdatedEventDataConverter : JsonConverter<EventGridMqttClientCreatedOrUpdatedEventData>

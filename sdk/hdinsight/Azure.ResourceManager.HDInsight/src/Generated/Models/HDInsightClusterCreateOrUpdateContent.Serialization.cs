@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IList<string> zones = default;
             Optional<HDInsightClusterCreateOrUpdateProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreateOrUpdateContent(Optional.ToNullable(location), Optional.ToDictionary(tags), zones ?? new ChangeTrackingList<string>(), properties.Value, identity, serializedAdditionalRawData);
+            return new HDInsightClusterCreateOrUpdateContent(Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), zones ?? new ChangeTrackingList<string>(), properties.Value, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

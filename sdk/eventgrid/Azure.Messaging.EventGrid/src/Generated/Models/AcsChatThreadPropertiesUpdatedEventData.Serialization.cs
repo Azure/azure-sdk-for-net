@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -24,8 +25,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             Optional<CommunicationIdentifierModel> editedByCommunicationIdentifier = default;
             Optional<DateTimeOffset> editTime = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            IReadOnlyDictionary<string, object> properties = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
             Optional<string> transactionId = default;
@@ -114,7 +115,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadPropertiesUpdatedEventData(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), Optional.ToDictionary(properties), Optional.ToDictionary(metadata));
+            return new AcsChatThreadPropertiesUpdatedEventData(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), properties ?? new ChangeTrackingDictionary<string, object>(), metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsChatThreadPropertiesUpdatedEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedEventData>

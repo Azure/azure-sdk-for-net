@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -125,8 +126,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> componentName = default;
             Optional<string> type = default;
             Optional<string> path = default;
-            Optional<IReadOnlyDictionary<string, string>> customKeys = default;
-            Optional<IReadOnlyDictionary<string, ClusterServiceConfigValueEntity>> defaultKeys = default;
+            IReadOnlyDictionary<string, string> customKeys = default;
+            IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServiceConfigResult(serviceName.Value, fileName.Value, content.Value, componentName.Value, type.Value, path.Value, Optional.ToDictionary(customKeys), Optional.ToDictionary(defaultKeys), serializedAdditionalRawData);
+            return new ClusterServiceConfigResult(serviceName.Value, fileName.Value, content.Value, componentName.Value, type.Value, path.Value, customKeys ?? new ChangeTrackingDictionary<string, string>(), defaultKeys ?? new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServiceConfigResult>.Write(ModelReaderWriterOptions options)

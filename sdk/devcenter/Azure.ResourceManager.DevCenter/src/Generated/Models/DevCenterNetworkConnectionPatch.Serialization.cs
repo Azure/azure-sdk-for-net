@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceIdentifier> subnetId = default;
             Optional<string> domainName = default;
@@ -189,7 +190,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterNetworkConnectionPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value);
+            return new DevCenterNetworkConnectionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), serializedAdditionalRawData, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value);
         }
 
         BinaryData IPersistableModel<DevCenterNetworkConnectionPatch>.Write(ModelReaderWriterOptions options)

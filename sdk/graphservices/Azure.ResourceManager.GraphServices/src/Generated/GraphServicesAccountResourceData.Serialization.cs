@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.GraphServices
                 return null;
             }
             GraphServicesAccountResourceProperties properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.GraphServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphServicesAccountResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, serializedAdditionalRawData);
+            return new GraphServicesAccountResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphServicesAccountResourceData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<DevCenterGitCatalog> gitHub = default;
             Optional<DevCenterGitCatalog> adoGit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterCatalogPatch(Optional.ToDictionary(tags), gitHub.Value, adoGit.Value, serializedAdditionalRawData);
+            return new DevCenterCatalogPatch(tags ?? new ChangeTrackingDictionary<string, string>(), gitHub.Value, adoGit.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterCatalogPatch>.Write(ModelReaderWriterOptions options)

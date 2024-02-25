@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>(), resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>(), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabCostData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, targetCost.Value, labCostSummary.Value, labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>(), resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>(), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostData>.Write(ModelReaderWriterOptions options)

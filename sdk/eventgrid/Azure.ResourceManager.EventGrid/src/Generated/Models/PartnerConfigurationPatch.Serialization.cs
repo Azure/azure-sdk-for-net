@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<int> defaultMaximumExpirationTimeInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerConfigurationPatch(Optional.ToDictionary(tags), Optional.ToNullable(defaultMaximumExpirationTimeInDays), serializedAdditionalRawData);
+            return new PartnerConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(defaultMaximumExpirationTimeInDays), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerConfigurationPatch>.Write(ModelReaderWriterOptions options)

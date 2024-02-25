@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<DevCenterImageReference> imageReference = default;
             Optional<DevCenterSku> sku = default;
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxDefinitionPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport));
+            return new DevBoxDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), serializedAdditionalRawData, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport));
         }
 
         BinaryData IPersistableModel<DevBoxDefinitionPatch>.Write(ModelReaderWriterOptions options)

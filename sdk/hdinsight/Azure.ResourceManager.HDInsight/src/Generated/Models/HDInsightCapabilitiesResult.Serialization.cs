@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -101,8 +102,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
-            Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
+            IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default;
+            IReadOnlyDictionary<string, RegionsCapability> regions = default;
             IReadOnlyList<string> features = default;
             Optional<QuotaCapability> quota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), features ?? new ChangeTrackingList<string>(), quota.Value, serializedAdditionalRawData);
+            return new HDInsightCapabilitiesResult(versions ?? new ChangeTrackingDictionary<string, HDInsightVersionsCapability>(), regions ?? new ChangeTrackingDictionary<string, RegionsCapability>(), features ?? new ChangeTrackingList<string>(), quota.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightCapabilitiesResult>.Write(ModelReaderWriterOptions options)

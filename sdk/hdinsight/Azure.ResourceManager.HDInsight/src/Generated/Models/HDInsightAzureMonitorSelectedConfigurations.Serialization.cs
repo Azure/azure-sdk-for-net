@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             Optional<string> configurationVersion = default;
-            Optional<IDictionary<string, string>> globalConfigurations = default;
+            IDictionary<string, string> globalConfigurations = default;
             IList<HDInsightAzureMonitorTableConfiguration> tableList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion.Value, Optional.ToDictionary(globalConfigurations), tableList ?? new ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>(), serializedAdditionalRawData);
+            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion.Value, globalConfigurations ?? new ChangeTrackingDictionary<string, string>(), tableList ?? new ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>.Write(ModelReaderWriterOptions options)

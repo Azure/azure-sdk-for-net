@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<NamespaceSku> sku = default;
             Optional<UpdateTopicSpacesConfigurationInfo> topicSpacesConfiguration = default;
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespacePatch(Optional.ToDictionary(tags), identity, sku.Value, topicSpacesConfiguration.Value, Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), serializedAdditionalRawData);
+            return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku.Value, topicSpacesConfiguration.Value, Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespacePatch>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDesktopPatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, serializedAdditionalRawData);
+            return new VirtualDesktopPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, friendlyName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDesktopPatch>.Write(ModelReaderWriterOptions options)

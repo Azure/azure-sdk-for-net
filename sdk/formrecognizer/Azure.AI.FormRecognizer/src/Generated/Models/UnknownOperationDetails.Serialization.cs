@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
 using Azure.Core;
 
@@ -29,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Models
             DocumentOperationKind kind = "Unknown";
             Uri resourceLocation = default;
             Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,7 +98,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new UnknownOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error);
+            return new UnknownOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), error);
         }
     }
 }

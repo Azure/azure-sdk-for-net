@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>(), Optional.ToNullable(sku), encryption.Value, locations ?? new ChangeTrackingList<DeviceUpdateAccountLocationDetail>(), serializedAdditionalRawData);
+            return new DeviceUpdateAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>(), Optional.ToNullable(sku), encryption.Value, locations ?? new ChangeTrackingList<DeviceUpdateAccountLocationDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options)

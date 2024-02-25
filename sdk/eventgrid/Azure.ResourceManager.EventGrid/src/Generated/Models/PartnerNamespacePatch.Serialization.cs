@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
             Optional<TlsVersion> minimumTlsVersionAllowed = default;
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerNamespacePatch(Optional.ToDictionary(tags), Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new PartnerNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerNamespacePatch>.Write(ModelReaderWriterOptions options)

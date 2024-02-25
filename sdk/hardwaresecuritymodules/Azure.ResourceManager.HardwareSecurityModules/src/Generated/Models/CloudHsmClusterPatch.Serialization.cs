@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<CloudHsmClusterSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<BackupProperties> backupProperties = default;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmClusterPatch(Optional.ToDictionary(tags), sku.Value, identity, backupProperties.Value, serializedAdditionalRawData);
+            return new CloudHsmClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, identity, backupProperties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmClusterPatch>.Write(ModelReaderWriterOptions options)
