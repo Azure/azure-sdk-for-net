@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.CustomerInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, IList<string>>> attributes = default;
-            Optional<IDictionary<string, string>> description = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, IDictionary<string, string>>> localizedAttributes = default;
+            IDictionary<string, IList<string>> attributes = default;
+            IDictionary<string, string> description = default;
+            IDictionary<string, string> displayName = default;
+            IDictionary<string, IDictionary<string, string>> localizedAttributes = default;
             Optional<string> smallImage = default;
             Optional<string> mediumImage = default;
             Optional<string> largeImage = default;
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), fields ?? new ChangeTrackingList<PropertyDefinition>(), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, strongIds ?? new ChangeTrackingList<StrongId>(), serializedAdditionalRawData);
+            return new ProfileResourceFormatData(id, name, type, systemData.Value, attributes ?? new ChangeTrackingDictionary<string, IList<string>>(), description ?? new ChangeTrackingDictionary<string, string>(), displayName ?? new ChangeTrackingDictionary<string, string>(), localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), fields ?? new ChangeTrackingList<PropertyDefinition>(), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, strongIds ?? new ChangeTrackingList<StrongId>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileResourceFormatData>.Write(ModelReaderWriterOptions options)

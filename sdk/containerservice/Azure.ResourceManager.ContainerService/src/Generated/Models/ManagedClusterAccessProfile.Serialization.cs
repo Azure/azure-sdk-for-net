@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAccessProfile(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kubeConfig.Value, serializedAdditionalRawData);
+            return new ManagedClusterAccessProfile(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, kubeConfig.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAccessProfile>.Write(ModelReaderWriterOptions options)

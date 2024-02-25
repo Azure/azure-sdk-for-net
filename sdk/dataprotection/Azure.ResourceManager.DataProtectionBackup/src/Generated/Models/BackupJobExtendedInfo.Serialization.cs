@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
+            IReadOnlyDictionary<string, string> additionalDetails = default;
             Optional<string> backupInstanceState = default;
             Optional<double> dataTransferredInBytes = default;
             Optional<string> recoveryDestination = default;
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupJobExtendedInfo(Optional.ToDictionary(additionalDetails), backupInstanceState.Value, Optional.ToNullable(dataTransferredInBytes), recoveryDestination.Value, sourceRecoverPoint.Value, subTasks ?? new ChangeTrackingList<BackupJobSubTask>(), targetRecoverPoint.Value, warningDetails ?? new ChangeTrackingList<UserFacingWarningDetail>(), serializedAdditionalRawData);
+            return new BackupJobExtendedInfo(additionalDetails ?? new ChangeTrackingDictionary<string, string>(), backupInstanceState.Value, Optional.ToNullable(dataTransferredInBytes), recoveryDestination.Value, sourceRecoverPoint.Value, subTasks ?? new ChangeTrackingList<BackupJobSubTask>(), targetRecoverPoint.Value, warningDetails ?? new ChangeTrackingList<UserFacingWarningDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

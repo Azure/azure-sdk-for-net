@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<long> executionCount = default;
             Optional<float> cpuTimeMs = default;
             Optional<float> elapsedTimeMs = default;
-            Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
+            IReadOnlyDictionary<string, WaitStatistics> waitStats = default;
             Optional<bool> hasErrors = default;
             IReadOnlyList<string> sqlErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), sqlErrors ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(), Optional.ToNullable(hasErrors), sqlErrors ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExecutionStatistics>.Write(ModelReaderWriterOptions options)

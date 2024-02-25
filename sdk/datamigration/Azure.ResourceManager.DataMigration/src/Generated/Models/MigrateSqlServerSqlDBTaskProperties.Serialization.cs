@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyList<ODataError> errors = default;
             Optional<TaskState> state = default;
             IReadOnlyList<CommandProperties> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MigrateSqlServerSqlDBTaskOutput>(), taskId.Value, Optional.ToNullable(isCloneable), createdOn.Value);
+            return new MigrateSqlServerSqlDBTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MigrateSqlServerSqlDBTaskOutput>(), taskId.Value, Optional.ToNullable(isCloneable), createdOn.Value);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskProperties>.Write(ModelReaderWriterOptions options)

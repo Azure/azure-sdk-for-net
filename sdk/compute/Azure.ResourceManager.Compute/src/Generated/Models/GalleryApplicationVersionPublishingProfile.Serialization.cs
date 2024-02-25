@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
             UserArtifactSource source = default;
             Optional<UserArtifactManagement> manageActions = default;
             Optional<UserArtifactSettings> settings = default;
-            Optional<IDictionary<string, string>> advancedSettings = default;
+            IDictionary<string, string> advancedSettings = default;
             Optional<bool> enableHealthCheck = default;
             IList<GalleryApplicationCustomAction> customActions = default;
             IList<TargetRegion> targetRegions = default;
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationVersionPublishingProfile(targetRegions ?? new ChangeTrackingList<TargetRegion>(), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(), serializedAdditionalRawData, source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck), customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>());
+            return new GalleryApplicationVersionPublishingProfile(targetRegions ?? new ChangeTrackingList<TargetRegion>(), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(), serializedAdditionalRawData, source, manageActions.Value, settings.Value, advancedSettings ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enableHealthCheck), customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>());
         }
 
         BinaryData IPersistableModel<GalleryApplicationVersionPublishingProfile>.Write(ModelReaderWriterOptions options)

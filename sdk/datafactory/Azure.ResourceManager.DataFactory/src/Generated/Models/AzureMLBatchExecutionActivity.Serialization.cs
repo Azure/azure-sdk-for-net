@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -168,9 +169,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
-            Optional<IDictionary<string, BinaryData>> globalParameters = default;
-            Optional<IDictionary<string, AzureMLWebServiceFile>> webServiceOutputs = default;
-            Optional<IDictionary<string, AzureMLWebServiceFile>> webServiceInputs = default;
+            IDictionary<string, BinaryData> globalParameters = default;
+            IDictionary<string, AzureMLWebServiceFile> webServiceOutputs = default;
+            IDictionary<string, AzureMLWebServiceFile> webServiceInputs = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLBatchExecutionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, Optional.ToDictionary(globalParameters), Optional.ToDictionary(webServiceOutputs), Optional.ToDictionary(webServiceInputs));
+            return new AzureMLBatchExecutionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, globalParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), webServiceOutputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>(), webServiceInputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>());
         }
 
         BinaryData IPersistableModel<AzureMLBatchExecutionActivity>.Write(ModelReaderWriterOptions options)

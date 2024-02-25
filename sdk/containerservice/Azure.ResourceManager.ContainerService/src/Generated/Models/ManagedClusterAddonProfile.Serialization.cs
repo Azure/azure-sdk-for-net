@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            Optional<IDictionary<string, string>> config = default;
+            IDictionary<string, string> config = default;
             Optional<ManagedClusterAddonProfileIdentity> identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAddonProfile(enabled, Optional.ToDictionary(config), identity.Value, serializedAdditionalRawData);
+            return new ManagedClusterAddonProfile(enabled, config ?? new ChangeTrackingDictionary<string, string>(), identity.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAddonProfile>.Write(ModelReaderWriterOptions options)

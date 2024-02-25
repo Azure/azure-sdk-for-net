@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> migrationId = default;
-            Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
+            IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default;
             Optional<ValidationStatus> status = default;
             Optional<string> id = default;
             string resultType = default;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id.Value, resultType, serializedAdditionalRawData, migrationId.Value, Optional.ToDictionary(summaryResults), Optional.ToNullable(status));
+            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id.Value, resultType, serializedAdditionalRawData, migrationId.Value, summaryResults ?? new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>(), Optional.ToNullable(status));
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputValidationResult>.Write(ModelReaderWriterOptions options)

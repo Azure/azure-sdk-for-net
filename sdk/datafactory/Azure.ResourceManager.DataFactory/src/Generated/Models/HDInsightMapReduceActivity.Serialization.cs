@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> jarFilePath = default;
             Optional<DataFactoryLinkedServiceReference> jarLinkedService = default;
             IList<BinaryData> jarLibs = default;
-            Optional<IDictionary<string, BinaryData>> defines = default;
+            IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -425,7 +426,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), arguments ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService, jarLibs ?? new ChangeTrackingList<BinaryData>(), Optional.ToDictionary(defines));
+            return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), arguments ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService, jarLibs ?? new ChangeTrackingList<BinaryData>(), defines ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HDInsightMapReduceActivity>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IList<string> labelSelectors = default;
             Optional<PersistentVolumeRestoreMode> persistentVolumeRestoreMode = default;
             Optional<KubernetesClusterRestoreExistingResourcePolicy> conflictPolicy = default;
-            Optional<IDictionary<string, string>> namespaceMappings = default;
+            IDictionary<string, string> namespaceMappings = default;
             IList<NamespacedName> restoreHookReferences = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterRestoreCriteria(objectType, serializedAdditionalRawData, includeClusterScopeResources, includedNamespaces ?? new ChangeTrackingList<string>(), excludedNamespaces ?? new ChangeTrackingList<string>(), includedResourceTypes ?? new ChangeTrackingList<string>(), excludedResourceTypes ?? new ChangeTrackingList<string>(), labelSelectors ?? new ChangeTrackingList<string>(), Optional.ToNullable(persistentVolumeRestoreMode), Optional.ToNullable(conflictPolicy), Optional.ToDictionary(namespaceMappings), restoreHookReferences ?? new ChangeTrackingList<NamespacedName>());
+            return new KubernetesClusterRestoreCriteria(objectType, serializedAdditionalRawData, includeClusterScopeResources, includedNamespaces ?? new ChangeTrackingList<string>(), excludedNamespaces ?? new ChangeTrackingList<string>(), includedResourceTypes ?? new ChangeTrackingList<string>(), excludedResourceTypes ?? new ChangeTrackingList<string>(), labelSelectors ?? new ChangeTrackingList<string>(), Optional.ToNullable(persistentVolumeRestoreMode), Optional.ToNullable(conflictPolicy), namespaceMappings ?? new ChangeTrackingDictionary<string, string>(), restoreHookReferences ?? new ChangeTrackingList<NamespacedName>());
         }
 
         BinaryData IPersistableModel<KubernetesClusterRestoreCriteria>.Write(ModelReaderWriterOptions options)

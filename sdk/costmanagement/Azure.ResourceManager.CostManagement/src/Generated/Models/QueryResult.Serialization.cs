@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<AzureLocation> location = default;
             Optional<string> sku = default;
             Optional<ETag> eTag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryResult(id, name, type, systemData.Value, nextLink.Value, columns ?? new ChangeTrackingList<QueryColumn>(), rows ?? new ChangeTrackingList<IList<BinaryData>>(), Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new QueryResult(id, name, type, systemData.Value, nextLink.Value, columns ?? new ChangeTrackingList<QueryColumn>(), rows ?? new ChangeTrackingList<IList<BinaryData>>(), Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryResult>.Write(ModelReaderWriterOptions options)

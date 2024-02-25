@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, MongoDBCollectionProgress>> collections = default;
+            IReadOnlyDictionary<string, MongoDBCollectionProgress> collections = default;
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBDatabaseProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, serializedAdditionalRawData, Optional.ToDictionary(collections));
+            return new MongoDBDatabaseProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, serializedAdditionalRawData, collections ?? new ChangeTrackingDictionary<string, MongoDBCollectionProgress>());
         }
 
         BinaryData IPersistableModel<MongoDBDatabaseProgress>.Write(ModelReaderWriterOptions options)

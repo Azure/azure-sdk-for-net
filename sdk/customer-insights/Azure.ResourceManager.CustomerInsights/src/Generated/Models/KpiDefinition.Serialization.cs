@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -185,8 +186,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string entityTypeName = default;
             Optional<Guid> tenantId = default;
             Optional<string> kpiName = default;
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> description = default;
+            IReadOnlyDictionary<string, string> displayName = default;
+            IReadOnlyDictionary<string, string> description = default;
             CalculationWindowType calculationWindow = default;
             Optional<string> calculationWindowFieldName = default;
             KpiFunction function = default;
@@ -380,7 +381,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, groupBy ?? new ChangeTrackingList<string>(), groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(), participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(), Optional.ToNullable(provisioningState), thresHolds.Value, aliases ?? new ChangeTrackingList<KpiAlias>(), extracts ?? new ChangeTrackingList<KpiExtract>(), serializedAdditionalRawData);
+            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, groupBy ?? new ChangeTrackingList<string>(), groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(), participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(), Optional.ToNullable(provisioningState), thresHolds.Value, aliases ?? new ChangeTrackingList<KpiAlias>(), extracts ?? new ChangeTrackingList<KpiExtract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiDefinition>.Write(ModelReaderWriterOptions options)

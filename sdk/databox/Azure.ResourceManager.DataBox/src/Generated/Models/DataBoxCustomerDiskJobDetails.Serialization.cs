@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -227,8 +228,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, ImportDiskDetails>> importDiskDetailsCollection = default;
-            Optional<IReadOnlyDictionary<string, ExportDiskDetails>> exportDiskDetailsCollection = default;
+            IDictionary<string, ImportDiskDetails> importDiskDetailsCollection = default;
+            IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetailsCollection = default;
             IReadOnlyList<DataBoxCustomerDiskCopyProgress> copyProgress = default;
             Optional<PackageCarrierInfo> deliverToDcPackageDetails = default;
             PackageCarrierDetails returnToCustomerPackageDetails = default;
@@ -517,7 +518,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxCustomerDiskJobDetails(jobStages ?? new ChangeTrackingList<DataBoxJobStage>(), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(), dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(), jobDetailsType, preferences.Value, reverseShippingDetails.Value, copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), actions ?? new ChangeTrackingList<CustomerResolutionCode>(), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, Optional.ToDictionary(importDiskDetailsCollection), Optional.ToDictionary(exportDiskDetailsCollection), copyProgress ?? new ChangeTrackingList<DataBoxCustomerDiskCopyProgress>(), deliverToDcPackageDetails.Value, returnToCustomerPackageDetails, Optional.ToNullable(enableManifestBackup));
+            return new DataBoxCustomerDiskJobDetails(jobStages ?? new ChangeTrackingList<DataBoxJobStage>(), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(), dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(), jobDetailsType, preferences.Value, reverseShippingDetails.Value, copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), actions ?? new ChangeTrackingList<CustomerResolutionCode>(), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, importDiskDetailsCollection ?? new ChangeTrackingDictionary<string, ImportDiskDetails>(), exportDiskDetailsCollection ?? new ChangeTrackingDictionary<string, ExportDiskDetails>(), copyProgress ?? new ChangeTrackingList<DataBoxCustomerDiskCopyProgress>(), deliverToDcPackageDetails.Value, returnToCustomerPackageDetails, Optional.ToNullable(enableManifestBackup));
         }
 
         BinaryData IPersistableModel<DataBoxCustomerDiskJobDetails>.Write(ModelReaderWriterOptions options)

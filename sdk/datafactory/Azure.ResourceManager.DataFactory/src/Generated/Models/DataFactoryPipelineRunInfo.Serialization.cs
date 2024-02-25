@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -142,8 +143,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> runGroupId = default;
             Optional<bool> isLatest = default;
             Optional<string> pipelineName = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
-            Optional<IReadOnlyDictionary<string, string>> runDimensions = default;
+            IReadOnlyDictionary<string, string> parameters = default;
+            IReadOnlyDictionary<string, string> runDimensions = default;
             Optional<DataFactoryPipelineRunEntityInfo> invokedBy = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<DateTimeOffset> runStart = default;
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunInfo(Optional.ToNullable(runId), runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), Optional.ToDictionary(runDimensions), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new DataFactoryPipelineRunInfo(Optional.ToNullable(runId), runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), runDimensions ?? new ChangeTrackingDictionary<string, string>(), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineRunInfo>.Write(ModelReaderWriterOptions options)

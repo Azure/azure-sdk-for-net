@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
             Optional<MongoClusterRestoreParameters> restoreParameters = default;
             Optional<string> administratorLogin = default;
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoClusterPatch(Optional.ToDictionary(tags), Optional.ToNullable(createMode), restoreParameters.Value, administratorLogin.Value, administratorLoginPassword.Value, serverVersion.Value, connectionString.Value, earliestRestoreTime.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(clusterStatus), nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(), serializedAdditionalRawData);
+            return new MongoClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(createMode), restoreParameters.Value, administratorLogin.Value, administratorLoginPassword.Value, serverVersion.Value, connectionString.Value, earliestRestoreTime.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(clusterStatus), nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoClusterPatch>.Write(ModelReaderWriterOptions options)
