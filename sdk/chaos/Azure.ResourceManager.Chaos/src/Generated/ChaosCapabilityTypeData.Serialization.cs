@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.Chaos
             Optional<string> parametersSchema = default;
             Optional<string> urn = default;
             Optional<string> kind = default;
-            Optional<IList<string>> azureRbacActions = default;
-            Optional<IList<string>> azureRbacDataActions = default;
+            IList<string> azureRbacActions = default;
+            IList<string> azureRbacDataActions = default;
             Optional<ChaosCapabilityTypeRuntimeProperties> runtimeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosCapabilityTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, Optional.ToList(azureRbacActions), Optional.ToList(azureRbacDataActions), runtimeProperties.Value, serializedAdditionalRawData);
+            return new ChaosCapabilityTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, azureRbacActions ?? new ChangeTrackingList<string>(), azureRbacDataActions ?? new ChangeTrackingList<string>(), runtimeProperties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosCapabilityTypeData>.Write(ModelReaderWriterOptions options)

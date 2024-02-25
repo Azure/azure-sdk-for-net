@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubSkuDescription>> value = default;
+            IReadOnlyList<IotHubSkuDescription> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubSkuDescriptionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IotHubSkuDescriptionListResult(value ?? new ChangeTrackingList<IotHubSkuDescription>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubSkuDescriptionListResult>.Write(ModelReaderWriterOptions options)

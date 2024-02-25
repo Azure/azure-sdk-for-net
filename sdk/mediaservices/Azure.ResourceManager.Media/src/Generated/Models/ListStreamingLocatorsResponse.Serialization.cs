@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaAssetStreamingLocator>> streamingLocators = default;
+            IReadOnlyList<MediaAssetStreamingLocator> streamingLocators = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListStreamingLocatorsResponse(Optional.ToList(streamingLocators), serializedAdditionalRawData);
+            return new ListStreamingLocatorsResponse(streamingLocators ?? new ChangeTrackingList<MediaAssetStreamingLocator>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListStreamingLocatorsResponse>.Write(ModelReaderWriterOptions options)

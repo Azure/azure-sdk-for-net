@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.HDInsight
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<HDInsightClusterProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HDInsight
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(zones), properties.Value, identity, serializedAdditionalRawData);
+            return new HDInsightClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), properties.Value, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterData>.Write(ModelReaderWriterOptions options)

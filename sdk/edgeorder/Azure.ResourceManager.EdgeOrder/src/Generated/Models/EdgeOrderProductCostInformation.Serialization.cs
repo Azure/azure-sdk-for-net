@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EdgeOrderProductBillingMeterDetails>> billingMeterDetails = default;
+            IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails = default;
             Optional<Uri> billingInfoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderProductCostInformation(Optional.ToList(billingMeterDetails), billingInfoUrl.Value, serializedAdditionalRawData);
+            return new EdgeOrderProductCostInformation(billingMeterDetails ?? new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>(), billingInfoUrl.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductCostInformation>.Write(ModelReaderWriterOptions options)

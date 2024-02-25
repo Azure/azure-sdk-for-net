@@ -165,8 +165,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<LexicalNormalizerName?> normalizer = default;
             Optional<int?> dimensions = default;
             Optional<string> vectorSearchProfile = default;
-            Optional<IList<string>> synonymMaps = default;
-            Optional<IList<SearchField>> fields = default;
+            IList<string> synonymMaps = default;
+            IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -322,7 +322,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(normalizer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, Optional.ToList(synonymMaps), Optional.ToList(fields));
+            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(normalizer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, synonymMaps ?? new ChangeTrackingList<string>(), fields ?? new ChangeTrackingList<SearchField>());
         }
     }
 }

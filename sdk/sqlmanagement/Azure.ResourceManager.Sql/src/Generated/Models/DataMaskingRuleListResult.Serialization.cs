@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataMaskingRule>> value = default;
+            IReadOnlyList<DataMaskingRule> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMaskingRuleListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new DataMaskingRuleListResult(value ?? new ChangeTrackingList<DataMaskingRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMaskingRuleListResult>.Write(ModelReaderWriterOptions options)

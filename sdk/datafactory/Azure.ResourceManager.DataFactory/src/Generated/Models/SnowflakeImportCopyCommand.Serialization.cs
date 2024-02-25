@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> additionalCopyOptions = default;
-            Optional<IDictionary<string, BinaryData>> additionalFormatOptions = default;
+            IDictionary<string, BinaryData> additionalCopyOptions = default;
+            IDictionary<string, BinaryData> additionalFormatOptions = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SnowflakeImportCopyCommand(type, additionalProperties, Optional.ToDictionary(additionalCopyOptions), Optional.ToDictionary(additionalFormatOptions));
+            return new SnowflakeImportCopyCommand(type, additionalProperties, additionalCopyOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<SnowflakeImportCopyCommand>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingJobData>> value = default;
+            IReadOnlyList<StreamingJobData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StreamingJobListResult(value ?? new ChangeTrackingList<StreamingJobData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobListResult>.Write(ModelReaderWriterOptions options)

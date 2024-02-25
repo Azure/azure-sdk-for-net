@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> groupId = default;
             Optional<string> requiredMemberName = default;
-            Optional<IReadOnlyList<string>> fqdns = default;
+            IReadOnlyList<string> fqdns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId.Value, requiredMemberName.Value, Optional.ToList(fqdns), serializedAdditionalRawData);
+            return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId.Value, requiredMemberName.Value, fqdns ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>.Write(ModelReaderWriterOptions options)

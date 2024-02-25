@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> sslCertificate = default;
             Optional<WritableSubResource> sslProfile = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<string>> hostNames = default;
+            IList<string> hostNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayListener(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), sslCertificate, sslProfile, Optional.ToNullable(provisioningState), Optional.ToList(hostNames));
+            return new ApplicationGatewayListener(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), sslCertificate, sslProfile, Optional.ToNullable(provisioningState), hostNames ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayListener>.Write(ModelReaderWriterOptions options)

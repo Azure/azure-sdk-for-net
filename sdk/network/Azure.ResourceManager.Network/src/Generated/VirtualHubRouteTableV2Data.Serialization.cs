@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<VirtualHubRouteV2>> routes = default;
-            Optional<IList<string>> attachedConnections = default;
+            IList<VirtualHubRouteV2> routes = default;
+            IList<string> attachedConnections = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubRouteTableV2Data(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(routes), Optional.ToList(attachedConnections), Optional.ToNullable(provisioningState));
+            return new VirtualHubRouteTableV2Data(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), routes ?? new ChangeTrackingList<VirtualHubRouteV2>(), attachedConnections ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VirtualHubRouteTableV2Data>.Write(ModelReaderWriterOptions options)

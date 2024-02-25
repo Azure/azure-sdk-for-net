@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridNetwork
             Optional<SiteNetworkServicePropertiesFormat> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<HybridNetworkSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteNetworkServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, identity, sku.Value, serializedAdditionalRawData);
+            return new SiteNetworkServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, identity, sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteNetworkServiceData>.Write(ModelReaderWriterOptions options)

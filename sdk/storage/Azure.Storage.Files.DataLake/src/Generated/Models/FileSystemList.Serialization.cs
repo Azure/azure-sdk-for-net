@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FileSystem>> filesystems = default;
+            IReadOnlyList<FileSystem> filesystems = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filesystems"u8))
@@ -37,7 +37,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new FileSystemList(Optional.ToList(filesystems));
+            return new FileSystemList(filesystems ?? new ChangeTrackingList<FileSystem>());
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 return null;
             }
             Optional<VirtualMachineUpdateProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmVirtualMachinePatch(properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ScVmmVirtualMachinePatch(properties.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmVirtualMachinePatch>.Write(ModelReaderWriterOptions options)

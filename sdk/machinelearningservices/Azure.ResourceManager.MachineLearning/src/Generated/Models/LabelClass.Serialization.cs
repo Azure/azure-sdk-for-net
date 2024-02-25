@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> displayName = default;
-            Optional<IDictionary<string, LabelClass>> subclasses = default;
+            IDictionary<string, LabelClass> subclasses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelClass(displayName.Value, Optional.ToDictionary(subclasses), serializedAdditionalRawData);
+            return new LabelClass(displayName.Value, subclasses ?? new ChangeTrackingDictionary<string, LabelClass>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelClass>.Write(ModelReaderWriterOptions options)

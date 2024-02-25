@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<string> value = default;
-            Optional<IList<PipelineActivity>> activities = default;
+            IList<PipelineActivity> activities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwitchCaseActivity(value.Value, Optional.ToList(activities), serializedAdditionalRawData);
+            return new SwitchCaseActivity(value.Value, activities ?? new ChangeTrackingList<PipelineActivity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwitchCaseActivity>.Write(ModelReaderWriterOptions options)

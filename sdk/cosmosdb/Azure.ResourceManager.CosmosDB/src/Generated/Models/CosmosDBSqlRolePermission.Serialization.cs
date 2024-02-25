@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<string>> dataActions = default;
-            Optional<IList<string>> notDataActions = default;
+            IList<string> dataActions = default;
+            IList<string> notDataActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlRolePermission(Optional.ToList(dataActions), Optional.ToList(notDataActions), serializedAdditionalRawData);
+            return new CosmosDBSqlRolePermission(dataActions ?? new ChangeTrackingList<string>(), notDataActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlRolePermission>.Write(ModelReaderWriterOptions options)

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<string> devBoxDefinitionName = default;
             Optional<string> networkConnectionName = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterPoolPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value);
+            return new DevCenterPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), serializedAdditionalRawData, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value);
         }
 
         BinaryData IPersistableModel<DevCenterPoolPatch>.Write(ModelReaderWriterOptions options)

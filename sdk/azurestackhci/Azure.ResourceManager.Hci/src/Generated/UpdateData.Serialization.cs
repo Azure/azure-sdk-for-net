@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.Hci
             Optional<DateTimeOffset> installedDate = default;
             Optional<string> description = default;
             Optional<HciUpdateState> state = default;
-            Optional<IList<UpdatePrerequisite>> prerequisites = default;
-            Optional<IList<HciPackageVersionInfo>> componentVersions = default;
+            IList<UpdatePrerequisite> prerequisites = default;
+            IList<HciPackageVersionInfo> componentVersions = default;
             Optional<HciNodeRebootRequirement> rebootRequired = default;
             Optional<HciHealthState> healthState = default;
-            Optional<IList<HciPrecheckResult>> healthCheckResult = default;
+            IList<HciPrecheckResult> healthCheckResult = default;
             Optional<DateTimeOffset> healthCheckDate = default;
             Optional<string> packagePath = default;
             Optional<float> packageSizeInMb = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(installedDate), description.Value, Optional.ToNullable(state), Optional.ToList(prerequisites), Optional.ToList(componentVersions), Optional.ToNullable(rebootRequired), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), packagePath.Value, Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Optional.ToNullable(progressPercentage), notifyMessage.Value, serializedAdditionalRawData);
+            return new UpdateData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(installedDate), description.Value, Optional.ToNullable(state), prerequisites ?? new ChangeTrackingList<UpdatePrerequisite>(), componentVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(), Optional.ToNullable(rebootRequired), Optional.ToNullable(healthState), healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(), Optional.ToNullable(healthCheckDate), packagePath.Value, Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Optional.ToNullable(progressPercentage), notifyMessage.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateData>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
             Optional<SignalRNetworkAclAction> defaultAction = default;
             Optional<SignalRNetworkAcl> publicNetwork = default;
-            Optional<IList<SignalRPrivateEndpointAcl>> privateEndpoints = default;
+            IList<SignalRPrivateEndpointAcl> privateEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints), serializedAdditionalRawData);
+            return new SignalRNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, privateEndpoints ?? new ChangeTrackingList<SignalRPrivateEndpointAcl>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRNetworkAcls>.Write(ModelReaderWriterOptions options)

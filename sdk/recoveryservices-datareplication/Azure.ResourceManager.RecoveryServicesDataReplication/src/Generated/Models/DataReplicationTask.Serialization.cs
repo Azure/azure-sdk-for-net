@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<TaskModelCustomProperties> customProperties = default;
-            Optional<IReadOnlyList<DataReplicationWorkflowData>> childrenWorkflows = default;
+            IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationTask(taskName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), customProperties.Value, Optional.ToList(childrenWorkflows), serializedAdditionalRawData);
+            return new DataReplicationTask(taskName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), customProperties.Value, childrenWorkflows ?? new ChangeTrackingList<DataReplicationWorkflowData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationTask>.Write(ModelReaderWriterOptions options)

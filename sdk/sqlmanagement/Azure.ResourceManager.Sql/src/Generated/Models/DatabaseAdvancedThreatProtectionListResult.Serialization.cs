@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatabaseAdvancedThreatProtectionData>> value = default;
+            IReadOnlyList<DatabaseAdvancedThreatProtectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseAdvancedThreatProtectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatabaseAdvancedThreatProtectionListResult(value ?? new ChangeTrackingList<DatabaseAdvancedThreatProtectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseAdvancedThreatProtectionListResult>.Write(ModelReaderWriterOptions options)

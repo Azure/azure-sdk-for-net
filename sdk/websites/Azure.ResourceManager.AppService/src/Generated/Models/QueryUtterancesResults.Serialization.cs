@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<string> query = default;
-            Optional<IList<QueryUtterancesResult>> results = default;
+            IList<QueryUtterancesResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryUtterancesResults(query.Value, Optional.ToList(results), serializedAdditionalRawData);
+            return new QueryUtterancesResults(query.Value, results ?? new ChangeTrackingList<QueryUtterancesResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryUtterancesResults>.Write(ModelReaderWriterOptions options)

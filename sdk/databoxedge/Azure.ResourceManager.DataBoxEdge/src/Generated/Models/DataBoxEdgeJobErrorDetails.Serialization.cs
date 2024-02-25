@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxEdgeJobErrorItem>> errorDetails = default;
+            IReadOnlyList<DataBoxEdgeJobErrorItem> errorDetails = default;
             Optional<string> code = default;
             Optional<string> message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeJobErrorDetails(Optional.ToList(errorDetails), code.Value, message.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeJobErrorDetails(errorDetails ?? new ChangeTrackingList<DataBoxEdgeJobErrorItem>(), code.Value, message.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeJobErrorDetails>.Write(ModelReaderWriterOptions options)

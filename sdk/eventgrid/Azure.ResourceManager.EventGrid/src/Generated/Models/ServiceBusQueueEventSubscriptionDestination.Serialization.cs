@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             EndpointType endpointType = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusQueueEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, Optional.ToList(deliveryAttributeMappings));
+            return new ServiceBusQueueEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>());
         }
 
         BinaryData IPersistableModel<ServiceBusQueueEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

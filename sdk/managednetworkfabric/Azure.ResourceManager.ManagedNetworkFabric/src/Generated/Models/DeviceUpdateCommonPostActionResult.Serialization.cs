@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<IReadOnlyList<string>> successfulDevices = default;
-            Optional<IReadOnlyList<string>> failedDevices = default;
+            IReadOnlyList<string> successfulDevices = default;
+            IReadOnlyList<string> failedDevices = default;
             Optional<ResponseError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateCommonPostActionResult(error.Value, serializedAdditionalRawData, Optional.ToNullable(configurationState), Optional.ToList(successfulDevices), Optional.ToList(failedDevices));
+            return new DeviceUpdateCommonPostActionResult(error.Value, serializedAdditionalRawData, Optional.ToNullable(configurationState), successfulDevices ?? new ChangeTrackingList<string>(), failedDevices ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DeviceUpdateCommonPostActionResult>.Write(ModelReaderWriterOptions options)

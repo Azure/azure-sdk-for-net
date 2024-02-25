@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ArcExtensionData>> value = default;
+            IReadOnlyList<ArcExtensionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcExtensionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArcExtensionListResult(value ?? new ChangeTrackingList<ArcExtensionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcExtensionListResult>.Write(ModelReaderWriterOptions options)

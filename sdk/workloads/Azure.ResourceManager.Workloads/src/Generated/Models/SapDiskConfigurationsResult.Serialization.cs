@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, SapDiskConfiguration>> volumeConfigurations = default;
+            IReadOnlyDictionary<string, SapDiskConfiguration> volumeConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDiskConfigurationsResult(Optional.ToDictionary(volumeConfigurations), serializedAdditionalRawData);
+            return new SapDiskConfigurationsResult(volumeConfigurations ?? new ChangeTrackingDictionary<string, SapDiskConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDiskConfigurationsResult>.Write(ModelReaderWriterOptions options)

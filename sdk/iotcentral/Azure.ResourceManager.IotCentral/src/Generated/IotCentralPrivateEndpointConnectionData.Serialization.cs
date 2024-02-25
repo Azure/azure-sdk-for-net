@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotCentral
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
+            IReadOnlyList<string> groupIds = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<IotCentralPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<IotCentralPrivateEndpointConnectionProvisioningState> provisioningState = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.IotCentral
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new IotCentralPrivateEndpointConnectionData(id, name, type, systemData.Value, groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

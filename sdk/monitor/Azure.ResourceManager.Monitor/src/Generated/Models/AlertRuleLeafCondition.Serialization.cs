@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             Optional<string> field = default;
             Optional<string> @equals = default;
-            Optional<IList<string>> containsAny = default;
+            IList<string> containsAny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), serializedAdditionalRawData);
+            return new AlertRuleLeafCondition(field.Value, @equals.Value, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleLeafCondition>.Write(ModelReaderWriterOptions options)

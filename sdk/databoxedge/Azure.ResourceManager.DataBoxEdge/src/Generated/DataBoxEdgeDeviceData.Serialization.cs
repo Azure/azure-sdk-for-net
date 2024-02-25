@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<DataBoxEdgeDeviceKind> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<long> deviceLocalCapacity = default;
             Optional<string> timeZone = default;
             Optional<string> deviceHcsVersion = default;
-            Optional<IReadOnlyList<DataBoxEdgeRoleType>> configuredRoleTypes = default;
+            IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes = default;
             Optional<int> nodeCount = default;
             Optional<DataBoxEdgeResourceMoveDetails> resourceMoveDetails = default;
             Optional<EdgeProfile> edgeProfile = default;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>(), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceData>.Write(ModelReaderWriterOptions options)

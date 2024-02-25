@@ -101,8 +101,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             ZendeskAuthenticationType authenticationType = default;
             object url = default;
             Optional<object> userName = default;
@@ -228,7 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ZendeskLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, authenticationType, url, userName.Value, password.Value, apiToken.Value, encryptedCredential.Value);
+            return new ZendeskLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, authenticationType, url, userName.Value, password.Value, apiToken.Value, encryptedCredential.Value);
         }
 
         internal partial class ZendeskLinkedServiceConverter : JsonConverter<ZendeskLinkedService>

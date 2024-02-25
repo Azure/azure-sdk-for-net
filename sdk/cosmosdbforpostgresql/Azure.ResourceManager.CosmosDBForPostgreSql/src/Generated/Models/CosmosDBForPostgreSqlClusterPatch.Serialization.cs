@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> administratorLoginPassword = default;
             Optional<string> postgresqlVersion = default;
             Optional<string> citusVersion = default;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlClusterPatch(Optional.ToDictionary(tags), administratorLoginPassword.Value, postgresqlVersion.Value, citusVersion.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), preferredPrimaryZone.Value, coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), maintenanceWindow.Value, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), administratorLoginPassword.Value, postgresqlVersion.Value, citusVersion.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), preferredPrimaryZone.Value, coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), maintenanceWindow.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterPatch>.Write(ModelReaderWriterOptions options)

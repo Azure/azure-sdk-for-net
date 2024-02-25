@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IList<GatewayLoadBalancerTunnelInterface>> tunnelInterfaces = default;
-            Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
-            Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
+            IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default;
+            IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default;
+            IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations = default;
+            IReadOnlyList<WritableSubResource> loadBalancingRules = default;
             Optional<WritableSubResource> outboundRule = default;
-            Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
-            Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
+            IReadOnlyList<WritableSubResource> outboundRules = default;
+            IReadOnlyList<WritableSubResource> inboundNatRules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> drainPeriodInSeconds = default;
             Optional<WritableSubResource> virtualNetwork = default;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToList(inboundNatRules), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode));
+            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(location), tunnelInterfaces ?? new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>(), loadBalancerBackendAddresses ?? new ChangeTrackingList<LoadBalancerBackendAddress>(), backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(), loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(), outboundRule, outboundRules ?? new ChangeTrackingList<WritableSubResource>(), inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode));
         }
 
         BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options)

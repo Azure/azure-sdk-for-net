@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             Optional<AzureLocation> location = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<FarmBeatsUpdateProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatPatch(Optional.ToNullable(location), identity, properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new FarmBeatPatch(Optional.ToNullable(location), identity, properties.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatPatch>.Write(ModelReaderWriterOptions options)

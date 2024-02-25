@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<ServiceObjectiveCapability>> supportedServiceLevelObjectives = default;
+            IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default;
             Optional<bool> zoneRedundant = default;
             Optional<ReadScaleCapability> readScale = default;
-            Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
+            IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EditionCapability(name.Value, Optional.ToList(supportedServiceLevelObjectives), Optional.ToNullable(zoneRedundant), readScale.Value, Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new EditionCapability(name.Value, supportedServiceLevelObjectives ?? new ChangeTrackingList<ServiceObjectiveCapability>(), Optional.ToNullable(zoneRedundant), readScale.Value, supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EditionCapability>.Write(ModelReaderWriterOptions options)

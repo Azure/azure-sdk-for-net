@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -249,19 +249,19 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<string> detailedStatusMessage = default;
             Optional<VirtualMachineIsolateEmulatorThread> isolateEmulatorThread = default;
             long memorySizeGB = default;
-            Optional<IList<NetworkAttachment>> networkAttachments = default;
+            IList<NetworkAttachment> networkAttachments = default;
             Optional<string> networkData = default;
-            Optional<IList<VirtualMachinePlacementHint>> placementHints = default;
+            IList<VirtualMachinePlacementHint> placementHints = default;
             Optional<VirtualMachinePowerState> powerState = default;
             Optional<VirtualMachineProvisioningState> provisioningState = default;
-            Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
+            IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
             NetworkCloudStorageProfile storageProfile = default;
             Optional<string> userData = default;
             Optional<VirtualMachineVirtioInterfaceType> virtioInterface = default;
             Optional<VirtualMachineDeviceModelType> vmDeviceModel = default;
             string vmImage = default;
             Optional<ImageRepositoryCredentials> vmImageRepositoryCredentials = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> volumes = default;
+            IReadOnlyList<ResourceIdentifier> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, Optional.ToList(networkAttachments), networkData.Value, Optional.ToList(placementHints), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), Optional.ToList(sshPublicKeys), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, Optional.ToList(volumes), serializedAdditionalRawData);
+            return new NetworkCloudVirtualMachineData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(), networkData.Value, placementHints ?? new ChangeTrackingList<VirtualMachinePlacementHint>(), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, volumes ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudVirtualMachineData>.Write(ModelReaderWriterOptions options)

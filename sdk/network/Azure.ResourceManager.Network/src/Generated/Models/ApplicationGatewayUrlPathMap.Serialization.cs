@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> defaultRewriteRuleSet = default;
             Optional<WritableSubResource> defaultRedirectConfiguration = default;
             Optional<WritableSubResource> defaultLoadDistributionPolicy = default;
-            Optional<IList<ApplicationGatewayPathRule>> pathRules = default;
+            IList<ApplicationGatewayPathRule> pathRules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayUrlPathMap(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), defaultBackendAddressPool, defaultBackendHttpSettings, defaultRewriteRuleSet, defaultRedirectConfiguration, defaultLoadDistributionPolicy, Optional.ToList(pathRules), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayUrlPathMap(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), defaultBackendAddressPool, defaultBackendHttpSettings, defaultRewriteRuleSet, defaultRedirectConfiguration, defaultLoadDistributionPolicy, pathRules ?? new ChangeTrackingList<ApplicationGatewayPathRule>(), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayUrlPathMap>.Write(ModelReaderWriterOptions options)

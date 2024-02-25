@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<string> masterKey = default;
-            Optional<IReadOnlyDictionary<string, string>> functionKeys = default;
-            Optional<IReadOnlyDictionary<string, string>> systemKeys = default;
+            IReadOnlyDictionary<string, string> functionKeys = default;
+            IReadOnlyDictionary<string, string> systemKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppHostKeys(masterKey.Value, Optional.ToDictionary(functionKeys), Optional.ToDictionary(systemKeys), serializedAdditionalRawData);
+            return new FunctionAppHostKeys(masterKey.Value, functionKeys ?? new ChangeTrackingDictionary<string, string>(), systemKeys ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppHostKeys>.Write(ModelReaderWriterOptions options)

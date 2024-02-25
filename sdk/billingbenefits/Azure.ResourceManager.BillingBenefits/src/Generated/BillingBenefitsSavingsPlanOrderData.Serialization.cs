@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Optional<DateTimeOffset> expiryDateTime = default;
             Optional<DateTimeOffset> benefitStartTime = default;
             Optional<BillingPlanInformation> planInformation = default;
-            Optional<IList<string>> savingsPlans = default;
+            IList<string> savingsPlans = default;
             Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), planInformation.Value, Optional.ToList(savingsPlans), extendedStatusInfo.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), planInformation.Value, savingsPlans ?? new ChangeTrackingList<string>(), extendedStatusInfo.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Write(ModelReaderWriterOptions options)

@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Media
                 return null;
             }
             Optional<StreamingEndpointCurrentSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Media
             Optional<string> availabilitySetName = default;
             Optional<StreamingEndpointAccessControl> accessControl = default;
             Optional<long?> maxCacheAge = default;
-            Optional<IList<string>> customHostNames = default;
+            IList<string> customHostNames = default;
             Optional<string> hostName = default;
             Optional<bool> cdnEnabled = default;
             Optional<string> cdnProvider = default;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, description.Value, Optional.ToNullable(scaleUnits), availabilitySetName.Value, accessControl.Value, Optional.ToNullable(maxCacheAge), Optional.ToList(customHostNames), hostName.Value, Optional.ToNullable(cdnEnabled), cdnProvider.Value, cdnProfile.Value, provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(freeTrialEndTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new StreamingEndpointData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, description.Value, Optional.ToNullable(scaleUnits), availabilitySetName.Value, accessControl.Value, Optional.ToNullable(maxCacheAge), customHostNames ?? new ChangeTrackingList<string>(), hostName.Value, Optional.ToNullable(cdnEnabled), cdnProvider.Value, cdnProfile.Value, provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(freeTrialEndTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointData>.Write(ModelReaderWriterOptions options)

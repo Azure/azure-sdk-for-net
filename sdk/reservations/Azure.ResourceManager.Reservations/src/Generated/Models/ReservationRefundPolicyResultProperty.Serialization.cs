@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             Optional<PurchasePrice> consumedRefundsTotal = default;
             Optional<PurchasePrice> maxRefundLimit = default;
-            Optional<IReadOnlyList<ReservationRefundPolicyError>> policyErrors = default;
+            IReadOnlyList<ReservationRefundPolicyError> policyErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, Optional.ToList(policyErrors), serializedAdditionalRawData);
+            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, policyErrors ?? new ChangeTrackingList<ReservationRefundPolicyError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundPolicyResultProperty>.Write(ModelReaderWriterOptions options)

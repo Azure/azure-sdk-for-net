@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HciSkuData>> value = default;
+            IReadOnlyList<HciSkuData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciSkuList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HciSkuList(value ?? new ChangeTrackingList<HciSkuData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciSkuList>.Write(ModelReaderWriterOptions options)

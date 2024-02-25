@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusTopicData>> value = default;
+            IReadOnlyList<ServiceBusTopicData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SBTopicListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SBTopicListResult(value ?? new ChangeTrackingList<ServiceBusTopicData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SBTopicListResult>.Write(ModelReaderWriterOptions options)

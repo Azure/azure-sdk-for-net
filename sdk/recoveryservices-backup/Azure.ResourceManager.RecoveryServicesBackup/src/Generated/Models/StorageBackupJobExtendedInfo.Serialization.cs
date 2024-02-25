@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<StorageBackupJobTaskDetails>> tasksList = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
+            IList<StorageBackupJobTaskDetails> tasksList = default;
+            IDictionary<string, string> propertyBag = default;
             Optional<string> dynamicErrorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), dynamicErrorMessage.Value, serializedAdditionalRawData);
+            return new StorageBackupJobExtendedInfo(tasksList ?? new ChangeTrackingList<StorageBackupJobTaskDetails>(), propertyBag ?? new ChangeTrackingDictionary<string, string>(), dynamicErrorMessage.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageBackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

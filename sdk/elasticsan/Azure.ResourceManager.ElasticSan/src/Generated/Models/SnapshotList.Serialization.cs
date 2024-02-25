@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ElasticSanSnapshotData>> value = default;
+            IReadOnlyList<ElasticSanSnapshotData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SnapshotList(value ?? new ChangeTrackingList<ElasticSanSnapshotData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotList>.Write(ModelReaderWriterOptions options)

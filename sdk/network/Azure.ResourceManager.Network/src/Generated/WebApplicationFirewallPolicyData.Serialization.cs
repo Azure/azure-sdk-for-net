@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<PolicySettings> policySettings = default;
-            Optional<IList<WebApplicationFirewallCustomRule>> customRules = default;
-            Optional<IReadOnlyList<ApplicationGatewayData>> applicationGateways = default;
+            IList<WebApplicationFirewallCustomRule> customRules = default;
+            IReadOnlyList<ApplicationGatewayData> applicationGateways = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<WebApplicationFirewallPolicyResourceState> resourceState = default;
             Optional<ManagedRulesDefinition> managedRules = default;
-            Optional<IReadOnlyList<WritableSubResource>> httpListeners = default;
-            Optional<IReadOnlyList<WritableSubResource>> pathBasedRules = default;
+            IReadOnlyList<WritableSubResource> httpListeners = default;
+            IReadOnlyList<WritableSubResource> pathBasedRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationFirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), policySettings.Value, Optional.ToList(customRules), Optional.ToList(applicationGateways), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), managedRules.Value, Optional.ToList(httpListeners), Optional.ToList(pathBasedRules));
+            return new WebApplicationFirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), policySettings.Value, customRules ?? new ChangeTrackingList<WebApplicationFirewallCustomRule>(), applicationGateways ?? new ChangeTrackingList<ApplicationGatewayData>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), managedRules.Value, httpListeners ?? new ChangeTrackingList<WritableSubResource>(), pathBasedRules ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<WebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

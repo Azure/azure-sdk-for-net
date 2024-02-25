@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IList<VideoGroupVideo>> videos = default;
+            IList<VideoGroupVideo> videos = default;
             Optional<string> replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoGroup(Optional.ToList(videos), replacementKey.Value, serializedAdditionalRawData);
+            return new VideoGroup(videos ?? new ChangeTrackingList<VideoGroupVideo>(), replacementKey.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VideoGroup>.Write(ModelReaderWriterOptions options)

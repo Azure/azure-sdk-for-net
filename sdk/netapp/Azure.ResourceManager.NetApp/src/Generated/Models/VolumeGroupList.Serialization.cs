@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppVolumeGroupResult>> value = default;
+            IReadOnlyList<NetAppVolumeGroupResult> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeGroupList(Optional.ToList(value), serializedAdditionalRawData);
+            return new VolumeGroupList(value ?? new ChangeTrackingList<NetAppVolumeGroupResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeGroupList>.Write(ModelReaderWriterOptions options)

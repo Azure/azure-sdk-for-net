@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 return null;
             }
             Optional<ConfidentialLedgerProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfidentialLedgerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, serializedAdditionalRawData);
+            return new ConfidentialLedgerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfidentialLedgerData>.Write(ModelReaderWriterOptions options)

@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> sku = default;
-            Optional<IList<LoadBalancerFrontendIPConfigurationResourceSettings>> frontendIPConfigurations = default;
-            Optional<IList<LoadBalancerBackendAddressPoolResourceSettings>> backendAddressPools = default;
+            IList<LoadBalancerFrontendIPConfigurationResourceSettings> frontendIPConfigurations = default;
+            IList<LoadBalancerBackendAddressPoolResourceSettings> backendAddressPools = default;
             Optional<string> zones = default;
             string resourceType = default;
             Optional<string> targetResourceName = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), sku.Value, Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), zones.Value);
+            return new LoadBalancerResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, frontendIPConfigurations ?? new ChangeTrackingList<LoadBalancerFrontendIPConfigurationResourceSettings>(), backendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolResourceSettings>(), zones.Value);
         }
 
         BinaryData IPersistableModel<LoadBalancerResourceSettings>.Write(ModelReaderWriterOptions options)

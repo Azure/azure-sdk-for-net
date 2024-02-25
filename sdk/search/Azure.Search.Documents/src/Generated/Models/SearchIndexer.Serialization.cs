@@ -133,8 +133,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string targetIndexName = default;
             Optional<IndexingSchedule> schedule = default;
             Optional<IndexingParameters> parameters = default;
-            Optional<IList<FieldMapping>> fieldMappings = default;
-            Optional<IList<FieldMapping>> outputFieldMappings = default;
+            IList<FieldMapping> fieldMappings = default;
+            IList<FieldMapping> outputFieldMappings = default;
             Optional<bool?> disabled = default;
             Optional<string> odataEtag = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
@@ -250,7 +250,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value, cache.Value);
+            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, fieldMappings ?? new ChangeTrackingList<FieldMapping>(), outputFieldMappings ?? new ChangeTrackingList<FieldMapping>(), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value, cache.Value);
         }
     }
 }

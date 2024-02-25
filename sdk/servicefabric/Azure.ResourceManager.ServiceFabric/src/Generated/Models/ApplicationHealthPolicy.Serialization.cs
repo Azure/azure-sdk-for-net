@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
-            Optional<IDictionary<string, ServiceTypeHealthPolicy>> serviceTypeHealthPolicies = default;
+            IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationHealthPolicy(defaultServiceTypeHealthPolicy.Value, Optional.ToDictionary(serviceTypeHealthPolicies), serializedAdditionalRawData);
+            return new ApplicationHealthPolicy(defaultServiceTypeHealthPolicy.Value, serviceTypeHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)

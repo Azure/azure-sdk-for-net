@@ -212,26 +212,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<AzureFirewallApplicationRuleCollectionData>> applicationRuleCollections = default;
-            Optional<IList<AzureFirewallNatRuleCollectionData>> natRuleCollections = default;
-            Optional<IList<AzureFirewallNetworkRuleCollectionData>> networkRuleCollections = default;
-            Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
+            IDictionary<string, string> tags = default;
+            IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = default;
+            IList<AzureFirewallNatRuleCollectionData> natRuleCollections = default;
+            IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections = default;
+            IList<AzureFirewallIPConfiguration> ipConfigurations = default;
             Optional<AzureFirewallIPConfiguration> managementIPConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
             Optional<WritableSubResource> virtualHub = default;
             Optional<WritableSubResource> firewallPolicy = default;
             Optional<HubIPAddresses> hubIPAddresses = default;
-            Optional<IReadOnlyList<AzureFirewallIPGroups>> ipGroups = default;
+            IReadOnlyList<AzureFirewallIPGroups> ipGroups = default;
             Optional<AzureFirewallSku> sku = default;
-            Optional<IDictionary<string, string>> additionalProperties = default;
+            IDictionary<string, string> additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
+            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(etag), applicationRuleCollections ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>(), natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>(), networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>(), ipConfigurations ?? new ChangeTrackingList<AzureFirewallIPConfiguration>(), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(), sku.Value, additionalProperties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options)

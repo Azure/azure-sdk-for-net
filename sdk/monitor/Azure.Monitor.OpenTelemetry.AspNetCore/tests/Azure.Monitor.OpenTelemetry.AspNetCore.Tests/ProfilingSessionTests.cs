@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
+using System.Linq;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Microsoft.Extensions.DependencyInjection;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
 
@@ -56,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             using Activity activity = new("Test");
 
-            ProfilingSessionTraceProcessor traceProcessor = new();
+            using ProfilingSessionTraceProcessor traceProcessor = new();
             traceProcessor.OnEnd(activity);
 
             Assert.Equal(_profiler.SessionId, activity.GetTagItem(ProfilingSessionTraceProcessor.TagName));
@@ -71,6 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             {
                 config.Transport = new MockTransport(new MockResponse(200).SetContent("ok"));
                 config.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+                config.EnableLiveMetrics = false;
             });
 
             using ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
@@ -93,6 +97,88 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Equal(_profiler.SessionId, activity.GetTagItem(ProfilingSessionTraceProcessor.TagName));
         }
 
+        [Theory]
+        [InlineData(false, 0)]
+        [InlineData(false, 2)]
+        [InlineData(true, 0)]
+        [InlineData(true, 2)]
+        public void ResourceAttributesWrittenExactlyOnce(bool startProfilerBeforeApp, int numActivities)
+        {
+            bool resourceAttributesWritten = false;
+            Exception? eventWrittenException = null;
+
+            void EventWrittenHandler(object? sender, EventWrittenEventArgs args)
+            {
+                try
+                {
+                    if (args.EventSource.Name == ProfilingSessionEventSource.EventSourceName)
+                    {
+                        Assert.Equal(ProfilingSessionEventSource.EventIds.ResourceAttributes, args.EventId);
+                        Assert.False(resourceAttributesWritten, $"Expect only one {nameof(ProfilingSessionEventSource.EventIds.ResourceAttributes)} event.");
+                        Assert.NotNull(args.PayloadNames);
+                        Assert.Single(args.PayloadNames);
+                        Assert.Equal("attributes", args.PayloadNames.First());
+                        resourceAttributesWritten = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    eventWrittenException = ex;
+                }
+            }
+
+            IDisposable? profilerSession = null;
+
+            if (startProfilerBeforeApp)
+            {
+                profilerSession = _profiler.StartProfiling(ProfilingSessionEventSource.Keywords.ResourceAttributes);
+                _profiler.EventWritten += EventWrittenHandler;
+            }
+
+            try
+            {
+                using (TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
+                    .AddProcessor(new ProfilingSessionTraceProcessor())
+                    .AddSource("Azure.Monitor.TestSource")
+                    .ConfigureResource(resource =>
+                    {
+                        resource.AddAttributes(new KeyValuePair<string, object>[]
+                        {
+                            new("test.attribute", "test-value"),
+                            new("test.attribute2", "test-value2"),
+                        });
+                    })
+                    .Build())
+                {
+                    if (!startProfilerBeforeApp)
+                    {
+                        Assert.Null(profilerSession);
+                        profilerSession = _profiler.StartProfiling(ProfilingSessionEventSource.Keywords.ResourceAttributes);
+                        _profiler.EventWritten += EventWrittenHandler;
+                    }
+
+                    // The ActivitySource name must begin with "Azure."
+                    ActivitySource activitySource = new("Azure.Monitor.TestSource");
+
+                    // Start multiple activities.
+                    for (int i = 0; i < numActivities; i++)
+                    {
+                        using (Activity? activity = activitySource.StartActivity($"Test{i}"))
+                        {
+                        }
+                    }
+                }
+
+                Assert.Null(eventWrittenException);
+                Assert.True(resourceAttributesWritten);
+            }
+            finally
+            {
+                profilerSession?.Dispose();
+                _profiler.EventWritten -= EventWrittenHandler;
+            }
+        }
+
         /// <summary>
         /// Simulation of a profiler that can start and stop profiling sessions
         /// and communicate the session ID to the <see cref="ProfilingSessionEventSource"/>.
@@ -103,6 +189,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             /// Gets or sets the current session ID. The value is null if profiling is not active.
             /// </summary>
             public string? SessionId { get; private set; }
+
+            /// <summary>
+            /// Keywords enabled in the current session.
+            /// </summary>
+            private EventKeywords _eventKeywords;
 
             /// <summary>
             /// Gets a Boolean value indicating whether profiling is active.
@@ -117,16 +208,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             /// generated.
             /// </summary>
             /// <returns>A disposable object the will stop profiling when disposed.</returns>
-            public IDisposable StartProfiling() => StartProfiling(Guid.NewGuid().ToString("N"));
+            public IDisposable StartProfiling(EventKeywords keywords = EventKeywords.All) => StartProfiling(Guid.NewGuid().ToString("N"), keywords);
 
             /// <summary>
             /// Simulate the profiler starting.
             /// </summary>
             /// <param name="sessionId">The new session ID.</param>
+            /// <param name="keywords">Set of keywords to enable.</param>
             /// <returns>A disposable object the will stop profiling when disposed.</returns>
             /// <exception cref="ArgumentException"><paramref name="sessionId"/> is null or empty.</exception>
             /// <exception cref="InvalidOperationException">A profiling session is already active.</exception>
-            public IDisposable StartProfiling(string sessionId)
+            public IDisposable StartProfiling(string sessionId, EventKeywords keywords = EventKeywords.All)
             {
                 if (string.IsNullOrEmpty(sessionId))
                 {
@@ -139,9 +231,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 }
 
                 SessionId = sessionId;
+                _eventKeywords = keywords;
                 foreach (EventSource eventSource in _eventSources)
                 {
-                    EnableEvents(eventSource, EventLevel.Informational, EventKeywords.All, new Dictionary<string, string?>
+                    EnableEvents(eventSource, EventLevel.Informational, _eventKeywords, new Dictionary<string, string?>
                     {
                         ["SessionId"] = sessionId
                     });
@@ -178,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 {
                     if (IsProfiling)
                     {
-                        EnableEvents(eventSource, EventLevel.Informational, EventKeywords.All, new Dictionary<string, string?>
+                        EnableEvents(eventSource, EventLevel.Informational, _eventKeywords, new Dictionary<string, string?>
                         {
                             ["SessionId"] = SessionId
                         });
@@ -195,13 +288,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             /// <inheritdoc/>
             public override void Dispose()
             {
-                base.Dispose();
-                foreach (EventSource eventSource in _eventSources)
+                try
                 {
-                    DisableEvents(eventSource);
-                }
+                    foreach (EventSource eventSource in _eventSources)
+                    {
+                        DisableEvents(eventSource);
+                    }
 
-                _eventSources.Clear();
+                    _eventSources.Clear();
+                }
+                finally
+                {
+                    base.Dispose();
+                }
             }
 
             /// <summary>

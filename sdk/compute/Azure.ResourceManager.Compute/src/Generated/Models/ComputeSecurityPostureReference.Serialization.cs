@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
-            Optional<IList<VirtualMachineExtensionData>> excludeExtensions = default;
+            IList<VirtualMachineExtensionData> excludeExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeSecurityPostureReference(id.Value, Optional.ToList(excludeExtensions), serializedAdditionalRawData);
+            return new ComputeSecurityPostureReference(id.Value, excludeExtensions ?? new ChangeTrackingList<VirtualMachineExtensionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeSecurityPostureReference>.Write(ModelReaderWriterOptions options)

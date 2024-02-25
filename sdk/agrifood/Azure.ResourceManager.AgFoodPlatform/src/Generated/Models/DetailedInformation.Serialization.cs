@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 return null;
             }
             Optional<string> apiName = default;
-            Optional<IReadOnlyList<string>> customParameters = default;
-            Optional<IReadOnlyList<string>> platformParameters = default;
+            IReadOnlyList<string> customParameters = default;
+            IReadOnlyList<string> platformParameters = default;
             Optional<UnitSystemsInfo> unitsSupported = default;
-            Optional<IReadOnlyList<string>> apiInputParameters = default;
+            IReadOnlyList<string> apiInputParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetailedInformation(apiName.Value, Optional.ToList(customParameters), Optional.ToList(platformParameters), unitsSupported.Value, Optional.ToList(apiInputParameters), serializedAdditionalRawData);
+            return new DetailedInformation(apiName.Value, customParameters ?? new ChangeTrackingList<string>(), platformParameters ?? new ChangeTrackingList<string>(), unitsSupported.Value, apiInputParameters ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetailedInformation>.Write(ModelReaderWriterOptions options)

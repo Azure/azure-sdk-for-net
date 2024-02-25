@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeAnalyticsStorageContainerData>> value = default;
+            IReadOnlyList<DataLakeAnalyticsStorageContainerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsStorageContainerListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsStorageContainerListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsStorageContainerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsStorageContainerListResult>.Write(ModelReaderWriterOptions options)

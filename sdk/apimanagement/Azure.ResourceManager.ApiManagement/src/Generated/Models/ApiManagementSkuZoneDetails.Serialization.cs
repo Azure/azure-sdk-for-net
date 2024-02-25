@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<ApiManagementSkuCapabilities>> capabilities = default;
+            IReadOnlyList<string> name = default;
+            IReadOnlyList<ApiManagementSkuCapabilities> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ApiManagementSkuZoneDetails(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<ApiManagementSkuCapabilities>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSkuZoneDetails>.Write(ModelReaderWriterOptions options)

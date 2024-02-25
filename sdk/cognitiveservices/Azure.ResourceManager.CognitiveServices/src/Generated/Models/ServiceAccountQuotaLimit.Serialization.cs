@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             Optional<float> count = default;
             Optional<float> renewalPeriod = default;
-            Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;
+            IReadOnlyList<ServiceAccountThrottlingRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountQuotaLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), Optional.ToList(rules), serializedAdditionalRawData);
+            return new ServiceAccountQuotaLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), rules ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountQuotaLimit>.Write(ModelReaderWriterOptions options)

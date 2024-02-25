@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             Optional<DateTimeOffset> dateTimeBegin = default;
             Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<IReadOnlyList<RankingsResponseTablesItem>> tables = default;
+            IReadOnlyList<RankingsResponseTablesItem> tables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToList(tables), serializedAdditionalRawData);
+            return new RankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), tables ?? new ChangeTrackingList<RankingsResponseTablesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RankingsResponse>.Write(ModelReaderWriterOptions options)

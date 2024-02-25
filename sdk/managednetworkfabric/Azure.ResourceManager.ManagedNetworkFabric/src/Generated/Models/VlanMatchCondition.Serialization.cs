@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> vlans = default;
-            Optional<IList<string>> innerVlans = default;
-            Optional<IList<string>> vlanGroupNames = default;
+            IList<string> vlans = default;
+            IList<string> innerVlans = default;
+            IList<string> vlanGroupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VlanMatchCondition(Optional.ToList(vlans), Optional.ToList(innerVlans), Optional.ToList(vlanGroupNames), serializedAdditionalRawData);
+            return new VlanMatchCondition(vlans ?? new ChangeTrackingList<string>(), innerVlans ?? new ChangeTrackingList<string>(), vlanGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VlanMatchCondition>.Write(ModelReaderWriterOptions options)

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<int> restartCount = default;
             Optional<ContainerState> currentState = default;
             Optional<ContainerState> previousState = default;
-            Optional<IReadOnlyList<ContainerEvent>> events = default;
+            IReadOnlyList<ContainerEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, Optional.ToList(events), serializedAdditionalRawData);
+            return new ContainerInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, events ?? new ChangeTrackingList<ContainerEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceView>.Write(ModelReaderWriterOptions options)

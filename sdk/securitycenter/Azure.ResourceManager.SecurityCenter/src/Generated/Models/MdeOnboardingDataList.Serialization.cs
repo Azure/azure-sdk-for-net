@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MdeOnboarding>> value = default;
+            IReadOnlyList<MdeOnboarding> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MdeOnboardingDataList(Optional.ToList(value), serializedAdditionalRawData);
+            return new MdeOnboardingDataList(value ?? new ChangeTrackingList<MdeOnboarding>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MdeOnboardingDataList>.Write(ModelReaderWriterOptions options)

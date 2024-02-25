@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<int?> faultDomain = default;
             Optional<int?> updateDomain = default;
             string resourceType = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverAvailabilitySetResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(faultDomain), Optional.ToNullable(updateDomain));
+            return new MoverAvailabilitySetResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(faultDomain), Optional.ToNullable(updateDomain));
         }
 
         BinaryData IPersistableModel<MoverAvailabilitySetResourceSettings>.Write(ModelReaderWriterOptions options)

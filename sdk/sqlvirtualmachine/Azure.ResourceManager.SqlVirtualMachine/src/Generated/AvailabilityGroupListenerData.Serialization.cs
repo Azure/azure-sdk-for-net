@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<string> availabilityGroupName = default;
-            Optional<IList<AvailabilityGroupListenerLoadBalancerConfiguration>> loadBalancerConfigurations = default;
-            Optional<IList<MultiSubnetIPConfiguration>> multiSubnetIPConfigurations = default;
+            IList<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations = default;
+            IList<MultiSubnetIPConfiguration> multiSubnetIPConfigurations = default;
             Optional<bool> createDefaultAvailabilityGroupIfNotExist = default;
             Optional<int> port = default;
             Optional<AvailabilityGroupConfiguration> availabilityGroupConfiguration = default;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupListenerData(id, name, type, systemData.Value, provisioningState.Value, availabilityGroupName.Value, Optional.ToList(loadBalancerConfigurations), Optional.ToList(multiSubnetIPConfigurations), Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist), Optional.ToNullable(port), availabilityGroupConfiguration.Value, serializedAdditionalRawData);
+            return new AvailabilityGroupListenerData(id, name, type, systemData.Value, provisioningState.Value, availabilityGroupName.Value, loadBalancerConfigurations ?? new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>(), multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>(), Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist), Optional.ToNullable(port), availabilityGroupConfiguration.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options)

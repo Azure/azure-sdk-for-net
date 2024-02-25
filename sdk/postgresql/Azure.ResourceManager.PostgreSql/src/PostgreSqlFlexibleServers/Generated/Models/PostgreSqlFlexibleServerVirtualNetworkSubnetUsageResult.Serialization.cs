@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
+            IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage = default;
             Optional<AzureLocation> location = default;
             Optional<string> subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToList(delegatedSubnetsUsage), Optional.ToNullable(location), subscriptionId.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(delegatedSubnetsUsage ?? new ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>(), Optional.ToNullable(location), subscriptionId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(ModelReaderWriterOptions options)

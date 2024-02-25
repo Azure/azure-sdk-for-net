@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AttestationPrivateLinkResource>> value = default;
+            IReadOnlyList<AttestationPrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AttestationPrivateLinkResourceListResult(value ?? new ChangeTrackingList<AttestationPrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

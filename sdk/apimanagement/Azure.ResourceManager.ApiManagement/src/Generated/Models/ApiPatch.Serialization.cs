@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> displayName = default;
             Optional<Uri> serviceUri = default;
             Optional<string> path = default;
-            Optional<IList<ApiOperationInvokableProtocol>> protocols = default;
+            IList<ApiOperationInvokableProtocol> protocols = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiPatch(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, displayName.Value, serviceUri.Value, path.Value, Optional.ToList(protocols), serializedAdditionalRawData);
+            return new ApiPatch(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, displayName.Value, serviceUri.Value, path.Value, protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiPatch>.Write(ModelReaderWriterOptions options)

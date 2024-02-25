@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> pollingInterval = default;
             Optional<int> minExecutions = default;
             Optional<int> maxExecutions = default;
-            Optional<IList<ContainerAppJobScaleRule>> rules = default;
+            IList<ContainerAppJobScaleRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobScale(Optional.ToNullable(pollingInterval), Optional.ToNullable(minExecutions), Optional.ToNullable(maxExecutions), Optional.ToList(rules), serializedAdditionalRawData);
+            return new ContainerAppJobScale(Optional.ToNullable(pollingInterval), Optional.ToNullable(minExecutions), Optional.ToNullable(maxExecutions), rules ?? new ChangeTrackingList<ContainerAppJobScaleRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobScale>.Write(ModelReaderWriterOptions options)

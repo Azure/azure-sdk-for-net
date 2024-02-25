@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisEnterpriseClusterData>> value = default;
+            IReadOnlyList<RedisEnterpriseClusterData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseClusterList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseClusterList(value ?? new ChangeTrackingList<RedisEnterpriseClusterData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseClusterList>.Write(ModelReaderWriterOptions options)

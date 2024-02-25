@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<string> hostServerName = default;
             Optional<WorkloadContainerInquiryInfo> inquiryInfo = default;
-            Optional<IList<DistributedNodesInfo>> nodesList = default;
+            IList<DistributedNodesInfo> nodesList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadContainerExtendedInfo(hostServerName.Value, inquiryInfo.Value, Optional.ToList(nodesList), serializedAdditionalRawData);
+            return new WorkloadContainerExtendedInfo(hostServerName.Value, inquiryInfo.Value, nodesList ?? new ChangeTrackingList<DistributedNodesInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadContainerExtendedInfo>.Write(ModelReaderWriterOptions options)

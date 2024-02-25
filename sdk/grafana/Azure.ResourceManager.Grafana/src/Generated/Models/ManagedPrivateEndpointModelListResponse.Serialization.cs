@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedPrivateEndpointModelData>> value = default;
+            IReadOnlyList<ManagedPrivateEndpointModelData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedPrivateEndpointModelListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedPrivateEndpointModelListResponse(value ?? new ChangeTrackingList<ManagedPrivateEndpointModelData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedPrivateEndpointModelListResponse>.Write(ModelReaderWriterOptions options)

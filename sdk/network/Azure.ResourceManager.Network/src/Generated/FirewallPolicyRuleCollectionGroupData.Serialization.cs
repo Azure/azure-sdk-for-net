@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<string> size = default;
             Optional<int> priority = default;
-            Optional<IList<FirewallPolicyRuleCollectionInfo>> ruleCollections = default;
+            IList<FirewallPolicyRuleCollectionInfo> ruleCollections = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyRuleCollectionGroupData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), size.Value, Optional.ToNullable(priority), Optional.ToList(ruleCollections), Optional.ToNullable(provisioningState));
+            return new FirewallPolicyRuleCollectionGroupData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), size.Value, Optional.ToNullable(priority), ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>(), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<FirewallPolicyRuleCollectionGroupData>.Write(ModelReaderWriterOptions options)

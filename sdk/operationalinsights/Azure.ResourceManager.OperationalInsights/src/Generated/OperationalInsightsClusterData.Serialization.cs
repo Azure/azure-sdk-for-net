@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<OperationalInsightsClusterSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
             Optional<DateTimeOffset> lastModifiedDate = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<IList<OperationalInsightsClusterAssociatedWorkspace>> associatedWorkspaces = default;
+            IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default;
             Optional<OperationalInsightsCapacityReservationProperties> capacityReservationProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(isDoubleEncryptionEnabled), Optional.ToNullable(isAvailabilityZonesEnabled), Optional.ToNullable(billingType), keyVaultProperties.Value, Optional.ToNullable(lastModifiedDate), Optional.ToNullable(createdDate), Optional.ToList(associatedWorkspaces), capacityReservationProperties.Value, serializedAdditionalRawData);
+            return new OperationalInsightsClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, sku.Value, Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(isDoubleEncryptionEnabled), Optional.ToNullable(isAvailabilityZonesEnabled), Optional.ToNullable(billingType), keyVaultProperties.Value, Optional.ToNullable(lastModifiedDate), Optional.ToNullable(createdDate), associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>(), capacityReservationProperties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterData>.Write(ModelReaderWriterOptions options)

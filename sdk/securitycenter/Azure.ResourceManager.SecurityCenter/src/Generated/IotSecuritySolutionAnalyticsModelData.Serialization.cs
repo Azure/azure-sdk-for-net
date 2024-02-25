@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<IotSeverityMetrics> metrics = default;
             Optional<long> unhealthyDeviceCount = default;
-            Optional<IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics>> devicesMetrics = default;
-            Optional<IList<IotSecurityAlertedDevice>> topAlertedDevices = default;
-            Optional<IList<IotSecurityDeviceAlert>> mostPrevalentDeviceAlerts = default;
-            Optional<IList<IotSecurityDeviceRecommendation>> mostPrevalentDeviceRecommendations = default;
+            IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics = default;
+            IList<IotSecurityAlertedDevice> topAlertedDevices = default;
+            IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts = default;
+            IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionAnalyticsModelData(id, name, type, systemData.Value, metrics.Value, Optional.ToNullable(unhealthyDeviceCount), Optional.ToList(devicesMetrics), Optional.ToList(topAlertedDevices), Optional.ToList(mostPrevalentDeviceAlerts), Optional.ToList(mostPrevalentDeviceRecommendations), serializedAdditionalRawData);
+            return new IotSecuritySolutionAnalyticsModelData(id, name, type, systemData.Value, metrics.Value, Optional.ToNullable(unhealthyDeviceCount), devicesMetrics ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>(), topAlertedDevices ?? new ChangeTrackingList<IotSecurityAlertedDevice>(), mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IotSecurityDeviceAlert>(), mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IotSecurityDeviceRecommendation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Write(ModelReaderWriterOptions options)

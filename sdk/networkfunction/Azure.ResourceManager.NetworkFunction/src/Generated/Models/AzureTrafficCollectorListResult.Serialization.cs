@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureTrafficCollectorData>> value = default;
+            IReadOnlyList<AzureTrafficCollectorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureTrafficCollectorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureTrafficCollectorListResult(value ?? new ChangeTrackingList<AzureTrafficCollectorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureTrafficCollectorListResult>.Write(ModelReaderWriterOptions options)

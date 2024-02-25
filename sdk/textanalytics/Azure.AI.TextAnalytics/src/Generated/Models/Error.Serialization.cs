@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Models
             ErrorCode code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IList<Error>> details = default;
+            IList<Error> details = default;
             Optional<InnerErrorModel> innererror = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -104,7 +104,7 @@ namespace Azure.AI.TextAnalytics.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value, additionalProperties);
+            return new Error(code, message, target.Value, details ?? new ChangeTrackingList<Error>(), innererror.Value, additionalProperties);
         }
     }
 }

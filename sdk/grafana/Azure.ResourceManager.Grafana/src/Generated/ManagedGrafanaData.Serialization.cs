@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Grafana
             Optional<ManagedGrafanaSku> sku = default;
             Optional<ManagedGrafanaProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Grafana
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedGrafanaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, properties.Value, identity, serializedAdditionalRawData);
+            return new ManagedGrafanaData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, properties.Value, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedGrafanaData>.Write(ModelReaderWriterOptions options)

@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automation
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Automation
             Optional<SystemData> systemData = default;
             Optional<DscConfigurationProvisioningState> provisioningState = default;
             Optional<int> jobCount = default;
-            Optional<IDictionary<string, DscConfigurationParameterDefinition>> parameters = default;
+            IDictionary<string, DscConfigurationParameterDefinition> parameters = default;
             Optional<AutomationContentSource> source = default;
             Optional<DscConfigurationState> state = default;
             Optional<bool> logVerbose = default;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(jobCount), Optional.ToDictionary(parameters), source.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(nodeConfigurationCount), description.Value, serializedAdditionalRawData);
+            return new DscConfigurationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(jobCount), parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(), source.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(nodeConfigurationCount), description.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscConfigurationData>.Write(ModelReaderWriterOptions options)

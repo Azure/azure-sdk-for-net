@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<Uri> queryResultsUri = default;
             Optional<int> nonCompliantResources = default;
             Optional<int> nonCompliantPolicies = default;
-            Optional<IReadOnlyList<ComplianceDetail>> resourceDetails = default;
-            Optional<IReadOnlyList<ComplianceDetail>> policyDetails = default;
-            Optional<IReadOnlyList<ComplianceDetail>> policyGroupDetails = default;
+            IReadOnlyList<ComplianceDetail> resourceDetails = default;
+            IReadOnlyList<ComplianceDetail> policyDetails = default;
+            IReadOnlyList<ComplianceDetail> policyGroupDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), Optional.ToList(resourceDetails), Optional.ToList(policyDetails), Optional.ToList(policyGroupDetails), serializedAdditionalRawData);
+            return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), resourceDetails ?? new ChangeTrackingList<ComplianceDetail>(), policyDetails ?? new ChangeTrackingList<ComplianceDetail>(), policyGroupDetails ?? new ChangeTrackingList<ComplianceDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySummaryResults>.Write(ModelReaderWriterOptions options)

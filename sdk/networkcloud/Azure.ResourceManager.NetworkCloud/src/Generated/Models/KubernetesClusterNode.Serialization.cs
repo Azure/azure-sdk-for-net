@@ -178,14 +178,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<long> diskSizeGB = default;
             Optional<string> image = default;
             Optional<string> kubernetesVersion = default;
-            Optional<IReadOnlyList<KubernetesLabel>> labels = default;
+            IReadOnlyList<KubernetesLabel> labels = default;
             Optional<long> memorySizeGB = default;
             Optional<NetworkCloudAgentPoolMode> mode = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<NetworkAttachment>> networkAttachments = default;
+            IReadOnlyList<NetworkAttachment> networkAttachments = default;
             Optional<KubernetesNodePowerState> powerState = default;
             Optional<KubernetesNodeRole> role = default;
-            Optional<IReadOnlyList<KubernetesLabel>> taints = default;
+            IReadOnlyList<KubernetesLabel> taints = default;
             Optional<string> vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Optional.ToList(labels), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, Optional.ToList(networkAttachments), Optional.ToNullable(powerState), Optional.ToNullable(role), Optional.ToList(taints), vmSkuName.Value, serializedAdditionalRawData);
+            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, labels ?? new ChangeTrackingList<KubernetesLabel>(), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(), Optional.ToNullable(powerState), Optional.ToNullable(role), taints ?? new ChangeTrackingList<KubernetesLabel>(), vmSkuName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterNode>.Write(ModelReaderWriterOptions options)

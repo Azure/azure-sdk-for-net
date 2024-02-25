@@ -94,7 +94,7 @@ namespace Azure.Communication.JobRouter
             }
             Optional<string> queueId = default;
             Optional<int> priority = default;
-            Optional<IList<RouterWorkerSelector>> workerSelectors = default;
+            IList<RouterWorkerSelector> workerSelectors = default;
             Optional<string> id = default;
             ExceptionActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,7 +145,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManualReclassifyExceptionAction(id.Value, kind, serializedAdditionalRawData, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
+            return new ManualReclassifyExceptionAction(id.Value, kind, serializedAdditionalRawData, queueId.Value, Optional.ToNullable(priority), workerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>());
         }
 
         BinaryData IPersistableModel<ManualReclassifyExceptionAction>.Write(ModelReaderWriterOptions options)

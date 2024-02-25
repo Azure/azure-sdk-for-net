@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<WritableSubResource> virtualHub = default;
-            Optional<IList<P2SConnectionConfiguration>> p2sConnectionConfigurations = default;
+            IList<P2SConnectionConfiguration> p2sConnectionConfigurations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> vpnGatewayScaleUnit = default;
             Optional<WritableSubResource> vpnServerConfiguration = default;
             Optional<VpnClientConnectionHealth> vpnClientConnectionHealth = default;
-            Optional<IList<string>> customDnsServers = default;
+            IList<string> customDnsServers = default;
             Optional<bool> isRoutingPreferenceInternet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new P2SVpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), virtualHub, Optional.ToList(p2sConnectionConfigurations), Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), vpnServerConfiguration, vpnClientConnectionHealth.Value, Optional.ToList(customDnsServers), Optional.ToNullable(isRoutingPreferenceInternet));
+            return new P2SVpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), virtualHub, p2sConnectionConfigurations ?? new ChangeTrackingList<P2SConnectionConfiguration>(), Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), vpnServerConfiguration, vpnClientConnectionHealth.Value, customDnsServers ?? new ChangeTrackingList<string>(), Optional.ToNullable(isRoutingPreferenceInternet));
         }
 
         BinaryData IPersistableModel<P2SVpnGatewayData>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<UefiSignatureTemplateName>> signatureTemplateNames = default;
+            IList<UefiSignatureTemplateName> signatureTemplateNames = default;
             Optional<UefiKeySignatures> additionalSignatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionUefiSettings(Optional.ToList(signatureTemplateNames), additionalSignatures.Value, serializedAdditionalRawData);
+            return new GalleryImageVersionUefiSettings(signatureTemplateNames ?? new ChangeTrackingList<UefiSignatureTemplateName>(), additionalSignatures.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionUefiSettings>.Write(ModelReaderWriterOptions options)

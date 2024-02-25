@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementDeletedServiceData>> value = default;
+            IReadOnlyList<ApiManagementDeletedServiceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedServicesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DeletedServicesListResult(value ?? new ChangeTrackingList<ApiManagementDeletedServiceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedServicesListResult>.Write(ModelReaderWriterOptions options)

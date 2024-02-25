@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic
             Optional<IntegrationServiceEnvironmentProperties> properties = default;
             Optional<IntegrationServiceEnvironmentSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, identity, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, sku.Value, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentData>.Write(ModelReaderWriterOptions options)

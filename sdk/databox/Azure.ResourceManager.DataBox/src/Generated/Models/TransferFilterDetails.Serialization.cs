@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataAccountType dataAccountType = default;
             Optional<BlobFilterDetails> blobFilterDetails = default;
             Optional<AzureFileFilterDetails> azureFileFilterDetails = default;
-            Optional<IList<FilterFileDetails>> filterFileDetails = default;
+            IList<FilterFileDetails> filterFileDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferFilterDetails(dataAccountType, blobFilterDetails.Value, azureFileFilterDetails.Value, Optional.ToList(filterFileDetails), serializedAdditionalRawData);
+            return new TransferFilterDetails(dataAccountType, blobFilterDetails.Value, azureFileFilterDetails.Value, filterFileDetails ?? new ChangeTrackingList<FilterFileDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferFilterDetails>.Write(ModelReaderWriterOptions options)

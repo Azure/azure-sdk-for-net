@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StatusCodeCount>> statusesSummary = default;
+            IReadOnlyList<StatusCodeCount> statusesSummary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstanceViewStatusesSummary(Optional.ToList(statusesSummary), serializedAdditionalRawData);
+            return new InstanceViewStatusesSummary(statusesSummary ?? new ChangeTrackingList<StatusCodeCount>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstanceViewStatusesSummary>.Write(ModelReaderWriterOptions options)

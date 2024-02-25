@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             Optional<ClientCertificateValidationScheme> validationScheme = default;
-            Optional<IList<string>> allowedThumbprints = default;
+            IList<string> allowedThumbprints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientCertificateAuthentication(Optional.ToNullable(validationScheme), Optional.ToList(allowedThumbprints), serializedAdditionalRawData);
+            return new ClientCertificateAuthentication(Optional.ToNullable(validationScheme), allowedThumbprints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientCertificateAuthentication>.Write(ModelReaderWriterOptions options)

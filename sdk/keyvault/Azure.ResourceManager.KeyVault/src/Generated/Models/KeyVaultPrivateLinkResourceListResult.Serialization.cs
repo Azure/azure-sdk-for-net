@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultPrivateLinkResourceData>> value = default;
+            IReadOnlyList<KeyVaultPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new KeyVaultPrivateLinkResourceListResult(value ?? new ChangeTrackingList<KeyVaultPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

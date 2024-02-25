@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
             Optional<string> maskingCharacter = default;
             Optional<string> modelVersion = default;
-            Optional<IList<string>> piiCategories = default;
+            IList<string> piiCategories = default;
             Optional<string> domain = default;
             string odataType = default;
             Optional<string> name = default;
@@ -260,7 +260,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
+            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, piiCategories ?? new ChangeTrackingList<string>(), domain.Value);
         }
     }
 }

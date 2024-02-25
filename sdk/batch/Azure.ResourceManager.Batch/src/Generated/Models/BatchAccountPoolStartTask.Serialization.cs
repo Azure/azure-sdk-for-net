@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             Optional<string> commandLine = default;
-            Optional<IList<BatchResourceFile>> resourceFiles = default;
-            Optional<IList<BatchEnvironmentSetting>> environmentSettings = default;
+            IList<BatchResourceFile> resourceFiles = default;
+            IList<BatchEnvironmentSetting> environmentSettings = default;
             Optional<BatchUserIdentity> userIdentity = default;
             Optional<int> maxTaskRetryCount = default;
             Optional<bool> waitForSuccess = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolStartTask(commandLine.Value, Optional.ToList(resourceFiles), Optional.ToList(environmentSettings), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value, serializedAdditionalRawData);
+            return new BatchAccountPoolStartTask(commandLine.Value, resourceFiles ?? new ChangeTrackingList<BatchResourceFile>(), environmentSettings ?? new ChangeTrackingList<BatchEnvironmentSetting>(), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolStartTask>.Write(ModelReaderWriterOptions options)

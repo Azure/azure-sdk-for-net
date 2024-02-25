@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             WebConnectivityEndpoint web = default;
-            Optional<IReadOnlyList<SshConnectivityEndpoint>> ssh = default;
+            IReadOnlyList<SshConnectivityEndpoint> ssh = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterConnectivityProfile(web, Optional.ToList(ssh), serializedAdditionalRawData);
+            return new ClusterConnectivityProfile(web, ssh ?? new ChangeTrackingList<SshConnectivityEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterConnectivityProfile>.Write(ModelReaderWriterOptions options)

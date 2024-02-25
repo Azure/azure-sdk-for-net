@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             Optional<string> databaseName = default;
             Optional<BackupType> backupType = default;
-            Optional<IReadOnlyList<string>> backupFiles = default;
+            IReadOnlyList<string> backupFiles = default;
             Optional<int> position = default;
             Optional<bool> isDamaged = default;
             Optional<bool> isCompressed = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseBackupInfo(databaseName.Value, Optional.ToNullable(backupType), Optional.ToList(backupFiles), Optional.ToNullable(position), Optional.ToNullable(isDamaged), Optional.ToNullable(isCompressed), Optional.ToNullable(familyCount), Optional.ToNullable(backupFinishDate), serializedAdditionalRawData);
+            return new DatabaseBackupInfo(databaseName.Value, Optional.ToNullable(backupType), backupFiles ?? new ChangeTrackingList<string>(), Optional.ToNullable(position), Optional.ToNullable(isDamaged), Optional.ToNullable(isCompressed), Optional.ToNullable(familyCount), Optional.ToNullable(backupFinishDate), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseBackupInfo>.Write(ModelReaderWriterOptions options)

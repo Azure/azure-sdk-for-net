@@ -92,7 +92,7 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             Optional<bool> verbose = default;
             Optional<bool> includeEvidence = default;
-            Optional<IList<OncoPhenotypeInferenceType>> inferenceTypes = default;
+            IList<OncoPhenotypeInferenceType> inferenceTypes = default;
             Optional<bool> checkForCancerCase = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +145,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OncoPhenotypeModelConfiguration(Optional.ToNullable(verbose), Optional.ToNullable(includeEvidence), Optional.ToList(inferenceTypes), Optional.ToNullable(checkForCancerCase), serializedAdditionalRawData);
+            return new OncoPhenotypeModelConfiguration(Optional.ToNullable(verbose), Optional.ToNullable(includeEvidence), inferenceTypes ?? new ChangeTrackingList<OncoPhenotypeInferenceType>(), Optional.ToNullable(checkForCancerCase), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OncoPhenotypeModelConfiguration>.Write(ModelReaderWriterOptions options)

@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MySqlFlexibleServerSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Optional<MySqlFlexibleServerBackupProperties> backup = default;
             Optional<MySqlFlexibleServerHighAvailability> highAvailability = default;
             Optional<MySqlFlexibleServerNetwork> network = default;
-            Optional<IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection>> privateEndpointConnections = default;
+            IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> privateEndpointConnections = default;
             Optional<MySqlFlexibleServerMaintenanceWindow> maintenanceWindow = default;
             Optional<ImportSourceProperties> importSourceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), availabilityZone.Value, Optional.ToNullable(createMode), sourceServerResourceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), dataEncryption.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, backup.Value, highAvailability.Value, network.Value, Optional.ToList(privateEndpointConnections), maintenanceWindow.Value, importSourceProperties.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, sku.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), availabilityZone.Value, Optional.ToNullable(createMode), sourceServerResourceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), dataEncryption.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, backup.Value, highAvailability.Value, network.Value, privateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection>(), maintenanceWindow.Value, importSourceProperties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerData>.Write(ModelReaderWriterOptions options)

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> recommendations = default;
+            IReadOnlyList<string> recommendations = default;
             Optional<string> code = default;
             Optional<string> message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeJobErrorItem(Optional.ToList(recommendations), code.Value, message.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeJobErrorItem(recommendations ?? new ChangeTrackingList<string>(), code.Value, message.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeJobErrorItem>.Write(ModelReaderWriterOptions options)

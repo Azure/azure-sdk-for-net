@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BinaryHardening>> value = default;
+            IReadOnlyList<BinaryHardening> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardeningList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BinaryHardeningList(value ?? new ChangeTrackingList<BinaryHardening>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BinaryHardeningList>.Write(ModelReaderWriterOptions options)

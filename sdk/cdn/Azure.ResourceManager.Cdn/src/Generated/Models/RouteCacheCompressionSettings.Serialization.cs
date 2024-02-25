@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<string>> contentTypesToCompress = default;
+            IList<string> contentTypesToCompress = default;
             Optional<bool> isCompressionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteCacheCompressionSettings(Optional.ToList(contentTypesToCompress), Optional.ToNullable(isCompressionEnabled), serializedAdditionalRawData);
+            return new RouteCacheCompressionSettings(contentTypesToCompress ?? new ChangeTrackingList<string>(), Optional.ToNullable(isCompressionEnabled), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteCacheCompressionSettings>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<string> name = default;
             Optional<Uri> uri = default;
-            Optional<IReadOnlyList<string>> messages = default;
+            IReadOnlyList<string> messages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, Optional.ToList(messages), serializedAdditionalRawData);
+            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, messages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerSettingsErrorRecord>.Write(ModelReaderWriterOptions options)

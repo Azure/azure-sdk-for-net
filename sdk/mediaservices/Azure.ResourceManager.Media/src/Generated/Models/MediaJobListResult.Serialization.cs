@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaJobData>> value = default;
+            IReadOnlyList<MediaJobData> value = default;
             Optional<string> odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobListResult(Optional.ToList(value), odataNextLink.Value, serializedAdditionalRawData);
+            return new MediaJobListResult(value ?? new ChangeTrackingList<MediaJobData>(), odataNextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobListResult>.Write(ModelReaderWriterOptions options)

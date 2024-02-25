@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
             Optional<string> password = default;
             Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
+            IReadOnlyList<string> subjectAlternativeNames = default;
             Optional<byte[]> value = default;
             Optional<string> issuer = default;
             Optional<DateTimeOffset> issueDate = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, Optional.ToList(subjectAlternativeNames), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value, serializedAdditionalRawData);
+            return new ContainerAppCertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, subjectAlternativeNames ?? new ChangeTrackingList<string>(), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCertificateProperties>.Write(ModelReaderWriterOptions options)

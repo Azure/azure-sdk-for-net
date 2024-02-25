@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceEndpointPolicyDefinitionData>> value = default;
+            IReadOnlyList<ServiceEndpointPolicyDefinitionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEndpointPolicyDefinitionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceEndpointPolicyDefinitionListResult(value ?? new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceEndpointPolicyDefinitionListResult>.Write(ModelReaderWriterOptions options)

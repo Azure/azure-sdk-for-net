@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> profileName = default;
             Optional<EnabledState> enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorEndpointPatch(Optional.ToDictionary(tags), profileName.Value, Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new FrontDoorEndpointPatch(tags ?? new ChangeTrackingDictionary<string, string>(), profileName.Value, Optional.ToNullable(enabledState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorEndpointPatch>.Write(ModelReaderWriterOptions options)

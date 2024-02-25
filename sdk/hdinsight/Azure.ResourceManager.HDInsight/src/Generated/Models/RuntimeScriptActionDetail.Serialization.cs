@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<string> status = default;
             Optional<string> operation = default;
-            Optional<IReadOnlyList<ScriptActionExecutionSummary>> executionSummary = default;
+            IReadOnlyList<ScriptActionExecutionSummary> executionSummary = default;
             Optional<string> debugInformation = default;
             string name = default;
             Uri uri = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, serializedAdditionalRawData, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value);
+            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, serializedAdditionalRawData, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, executionSummary ?? new ChangeTrackingList<ScriptActionExecutionSummary>(), debugInformation.Value);
         }
 
         BinaryData IPersistableModel<RuntimeScriptActionDetail>.Write(ModelReaderWriterOptions options)

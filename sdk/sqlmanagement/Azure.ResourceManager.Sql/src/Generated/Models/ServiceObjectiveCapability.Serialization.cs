@@ -156,16 +156,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
             Optional<Guid> id = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
+            IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes = default;
             Optional<PerformanceLevelCapability> performanceLevel = default;
             Optional<SqlSku> sku = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
+            IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
             Optional<MaxSizeCapability> includedMaxSize = default;
             Optional<bool> zoneRedundant = default;
             Optional<AutoPauseDelayTimeRange> supportedAutoPauseDelay = default;
-            Optional<IReadOnlyList<MinCapacityCapability>> supportedMinCapacities = default;
+            IReadOnlyList<MinCapacityCapability> supportedMinCapacities = default;
             Optional<string> computeModel = default;
-            Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
+            IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Optional.ToList(supportedMinCapacities), computeModel.Value, Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), performanceLevel.Value, sku.Value, supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(), computeModel.Value, supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceObjectiveCapability>.Write(ModelReaderWriterOptions options)

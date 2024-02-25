@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ResourceZoneRedundantSetting> zoneRedundant = default;
             string resourceType = default;
             Optional<string> targetResourceName = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(zoneRedundant));
+            return new SqlDatabaseResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(zoneRedundant));
         }
 
         BinaryData IPersistableModel<SqlDatabaseResourceSettings>.Write(ModelReaderWriterOptions options)

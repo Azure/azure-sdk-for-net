@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             MobileNetworkSdfDirectionS direction = default;
             IList<string> protocol = default;
             IList<string> remoteIPList = default;
-            Optional<IList<string>> ports = default;
+            IList<string> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkServiceDataFlowTemplate(templateName, direction, protocol, remoteIPList, Optional.ToList(ports), serializedAdditionalRawData);
+            return new MobileNetworkServiceDataFlowTemplate(templateName, direction, protocol, remoteIPList, ports ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkServiceDataFlowTemplate>.Write(ModelReaderWriterOptions options)

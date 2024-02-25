@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> timeGrain = default;
             Optional<SqlMetricUnitType> unit = default;
             Optional<SqlMetricName> name = default;
-            Optional<IReadOnlyList<SqlMetricValue>> metricValues = default;
+            IReadOnlyList<SqlMetricValue> metricValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), serializedAdditionalRawData);
+            return new SqlMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, metricValues ?? new ChangeTrackingList<SqlMetricValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMetric>.Write(ModelReaderWriterOptions options)

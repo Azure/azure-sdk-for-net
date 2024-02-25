@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClusterPoolVersion>> value = default;
+            IReadOnlyList<ClusterPoolVersion> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPoolVersionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ClusterPoolVersionListResult(value ?? new ChangeTrackingList<ClusterPoolVersion>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPoolVersionListResult>.Write(ModelReaderWriterOptions options)

@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> minSupportedTlsVersion = default;
             Optional<HDInsightClusterNetworkProperties> networkProperties = default;
             Optional<HDInsightComputeIsolationProperties> computeIsolationProperties = default;
-            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
+            IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreateOrUpdateProperties(clusterVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterDefinition.Value, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, storageProfile.Value, diskEncryptionProperties.Value, encryptionInTransitProperties.Value, minSupportedTlsVersion.Value, networkProperties.Value, computeIsolationProperties.Value, Optional.ToList(privateLinkConfigurations), serializedAdditionalRawData);
+            return new HDInsightClusterCreateOrUpdateProperties(clusterVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterDefinition.Value, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, storageProfile.Value, diskEncryptionProperties.Value, encryptionInTransitProperties.Value, minSupportedTlsVersion.Value, networkProperties.Value, computeIsolationProperties.Value, privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreateOrUpdateProperties>.Write(ModelReaderWriterOptions options)

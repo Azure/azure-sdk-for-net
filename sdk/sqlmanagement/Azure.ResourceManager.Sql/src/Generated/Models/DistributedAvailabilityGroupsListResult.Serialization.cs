@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DistributedAvailabilityGroupData>> value = default;
+            IReadOnlyList<DistributedAvailabilityGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DistributedAvailabilityGroupsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DistributedAvailabilityGroupsListResult(value ?? new ChangeTrackingList<DistributedAvailabilityGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistributedAvailabilityGroupsListResult>.Write(ModelReaderWriterOptions options)

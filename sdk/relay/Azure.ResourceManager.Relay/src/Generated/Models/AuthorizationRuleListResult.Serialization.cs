@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RelayAuthorizationRuleData>> value = default;
+            IReadOnlyList<RelayAuthorizationRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AuthorizationRuleListResult(value ?? new ChangeTrackingList<RelayAuthorizationRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationRuleListResult>.Write(ModelReaderWriterOptions options)

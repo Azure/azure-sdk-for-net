@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ResourceIdentifier> storageAccountId = default;
             Optional<ResourceIdentifier> serviceBusRuleId = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<string>> categories = default;
+            IList<AzureLocation> locations = default;
+            IList<string> categories = default;
             Optional<RetentionPolicy> retentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogProfilePatch(Optional.ToDictionary(tags), storageAccountId.Value, serviceBusRuleId.Value, Optional.ToList(locations), Optional.ToList(categories), retentionPolicy.Value, serializedAdditionalRawData);
+            return new LogProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), storageAccountId.Value, serviceBusRuleId.Value, locations ?? new ChangeTrackingList<AzureLocation>(), categories ?? new ChangeTrackingList<string>(), retentionPolicy.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogProfilePatch>.Write(ModelReaderWriterOptions options)

@@ -276,10 +276,10 @@ namespace Azure.ResourceManager.Kusto
                 return null;
             }
             KustoSku sku = default;
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Kusto
             Optional<Uri> uri = default;
             Optional<Uri> dataIngestionUri = default;
             Optional<string> stateReason = default;
-            Optional<IList<KustoClusterTrustedExternalTenant>> trustedExternalTenants = default;
+            IList<KustoClusterTrustedExternalTenant> trustedExternalTenants = default;
             Optional<OptimizedAutoscale> optimizedAutoscale = default;
             Optional<bool> enableDiskEncryption = default;
             Optional<bool> enableStreamingIngest = default;
@@ -300,15 +300,15 @@ namespace Azure.ResourceManager.Kusto
             Optional<KustoLanguageExtensionList> languageExtensions = default;
             Optional<bool> enableDoubleEncryption = default;
             Optional<KustoClusterPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<string>> allowedIPRangeList = default;
+            IList<string> allowedIPRangeList = default;
             Optional<KustoClusterEngineType> engineType = default;
-            Optional<IList<AcceptedAudience>> acceptedAudiences = default;
+            IList<AcceptedAudience> acceptedAudiences = default;
             Optional<bool> enableAutoStop = default;
             Optional<KustoClusterNetworkAccessFlag> restrictOutboundNetworkAccess = default;
-            Optional<IList<string>> allowedFqdnList = default;
+            IList<string> allowedFqdnList = default;
             Optional<KustoClusterPublicIPType> publicIPType = default;
             Optional<string> virtualClusterGraduationProperties = default;
-            Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<MigrationClusterProperties> migrationCluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), identity, Optional.ToNullable(etag), Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, Optional.ToList(trustedExternalTenants), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), Optional.ToList(allowedIPRangeList), Optional.ToNullable(engineType), Optional.ToList(acceptedAudiences), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, Optional.ToList(privateEndpointConnections), migrationCluster.Value, serializedAdditionalRawData);
+            return new KustoClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, zones ?? new ChangeTrackingList<string>(), identity, Optional.ToNullable(etag), Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>(), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), allowedIPRangeList ?? new ChangeTrackingList<string>(), Optional.ToNullable(engineType), acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>(), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), allowedFqdnList ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>(), migrationCluster.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoClusterData>.Write(ModelReaderWriterOptions options)
