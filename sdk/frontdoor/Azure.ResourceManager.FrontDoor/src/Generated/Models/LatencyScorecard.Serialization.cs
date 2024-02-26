@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LatencyScorecard(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, id0.Value, name0.Value, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), country.Value, latencyMetrics ?? new ChangeTrackingList<LatencyMetric>(), serializedAdditionalRawData);
+            return new LatencyScorecard(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, id0.Value, name0.Value, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), country.Value, latencyMetrics ?? new ChangeTrackingList<LatencyMetric>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LatencyScorecard>.Write(ModelReaderWriterOptions options)

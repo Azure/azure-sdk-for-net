@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Billing
             Optional<string> beneficiaryTenantId = default;
             Optional<string> billingFrequency = default;
             Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<IReadOnlyDictionary<string, string>> billingPolicies = default;
+            IReadOnlyDictionary<string, string> billingPolicies = default;
             Optional<string> billingProfileDisplayName = default;
             Optional<string> billingProfileName = default;
             Optional<string> consumptionCostCenter = default;
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Billing
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionAliasData(id, name, type, systemData.Value, Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, Optional.ToDictionary(billingPolicies), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Optional.ToNullable(status), subscriptionId.Value, suspensionReasons ?? new ChangeTrackingList<string>(), Optional.ToNullable(termDuration), Optional.ToNullable(termStartDate), Optional.ToNullable(termEndDate), Optional.ToNullable(subscriptionEnrollmentAccountStatus), Optional.ToNullable(enrollmentAccountStartDate), billingSubscriptionId.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionAliasData(id, name, type, systemData.Value, Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, billingPolicies ?? new ChangeTrackingDictionary<string, string>(), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Optional.ToNullable(status), subscriptionId.Value, suspensionReasons ?? new ChangeTrackingList<string>(), Optional.ToNullable(termDuration), Optional.ToNullable(termStartDate), Optional.ToNullable(termEndDate), Optional.ToNullable(subscriptionEnrollmentAccountStatus), Optional.ToNullable(enrollmentAccountStartDate), billingSubscriptionId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionAliasData>.Write(ModelReaderWriterOptions options)

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> name = default;
             Optional<string> targetDatabaseName = default;
             Optional<bool> makeSourceDBReadOnly = default;
-            Optional<IDictionary<string, string>> tableMap = default;
+            IDictionary<string, string> tableMap = default;
             Optional<BinaryData> schemaSetting = default;
             Optional<string> id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToNullable(makeSourceDBReadOnly), Optional.ToDictionary(tableMap), schemaSetting.Value, id.Value, serializedAdditionalRawData);
+            return new MigrateSqlServerSqlDBDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToNullable(makeSourceDBReadOnly), tableMap ?? new ChangeTrackingDictionary<string, string>(), schemaSetting.Value, id.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBDatabaseInput>.Write(ModelReaderWriterOptions options)

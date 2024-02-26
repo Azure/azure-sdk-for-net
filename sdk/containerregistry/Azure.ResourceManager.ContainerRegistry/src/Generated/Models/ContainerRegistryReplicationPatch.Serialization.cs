@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> regionEndpointEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryReplicationPatch(Optional.ToDictionary(tags), Optional.ToNullable(regionEndpointEnabled), serializedAdditionalRawData);
+            return new ContainerRegistryReplicationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(regionEndpointEnabled), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryReplicationPatch>.Write(ModelReaderWriterOptions options)

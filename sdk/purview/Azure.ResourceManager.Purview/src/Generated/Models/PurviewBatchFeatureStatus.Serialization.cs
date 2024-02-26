@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, bool>> features = default;
+            IReadOnlyDictionary<string, bool> features = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewBatchFeatureStatus(Optional.ToDictionary(features), serializedAdditionalRawData);
+            return new PurviewBatchFeatureStatus(features ?? new ChangeTrackingDictionary<string, bool>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewBatchFeatureStatus>.Write(ModelReaderWriterOptions options)

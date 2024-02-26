@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, migrationId.Value, currentStatus.Value, Optional.ToNullable(migrationMode), sourceDbServerMetadata.Value, targetDbServerMetadata.Value, sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerResourceId.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, dbsToMigrate ?? new ChangeTrackingList<string>(), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(migrationWindowEndTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(), Optional.ToNullable(cancel), dbsToCancelMigrationOn ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PostgreSqlMigrationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, migrationId.Value, currentStatus.Value, Optional.ToNullable(migrationMode), sourceDbServerMetadata.Value, targetDbServerMetadata.Value, sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerResourceId.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, dbsToMigrate ?? new ChangeTrackingList<string>(), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(migrationWindowEndTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(), Optional.ToNullable(cancel), dbsToCancelMigrationOn ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationData>.Write(ModelReaderWriterOptions options)

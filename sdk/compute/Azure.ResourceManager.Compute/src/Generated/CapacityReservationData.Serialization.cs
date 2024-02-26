@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
             }
             ComputeSku sku = default;
             IList<string> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, zones ?? new ChangeTrackingList<string>(), reservationId.Value, Optional.ToNullable(platformFaultDomainCount), virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new CapacityReservationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, zones ?? new ChangeTrackingList<string>(), reservationId.Value, Optional.ToNullable(platformFaultDomainCount), virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationData>.Write(ModelReaderWriterOptions options)

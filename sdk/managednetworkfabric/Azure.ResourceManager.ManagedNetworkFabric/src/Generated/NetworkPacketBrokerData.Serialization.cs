@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkPacketBrokerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, networkFabricId, networkDeviceIds ?? new ChangeTrackingList<ResourceIdentifier>(), sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>(), networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(), neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkPacketBrokerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, networkFabricId, networkDeviceIds ?? new ChangeTrackingList<ResourceIdentifier>(), sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>(), networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(), neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkPacketBrokerData>.Write(ModelReaderWriterOptions options)

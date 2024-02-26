@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<UserDefinedResourcesProperties> userDefinedResources = default;
             IList<RecommendationConfigurationProperties> recommendationsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, userDefinedResources.Value, recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>());
+            return new IotSecuritySolutionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, userDefinedResources.Value, recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>());
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionPatch>.Write(ModelReaderWriterOptions options)

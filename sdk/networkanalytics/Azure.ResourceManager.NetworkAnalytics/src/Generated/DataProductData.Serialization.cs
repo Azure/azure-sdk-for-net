@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, resourceGuid.Value, Optional.ToNullable(provisioningState), publisher.Value, product.Value, majorVersion.Value, owners ?? new ChangeTrackingList<string>(), Optional.ToNullable(redundancy), purviewAccount.Value, purviewCollection.Value, Optional.ToNullable(privateLinksEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(customerManagedKeyEncryptionEnabled), customerEncryptionKey.Value, networkacls.Value, managedResourceGroupConfiguration.Value, availableMinorVersions ?? new ChangeTrackingList<string>(), currentMinorVersion.Value, documentation.Value, consumptionEndpoints.Value, keyVaultUrl.Value, serializedAdditionalRawData);
+            return new DataProductData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, resourceGuid.Value, Optional.ToNullable(provisioningState), publisher.Value, product.Value, majorVersion.Value, owners ?? new ChangeTrackingList<string>(), Optional.ToNullable(redundancy), purviewAccount.Value, purviewCollection.Value, Optional.ToNullable(privateLinksEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(customerManagedKeyEncryptionEnabled), customerEncryptionKey.Value, networkacls.Value, managedResourceGroupConfiguration.Value, availableMinorVersions ?? new ChangeTrackingList<string>(), currentMinorVersion.Value, documentation.Value, consumptionEndpoints.Value, keyVaultUrl.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductData>.Write(ModelReaderWriterOptions options)

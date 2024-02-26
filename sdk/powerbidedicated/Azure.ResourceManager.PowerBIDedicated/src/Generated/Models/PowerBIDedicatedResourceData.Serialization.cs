@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             Optional<string> name = default;
             Optional<string> type = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerBIDedicatedResourceData(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), systemData.Value, serializedAdditionalRawData);
+            return new PowerBIDedicatedResourceData(id.Value, name.Value, type.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), systemData.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PowerBIDedicatedResourceData>.Write(ModelReaderWriterOptions options)

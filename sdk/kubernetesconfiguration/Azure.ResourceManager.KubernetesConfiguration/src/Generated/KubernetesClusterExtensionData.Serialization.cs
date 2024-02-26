@@ -265,13 +265,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Optional<string> releaseTrain = default;
             Optional<string> version = default;
             Optional<KubernetesClusterExtensionScope> scope = default;
-            Optional<IDictionary<string, string>> configurationSettings = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            IDictionary<string, string> configurationSettings = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
             Optional<string> currentVersion = default;
             Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
             IList<KubernetesClusterExtensionStatus> statuses = default;
             Optional<ResponseError> errorInfo = default;
-            Optional<IReadOnlyDictionary<string, string>> customLocationSettings = default;
+            IReadOnlyDictionary<string, string> customLocationSettings = default;
             Optional<Uri> packageUri = default;
             Optional<ManagedServiceIdentity> aksAssignedIdentity = default;
             Optional<bool> isSystemExtension = default;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionData(id, name, type, systemData.Value, identity, plan, extensionType.Value, Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, scope.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), currentVersion.Value, Optional.ToNullable(provisioningState), statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>(), errorInfo.Value, Optional.ToDictionary(customLocationSettings), packageUri.Value, aksAssignedIdentity, Optional.ToNullable(isSystemExtension), serializedAdditionalRawData);
+            return new KubernetesClusterExtensionData(id, name, type, systemData.Value, identity, plan, extensionType.Value, Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, scope.Value, configurationSettings ?? new ChangeTrackingDictionary<string, string>(), configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(), currentVersion.Value, Optional.ToNullable(provisioningState), statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>(), errorInfo.Value, customLocationSettings ?? new ChangeTrackingDictionary<string, string>(), packageUri.Value, aksAssignedIdentity, Optional.ToNullable(isSystemExtension), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionData>.Write(ModelReaderWriterOptions options)

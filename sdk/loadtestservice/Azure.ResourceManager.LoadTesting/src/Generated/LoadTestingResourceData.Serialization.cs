@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.LoadTesting
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.LoadTesting
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, description.Value, Optional.ToNullable(provisioningState), dataPlaneUri.Value, encryption.Value, serializedAdditionalRawData);
+            return new LoadTestingResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, description.Value, Optional.ToNullable(provisioningState), dataPlaneUri.Value, encryption.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingResourceData>.Write(ModelReaderWriterOptions options)

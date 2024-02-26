@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryLinkedServiceReference> sparkJobLinkedService = default;
             Optional<string> className = default;
             Optional<DataFactoryElement<string>> proxyUser = default;
-            Optional<IDictionary<string, BinaryData>> sparkConfig = default;
+            IDictionary<string, BinaryData> sparkConfig = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightSparkActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, rootPath, entryFilePath, arguments ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(getDebugInfo), sparkJobLinkedService, className.Value, proxyUser.Value, Optional.ToDictionary(sparkConfig));
+            return new HDInsightSparkActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, rootPath, entryFilePath, arguments ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(getDebugInfo), sparkJobLinkedService, className.Value, proxyUser.Value, sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HDInsightSparkActivity>.Write(ModelReaderWriterOptions options)

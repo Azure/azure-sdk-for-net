@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<SecurityCenterResourceDetails> resourceDetails = default;
             Optional<string> displayName = default;
-            Optional<IDictionary<string, string>> additionalData = default;
+            IDictionary<string, string> additionalData = default;
             Optional<AssessmentLinks> links = default;
             Optional<SecurityAssessmentMetadataProperties> metadata = default;
             Optional<SecurityAssessmentPartner> partnersData = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentData(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, Optional.ToDictionary(additionalData), links.Value, metadata.Value, partnersData.Value, status.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentData(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, additionalData ?? new ChangeTrackingDictionary<string, string>(), links.Value, metadata.Value, partnersData.Value, status.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentData>.Write(ModelReaderWriterOptions options)

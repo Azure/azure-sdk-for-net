@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> publicIPId = default;
             Optional<string> loadBalancerId = default;
             Optional<string> networkSecurityGroupId = default;
-            Optional<IDictionary<string, string>> extendedProperties = default;
+            IDictionary<string, string> extendedProperties = default;
             Optional<string> provisioningState = default;
             Optional<Guid> uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>(), mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>(), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Optional.ToDictionary(extendedProperties), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>(), mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>(), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, extendedProperties ?? new ChangeTrackingDictionary<string, string>(), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabData>.Write(ModelReaderWriterOptions options)

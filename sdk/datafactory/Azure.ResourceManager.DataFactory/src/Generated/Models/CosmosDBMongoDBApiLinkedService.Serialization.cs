@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<bool>> isServerVersionAbove32 = default;
             DataFactoryElement<string> connectionString = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CosmosDBMongoDBApiLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, isServerVersionAbove32.Value, connectionString, database);
+            return new CosmosDBMongoDBApiLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, isServerVersionAbove32.Value, connectionString, database);
         }
 
         BinaryData IPersistableModel<CosmosDBMongoDBApiLinkedService>.Write(ModelReaderWriterOptions options)

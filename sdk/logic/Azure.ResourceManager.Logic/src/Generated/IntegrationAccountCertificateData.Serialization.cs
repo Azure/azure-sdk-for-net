@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountCertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, key.Value, publicCertificate.Value, serializedAdditionalRawData);
+            return new IntegrationAccountCertificateData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, key.Value, publicCertificate.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountCertificateData>.Write(ModelReaderWriterOptions options)

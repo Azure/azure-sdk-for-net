@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Quantum
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Quantum
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuantumWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, providers ?? new ChangeTrackingList<Provider>(), Optional.ToNullable(usable), Optional.ToNullable(provisioningState), storageAccount.Value, endpointUri.Value, serializedAdditionalRawData);
+            return new QuantumWorkspaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, providers ?? new ChangeTrackingList<Provider>(), Optional.ToNullable(usable), Optional.ToNullable(provisioningState), storageAccount.Value, endpointUri.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuantumWorkspaceData>.Write(ModelReaderWriterOptions options)

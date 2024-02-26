@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> keyEntityId = default;
             Optional<string> valueData = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsRegistryValueEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, keyEntityId.Value, valueData.Value, valueName.Value, Optional.ToNullable(valueType));
+            return new SecurityInsightsRegistryValueEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, keyEntityId.Value, valueData.Value, valueName.Value, Optional.ToNullable(valueType));
         }
 
         BinaryData IPersistableModel<SecurityInsightsRegistryValueEntity>.Write(ModelReaderWriterOptions options)

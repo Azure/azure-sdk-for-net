@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> secrets = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> secrets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildpackBindingLaunchProperties(Optional.ToDictionary(properties), Optional.ToDictionary(secrets), serializedAdditionalRawData);
+            return new BuildpackBindingLaunchProperties(properties ?? new ChangeTrackingDictionary<string, string>(), secrets ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildpackBindingLaunchProperties>.Write(ModelReaderWriterOptions options)

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 return null;
             }
             Optional<NotificationHubSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubTestSendResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(success), Optional.ToNullable(failure), results.Value, sku.Value, serializedAdditionalRawData);
+            return new NotificationHubTestSendResult(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(success), Optional.ToNullable(failure), results.Value, sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubTestSendResult>.Write(ModelReaderWriterOptions options)

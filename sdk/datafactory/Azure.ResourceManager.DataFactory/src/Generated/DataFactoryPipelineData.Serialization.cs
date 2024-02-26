@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.DataFactory
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             IList<PipelineActivity> activities = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IDictionary<string, PipelineVariableSpecification>> variables = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IDictionary<string, PipelineVariableSpecification> variables = default;
             Optional<int> concurrency = default;
             IList<BinaryData> annotations = default;
-            Optional<IDictionary<string, BinaryData>> runDimensions = default;
+            IDictionary<string, BinaryData> runDimensions = default;
             Optional<PipelineFolder> folder = default;
             Optional<DataFactoryPipelinePolicy> policy = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineData(id, name, type, systemData.Value, description.Value, activities ?? new ChangeTrackingList<PipelineActivity>(), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), annotations ?? new ChangeTrackingList<BinaryData>(), Optional.ToDictionary(runDimensions), folder.Value, policy.Value, Optional.ToNullable(etag), additionalProperties);
+            return new DataFactoryPipelineData(id, name, type, systemData.Value, description.Value, activities ?? new ChangeTrackingList<PipelineActivity>(), parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), variables ?? new ChangeTrackingDictionary<string, PipelineVariableSpecification>(), Optional.ToNullable(concurrency), annotations ?? new ChangeTrackingList<BinaryData>(), runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(), folder.Value, policy.Value, Optional.ToNullable(etag), additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineData>.Write(ModelReaderWriterOptions options)

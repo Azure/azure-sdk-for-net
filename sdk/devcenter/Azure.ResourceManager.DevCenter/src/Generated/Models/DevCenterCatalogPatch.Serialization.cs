@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<DevCenterGitCatalog> gitHub = default;
             Optional<DevCenterGitCatalog> adoGit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterCatalogPatch(Optional.ToDictionary(tags), gitHub.Value, adoGit.Value, serializedAdditionalRawData);
+            return new DevCenterCatalogPatch(tags ?? new ChangeTrackingDictionary<string, string>(), gitHub.Value, adoGit.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterCatalogPatch>.Write(ModelReaderWriterOptions options)

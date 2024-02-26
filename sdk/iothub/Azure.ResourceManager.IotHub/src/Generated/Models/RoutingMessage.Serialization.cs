@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             Optional<string> body = default;
-            Optional<IDictionary<string, string>> appProperties = default;
-            Optional<IDictionary<string, string>> systemProperties = default;
+            IDictionary<string, string> appProperties = default;
+            IDictionary<string, string> systemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingMessage(body.Value, Optional.ToDictionary(appProperties), Optional.ToDictionary(systemProperties), serializedAdditionalRawData);
+            return new RoutingMessage(body.Value, appProperties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingMessage>.Write(ModelReaderWriterOptions options)
