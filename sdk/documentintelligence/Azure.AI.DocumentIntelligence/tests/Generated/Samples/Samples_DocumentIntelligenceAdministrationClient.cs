@@ -1619,7 +1619,13 @@ new ComponentDocumentModelDetails("<modelId>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            CopyAuthorization copyToRequest = new CopyAuthorization("<targetResourceId>", "<targetResourceRegion>", "<targetModelId>", new Uri("http://localhost:3000"), "<accessToken>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            CopyAuthorization copyToRequest = new CopyAuthorization(
+                "<targetResourceId>",
+                "<targetResourceRegion>",
+                "<targetModelId>",
+                new Uri("http://localhost:3000"),
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
             Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1632,7 +1638,13 @@ new ComponentDocumentModelDetails("<modelId>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            CopyAuthorization copyToRequest = new CopyAuthorization("<targetResourceId>", "<targetResourceRegion>", "<targetModelId>", new Uri("http://localhost:3000"), "<accessToken>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            CopyAuthorization copyToRequest = new CopyAuthorization(
+                "<targetResourceId>",
+                "<targetResourceRegion>",
+                "<targetModelId>",
+                new Uri("http://localhost:3000"),
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
             Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1731,7 +1743,13 @@ new ComponentDocumentModelDetails("<modelId>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            CopyAuthorization copyToRequest = new CopyAuthorization("<targetResourceId>", "<targetResourceRegion>", "<targetModelId>", new Uri("http://localhost:3000"), "<accessToken>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            CopyAuthorization copyToRequest = new CopyAuthorization(
+                "<targetResourceId>",
+                "<targetResourceRegion>",
+                "<targetModelId>",
+                new Uri("http://localhost:3000"),
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
             Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1744,7 +1762,13 @@ new ComponentDocumentModelDetails("<modelId>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            CopyAuthorization copyToRequest = new CopyAuthorization("<targetResourceId>", "<targetResourceRegion>", "<targetModelId>", new Uri("http://localhost:3000"), "<accessToken>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            CopyAuthorization copyToRequest = new CopyAuthorization(
+                "<targetResourceId>",
+                "<targetResourceRegion>",
+                "<targetModelId>",
+                new Uri("http://localhost:3000"),
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
             Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }

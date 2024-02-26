@@ -201,7 +201,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationGroupPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, friendlyName.Value, Optional.ToNullable(showInFeed), serializedAdditionalRawData);
+            return new VirtualApplicationGroupPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                friendlyName.Value,
+                Optional.ToNullable(showInFeed),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationGroupPatch>.Write(ModelReaderWriterOptions options)

@@ -90,7 +90,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceWriteCancelEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization, claims, correlationId.Value, httpRequest);
+            return new ResourceWriteCancelEventData(
+                tenantId.Value,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                resourceProvider.Value,
+                resourceUri.Value,
+                operationName.Value,
+                status.Value,
+                authorization,
+                claims,
+                correlationId.Value,
+                httpRequest);
         }
 
         internal partial class ResourceWriteCancelEventDataConverter : JsonConverter<ResourceWriteCancelEventData>

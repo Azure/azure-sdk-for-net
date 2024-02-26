@@ -174,7 +174,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value, serializedAdditionalRawData);
+            return new EventHubDestination(
+                name.Value,
+                storageAccountResourceId.Value,
+                blobContainer.Value,
+                archiveNameFormat.Value,
+                Optional.ToNullable(dataLakeSubscriptionId),
+                dataLakeAccountName.Value,
+                dataLakeFolderPath.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubDestination>.Write(ModelReaderWriterOptions options)

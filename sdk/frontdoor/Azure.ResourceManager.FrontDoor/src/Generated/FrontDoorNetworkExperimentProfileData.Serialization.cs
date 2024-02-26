@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorNetworkExperimentProfileData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(resourceState), Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new FrontDoorNetworkExperimentProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(resourceState),
+                Optional.ToNullable(enabledState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorNetworkExperimentProfileData>.Write(ModelReaderWriterOptions options)

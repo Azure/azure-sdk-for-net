@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.Dynatrace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceTagRuleData(id, name, type, systemData.Value, logRules.Value, metricRules.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DynatraceTagRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                logRules.Value,
+                metricRules.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceTagRuleData>.Write(ModelReaderWriterOptions options)

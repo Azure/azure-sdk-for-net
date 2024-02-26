@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LcmConfigurationSetting(Optional.ToNullable(configurationMode), Optional.ToNullable(allowModuleOverwrite), Optional.ToNullable(actionAfterReboot), Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(rebootIfNeeded), Optional.ToNullable(configurationModeFrequencyMins), serializedAdditionalRawData);
+            return new LcmConfigurationSetting(
+                Optional.ToNullable(configurationMode),
+                Optional.ToNullable(allowModuleOverwrite),
+                Optional.ToNullable(actionAfterReboot),
+                Optional.ToNullable(refreshFrequencyMins),
+                Optional.ToNullable(rebootIfNeeded),
+                Optional.ToNullable(configurationModeFrequencyMins),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LcmConfigurationSetting>.Write(ModelReaderWriterOptions options)

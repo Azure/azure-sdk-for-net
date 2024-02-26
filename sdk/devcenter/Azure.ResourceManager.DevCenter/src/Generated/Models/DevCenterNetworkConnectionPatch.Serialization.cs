@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterNetworkConnectionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), serializedAdditionalRawData, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value);
+            return new DevCenterNetworkConnectionPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                subnetId.Value,
+                domainName.Value,
+                organizationUnit.Value,
+                domainUsername.Value,
+                domainPassword.Value);
         }
 
         BinaryData IPersistableModel<DevCenterNetworkConnectionPatch>.Write(ModelReaderWriterOptions options)

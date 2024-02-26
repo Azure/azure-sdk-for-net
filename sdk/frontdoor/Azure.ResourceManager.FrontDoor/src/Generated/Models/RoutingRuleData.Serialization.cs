@@ -281,7 +281,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, frontendEndpoints ?? new ChangeTrackingList<WritableSubResource>(), acceptedProtocols ?? new ChangeTrackingList<FrontDoorProtocol>(), patternsToMatch ?? new ChangeTrackingList<string>(), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine, webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState));
+            return new RoutingRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                frontendEndpoints ?? new ChangeTrackingList<WritableSubResource>(),
+                acceptedProtocols ?? new ChangeTrackingList<FrontDoorProtocol>(),
+                patternsToMatch ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(enabledState),
+                routeConfiguration.Value,
+                rulesEngine,
+                webApplicationFirewallPolicyLink,
+                Optional.ToNullable(resourceState));
         }
 
         BinaryData IPersistableModel<RoutingRuleData>.Write(ModelReaderWriterOptions options)

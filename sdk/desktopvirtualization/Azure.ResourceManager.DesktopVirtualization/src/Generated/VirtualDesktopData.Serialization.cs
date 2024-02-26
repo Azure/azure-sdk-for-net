@@ -204,7 +204,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDesktopData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, iconHash.Value, iconContent.Value, serializedAdditionalRawData);
+            return new VirtualDesktopData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                objectId.Value,
+                description.Value,
+                friendlyName.Value,
+                iconHash.Value,
+                iconContent.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDesktopData>.Write(ModelReaderWriterOptions options)

@@ -61,7 +61,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutputAsset(odataType, error.Value, label.Value, progress, state, assetName.Value);
+            return new MediaJobOutputAsset(
+                odataType,
+                error.Value,
+                label.Value,
+                progress,
+                state,
+                assetName.Value);
         }
     }
 }

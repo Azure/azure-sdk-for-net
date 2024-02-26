@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck), serializedAdditionalRawData);
+            return new FrontDoorWebApplicationFirewallPolicySettings(
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(mode),
+                redirectUrl.Value,
+                Optional.ToNullable(customBlockResponseStatusCode),
+                customBlockResponseBody.Value,
+                Optional.ToNullable(requestBodyCheck),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(ModelReaderWriterOptions options)

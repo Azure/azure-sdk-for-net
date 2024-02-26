@@ -135,7 +135,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedClinicalCodedElement(system, code, name.Value, value.Value, semanticType.Value, category.Value, serializedAdditionalRawData);
+            return new ExtendedClinicalCodedElement(
+                system,
+                code,
+                name.Value,
+                value.Value,
+                semanticType.Value,
+                category.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedClinicalCodedElement>.Write(ModelReaderWriterOptions options)

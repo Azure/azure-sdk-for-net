@@ -255,7 +255,20 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), metricId.Value, status.Value, Optional.ToNullable(supportsScaling), serializedAdditionalRawData);
+            return new EventHubsClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                metricId.Value,
+                status.Value,
+                Optional.ToNullable(supportsScaling),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsClusterData>.Write(ModelReaderWriterOptions options)

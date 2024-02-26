@@ -224,7 +224,17 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), provisioningIssues ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationIssues>(), networkSecurityPerimeter.Value, resourceAssociation.Value, profile.Value, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                provisioningIssues ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationIssues>(),
+                networkSecurityPerimeter.Value,
+                resourceAssociation.Value,
+                profile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options)

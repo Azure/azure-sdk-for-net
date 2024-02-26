@@ -60,7 +60,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(minLastTimestamp.Value, typeOfStreamWithMinLastTimestamp.Value, maxLastTimestamp.Value, typeOfStreamWithMaxLastTimestamp.Value, timescaleOfMinLastTimestamp.Value, timescaleOfMaxLastTimestamp.Value);
+            return new MediaLiveEventIncomingStreamsOutOfSyncEventData(
+                minLastTimestamp.Value,
+                typeOfStreamWithMinLastTimestamp.Value,
+                maxLastTimestamp.Value,
+                typeOfStreamWithMaxLastTimestamp.Value,
+                timescaleOfMinLastTimestamp.Value,
+                timescaleOfMaxLastTimestamp.Value);
         }
 
         internal partial class MediaLiveEventIncomingStreamsOutOfSyncEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamsOutOfSyncEventData>

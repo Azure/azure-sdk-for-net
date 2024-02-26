@@ -204,7 +204,16 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightIPConfiguration(id.Value, name, Optional.ToNullable(type), Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, serializedAdditionalRawData);
+            return new HDInsightIPConfiguration(
+                id.Value,
+                name,
+                Optional.ToNullable(type),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(primary),
+                privateIPAddress.Value,
+                Optional.ToNullable(privateIPAllocationMethod),
+                subnet,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightIPConfiguration>.Write(ModelReaderWriterOptions options)

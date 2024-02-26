@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterRole(name.Value, Optional.ToNullable(minInstanceCount), Optional.ToNullable(targetInstanceCount), vmGroupName.Value, autoScale.Value, hardwareProfile.Value, osProfile.Value, virtualNetworkProfile.Value, dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>(), scriptActions ?? new ChangeTrackingList<ScriptAction>(), Optional.ToNullable(encryptDataDisks), serializedAdditionalRawData);
+            return new HDInsightClusterRole(
+                name.Value,
+                Optional.ToNullable(minInstanceCount),
+                Optional.ToNullable(targetInstanceCount),
+                vmGroupName.Value,
+                autoScale.Value,
+                hardwareProfile.Value,
+                osProfile.Value,
+                virtualNetworkProfile.Value,
+                dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>(),
+                scriptActions ?? new ChangeTrackingList<ScriptAction>(),
+                Optional.ToNullable(encryptDataDisks),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterRole>.Write(ModelReaderWriterOptions options)

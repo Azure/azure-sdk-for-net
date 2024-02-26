@@ -78,7 +78,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsIncomingCallEventData(to.Value, @from.Value, serverCallId.Value, callerDisplayName.Value, customContext.Value, incomingCallContext.Value, correlationId.Value);
+            return new AcsIncomingCallEventData(
+                to.Value,
+                @from.Value,
+                serverCallId.Value,
+                callerDisplayName.Value,
+                customContext.Value,
+                incomingCallContext.Value,
+                correlationId.Value);
         }
 
         internal partial class AcsIncomingCallEventDataConverter : JsonConverter<AcsIncomingCallEventData>

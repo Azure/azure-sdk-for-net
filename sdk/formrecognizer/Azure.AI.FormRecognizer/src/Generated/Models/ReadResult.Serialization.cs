@@ -83,7 +83,14 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new ReadResult(page, angle, width, height, unit, lines ?? new ChangeTrackingList<TextLine>(), selectionMarks ?? new ChangeTrackingList<SelectionMark>());
+            return new ReadResult(
+                page,
+                angle,
+                width,
+                height,
+                unit,
+                lines ?? new ChangeTrackingList<TextLine>(),
+                selectionMarks ?? new ChangeTrackingList<SelectionMark>());
         }
     }
 }

@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedGrafanaPatchProperties(Optional.ToNullable(zoneRedundancy), Optional.ToNullable(apiKey), Optional.ToNullable(deterministicOutboundIP), Optional.ToNullable(publicNetworkAccess), grafanaIntegrations.Value, enterpriseConfigurations.Value, grafanaConfigurations.Value, grafanaPlugins ?? new ChangeTrackingDictionary<string, GrafanaPlugin>(), grafanaMajorVersion.Value, serializedAdditionalRawData);
+            return new ManagedGrafanaPatchProperties(
+                Optional.ToNullable(zoneRedundancy),
+                Optional.ToNullable(apiKey),
+                Optional.ToNullable(deterministicOutboundIP),
+                Optional.ToNullable(publicNetworkAccess),
+                grafanaIntegrations.Value,
+                enterpriseConfigurations.Value,
+                grafanaConfigurations.Value,
+                grafanaPlugins ?? new ChangeTrackingDictionary<string, GrafanaPlugin>(),
+                grafanaMajorVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedGrafanaPatchProperties>.Write(ModelReaderWriterOptions options)

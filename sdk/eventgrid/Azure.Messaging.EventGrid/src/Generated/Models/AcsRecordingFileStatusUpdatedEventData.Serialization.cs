@@ -90,7 +90,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Optional.ToNullable(recordingStartTime), Optional.ToNullable(recordingDurationMs), Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), sessionEndReason.Value);
+            return new AcsRecordingFileStatusUpdatedEventData(
+                recordingStorageInfo.Value,
+                Optional.ToNullable(recordingStartTime),
+                Optional.ToNullable(recordingDurationMs),
+                Optional.ToNullable(recordingContentType),
+                Optional.ToNullable(recordingChannelType),
+                Optional.ToNullable(recordingFormatType),
+                sessionEndReason.Value);
         }
 
         internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>

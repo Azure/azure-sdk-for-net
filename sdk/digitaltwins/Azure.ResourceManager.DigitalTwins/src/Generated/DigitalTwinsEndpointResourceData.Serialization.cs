@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsEndpointResourceData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new DigitalTwinsEndpointResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsEndpointResourceData>.Write(ModelReaderWriterOptions options)

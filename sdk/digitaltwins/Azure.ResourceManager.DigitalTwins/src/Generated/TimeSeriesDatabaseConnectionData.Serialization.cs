@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TimeSeriesDatabaseConnectionData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new TimeSeriesDatabaseConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TimeSeriesDatabaseConnectionData>.Write(ModelReaderWriterOptions options)

@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointUpdate(id.Value, Optional.ToNullable(location), immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointUpdate(
+                id.Value,
+                Optional.ToNullable(location),
+                immutableSubscriptionId.Value,
+                immutableResourceId.Value,
+                vnetTrafficTag.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointUpdate>.Write(ModelReaderWriterOptions options)
