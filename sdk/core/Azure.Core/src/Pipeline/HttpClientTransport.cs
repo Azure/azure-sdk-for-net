@@ -67,7 +67,7 @@ namespace Azure.Core.Pipeline
         public override void Process(HttpMessage message)
         {
 #if NET5_0_OR_GREATER
-            ProcessAsync(message, false).EnsureCompleted();
+            ProcessSyncOrAsync(message, async: false).EnsureCompleted();
 #else
             // Intentionally blocking here
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
@@ -77,10 +77,11 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        public override ValueTask ProcessAsync(HttpMessage message) => ProcessAsync(message, true);
+        public override ValueTask ProcessAsync(HttpMessage message)
+            => ProcessSyncOrAsync(message, async: true);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard
-        private async ValueTask ProcessAsync(HttpMessage message, bool async)
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
 #pragma warning restore CA1801
         {
             using HttpRequestMessage httpRequest = BuildRequestMessage(message);
