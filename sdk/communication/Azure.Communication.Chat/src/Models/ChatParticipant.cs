@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Chat
 {
@@ -38,9 +39,14 @@ namespace Azure.Communication.Chat
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
 
+        /// <summary>
+        /// Metadata
+        /// </summary>
+        public IDictionary<string, string> Metadata { get; }
+
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime);
+            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime, Metadata);
         }
     }
 }

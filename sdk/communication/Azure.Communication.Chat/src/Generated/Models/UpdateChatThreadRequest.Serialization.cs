@@ -20,6 +20,22 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (RetentionPolicy != null)
+            {
+                writer.WritePropertyName("retentionPolicy"u8);
+                writer.WriteObjectValue(RetentionPolicy);
+            }
             writer.WriteEndObject();
         }
     }
