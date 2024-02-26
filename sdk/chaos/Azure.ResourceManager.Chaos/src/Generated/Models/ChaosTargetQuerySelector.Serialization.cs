@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value);
+                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

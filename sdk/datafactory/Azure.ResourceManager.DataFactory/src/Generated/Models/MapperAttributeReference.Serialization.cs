@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Entity))
+            if (Entity != null)
             {
                 writer.WritePropertyName("entity"u8);
                 writer.WriteStringValue(Entity);
             }
-            if (Optional.IsDefined(EntityConnectionReference))
+            if (EntityConnectionReference != null)
             {
                 writer.WritePropertyName("entityConnectionReference"u8);
                 writer.WriteObjectValue(EntityConnectionReference);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    entityConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value);
+                    entityConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

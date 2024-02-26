@@ -27,17 +27,17 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Variable))
+            if (Variable != null)
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (Optional.IsDefined(ContributionScore))
+            if (ContributionScore.HasValue)
             {
                 writer.WritePropertyName("contributionScore"u8);
                 writer.WriteNumberValue(ContributionScore.Value);
             }
-            if (Optional.IsDefined(CorrelationChanges))
+            if (CorrelationChanges != null)
             {
                 writer.WritePropertyName("correlationChanges"u8);
                 writer.WriteObjectValue(CorrelationChanges);
@@ -107,7 +107,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    correlationChanges = CorrelationChanges.DeserializeCorrelationChanges(property.Value);
+                    correlationChanges = CorrelationChanges.DeserializeCorrelationChanges(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

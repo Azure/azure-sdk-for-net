@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Body))
+            if (Body != null)
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Optional.IsCollectionDefined(AppProperties))
+            if (!(AppProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appProperties"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SystemProperties))
+            if (!(SystemProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("systemProperties"u8);
                 writer.WriteStartObject();
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             Optional<string> body = default;
-            Optional<IDictionary<string, string>> appProperties = default;
-            Optional<IDictionary<string, string>> systemProperties = default;
+            IDictionary<string, string> appProperties = default;
+            IDictionary<string, string> systemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingMessage(body.Value, Optional.ToDictionary(appProperties), Optional.ToDictionary(systemProperties), serializedAdditionalRawData);
+            return new RoutingMessage(body.Value, appProperties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingMessage>.Write(ModelReaderWriterOptions options)

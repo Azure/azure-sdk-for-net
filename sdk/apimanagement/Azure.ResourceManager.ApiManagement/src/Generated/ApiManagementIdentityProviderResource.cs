@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ApiManagementIdentityProviderResource>> UpdateAsync(ETag ifMatch, ApiManagementIdentityProviderPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ApiManagementIdentityProviderResource> Update(ETag ifMatch, ApiManagementIdentityProviderPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderResource.Update");
             scope.Start();

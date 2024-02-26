@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArcAutoProvisioning))
+            if (ArcAutoProvisioning != null)
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
-            if (Optional.IsDefined(DefenderForDatabasesArcAutoProvisioning))
+            if (DefenderForDatabasesArcAutoProvisioning != null)
             {
                 writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning"u8);
                 writer.WriteObjectValue(DefenderForDatabasesArcAutoProvisioning);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value);
+                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defenderForDatabasesArcAutoProvisioning"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value);
+                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

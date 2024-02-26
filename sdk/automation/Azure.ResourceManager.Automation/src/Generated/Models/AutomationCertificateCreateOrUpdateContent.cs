@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="base64Value"/> is null. </exception>
         public AutomationCertificateCreateOrUpdateContent(string name, string base64Value)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(base64Value, nameof(base64Value));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (base64Value == null)
+            {
+                throw new ArgumentNullException(nameof(base64Value));
+            }
 
             Name = name;
             Base64Value = base64Value;

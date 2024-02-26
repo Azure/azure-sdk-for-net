@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShareProvisionILRRequest": return FileShareProvisionIlrContent.DeserializeFileShareProvisionIlrContent(element);
-                    case "IaasVMILRRegistrationRequest": return IaasVmIlrRegistrationContent.DeserializeIaasVmIlrRegistrationContent(element);
+                    case "AzureFileShareProvisionILRRequest": return FileShareProvisionIlrContent.DeserializeFileShareProvisionIlrContent(element, options);
+                    case "IaasVMILRRegistrationRequest": return IaasVmIlrRegistrationContent.DeserializeIaasVmIlrRegistrationContent(element, options);
                 }
             }
-            return UnknownIlrRequest.DeserializeUnknownIlrRequest(element);
+            return UnknownIlrRequest.DeserializeUnknownIlrRequest(element, options);
         }
 
         BinaryData IPersistableModel<IlrContent>.Write(ModelReaderWriterOptions options)

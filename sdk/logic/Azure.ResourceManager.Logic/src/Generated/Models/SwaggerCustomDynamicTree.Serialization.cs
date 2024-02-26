@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Optional.IsDefined(Open))
+            if (Open != null)
             {
                 writer.WritePropertyName("open"u8);
                 writer.WriteObjectValue(Open);
             }
-            if (Optional.IsDefined(Browse))
+            if (Browse != null)
             {
                 writer.WritePropertyName("browse"u8);
                 writer.WriteObjectValue(Browse);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    settings = SwaggerCustomDynamicTreeSettings.DeserializeSwaggerCustomDynamicTreeSettings(property.Value);
+                    settings = SwaggerCustomDynamicTreeSettings.DeserializeSwaggerCustomDynamicTreeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("open"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    open = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value);
+                    open = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("browse"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    browse = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value);
+                    browse = SwaggerCustomDynamicTreeCommand.DeserializeSwaggerCustomDynamicTreeCommand(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

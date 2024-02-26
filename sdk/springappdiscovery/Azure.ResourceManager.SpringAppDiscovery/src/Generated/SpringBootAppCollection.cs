@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootappsName"/> is null. </exception>
         public virtual async Task<Response<SpringBootAppResource>> GetAsync(string springbootappsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(springbootappsName, nameof(springbootappsName));
+            if (springbootappsName == null)
+            {
+                throw new ArgumentNullException(nameof(springbootappsName));
+            }
+            if (springbootappsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootappsName));
+            }
 
             using var scope = _springBootAppspringbootappsClientDiagnostics.CreateScope("SpringBootAppCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootappsName"/> is null. </exception>
         public virtual Response<SpringBootAppResource> Get(string springbootappsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(springbootappsName, nameof(springbootappsName));
+            if (springbootappsName == null)
+            {
+                throw new ArgumentNullException(nameof(springbootappsName));
+            }
+            if (springbootappsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootappsName));
+            }
 
             using var scope = _springBootAppspringbootappsClientDiagnostics.CreateScope("SpringBootAppCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootappsName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string springbootappsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(springbootappsName, nameof(springbootappsName));
+            if (springbootappsName == null)
+            {
+                throw new ArgumentNullException(nameof(springbootappsName));
+            }
+            if (springbootappsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootappsName));
+            }
 
             using var scope = _springBootAppspringbootappsClientDiagnostics.CreateScope("SpringBootAppCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootappsName"/> is null. </exception>
         public virtual Response<bool> Exists(string springbootappsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(springbootappsName, nameof(springbootappsName));
+            if (springbootappsName == null)
+            {
+                throw new ArgumentNullException(nameof(springbootappsName));
+            }
+            if (springbootappsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootappsName));
+            }
 
             using var scope = _springBootAppspringbootappsClientDiagnostics.CreateScope("SpringBootAppCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootappsName"/> is null. </exception>
         public virtual async Task<NullableResponse<SpringBootAppResource>> GetIfExistsAsync(string springbootappsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(springbootappsName, nameof(springbootappsName));
+            if (springbootappsName == null)
+            {
+                throw new ArgumentNullException(nameof(springbootappsName));
+            }
+            if (springbootappsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootappsName));
+            }
 
             using var scope = _springBootAppspringbootappsClientDiagnostics.CreateScope("SpringBootAppCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootappsName"/> is null. </exception>
         public virtual NullableResponse<SpringBootAppResource> GetIfExists(string springbootappsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(springbootappsName, nameof(springbootappsName));
+            if (springbootappsName == null)
+            {
+                throw new ArgumentNullException(nameof(springbootappsName));
+            }
+            if (springbootappsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootappsName));
+            }
 
             using var scope = _springBootAppspringbootappsClientDiagnostics.CreateScope("SpringBootAppCollection.GetIfExists");
             scope.Start();

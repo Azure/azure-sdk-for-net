@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionInMb))
+            if (RetentionInMb.HasValue)
             {
                 writer.WritePropertyName("retentionInMb"u8);
                 writer.WriteNumberValue(RetentionInMb.Value);
             }
-            if (Optional.IsDefined(RetentionInDays))
+            if (RetentionInDays.HasValue)
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

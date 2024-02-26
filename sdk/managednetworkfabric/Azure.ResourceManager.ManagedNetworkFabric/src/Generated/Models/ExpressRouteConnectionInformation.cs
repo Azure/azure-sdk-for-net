@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteCircuitId"/> is null. </exception>
         public ExpressRouteConnectionInformation(ResourceIdentifier expressRouteCircuitId)
         {
-            Argument.AssertNotNull(expressRouteCircuitId, nameof(expressRouteCircuitId));
+            if (expressRouteCircuitId == null)
+            {
+                throw new ArgumentNullException(nameof(expressRouteCircuitId));
+            }
 
             ExpressRouteCircuitId = expressRouteCircuitId;
         }

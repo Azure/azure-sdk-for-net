@@ -51,7 +51,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         public CreateRunOptions(string assistantId)
         {
-            Argument.AssertNotNull(assistantId, nameof(assistantId));
+            if (assistantId == null)
+            {
+                throw new ArgumentNullException(nameof(assistantId));
+            }
 
             AssistantId = assistantId;
             OverrideTools = new ChangeTrackingList<ToolDefinition>();

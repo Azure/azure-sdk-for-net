@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPRules))
+            if (!(IPRules is ChangeTrackingList<BastionHostIPRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<BastionHostIPRule>> ipRules = default;
+            IList<BastionHostIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BastionHostIPRule> array = new List<BastionHostIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BastionHostIPRule.DeserializeBastionHostIPRule(item));
+                        array.Add(BastionHostIPRule.DeserializeBastionHostIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BastionHostPropertiesFormatNetworkAcls(Optional.ToList(ipRules), serializedAdditionalRawData);
+            return new BastionHostPropertiesFormatNetworkAcls(ipRules ?? new ChangeTrackingList<BastionHostIPRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BastionHostPropertiesFormatNetworkAcls>.Write(ModelReaderWriterOptions options)

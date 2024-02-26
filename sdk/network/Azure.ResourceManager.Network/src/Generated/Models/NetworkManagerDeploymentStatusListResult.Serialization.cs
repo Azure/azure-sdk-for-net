@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkManagerDeploymentStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SkipToken))
+            if (SkipToken != null)
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkManagerDeploymentStatus>> value = default;
+            IReadOnlyList<NetworkManagerDeploymentStatus> value = default;
             Optional<string> skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkManagerDeploymentStatus> array = new List<NetworkManagerDeploymentStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(item));
+                        array.Add(NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatusListResult(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatusListResult(value ?? new ChangeTrackingList<NetworkManagerDeploymentStatus>(), skipToken.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatusListResult>.Write(ModelReaderWriterOptions options)

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalCertificates))
+            if (TotalCertificates.HasValue)
             {
                 writer.WritePropertyName("totalCertificates"u8);
                 writer.WriteNumberValue(TotalCertificates.Value);
             }
-            if (Optional.IsDefined(PairedKeys))
+            if (PairedKeys.HasValue)
             {
                 writer.WritePropertyName("pairedKeys"u8);
                 writer.WriteNumberValue(PairedKeys.Value);
             }
-            if (Optional.IsDefined(Expired))
+            if (Expired.HasValue)
             {
                 writer.WritePropertyName("expired"u8);
                 writer.WriteNumberValue(Expired.Value);
             }
-            if (Optional.IsDefined(ExpiringSoon))
+            if (ExpiringSoon.HasValue)
             {
                 writer.WritePropertyName("expiringSoon"u8);
                 writer.WriteNumberValue(ExpiringSoon.Value);
             }
-            if (Optional.IsDefined(WeakSignature))
+            if (WeakSignature.HasValue)
             {
                 writer.WritePropertyName("weakSignature"u8);
                 writer.WriteNumberValue(WeakSignature.Value);
             }
-            if (Optional.IsDefined(SelfSigned))
+            if (SelfSigned.HasValue)
             {
                 writer.WritePropertyName("selfSigned"u8);
                 writer.WriteNumberValue(SelfSigned.Value);
             }
-            if (Optional.IsDefined(ShortKeySize))
+            if (ShortKeySize.HasValue)
             {
                 writer.WritePropertyName("shortKeySize"u8);
                 writer.WriteNumberValue(ShortKeySize.Value);

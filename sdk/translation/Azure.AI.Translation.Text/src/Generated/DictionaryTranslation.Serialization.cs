@@ -122,7 +122,7 @@ namespace Azure.AI.Translation.Text
                     List<BackTranslation> array = new List<BackTranslation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackTranslation.DeserializeBackTranslation(item));
+                        array.Add(BackTranslation.DeserializeBackTranslation(item, options));
                     }
                     backTranslations = array;
                     continue;

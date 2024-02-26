@@ -53,9 +53,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="resourceId"/> or <paramref name="callbackUri"/> is null. </exception>
         public MonitorLogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (callbackUri == null)
+            {
+                throw new ArgumentNullException(nameof(callbackUri));
+            }
 
             Name = name;
             ResourceId = resourceId;

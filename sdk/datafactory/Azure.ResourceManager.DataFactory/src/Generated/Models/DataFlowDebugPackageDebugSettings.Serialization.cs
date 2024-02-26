@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SourceSettings))
+            if (!(SourceSettings is ChangeTrackingList<DataFlowSourceSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceSettings"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DatasetParameters))
+            if (DatasetParameters != null)
             {
                 writer.WritePropertyName("datasetParameters"u8);
 #if NET6_0_OR_GREATER
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            IList<DataFlowSourceSetting> sourceSettings = default;
+            IDictionary<string, BinaryData> parameters = default;
             Optional<BinaryData> datasetParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFlowSourceSetting> array = new List<DataFlowSourceSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item));
+                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item, options));
                     }
                     sourceSettings = array;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowDebugPackageDebugSettings(Optional.ToList(sourceSettings), Optional.ToDictionary(parameters), datasetParameters.Value, serializedAdditionalRawData);
+            return new DataFlowDebugPackageDebugSettings(sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>(), parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), datasetParameters.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowDebugPackageDebugSettings>.Write(ModelReaderWriterOptions options)

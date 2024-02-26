@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LogicalZone))
+            if (options.Format != "W" && LogicalZone != null)
             {
                 writer.WritePropertyName("logicalZone"u8);
                 writer.WriteStringValue(LogicalZone);
             }
-            if (options.Format != "W" && Optional.IsDefined(PhysicalZone))
+            if (options.Format != "W" && PhysicalZone != null)
             {
                 writer.WritePropertyName("physicalZone"u8);
                 writer.WriteStringValue(PhysicalZone);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServiceName))
+            if (options.Format != "W" && ServiceName.HasValue)
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceState))
+            if (options.Format != "W" && ServiceState.HasValue)
             {
                 writer.WritePropertyName("serviceState"u8);
                 writer.WriteStringValue(ServiceState.Value.ToString());

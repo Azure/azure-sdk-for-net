@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FipsState))
+            if (FipsState.HasValue)
             {
                 writer.WritePropertyName("fipsState"u8);
                 writer.WriteNumberValue(FipsState.Value);
             }
-            if (Optional.IsDefined(ActivationStatus))
+            if (ActivationStatus != null)
             {
                 writer.WritePropertyName("activationStatus"u8);
                 writer.WriteStringValue(ActivationStatus);

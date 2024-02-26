@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(SummaryMessage))
+            if (SummaryMessage != null)
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (Optional.IsDefined(RunAsAccountId))
+            if (RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(PossibleCauses))
+            if (PossibleCauses != null)
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (Optional.IsDefined(RecommendedAction))
+            if (RecommendedAction != null)
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (Optional.IsDefined(UpdatedTimeStamp))
+            if (UpdatedTimeStamp.HasValue)
             {
                 writer.WritePropertyName("updatedTimeStamp"u8);
                 writer.WriteStringValue(UpdatedTimeStamp.Value, "O");

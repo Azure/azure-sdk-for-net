@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Permission))
+            if (Permission.HasValue)
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permission.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
+            if (options.Format != "W" && !(Groups is ChangeTrackingList<SharingProfileGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CommunityGalleryInfo))
+            if (CommunityGalleryInfo != null)
             {
                 writer.WritePropertyName("communityGalleryInfo"u8);
                 writer.WriteObjectValue(CommunityGalleryInfo);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<GallerySharingPermissionType> permissions = default;
-            Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
+            IReadOnlyList<SharingProfileGroup> groups = default;
             Optional<CommunityGalleryInfo> communityGalleryInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SharingProfileGroup> array = new List<SharingProfileGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item));
+                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item, options));
                     }
                     groups = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    communityGalleryInfo = CommunityGalleryInfo.DeserializeCommunityGalleryInfo(property.Value);
+                    communityGalleryInfo = CommunityGalleryInfo.DeserializeCommunityGalleryInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingProfile(Optional.ToNullable(permissions), Optional.ToList(groups), communityGalleryInfo.Value, serializedAdditionalRawData);
+            return new SharingProfile(Optional.ToNullable(permissions), groups ?? new ChangeTrackingList<SharingProfileGroup>(), communityGalleryInfo.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingProfile>.Write(ModelReaderWriterOptions options)

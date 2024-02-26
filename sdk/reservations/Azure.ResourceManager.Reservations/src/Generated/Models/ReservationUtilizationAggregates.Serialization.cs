@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Grain))
+            if (options.Format != "W" && Grain.HasValue)
             {
                 writer.WritePropertyName("grain"u8);
                 writer.WriteNumberValue(Grain.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(GrainUnit))
+            if (options.Format != "W" && GrainUnit != null)
             {
                 writer.WritePropertyName("grainUnit"u8);
                 writer.WriteStringValue(GrainUnit);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValueUnit))
+            if (options.Format != "W" && ValueUnit != null)
             {
                 writer.WritePropertyName("valueUnit"u8);
                 writer.WriteStringValue(ValueUnit);

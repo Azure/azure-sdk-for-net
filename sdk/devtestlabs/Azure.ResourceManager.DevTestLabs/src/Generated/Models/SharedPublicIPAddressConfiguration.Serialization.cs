@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InboundNatRules))
+            if (!(InboundNatRules is ChangeTrackingList<DevTestLabInboundNatRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IList<DevTestLabInboundNatRule>> inboundNatRules = default;
+            IList<DevTestLabInboundNatRule> inboundNatRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabInboundNatRule> array = new List<DevTestLabInboundNatRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabInboundNatRule.DeserializeDevTestLabInboundNatRule(item));
+                        array.Add(DevTestLabInboundNatRule.DeserializeDevTestLabInboundNatRule(item, options));
                     }
                     inboundNatRules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedPublicIPAddressConfiguration(Optional.ToList(inboundNatRules), serializedAdditionalRawData);
+            return new SharedPublicIPAddressConfiguration(inboundNatRules ?? new ChangeTrackingList<DevTestLabInboundNatRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)

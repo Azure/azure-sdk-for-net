@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CertificatePropertiesType);
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(Issuer))
+            if (options.Format != "W" && Issuer != null)
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (options.Format != "W" && Optional.IsDefined(IssuedOn))
+            if (options.Format != "W" && IssuedOn.HasValue)
             {
                 writer.WritePropertyName("issuedDate"u8);
                 writer.WriteStringValue(IssuedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivateOn))
+            if (options.Format != "W" && ActivateOn.HasValue)
             {
                 writer.WritePropertyName("activateDate"u8);
                 writer.WriteStringValue(ActivateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SubjectName))
+            if (options.Format != "W" && SubjectName != null)
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DnsNames))
+            if (options.Format != "W" && !(DnsNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsNames"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ContentCertificate": return AppPlatformContentCertificateProperties.DeserializeAppPlatformContentCertificateProperties(element);
-                    case "KeyVaultCertificate": return AppPlatformKeyVaultCertificateProperties.DeserializeAppPlatformKeyVaultCertificateProperties(element);
+                    case "ContentCertificate": return AppPlatformContentCertificateProperties.DeserializeAppPlatformContentCertificateProperties(element, options);
+                    case "KeyVaultCertificate": return AppPlatformKeyVaultCertificateProperties.DeserializeAppPlatformKeyVaultCertificateProperties(element, options);
                 }
             }
-            return UnknownCertificateProperties.DeserializeUnknownCertificateProperties(element);
+            return UnknownCertificateProperties.DeserializeUnknownCertificateProperties(element, options);
         }
 
         BinaryData IPersistableModel<AppPlatformCertificateProperties>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uid))
+            if (Uid.HasValue)
             {
                 writer.WritePropertyName("uid"u8);
                 writer.WriteNumberValue(Uid.Value);
             }
-            if (Optional.IsDefined(Gid))
+            if (Gid.HasValue)
             {
                 writer.WritePropertyName("gid"u8);
                 writer.WriteNumberValue(Gid.Value);
             }
-            if (Optional.IsDefined(SshPrivateKey))
+            if (SshPrivateKey != null)
             {
                 writer.WritePropertyName("sshPrivateKey"u8);
                 writer.WriteStringValue(SshPrivateKey);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType);
-            if (Optional.IsDefined(TrackEventsOptions))
+            if (TrackEventsOptions.HasValue)
             {
                 writer.WritePropertyName("trackEventsOptions"u8);
                 writer.WriteStringValue(TrackEventsOptions.Value.ToString());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountTrackingEvent> array = new List<IntegrationAccountTrackingEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountTrackingEvent.DeserializeIntegrationAccountTrackingEvent(item));
+                        array.Add(IntegrationAccountTrackingEvent.DeserializeIntegrationAccountTrackingEvent(item, options));
                     }
                     events = array;
                     continue;

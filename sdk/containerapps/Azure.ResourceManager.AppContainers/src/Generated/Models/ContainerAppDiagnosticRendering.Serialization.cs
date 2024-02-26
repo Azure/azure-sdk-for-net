@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiagnosticRenderingType))
+            if (DiagnosticRenderingType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteNumberValue(DiagnosticRenderingType.Value);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsVisible))
+            if (IsVisible.HasValue)
             {
                 writer.WritePropertyName("isVisible"u8);
                 writer.WriteBooleanValue(IsVisible.Value);

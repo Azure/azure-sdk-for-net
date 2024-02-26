@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Smtp))
+            if (Smtp != null)
             {
                 writer.WritePropertyName("smtp"u8);
                 writer.WriteObjectValue(Smtp);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    smtp = Smtp.DeserializeSmtp(property.Value);
+                    smtp = Smtp.DeserializeSmtp(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

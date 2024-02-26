@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSDiskImage))
+            if (OSDiskImage != null)
             {
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
-            if (Optional.IsCollectionDefined(DataDiskImages))
+            if (!(DataDiskImages is ChangeTrackingList<SharedGalleryDataDiskImage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<SharedGalleryOSDiskImage> osDiskImage = default;
-            Optional<IReadOnlyList<SharedGalleryDataDiskImage>> dataDiskImages = default;
+            IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDiskImage = SharedGalleryOSDiskImage.DeserializeSharedGalleryOSDiskImage(property.Value);
+                    osDiskImage = SharedGalleryOSDiskImage.DeserializeSharedGalleryOSDiskImage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SharedGalleryDataDiskImage> array = new List<SharedGalleryDataDiskImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedGalleryDataDiskImage.DeserializeSharedGalleryDataDiskImage(item));
+                        array.Add(SharedGalleryDataDiskImage.DeserializeSharedGalleryDataDiskImage(item, options));
                     }
                     dataDiskImages = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryImageVersionStorageProfile(osDiskImage.Value, Optional.ToList(dataDiskImages), serializedAdditionalRawData);
+            return new SharedGalleryImageVersionStorageProfile(osDiskImage.Value, dataDiskImages ?? new ChangeTrackingList<SharedGalleryDataDiskImage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedGalleryImageVersionStorageProfile>.Write(ModelReaderWriterOptions options)

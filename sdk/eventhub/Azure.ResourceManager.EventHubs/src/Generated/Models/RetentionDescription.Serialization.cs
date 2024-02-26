@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CleanupPolicy))
+            if (CleanupPolicy.HasValue)
             {
                 writer.WritePropertyName("cleanupPolicy"u8);
                 writer.WriteStringValue(CleanupPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionTimeInHours))
+            if (RetentionTimeInHours.HasValue)
             {
                 writer.WritePropertyName("retentionTimeInHours"u8);
                 writer.WriteNumberValue(RetentionTimeInHours.Value);
             }
-            if (Optional.IsDefined(TombstoneRetentionTimeInHours))
+            if (TombstoneRetentionTimeInHours.HasValue)
             {
                 writer.WritePropertyName("tombstoneRetentionTimeInHours"u8);
                 writer.WriteNumberValue(TombstoneRetentionTimeInHours.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SamplingType))
+            if (SamplingType.HasValue)
             {
                 writer.WritePropertyName("samplingType"u8);
                 writer.WriteStringValue(SamplingType.Value.ToString());
             }
-            if (Optional.IsDefined(Percentage))
+            if (Percentage.HasValue)
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);

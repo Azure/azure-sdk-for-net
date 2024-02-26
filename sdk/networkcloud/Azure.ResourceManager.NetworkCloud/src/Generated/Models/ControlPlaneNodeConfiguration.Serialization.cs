@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorConfiguration))
+            if (AdministratorConfiguration != null)
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<IList<string>> availabilityZones = default;
+            IList<string> availabilityZones = default;
             long count = default;
             string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value);
+                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, Optional.ToList(availabilityZones), count, vmSkuName, serializedAdditionalRawData);
+            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, availabilityZones ?? new ChangeTrackingList<string>(), count, vmSkuName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlPlaneNodeConfiguration>.Write(ModelReaderWriterOptions options)

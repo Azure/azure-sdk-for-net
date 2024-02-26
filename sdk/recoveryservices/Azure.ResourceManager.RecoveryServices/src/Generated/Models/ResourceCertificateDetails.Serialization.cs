@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType);
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteBase64StringValue(Certificate, "D");
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(Issuer))
+            if (Issuer != null)
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId.HasValue)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteNumberValue(ResourceId.Value);
             }
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ValidStartOn))
+            if (ValidStartOn.HasValue)
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ValidEndOn))
+            if (ValidEndOn.HasValue)
             {
                 writer.WritePropertyName("validTo"u8);
                 writer.WriteStringValue(ValidEndOn.Value, "O");
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AccessControlService": return ResourceCertificateAndAcsDetails.DeserializeResourceCertificateAndAcsDetails(element);
-                    case "AzureActiveDirectory": return ResourceCertificateAndAadDetails.DeserializeResourceCertificateAndAadDetails(element);
+                    case "AccessControlService": return ResourceCertificateAndAcsDetails.DeserializeResourceCertificateAndAcsDetails(element, options);
+                    case "AzureActiveDirectory": return ResourceCertificateAndAadDetails.DeserializeResourceCertificateAndAadDetails(element, options);
                 }
             }
-            return UnknownResourceCertificateDetails.DeserializeUnknownResourceCertificateDetails(element);
+            return UnknownResourceCertificateDetails.DeserializeUnknownResourceCertificateDetails(element, options);
         }
 
         BinaryData IPersistableModel<ResourceCertificateDetails>.Write(ModelReaderWriterOptions options)

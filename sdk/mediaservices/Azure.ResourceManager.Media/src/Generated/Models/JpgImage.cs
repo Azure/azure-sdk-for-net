@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> is null. </exception>
         public JpgImage(string start) : base(start)
         {
-            Argument.AssertNotNull(start, nameof(start));
+            if (start == null)
+            {
+                throw new ArgumentNullException(nameof(start));
+            }
 
             Layers = new ChangeTrackingList<JpgLayer>();
             OdataType = "#Microsoft.Media.JpgImage";

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryData> array = new List<GalleryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryData.DeserializeGalleryData(item));
+                        array.Add(GalleryData.DeserializeGalleryData(item, options));
                     }
                     value = array;
                     continue;

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<LogAnalyticsQueryData> array = new List<LogAnalyticsQueryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(item));
+                        array.Add(LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeleteMigrationResources))
+            if (DeleteMigrationResources != null)
             {
                 writer.WritePropertyName("deleteMigrationResources"u8);
                 writer.WriteStringValue(DeleteMigrationResources);

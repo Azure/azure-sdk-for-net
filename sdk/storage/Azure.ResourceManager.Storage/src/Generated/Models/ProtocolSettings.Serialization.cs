@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SmbSetting))
+            if (SmbSetting != null)
             {
                 writer.WritePropertyName("smb"u8);
                 writer.WriteObjectValue(SmbSetting);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    smb = SmbSetting.DeserializeSmbSetting(property.Value);
+                    smb = SmbSetting.DeserializeSmbSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

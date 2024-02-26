@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
         public UpdateTranscriptionRequestInternal(string locale)
         {
-            Argument.AssertNotNull(locale, nameof(locale));
+            if (locale == null)
+            {
+                throw new ArgumentNullException(nameof(locale));
+            }
 
             Locale = locale;
         }

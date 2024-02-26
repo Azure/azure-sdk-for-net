@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCredentials(document.RootElement, options);
+            return DeserializeStorageMoverCredentials(document.RootElement, options);
         }
 
         internal static UnknownCredentials DeserializeUnknownCredentials(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCredentials(document.RootElement, options);
+                        return DeserializeStorageMoverCredentials(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support '{options.Format}' format.");

@@ -376,7 +376,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<RecoveryServicesVaultResource>> UpdateAsync(WaitUntil waitUntil, RecoveryServicesVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Update");
             scope.Start();
@@ -422,7 +425,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<RecoveryServicesVaultResource> Update(WaitUntil waitUntil, RecoveryServicesVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.Update");
             scope.Start();
@@ -465,8 +471,18 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<VaultCertificateResult>> CreateVaultCertificateAsync(string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _vaultCertificatesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.CreateVaultCertificate");
             scope.Start();
@@ -506,8 +522,18 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<VaultCertificateResult> CreateVaultCertificate(string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _vaultCertificatesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.CreateVaultCertificate");
             scope.Start();
@@ -546,7 +572,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="identityName"/> is null. </exception>
         public virtual async Task<Response> DeleteRegisteredIdentityAsync(string identityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(identityName, nameof(identityName));
+            if (identityName == null)
+            {
+                throw new ArgumentNullException(nameof(identityName));
+            }
+            if (identityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(identityName));
+            }
 
             using var scope = _registeredIdentitiesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
             scope.Start();
@@ -585,7 +618,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="identityName"/> is null. </exception>
         public virtual Response DeleteRegisteredIdentity(string identityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(identityName, nameof(identityName));
+            if (identityName == null)
+            {
+                throw new ArgumentNullException(nameof(identityName));
+            }
+            if (identityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(identityName));
+            }
 
             using var scope = _registeredIdentitiesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
             scope.Start();
@@ -728,8 +768,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<RecoveryServicesVaultResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.AddTag");
             scope.Start();
@@ -790,8 +836,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<RecoveryServicesVaultResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.AddTag");
             scope.Start();
@@ -851,7 +903,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<RecoveryServicesVaultResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.SetTags");
             scope.Start();
@@ -908,7 +963,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<RecoveryServicesVaultResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.SetTags");
             scope.Start();
@@ -965,7 +1023,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<RecoveryServicesVaultResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.RemoveTag");
             scope.Start();
@@ -1025,7 +1086,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<RecoveryServicesVaultResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _recoveryServicesVaultVaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.RemoveTag");
             scope.Start();

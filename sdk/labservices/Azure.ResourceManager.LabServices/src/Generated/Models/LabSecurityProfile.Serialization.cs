@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RegistrationCode))
+            if (options.Format != "W" && RegistrationCode != null)
             {
                 writer.WritePropertyName("registrationCode"u8);
                 writer.WriteStringValue(RegistrationCode);
             }
-            if (Optional.IsDefined(OpenAccess))
+            if (OpenAccess.HasValue)
             {
                 writer.WritePropertyName("openAccess"u8);
                 writer.WriteStringValue(OpenAccess.Value.ToSerialString());

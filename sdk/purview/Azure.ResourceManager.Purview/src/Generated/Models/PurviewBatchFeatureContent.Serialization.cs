@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Features))
+            if (!(Features is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<IList<string>> features = default;
+            IList<string> features = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewBatchFeatureContent(Optional.ToList(features), serializedAdditionalRawData);
+            return new PurviewBatchFeatureContent(features ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewBatchFeatureContent>.Write(ModelReaderWriterOptions options)

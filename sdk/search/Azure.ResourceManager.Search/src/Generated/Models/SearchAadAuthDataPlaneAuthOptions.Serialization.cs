@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiKeyOnly))
+            if (ApiKeyOnly != null)
             {
                 writer.WritePropertyName("apiKeyOnly"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(AadOrApiKey))
+            if (AadOrApiKey != null)
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
                 writer.WriteObjectValue(AadOrApiKey);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    aadOrApiKey = DataPlaneAadOrApiKeyAuthOption.DeserializeDataPlaneAadOrApiKeyAuthOption(property.Value);
+                    aadOrApiKey = DataPlaneAadOrApiKeyAuthOption.DeserializeDataPlaneAadOrApiKeyAuthOption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

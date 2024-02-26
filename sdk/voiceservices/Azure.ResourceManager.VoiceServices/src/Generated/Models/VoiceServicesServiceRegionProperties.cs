@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.VoiceServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="primaryRegionProperties"/> is null. </exception>
         public VoiceServicesServiceRegionProperties(string name, VoiceServicesPrimaryRegionProperties primaryRegionProperties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(primaryRegionProperties, nameof(primaryRegionProperties));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (primaryRegionProperties == null)
+            {
+                throw new ArgumentNullException(nameof(primaryRegionProperties));
+            }
 
             Name = name;
             PrimaryRegionProperties = primaryRegionProperties;

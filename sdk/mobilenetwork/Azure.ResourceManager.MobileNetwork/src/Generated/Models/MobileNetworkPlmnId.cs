@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mcc"/> or <paramref name="mnc"/> is null. </exception>
         public MobileNetworkPlmnId(string mcc, string mnc)
         {
-            Argument.AssertNotNull(mcc, nameof(mcc));
-            Argument.AssertNotNull(mnc, nameof(mnc));
+            if (mcc == null)
+            {
+                throw new ArgumentNullException(nameof(mcc));
+            }
+            if (mnc == null)
+            {
+                throw new ArgumentNullException(nameof(mnc));
+            }
 
             Mcc = mcc;
             Mnc = mnc;

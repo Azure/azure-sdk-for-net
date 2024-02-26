@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScaleUnit))
+            if (ScaleUnit.HasValue)
             {
                 writer.WritePropertyName("scaleUnit"u8);
                 writer.WriteNumberValue(ScaleUnit.Value);

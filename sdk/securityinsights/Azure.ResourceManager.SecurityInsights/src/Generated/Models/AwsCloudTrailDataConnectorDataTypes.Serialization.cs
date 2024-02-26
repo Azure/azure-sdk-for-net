@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Logs))
+            if (Logs != null)
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteObjectValue(Logs);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    logs = AwsCloudTrailDataConnectorDataTypesLogs.DeserializeAwsCloudTrailDataConnectorDataTypesLogs(property.Value);
+                    logs = AwsCloudTrailDataConnectorDataTypesLogs.DeserializeAwsCloudTrailDataConnectorDataTypesLogs(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

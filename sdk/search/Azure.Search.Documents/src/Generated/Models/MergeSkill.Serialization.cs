@@ -16,29 +16,29 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InsertPreTag))
+            if (InsertPreTag != null)
             {
                 writer.WritePropertyName("insertPreTag"u8);
                 writer.WriteStringValue(InsertPreTag);
             }
-            if (Optional.IsDefined(InsertPostTag))
+            if (InsertPostTag != null)
             {
                 writer.WritePropertyName("insertPostTag"u8);
                 writer.WriteStringValue(InsertPostTag);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);

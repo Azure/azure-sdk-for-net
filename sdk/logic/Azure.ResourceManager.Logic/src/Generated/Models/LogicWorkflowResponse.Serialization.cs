@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Headers))
+            if (Headers != null)
             {
                 writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(StatusCode))
+            if (StatusCode.HasValue)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);
             }
-            if (Optional.IsDefined(BodyLink))
+            if (BodyLink != null)
             {
                 writer.WritePropertyName("bodyLink"u8);
                 writer.WriteObjectValue(BodyLink);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

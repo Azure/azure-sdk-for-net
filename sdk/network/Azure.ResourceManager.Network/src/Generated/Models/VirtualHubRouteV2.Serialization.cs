@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationType))
+            if (DestinationType != null)
             {
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (!(Destinations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextHopType))
+            if (NextHopType != null)
             {
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType);
             }
-            if (Optional.IsCollectionDefined(NextHops))
+            if (!(NextHops is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nextHops"u8);
                 writer.WriteStartArray();
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> destinationType = default;
-            Optional<IList<string>> destinations = default;
+            IList<string> destinations = default;
             Optional<string> nextHopType = default;
-            Optional<IList<string>> nextHops = default;
+            IList<string> nextHops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubRouteV2(destinationType.Value, Optional.ToList(destinations), nextHopType.Value, Optional.ToList(nextHops), serializedAdditionalRawData);
+            return new VirtualHubRouteV2(destinationType.Value, destinations ?? new ChangeTrackingList<string>(), nextHopType.Value, nextHops ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubRouteV2>.Write(ModelReaderWriterOptions options)

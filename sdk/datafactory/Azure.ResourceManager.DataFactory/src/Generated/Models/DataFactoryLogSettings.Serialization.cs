@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableCopyActivityLog))
+            if (EnableCopyActivityLog != null)
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
                 JsonSerializer.Serialize(writer, EnableCopyActivityLog);
             }
-            if (Optional.IsDefined(CopyActivityLogSettings))
+            if (CopyActivityLogSettings != null)
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value);
+                    copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logLocationSettings"u8))
                 {
-                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
+                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

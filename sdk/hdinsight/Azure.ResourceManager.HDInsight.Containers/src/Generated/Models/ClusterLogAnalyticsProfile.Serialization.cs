@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(ApplicationLogs))
+            if (ApplicationLogs != null)
             {
                 writer.WritePropertyName("applicationLogs"u8);
                 writer.WriteObjectValue(ApplicationLogs);
             }
-            if (Optional.IsDefined(IsMetricsEnabled))
+            if (IsMetricsEnabled.HasValue)
             {
                 writer.WritePropertyName("metricsEnabled"u8);
                 writer.WriteBooleanValue(IsMetricsEnabled.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value);
+                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricsEnabled"u8))

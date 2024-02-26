@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetStorageClassificationId))
+            if (TargetStorageClassificationId != null)
             {
                 writer.WritePropertyName("targetStorageClassificationId"u8);
                 writer.WriteStringValue(TargetStorageClassificationId);

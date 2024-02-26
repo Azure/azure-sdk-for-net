@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LabVmId))
+            if (LabVmId != null)
             {
                 writer.WritePropertyName("labVmId"u8);
                 writer.WriteStringValue(LabVmId);

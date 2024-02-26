@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServicePrincipal))
+            if (ServicePrincipal != null)
             {
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
+                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

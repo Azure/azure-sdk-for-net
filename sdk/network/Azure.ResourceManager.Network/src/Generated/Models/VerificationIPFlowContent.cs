@@ -57,11 +57,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="localPort"/>, <paramref name="remotePort"/>, <paramref name="localIPAddress"/> or <paramref name="remoteIPAddress"/> is null. </exception>
         public VerificationIPFlowContent(ResourceIdentifier targetResourceId, NetworkTrafficDirection direction, IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress)
         {
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(localPort, nameof(localPort));
-            Argument.AssertNotNull(remotePort, nameof(remotePort));
-            Argument.AssertNotNull(localIPAddress, nameof(localIPAddress));
-            Argument.AssertNotNull(remoteIPAddress, nameof(remoteIPAddress));
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+            if (localPort == null)
+            {
+                throw new ArgumentNullException(nameof(localPort));
+            }
+            if (remotePort == null)
+            {
+                throw new ArgumentNullException(nameof(remotePort));
+            }
+            if (localIPAddress == null)
+            {
+                throw new ArgumentNullException(nameof(localIPAddress));
+            }
+            if (remoteIPAddress == null)
+            {
+                throw new ArgumentNullException(nameof(remoteIPAddress));
+            }
 
             TargetResourceId = targetResourceId;
             Direction = direction;

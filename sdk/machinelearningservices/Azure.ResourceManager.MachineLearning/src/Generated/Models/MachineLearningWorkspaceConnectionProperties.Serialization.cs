@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(ExpiryOn))
+            if (ExpiryOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -97,18 +97,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AccessKey": return AccessKeyAuthTypeWorkspaceConnectionProperties.DeserializeAccessKeyAuthTypeWorkspaceConnectionProperties(element);
-                    case "ApiKey": return ApiKeyAuthWorkspaceConnectionProperties.DeserializeApiKeyAuthWorkspaceConnectionProperties(element);
-                    case "CustomKeys": return CustomKeysWorkspaceConnectionProperties.DeserializeCustomKeysWorkspaceConnectionProperties(element);
-                    case "ManagedIdentity": return MachineLearningManagedIdentityAuthTypeWorkspaceConnection.DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(element);
-                    case "None": return MachineLearningNoneAuthTypeWorkspaceConnection.DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(element);
-                    case "PAT": return MachineLearningPatAuthTypeWorkspaceConnection.DeserializeMachineLearningPatAuthTypeWorkspaceConnection(element);
-                    case "SAS": return MachineLearningSasAuthTypeWorkspaceConnection.DeserializeMachineLearningSasAuthTypeWorkspaceConnection(element);
-                    case "ServicePrincipal": return ServicePrincipalAuthTypeWorkspaceConnectionProperties.DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(element);
-                    case "UsernamePassword": return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element);
+                    case "AccessKey": return AccessKeyAuthTypeWorkspaceConnectionProperties.DeserializeAccessKeyAuthTypeWorkspaceConnectionProperties(element, options);
+                    case "ApiKey": return ApiKeyAuthWorkspaceConnectionProperties.DeserializeApiKeyAuthWorkspaceConnectionProperties(element, options);
+                    case "CustomKeys": return CustomKeysWorkspaceConnectionProperties.DeserializeCustomKeysWorkspaceConnectionProperties(element, options);
+                    case "ManagedIdentity": return MachineLearningManagedIdentityAuthTypeWorkspaceConnection.DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(element, options);
+                    case "None": return MachineLearningNoneAuthTypeWorkspaceConnection.DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(element, options);
+                    case "PAT": return MachineLearningPatAuthTypeWorkspaceConnection.DeserializeMachineLearningPatAuthTypeWorkspaceConnection(element, options);
+                    case "SAS": return MachineLearningSasAuthTypeWorkspaceConnection.DeserializeMachineLearningSasAuthTypeWorkspaceConnection(element, options);
+                    case "ServicePrincipal": return ServicePrincipalAuthTypeWorkspaceConnectionProperties.DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(element, options);
+                    case "UsernamePassword": return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element, options);
                 }
             }
-            return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element);
+            return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)

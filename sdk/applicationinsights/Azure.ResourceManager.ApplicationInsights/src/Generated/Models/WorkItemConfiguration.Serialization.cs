@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectorId))
+            if (ConnectorId != null)
             {
                 writer.WritePropertyName("ConnectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (Optional.IsDefined(ConfigDisplayName))
+            if (ConfigDisplayName != null)
             {
                 writer.WritePropertyName("ConfigDisplayName"u8);
                 writer.WriteStringValue(ConfigDisplayName);
             }
-            if (Optional.IsDefined(IsDefault))
+            if (IsDefault.HasValue)
             {
                 writer.WritePropertyName("IsDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ConfigProperties))
+            if (ConfigProperties != null)
             {
                 writer.WritePropertyName("ConfigProperties"u8);
                 writer.WriteStringValue(ConfigProperties);

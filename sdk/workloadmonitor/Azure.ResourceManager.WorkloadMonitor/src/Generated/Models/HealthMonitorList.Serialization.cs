@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HealthMonitorData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HealthMonitorData>> value = default;
+            IReadOnlyList<HealthMonitorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                     List<HealthMonitorData> array = new List<HealthMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthMonitorData.DeserializeHealthMonitorData(item));
+                        array.Add(HealthMonitorData.DeserializeHealthMonitorData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthMonitorList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HealthMonitorList(value ?? new ChangeTrackingList<HealthMonitorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthMonitorList>.Write(ModelReaderWriterOptions options)

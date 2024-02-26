@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseDatabasePrincipalAssignmentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseDatabasePrincipalAssignmentData>> value = default;
+            IReadOnlyList<SynapseDatabasePrincipalAssignmentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDatabasePrincipalAssignmentData> array = new List<SynapseDatabasePrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(item));
+                        array.Add(SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDatabasePrincipalAssignmentListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseDatabasePrincipalAssignmentListResult(value ?? new ChangeTrackingList<SynapseDatabasePrincipalAssignmentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDatabasePrincipalAssignmentListResult>.Write(ModelReaderWriterOptions options)

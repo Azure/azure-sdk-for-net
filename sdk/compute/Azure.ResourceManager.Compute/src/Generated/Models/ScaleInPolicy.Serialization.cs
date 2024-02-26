@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<VirtualMachineScaleSetScaleInRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ForceDeletion))
+            if (ForceDeletion.HasValue)
             {
                 writer.WritePropertyName("forceDeletion"u8);
                 writer.WriteBooleanValue(ForceDeletion.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VirtualMachineScaleSetScaleInRule>> rules = default;
+            IList<VirtualMachineScaleSetScaleInRule> rules = default;
             Optional<bool> forceDeletion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScaleInPolicy(Optional.ToList(rules), Optional.ToNullable(forceDeletion), serializedAdditionalRawData);
+            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), Optional.ToNullable(forceDeletion), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScaleInPolicy>.Write(ModelReaderWriterOptions options)

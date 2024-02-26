@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 if (NextLink != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("nextLink");
                 }
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DigitalTwinsDescriptionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DigitalTwinsDescriptionData>> value = default;
+            IReadOnlyList<DigitalTwinsDescriptionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     List<DigitalTwinsDescriptionData> array = new List<DigitalTwinsDescriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(item));
+                        array.Add(DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsDescriptionListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new DigitalTwinsDescriptionListResult(nextLink.Value, value ?? new ChangeTrackingList<DigitalTwinsDescriptionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsDescriptionListResult>.Write(ModelReaderWriterOptions options)

@@ -50,8 +50,14 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public WorkflowRunsClient(Uri endpoint, TokenCredential credential, PurviewWorkflowServiceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewWorkflowServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -139,15 +145,15 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (runStatuses != null && Optional.IsCollectionDefined(runStatuses))
+            if (runStatuses != null && !(runStatuses is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("runStatuses", runStatuses, ",", true);
             }
-            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
+            if (workflowIds != null && !(workflowIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
-            if (requestors != null && Optional.IsCollectionDefined(requestors))
+            if (requestors != null && !(requestors is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("requestors", requestors, ",", true);
             }

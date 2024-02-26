@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Maps.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public MapsCorsRule(IEnumerable<string> allowedOrigins)
         {
-            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
+            if (allowedOrigins == null)
+            {
+                throw new ArgumentNullException(nameof(allowedOrigins));
+            }
 
             AllowedOrigins = allowedOrigins.ToList();
         }

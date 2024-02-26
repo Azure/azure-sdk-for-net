@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("machineArmId"u8);
             writer.WriteStringValue(MachineArmId);
-            if (Optional.IsDefined(InstanceCount))
+            if (InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (Optional.IsDefined(JvmMemoryInMB))
+            if (JvmMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("jvmMemoryInMB"u8);
                 writer.WriteNumberValue(JvmMemoryInMB.Value);

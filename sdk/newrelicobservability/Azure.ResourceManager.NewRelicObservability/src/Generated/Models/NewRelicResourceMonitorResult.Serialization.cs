@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(SendingMetrics))
+            if (SendingMetrics.HasValue)
             {
                 writer.WritePropertyName("sendingMetrics"u8);
                 writer.WriteStringValue(SendingMetrics.Value.ToString());
             }
-            if (Optional.IsDefined(ReasonForMetricsStatus))
+            if (ReasonForMetricsStatus != null)
             {
                 writer.WritePropertyName("reasonForMetricsStatus"u8);
                 writer.WriteStringValue(ReasonForMetricsStatus);
             }
-            if (Optional.IsDefined(SendingLogs))
+            if (SendingLogs.HasValue)
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteStringValue(SendingLogs.Value.ToString());
             }
-            if (Optional.IsDefined(ReasonForLogsStatus))
+            if (ReasonForLogsStatus != null)
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);

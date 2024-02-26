@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PolicyDescriptionContractData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyDescriptionContractData>> value = default;
+            IReadOnlyList<PolicyDescriptionContractData> value = default;
             Optional<long> count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<PolicyDescriptionContractData> array = new List<PolicyDescriptionContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(item));
+                        array.Add(PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDescriptionListResult(Optional.ToList(value), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new PolicyDescriptionListResult(value ?? new ChangeTrackingList<PolicyDescriptionContractData>(), Optional.ToNullable(count), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDescriptionListResult>.Write(ModelReaderWriterOptions options)

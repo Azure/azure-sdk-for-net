@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
+            return DeserializeAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
         }
 
         internal static UnknownAzureArcKubernetesNetworkFunctionApplication DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options = null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
+                        return DeserializeAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support '{options.Format}' format.");

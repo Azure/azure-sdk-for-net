@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Validation))
+            if (Validation != null)
             {
                 writer.WritePropertyName("validation"u8);
                 writer.WriteStringValue(Validation);
             }
-            if (Optional.IsDefined(ValidationKey))
+            if (ValidationKey != null)
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(Decryption))
+            if (Decryption != null)
             {
                 writer.WritePropertyName("decryption"u8);
                 writer.WriteStringValue(Decryption);
             }
-            if (Optional.IsDefined(DecryptionKey))
+            if (DecryptionKey != null)
             {
                 writer.WritePropertyName("decryptionKey"u8);
                 writer.WriteStringValue(DecryptionKey);

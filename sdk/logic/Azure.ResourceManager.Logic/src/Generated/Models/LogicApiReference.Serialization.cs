@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IconUri))
+            if (IconUri != null)
             {
                 writer.WritePropertyName("iconUri"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Swagger))
+            if (Swagger != null)
             {
                 writer.WritePropertyName("swagger"u8);
 #if NET6_0_OR_GREATER
@@ -53,32 +53,32 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(BrandColor))
+            if (BrandColor != null)
             {
                 writer.WritePropertyName("brandColor"u8);
                 writer.WriteStringValue(BrandColor);
             }
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(IntegrationServiceEnvironment))
+            if (IntegrationServiceEnvironment != null)
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value);
+                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Body))
+            if (Body != null)
             {
                 writer.WritePropertyName("body"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(StatusCodes))
+            if (!(StatusCodes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<BinaryData> body = default;
-            Optional<IList<string>> statusCodes = default;
+            IList<string> statusCodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, Optional.ToList(statusCodes), serializedAdditionalRawData);
+            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, statusCodes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayProbeHealthResponseMatch>.Write(ModelReaderWriterOptions options)

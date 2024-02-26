@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EffectiveFrom))
+            if (EffectiveFrom.HasValue)
             {
                 writer.WritePropertyName("effectiveFrom"u8);
                 writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
-            if (Optional.IsDefined(EffectiveUntil))
+            if (EffectiveUntil.HasValue)
             {
                 writer.WritePropertyName("effectiveUntil"u8);
                 writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsCollectionDefined(Recurrences))
+            if (!(Recurrences is ChangeTrackingList<AlertProcessingRuleRecurrence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recurrences"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<DateTimeOffset> effectiveFrom = default;
             Optional<DateTimeOffset> effectiveUntil = default;
             Optional<string> timeZone = default;
-            Optional<IList<AlertProcessingRuleRecurrence>> recurrences = default;
+            IList<AlertProcessingRuleRecurrence> recurrences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleRecurrence> array = new List<AlertProcessingRuleRecurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleRecurrence.DeserializeAlertProcessingRuleRecurrence(item));
+                        array.Add(AlertProcessingRuleRecurrence.DeserializeAlertProcessingRuleRecurrence(item, options));
                     }
                     recurrences = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, Optional.ToList(recurrences), serializedAdditionalRawData);
+            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, recurrences ?? new ChangeTrackingList<AlertProcessingRuleRecurrence>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleSchedule>.Write(ModelReaderWriterOptions options)

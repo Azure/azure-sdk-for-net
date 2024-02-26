@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "PathId": return PackageInputPathId.DeserializePackageInputPathId(element);
-                    case "PathVersion": return PackageInputPathVersion.DeserializePackageInputPathVersion(element);
-                    case "Url": return PackageInputPathUri.DeserializePackageInputPathUri(element);
+                    case "PathId": return PackageInputPathId.DeserializePackageInputPathId(element, options);
+                    case "PathVersion": return PackageInputPathVersion.DeserializePackageInputPathVersion(element, options);
+                    case "Url": return PackageInputPathUri.DeserializePackageInputPathUri(element, options);
                 }
             }
-            return UnknownPackageInputPathBase.DeserializeUnknownPackageInputPathBase(element);
+            return UnknownPackageInputPathBase.DeserializeUnknownPackageInputPathBase(element, options);
         }
 
         BinaryData IPersistableModel<PackageInputPathBase>.Write(ModelReaderWriterOptions options)

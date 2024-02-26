@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BillingAccounts))
+            if (!(BillingAccounts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("billingAccounts"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> billingAccounts = default;
+            IReadOnlyList<string> billingAccounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreBillingAccountsResult(Optional.ToList(billingAccounts), serializedAdditionalRawData);
+            return new PrivateStoreBillingAccountsResult(billingAccounts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreBillingAccountsResult>.Write(ModelReaderWriterOptions options)

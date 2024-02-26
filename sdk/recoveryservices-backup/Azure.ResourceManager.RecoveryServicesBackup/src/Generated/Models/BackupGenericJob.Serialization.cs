@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EntityFriendlyName))
+            if (EntityFriendlyName != null)
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(Operation))
+            if (Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(ActivityId))
+            if (ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureIaaSVMJob": return IaasVmBackupJob.DeserializeIaasVmBackupJob(element);
-                    case "AzureIaaSVMJobV2": return IaasVmBackupJobV2.DeserializeIaasVmBackupJobV2(element);
-                    case "AzureStorageJob": return StorageBackupJob.DeserializeStorageBackupJob(element);
-                    case "AzureWorkloadJob": return WorkloadBackupJob.DeserializeWorkloadBackupJob(element);
-                    case "DpmJob": return DpmBackupJob.DeserializeDpmBackupJob(element);
-                    case "MabJob": return MabBackupJob.DeserializeMabBackupJob(element);
-                    case "VaultJob": return VaultBackupJob.DeserializeVaultBackupJob(element);
+                    case "AzureIaaSVMJob": return IaasVmBackupJob.DeserializeIaasVmBackupJob(element, options);
+                    case "AzureIaaSVMJobV2": return IaasVmBackupJobV2.DeserializeIaasVmBackupJobV2(element, options);
+                    case "AzureStorageJob": return StorageBackupJob.DeserializeStorageBackupJob(element, options);
+                    case "AzureWorkloadJob": return WorkloadBackupJob.DeserializeWorkloadBackupJob(element, options);
+                    case "DpmJob": return DpmBackupJob.DeserializeDpmBackupJob(element, options);
+                    case "MabJob": return MabBackupJob.DeserializeMabBackupJob(element, options);
+                    case "VaultJob": return VaultBackupJob.DeserializeVaultBackupJob(element, options);
                 }
             }
-            return UnknownJob.DeserializeUnknownJob(element);
+            return UnknownJob.DeserializeUnknownJob(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericJob>.Write(ModelReaderWriterOptions options)

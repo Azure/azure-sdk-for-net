@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryDatasetProperties.DeserializeDataFactoryDatasetProperties(property.Value);
+                    properties = DataFactoryDatasetProperties.DeserializeDataFactoryDatasetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

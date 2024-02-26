@@ -53,9 +53,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(instanceId, nameof(instanceId));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new DeviceUpdateClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -88,9 +97,30 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdateAsync(string,string,string,ETag?,RequestContext)']/*" />
         public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetUpdate");
             scope.Start();
@@ -128,9 +158,30 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdate(string,string,string,ETag?,RequestContext)']/*" />
         public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetUpdate");
             scope.Start();
@@ -169,10 +220,38 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFileAsync(string,string,string,string,ETag?,RequestContext)']/*" />
         public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (fileId == null)
+            {
+                throw new ArgumentNullException(nameof(fileId));
+            }
+            if (fileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetFile");
             scope.Start();
@@ -211,10 +290,38 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFile(string,string,string,string,ETag?,RequestContext)']/*" />
         public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (fileId == null)
+            {
+                throw new ArgumentNullException(nameof(fileId));
+            }
+            if (fileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetFile");
             scope.Start();
@@ -250,7 +357,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusAsync(string,ETag?,RequestContext)']/*" />
         public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
             scope.Start();
@@ -286,7 +400,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatus(string,ETag?,RequestContext)']/*" />
         public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
             scope.Start();
@@ -409,7 +530,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetNamesAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNamesRequest(provider, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNamesNextPageRequest(nextLink, provider, context);
@@ -435,7 +563,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetNames(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNamesRequest(provider, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNamesNextPageRequest(nextLink, provider, context);
@@ -463,8 +598,22 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetVersionsAsync(string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(provider, name, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
@@ -492,8 +641,22 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetVersions(string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(provider, name, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
@@ -521,9 +684,30 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFilesAsync(string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFilesRequest(provider, name, version, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
@@ -551,9 +735,30 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFiles(string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFilesRequest(provider, name, version, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
@@ -628,9 +833,30 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='DeleteUpdateAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteUpdateAsync(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.DeleteUpdate");
             scope.Start();
@@ -668,9 +894,30 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='DeleteUpdate(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation DeleteUpdate(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+            if (provider.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.DeleteUpdate");
             scope.Start();
@@ -705,7 +952,10 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='StartImportUpdateAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> StartImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.StartImportUpdate");
             scope.Start();
@@ -740,7 +990,10 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='StartImportUpdate(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation StartImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.StartImportUpdate");
             scope.Start();

@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AzureDevOpsConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureDevOpsConnectorName, AzureDevOpsConnectorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (azureDevOpsConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
+            }
+            if (azureDevOpsConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AzureDevOpsConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string azureDevOpsConnectorName, AzureDevOpsConnectorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (azureDevOpsConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
+            }
+            if (azureDevOpsConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
         public virtual async Task<Response<AzureDevOpsConnectorResource>> GetAsync(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            if (azureDevOpsConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
+            }
+            if (azureDevOpsConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
+            }
 
             using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
         public virtual Response<AzureDevOpsConnectorResource> Get(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            if (azureDevOpsConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
+            }
+            if (azureDevOpsConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
+            }
 
             using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            if (azureDevOpsConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
+            }
+            if (azureDevOpsConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
+            }
 
             using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            if (azureDevOpsConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
+            }
+            if (azureDevOpsConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
+            }
 
             using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<AzureDevOpsConnectorResource>> GetIfExistsAsync(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            if (azureDevOpsConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
+            }
+            if (azureDevOpsConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
+            }
 
             using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsConnectorName"/> is null. </exception>
         public virtual NullableResponse<AzureDevOpsConnectorResource> GetIfExists(string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            if (azureDevOpsConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
+            }
+            if (azureDevOpsConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
+            }
 
             using var scope = _azureDevOpsConnectorClientDiagnostics.CreateScope("AzureDevOpsConnectorCollection.GetIfExists");
             scope.Start();

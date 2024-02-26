@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
         public virtual async Task<Response<ProviderShareSubscriptionResource>> GetAsync(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+            if (providerShareSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(providerShareSubscriptionId));
+            }
+            if (providerShareSubscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerShareSubscriptionId));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
         public virtual Response<ProviderShareSubscriptionResource> Get(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+            if (providerShareSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(providerShareSubscriptionId));
+            }
+            if (providerShareSubscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerShareSubscriptionId));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+            if (providerShareSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(providerShareSubscriptionId));
+            }
+            if (providerShareSubscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerShareSubscriptionId));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
         public virtual Response<bool> Exists(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+            if (providerShareSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(providerShareSubscriptionId));
+            }
+            if (providerShareSubscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerShareSubscriptionId));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
         public virtual async Task<NullableResponse<ProviderShareSubscriptionResource>> GetIfExistsAsync(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+            if (providerShareSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(providerShareSubscriptionId));
+            }
+            if (providerShareSubscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerShareSubscriptionId));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
         public virtual NullableResponse<ProviderShareSubscriptionResource> GetIfExists(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+            if (providerShareSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(providerShareSubscriptionId));
+            }
+            if (providerShareSubscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerShareSubscriptionId));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetIfExists");
             scope.Start();

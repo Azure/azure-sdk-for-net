@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ScheduleAvailabilityResponse))
+            if (options.Format != "W" && ScheduleAvailabilityResponse != null)
             {
                 writer.WritePropertyName("scheduleAvailabilityResponse"u8);
                 writer.WriteObjectValue(ScheduleAvailabilityResponse);
             }
-            if (options.Format != "W" && Optional.IsDefined(TransportAvailabilityResponse))
+            if (options.Format != "W" && TransportAvailabilityResponse != null)
             {
                 writer.WritePropertyName("transportAvailabilityResponse"u8);
                 writer.WriteObjectValue(TransportAvailabilityResponse);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAddressResponse))
+            if (options.Format != "W" && DataCenterAddressResponse != null)
             {
                 writer.WritePropertyName("datacenterAddressResponse"u8);
                 writer.WriteObjectValue(DataCenterAddressResponse);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    scheduleAvailabilityResponse = ScheduleAvailabilityResponse.DeserializeScheduleAvailabilityResponse(property.Value);
+                    scheduleAvailabilityResponse = ScheduleAvailabilityResponse.DeserializeScheduleAvailabilityResponse(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transportAvailabilityResponse"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityResponse = TransportAvailabilityResponse.DeserializeTransportAvailabilityResponse(property.Value);
+                    transportAvailabilityResponse = TransportAvailabilityResponse.DeserializeTransportAvailabilityResponse(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddressResponse"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
+                    dataCenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

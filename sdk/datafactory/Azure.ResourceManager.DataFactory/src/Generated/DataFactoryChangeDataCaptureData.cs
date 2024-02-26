@@ -28,9 +28,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionsInfo"/>, <paramref name="targetConnectionsInfo"/> or <paramref name="policy"/> is null. </exception>
         public DataFactoryChangeDataCaptureData(IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo, MapperPolicy policy)
         {
-            Argument.AssertNotNull(sourceConnectionsInfo, nameof(sourceConnectionsInfo));
-            Argument.AssertNotNull(targetConnectionsInfo, nameof(targetConnectionsInfo));
-            Argument.AssertNotNull(policy, nameof(policy));
+            if (sourceConnectionsInfo == null)
+            {
+                throw new ArgumentNullException(nameof(sourceConnectionsInfo));
+            }
+            if (targetConnectionsInfo == null)
+            {
+                throw new ArgumentNullException(nameof(targetConnectionsInfo));
+            }
+            if (policy == null)
+            {
+                throw new ArgumentNullException(nameof(policy));
+            }
 
             SourceConnectionsInfo = sourceConnectionsInfo.ToList();
             TargetConnectionsInfo = targetConnectionsInfo.ToList();

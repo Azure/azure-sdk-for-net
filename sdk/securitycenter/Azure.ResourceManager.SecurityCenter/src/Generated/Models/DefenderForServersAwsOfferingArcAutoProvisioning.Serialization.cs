@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(CloudRoleArn))
+            if (CloudRoleArn != null)
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderForServersAwsOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersAwsOfferingArcAutoProvisioningConfiguration(property.Value);
+                    configuration = DefenderForServersAwsOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersAwsOfferingArcAutoProvisioningConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

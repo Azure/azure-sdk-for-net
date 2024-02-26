@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Granularity))
+            if (Granularity.HasValue)
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ForecastDatasetConfiguration.DeserializeForecastDatasetConfiguration(property.Value);
+                    configuration = ForecastDatasetConfiguration.DeserializeForecastDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, ForecastAggregation> dictionary = new Dictionary<string, ForecastAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ForecastAggregation.DeserializeForecastAggregation(property0.Value));
+                        dictionary.Add(property0.Name, ForecastAggregation.DeserializeForecastAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = ForecastFilter.DeserializeForecastFilter(property.Value);
+                    filter = ForecastFilter.DeserializeForecastFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

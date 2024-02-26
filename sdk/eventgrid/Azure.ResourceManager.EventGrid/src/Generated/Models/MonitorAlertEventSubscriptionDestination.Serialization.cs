@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ActionGroups))
+            if (!(ActionGroups is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             EndpointType endpointType = default;
             Optional<MonitorAlertSeverity> severity = default;
             Optional<string> description = default;
-            Optional<IList<ResourceIdentifier>> actionGroups = default;
+            IList<ResourceIdentifier> actionGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorAlertEventSubscriptionDestination(endpointType, serializedAdditionalRawData, Optional.ToNullable(severity), description.Value, Optional.ToList(actionGroups));
+            return new MonitorAlertEventSubscriptionDestination(endpointType, serializedAdditionalRawData, Optional.ToNullable(severity), description.Value, actionGroups ?? new ChangeTrackingList<ResourceIdentifier>());
         }
 
         BinaryData IPersistableModel<MonitorAlertEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

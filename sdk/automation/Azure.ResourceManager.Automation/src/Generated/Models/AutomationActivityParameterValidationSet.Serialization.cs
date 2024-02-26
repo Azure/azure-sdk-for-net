@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MemberValue))
+            if (MemberValue != null)
             {
                 writer.WritePropertyName("memberValue"u8);
                 writer.WriteStringValue(MemberValue);

@@ -71,7 +71,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            if (billingAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(billingAccountId));
+            }
+            if (billingAccountId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
+            }
 
             using var message = CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,7 +105,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            if (billingAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(billingAccountId));
+            }
+            if (billingAccountId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
+            }
 
             using var message = CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             _pipeline.Send(message, cancellationToken);
@@ -153,8 +167,22 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            if (billingAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(billingAccountId));
+            }
+            if (billingAccountId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
+            }
+            if (billingProfileId == null)
+            {
+                throw new ArgumentNullException(nameof(billingProfileId));
+            }
+            if (billingProfileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
+            }
 
             using var message = CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -182,8 +210,22 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BenefitUtilizationSummariesListResult> ListByBillingProfileId(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            if (billingAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(billingAccountId));
+            }
+            if (billingAccountId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
+            }
+            if (billingProfileId == null)
+            {
+                throw new ArgumentNullException(nameof(billingProfileId));
+            }
+            if (billingProfileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
+            }
 
             using var message = CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             _pipeline.Send(message, cancellationToken);
@@ -235,7 +277,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            if (savingsPlanOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
+            }
 
             using var message = CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -262,7 +311,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            if (savingsPlanOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
+            }
 
             using var message = CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             _pipeline.Send(message, cancellationToken);
@@ -317,8 +373,22 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            if (savingsPlanOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanId));
+            }
+            if (savingsPlanId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
+            }
 
             using var message = CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -346,8 +416,22 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            if (savingsPlanOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanId));
+            }
+            if (savingsPlanId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
+            }
 
             using var message = CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             _pipeline.Send(message, cancellationToken);
@@ -389,8 +473,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdNextPageAsync(string nextLink, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (billingAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(billingAccountId));
+            }
+            if (billingAccountId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
+            }
 
             using var message = CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -418,8 +512,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountIdNextPage(string nextLink, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (billingAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(billingAccountId));
+            }
+            if (billingAccountId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
+            }
 
             using var message = CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
             _pipeline.Send(message, cancellationToken);
@@ -462,9 +566,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingProfileIdNextPageAsync(string nextLink, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (billingAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(billingAccountId));
+            }
+            if (billingAccountId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
+            }
+            if (billingProfileId == null)
+            {
+                throw new ArgumentNullException(nameof(billingProfileId));
+            }
+            if (billingProfileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
+            }
 
             using var message = CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -493,9 +614,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BenefitUtilizationSummariesListResult> ListByBillingProfileIdNextPage(string nextLink, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (billingAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(billingAccountId));
+            }
+            if (billingAccountId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
+            }
+            if (billingProfileId == null)
+            {
+                throw new ArgumentNullException(nameof(billingProfileId));
+            }
+            if (billingProfileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
+            }
 
             using var message = CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
             _pipeline.Send(message, cancellationToken);
@@ -537,8 +675,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanOrderNextPageAsync(string nextLink, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (savingsPlanOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
+            }
 
             using var message = CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -566,8 +714,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanOrderNextPage(string nextLink, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (savingsPlanOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
+            }
 
             using var message = CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
             _pipeline.Send(message, cancellationToken);
@@ -610,9 +768,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BenefitUtilizationSummariesListResult>> ListBySavingsPlanIdNextPageAsync(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (savingsPlanOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanId));
+            }
+            if (savingsPlanId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
+            }
 
             using var message = CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -641,9 +816,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BenefitUtilizationSummariesListResult> ListBySavingsPlanIdNextPage(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (savingsPlanOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
+            }
+            if (savingsPlanId == null)
+            {
+                throw new ArgumentNullException(nameof(savingsPlanId));
+            }
+            if (savingsPlanId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
+            }
 
             using var message = CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             _pipeline.Send(message, cancellationToken);

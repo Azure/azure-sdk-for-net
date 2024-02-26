@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <exception cref="ArgumentNullException"> <paramref name="topicEndpoint"/> is null. </exception>
         public DigitalTwinsEventGridProperties(string topicEndpoint, string accessKey1)
         {
-            Argument.AssertNotNull(topicEndpoint, nameof(topicEndpoint));
+            if (topicEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(topicEndpoint));
+            }
 
             TopicEndpoint = topicEndpoint;
             AccessKey1 = accessKey1;

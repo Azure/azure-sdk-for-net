@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Subexpressions))
+            if (!(Subexpressions is ChangeTrackingList<LogicExpression> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subexpressions"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<string> text = default;
             Optional<BinaryData> value = default;
-            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
+            IReadOnlyList<LogicExpression> subexpressions = default;
             Optional<LogicExpressionErrorInfo> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpression> array = new List<LogicExpression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLogicExpression(item));
+                        array.Add(DeserializeLogicExpression(item, options));
                     }
                     subexpressions = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value);
+                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicExpression(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, serializedAdditionalRawData);
+            return new LogicExpression(text.Value, value.Value, subexpressions ?? new ChangeTrackingList<LogicExpression>(), error.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicExpression>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<SynapseIntegrationRuntimeNodeMonitoringResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult>> nodes = default;
+            IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult> nodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeNodeMonitoringResult> array = new List<SynapseIntegrationRuntimeNodeMonitoringResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item));
+                        array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item, options));
                     }
                     nodes = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeMonitoringResult(name.Value, Optional.ToList(nodes), serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeMonitoringResult(name.Value, nodes ?? new ChangeTrackingList<SynapseIntegrationRuntimeNodeMonitoringResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeMonitoringResult>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EasmLabelData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EasmLabelData>> value = default;
+            IReadOnlyList<EasmLabelData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     List<EasmLabelData> array = new List<EasmLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EasmLabelData.DeserializeEasmLabelData(item));
+                        array.Add(EasmLabelData.DeserializeEasmLabelData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmLabelListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EasmLabelListResult(value ?? new ChangeTrackingList<EasmLabelData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmLabelListResult>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AggregatedState))
+            if (options.Format != "W" && AggregatedState.HasValue)
             {
                 writer.WritePropertyName("aggregatedState"u8);
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Summary))
+            if (!(Summary is ChangeTrackingList<RegionalSharingStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<SharingState> aggregatedState = default;
-            Optional<IReadOnlyList<RegionalSharingStatus>> summary = default;
+            IReadOnlyList<RegionalSharingStatus> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RegionalSharingStatus> array = new List<RegionalSharingStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalSharingStatus.DeserializeRegionalSharingStatus(item));
+                        array.Add(RegionalSharingStatus.DeserializeRegionalSharingStatus(item, options));
                     }
                     summary = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary), serializedAdditionalRawData);
+            return new SharingStatus(Optional.ToNullable(aggregatedState), summary ?? new ChangeTrackingList<RegionalSharingStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingStatus>.Write(ModelReaderWriterOptions options)

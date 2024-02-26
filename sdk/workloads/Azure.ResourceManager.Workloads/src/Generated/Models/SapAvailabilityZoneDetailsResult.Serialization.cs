@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AvailabilityZonePairs))
+            if (!(AvailabilityZonePairs is ChangeTrackingList<SapAvailabilityZonePair> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZonePairs"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapAvailabilityZonePair>> availabilityZonePairs = default;
+            IReadOnlyList<SapAvailabilityZonePair> availabilityZonePairs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapAvailabilityZonePair> array = new List<SapAvailabilityZonePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapAvailabilityZonePair.DeserializeSapAvailabilityZonePair(item));
+                        array.Add(SapAvailabilityZonePair.DeserializeSapAvailabilityZonePair(item, options));
                     }
                     availabilityZonePairs = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapAvailabilityZoneDetailsResult(Optional.ToList(availabilityZonePairs), serializedAdditionalRawData);
+            return new SapAvailabilityZoneDetailsResult(availabilityZonePairs ?? new ChangeTrackingList<SapAvailabilityZonePair>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapAvailabilityZoneDetailsResult>.Write(ModelReaderWriterOptions options)

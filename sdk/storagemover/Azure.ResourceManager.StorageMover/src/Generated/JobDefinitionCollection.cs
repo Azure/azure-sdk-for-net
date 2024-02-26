@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<JobDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobDefinitionName, JobDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<JobDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string jobDefinitionName, JobDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual async Task<Response<JobDefinitionResource>> GetAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual Response<JobDefinitionResource> Get(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual async Task<NullableResponse<JobDefinitionResource>> GetIfExistsAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual NullableResponse<JobDefinitionResource> GetIfExists(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.GetIfExists");
             scope.Start();

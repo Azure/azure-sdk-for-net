@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
@@ -57,7 +56,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountId"/> is null. </exception>
         public FreeTrialProperties(string accountId, DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, int usedValue, decimal percentageUsed, FreeTrialState state)
         {
-            Argument.AssertNotNull(accountId, nameof(accountId));
+            if (accountId == null)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
 
             AccountId = accountId;
             CreatedOn = createdOn;

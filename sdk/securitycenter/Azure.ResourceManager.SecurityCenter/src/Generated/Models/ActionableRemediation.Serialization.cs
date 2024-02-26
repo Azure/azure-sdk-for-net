@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CategoryConfigurations))
+            if (!(CategoryConfigurations is ChangeTrackingList<CategoryConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categoryConfigurations"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BranchConfiguration))
+            if (BranchConfiguration != null)
             {
                 writer.WritePropertyName("branchConfiguration"u8);
                 writer.WriteObjectValue(BranchConfiguration);
             }
-            if (Optional.IsDefined(InheritFromParentState))
+            if (InheritFromParentState.HasValue)
             {
                 writer.WritePropertyName("inheritFromParentState"u8);
                 writer.WriteStringValue(InheritFromParentState.Value.ToString());
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<ActionableRemediationState> state = default;
-            Optional<IList<CategoryConfiguration>> categoryConfigurations = default;
+            IList<CategoryConfiguration> categoryConfigurations = default;
             Optional<TargetBranchConfiguration> branchConfiguration = default;
             Optional<InheritFromParentState> inheritFromParentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<CategoryConfiguration> array = new List<CategoryConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CategoryConfiguration.DeserializeCategoryConfiguration(item));
+                        array.Add(CategoryConfiguration.DeserializeCategoryConfiguration(item, options));
                     }
                     categoryConfigurations = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value);
+                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inheritFromParentState"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionableRemediation(Optional.ToNullable(state), Optional.ToList(categoryConfigurations), branchConfiguration.Value, Optional.ToNullable(inheritFromParentState), serializedAdditionalRawData);
+            return new ActionableRemediation(Optional.ToNullable(state), categoryConfigurations ?? new ChangeTrackingList<CategoryConfiguration>(), branchConfiguration.Value, Optional.ToNullable(inheritFromParentState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionableRemediation>.Write(ModelReaderWriterOptions options)

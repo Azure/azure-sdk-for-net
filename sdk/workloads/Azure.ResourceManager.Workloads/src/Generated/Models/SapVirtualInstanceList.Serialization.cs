@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SapVirtualInstanceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapVirtualInstanceData>> value = default;
+            IReadOnlyList<SapVirtualInstanceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapVirtualInstanceData> array = new List<SapVirtualInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapVirtualInstanceData.DeserializeSapVirtualInstanceData(item));
+                        array.Add(SapVirtualInstanceData.DeserializeSapVirtualInstanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapVirtualInstanceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SapVirtualInstanceList(value ?? new ChangeTrackingList<SapVirtualInstanceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapVirtualInstanceList>.Write(ModelReaderWriterOptions options)

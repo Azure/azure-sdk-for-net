@@ -29,19 +29,19 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(ClinicalType))
+            if (ClinicalType.HasValue)
             {
                 writer.WritePropertyName("clinicalType"u8);
                 writer.WriteStringValue(ClinicalType.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(CreatedDateTime))
+            if (CreatedDateTime.HasValue)
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
@@ -131,7 +131,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = DocumentContent.DeserializeDocumentContent(property.Value);
+                    content = DocumentContent.DeserializeDocumentContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

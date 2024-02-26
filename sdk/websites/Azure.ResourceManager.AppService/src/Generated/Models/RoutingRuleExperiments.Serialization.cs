@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RampUpRules))
+            if (!(RampUpRules is ChangeTrackingList<RampUpRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rampUpRules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<RampUpRule>> rampUpRules = default;
+            IList<RampUpRule> rampUpRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<RampUpRule> array = new List<RampUpRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RampUpRule.DeserializeRampUpRule(item));
+                        array.Add(RampUpRule.DeserializeRampUpRule(item, options));
                     }
                     rampUpRules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingRuleExperiments(Optional.ToList(rampUpRules), serializedAdditionalRawData);
+            return new RoutingRuleExperiments(rampUpRules ?? new ChangeTrackingList<RampUpRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingRuleExperiments>.Write(ModelReaderWriterOptions options)

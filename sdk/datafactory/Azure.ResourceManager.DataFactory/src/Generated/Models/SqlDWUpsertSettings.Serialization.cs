@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InterimSchemaName))
+            if (InterimSchemaName != null)
             {
                 writer.WritePropertyName("interimSchemaName"u8);
                 JsonSerializer.Serialize(writer, InterimSchemaName);
             }
-            if (Optional.IsDefined(Keys))
+            if (Keys != null)
             {
                 writer.WritePropertyName("keys"u8);
                 JsonSerializer.Serialize(writer, Keys);

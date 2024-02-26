@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (IdentityType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType);
             }
-            if (Optional.IsDefined(UserAssigned))
+            if (UserAssigned != null)
             {
                 writer.WritePropertyName("userAssigned"u8);
                 writer.WriteObjectValue(UserAssigned);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    userAssigned = DataBoxUserAssignedIdentity.DeserializeDataBoxUserAssignedIdentity(property.Value);
+                    userAssigned = DataBoxUserAssignedIdentity.DeserializeDataBoxUserAssignedIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

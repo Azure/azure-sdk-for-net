@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(CallbackUri))
+            if (options.Format != "W" && CallbackUri != null)
             {
                 writer.WritePropertyName("callbackUrl"u8);
                 writer.WriteStringValue(CallbackUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsValidated))
+            if (options.Format != "W" && IsValidated.HasValue)
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<LineRegistration> array = new List<LineRegistration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LineRegistration.DeserializeLineRegistration(item));
+                        array.Add(LineRegistration.DeserializeLineRegistration(item, options));
                     }
                     lineRegistrations = array;
                     continue;

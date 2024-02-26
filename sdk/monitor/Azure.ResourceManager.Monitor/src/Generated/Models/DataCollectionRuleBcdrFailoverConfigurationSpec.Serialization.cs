@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActiveLocation))
+            if (ActiveLocation != null)
             {
                 writer.WritePropertyName("activeLocation"u8);
                 writer.WriteStringValue(ActiveLocation);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<DataCollectionRuleBcdrLocationSpec> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             Optional<string> activeLocation = default;
-            Optional<IReadOnlyList<DataCollectionRuleBcdrLocationSpec>> locations = default;
+            IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleBcdrLocationSpec> array = new List<DataCollectionRuleBcdrLocationSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleBcdrLocationSpec.DeserializeDataCollectionRuleBcdrLocationSpec(item));
+                        array.Add(DataCollectionRuleBcdrLocationSpec.DeserializeDataCollectionRuleBcdrLocationSpec(item, options));
                     }
                     locations = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation.Value, locations ?? new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleBcdrFailoverConfigurationSpec>.Write(ModelReaderWriterOptions options)

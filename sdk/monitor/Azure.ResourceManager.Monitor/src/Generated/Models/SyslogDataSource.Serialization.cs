@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (!(Streams is ChangeTrackingList<SyslogDataSourceStream> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FacilityNames))
+            if (!(FacilityNames is ChangeTrackingList<SyslogDataSourceFacilityName> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogLevels))
+            if (!(LogLevels is ChangeTrackingList<SyslogDataSourceLogLevel> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("logLevels"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<SyslogDataSourceStream>> streams = default;
-            Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
-            Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;
+            IList<SyslogDataSourceStream> streams = default;
+            IList<SyslogDataSourceFacilityName> facilityNames = default;
+            IList<SyslogDataSourceLogLevel> logLevels = default;
             Optional<string> name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyslogDataSource(Optional.ToList(streams), Optional.ToList(facilityNames), Optional.ToList(logLevels), name.Value, serializedAdditionalRawData);
+            return new SyslogDataSource(streams ?? new ChangeTrackingList<SyslogDataSourceStream>(), facilityNames ?? new ChangeTrackingList<SyslogDataSourceFacilityName>(), logLevels ?? new ChangeTrackingList<SyslogDataSourceLogLevel>(), name.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyslogDataSource>.Write(ModelReaderWriterOptions options)

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IpamEnabled))
+            if (IpamEnabled.HasValue)
             {
                 writer.WritePropertyName("ipamEnabled"u8);
                 writer.WriteStringValue(IpamEnabled.Value.ToString());
             }
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (Optional.IsDefined(PluginType))
+            if (PluginType.HasValue)
             {
                 writer.WritePropertyName("pluginType"u8);
                 writer.WriteStringValue(PluginType.Value.ToString());

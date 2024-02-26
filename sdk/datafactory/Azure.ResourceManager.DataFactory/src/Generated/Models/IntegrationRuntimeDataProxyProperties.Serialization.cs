@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(StagingLinkedService))
+            if (StagingLinkedService != null)
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
                 writer.WriteObjectValue(StagingLinkedService);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = EntityReference.DeserializeEntityReference(property.Value);
+                    connectVia = EntityReference.DeserializeEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stagingLinkedService"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value);
+                    stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

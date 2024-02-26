@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<Response<SqlDatabaseTableResource>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _sqlDatabaseTableDatabaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<SqlDatabaseTableResource> Get(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _sqlDatabaseTableDatabaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _sqlDatabaseTableDatabaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _sqlDatabaseTableDatabaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlDatabaseTableResource>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _sqlDatabaseTableDatabaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual NullableResponse<SqlDatabaseTableResource> GetIfExists(string tableName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
 
             using var scope = _sqlDatabaseTableDatabaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableCollection.GetIfExists");
             scope.Start();

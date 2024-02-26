@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventSource))
+            if (EventSource.HasValue)
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RuleSets))
+            if (!(RuleSets is ChangeTrackingList<SecurityAutomationRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<SecurityEventSource> eventSource = default;
-            Optional<IList<SecurityAutomationRuleSet>> ruleSets = default;
+            IList<SecurityAutomationRuleSet> ruleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationRuleSet> array = new List<SecurityAutomationRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item));
+                        array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item, options));
                     }
                     ruleSets = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationSource(Optional.ToNullable(eventSource), Optional.ToList(ruleSets), serializedAdditionalRawData);
+            return new SecurityAutomationSource(Optional.ToNullable(eventSource), ruleSets ?? new ChangeTrackingList<SecurityAutomationRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationSource>.Write(ModelReaderWriterOptions options)

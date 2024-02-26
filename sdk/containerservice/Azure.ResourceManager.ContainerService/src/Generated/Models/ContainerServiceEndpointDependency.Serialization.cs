@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainName))
+            if (DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsCollectionDefined(EndpointDetails))
+            if (!(EndpointDetails is ChangeTrackingList<ContainerServiceEndpointDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             Optional<string> domainName = default;
-            Optional<IReadOnlyList<ContainerServiceEndpointDetail>> endpointDetails = default;
+            IReadOnlyList<ContainerServiceEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceEndpointDetail> array = new List<ContainerServiceEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceEndpointDetail.DeserializeContainerServiceEndpointDetail(item));
+                        array.Add(ContainerServiceEndpointDetail.DeserializeContainerServiceEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceEndpointDependency(domainName.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new ContainerServiceEndpointDependency(domainName.Value, endpointDetails ?? new ChangeTrackingList<ContainerServiceEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceEndpointDependency>.Write(ModelReaderWriterOptions options)

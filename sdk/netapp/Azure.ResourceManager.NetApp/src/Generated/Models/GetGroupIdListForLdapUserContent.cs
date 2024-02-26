@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public GetGroupIdListForLdapUserContent(string username)
         {
-            Argument.AssertNotNull(username, nameof(username));
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
 
             Username = username;
         }

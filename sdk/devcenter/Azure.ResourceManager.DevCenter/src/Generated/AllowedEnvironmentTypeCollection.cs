@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual async Task<Response<AllowedEnvironmentTypeResource>> GetAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+            if (environmentTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentTypeName));
+            }
+            if (environmentTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
+            }
 
             using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual Response<AllowedEnvironmentTypeResource> Get(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+            if (environmentTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentTypeName));
+            }
+            if (environmentTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
+            }
 
             using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+            if (environmentTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentTypeName));
+            }
+            if (environmentTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
+            }
 
             using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+            if (environmentTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentTypeName));
+            }
+            if (environmentTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
+            }
 
             using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual async Task<NullableResponse<AllowedEnvironmentTypeResource>> GetIfExistsAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+            if (environmentTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentTypeName));
+            }
+            if (environmentTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
+            }
 
             using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual NullableResponse<AllowedEnvironmentTypeResource> GetIfExists(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+            if (environmentTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentTypeName));
+            }
+            if (environmentTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
+            }
 
             using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.GetIfExists");
             scope.Start();

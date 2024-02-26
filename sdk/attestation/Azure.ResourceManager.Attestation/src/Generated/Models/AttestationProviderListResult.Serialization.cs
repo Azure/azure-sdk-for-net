@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AttestationProviderData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 return null;
             }
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<AttestationProviderData>> value = default;
+            IReadOnlyList<AttestationProviderData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<AttestationProviderData> array = new List<AttestationProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationProviderData.DeserializeAttestationProviderData(item));
+                        array.Add(AttestationProviderData.DeserializeAttestationProviderData(item, options));
                     }
                     value = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationProviderListResult(systemData, Optional.ToList(value), serializedAdditionalRawData);
+            return new AttestationProviderListResult(systemData, value ?? new ChangeTrackingList<AttestationProviderData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationProviderListResult>.Write(ModelReaderWriterOptions options)

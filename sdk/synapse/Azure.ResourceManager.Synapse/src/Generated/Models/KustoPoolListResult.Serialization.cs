@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseKustoPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseKustoPoolData>> value = default;
+            IReadOnlyList<SynapseKustoPoolData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseKustoPoolData> array = new List<SynapseKustoPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseKustoPoolData.DeserializeSynapseKustoPoolData(item));
+                        array.Add(SynapseKustoPoolData.DeserializeSynapseKustoPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoPoolListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new KustoPoolListResult(value ?? new ChangeTrackingList<SynapseKustoPoolData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoPoolListResult>.Write(ModelReaderWriterOptions options)

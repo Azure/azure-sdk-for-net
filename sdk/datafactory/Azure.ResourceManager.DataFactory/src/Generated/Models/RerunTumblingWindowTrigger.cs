@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,7 +21,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="parentTrigger"/> is null. </exception>
         public RerunTumblingWindowTrigger(BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency)
         {
-            Argument.AssertNotNull(parentTrigger, nameof(parentTrigger));
+            if (parentTrigger == null)
+            {
+                throw new ArgumentNullException(nameof(parentTrigger));
+            }
 
             ParentTrigger = parentTrigger;
             RequestedStartOn = requestedStartOn;

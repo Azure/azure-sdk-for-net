@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendToServiceOwners))
+            if (SendToServiceOwners.HasValue)
             {
                 writer.WritePropertyName("sendToServiceOwners"u8);
                 writer.WriteBooleanValue(SendToServiceOwners.Value);
             }
-            if (Optional.IsCollectionDefined(CustomEmails))
+            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             Optional<bool> sendToServiceOwners = default;
-            Optional<IList<string>> customEmails = default;
+            IList<string> customEmails = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleEmailAction(odataType, serializedAdditionalRawData, Optional.ToNullable(sendToServiceOwners), Optional.ToList(customEmails));
+            return new RuleEmailAction(odataType, serializedAdditionalRawData, Optional.ToNullable(sendToServiceOwners), customEmails ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<RuleEmailAction>.Write(ModelReaderWriterOptions options)

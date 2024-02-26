@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileAttachedDataNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attachedDataNetworkName, MobileAttachedDataNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attachedDataNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDataNetworkName));
+            }
+            if (attachedDataNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileAttachedDataNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string attachedDataNetworkName, MobileAttachedDataNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attachedDataNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDataNetworkName));
+            }
+            if (attachedDataNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         public virtual async Task<Response<MobileAttachedDataNetworkResource>> GetAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            if (attachedDataNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDataNetworkName));
+            }
+            if (attachedDataNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
+            }
 
             using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         public virtual Response<MobileAttachedDataNetworkResource> Get(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            if (attachedDataNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDataNetworkName));
+            }
+            if (attachedDataNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
+            }
 
             using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            if (attachedDataNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDataNetworkName));
+            }
+            if (attachedDataNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
+            }
 
             using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            if (attachedDataNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDataNetworkName));
+            }
+            if (attachedDataNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
+            }
 
             using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileAttachedDataNetworkResource>> GetIfExistsAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            if (attachedDataNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDataNetworkName));
+            }
+            if (attachedDataNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
+            }
 
             using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         public virtual NullableResponse<MobileAttachedDataNetworkResource> GetIfExists(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            if (attachedDataNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDataNetworkName));
+            }
+            if (attachedDataNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
+            }
 
             using var scope = _mobileAttachedDataNetworkAttachedDataNetworksClientDiagnostics.CreateScope("MobileAttachedDataNetworkCollection.GetIfExists");
             scope.Start();

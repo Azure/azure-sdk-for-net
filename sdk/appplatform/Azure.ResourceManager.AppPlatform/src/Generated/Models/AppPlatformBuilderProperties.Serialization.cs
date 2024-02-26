@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Stack))
+            if (Stack != null)
             {
                 writer.WritePropertyName("stack"u8);
                 writer.WriteObjectValue(Stack);
             }
-            if (Optional.IsCollectionDefined(BuildpackGroups))
+            if (!(BuildpackGroups is ChangeTrackingList<BuildpacksGroupProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("buildpackGroups"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
             Optional<AppPlatformClusterStackProperties> stack = default;
-            Optional<IList<BuildpacksGroupProperties>> buildpackGroups = default;
+            IList<BuildpacksGroupProperties> buildpackGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value);
+                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("buildpackGroups"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<BuildpacksGroupProperties> array = new List<BuildpacksGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BuildpacksGroupProperties.DeserializeBuildpacksGroupProperties(item));
+                        array.Add(BuildpacksGroupProperties.DeserializeBuildpacksGroupProperties(item, options));
                     }
                     buildpackGroups = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuilderProperties(Optional.ToNullable(provisioningState), stack.Value, Optional.ToList(buildpackGroups), serializedAdditionalRawData);
+            return new AppPlatformBuilderProperties(Optional.ToNullable(provisioningState), stack.Value, buildpackGroups ?? new ChangeTrackingList<BuildpacksGroupProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuilderProperties>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientIP))
+            if (ClientIP != null)
             {
                 writer.WritePropertyName("clientIp"u8);
                 writer.WriteStringValue(ClientIP.ToString());
             }
-            if (Optional.IsDefined(ConfirmRunningDisruptiveOperation))
+            if (ConfirmRunningDisruptiveOperation.HasValue)
             {
                 writer.WritePropertyName("confirmRunningDisruptiveOperation"u8);
                 writer.WriteBooleanValue(ConfirmRunningDisruptiveOperation.Value);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             writer.WritePropertyName("primaryDnsIpAddress"u8);
             writer.WriteStringValue(PrimaryDnsIPAddress.ToString());
-            if (Optional.IsDefined(SecondaryDnsIPAddress))
+            if (SecondaryDnsIPAddress != null)
             {
                 writer.WritePropertyName("secondaryDnsIpAddress"u8);
                 writer.WriteStringValue(SecondaryDnsIPAddress.ToString());
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStringValue(DomainNetBiosName);
             writer.WritePropertyName("cacheNetBiosName"u8);
             writer.WriteStringValue(CacheNetBiosName);
-            if (options.Format != "W" && Optional.IsDefined(DomainJoined))
+            if (options.Format != "W" && DomainJoined.HasValue)
             {
                 writer.WritePropertyName("domainJoined"u8);
                 writer.WriteStringValue(DomainJoined.Value.ToString());
             }
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    credentials = StorageCacheActiveDirectorySettingsCredentials.DeserializeStorageCacheActiveDirectorySettingsCredentials(property.Value);
+                    credentials = StorageCacheActiveDirectorySettingsCredentials.DeserializeStorageCacheActiveDirectorySettingsCredentials(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

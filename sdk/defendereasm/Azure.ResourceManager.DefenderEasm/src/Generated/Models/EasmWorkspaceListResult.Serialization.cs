@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EasmWorkspaceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<EasmWorkspaceData>> value = default;
+            IReadOnlyList<EasmWorkspaceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     List<EasmWorkspaceData> array = new List<EasmWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EasmWorkspaceData.DeserializeEasmWorkspaceData(item));
+                        array.Add(EasmWorkspaceData.DeserializeEasmWorkspaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmWorkspaceListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new EasmWorkspaceListResult(nextLink.Value, value ?? new ChangeTrackingList<EasmWorkspaceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmWorkspaceListResult>.Write(ModelReaderWriterOptions options)

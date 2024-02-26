@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStorageProperties(document.RootElement, options);
+            return DeserializeAppPlatformStorageProperties(document.RootElement, options);
         }
 
         internal static UnknownStorageProperties DeserializeUnknownStorageProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownStorageProperties(document.RootElement, options);
+                        return DeserializeAppPlatformStorageProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformStorageProperties)} does not support '{options.Format}' format.");

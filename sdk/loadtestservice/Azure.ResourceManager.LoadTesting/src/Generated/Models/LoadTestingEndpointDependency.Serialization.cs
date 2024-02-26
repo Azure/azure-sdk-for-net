@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DomainName))
+            if (options.Format != "W" && DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointDetails))
+            if (options.Format != "W" && !(EndpointDetails is ChangeTrackingList<LoadTestingEndpointDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             Optional<string> domainName = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<LoadTestingEndpointDetail>> endpointDetails = default;
+            IReadOnlyList<LoadTestingEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingEndpointDetail> array = new List<LoadTestingEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingEndpointDetail.DeserializeLoadTestingEndpointDetail(item));
+                        array.Add(LoadTestingEndpointDetail.DeserializeLoadTestingEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingEndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new LoadTestingEndpointDependency(domainName.Value, description.Value, endpointDetails ?? new ChangeTrackingList<LoadTestingEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingEndpointDependency>.Write(ModelReaderWriterOptions options)

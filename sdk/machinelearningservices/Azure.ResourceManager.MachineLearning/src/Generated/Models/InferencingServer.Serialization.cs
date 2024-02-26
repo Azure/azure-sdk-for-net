@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureMLBatch": return AzureMLBatchInferencingServer.DeserializeAzureMLBatchInferencingServer(element);
-                    case "AzureMLOnline": return AzureMLOnlineInferencingServer.DeserializeAzureMLOnlineInferencingServer(element);
-                    case "Custom": return CustomInferencingServer.DeserializeCustomInferencingServer(element);
-                    case "Triton": return TritonInferencingServer.DeserializeTritonInferencingServer(element);
+                    case "AzureMLBatch": return AzureMLBatchInferencingServer.DeserializeAzureMLBatchInferencingServer(element, options);
+                    case "AzureMLOnline": return AzureMLOnlineInferencingServer.DeserializeAzureMLOnlineInferencingServer(element, options);
+                    case "Custom": return CustomInferencingServer.DeserializeCustomInferencingServer(element, options);
+                    case "Triton": return TritonInferencingServer.DeserializeTritonInferencingServer(element, options);
                 }
             }
-            return UnknownInferencingServer.DeserializeUnknownInferencingServer(element);
+            return UnknownInferencingServer.DeserializeUnknownInferencingServer(element, options);
         }
 
         BinaryData IPersistableModel<InferencingServer>.Write(ModelReaderWriterOptions options)

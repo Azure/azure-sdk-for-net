@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Audience))
+            if (options.Format != "W" && Audience != null)
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (options.Format != "W" && Optional.IsDefined(Catalog))
+            if (options.Format != "W" && Catalog != null)
             {
                 writer.WritePropertyName("catalog"u8);
                 writer.WriteStringValue(Catalog);
             }
-            if (options.Format != "W" && Optional.IsDefined(Offer))
+            if (options.Format != "W" && Offer != null)
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

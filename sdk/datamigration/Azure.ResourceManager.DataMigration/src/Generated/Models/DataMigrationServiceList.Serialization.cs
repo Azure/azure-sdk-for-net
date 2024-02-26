@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DataMigrationServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataMigrationServiceData>> value = default;
+            IReadOnlyList<DataMigrationServiceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<DataMigrationServiceData> array = new List<DataMigrationServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationServiceData.DeserializeDataMigrationServiceData(item));
+                        array.Add(DataMigrationServiceData.DeserializeDataMigrationServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMigrationServiceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataMigrationServiceList(value ?? new ChangeTrackingList<DataMigrationServiceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMigrationServiceList>.Write(ModelReaderWriterOptions options)

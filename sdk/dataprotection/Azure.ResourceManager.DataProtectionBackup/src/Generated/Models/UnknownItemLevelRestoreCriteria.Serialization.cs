@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownItemLevelRestoreCriteria(document.RootElement, options);
+            return DeserializeItemLevelRestoreCriteria(document.RootElement, options);
         }
 
         internal static UnknownItemLevelRestoreCriteria DeserializeUnknownItemLevelRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownItemLevelRestoreCriteria(document.RootElement, options);
+                        return DeserializeItemLevelRestoreCriteria(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support '{options.Format}' format.");

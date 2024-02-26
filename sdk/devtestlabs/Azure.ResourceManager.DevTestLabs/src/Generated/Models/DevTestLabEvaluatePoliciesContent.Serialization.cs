@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Policies))
+            if (!(Policies is ChangeTrackingList<DevTestLabEvaluatePolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IList<DevTestLabEvaluatePolicy>> policies = default;
+            IList<DevTestLabEvaluatePolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabEvaluatePolicy> array = new List<DevTestLabEvaluatePolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabEvaluatePolicy.DeserializeDevTestLabEvaluatePolicy(item));
+                        array.Add(DevTestLabEvaluatePolicy.DeserializeDevTestLabEvaluatePolicy(item, options));
                     }
                     policies = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabEvaluatePoliciesContent(Optional.ToList(policies), serializedAdditionalRawData);
+            return new DevTestLabEvaluatePoliciesContent(policies ?? new ChangeTrackingList<DevTestLabEvaluatePolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabEvaluatePoliciesContent>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeSubnetId))
+            if (ComputeSubnetId != null)
             {
                 writer.WritePropertyName("computeSubnetId"u8);
                 writer.WriteStringValue(ComputeSubnetId);

@@ -19,7 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public TrackedResource(string location)
         {
-            Argument.AssertNotNull(location, nameof(location));
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;

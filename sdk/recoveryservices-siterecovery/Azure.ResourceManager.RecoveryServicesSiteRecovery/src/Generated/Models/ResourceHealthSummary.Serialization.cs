@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceCount))
+            if (ResourceCount.HasValue)
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (Optional.IsCollectionDefined(Issues))
+            if (!(Issues is ChangeTrackingList<HealthErrorSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CategorizedResourceCounts))
+            if (!(CategorizedResourceCounts is ChangeTrackingDictionary<string, int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("categorizedResourceCounts"u8);
                 writer.WriteStartObject();
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<int> resourceCount = default;
-            Optional<IReadOnlyList<HealthErrorSummary>> issues = default;
-            Optional<IReadOnlyDictionary<string, int>> categorizedResourceCounts = default;
+            IReadOnlyList<HealthErrorSummary> issues = default;
+            IReadOnlyDictionary<string, int> categorizedResourceCounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HealthErrorSummary> array = new List<HealthErrorSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthErrorSummary.DeserializeHealthErrorSummary(item));
+                        array.Add(HealthErrorSummary.DeserializeHealthErrorSummary(item, options));
                     }
                     issues = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthSummary(Optional.ToNullable(resourceCount), Optional.ToList(issues), Optional.ToDictionary(categorizedResourceCounts), serializedAdditionalRawData);
+            return new ResourceHealthSummary(Optional.ToNullable(resourceCount), issues ?? new ChangeTrackingList<HealthErrorSummary>(), categorizedResourceCounts ?? new ChangeTrackingDictionary<string, int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthSummary>.Write(ModelReaderWriterOptions options)

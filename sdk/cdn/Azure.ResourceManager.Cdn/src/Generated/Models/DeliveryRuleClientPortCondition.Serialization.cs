@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = ClientPortMatchCondition.DeserializeClientPortMatchCondition(property.Value);
+                    parameters = ClientPortMatchCondition.DeserializeClientPortMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

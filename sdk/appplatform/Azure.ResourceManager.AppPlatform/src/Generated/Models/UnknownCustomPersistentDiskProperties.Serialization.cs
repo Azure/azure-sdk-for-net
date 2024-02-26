@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStringValue(UnderlyingResourceType.ToString());
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(IsReadOnly))
+            if (IsReadOnly.HasValue)
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (Optional.IsCollectionDefined(MountOptions))
+            if (!(MountOptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomPersistentDiskProperties(document.RootElement, options);
+            return DeserializeAppCustomPersistentDiskProperties(document.RootElement, options);
         }
 
         internal static UnknownCustomPersistentDiskProperties DeserializeUnknownCustomPersistentDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             UnderlyingResourceType type = "Unknown";
             string mountPath = default;
             Optional<bool> readOnly = default;
-            Optional<IList<string>> mountOptions = default;
+            IList<string> mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCustomPersistentDiskProperties(type, mountPath, Optional.ToNullable(readOnly), Optional.ToList(mountOptions), serializedAdditionalRawData);
+            return new UnknownCustomPersistentDiskProperties(type, mountPath, Optional.ToNullable(readOnly), mountOptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppCustomPersistentDiskProperties>.Write(ModelReaderWriterOptions options)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCustomPersistentDiskProperties(document.RootElement, options);
+                        return DeserializeAppCustomPersistentDiskProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AppCustomPersistentDiskProperties)} does not support '{options.Format}' format.");

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StorageAccount": return AppPlatformStorageAccount.DeserializeAppPlatformStorageAccount(element);
+                    case "StorageAccount": return AppPlatformStorageAccount.DeserializeAppPlatformStorageAccount(element, options);
                 }
             }
-            return UnknownStorageProperties.DeserializeUnknownStorageProperties(element);
+            return UnknownStorageProperties.DeserializeUnknownStorageProperties(element, options);
         }
 
         BinaryData IPersistableModel<AppPlatformStorageProperties>.Write(ModelReaderWriterOptions options)
