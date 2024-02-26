@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     {
                         continue;
                     }
-                    properties = AcceptOwnershipRequestProperties.DeserializeAcceptOwnershipRequestProperties(property.Value);
+                    properties = AcceptOwnershipRequestProperties.DeserializeAcceptOwnershipRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<WebPubSubHubData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WebPubSubHubData>> value = default;
+            IReadOnlyList<WebPubSubHubData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubHubData> array = new List<WebPubSubHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubHubData.DeserializeWebPubSubHubData(item));
+                        array.Add(WebPubSubHubData.DeserializeWebPubSubHubData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubHubList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WebPubSubHubList(value ?? new ChangeTrackingList<WebPubSubHubData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubHubList>.Write(ModelReaderWriterOptions options)

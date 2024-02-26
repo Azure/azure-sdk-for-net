@@ -55,8 +55,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="baselines"/> is null. </exception>
         internal MonitorSingleMetricBaseline(string timespan, TimeSpan interval, IEnumerable<MonitorTimeSeriesBaseline> baselines)
         {
-            Argument.AssertNotNull(timespan, nameof(timespan));
-            Argument.AssertNotNull(baselines, nameof(baselines));
+            if (timespan == null)
+            {
+                throw new ArgumentNullException(nameof(timespan));
+            }
+            if (baselines == null)
+            {
+                throw new ArgumentNullException(nameof(baselines));
+            }
 
             Timespan = timespan;
             Interval = interval;

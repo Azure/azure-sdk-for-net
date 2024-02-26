@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AppInsightsJavaAgentVersion))
+            if (options.Format != "W" && AppInsightsJavaAgentVersion != null)
             {
                 writer.WritePropertyName("java"u8);
                 writer.WriteStringValue(AppInsightsJavaAgentVersion);

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PostgreSqlFlexibleServerBackupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerBackupData>> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServerBackupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerBackupData> array = new List<PostgreSqlFlexibleServerBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(item));
+                        array.Add(PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerBackupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerBackupListResult(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerBackupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerBackupListResult>.Write(ModelReaderWriterOptions options)

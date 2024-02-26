@@ -71,11 +71,11 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "message_creation": return RunStepMessageCreationDetails.DeserializeRunStepMessageCreationDetails(element);
-                    case "tool_calls": return RunStepToolCallDetails.DeserializeRunStepToolCallDetails(element);
+                    case "message_creation": return RunStepMessageCreationDetails.DeserializeRunStepMessageCreationDetails(element, options);
+                    case "tool_calls": return RunStepToolCallDetails.DeserializeRunStepToolCallDetails(element, options);
                 }
             }
-            return UnknownRunStepDetails.DeserializeUnknownRunStepDetails(element);
+            return UnknownRunStepDetails.DeserializeUnknownRunStepDetails(element, options);
         }
 
         BinaryData IPersistableModel<RunStepDetails>.Write(ModelReaderWriterOptions options)

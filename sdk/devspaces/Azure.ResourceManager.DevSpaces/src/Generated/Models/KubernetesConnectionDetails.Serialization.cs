@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KubeConfig))
+            if (KubeConfig != null)
             {
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteStringValue(KubeConfig);

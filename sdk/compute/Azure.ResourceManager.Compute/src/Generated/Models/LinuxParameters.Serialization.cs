@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ClassificationsToInclude))
+            if (!(ClassificationsToInclude is ChangeTrackingList<VmGuestPatchClassificationForLinux> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PackageNameMasksToInclude))
+            if (!(PackageNameMasksToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("packageNameMasksToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PackageNameMasksToExclude))
+            if (!(PackageNameMasksToExclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("packageNameMasksToExclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaintenanceRunId))
+            if (MaintenanceRunId != null)
             {
                 writer.WritePropertyName("maintenanceRunId"u8);
                 writer.WriteStringValue(MaintenanceRunId);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationForLinux>> classificationsToInclude = default;
-            Optional<IList<string>> packageNameMasksToInclude = default;
-            Optional<IList<string>> packageNameMasksToExclude = default;
+            IList<VmGuestPatchClassificationForLinux> classificationsToInclude = default;
+            IList<string> packageNameMasksToInclude = default;
+            IList<string> packageNameMasksToExclude = default;
             Optional<string> maintenanceRunId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxParameters(Optional.ToList(classificationsToInclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(packageNameMasksToExclude), maintenanceRunId.Value, serializedAdditionalRawData);
+            return new LinuxParameters(classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForLinux>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), packageNameMasksToExclude ?? new ChangeTrackingList<string>(), maintenanceRunId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxParameters>.Write(ModelReaderWriterOptions options)

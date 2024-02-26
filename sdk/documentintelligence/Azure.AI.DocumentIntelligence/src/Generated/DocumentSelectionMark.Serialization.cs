@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToString());
-            if (Optional.IsCollectionDefined(Polygon))
+            if (!(Polygon is ChangeTrackingList<float> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("polygon"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             DocumentSelectionMarkState state = default;
-            Optional<IReadOnlyList<float>> polygon = default;
+            IReadOnlyList<float> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +110,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("span"u8))
                 {
-                    span = DocumentSpan.DeserializeDocumentSpan(property.Value);
+                    span = DocumentSpan.DeserializeDocumentSpan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))
@@ -124,7 +124,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentSelectionMark(state, Optional.ToList(polygon), span, confidence, serializedAdditionalRawData);
+            return new DocumentSelectionMark(state, polygon ?? new ChangeTrackingList<float>(), span, confidence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentSelectionMark>.Write(ModelReaderWriterOptions options)

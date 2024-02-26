@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ManagedPrivateEndpointModelData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedPrivateEndpointModelData>> value = default;
+            IReadOnlyList<ManagedPrivateEndpointModelData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<ManagedPrivateEndpointModelData> array = new List<ManagedPrivateEndpointModelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(item));
+                        array.Add(ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedPrivateEndpointModelListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedPrivateEndpointModelListResponse(value ?? new ChangeTrackingList<ManagedPrivateEndpointModelData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedPrivateEndpointModelListResponse>.Write(ModelReaderWriterOptions options)

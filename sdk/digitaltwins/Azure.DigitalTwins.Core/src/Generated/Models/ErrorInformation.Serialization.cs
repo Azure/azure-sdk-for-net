@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Innererror))
+            if (Innererror != null)
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror);
@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core
             }
             Optional<string> code = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<ErrorInformation>> details = default;
+            IReadOnlyList<ErrorInformation> details = default;
             Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new ErrorInformation(code.Value, message.Value, Optional.ToList(details), innererror.Value);
+            return new ErrorInformation(code.Value, message.Value, details ?? new ChangeTrackingList<ErrorInformation>(), innererror.Value);
         }
     }
 }

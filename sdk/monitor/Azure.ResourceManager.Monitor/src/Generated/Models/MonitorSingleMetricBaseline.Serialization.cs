@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Timespan);
             writer.WritePropertyName("interval"u8);
             writer.WriteStringValue(Interval, "P");
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<MonitorTimeSeriesBaseline> array = new List<MonitorTimeSeriesBaseline>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorTimeSeriesBaseline.DeserializeMonitorTimeSeriesBaseline(item));
+                                array.Add(MonitorTimeSeriesBaseline.DeserializeMonitorTimeSeriesBaseline(item, options));
                             }
                             baselines = array;
                             continue;

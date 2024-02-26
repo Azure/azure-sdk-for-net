@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adminUserName"/> is null. </exception>
         public MachineLearningUserAccountCredentials(string adminUserName)
         {
-            Argument.AssertNotNull(adminUserName, nameof(adminUserName));
+            if (adminUserName == null)
+            {
+                throw new ArgumentNullException(nameof(adminUserName));
+            }
 
             AdminUserName = adminUserName;
         }

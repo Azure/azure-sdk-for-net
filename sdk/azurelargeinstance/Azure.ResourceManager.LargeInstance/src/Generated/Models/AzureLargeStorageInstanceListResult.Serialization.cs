@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeStorageInstanceData> array = new List<LargeStorageInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeStorageInstanceData.DeserializeLargeStorageInstanceData(item));
+                        array.Add(LargeStorageInstanceData.DeserializeLargeStorageInstanceData(item, options));
                     }
                     value = array;
                     continue;

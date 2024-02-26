@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceBusTopicAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, ServiceBusAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceBusTopicAuthorizationRuleResource> Update(WaitUntil waitUntil, ServiceBusAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleResource.Update");
             scope.Start();
@@ -450,7 +456,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ServiceBusAccessKeys>> RegenerateKeysAsync(ServiceBusRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
@@ -492,7 +501,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ServiceBusAccessKeys> RegenerateKeys(ServiceBusRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleResource.RegenerateKeys");
             scope.Start();

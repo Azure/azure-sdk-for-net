@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(PolicyName))
+            if (PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsCollectionDefined(Tracks))
+            if (!(Tracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             Optional<string> label = default;
             Optional<string> policyName = default;
-            Optional<IList<MediaTrackSelection>> tracks = default;
+            IList<MediaTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     tracks = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyContentKey(label.Value, policyName.Value, Optional.ToList(tracks), serializedAdditionalRawData);
+            return new StreamingPolicyContentKey(label.Value, policyName.Value, tracks ?? new ChangeTrackingList<MediaTrackSelection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyContentKey>.Write(ModelReaderWriterOptions options)

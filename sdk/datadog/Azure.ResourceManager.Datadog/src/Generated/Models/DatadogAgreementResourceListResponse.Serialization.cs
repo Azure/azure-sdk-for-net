@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DatadogAgreementResourceProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatadogAgreementResourceProperties>> value = default;
+            IReadOnlyList<DatadogAgreementResourceProperties> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogAgreementResourceProperties> array = new List<DatadogAgreementResourceProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(item));
+                        array.Add(DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogAgreementResourceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatadogAgreementResourceListResponse(value ?? new ChangeTrackingList<DatadogAgreementResourceProperties>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogAgreementResourceListResponse>.Write(ModelReaderWriterOptions options)

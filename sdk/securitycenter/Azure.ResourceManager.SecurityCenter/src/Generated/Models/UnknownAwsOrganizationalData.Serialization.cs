@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAwsOrganizationalData(document.RootElement, options);
+            return DeserializeAwsOrganizationalInfo(document.RootElement, options);
         }
 
         internal static UnknownAwsOrganizationalData DeserializeUnknownAwsOrganizationalData(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAwsOrganizationalData(document.RootElement, options);
+                        return DeserializeAwsOrganizationalInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support '{options.Format}' format.");

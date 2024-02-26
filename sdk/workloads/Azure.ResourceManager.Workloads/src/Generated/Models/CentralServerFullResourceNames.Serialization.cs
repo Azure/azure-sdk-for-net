@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VirtualMachines))
+            if (!(VirtualMachines is ChangeTrackingList<VirtualMachineResourceNames> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AvailabilitySetName))
+            if (AvailabilitySetName != null)
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
-            if (Optional.IsDefined(LoadBalancer))
+            if (LoadBalancer != null)
             {
                 writer.WritePropertyName("loadBalancer"u8);
                 writer.WriteObjectValue(LoadBalancer);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IList<VirtualMachineResourceNames>> virtualMachines = default;
+            IList<VirtualMachineResourceNames> virtualMachines = default;
             Optional<string> availabilitySetName = default;
             Optional<LoadBalancerResourceNames> loadBalancer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<VirtualMachineResourceNames> array = new List<VirtualMachineResourceNames>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(item));
+                        array.Add(VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(item, options));
                     }
                     virtualMachines = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    loadBalancer = LoadBalancerResourceNames.DeserializeLoadBalancerResourceNames(property.Value);
+                    loadBalancer = LoadBalancerResourceNames.DeserializeLoadBalancerResourceNames(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CentralServerFullResourceNames(Optional.ToList(virtualMachines), availabilitySetName.Value, loadBalancer.Value, serializedAdditionalRawData);
+            return new CentralServerFullResourceNames(virtualMachines ?? new ChangeTrackingList<VirtualMachineResourceNames>(), availabilitySetName.Value, loadBalancer.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CentralServerFullResourceNames>.Write(ModelReaderWriterOptions options)

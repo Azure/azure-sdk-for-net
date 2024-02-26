@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IntegrationAccountCertificateData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountCertificateData>> value = default;
+            IReadOnlyList<IntegrationAccountCertificateData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountCertificateData> array = new List<IntegrationAccountCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(item));
+                        array.Add(IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountCertificateListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationAccountCertificateListResult(value ?? new ChangeTrackingList<IntegrationAccountCertificateData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountCertificateListResult>.Write(ModelReaderWriterOptions options)

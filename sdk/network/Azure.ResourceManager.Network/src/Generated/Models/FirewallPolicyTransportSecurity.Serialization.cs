@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateAuthority))
+            if (CertificateAuthority != null)
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteObjectValue(CertificateAuthority);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    certificateAuthority = FirewallPolicyCertificateAuthority.DeserializeFirewallPolicyCertificateAuthority(property.Value);
+                    certificateAuthority = FirewallPolicyCertificateAuthority.DeserializeFirewallPolicyCertificateAuthority(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

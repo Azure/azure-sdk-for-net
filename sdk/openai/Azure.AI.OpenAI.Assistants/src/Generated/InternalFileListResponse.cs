@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -52,7 +51,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         internal InternalFileListResponse(IEnumerable<OpenAIFile> data)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             Data = data.ToList();
         }

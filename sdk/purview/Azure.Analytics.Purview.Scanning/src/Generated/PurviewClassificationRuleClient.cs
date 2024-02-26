@@ -55,9 +55,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="classificationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, TokenCredential credential, PurviewScanningServiceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(classificationRuleName, nameof(classificationRuleName));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (classificationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationRuleName));
+            }
+            if (classificationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationRuleName));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewScanningServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -269,7 +282,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersionAsync(int,string,RequestContext)']/*" />
         public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context)
         {
-            Argument.AssertNotNull(action, nameof(action));
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
             scope.Start();
@@ -304,7 +320,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersion(int,string,RequestContext)']/*" />
         public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context)
         {
-            Argument.AssertNotNull(action, nameof(action));
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
             scope.Start();

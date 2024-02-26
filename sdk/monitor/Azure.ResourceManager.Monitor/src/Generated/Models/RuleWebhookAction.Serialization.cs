@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceUri))
+            if (ServiceUri != null)
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             Optional<Uri> serviceUri = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleWebhookAction(odataType, serializedAdditionalRawData, serviceUri.Value, Optional.ToDictionary(properties));
+            return new RuleWebhookAction(odataType, serializedAdditionalRawData, serviceUri.Value, properties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<RuleWebhookAction>.Write(ModelReaderWriterOptions options)

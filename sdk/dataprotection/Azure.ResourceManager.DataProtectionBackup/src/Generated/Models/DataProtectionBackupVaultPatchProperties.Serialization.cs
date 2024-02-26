@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MonitoringSettings))
+            if (MonitoringSettings != null)
             {
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
-            if (Optional.IsDefined(SecuritySettings))
+            if (SecuritySettings != null)
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (Optional.IsDefined(FeatureSettings))
+            if (FeatureSettings != null)
             {
                 writer.WritePropertyName("featureSettings"u8);
                 writer.WriteObjectValue(FeatureSettings);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value);
+                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value);
+                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("featureSettings"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value);
+                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GtidSet))
+            if (GtidSet != null)
             {
                 writer.WritePropertyName("gtidSet"u8);
                 writer.WriteStringValue(GtidSet);

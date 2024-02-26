@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         public EdgeOrderItemAddressProperties(EdgeOrderAddressContactDetails contactDetails)
         {
-            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
+            if (contactDetails == null)
+            {
+                throw new ArgumentNullException(nameof(contactDetails));
+            }
 
             ContactDetails = contactDetails;
         }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<PartialBatchDeployment> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = PartialBatchDeployment.DeserializePartialBatchDeployment(property.Value);
+                    properties = PartialBatchDeployment.DeserializePartialBatchDeployment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningBatchDeploymentPatch(properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new MachineLearningBatchDeploymentPatch(properties.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchDeploymentPatch>.Write(ModelReaderWriterOptions options)

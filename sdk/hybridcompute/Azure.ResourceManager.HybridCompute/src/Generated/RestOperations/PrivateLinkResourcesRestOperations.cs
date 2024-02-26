@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridComputePrivateLinkResourceListResult>> ListByPrivateLinkScopeAsync(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scopeName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeName));
+            }
+            if (scopeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
+            }
 
             using var message = CreateListByPrivateLinkScopeRequest(subscriptionId, resourceGroupName, scopeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridComputePrivateLinkResourceListResult> ListByPrivateLinkScope(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scopeName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeName));
+            }
+            if (scopeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
+            }
 
             using var message = CreateListByPrivateLinkScopeRequest(subscriptionId, resourceGroupName, scopeName);
             _pipeline.Send(message, cancellationToken);
@@ -148,10 +190,38 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridComputePrivateLinkResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string scopeName, string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scopeName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeName));
+            }
+            if (scopeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, scopeName, groupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +251,38 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridComputePrivateLinkResourceData> Get(string subscriptionId, string resourceGroupName, string scopeName, string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scopeName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeName));
+            }
+            if (scopeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, scopeName, groupName);
             _pipeline.Send(message, cancellationToken);
@@ -228,10 +326,34 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridComputePrivateLinkResourceListResult>> ListByPrivateLinkScopeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scopeName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeName));
+            }
+            if (scopeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
+            }
 
             using var message = CreateListByPrivateLinkScopeNextPageRequest(nextLink, subscriptionId, resourceGroupName, scopeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -259,10 +381,34 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridComputePrivateLinkResourceListResult> ListByPrivateLinkScopeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scopeName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeName));
+            }
+            if (scopeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
+            }
 
             using var message = CreateListByPrivateLinkScopeNextPageRequest(nextLink, subscriptionId, resourceGroupName, scopeName);
             _pipeline.Send(message, cancellationToken);

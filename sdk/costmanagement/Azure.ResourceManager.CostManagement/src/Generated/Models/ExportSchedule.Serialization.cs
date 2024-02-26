@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Recurrence.HasValue)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteStringValue(Recurrence.Value.ToString());
             }
-            if (Optional.IsDefined(RecurrencePeriod))
+            if (RecurrencePeriod != null)
             {
                 writer.WritePropertyName("recurrencePeriod"u8);
                 writer.WriteObjectValue(RecurrencePeriod);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    recurrencePeriod = ExportRecurrencePeriod.DeserializeExportRecurrencePeriod(property.Value);
+                    recurrencePeriod = ExportRecurrencePeriod.DeserializeExportRecurrencePeriod(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

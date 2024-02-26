@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code.HasValue)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteNumberValue(Code.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Title))
+            if (options.Format != "W" && Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Recommendations))
+            if (options.Format != "W" && !(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> code = default;
             Optional<string> title = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<string>> recommendations = default;
+            IReadOnlyList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthDetails(Optional.ToNullable(code), title.Value, message.Value, Optional.ToList(recommendations), serializedAdditionalRawData);
+            return new ResourceHealthDetails(Optional.ToNullable(code), title.Value, message.Value, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthDetails>.Write(ModelReaderWriterOptions options)

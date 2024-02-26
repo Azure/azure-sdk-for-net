@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(SecurityRuleAssociations))
+            if (SecurityRuleAssociations != null)
             {
                 writer.WritePropertyName("securityRuleAssociations"u8);
                 writer.WriteObjectValue(SecurityRuleAssociations);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    securityRuleAssociations = SecurityRuleAssociations.DeserializeSecurityRuleAssociations(property.Value);
+                    securityRuleAssociations = SecurityRuleAssociations.DeserializeSecurityRuleAssociations(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

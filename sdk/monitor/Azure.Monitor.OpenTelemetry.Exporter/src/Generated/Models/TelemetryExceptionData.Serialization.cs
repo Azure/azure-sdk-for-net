@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(SeverityLevel))
+            if (SeverityLevel.HasValue)
             {
                 if (SeverityLevel != null)
                 {
@@ -34,12 +34,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("severityLevel");
                 }
             }
-            if (Optional.IsDefined(ProblemId))
+            if (ProblemId != null)
             {
                 writer.WritePropertyName("problemId"u8);
                 writer.WriteStringValue(ProblemId);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Measurements))
+            if (!(Measurements is ChangeTrackingDictionary<string, double> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

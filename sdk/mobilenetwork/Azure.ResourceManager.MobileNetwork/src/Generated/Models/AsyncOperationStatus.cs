@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal AsyncOperationStatus(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
 
             Status = status;
         }

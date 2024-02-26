@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<DataTransferJobGetResultData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataTransferJobGetResultData>> value = default;
+            IReadOnlyList<DataTransferJobGetResultData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<DataTransferJobGetResultData> array = new List<DataTransferJobGetResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTransferJobGetResultData.DeserializeDataTransferJobGetResultData(item));
+                        array.Add(DataTransferJobGetResultData.DeserializeDataTransferJobGetResultData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobFeedResults(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataTransferJobFeedResults(value ?? new ChangeTrackingList<DataTransferJobGetResultData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobFeedResults>.Write(ModelReaderWriterOptions options)

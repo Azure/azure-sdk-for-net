@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule);
-            if (Optional.IsDefined(Topic))
+            if (Topic != null)
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<VMwareNetworkInterfaceUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<IList<VMwareNetworkInterfaceUpdate>> networkInterfaces = default;
+            IList<VMwareNetworkInterfaceUpdate> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareNetworkInterfaceUpdate> array = new List<VMwareNetworkInterfaceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareNetworkInterfaceUpdate.DeserializeVMwareNetworkInterfaceUpdate(item));
+                        array.Add(VMwareNetworkInterfaceUpdate.DeserializeVMwareNetworkInterfaceUpdate(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareNetworkProfileUpdate(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new VMwareNetworkProfileUpdate(networkInterfaces ?? new ChangeTrackingList<VMwareNetworkInterfaceUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareNetworkProfileUpdate>.Write(ModelReaderWriterOptions options)

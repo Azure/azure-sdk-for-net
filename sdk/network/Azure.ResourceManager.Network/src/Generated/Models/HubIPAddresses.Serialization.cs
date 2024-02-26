@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicIPs))
+            if (PublicIPs != null)
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteObjectValue(PublicIPs);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value);
+                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateIPAddress"u8))

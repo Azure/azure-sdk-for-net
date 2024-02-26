@@ -196,7 +196,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response> UpdateAsync(ETag ifMatch, ApiManagementPortalSignUpSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.Update");
             scope.Start();
@@ -239,7 +242,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response Update(ETag ifMatch, ApiManagementPortalSignUpSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.Update");
             scope.Start();
@@ -283,7 +289,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementPortalSignUpSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApiManagementPortalSignUpSettingData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.CreateOrUpdate");
             scope.Start();
@@ -330,7 +339,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementPortalSignUpSettingResource> CreateOrUpdate(WaitUntil waitUntil, ApiManagementPortalSignUpSettingData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.CreateOrUpdate");
             scope.Start();

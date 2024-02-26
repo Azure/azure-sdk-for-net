@@ -75,12 +75,50 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CosmosDBMetricListResult>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
-            Argument.AssertNotNull(filter, nameof(filter));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (databaseRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (collectionRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
 
             using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, databaseRid, collectionRid, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -110,12 +148,50 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CosmosDBMetricListResult> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
-            Argument.AssertNotNull(filter, nameof(filter));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (databaseRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (collectionRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
+            }
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
 
             using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, databaseRid, collectionRid, filter);
             _pipeline.Send(message, cancellationToken);
@@ -174,11 +250,46 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CosmosDBUsagesResult>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (databaseRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (collectionRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
+            }
 
             using var message = CreateListUsagesRequest(subscriptionId, resourceGroupName, accountName, databaseRid, collectionRid, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -208,11 +319,46 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CosmosDBUsagesResult> ListUsages(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (databaseRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (collectionRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
+            }
 
             using var message = CreateListUsagesRequest(subscriptionId, resourceGroupName, accountName, databaseRid, collectionRid, filter);
             _pipeline.Send(message, cancellationToken);
@@ -266,11 +412,46 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CosmosDBMetricDefinitionsListResult>> ListMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (databaseRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (collectionRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
+            }
 
             using var message = CreateListMetricDefinitionsRequest(subscriptionId, resourceGroupName, accountName, databaseRid, collectionRid);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -299,11 +480,46 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CosmosDBMetricDefinitionsListResult> ListMetricDefinitions(string subscriptionId, string resourceGroupName, string accountName, string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (databaseRid == null)
+            {
+                throw new ArgumentNullException(nameof(databaseRid));
+            }
+            if (databaseRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
+            }
+            if (collectionRid == null)
+            {
+                throw new ArgumentNullException(nameof(collectionRid));
+            }
+            if (collectionRid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
+            }
 
             using var message = CreateListMetricDefinitionsRequest(subscriptionId, resourceGroupName, accountName, databaseRid, collectionRid);
             _pipeline.Send(message, cancellationToken);

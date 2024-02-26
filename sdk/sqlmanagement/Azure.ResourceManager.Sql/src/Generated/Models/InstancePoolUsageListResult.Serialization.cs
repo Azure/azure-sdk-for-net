@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<InstancePoolUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InstancePoolUsage>> value = default;
+            IReadOnlyList<InstancePoolUsage> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolUsage> array = new List<InstancePoolUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolUsage.DeserializeInstancePoolUsage(item));
+                        array.Add(InstancePoolUsage.DeserializeInstancePoolUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolUsageListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InstancePoolUsageListResult(value ?? new ChangeTrackingList<InstancePoolUsage>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolUsageListResult>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.PlaywrightTesting;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AccountListResult(IEnumerable<PlaywrightTestingAccountData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Value = value.ToList();
         }

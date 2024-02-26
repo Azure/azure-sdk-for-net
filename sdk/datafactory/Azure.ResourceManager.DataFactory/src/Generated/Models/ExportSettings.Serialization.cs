@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureDatabricksDeltaLakeExportCommand": return AzureDatabricksDeltaLakeExportCommand.DeserializeAzureDatabricksDeltaLakeExportCommand(element);
-                    case "SnowflakeExportCopyCommand": return SnowflakeExportCopyCommand.DeserializeSnowflakeExportCopyCommand(element);
+                    case "AzureDatabricksDeltaLakeExportCommand": return AzureDatabricksDeltaLakeExportCommand.DeserializeAzureDatabricksDeltaLakeExportCommand(element, options);
+                    case "SnowflakeExportCopyCommand": return SnowflakeExportCopyCommand.DeserializeSnowflakeExportCopyCommand(element, options);
                 }
             }
-            return UnknownExportSettings.DeserializeUnknownExportSettings(element);
+            return UnknownExportSettings.DeserializeUnknownExportSettings(element, options);
         }
 
         BinaryData IPersistableModel<ExportSettings>.Write(ModelReaderWriterOptions options)

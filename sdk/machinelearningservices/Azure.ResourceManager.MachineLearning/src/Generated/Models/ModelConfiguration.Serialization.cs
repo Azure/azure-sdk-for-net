@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(MountPath))
+            if (MountPath != null)
             {
                 if (MountPath != null)
                 {

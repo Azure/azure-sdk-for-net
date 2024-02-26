@@ -82,7 +82,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseDedicatedSqlMinimalTlsSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseDedicatedSqlMinimalTlsSettingName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +132,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseDedicatedSqlMinimalTlsSettingResource> CreateOrUpdate(WaitUntil waitUntil, SynapseDedicatedSqlMinimalTlsSettingName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -175,7 +181,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedSQLminimalTlsSettingsName"/> is null. </exception>
         public virtual async Task<Response<SynapseDedicatedSqlMinimalTlsSettingResource>> GetAsync(string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dedicatedSQLminimalTlsSettingsName, nameof(dedicatedSQLminimalTlsSettingsName));
+            if (dedicatedSQLminimalTlsSettingsName == null)
+            {
+                throw new ArgumentNullException(nameof(dedicatedSQLminimalTlsSettingsName));
+            }
+            if (dedicatedSQLminimalTlsSettingsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedSQLminimalTlsSettingsName));
+            }
 
             using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.Get");
             scope.Start();
@@ -220,7 +233,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedSQLminimalTlsSettingsName"/> is null. </exception>
         public virtual Response<SynapseDedicatedSqlMinimalTlsSettingResource> Get(string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dedicatedSQLminimalTlsSettingsName, nameof(dedicatedSQLminimalTlsSettingsName));
+            if (dedicatedSQLminimalTlsSettingsName == null)
+            {
+                throw new ArgumentNullException(nameof(dedicatedSQLminimalTlsSettingsName));
+            }
+            if (dedicatedSQLminimalTlsSettingsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedSQLminimalTlsSettingsName));
+            }
 
             using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.Get");
             scope.Start();
@@ -325,7 +345,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedSQLminimalTlsSettingsName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dedicatedSQLminimalTlsSettingsName, nameof(dedicatedSQLminimalTlsSettingsName));
+            if (dedicatedSQLminimalTlsSettingsName == null)
+            {
+                throw new ArgumentNullException(nameof(dedicatedSQLminimalTlsSettingsName));
+            }
+            if (dedicatedSQLminimalTlsSettingsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedSQLminimalTlsSettingsName));
+            }
 
             using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.Exists");
             scope.Start();
@@ -368,7 +395,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedSQLminimalTlsSettingsName"/> is null. </exception>
         public virtual Response<bool> Exists(string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dedicatedSQLminimalTlsSettingsName, nameof(dedicatedSQLminimalTlsSettingsName));
+            if (dedicatedSQLminimalTlsSettingsName == null)
+            {
+                throw new ArgumentNullException(nameof(dedicatedSQLminimalTlsSettingsName));
+            }
+            if (dedicatedSQLminimalTlsSettingsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedSQLminimalTlsSettingsName));
+            }
 
             using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.Exists");
             scope.Start();
@@ -411,7 +445,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedSQLminimalTlsSettingsName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseDedicatedSqlMinimalTlsSettingResource>> GetIfExistsAsync(string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dedicatedSQLminimalTlsSettingsName, nameof(dedicatedSQLminimalTlsSettingsName));
+            if (dedicatedSQLminimalTlsSettingsName == null)
+            {
+                throw new ArgumentNullException(nameof(dedicatedSQLminimalTlsSettingsName));
+            }
+            if (dedicatedSQLminimalTlsSettingsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedSQLminimalTlsSettingsName));
+            }
 
             using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.GetIfExists");
             scope.Start();
@@ -456,7 +497,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedSQLminimalTlsSettingsName"/> is null. </exception>
         public virtual NullableResponse<SynapseDedicatedSqlMinimalTlsSettingResource> GetIfExists(string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dedicatedSQLminimalTlsSettingsName, nameof(dedicatedSQLminimalTlsSettingsName));
+            if (dedicatedSQLminimalTlsSettingsName == null)
+            {
+                throw new ArgumentNullException(nameof(dedicatedSQLminimalTlsSettingsName));
+            }
+            if (dedicatedSQLminimalTlsSettingsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedSQLminimalTlsSettingsName));
+            }
 
             using var scope = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics.CreateScope("SynapseDedicatedSqlMinimalTlsSettingCollection.GetIfExists");
             scope.Start();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            if (options.Format != "W" && AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorLogLink))
+            if (options.Format != "W" && ErrorLogLink != null)
             {
                 writer.WritePropertyName("errorLogLink"u8);
                 writer.WriteStringValue(ErrorLogLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(VerboseLogLink))
+            if (options.Format != "W" && VerboseLogLink != null)
             {
                 writer.WritePropertyName("verboseLogLink"u8);
                 writer.WriteStringValue(VerboseLogLink);

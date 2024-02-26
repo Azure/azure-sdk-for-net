@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProcessorArchitecture))
+            if (ProcessorArchitecture.HasValue)
             {
                 writer.WritePropertyName("processorArchitecture"u8);
                 writer.WriteStringValue(ProcessorArchitecture.Value.ToString());
             }
-            if (Optional.IsDefined(AuthenticationMethod))
+            if (AuthenticationMethod.HasValue)
             {
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
             }
-            if (Optional.IsDefined(RadiusServerAuthCertificate))
+            if (RadiusServerAuthCertificate != null)
             {
                 writer.WritePropertyName("radiusServerAuthCertificate"u8);
                 writer.WriteStringValue(RadiusServerAuthCertificate);
             }
-            if (Optional.IsCollectionDefined(ClientRootCertificates))
+            if (!(ClientRootCertificates is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clientRootCertificates"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ProcessorArchitecture> processorArchitecture = default;
             Optional<NetworkAuthenticationMethod> authenticationMethod = default;
             Optional<string> radiusServerAuthCertificate = default;
-            Optional<IList<string>> clientRootCertificates = default;
+            IList<string> clientRootCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientContent(Optional.ToNullable(processorArchitecture), Optional.ToNullable(authenticationMethod), radiusServerAuthCertificate.Value, Optional.ToList(clientRootCertificates), serializedAdditionalRawData);
+            return new VpnClientContent(Optional.ToNullable(processorArchitecture), Optional.ToNullable(authenticationMethod), radiusServerAuthCertificate.Value, clientRootCertificates ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientContent>.Write(ModelReaderWriterOptions options)

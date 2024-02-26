@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<VirtualMachineScaleSetVmExtensionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionData>> value = default;
+            IReadOnlyList<VirtualMachineScaleSetVmExtensionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineScaleSetVmExtensionData> array = new List<VirtualMachineScaleSetVmExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetVmExtensionData.DeserializeVirtualMachineScaleSetVmExtensionData(item));
+                        array.Add(VirtualMachineScaleSetVmExtensionData.DeserializeVirtualMachineScaleSetVmExtensionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetVmExtensionsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetVmExtensionsListResult(value ?? new ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmExtensionsListResult>.Write(ModelReaderWriterOptions options)

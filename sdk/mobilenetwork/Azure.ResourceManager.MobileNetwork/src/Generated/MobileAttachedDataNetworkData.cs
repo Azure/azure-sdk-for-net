@@ -59,8 +59,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="userPlaneDataInterface"/> or <paramref name="dnsAddresses"/> is null. </exception>
         public MobileAttachedDataNetworkData(AzureLocation location, MobileNetworkInterfaceProperties userPlaneDataInterface, IEnumerable<string> dnsAddresses) : base(location)
         {
-            Argument.AssertNotNull(userPlaneDataInterface, nameof(userPlaneDataInterface));
-            Argument.AssertNotNull(dnsAddresses, nameof(dnsAddresses));
+            if (userPlaneDataInterface == null)
+            {
+                throw new ArgumentNullException(nameof(userPlaneDataInterface));
+            }
+            if (dnsAddresses == null)
+            {
+                throw new ArgumentNullException(nameof(dnsAddresses));
+            }
 
             UserPlaneDataInterface = userPlaneDataInterface;
             DnsAddresses = dnsAddresses.ToList();

@@ -62,9 +62,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="triggeringLogic"/> or <paramref name="actions"/> is null. </exception>
         public SecurityInsightsAutomationRuleData(string displayName, int order, SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic, IEnumerable<SecurityInsightsAutomationRuleAction> actions)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(triggeringLogic, nameof(triggeringLogic));
-            Argument.AssertNotNull(actions, nameof(actions));
+            if (displayName == null)
+            {
+                throw new ArgumentNullException(nameof(displayName));
+            }
+            if (triggeringLogic == null)
+            {
+                throw new ArgumentNullException(nameof(triggeringLogic));
+            }
+            if (actions == null)
+            {
+                throw new ArgumentNullException(nameof(actions));
+            }
 
             DisplayName = displayName;
             Order = order;

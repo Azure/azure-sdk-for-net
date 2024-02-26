@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ApplicationSecurityGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationSecurityGroupData>> value = default;
+            IReadOnlyList<ApplicationSecurityGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
+                        array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationSecurityGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationSecurityGroupListResult(value ?? new ChangeTrackingList<ApplicationSecurityGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationSecurityGroupListResult>.Write(ModelReaderWriterOptions options)

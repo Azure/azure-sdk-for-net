@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public AzureDataExplorerSource(object query)
         {
-            Argument.AssertNotNull(query, nameof(query));
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
 
             Query = query;
             Type = "AzureDataExplorerSource";

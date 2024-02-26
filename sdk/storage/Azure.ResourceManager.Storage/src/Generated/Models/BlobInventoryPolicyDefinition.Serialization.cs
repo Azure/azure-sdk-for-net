@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Filters))
+            if (Filters != null)
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    filters = BlobInventoryPolicyFilter.DeserializeBlobInventoryPolicyFilter(property.Value);
+                    filters = BlobInventoryPolicyFilter.DeserializeBlobInventoryPolicyFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("format"u8))

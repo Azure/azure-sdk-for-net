@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoginParameters))
+            if (!(LoginParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loginParameters"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsWwwAuthenticationDisabled))
+            if (IsWwwAuthenticationDisabled.HasValue)
             {
                 writer.WritePropertyName("disableWWWAuthenticate"u8);
                 writer.WriteBooleanValue(IsWwwAuthenticationDisabled.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<string>> loginParameters = default;
+            IList<string> loginParameters = default;
             Optional<bool> disableWWWAuthenticate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureActiveDirectoryLoginConfiguration(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate), serializedAdditionalRawData);
+            return new ContainerAppAzureActiveDirectoryLoginConfiguration(loginParameters ?? new ChangeTrackingList<string>(), Optional.ToNullable(disableWWWAuthenticate), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryLoginConfiguration>.Write(ModelReaderWriterOptions options)

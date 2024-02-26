@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkFunctionDefinitionGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFunctionDefinitionGroupData>> value = default;
+            IReadOnlyList<NetworkFunctionDefinitionGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<NetworkFunctionDefinitionGroupData> array = new List<NetworkFunctionDefinitionGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(item));
+                        array.Add(NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionDefinitionGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkFunctionDefinitionGroupListResult(value ?? new ChangeTrackingList<NetworkFunctionDefinitionGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionGroupListResult>.Write(ModelReaderWriterOptions options)

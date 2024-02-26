@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType.ToString());
-            if (Optional.IsDefined(PrincipalId))
+            if (PrincipalId != null)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (!(UserAssignedIdentities is ChangeTrackingDictionary<string, UserAssignedIdentity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             ManagedServiceIdentityType type = default;
             Optional<string> principalId = default;
             Optional<Guid> tenantId = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServiceIdentity(type, principalId.Value, Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new ManagedServiceIdentity(type, principalId.Value, Optional.ToNullable(tenantId), userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServiceIdentity>.Write(ModelReaderWriterOptions options)

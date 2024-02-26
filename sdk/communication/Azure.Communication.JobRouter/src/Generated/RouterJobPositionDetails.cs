@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Position and estimated wait time for a job. </summary>
     public partial class RouterJobPositionDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/>. </summary>
         /// <param name="jobId"> Id of the job these details are about. </param>
         /// <param name="position"> Position of the job in question within that queue. </param>
@@ -22,14 +54,42 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="queueId"/> is null. </exception>
         internal RouterJobPositionDetails(string jobId, int position, string queueId, int queueLength, TimeSpan estimatedWaitTime)
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
-            Argument.AssertNotNull(queueId, nameof(queueId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
 
             JobId = jobId;
             Position = position;
             QueueId = queueId;
             QueueLength = queueLength;
             EstimatedWaitTime = estimatedWaitTime;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/>. </summary>
+        /// <param name="jobId"> Id of the job these details are about. </param>
+        /// <param name="position"> Position of the job in question within that queue. </param>
+        /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
+        /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTime"> Estimated wait time of the job rounded up to the nearest minute. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJobPositionDetails(string jobId, int position, string queueId, int queueLength, TimeSpan estimatedWaitTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            JobId = jobId;
+            Position = position;
+            QueueId = queueId;
+            QueueLength = queueLength;
+            EstimatedWaitTime = estimatedWaitTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobPositionDetails"/> for deserialization. </summary>
+        internal RouterJobPositionDetails()
+        {
         }
 
         /// <summary> Id of the job these details are about. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);

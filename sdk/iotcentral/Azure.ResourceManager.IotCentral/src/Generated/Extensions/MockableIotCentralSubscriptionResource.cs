@@ -131,7 +131,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppNameAvailabilityAsync(IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("MockableIotCentralSubscriptionResource.CheckIotCentralAppNameAvailability");
             scope.Start();
@@ -173,7 +176,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppNameAvailability(IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("MockableIotCentralSubscriptionResource.CheckIotCentralAppNameAvailability");
             scope.Start();
@@ -215,7 +221,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppSubdomainAvailabilityAsync(IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("MockableIotCentralSubscriptionResource.CheckIotCentralAppSubdomainAvailability");
             scope.Start();
@@ -257,7 +266,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppSubdomainAvailability(IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("MockableIotCentralSubscriptionResource.CheckIotCentralAppSubdomainAvailability");
             scope.Start();

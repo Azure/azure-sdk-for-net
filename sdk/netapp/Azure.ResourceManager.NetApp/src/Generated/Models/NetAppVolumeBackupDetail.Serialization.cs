@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VolumeName))
+            if (VolumeName != null)
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
-            if (Optional.IsDefined(BackupsCount))
+            if (BackupsCount.HasValue)
             {
                 writer.WritePropertyName("backupsCount"u8);
                 writer.WriteNumberValue(BackupsCount.Value);
             }
-            if (Optional.IsDefined(IsPolicyEnabled))
+            if (IsPolicyEnabled.HasValue)
             {
                 writer.WritePropertyName("policyEnabled"u8);
                 writer.WriteBooleanValue(IsPolicyEnabled.Value);

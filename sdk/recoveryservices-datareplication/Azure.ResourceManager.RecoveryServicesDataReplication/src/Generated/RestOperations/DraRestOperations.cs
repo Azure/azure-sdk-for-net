@@ -69,10 +69,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataReplicationDraData>> GetAsync(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (fabricAgentName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricAgentName));
+            }
+            if (fabricAgentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,10 +130,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataReplicationDraData> Get(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (fabricAgentName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricAgentName));
+            }
+            if (fabricAgentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName);
             _pipeline.Send(message, cancellationToken);
@@ -162,11 +218,42 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, DataReplicationDraData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (fabricAgentName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricAgentName));
+            }
+            if (fabricAgentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -191,11 +278,42 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, DataReplicationDraData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (fabricAgentName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricAgentName));
+            }
+            if (fabricAgentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName, data);
             _pipeline.Send(message, cancellationToken);
@@ -241,10 +359,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (fabricAgentName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricAgentName));
+            }
+            if (fabricAgentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -268,10 +414,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fabricName"/> or <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (fabricAgentName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricAgentName));
+            }
+            if (fabricAgentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fabricName, fabricAgentName);
             _pipeline.Send(message, cancellationToken);
@@ -315,9 +489,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataReplicationDraListResult>> ListAsync(string subscriptionId, string resourceGroupName, string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, fabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -344,9 +539,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataReplicationDraListResult> List(string subscriptionId, string resourceGroupName, string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, fabricName);
             _pipeline.Send(message, cancellationToken);
@@ -388,10 +604,34 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataReplicationDraListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, fabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -419,10 +659,34 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataReplicationDraListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, fabricName);
             _pipeline.Send(message, cancellationToken);

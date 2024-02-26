@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CapacityReservationGroup))
+            if (CapacityReservationGroup != null)
             {
                 writer.WritePropertyName("capacityReservationGroup"u8);
                 JsonSerializer.Serialize(writer, CapacityReservationGroup);

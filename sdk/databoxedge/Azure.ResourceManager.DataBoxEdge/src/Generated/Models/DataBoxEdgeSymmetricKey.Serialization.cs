@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value);
+                    connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

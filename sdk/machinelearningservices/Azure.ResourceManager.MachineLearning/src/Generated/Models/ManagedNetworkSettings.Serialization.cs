@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsolationMode))
+            if (IsolationMode.HasValue)
             {
                 writer.WritePropertyName("isolationMode"u8);
                 writer.WriteStringValue(IsolationMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkId))
+            if (options.Format != "W" && NetworkId != null)
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (Optional.IsCollectionDefined(OutboundRules))
+            if (!(OutboundRules is ChangeTrackingDictionary<string, MachineLearningOutboundRule> collection && collection.IsUndefined))
             {
                 if (OutboundRules != null)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outboundRules");
                 }
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<IsolationMode> isolationMode = default;
             Optional<string> networkId = default;
-            Optional<IDictionary<string, MachineLearningOutboundRule>> outboundRules = default;
+            IDictionary<string, MachineLearningOutboundRule> outboundRules = default;
             Optional<ManagedNetworkProvisionStatus> status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningOutboundRule> dictionary = new Dictionary<string, MachineLearningOutboundRule>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningOutboundRule.DeserializeMachineLearningOutboundRule(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningOutboundRule.DeserializeMachineLearningOutboundRule(property0.Value, options));
                     }
                     outboundRules = dictionary;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    status = ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(property.Value);
+                    status = ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkSettings(Optional.ToNullable(isolationMode), networkId.Value, Optional.ToDictionary(outboundRules), status.Value, serializedAdditionalRawData);
+            return new ManagedNetworkSettings(Optional.ToNullable(isolationMode), networkId.Value, outboundRules ?? new ChangeTrackingDictionary<string, MachineLearningOutboundRule>(), status.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkSettings>.Write(ModelReaderWriterOptions options)

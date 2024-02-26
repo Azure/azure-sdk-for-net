@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
+            if (options.Format != "W" && AuthenticationProvisioningState.HasValue)
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
+            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "awsAssumeRole": return AwsAssumeRoleAuthenticationDetailsProperties.DeserializeAwsAssumeRoleAuthenticationDetailsProperties(element);
-                    case "awsCreds": return AwsCredsAuthenticationDetailsProperties.DeserializeAwsCredsAuthenticationDetailsProperties(element);
-                    case "gcpCredentials": return GcpCredentialsDetailsProperties.DeserializeGcpCredentialsDetailsProperties(element);
+                    case "awsAssumeRole": return AwsAssumeRoleAuthenticationDetailsProperties.DeserializeAwsAssumeRoleAuthenticationDetailsProperties(element, options);
+                    case "awsCreds": return AwsCredsAuthenticationDetailsProperties.DeserializeAwsCredsAuthenticationDetailsProperties(element, options);
+                    case "gcpCredentials": return GcpCredentialsDetailsProperties.DeserializeGcpCredentialsDetailsProperties(element, options);
                 }
             }
-            return UnknownAuthenticationDetailsProperties.DeserializeUnknownAuthenticationDetailsProperties(element);
+            return UnknownAuthenticationDetailsProperties.DeserializeUnknownAuthenticationDetailsProperties(element, options);
         }
 
         BinaryData IPersistableModel<AuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)

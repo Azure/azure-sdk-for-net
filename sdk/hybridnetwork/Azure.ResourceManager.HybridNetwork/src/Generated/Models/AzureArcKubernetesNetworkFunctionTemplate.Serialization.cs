@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkFunctionApplications))
+            if (!(NetworkFunctionApplications is ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkFunctionApplications"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IList<AzureArcKubernetesNetworkFunctionApplication>> networkFunctionApplications = default;
+            IList<AzureArcKubernetesNetworkFunctionApplication> networkFunctionApplications = default;
             ContainerizedNetworkFunctionNfviType nfviType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureArcKubernetesNetworkFunctionApplication> array = new List<AzureArcKubernetesNetworkFunctionApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureArcKubernetesNetworkFunctionApplication.DeserializeAzureArcKubernetesNetworkFunctionApplication(item));
+                        array.Add(AzureArcKubernetesNetworkFunctionApplication.DeserializeAzureArcKubernetesNetworkFunctionApplication(item, options));
                     }
                     networkFunctionApplications = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureArcKubernetesNetworkFunctionTemplate(nfviType, serializedAdditionalRawData, Optional.ToList(networkFunctionApplications));
+            return new AzureArcKubernetesNetworkFunctionTemplate(nfviType, serializedAdditionalRawData, networkFunctionApplications ?? new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>());
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesNetworkFunctionTemplate>.Write(ModelReaderWriterOptions options)

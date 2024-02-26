@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Thumbprint))
+            if (Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(AppName))
+            if (options.Format != "W" && AppName != null)
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (Optional.IsDefined(CertName))
+            if (CertName != null)
             {
                 writer.WritePropertyName("certName"u8);
                 writer.WriteStringValue(CertName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

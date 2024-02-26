@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = SiteRecoveryCreateProtectionIntentProviderDetail.DeserializeSiteRecoveryCreateProtectionIntentProviderDetail(property.Value);
+                    providerSpecificDetails = SiteRecoveryCreateProtectionIntentProviderDetail.DeserializeSiteRecoveryCreateProtectionIntentProviderDetail(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

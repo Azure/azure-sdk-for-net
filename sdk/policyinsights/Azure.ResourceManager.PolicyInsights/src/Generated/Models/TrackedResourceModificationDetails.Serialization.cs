@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
+            if (options.Format != "W" && PolicyDetails != null)
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteObjectValue(PolicyDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
+            if (options.Format != "W" && DeploymentId != null)
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentOn))
+            if (options.Format != "W" && DeploymentOn.HasValue)
             {
                 writer.WritePropertyName("deploymentTime"u8);
                 writer.WriteStringValue(DeploymentOn.Value, "O");
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
+                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentId"u8))

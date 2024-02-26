@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Title);
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);

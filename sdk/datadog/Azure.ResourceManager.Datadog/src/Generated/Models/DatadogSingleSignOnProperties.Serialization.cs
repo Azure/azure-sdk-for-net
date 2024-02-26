@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(SingleSignOnState))
+            if (SingleSignOnState.HasValue)
             {
                 writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
-            if (Optional.IsDefined(EnterpriseAppId))
+            if (EnterpriseAppId != null)
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SingleSignOnUri))
+            if (options.Format != "W" && SingleSignOnUri != null)
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);

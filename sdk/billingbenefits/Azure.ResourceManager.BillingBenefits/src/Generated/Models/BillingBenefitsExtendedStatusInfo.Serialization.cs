@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StatusCode))
+            if (StatusCode != null)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

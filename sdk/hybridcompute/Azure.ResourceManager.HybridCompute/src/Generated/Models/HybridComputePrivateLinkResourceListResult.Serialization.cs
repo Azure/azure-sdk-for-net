@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<HybridComputePrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputePrivateLinkResourceData>> value = default;
+            IReadOnlyList<HybridComputePrivateLinkResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputePrivateLinkResourceData> array = new List<HybridComputePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputePrivateLinkResourceData.DeserializeHybridComputePrivateLinkResourceData(item));
+                        array.Add(HybridComputePrivateLinkResourceData.DeserializeHybridComputePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputePrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HybridComputePrivateLinkResourceListResult(value ?? new ChangeTrackingList<HybridComputePrivateLinkResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputePrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<DataProtectionBackupVaultPatchProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    properties = DataProtectionBackupVaultPatchProperties.DeserializeDataProtectionBackupVaultPatchProperties(property.Value);
+                    properties = DataProtectionBackupVaultPatchProperties.DeserializeDataProtectionBackupVaultPatchProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupVaultPatch(identity, properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new DataProtectionBackupVaultPatch(identity, properties.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupVaultPatch>.Write(ModelReaderWriterOptions options)

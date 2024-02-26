@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,7 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
         public ThrottledRequestsContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime) : base(blobContainerSasUri, fromTime, toTime)
         {
-            Argument.AssertNotNull(blobContainerSasUri, nameof(blobContainerSasUri));
+            if (blobContainerSasUri == null)
+            {
+                throw new ArgumentNullException(nameof(blobContainerSasUri));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="ThrottledRequestsContent"/>. </summary>

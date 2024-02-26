@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DetectedChangeData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DetectedChangeData>> value = default;
+            IReadOnlyList<DetectedChangeData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     List<DetectedChangeData> array = new List<DetectedChangeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedChangeData.DeserializeDetectedChangeData(item));
+                        array.Add(DetectedChangeData.DeserializeDetectedChangeData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ChangeList(value ?? new ChangeTrackingList<DetectedChangeData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeList>.Write(ModelReaderWriterOptions options)

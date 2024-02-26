@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<CloudError>> details = default;
+            IReadOnlyList<CloudError> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CloudError(code, message, target.Value, Optional.ToList(details));
+            return new CloudError(code, message, target.Value, details ?? new ChangeTrackingList<CloudError>());
         }
 
         internal partial class CloudErrorConverter : JsonConverter<CloudError>

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SqlDedicatedGatewayEndpoint))
+            if (options.Format != "W" && SqlDedicatedGatewayEndpoint != null)
             {
                 writer.WritePropertyName("sqlDedicatedGatewayEndpoint"u8);
                 writer.WriteStringValue(SqlDedicatedGatewayEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

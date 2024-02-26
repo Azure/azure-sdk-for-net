@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeRuntime))
+            if (ComputeRuntime != null)
             {
                 writer.WritePropertyName("computeRuntime"u8);
                 writer.WriteObjectValue(ComputeRuntime);
             }
-            if (Optional.IsDefined(OfflineStoreConnectionName))
+            if (OfflineStoreConnectionName != null)
             {
                 writer.WritePropertyName("offlineStoreConnectionName"u8);
                 writer.WriteStringValue(OfflineStoreConnectionName);
             }
-            if (Optional.IsDefined(OnlineStoreConnectionName))
+            if (OnlineStoreConnectionName != null)
             {
                 writer.WritePropertyName("onlineStoreConnectionName"u8);
                 writer.WriteStringValue(OnlineStoreConnectionName);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    computeRuntime = ComputeRuntimeDto.DeserializeComputeRuntimeDto(property.Value);
+                    computeRuntime = ComputeRuntimeDto.DeserializeComputeRuntimeDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offlineStoreConnectionName"u8))

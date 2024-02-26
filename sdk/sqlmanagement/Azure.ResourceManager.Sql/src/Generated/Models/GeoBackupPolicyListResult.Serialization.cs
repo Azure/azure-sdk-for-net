@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<GeoBackupPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GeoBackupPolicyData>> value = default;
+            IReadOnlyList<GeoBackupPolicyData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<GeoBackupPolicyData> array = new List<GeoBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeoBackupPolicyData.DeserializeGeoBackupPolicyData(item));
+                        array.Add(GeoBackupPolicyData.DeserializeGeoBackupPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GeoBackupPolicyListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new GeoBackupPolicyListResult(value ?? new ChangeTrackingList<GeoBackupPolicyData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GeoBackupPolicyListResult>.Write(ModelReaderWriterOptions options)

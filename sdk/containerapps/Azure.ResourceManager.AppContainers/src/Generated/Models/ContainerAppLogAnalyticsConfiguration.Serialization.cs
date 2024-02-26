@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomerId))
+            if (CustomerId != null)
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (Optional.IsDefined(SharedKey))
+            if (SharedKey != null)
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DraModelCustomProperties": return GeneralDraModelCustomProperties.DeserializeGeneralDraModelCustomProperties(element);
-                    case "VMware": return VMwareDraModelCustomProperties.DeserializeVMwareDraModelCustomProperties(element);
+                    case "DraModelCustomProperties": return GeneralDraModelCustomProperties.DeserializeGeneralDraModelCustomProperties(element, options);
+                    case "VMware": return VMwareDraModelCustomProperties.DeserializeVMwareDraModelCustomProperties(element, options);
                 }
             }
-            return UnknownDraModelCustomProperties.DeserializeUnknownDraModelCustomProperties(element);
+            return UnknownDraModelCustomProperties.DeserializeUnknownDraModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<DraModelCustomProperties>.Write(ModelReaderWriterOptions options)

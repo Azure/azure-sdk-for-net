@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsCollectionDefined(Skus))
+            if (!(Skus is ChangeTrackingList<GlobalCsmSkuDescription> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<ResourceType> resourceType = default;
-            Optional<IReadOnlyList<GlobalCsmSkuDescription>> skus = default;
+            IReadOnlyList<GlobalCsmSkuDescription> skus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<GlobalCsmSkuDescription> array = new List<GlobalCsmSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item));
+                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item, options));
                     }
                     skus = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceSkuResult(Optional.ToNullable(resourceType), Optional.ToList(skus), serializedAdditionalRawData);
+            return new AppServiceSkuResult(Optional.ToNullable(resourceType), skus ?? new ChangeTrackingList<GlobalCsmSkuDescription>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceSkuResult>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Daily))
+            if (Daily != null)
             {
                 writer.WritePropertyName("daily"u8);
                 writer.WriteObjectValue(Daily);
             }
-            if (Optional.IsDefined(Weekly))
+            if (Weekly != null)
             {
                 writer.WritePropertyName("weekly"u8);
                 writer.WriteObjectValue(Weekly);
             }
-            if (Optional.IsDefined(AbsoluteMonthly))
+            if (AbsoluteMonthly != null)
             {
                 writer.WritePropertyName("absoluteMonthly"u8);
                 writer.WriteObjectValue(AbsoluteMonthly);
             }
-            if (Optional.IsDefined(RelativeMonthly))
+            if (RelativeMonthly != null)
             {
                 writer.WritePropertyName("relativeMonthly"u8);
                 writer.WriteObjectValue(RelativeMonthly);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    daily = DailySchedule.DeserializeDailySchedule(property.Value);
+                    daily = DailySchedule.DeserializeDailySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("weekly"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    weekly = ContainerServiceMaintenanceWeeklySchedule.DeserializeContainerServiceMaintenanceWeeklySchedule(property.Value);
+                    weekly = ContainerServiceMaintenanceWeeklySchedule.DeserializeContainerServiceMaintenanceWeeklySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("absoluteMonthly"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    absoluteMonthly = ContainerServiceMaintenanceAbsoluteMonthlySchedule.DeserializeContainerServiceMaintenanceAbsoluteMonthlySchedule(property.Value);
+                    absoluteMonthly = ContainerServiceMaintenanceAbsoluteMonthlySchedule.DeserializeContainerServiceMaintenanceAbsoluteMonthlySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("relativeMonthly"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    relativeMonthly = ContainerServiceMaintenanceRelativeMonthlySchedule.DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(property.Value);
+                    relativeMonthly = ContainerServiceMaintenanceRelativeMonthlySchedule.DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

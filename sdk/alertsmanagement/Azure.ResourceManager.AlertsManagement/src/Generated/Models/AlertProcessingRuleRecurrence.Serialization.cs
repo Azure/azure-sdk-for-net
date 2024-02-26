@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Daily": return DailyRecurrence.DeserializeDailyRecurrence(element);
-                    case "Monthly": return AlertProcessingRuleMonthlyRecurrence.DeserializeAlertProcessingRuleMonthlyRecurrence(element);
-                    case "Weekly": return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element);
+                    case "Daily": return DailyRecurrence.DeserializeDailyRecurrence(element, options);
+                    case "Monthly": return AlertProcessingRuleMonthlyRecurrence.DeserializeAlertProcessingRuleMonthlyRecurrence(element, options);
+                    case "Weekly": return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element, options);
                 }
             }
-            return UnknownRecurrence.DeserializeUnknownRecurrence(element);
+            return UnknownRecurrence.DeserializeUnknownRecurrence(element, options);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleRecurrence>.Write(ModelReaderWriterOptions options)

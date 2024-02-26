@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PublishedBlueprintData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PublishedBlueprintData>> value = default;
+            IReadOnlyList<PublishedBlueprintData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<PublishedBlueprintData> array = new List<PublishedBlueprintData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublishedBlueprintData.DeserializePublishedBlueprintData(item));
+                        array.Add(PublishedBlueprintData.DeserializePublishedBlueprintData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublishedBlueprintList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PublishedBlueprintList(value ?? new ChangeTrackingList<PublishedBlueprintData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublishedBlueprintList>.Write(ModelReaderWriterOptions options)

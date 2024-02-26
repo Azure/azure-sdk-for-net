@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<string>> zones = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSkuRestrictionInfo(Optional.ToList(locations), Optional.ToList(zones), serializedAdditionalRawData);
+            return new ComputeResourceSkuRestrictionInfo(locations ?? new ChangeTrackingList<AzureLocation>(), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSkuRestrictionInfo>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageTitle))
+            if (MessageTitle != null)
             {
                 writer.WritePropertyName("messageTitle"u8);
                 writer.WriteStringValue(MessageTitle);
             }
-            if (Optional.IsDefined(MessageBody))
+            if (MessageBody != null)
             {
                 writer.WritePropertyName("messageBody"u8);
                 writer.WriteStringValue(MessageBody);

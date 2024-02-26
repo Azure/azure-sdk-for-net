@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public MongoDBConnectionInfo(string connectionString)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
 
             ConnectionString = connectionString;
             ConnectionInfoType = "MongoDbConnectionInfo";

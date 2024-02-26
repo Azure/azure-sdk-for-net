@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionKeyReference))
+            if (EncryptionKeyReference != null)
             {
                 writer.WritePropertyName("encryptionKeyReference"u8);
                 writer.WriteObjectValue(EncryptionKeyReference);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    encryptionKeyReference = IntegrationServiceEnvironmenEncryptionKeyReference.DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(property.Value);
+                    encryptionKeyReference = IntegrationServiceEnvironmenEncryptionKeyReference.DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

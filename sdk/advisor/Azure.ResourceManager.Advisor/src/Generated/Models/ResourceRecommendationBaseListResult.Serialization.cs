@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Advisor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ResourceRecommendationBaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ResourceRecommendationBaseData>> value = default;
+            IReadOnlyList<ResourceRecommendationBaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<ResourceRecommendationBaseData> array = new List<ResourceRecommendationBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(item));
+                        array.Add(ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceRecommendationBaseListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ResourceRecommendationBaseListResult(nextLink.Value, value ?? new ChangeTrackingList<ResourceRecommendationBaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceRecommendationBaseListResult>.Write(ModelReaderWriterOptions options)

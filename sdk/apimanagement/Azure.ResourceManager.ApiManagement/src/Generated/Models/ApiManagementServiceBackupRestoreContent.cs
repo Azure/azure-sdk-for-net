@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccount"/>, <paramref name="containerName"/> or <paramref name="backupName"/> is null. </exception>
         public ApiManagementServiceBackupRestoreContent(string storageAccount, string containerName, string backupName)
         {
-            Argument.AssertNotNull(storageAccount, nameof(storageAccount));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(backupName, nameof(backupName));
+            if (storageAccount == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccount));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
 
             StorageAccount = storageAccount;
             ContainerName = containerName;

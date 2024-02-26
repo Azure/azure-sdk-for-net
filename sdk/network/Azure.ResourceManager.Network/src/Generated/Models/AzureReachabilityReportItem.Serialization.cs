@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Provider))
+            if (Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(AzureLocation))
+            if (AzureLocation.HasValue)
             {
                 writer.WritePropertyName("azureLocation"u8);
                 writer.WriteStringValue(AzureLocation.Value);
             }
-            if (Optional.IsCollectionDefined(Latencies))
+            if (!(Latencies is ChangeTrackingList<AzureReachabilityReportLatencyInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("latencies"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> provider = default;
             Optional<AzureLocation> azureLocation = default;
-            Optional<IReadOnlyList<AzureReachabilityReportLatencyInfo>> latencies = default;
+            IReadOnlyList<AzureReachabilityReportLatencyInfo> latencies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureReachabilityReportLatencyInfo> array = new List<AzureReachabilityReportLatencyInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureReachabilityReportLatencyInfo.DeserializeAzureReachabilityReportLatencyInfo(item));
+                        array.Add(AzureReachabilityReportLatencyInfo.DeserializeAzureReachabilityReportLatencyInfo(item, options));
                     }
                     latencies = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportItem(provider.Value, Optional.ToNullable(azureLocation), Optional.ToList(latencies), serializedAdditionalRawData);
+            return new AzureReachabilityReportItem(provider.Value, Optional.ToNullable(azureLocation), latencies ?? new ChangeTrackingList<AzureReachabilityReportLatencyInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportItem>.Write(ModelReaderWriterOptions options)

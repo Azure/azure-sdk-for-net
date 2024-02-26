@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowedPrincipals))
+            if (AllowedPrincipals != null)
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
                 writer.WriteObjectValue(AllowedPrincipals);
             }
-            if (Optional.IsCollectionDefined(AllowedApplications))
+            if (!(AllowedApplications is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedApplications"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<AppServiceAadAllowedPrincipals> allowedPrincipals = default;
-            Optional<IList<string>> allowedApplications = default;
+            IList<string> allowedApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(property.Value);
+                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedApplications"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultAuthorizationPolicy(allowedPrincipals.Value, Optional.ToList(allowedApplications), serializedAdditionalRawData);
+            return new DefaultAuthorizationPolicy(allowedPrincipals.Value, allowedApplications ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultAuthorizationPolicy>.Write(ModelReaderWriterOptions options)

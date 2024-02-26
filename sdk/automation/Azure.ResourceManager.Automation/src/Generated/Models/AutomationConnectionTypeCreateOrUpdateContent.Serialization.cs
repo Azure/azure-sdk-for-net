@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsGlobal))
+            if (IsGlobal.HasValue)
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automation.Models
                             Dictionary<string, AutomationConnectionFieldDefinition> dictionary = new Dictionary<string, AutomationConnectionFieldDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AutomationConnectionFieldDefinition.DeserializeAutomationConnectionFieldDefinition(property1.Value));
+                                dictionary.Add(property1.Name, AutomationConnectionFieldDefinition.DeserializeAutomationConnectionFieldDefinition(property1.Value, options));
                             }
                             fieldDefinitions = dictionary;
                             continue;

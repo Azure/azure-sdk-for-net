@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Optional.IsDefined(Scheme))
+            if (Scheme.HasValue)
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HttpHeaders))
+            if (!(HttpHeaders is ChangeTrackingList<ContainerHttpHeader> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> path = default;
             int port = default;
             Optional<ContainerHttpGetScheme> scheme = default;
-            Optional<IList<ContainerHttpHeader>> httpHeaders = default;
+            IList<ContainerHttpHeader> httpHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerHttpHeader> array = new List<ContainerHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerHttpHeader.DeserializeContainerHttpHeader(item));
+                        array.Add(ContainerHttpHeader.DeserializeContainerHttpHeader(item, options));
                     }
                     httpHeaders = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerHttpGet(path.Value, port, Optional.ToNullable(scheme), Optional.ToList(httpHeaders), serializedAdditionalRawData);
+            return new ContainerHttpGet(path.Value, port, Optional.ToNullable(scheme), httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerHttpGet>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(AccessPolicy))
+            if (AccessPolicy != null)
             {
                 writer.WritePropertyName("accessPolicy"u8);
                 writer.WriteObjectValue(AccessPolicy);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    accessPolicy = StorageTableAccessPolicy.DeserializeStorageTableAccessPolicy(property.Value);
+                    accessPolicy = StorageTableAccessPolicy.DeserializeStorageTableAccessPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "LimitValue": return QuotaLimitObject.DeserializeQuotaLimitObject(element);
+                    case "LimitValue": return QuotaLimitObject.DeserializeQuotaLimitObject(element, options);
                 }
             }
-            return UnknownLimitJsonObject.DeserializeUnknownLimitJsonObject(element);
+            return UnknownLimitJsonObject.DeserializeUnknownLimitJsonObject(element, options);
         }
 
         BinaryData IPersistableModel<QuotaLimitJsonObject>.Write(ModelReaderWriterOptions options)

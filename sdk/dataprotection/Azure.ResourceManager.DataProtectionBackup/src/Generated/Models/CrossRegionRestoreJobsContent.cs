@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceBackupVaultId"/> is null. </exception>
         public CrossRegionRestoreJobsContent(AzureLocation sourceRegion, ResourceIdentifier sourceBackupVaultId)
         {
-            Argument.AssertNotNull(sourceBackupVaultId, nameof(sourceBackupVaultId));
+            if (sourceBackupVaultId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceBackupVaultId));
+            }
 
             SourceRegion = sourceRegion;
             SourceBackupVaultId = sourceBackupVaultId;

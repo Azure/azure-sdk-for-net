@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Provider))
+            if (options.Format != "W" && Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);

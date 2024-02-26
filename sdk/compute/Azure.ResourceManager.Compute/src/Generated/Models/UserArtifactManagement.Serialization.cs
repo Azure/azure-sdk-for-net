@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Install);
             writer.WritePropertyName("remove"u8);
             writer.WriteStringValue(Remove);
-            if (Optional.IsDefined(Update))
+            if (Update != null)
             {
                 writer.WritePropertyName("update"u8);
                 writer.WriteStringValue(Update);

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -52,8 +51,14 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="text"/> is null. </exception>
         internal Translation(string to, string text)
         {
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(text, nameof(text));
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
 
             To = to;
             Text = text;

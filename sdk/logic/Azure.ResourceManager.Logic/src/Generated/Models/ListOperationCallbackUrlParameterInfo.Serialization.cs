@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotAfter))
+            if (NotAfter.HasValue)
             {
                 writer.WritePropertyName("notAfter"u8);
                 writer.WriteStringValue(NotAfter.Value, "O");
             }
-            if (Optional.IsDefined(KeyType))
+            if (KeyType.HasValue)
             {
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());

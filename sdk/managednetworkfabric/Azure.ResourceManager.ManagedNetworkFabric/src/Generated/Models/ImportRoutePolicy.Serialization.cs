@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImportIPv4RoutePolicyId))
+            if (ImportIPv4RoutePolicyId != null)
             {
                 writer.WritePropertyName("importIpv4RoutePolicyId"u8);
                 writer.WriteStringValue(ImportIPv4RoutePolicyId);
             }
-            if (Optional.IsDefined(ImportIPv6RoutePolicyId))
+            if (ImportIPv6RoutePolicyId != null)
             {
                 writer.WritePropertyName("importIpv6RoutePolicyId"u8);
                 writer.WriteStringValue(ImportIPv6RoutePolicyId);

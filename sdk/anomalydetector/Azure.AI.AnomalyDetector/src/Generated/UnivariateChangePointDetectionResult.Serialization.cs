@@ -27,12 +27,12 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Period))
+            if (options.Format != "W" && Period.HasValue)
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (Optional.IsCollectionDefined(IsChangePoint))
+            if (!(IsChangePoint is ChangeTrackingList<bool> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("isChangePoint"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfidenceScores))
+            if (!(ConfidenceScores is ChangeTrackingList<float> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("confidenceScores"u8);
                 writer.WriteStartArray();
@@ -91,8 +91,8 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             Optional<int> period = default;
-            Optional<IReadOnlyList<bool>> isChangePoint = default;
-            Optional<IReadOnlyList<float>> confidenceScores = default;
+            IReadOnlyList<bool> isChangePoint = default;
+            IReadOnlyList<float> confidenceScores = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateChangePointDetectionResult(Optional.ToNullable(period), Optional.ToList(isChangePoint), Optional.ToList(confidenceScores), serializedAdditionalRawData);
+            return new UnivariateChangePointDetectionResult(Optional.ToNullable(period), isChangePoint ?? new ChangeTrackingList<bool>(), confidenceScores ?? new ChangeTrackingList<float>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateChangePointDetectionResult>.Write(ModelReaderWriterOptions options)

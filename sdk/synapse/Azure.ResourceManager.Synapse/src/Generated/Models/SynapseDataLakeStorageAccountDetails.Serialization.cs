@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountUri))
+            if (AccountUri != null)
             {
                 writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Filesystem))
+            if (Filesystem != null)
             {
                 writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(CreateManagedPrivateEndpoint))
+            if (CreateManagedPrivateEndpoint.HasValue)
             {
                 writer.WritePropertyName("createManagedPrivateEndpoint"u8);
                 writer.WriteBooleanValue(CreateManagedPrivateEndpoint.Value);

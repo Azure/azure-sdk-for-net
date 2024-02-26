@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BackupShortTermRetentionPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackupShortTermRetentionPolicyData>> value = default;
+            IReadOnlyList<BackupShortTermRetentionPolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<BackupShortTermRetentionPolicyData> array = new List<BackupShortTermRetentionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(item));
+                        array.Add(BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupShortTermRetentionPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BackupShortTermRetentionPolicyListResult(value ?? new ChangeTrackingList<BackupShortTermRetentionPolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupShortTermRetentionPolicyListResult>.Write(ModelReaderWriterOptions options)

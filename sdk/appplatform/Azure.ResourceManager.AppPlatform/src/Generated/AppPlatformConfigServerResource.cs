@@ -196,7 +196,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformConfigServerResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformConfigServerConfigServersClientDiagnostics.CreateScope("AppPlatformConfigServerResource.Update");
             scope.Start();
@@ -242,7 +245,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformConfigServerResource> Update(WaitUntil waitUntil, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformConfigServerConfigServersClientDiagnostics.CreateScope("AppPlatformConfigServerResource.Update");
             scope.Start();
@@ -288,7 +294,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformConfigServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformConfigServerConfigServersClientDiagnostics.CreateScope("AppPlatformConfigServerResource.CreateOrUpdate");
             scope.Start();
@@ -334,7 +343,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformConfigServerResource> CreateOrUpdate(WaitUntil waitUntil, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformConfigServerConfigServersClientDiagnostics.CreateScope("AppPlatformConfigServerResource.CreateOrUpdate");
             scope.Start();

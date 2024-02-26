@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CdnOriginGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnOriginGroupData>> value = default;
+            IReadOnlyList<CdnOriginGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CdnOriginGroupData> array = new List<CdnOriginGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnOriginGroupData.DeserializeCdnOriginGroupData(item));
+                        array.Add(CdnOriginGroupData.DeserializeCdnOriginGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OriginGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OriginGroupListResult(value ?? new ChangeTrackingList<CdnOriginGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OriginGroupListResult>.Write(ModelReaderWriterOptions options)

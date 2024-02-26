@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DataReplicationEventData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataReplicationEventData>> value = default;
+            IReadOnlyList<DataReplicationEventData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationEventData> array = new List<DataReplicationEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationEventData.DeserializeDataReplicationEventData(item));
+                        array.Add(DataReplicationEventData.DeserializeDataReplicationEventData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationEventListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataReplicationEventListResult(value ?? new ChangeTrackingList<DataReplicationEventData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationEventListResult>.Write(ModelReaderWriterOptions options)

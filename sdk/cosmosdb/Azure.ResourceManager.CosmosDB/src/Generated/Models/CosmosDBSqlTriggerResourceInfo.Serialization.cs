@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TriggerName);
-            if (Optional.IsDefined(Body))
+            if (Body != null)
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Optional.IsDefined(TriggerType))
+            if (TriggerType.HasValue)
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (Optional.IsDefined(TriggerOperation))
+            if (TriggerOperation.HasValue)
             {
                 writer.WritePropertyName("triggerOperation"u8);
                 writer.WriteStringValue(TriggerOperation.Value.ToString());

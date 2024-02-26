@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceAccountUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ServiceAccountUsage>> value = default;
+            IReadOnlyList<ServiceAccountUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountUsage> array = new List<ServiceAccountUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountUsage.DeserializeServiceAccountUsage(item));
+                        array.Add(ServiceAccountUsage.DeserializeServiceAccountUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountUsageListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ServiceAccountUsageListResult(nextLink.Value, value ?? new ChangeTrackingList<ServiceAccountUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountUsageListResult>.Write(ModelReaderWriterOptions options)

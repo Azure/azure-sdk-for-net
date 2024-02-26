@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertNotificationSetting))
+            if (AlertNotificationSetting != null)
             {
                 if (AlertNotificationSetting != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("computeConfiguration"u8);
             writer.WriteObjectValue(ComputeConfiguration);
-            if (Optional.IsDefined(MonitoringTarget))
+            if (MonitoringTarget != null)
             {
                 if (MonitoringTarget != null)
                 {
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         alertNotificationSetting = null;
                         continue;
                     }
-                    alertNotificationSetting = MonitoringAlertNotificationSettingsBase.DeserializeMonitoringAlertNotificationSettingsBase(property.Value);
+                    alertNotificationSetting = MonitoringAlertNotificationSettingsBase.DeserializeMonitoringAlertNotificationSettingsBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeConfiguration"u8))
                 {
-                    computeConfiguration = MonitorComputeConfigurationBase.DeserializeMonitorComputeConfigurationBase(property.Value);
+                    computeConfiguration = MonitorComputeConfigurationBase.DeserializeMonitorComputeConfigurationBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monitoringTarget"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         monitoringTarget = null;
                         continue;
                     }
-                    monitoringTarget = MonitoringTarget.DeserializeMonitoringTarget(property.Value);
+                    monitoringTarget = MonitoringTarget.DeserializeMonitoringTarget(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("signals"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MonitoringSignalBase> dictionary = new Dictionary<string, MonitoringSignalBase>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MonitoringSignalBase.DeserializeMonitoringSignalBase(property0.Value));
+                        dictionary.Add(property0.Name, MonitoringSignalBase.DeserializeMonitoringSignalBase(property0.Value, options));
                     }
                     signals = dictionary;
                     continue;

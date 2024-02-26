@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -55,11 +54,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/>, <paramref name="metastoreDBConnectionPasswordSecret"/>, <paramref name="metastoreDBConnectionUriString"/>, <paramref name="metastoreDBConnectionUserName"/> or <paramref name="metastoreWarehouseDir"/> is null. </exception>
         public HiveCatalogOption(string catalogName, string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, string metastoreWarehouseDir)
         {
-            Argument.AssertNotNull(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(metastoreDBConnectionPasswordSecret, nameof(metastoreDBConnectionPasswordSecret));
-            Argument.AssertNotNull(metastoreDBConnectionUriString, nameof(metastoreDBConnectionUriString));
-            Argument.AssertNotNull(metastoreDBConnectionUserName, nameof(metastoreDBConnectionUserName));
-            Argument.AssertNotNull(metastoreWarehouseDir, nameof(metastoreWarehouseDir));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (metastoreDBConnectionPasswordSecret == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreDBConnectionPasswordSecret));
+            }
+            if (metastoreDBConnectionUriString == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreDBConnectionUriString));
+            }
+            if (metastoreDBConnectionUserName == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreDBConnectionUserName));
+            }
+            if (metastoreWarehouseDir == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreWarehouseDir));
+            }
 
             CatalogName = catalogName;
             MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;

@@ -24,8 +24,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public ProfileResourceGetLogAnalyticsRankingsOptions(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd)
         {
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            if (rankings == null)
+            {
+                throw new ArgumentNullException(nameof(rankings));
+            }
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             Rankings = rankings.ToList();
             Metrics = metrics.ToList();

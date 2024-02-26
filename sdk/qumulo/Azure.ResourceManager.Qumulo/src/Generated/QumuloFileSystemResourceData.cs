@@ -63,10 +63,22 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceDetails"/>, <paramref name="userDetails"/>, <paramref name="delegatedSubnetId"/> or <paramref name="adminPassword"/> is null. </exception>
         public QumuloFileSystemResourceData(AzureLocation location, MarketplaceDetails marketplaceDetails, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) : base(location)
         {
-            Argument.AssertNotNull(marketplaceDetails, nameof(marketplaceDetails));
-            Argument.AssertNotNull(userDetails, nameof(userDetails));
-            Argument.AssertNotNull(delegatedSubnetId, nameof(delegatedSubnetId));
-            Argument.AssertNotNull(adminPassword, nameof(adminPassword));
+            if (marketplaceDetails == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceDetails));
+            }
+            if (userDetails == null)
+            {
+                throw new ArgumentNullException(nameof(userDetails));
+            }
+            if (delegatedSubnetId == null)
+            {
+                throw new ArgumentNullException(nameof(delegatedSubnetId));
+            }
+            if (adminPassword == null)
+            {
+                throw new ArgumentNullException(nameof(adminPassword));
+            }
 
             MarketplaceDetails = marketplaceDetails;
             StorageSku = storageSku;

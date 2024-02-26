@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ControllerData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ControllerData>> value = default;
+            IReadOnlyList<ControllerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     List<ControllerData> array = new List<ControllerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControllerData.DeserializeControllerData(item));
+                        array.Add(ControllerData.DeserializeControllerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ControllerList(value ?? new ChangeTrackingList<ControllerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerList>.Write(ModelReaderWriterOptions options)

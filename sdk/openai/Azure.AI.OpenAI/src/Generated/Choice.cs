@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -58,7 +57,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal Choice(string text, int index, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
 
             Text = text;
             Index = index;

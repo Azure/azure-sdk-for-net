@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Profile))
+            if (Profile != null)
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile);
             }
-            if (Optional.IsDefined(NetworkSecurityGroupResult))
+            if (NetworkSecurityGroupResult != null)
             {
                 writer.WritePropertyName("networkSecurityGroupResult"u8);
                 writer.WriteObjectValue(NetworkSecurityGroupResult);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    profile = NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(property.Value);
+                    profile = NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkSecurityGroupResult"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkSecurityGroupResult = NetworkSecurityGroupResult.DeserializeNetworkSecurityGroupResult(property.Value);
+                    networkSecurityGroupResult = NetworkSecurityGroupResult.DeserializeNetworkSecurityGroupResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

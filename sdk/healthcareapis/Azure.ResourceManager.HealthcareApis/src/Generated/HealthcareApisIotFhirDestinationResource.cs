@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthcareApisIotFhirDestinationResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HealthcareApisIotFhirDestinationResource> Update(WaitUntil waitUntil, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Update");
             scope.Start();

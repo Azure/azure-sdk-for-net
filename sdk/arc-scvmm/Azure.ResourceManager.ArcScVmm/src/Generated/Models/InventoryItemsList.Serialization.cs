@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<InventoryItemData> array = new List<InventoryItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InventoryItemData.DeserializeInventoryItemData(item));
+                        array.Add(InventoryItemData.DeserializeInventoryItemData(item, options));
                     }
                     value = array;
                     continue;

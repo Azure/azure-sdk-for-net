@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PurviewKafkaConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kafkaConfigurationName, PurviewKafkaConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (kafkaConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaConfigurationName));
+            }
+            if (kafkaConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kafkaConfigurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PurviewKafkaConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string kafkaConfigurationName, PurviewKafkaConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (kafkaConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaConfigurationName));
+            }
+            if (kafkaConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kafkaConfigurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
         public virtual async Task<Response<PurviewKafkaConfigurationResource>> GetAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
+            if (kafkaConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaConfigurationName));
+            }
+            if (kafkaConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kafkaConfigurationName));
+            }
 
             using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
         public virtual Response<PurviewKafkaConfigurationResource> Get(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
+            if (kafkaConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaConfigurationName));
+            }
+            if (kafkaConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kafkaConfigurationName));
+            }
 
             using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
+            if (kafkaConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaConfigurationName));
+            }
+            if (kafkaConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kafkaConfigurationName));
+            }
 
             using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
+            if (kafkaConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaConfigurationName));
+            }
+            if (kafkaConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kafkaConfigurationName));
+            }
 
             using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<PurviewKafkaConfigurationResource>> GetIfExistsAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
+            if (kafkaConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaConfigurationName));
+            }
+            if (kafkaConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kafkaConfigurationName));
+            }
 
             using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
         public virtual NullableResponse<PurviewKafkaConfigurationResource> GetIfExists(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
+            if (kafkaConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaConfigurationName));
+            }
+            if (kafkaConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kafkaConfigurationName));
+            }
 
             using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.GetIfExists");
             scope.Start();

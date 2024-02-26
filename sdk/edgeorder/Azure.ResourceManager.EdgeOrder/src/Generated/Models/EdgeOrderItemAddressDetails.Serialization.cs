@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("forwardAddress"u8);
             writer.WriteObjectValue(ForwardAddress);
-            if (options.Format != "W" && Optional.IsDefined(ReturnAddress))
+            if (options.Format != "W" && ReturnAddress != null)
             {
                 writer.WritePropertyName("returnAddress"u8);
                 writer.WriteObjectValue(ReturnAddress);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 if (property.NameEquals("forwardAddress"u8))
                 {
-                    forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value);
+                    forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("returnAddress"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value);
+                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

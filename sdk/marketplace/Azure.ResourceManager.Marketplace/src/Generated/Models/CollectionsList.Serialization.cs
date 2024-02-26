@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PrivateStoreCollectionInfoData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateStoreCollectionInfoData>> value = default;
+            IReadOnlyList<PrivateStoreCollectionInfoData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionInfoData> array = new List<PrivateStoreCollectionInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(item));
+                        array.Add(PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CollectionsList(value ?? new ChangeTrackingList<PrivateStoreCollectionInfoData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionsList>.Write(ModelReaderWriterOptions options)

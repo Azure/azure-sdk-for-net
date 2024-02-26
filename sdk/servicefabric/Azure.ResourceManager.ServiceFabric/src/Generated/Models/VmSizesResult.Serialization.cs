@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceFabricVmSizeResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceFabricVmSizeResourceData>> value = default;
+            IReadOnlyList<ServiceFabricVmSizeResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ServiceFabricVmSizeResourceData> array = new List<ServiceFabricVmSizeResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricVmSizeResourceData.DeserializeServiceFabricVmSizeResourceData(item));
+                        array.Add(ServiceFabricVmSizeResourceData.DeserializeServiceFabricVmSizeResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmSizesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VmSizesResult(value ?? new ChangeTrackingList<ServiceFabricVmSizeResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmSizesResult>.Write(ModelReaderWriterOptions options)

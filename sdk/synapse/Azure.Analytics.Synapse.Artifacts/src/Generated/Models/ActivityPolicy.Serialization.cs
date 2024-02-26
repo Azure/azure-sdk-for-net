@@ -19,27 +19,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timeout))
+            if (Timeout != null)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteObjectValue(Timeout);
             }
-            if (Optional.IsDefined(Retry))
+            if (Retry != null)
             {
                 writer.WritePropertyName("retry"u8);
                 writer.WriteObjectValue(Retry);
             }
-            if (Optional.IsDefined(RetryIntervalInSeconds))
+            if (RetryIntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("retryIntervalInSeconds"u8);
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(SecureInput))
+            if (SecureInput.HasValue)
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(SecureInput.Value);
             }
-            if (Optional.IsDefined(SecureOutput))
+            if (SecureOutput.HasValue)
             {
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);

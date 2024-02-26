@@ -137,8 +137,22 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkName));
+            }
+            if (virtualNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
+            }
+            if (subnetName == null)
+            {
+                throw new ArgumentNullException(nameof(subnetName));
+            }
+            if (subnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
+            }
 
             using var scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceResourceGroupResource.DeleteSubnetServiceAssociationLink");
             scope.Start();
@@ -182,8 +196,22 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         public virtual ArmOperation DeleteSubnetServiceAssociationLink(WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkName));
+            }
+            if (virtualNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
+            }
+            if (subnetName == null)
+            {
+                throw new ArgumentNullException(nameof(subnetName));
+            }
+            if (subnetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
+            }
 
             using var scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceResourceGroupResource.DeleteSubnetServiceAssociationLink");
             scope.Start();

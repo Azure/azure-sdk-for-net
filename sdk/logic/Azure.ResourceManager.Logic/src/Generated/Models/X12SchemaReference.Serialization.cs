@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
-            if (Optional.IsDefined(SenderApplicationId))
+            if (SenderApplicationId != null)
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);

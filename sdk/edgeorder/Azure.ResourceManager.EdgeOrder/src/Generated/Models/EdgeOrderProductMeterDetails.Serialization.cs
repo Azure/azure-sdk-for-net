@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Multiplier))
+            if (options.Format != "W" && Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargingType))
+            if (options.Format != "W" && ChargingType.HasValue)
             {
                 writer.WritePropertyName("chargingType"u8);
                 writer.WriteStringValue(ChargingType.Value.ToString());
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Pav2": return Pav2MeterDetails.DeserializePav2MeterDetails(element);
-                    case "Purchase": return PurchaseMeterDetails.DeserializePurchaseMeterDetails(element);
+                    case "Pav2": return Pav2MeterDetails.DeserializePav2MeterDetails(element, options);
+                    case "Purchase": return PurchaseMeterDetails.DeserializePurchaseMeterDetails(element, options);
                 }
             }
-            return UnknownMeterDetails.DeserializeUnknownMeterDetails(element);
+            return UnknownMeterDetails.DeserializeUnknownMeterDetails(element, options);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductMeterDetails>.Write(ModelReaderWriterOptions options)

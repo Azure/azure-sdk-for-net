@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
+                        array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionListResultDescription(Optional.ToList(value), serializedAdditionalRawData);
+            return new PrivateEndpointConnectionListResultDescription(value ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionListResultDescription>.Write(ModelReaderWriterOptions options)

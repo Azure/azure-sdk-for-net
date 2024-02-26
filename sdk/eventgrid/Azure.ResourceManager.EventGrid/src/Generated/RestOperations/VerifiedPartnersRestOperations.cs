@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VerifiedPartnerData>> GetAsync(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
+            if (verifiedPartnerName == null)
+            {
+                throw new ArgumentNullException(nameof(verifiedPartnerName));
+            }
+            if (verifiedPartnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
+            }
 
             using var message = CreateGetRequest(verifiedPartnerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VerifiedPartnerData> Get(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
+            if (verifiedPartnerName == null)
+            {
+                throw new ArgumentNullException(nameof(verifiedPartnerName));
+            }
+            if (verifiedPartnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
+            }
 
             using var message = CreateGetRequest(verifiedPartnerName);
             _pipeline.Send(message, cancellationToken);
@@ -196,7 +210,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<VerifiedPartnersListResult>> ListNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -222,7 +239,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<VerifiedPartnersListResult> ListNextPage(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, filter, top);
             _pipeline.Send(message, cancellationToken);

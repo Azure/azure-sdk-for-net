@@ -76,7 +76,10 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = WebPubSubClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
             scope.Start();
@@ -119,7 +122,10 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = WebPubSubClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
             scope.Start();

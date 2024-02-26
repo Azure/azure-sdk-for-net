@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionRequestProperties.DeserializePrivateEndpointConnectionRequestProperties(property.Value);
+                    properties = PrivateEndpointConnectionRequestProperties.DeserializePrivateEndpointConnectionRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

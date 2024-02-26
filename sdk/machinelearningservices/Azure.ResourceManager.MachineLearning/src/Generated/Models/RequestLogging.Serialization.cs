@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CaptureHeaders))
+            if (!(CaptureHeaders is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (CaptureHeaders != null)
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<string>> captureHeaders = default;
+            IList<string> captureHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestLogging(Optional.ToList(captureHeaders), serializedAdditionalRawData);
+            return new RequestLogging(captureHeaders ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestLogging>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KeyVaultPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<KeyVaultPrivateEndpointConnectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultPrivateEndpointConnectionData> array = new List<KeyVaultPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(item));
+                        array.Add(KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new KeyVaultPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

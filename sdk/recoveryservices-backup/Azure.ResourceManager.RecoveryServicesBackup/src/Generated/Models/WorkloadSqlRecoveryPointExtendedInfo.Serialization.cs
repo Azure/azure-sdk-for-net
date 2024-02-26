@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataDirectoryInfoCapturedOn))
+            if (DataDirectoryInfoCapturedOn.HasValue)
             {
                 writer.WritePropertyName("dataDirectoryTimeInUTC"u8);
                 writer.WriteStringValue(DataDirectoryInfoCapturedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(DataDirectoryPaths))
+            if (!(DataDirectoryPaths is ChangeTrackingList<SqlDataDirectory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             Optional<DateTimeOffset> dataDirectoryTimeInUTC = default;
-            Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
+            IList<SqlDataDirectory> dataDirectoryPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SqlDataDirectory> array = new List<SqlDataDirectory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item));
+                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item, options));
                     }
                     dataDirectoryPaths = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSqlRecoveryPointExtendedInfo(Optional.ToNullable(dataDirectoryTimeInUTC), Optional.ToList(dataDirectoryPaths), serializedAdditionalRawData);
+            return new WorkloadSqlRecoveryPointExtendedInfo(Optional.ToNullable(dataDirectoryTimeInUTC), dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>.Write(ModelReaderWriterOptions options)

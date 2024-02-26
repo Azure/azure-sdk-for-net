@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessCredential))
+            if (AccessCredential != null)
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (Optional.IsDefined(LogRefreshInterval))
+            if (LogRefreshInterval != null)
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
                 JsonSerializer.Serialize(writer, LogRefreshInterval);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logRefreshInterval"u8))

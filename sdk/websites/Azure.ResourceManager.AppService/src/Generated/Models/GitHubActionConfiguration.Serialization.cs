@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeConfiguration))
+            if (CodeConfiguration != null)
             {
                 writer.WritePropertyName("codeConfiguration"u8);
                 writer.WriteObjectValue(CodeConfiguration);
             }
-            if (Optional.IsDefined(ContainerConfiguration))
+            if (ContainerConfiguration != null)
             {
                 writer.WritePropertyName("containerConfiguration"u8);
                 writer.WriteObjectValue(ContainerConfiguration);
             }
-            if (Optional.IsDefined(IsLinux))
+            if (IsLinux.HasValue)
             {
                 writer.WritePropertyName("isLinux"u8);
                 writer.WriteBooleanValue(IsLinux.Value);
             }
-            if (Optional.IsDefined(GenerateWorkflowFile))
+            if (GenerateWorkflowFile.HasValue)
             {
                 writer.WritePropertyName("generateWorkflowFile"u8);
                 writer.WriteBooleanValue(GenerateWorkflowFile.Value);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    codeConfiguration = GitHubActionCodeConfiguration.DeserializeGitHubActionCodeConfiguration(property.Value);
+                    codeConfiguration = GitHubActionCodeConfiguration.DeserializeGitHubActionCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containerConfiguration"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    containerConfiguration = GitHubActionContainerConfiguration.DeserializeGitHubActionContainerConfiguration(property.Value);
+                    containerConfiguration = GitHubActionContainerConfiguration.DeserializeGitHubActionContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isLinux"u8))

@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="osOptionPropertyList"/> is null. </exception>
         internal OSOptionProfileData(IEnumerable<ContainerServiceOSOptionProperty> osOptionPropertyList)
         {
-            Argument.AssertNotNull(osOptionPropertyList, nameof(osOptionPropertyList));
+            if (osOptionPropertyList == null)
+            {
+                throw new ArgumentNullException(nameof(osOptionPropertyList));
+            }
 
             OSOptionPropertyList = osOptionPropertyList.ToList();
         }

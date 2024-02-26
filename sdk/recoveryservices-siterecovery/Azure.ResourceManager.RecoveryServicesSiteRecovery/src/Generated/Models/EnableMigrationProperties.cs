@@ -56,8 +56,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> or <paramref name="providerSpecificDetails"/> is null. </exception>
         public EnableMigrationProperties(ResourceIdentifier policyId, EnableMigrationProviderSpecificContent providerSpecificDetails)
         {
-            Argument.AssertNotNull(policyId, nameof(policyId));
-            Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
+            if (policyId == null)
+            {
+                throw new ArgumentNullException(nameof(policyId));
+            }
+            if (providerSpecificDetails == null)
+            {
+                throw new ArgumentNullException(nameof(providerSpecificDetails));
+            }
 
             PolicyId = policyId;
             ProviderSpecificDetails = providerSpecificDetails;

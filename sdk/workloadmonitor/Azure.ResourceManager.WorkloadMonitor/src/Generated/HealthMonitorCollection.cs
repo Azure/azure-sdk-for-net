@@ -93,7 +93,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
         public virtual async Task<Response<HealthMonitorResource>> GetAsync(string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            if (monitorId == null)
+            {
+                throw new ArgumentNullException(nameof(monitorId));
+            }
+            if (monitorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorId));
+            }
 
             using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.Get");
             scope.Start();
@@ -139,7 +146,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
         public virtual Response<HealthMonitorResource> Get(string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            if (monitorId == null)
+            {
+                throw new ArgumentNullException(nameof(monitorId));
+            }
+            if (monitorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorId));
+            }
 
             using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.Get");
             scope.Start();
@@ -249,7 +263,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            if (monitorId == null)
+            {
+                throw new ArgumentNullException(nameof(monitorId));
+            }
+            if (monitorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorId));
+            }
 
             using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.Exists");
             scope.Start();
@@ -293,7 +314,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
         public virtual Response<bool> Exists(string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            if (monitorId == null)
+            {
+                throw new ArgumentNullException(nameof(monitorId));
+            }
+            if (monitorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorId));
+            }
 
             using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.Exists");
             scope.Start();
@@ -337,7 +365,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
         public virtual async Task<NullableResponse<HealthMonitorResource>> GetIfExistsAsync(string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            if (monitorId == null)
+            {
+                throw new ArgumentNullException(nameof(monitorId));
+            }
+            if (monitorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorId));
+            }
 
             using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetIfExists");
             scope.Start();
@@ -383,7 +418,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
         public virtual NullableResponse<HealthMonitorResource> GetIfExists(string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            if (monitorId == null)
+            {
+                throw new ArgumentNullException(nameof(monitorId));
+            }
+            if (monitorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorId));
+            }
 
             using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetIfExists");
             scope.Start();

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPartition(document.RootElement, options);
+            return DeserializeManagedServicePartitionScheme(document.RootElement, options);
         }
 
         internal static UnknownPartition DeserializeUnknownPartition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPartition(document.RootElement, options);
+                        return DeserializeManagedServicePartitionScheme(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ManagedServicePartitionScheme)} does not support '{options.Format}' format.");

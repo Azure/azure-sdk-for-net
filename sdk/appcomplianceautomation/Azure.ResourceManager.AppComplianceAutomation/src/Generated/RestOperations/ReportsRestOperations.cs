@@ -147,7 +147,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ReportResourceList>> ListNextPageAsync(string nextLink, string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -176,7 +179,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ReportResourceList> ListNextPage(string nextLink, string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
             _pipeline.Send(message, cancellationToken);

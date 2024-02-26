@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseServerUsage> array = new List<SynapseServerUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseServerUsage.DeserializeSynapseServerUsage(item));
+                        array.Add(SynapseServerUsage.DeserializeSynapseServerUsage(item, options));
                     }
                     value = array;
                     continue;

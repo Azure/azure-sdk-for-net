@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProductFamilyName))
+            if (ProductFamilyName != null)
             {
                 writer.WritePropertyName("productFamilyName"u8);
                 writer.WriteStringValue(ProductFamilyName);
             }
-            if (Optional.IsDefined(ProductLineName))
+            if (ProductLineName != null)
             {
                 writer.WritePropertyName("productLineName"u8);
                 writer.WriteStringValue(ProductLineName);
             }
-            if (Optional.IsDefined(ProductName))
+            if (ProductName != null)
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (Optional.IsDefined(ConfigurationName))
+            if (ConfigurationName != null)
             {
                 writer.WritePropertyName("configurationName"u8);
                 writer.WriteStringValue(ConfigurationName);

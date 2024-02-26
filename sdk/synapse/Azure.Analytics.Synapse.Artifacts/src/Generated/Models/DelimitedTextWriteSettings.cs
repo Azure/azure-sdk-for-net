@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileExtension"/> is null. </exception>
         public DelimitedTextWriteSettings(object fileExtension)
         {
-            Argument.AssertNotNull(fileExtension, nameof(fileExtension));
+            if (fileExtension == null)
+            {
+                throw new ArgumentNullException(nameof(fileExtension));
+            }
 
             FileExtension = fileExtension;
             Type = "DelimitedTextWriteSettings";

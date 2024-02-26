@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(TagName))
+            if (TagName != null)
             {
                 writer.WritePropertyName("tagName"u8);
                 writer.WriteStringValue(TagName);
             }
-            if (Optional.IsDefined(Count))
+            if (Count != null)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteObjectValue(Count);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<PredefinedTagValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> id = default;
             Optional<string> tagName = default;
             Optional<PredefinedTagCount> count = default;
-            Optional<IReadOnlyList<PredefinedTagValue>> values = default;
+            IReadOnlyList<PredefinedTagValue> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value);
+                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("values"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PredefinedTagValue> array = new List<PredefinedTagValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredefinedTagValue.DeserializePredefinedTagValue(item));
+                        array.Add(PredefinedTagValue.DeserializePredefinedTagValue(item, options));
                     }
                     values = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredefinedTag(id.Value, tagName.Value, count.Value, Optional.ToList(values), serializedAdditionalRawData);
+            return new PredefinedTag(id.Value, tagName.Value, count.Value, values ?? new ChangeTrackingList<PredefinedTagValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredefinedTag>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    properties = MySqlServerPrivateEndpointConnectionProperties.DeserializeMySqlServerPrivateEndpointConnectionProperties(property.Value);
+                    properties = MySqlServerPrivateEndpointConnectionProperties.DeserializeMySqlServerPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

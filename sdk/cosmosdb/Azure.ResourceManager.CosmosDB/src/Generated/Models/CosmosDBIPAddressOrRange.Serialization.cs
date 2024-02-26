@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddressOrRange))
+            if (IPAddressOrRange != null)
             {
                 writer.WritePropertyName("ipAddressOrRange"u8);
                 writer.WriteStringValue(IPAddressOrRange);

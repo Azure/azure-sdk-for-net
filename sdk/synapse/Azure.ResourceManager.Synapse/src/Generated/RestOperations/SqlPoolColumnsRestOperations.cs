@@ -77,13 +77,62 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapseSqlPoolColumnData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (sqlPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPoolName));
+            }
+            if (sqlPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName, columnName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -116,13 +165,62 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapseSqlPoolColumnData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (sqlPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPoolName));
+            }
+            if (sqlPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName, columnName);
             _pipeline.Send(message, cancellationToken);

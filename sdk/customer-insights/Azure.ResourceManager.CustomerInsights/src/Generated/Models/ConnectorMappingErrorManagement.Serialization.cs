@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("errorManagementType"u8);
             writer.WriteStringValue(ErrorManagementType.ToSerialString());
-            if (Optional.IsDefined(ErrorLimit))
+            if (ErrorLimit.HasValue)
             {
                 writer.WritePropertyName("errorLimit"u8);
                 writer.WriteNumberValue(ErrorLimit.Value);

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PodSecrets))
+            if (!(PodSecrets is ChangeTrackingList<DataBoxSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("podSecrets"u8);
                 writer.WriteStartArray();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
+            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxSecret>> podSecrets = default;
+            IReadOnlyList<DataBoxSecret> podSecrets = default;
             DataBoxOrderType jobSecretsType = default;
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxSecret> array = new List<DataBoxSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxSecret.DeserializeDataBoxSecret(item));
+                        array.Add(DataBoxSecret.DeserializeDataBoxSecret(item, options));
                     }
                     podSecrets = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataboxJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, Optional.ToList(podSecrets));
+            return new DataboxJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, podSecrets ?? new ChangeTrackingList<DataBoxSecret>());
         }
 
         BinaryData IPersistableModel<DataboxJobSecrets>.Write(ModelReaderWriterOptions options)

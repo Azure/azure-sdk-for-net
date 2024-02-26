@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sites))
+            if (!(Sites is ChangeTrackingList<DirectLineSite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtensionKey1))
+            if (ExtensionKey1 != null)
             {
                 writer.WritePropertyName("extensionKey1"u8);
                 writer.WriteStringValue(ExtensionKey1);
             }
-            if (Optional.IsDefined(ExtensionKey2))
+            if (ExtensionKey2 != null)
             {
                 writer.WritePropertyName("extensionKey2"u8);
                 writer.WriteStringValue(ExtensionKey2);
             }
-            if (Optional.IsDefined(DirectLineEmbedCode))
+            if (DirectLineEmbedCode != null)
             {
                 writer.WritePropertyName("DirectLineEmbedCode"u8);
                 writer.WriteStringValue(DirectLineEmbedCode);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<IList<DirectLineSite>> sites = default;
+            IList<DirectLineSite> sites = default;
             Optional<string> extensionKey1 = default;
             Optional<string> extensionKey2 = default;
             Optional<string> directLineEmbedCode = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<DirectLineSite> array = new List<DirectLineSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DirectLineSite.DeserializeDirectLineSite(item));
+                        array.Add(DirectLineSite.DeserializeDirectLineSite(item, options));
                     }
                     sites = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectLineChannelProperties(Optional.ToList(sites), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value, serializedAdditionalRawData);
+            return new DirectLineChannelProperties(sites ?? new ChangeTrackingList<DirectLineSite>(), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectLineChannelProperties>.Write(ModelReaderWriterOptions options)

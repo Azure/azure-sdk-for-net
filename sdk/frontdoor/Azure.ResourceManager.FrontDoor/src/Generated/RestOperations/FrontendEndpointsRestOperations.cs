@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FrontendEndpointsListResult>> ListByFrontDoorAsync(string subscriptionId, string resourceGroupName, string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var message = CreateListByFrontDoorRequest(subscriptionId, resourceGroupName, frontDoorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FrontendEndpointsListResult> ListByFrontDoor(string subscriptionId, string resourceGroupName, string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var message = CreateListByFrontDoorRequest(subscriptionId, resourceGroupName, frontDoorName);
             _pipeline.Send(message, cancellationToken);
@@ -148,10 +190,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FrontendEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
+            if (frontendEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendEndpointName));
+            }
+            if (frontendEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +251,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FrontendEndpointData> Get(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
+            if (frontendEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendEndpointName));
+            }
+            if (frontendEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -242,11 +340,42 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> EnableHttpsAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
-            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
+            if (frontendEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendEndpointName));
+            }
+            if (frontendEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
+            }
+            if (customHttpsConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(customHttpsConfiguration));
+            }
 
             using var message = CreateEnableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName, customHttpsConfiguration);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,11 +400,42 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response EnableHttps(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
-            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
+            if (frontendEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendEndpointName));
+            }
+            if (frontendEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
+            }
+            if (customHttpsConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(customHttpsConfiguration));
+            }
 
             using var message = CreateEnableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName, customHttpsConfiguration);
             _pipeline.Send(message, cancellationToken);
@@ -322,10 +482,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DisableHttpsAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
+            if (frontendEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendEndpointName));
+            }
+            if (frontendEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
+            }
 
             using var message = CreateDisableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -349,10 +537,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DisableHttps(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
+            if (frontendEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendEndpointName));
+            }
+            if (frontendEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
+            }
 
             using var message = CreateDisableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -390,10 +606,34 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FrontendEndpointsListResult>> ListByFrontDoorNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var message = CreateListByFrontDoorNextPageRequest(nextLink, subscriptionId, resourceGroupName, frontDoorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -421,10 +661,34 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FrontendEndpointsListResult> ListByFrontDoorNextPage(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var message = CreateListByFrontDoorNextPageRequest(nextLink, subscriptionId, resourceGroupName, frontDoorName);
             _pipeline.Send(message, cancellationToken);

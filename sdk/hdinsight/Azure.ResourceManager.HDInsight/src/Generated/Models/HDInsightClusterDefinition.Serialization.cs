@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Blueprint))
+            if (Blueprint != null)
             {
                 writer.WritePropertyName("blueprint"u8);
                 writer.WriteStringValue(Blueprint);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(ComponentVersion))
+            if (!(ComponentVersion is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("componentVersion"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Configurations))
+            if (Configurations != null)
             {
                 writer.WritePropertyName("configurations"u8);
 #if NET6_0_OR_GREATER
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             Optional<string> blueprint = default;
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> componentVersion = default;
+            IDictionary<string, string> componentVersion = default;
             Optional<BinaryData> configurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterDefinition(blueprint.Value, kind.Value, Optional.ToDictionary(componentVersion), configurations.Value, serializedAdditionalRawData);
+            return new HDInsightClusterDefinition(blueprint.Value, kind.Value, componentVersion ?? new ChangeTrackingDictionary<string, string>(), configurations.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterDefinition>.Write(ModelReaderWriterOptions options)

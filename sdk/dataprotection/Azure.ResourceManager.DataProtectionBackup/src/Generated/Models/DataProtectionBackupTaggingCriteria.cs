@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tagInfo"/> is null. </exception>
         public DataProtectionBackupTaggingCriteria(bool isDefault, long taggingPriority, DataProtectionBackupRetentionTag tagInfo)
         {
-            Argument.AssertNotNull(tagInfo, nameof(tagInfo));
+            if (tagInfo == null)
+            {
+                throw new ArgumentNullException(nameof(tagInfo));
+            }
 
             Criteria = new ChangeTrackingList<DataProtectionBackupCriteria>();
             IsDefault = isDefault;

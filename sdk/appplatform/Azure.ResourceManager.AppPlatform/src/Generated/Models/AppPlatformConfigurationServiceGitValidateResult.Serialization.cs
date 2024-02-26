@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsValid))
+            if (IsValid.HasValue)
             {
                 writer.WritePropertyName("isValid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (Optional.IsCollectionDefined(GitReposValidationResult))
+            if (!(GitReposValidationResult is ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("gitReposValidationResult"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<bool> isValid = default;
-            Optional<IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages>> gitReposValidationResult = default;
+            IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceGitReposValidationMessages> array = new List<AppPlatformConfigurationServiceGitReposValidationMessages>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceGitReposValidationMessages.DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(item));
+                        array.Add(AppPlatformConfigurationServiceGitReposValidationMessages.DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(item, options));
                     }
                     gitReposValidationResult = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), Optional.ToList(gitReposValidationResult), serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), gitReposValidationResult ?? new ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceGitValidateResult>.Write(ModelReaderWriterOptions options)

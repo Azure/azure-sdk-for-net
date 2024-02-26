@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StreamingPaths))
+            if (!(StreamingPaths is ChangeTrackingList<StreamingPath> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streamingPaths"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DownloadPaths))
+            if (!(DownloadPaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("downloadPaths"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingPath>> streamingPaths = default;
-            Optional<IReadOnlyList<string>> downloadPaths = default;
+            IReadOnlyList<StreamingPath> streamingPaths = default;
+            IReadOnlyList<string> downloadPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPath> array = new List<StreamingPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPath.DeserializeStreamingPath(item));
+                        array.Add(StreamingPath.DeserializeStreamingPath(item, options));
                     }
                     streamingPaths = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPathsResult(Optional.ToList(streamingPaths), Optional.ToList(downloadPaths), serializedAdditionalRawData);
+            return new StreamingPathsResult(streamingPaths ?? new ChangeTrackingList<StreamingPath>(), downloadPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPathsResult>.Write(ModelReaderWriterOptions options)

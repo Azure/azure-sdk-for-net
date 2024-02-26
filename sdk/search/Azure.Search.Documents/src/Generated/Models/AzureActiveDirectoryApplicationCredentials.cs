@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public AzureActiveDirectoryApplicationCredentials(string applicationId)
         {
-            Argument.AssertNotNull(applicationId, nameof(applicationId));
+            if (applicationId == null)
+            {
+                throw new ArgumentNullException(nameof(applicationId));
+            }
 
             ApplicationId = applicationId;
         }

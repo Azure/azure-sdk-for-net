@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteExtensionInfoData> array = new List<SiteExtensionInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteExtensionInfoData.DeserializeSiteExtensionInfoData(item));
+                        array.Add(SiteExtensionInfoData.DeserializeSiteExtensionInfoData(item, options));
                     }
                     value = array;
                     continue;

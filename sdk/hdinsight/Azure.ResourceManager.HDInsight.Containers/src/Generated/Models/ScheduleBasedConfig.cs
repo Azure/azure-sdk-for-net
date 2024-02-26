@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -54,8 +53,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> or <paramref name="schedules"/> is null. </exception>
         public ScheduleBasedConfig(string timeZone, int defaultCount, IEnumerable<AutoscaleSchedule> schedules)
         {
-            Argument.AssertNotNull(timeZone, nameof(timeZone));
-            Argument.AssertNotNull(schedules, nameof(schedules));
+            if (timeZone == null)
+            {
+                throw new ArgumentNullException(nameof(timeZone));
+            }
+            if (schedules == null)
+            {
+                throw new ArgumentNullException(nameof(schedules));
+            }
 
             TimeZone = timeZone;
             DefaultCount = defaultCount;

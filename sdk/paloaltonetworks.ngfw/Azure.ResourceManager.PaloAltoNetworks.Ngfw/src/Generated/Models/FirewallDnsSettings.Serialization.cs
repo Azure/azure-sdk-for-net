@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableDnsProxy))
+            if (EnableDnsProxy.HasValue)
             {
                 writer.WritePropertyName("enableDnsProxy"u8);
                 writer.WriteStringValue(EnableDnsProxy.Value.ToString());
             }
-            if (Optional.IsDefined(EnabledDnsType))
+            if (EnabledDnsType.HasValue)
             {
                 writer.WritePropertyName("enabledDnsType"u8);
                 writer.WriteStringValue(EnabledDnsType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<IPAddressInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             Optional<AllowDnsProxyType> enableDnsProxy = default;
             Optional<EnabledDnsType> enabledDnsType = default;
-            Optional<IList<IPAddressInfo>> dnsServers = default;
+            IList<IPAddressInfo> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item));
+                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
                     dnsServers = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallDnsSettings(Optional.ToNullable(enableDnsProxy), Optional.ToNullable(enabledDnsType), Optional.ToList(dnsServers), serializedAdditionalRawData);
+            return new FirewallDnsSettings(Optional.ToNullable(enableDnsProxy), Optional.ToNullable(enabledDnsType), dnsServers ?? new ChangeTrackingList<IPAddressInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallDnsSettings>.Write(ModelReaderWriterOptions options)

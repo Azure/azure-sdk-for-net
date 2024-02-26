@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HelmPackage": return AzureArcKubernetesHelmApplication.DeserializeAzureArcKubernetesHelmApplication(element);
+                    case "HelmPackage": return AzureArcKubernetesHelmApplication.DeserializeAzureArcKubernetesHelmApplication(element, options);
                 }
             }
-            return UnknownAzureArcKubernetesNetworkFunctionApplication.DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(element);
+            return UnknownAzureArcKubernetesNetworkFunctionApplication.DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(element, options);
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)

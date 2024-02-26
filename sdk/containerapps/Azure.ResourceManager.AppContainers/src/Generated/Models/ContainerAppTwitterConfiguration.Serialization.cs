@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Registration))
+            if (Registration != null)
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppTwitterRegistration.DeserializeContainerAppTwitterRegistration(property.Value);
+                    registration = ContainerAppTwitterRegistration.DeserializeContainerAppTwitterRegistration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

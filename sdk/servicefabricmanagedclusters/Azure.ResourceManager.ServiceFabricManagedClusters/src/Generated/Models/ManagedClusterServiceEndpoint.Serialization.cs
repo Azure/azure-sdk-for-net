@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("service"u8);
             writer.WriteStringValue(Service);
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string service = default;
-            Optional<IList<AzureLocation>> locations = default;
+            IList<AzureLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterServiceEndpoint(service, Optional.ToList(locations), serializedAdditionalRawData);
+            return new ManagedClusterServiceEndpoint(service, locations ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterServiceEndpoint>.Write(ModelReaderWriterOptions options)

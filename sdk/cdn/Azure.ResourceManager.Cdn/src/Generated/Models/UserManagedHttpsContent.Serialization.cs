@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
                 {
-                    certificateSourceParameters = KeyVaultCertificateSource.DeserializeKeyVaultCertificateSource(property.Value);
+                    certificateSourceParameters = KeyVaultCertificateSource.DeserializeKeyVaultCertificateSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"u8))

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Kubernetes.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
+            if (options.Format != "W" && HybridConnectionConfig != null)
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
                 writer.WriteObjectValue(HybridConnectionConfig);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
+            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<CredentialResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 return null;
             }
             Optional<HybridConnectionConfig> hybridConnectionConfig = default;
-            Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
+            IReadOnlyList<CredentialResult> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value);
+                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubeconfigs"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     List<CredentialResult> array = new List<CredentialResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CredentialResult.DeserializeCredentialResult(item));
+                        array.Add(CredentialResult.DeserializeCredentialResult(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CredentialResults(hybridConnectionConfig.Value, Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new CredentialResults(hybridConnectionConfig.Value, kubeconfigs ?? new ChangeTrackingList<CredentialResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CredentialResults>.Write(ModelReaderWriterOptions options)

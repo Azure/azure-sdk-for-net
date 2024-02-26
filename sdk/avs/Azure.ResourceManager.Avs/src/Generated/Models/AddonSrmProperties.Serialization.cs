@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LicenseKey))
+            if (LicenseKey != null)
             {
                 writer.WritePropertyName("licenseKey"u8);
                 writer.WriteStringValue(LicenseKey);
             }
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

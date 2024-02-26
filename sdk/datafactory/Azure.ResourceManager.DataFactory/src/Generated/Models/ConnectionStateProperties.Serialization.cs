@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActionsRequired))
+            if (options.Format != "W" && ActionsRequired != null)
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

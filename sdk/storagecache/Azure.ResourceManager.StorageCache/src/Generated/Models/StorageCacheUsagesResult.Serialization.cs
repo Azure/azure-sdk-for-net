@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<StorageCacheUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<StorageCacheUsage>> value = default;
+            IReadOnlyList<StorageCacheUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheUsage> array = new List<StorageCacheUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheUsage.DeserializeStorageCacheUsage(item));
+                        array.Add(StorageCacheUsage.DeserializeStorageCacheUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsagesResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new StorageCacheUsagesResult(nextLink.Value, value ?? new ChangeTrackingList<StorageCacheUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsagesResult>.Write(ModelReaderWriterOptions options)

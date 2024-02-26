@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
@@ -19,7 +20,13 @@ namespace Microsoft.Extensions.Azure
         private const string ConnectionStringParameterName = "connectionString";
         private const char TenantDelimiter = ';';
 
-        public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        public static object CreateClient(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type clientType,
+            Type optionsType,
+            object options,
+            IConfiguration configuration,
+            TokenCredential credential)
         {
             List<object> arguments = new List<object>();
             // Handle single values as connection strings
@@ -243,7 +250,9 @@ namespace Microsoft.Extensions.Azure
             return null;
         }
 
-        internal static object CreateClientOptions(object version, Type optionsType)
+        internal static object CreateClientOptions(
+            object version,
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type optionsType)
         {
             ConstructorInfo parameterlessConstructor = null;
             int versionParameterIndex = 0;
@@ -320,7 +329,11 @@ namespace Microsoft.Extensions.Azure
                    parameter.Position == ((ConstructorInfo)parameter.Member).GetParameters().Length - 1;
         }
 
-        private static string BuildErrorMessage(IConfiguration configuration, Type clientType, Type optionsType)
+        [RequiresUnreferencedCode("Walks the constructors of the type's constructor parameters, which can't be annotated for trimming.")]
+        private static string BuildErrorMessage(
+            IConfiguration configuration,
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type clientType,
+            Type optionsType)
         {
             var builder = new StringBuilder();
 
@@ -410,7 +423,12 @@ namespace Microsoft.Extensions.Azure
                    IsOptionsParameter(parameters[parameters.Length - 1], optionsType);
         }
 
-        private static bool TryConvertArgument(IConfiguration configuration, string parameterName, Type parameterType, out object value)
+        [RequiresUnreferencedCode("Recursively walks the constructors of parameterType's constructor parameters, which can't be annotated for trimming.")]
+        private static bool TryConvertArgument(
+            IConfiguration configuration,
+            string parameterName,
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type parameterType,
+            out object value)
         {
             if (parameterType == typeof(string))
             {
@@ -443,7 +461,11 @@ namespace Microsoft.Extensions.Azure
             return true;
         }
 
-        internal static bool TryCreateObject(Type type, IConfigurationSection configuration, out object value)
+        [RequiresUnreferencedCode("Recursively walks the constructors of the type's constructor parameters, which can't be annotated for trimming.")]
+        internal static bool TryCreateObject(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type,
+            IConfigurationSection configuration,
+            out object value)
         {
             if (!configuration.GetChildren().Any())
             {
@@ -481,7 +503,8 @@ namespace Microsoft.Extensions.Azure
             return false;
         }
 
-        private static IOrderedEnumerable<ConstructorInfo> GetApplicableParameterConstructors(Type type)
+        private static IOrderedEnumerable<ConstructorInfo> GetApplicableParameterConstructors(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type)
         {
             return type.GetConstructors(BindingFlags.Public | BindingFlags.Instance).OrderByDescending(c => c.GetParameters().Length);
         }

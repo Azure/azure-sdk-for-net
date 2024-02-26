@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HybridComputeMachineExtensionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputeMachineExtensionData>> value = default;
+            IReadOnlyList<HybridComputeMachineExtensionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
+                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineExtensionsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MachineExtensionsListResult(value ?? new ChangeTrackingList<HybridComputeMachineExtensionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineExtensionsListResult>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IList<WritableSubResource>> networkInterfaces = default;
+            IList<WritableSubResource> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesNetworkProfile(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesNetworkProfile(networkInterfaces ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesNetworkProfile>.Write(ModelReaderWriterOptions options)

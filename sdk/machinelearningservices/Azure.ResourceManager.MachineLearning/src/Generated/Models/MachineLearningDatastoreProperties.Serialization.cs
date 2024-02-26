@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
-            if (Optional.IsDefined(IntellectualProperty))
+            if (IntellectualProperty != null)
             {
                 if (IntellectualProperty != null)
                 {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("intellectualProperty");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDefault))
+            if (options.Format != "W" && IsDefault.HasValue)
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlob": return MachineLearningAzureBlobDatastore.DeserializeMachineLearningAzureBlobDatastore(element);
-                    case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element);
-                    case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element);
-                    case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element);
-                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element);
-                    case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element);
+                    case "AzureBlob": return MachineLearningAzureBlobDatastore.DeserializeMachineLearningAzureBlobDatastore(element, options);
+                    case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element, options);
+                    case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element, options);
+                    case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element, options);
+                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element, options);
+                    case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element, options);
                 }
             }
-            return UnknownDatastore.DeserializeUnknownDatastore(element);
+            return UnknownDatastore.DeserializeUnknownDatastore(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreProperties>.Write(ModelReaderWriterOptions options)

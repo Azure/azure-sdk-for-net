@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CognitiveServicesAccountData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<CognitiveServicesAccountData>> value = default;
+            IReadOnlyList<CognitiveServicesAccountData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesAccountData> array = new List<CognitiveServicesAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(item));
+                        array.Add(CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new CognitiveServicesAccountListResult(nextLink.Value, value ?? new ChangeTrackingList<CognitiveServicesAccountData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountListResult>.Write(ModelReaderWriterOptions options)

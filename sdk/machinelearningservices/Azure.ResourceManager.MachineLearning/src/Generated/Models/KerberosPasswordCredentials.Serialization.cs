@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(property.Value);
+                    secrets = KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kerberosKdcAddress"u8))

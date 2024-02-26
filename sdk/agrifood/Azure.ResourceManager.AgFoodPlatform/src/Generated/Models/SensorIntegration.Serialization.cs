@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled != null)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ProvisioningInfo))
+            if (ProvisioningInfo != null)
             {
                 writer.WritePropertyName("provisioningInfo"u8);
                 writer.WriteObjectValue(ProvisioningInfo);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    provisioningInfo = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    provisioningInfo = ErrorResponse.DeserializeErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Target))
+            if (options.Format != "W" && Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);

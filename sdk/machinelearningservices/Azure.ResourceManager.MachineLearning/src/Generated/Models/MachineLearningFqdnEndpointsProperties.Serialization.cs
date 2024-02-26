@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<MachineLearningFqdnEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> category = default;
-            Optional<IReadOnlyList<MachineLearningFqdnEndpoint>> endpoints = default;
+            IReadOnlyList<MachineLearningFqdnEndpoint> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFqdnEndpoint> array = new List<MachineLearningFqdnEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFqdnEndpoint.DeserializeMachineLearningFqdnEndpoint(item));
+                        array.Add(MachineLearningFqdnEndpoint.DeserializeMachineLearningFqdnEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFqdnEndpointsProperties(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new MachineLearningFqdnEndpointsProperties(category.Value, endpoints ?? new ChangeTrackingList<MachineLearningFqdnEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningFqdnEndpointsProperties>.Write(ModelReaderWriterOptions options)

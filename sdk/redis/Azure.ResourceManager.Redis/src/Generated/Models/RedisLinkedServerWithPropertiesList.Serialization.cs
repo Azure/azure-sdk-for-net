@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RedisLinkedServerWithPropertyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisLinkedServerWithPropertyData>> value = default;
+            IReadOnlyList<RedisLinkedServerWithPropertyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisLinkedServerWithPropertyData> array = new List<RedisLinkedServerWithPropertyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(item));
+                        array.Add(RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisLinkedServerWithPropertiesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisLinkedServerWithPropertiesList(value ?? new ChangeTrackingList<RedisLinkedServerWithPropertyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisLinkedServerWithPropertiesList>.Write(ModelReaderWriterOptions options)

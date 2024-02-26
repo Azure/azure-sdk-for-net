@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="newPoolResourceId"/> is null. </exception>
         public NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId)
         {
-            Argument.AssertNotNull(newPoolResourceId, nameof(newPoolResourceId));
+            if (newPoolResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(newPoolResourceId));
+            }
 
             NewPoolResourceId = newPoolResourceId;
         }

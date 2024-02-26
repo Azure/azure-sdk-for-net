@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningOutboundRuleBasicResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningOutboundRuleBasicManagedNetworkSettingsRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningOutboundRuleBasicResource> Update(WaitUntil waitUntil, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningOutboundRuleBasicManagedNetworkSettingsRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Update");
             scope.Start();

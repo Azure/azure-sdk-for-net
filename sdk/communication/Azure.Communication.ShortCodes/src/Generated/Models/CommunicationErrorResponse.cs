@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.ShortCodes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal CommunicationErrorResponse(CommunicationError error)
         {
-            Argument.AssertNotNull(error, nameof(error));
+            if (error == null)
+            {
+                throw new ArgumentNullException(nameof(error));
+            }
 
             Error = error;
         }

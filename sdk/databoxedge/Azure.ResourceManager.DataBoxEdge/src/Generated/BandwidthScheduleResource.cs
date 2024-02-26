@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BandwidthScheduleResource>> UpdateAsync(WaitUntil waitUntil, BandwidthScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BandwidthScheduleResource> Update(WaitUntil waitUntil, BandwidthScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleResource.Update");
             scope.Start();

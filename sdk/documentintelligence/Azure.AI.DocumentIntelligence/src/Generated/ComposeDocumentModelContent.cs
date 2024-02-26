@@ -53,8 +53,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="componentModels"/> is null. </exception>
         public ComposeDocumentModelContent(string modelId, IEnumerable<ComponentDocumentModelDetails> componentModels)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-            Argument.AssertNotNull(componentModels, nameof(componentModels));
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (componentModels == null)
+            {
+                throw new ArgumentNullException(nameof(componentModels));
+            }
 
             ModelId = modelId;
             ComponentModels = componentModels.ToList();

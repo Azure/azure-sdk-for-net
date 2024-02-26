@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DataProtectionBackupJobData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataProtectionBackupJobData>> value = default;
+            IReadOnlyList<DataProtectionBackupJobData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupJobData> array = new List<DataProtectionBackupJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(item));
+                        array.Add(DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureBackupJobResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureBackupJobResourceList(value ?? new ChangeTrackingList<DataProtectionBackupJobData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureBackupJobResourceList>.Write(ModelReaderWriterOptions options)

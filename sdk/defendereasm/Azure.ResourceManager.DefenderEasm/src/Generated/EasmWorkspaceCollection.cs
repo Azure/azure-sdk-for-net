@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EasmWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, EasmWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EasmWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, EasmWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<EasmWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<EasmWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<EasmWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual NullableResponse<EasmWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceCollection.GetIfExists");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Reference))
+            if (Reference != null)
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteObjectValue(Reference);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    reference = SecretValueReference.DeserializeSecretValueReference(property.Value);
+                    reference = SecretValueReference.DeserializeSecretValueReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

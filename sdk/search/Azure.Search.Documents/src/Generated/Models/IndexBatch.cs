@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Search.Documents.Models
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
         public IndexBatch(IEnumerable<IndexAction> actions)
         {
-            Argument.AssertNotNull(actions, nameof(actions));
+            if (actions == null)
+            {
+                throw new ArgumentNullException(nameof(actions));
+            }
 
             Actions = actions.ToList();
         }

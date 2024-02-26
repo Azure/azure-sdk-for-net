@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CloudHsmClusterData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CloudHsmClusterData>> value = default;
+            IReadOnlyList<CloudHsmClusterData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<CloudHsmClusterData> array = new List<CloudHsmClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item));
+                        array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmClusterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CloudHsmClusterListResult(value ?? new ChangeTrackingList<CloudHsmClusterData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmClusterListResult>.Write(ModelReaderWriterOptions options)

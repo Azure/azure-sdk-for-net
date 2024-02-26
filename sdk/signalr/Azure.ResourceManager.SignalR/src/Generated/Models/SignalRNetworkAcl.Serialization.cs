@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Allow))
+            if (!(Allow is ChangeTrackingList<SignalRRequestType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Deny))
+            if (!(Deny is ChangeTrackingList<SignalRRequestType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IList<SignalRRequestType>> allow = default;
-            Optional<IList<SignalRRequestType>> deny = default;
+            IList<SignalRRequestType> allow = default;
+            IList<SignalRRequestType> deny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRNetworkAcl(Optional.ToList(allow), Optional.ToList(deny), serializedAdditionalRawData);
+            return new SignalRNetworkAcl(allow ?? new ChangeTrackingList<SignalRRequestType>(), deny ?? new ChangeTrackingList<SignalRRequestType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRNetworkAcl>.Write(ModelReaderWriterOptions options)

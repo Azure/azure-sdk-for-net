@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
+            if (options.Format != "W" && UpdatedBy != null)
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (Optional.IsDefined(Parent))
+            if (Parent != null)
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteObjectValue(Parent);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    parent = ManagementGroupParentCreateOptions.DeserializeManagementGroupParentCreateOptions(property.Value);
+                    parent = ManagementGroupParentCreateOptions.DeserializeManagementGroupParentCreateOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

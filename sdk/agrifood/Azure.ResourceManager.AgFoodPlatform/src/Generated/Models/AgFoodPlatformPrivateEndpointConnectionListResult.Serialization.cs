@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<AgFoodPlatformPrivateEndpointConnectionData> array = new List<AgFoodPlatformPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(item));
+                        array.Add(AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgFoodPlatformPrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AgFoodPlatformPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

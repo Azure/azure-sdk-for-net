@@ -280,7 +280,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DefaultRolloutResource>> UpdateAsync(WaitUntil waitUntil, DefaultRolloutData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutResource.Update");
             scope.Start();
@@ -326,7 +329,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DefaultRolloutResource> Update(WaitUntil waitUntil, DefaultRolloutData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutResource.Update");
             scope.Start();

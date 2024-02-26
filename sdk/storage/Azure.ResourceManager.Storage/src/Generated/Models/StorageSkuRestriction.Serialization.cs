@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RestrictionType))
+            if (options.Format != "W" && RestrictionType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestrictionType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
+            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReasonCode))
+            if (ReasonCode.HasValue)
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToString());
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             Optional<string> type = default;
-            Optional<IReadOnlyList<string>> values = default;
+            IReadOnlyList<string> values = default;
             Optional<StorageRestrictionReasonCode> reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSkuRestriction(type.Value, Optional.ToList(values), Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new StorageSkuRestriction(type.Value, values ?? new ChangeTrackingList<string>(), Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSkuRestriction>.Write(ModelReaderWriterOptions options)

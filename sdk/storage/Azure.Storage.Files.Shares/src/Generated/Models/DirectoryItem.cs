@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal DirectoryItem(StringEncoded name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
         }

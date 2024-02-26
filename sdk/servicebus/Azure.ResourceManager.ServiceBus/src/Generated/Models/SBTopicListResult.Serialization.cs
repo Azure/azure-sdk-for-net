@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceBusTopicData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusTopicData>> value = default;
+            IReadOnlyList<ServiceBusTopicData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusTopicData> array = new List<ServiceBusTopicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusTopicData.DeserializeServiceBusTopicData(item));
+                        array.Add(ServiceBusTopicData.DeserializeServiceBusTopicData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SBTopicListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SBTopicListResult(value ?? new ChangeTrackingList<ServiceBusTopicData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SBTopicListResult>.Write(ModelReaderWriterOptions options)

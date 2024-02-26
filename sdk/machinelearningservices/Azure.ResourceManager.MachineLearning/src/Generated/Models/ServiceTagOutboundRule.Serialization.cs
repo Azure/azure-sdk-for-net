@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    destination = ServiceTagDestination.DeserializeServiceTagDestination(property.Value);
+                    destination = ServiceTagDestination.DeserializeServiceTagDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("category"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerServiceAgentPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServiceAgentPoolData>> value = default;
+            IReadOnlyList<ContainerServiceAgentPoolData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceAgentPoolData> array = new List<ContainerServiceAgentPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceAgentPoolData.DeserializeContainerServiceAgentPoolData(item));
+                        array.Add(ContainerServiceAgentPoolData.DeserializeContainerServiceAgentPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceAgentPoolListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerServiceAgentPoolListResult(value ?? new ChangeTrackingList<ContainerServiceAgentPoolData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceAgentPoolListResult>.Write(ModelReaderWriterOptions options)
