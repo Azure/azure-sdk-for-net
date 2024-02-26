@@ -3,10 +3,7 @@
 
 using System;
 using System.Globalization;
-using System.Net;
 using System.Net.Http.Headers;
-
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -18,12 +15,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         private const string OpenIdConfigurationPath = "/.well-known/openid-configuration";
         private const string OpenIdConfigurationPathV2 = "/v2.0/.well-known/openid-configuration";
 
-        private const string AuthorityUrlKey = "AuthenticationEvents__AuthorityUrl";
-        private const string AuthorizedPartyAppIdKey = "AuthenticationEvents__AuthorizedPartyAppId";
-        private const string AudienceAppIdKey = "AuthenticationEvents__AudienceAppId";
+        private const string AuthenticationEventsKeyPrefix = "AuthenticationEvents__";
+        private const string AuthorityUrlKey = AuthenticationEventsKeyPrefix + "AuthorityUrl";
+        private const string AuthorizedPartyAppIdKey =AuthenticationEventsKeyPrefix + "AuthorizedPartyAppId";
+        private const string AudienceAppIdKey =AuthenticationEventsKeyPrefix + "AudienceAppId";
+        private const string BypassTokenValidationKey =AuthenticationEventsKeyPrefix + "BypassTokenValidation";
 
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
-        private const string BYPASS_VALIDATION_KEY = "AuthenticationEvents__BypassTokenValidation";
 
         internal const string AppIdKey = "appid";
         internal const string AzpKey = "azp";
@@ -52,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 string value = GetConfigValue(AudienceAppIdKey, triggerAttribute?.AudienceAppId);
 
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new MissingFieldException(
                         string.Format(
@@ -75,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 string value = GetConfigValue(AuthorityUrlKey, triggerAttribute?.AuthorityUrl);
 
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new MissingFieldException(
                         string.Format(
@@ -98,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 string value = GetConfigValue(AuthorizedPartyAppIdKey, triggerAttribute?.AuthorizedPartyAppId);
 
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new MissingFieldException(
                         string.Format(
@@ -115,12 +113,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// If we should bypass the token validation.
         /// Use only for testing and development.
         /// </summary>
-        internal bool BypassValidation => GetConfigValue(BYPASS_VALIDATION_KEY, false);
+        internal static bool BypassValidation => GetConfigValue(BypassTokenValidationKey, false);
 
         /// <summary>
         /// If the EZAuth is enabled.
         /// </summary>
-        internal bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
+        internal static bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
 
         /// <summary>
         /// Get the issuer string based on the token schema version.
@@ -132,26 +130,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
                 AuthorityUrl + OpenIdConfigurationPathV2 :
                 AuthorityUrl + OpenIdConfigurationPath;
-        }
-
-        /// <summary>
-        /// Validate the authorization party is accurate to the one in configuration.
-        /// </summary>
-        /// <param name="authoizedPartyValueFromTokenOrHeader">The value from either the token or the header.</param>
-        /// <returns>True if azp/appid value matches the configured value.</returns>
-        internal bool ValidateAuthorizationParty(string authoizedPartyValueFromTokenOrHeader)
-        {
-            return  AuthorizedPartyAppId.EqualsOic(authoizedPartyValueFromTokenOrHeader);
-        }
-
-        /// <summary>
-        /// Checks wheather the header has the correct values for ezauth.
-        /// </summary>
-        /// <param name="headers"><see cref="HttpRequestHeaders"/> headers to check in.</param>
-        /// <returns>True if ezauth is valid</returns>
-        internal bool IsEzAuthValid(HttpRequestHeaders headers)
-        {
-            return EZAuthEnabled && headers.Matches(HEADER_EZAUTH_ICP, HEADER_EZAUTH_ICP_VERIFY);
         }
 
         /// <summary>

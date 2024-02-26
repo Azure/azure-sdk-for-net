@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             string authorizedPartyKey = tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? ConfigurationManager.AzpKey : ConfigurationManager.AppIdKey;
             jsonWebToken.TryGetPayloadValue(authorizedPartyKey, out string authorizedPartyValue);
 
-            if (configurationManager.ValidateAuthorizationParty(authorizedPartyValue) == false)
+            if (TokenValidatorHelper.ValidateAuthorizationParty(configurationManager, authorizedPartyValue) == false)
             {
                 return (false, null);
             }
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = oidcConfig.Issuer,
                         ValidAudience = configurationManager.AudienceAppId,
-                        IssuerSigningKeys = oidcConfig.SigningKeys
+                        IssuerSigningKeys = oidcConfig.SigningKeys,
                     },
                     validatedToken: out _);
 

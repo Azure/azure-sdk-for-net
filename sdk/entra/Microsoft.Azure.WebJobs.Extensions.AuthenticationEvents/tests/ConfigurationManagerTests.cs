@@ -56,14 +56,58 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         }
 
         [Test]
-        public void Test_When_Attributes_AudienceAppId_Is_Null()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void Test_When_Attributes_AuthorizedPartyAppId_Is_Null(string value)
+        {
+            var attribute = new AuthenticationEventsTriggerAttribute
+            {
+                AuthorizedPartyAppId = value,
+                AudienceAppId = testAudienceAppId,
+                AuthorityUrl = testAuthorityUrl
+            };
+
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Config should not throw when initialized.");
+            Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, "Audience is not null");
+            Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, "Audience should match what it was set to.");
+
+            ValidateAuthorityUrl(configurationManager, "AuthorityURl should match what match to what it was set to.");
+
+            Assert.Throws<MissingFieldException>(() => _ = configurationManager.AuthorizedPartyAppId, "Should throw if value of AuthorizedPartyAppId was set. No Default.");
+        }
+
+        [Test]
+        public void Test_When_Attributes_AuthorizedPartyAppId_Is_NotSet()
+        {
+            var attribute = new AuthenticationEventsTriggerAttribute
+            {
+                AudienceAppId = testAudienceAppId,
+                AuthorityUrl = testAuthorityUrl
+            };
+
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Config should not throw when initialized.");
+            Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, "Audience is not null");
+            Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, "Audience should match what it was set to.");
+
+            ValidateAuthorityUrl(configurationManager, "AuthorityURl should match what match to what it was set to.");
+
+            Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, "Should not throw when AuthorizedPartyAppId is not set.");
+            Assert.AreEqual("99045fe1-7639-4a75-9d4a-577b6ca3810f", configurationManager.AuthorizedPartyAppId, "AuthorizedPartyAppId should match default value.");
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void Test_When_Attributes_AudienceAppId_Is_Null(string value)
         {
             string testMessage = "Audience App ID is null.";
 
             var attribute = new AuthenticationEventsTriggerAttribute
             {
                 AuthorizedPartyAppId = testAuthorizedPartyId,
-                AudienceAppId = null,
+                AudienceAppId = value,
                 AuthorityUrl = testAuthorityUrl
             };
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
@@ -71,21 +115,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
 
             Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
-            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
-
             ValidateAuthorityUrl(configurationManager, testMessage);
         }
 
         [Test]
-        public void Test_When_Attributes_AuthorityUrl_Is_Null()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void Test_When_Attributes_AuthorityUrl_Is_Null(string value)
         {
-            string testMessage = "Authority URL is null.";
+            string testMessage = "Authority URL is null. Should use default value";
 
             var attribute = new AuthenticationEventsTriggerAttribute
             {
                 AuthorizedPartyAppId = testAuthorizedPartyId,
                 AudienceAppId = testAudienceAppId,
-                AuthorityUrl = null
+                AuthorityUrl = value
             };
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
 
@@ -99,23 +144,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         }
 
         [Test]
-        public void Test_When_Attributes_AudienceAppId_Is_Null_And_Authority_Is_Null()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void Test_When_Attributes_AudienceAppId_Is_Null_And_Authority_Is_Null(string value)
         {
             string testMessage = "AudienceAppId and AuthorityUrl is null.";
 
             var attribute = new AuthenticationEventsTriggerAttribute
             {
                 AuthorizedPartyAppId = testAuthorizedPartyId,
-                AudienceAppId = null,
-                AuthorityUrl = null
+                AudienceAppId = value,
+                AuthorityUrl = value
             };
 
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
             Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
-            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
 
             Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
-
             ValidateAuthorityUrl(configurationManager, testMessage, false);
         }
 
@@ -132,13 +178,35 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             };
 
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
-            Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, testMessage);
-            Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, testMessage);
-
-            Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
-            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
-
+            ValidateAudienceAppId(configurationManager, testMessage);
+            ValidateAuthorizedPartyAppId(configurationManager, testMessage);
             ValidateAuthorityUrl(configurationManager, testMessage);
+        }
+
+        private void ValidateAudienceAppId(ConfigurationManager configurationManager, string testMessage, bool isSuccess = true)
+        {
+            if (isSuccess)
+            {
+                Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, testMessage);
+                Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, testMessage);
+            }
+            else
+            {
+                Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
+            }
+        }
+
+        private void ValidateAuthorizedPartyAppId(ConfigurationManager configurationManager, string testMessage, bool isSuccess = true)
+        {
+            if (isSuccess)
+            {
+                Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+                Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
+            }
+            else
+            {
+                Assert.Throws<MissingFieldException>(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+            }
         }
 
         private void ValidateAuthorityUrl(ConfigurationManager configurationManager, string testMessage, bool isSuccess = true)

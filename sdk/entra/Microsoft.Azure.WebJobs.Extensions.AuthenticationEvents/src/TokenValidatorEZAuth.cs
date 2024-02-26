@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -32,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 SupportedTokenSchemaVersions tokenSchemaVersion = TokenValidatorHelper.ParseSupportedTokenVersion(Claims["ver"]);
                 string authorizedPartyKey = tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? ConfigurationManager.AzpKey : ConfigurationManager.AppIdKey;
 
-                return Task.FromResult((configurationManager.ValidateAuthorizationParty(Claims[authorizedPartyKey]), Claims));
+                return Task.FromResult((TokenValidatorHelper.ValidateAuthorizationParty(configurationManager, Claims[authorizedPartyKey]), Claims));
             }
             catch (Exception)
             {

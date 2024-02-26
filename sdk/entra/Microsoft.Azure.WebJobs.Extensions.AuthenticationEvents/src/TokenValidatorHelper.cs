@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -26,6 +27,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Token_Version, version, string.Join(",", Enum.GetNames(typeof(SupportedTokenSchemaVersions)))));
             }
+        }
+
+        /// <summary>
+        /// Checks wheather the header has the correct values for ezauth.
+        /// </summary>
+        /// <param name="headers"><see cref="HttpRequestHeaders"/> headers to check in.</param>
+        /// <returns>True if ezauth is valid</returns>
+        internal static bool IsEzAuthValid(HttpRequestHeaders headers)
+        {
+            return ConfigurationManager.EZAuthEnabled && headers.Matches(ConfigurationManager.HEADER_EZAUTH_ICP, ConfigurationManager.HEADER_EZAUTH_ICP_VERIFY);
+        }
+
+        /// <summary>
+        /// Validate the authorization party is accurate to the one in configuration.
+        /// </summary>
+        /// <param name="configurationManager"></param>
+        /// <param name="authoizedPartyValueFromTokenOrHeader">The value from either the token or the header.</param>
+        /// <returns>True if azp/appid value matches the configured value.</returns>
+        internal static bool ValidateAuthorizationParty(ConfigurationManager configurationManager, string authoizedPartyValueFromTokenOrHeader)
+        {
+            return configurationManager.AuthorizedPartyAppId.EqualsOic(authoizedPartyValueFromTokenOrHeader);
         }
     }
 }
