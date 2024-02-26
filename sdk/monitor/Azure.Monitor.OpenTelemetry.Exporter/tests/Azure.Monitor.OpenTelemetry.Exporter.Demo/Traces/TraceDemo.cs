@@ -25,6 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 { "service.name", "my-service" },
                 { "service.namespace", "my-namespace" },
                 { "service.instance.id", "my-instance" },
+                { "service.version", "1.0.0-demo" },
                 { "foo", "bar" }
             };
 
