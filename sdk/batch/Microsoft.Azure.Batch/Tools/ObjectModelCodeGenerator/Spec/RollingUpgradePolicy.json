@@ -49,7 +49,7 @@
     },
     {
       "Key": {
-        "Type": "string",
+        "Type": "TimeSpan?",
         "Name": "PauseTimeBetweenBatches",
         "SummaryComment": "The wait time between completing the update for all virtual machines in one batch and starting the next batch. The time duration should be specified in ISO 8601 format.",
         "RemarksComment": null,

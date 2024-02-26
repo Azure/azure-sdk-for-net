@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<int?> MaxBatchInstancePercentProperty;
             public readonly PropertyAccessor<int?> MaxUnhealthyInstancePercentProperty;
             public readonly PropertyAccessor<int?> MaxUnhealthyUpgradedInstancePercentProperty;
-            public readonly PropertyAccessor<string> PauseTimeBetweenBatchesProperty;
+            public readonly PropertyAccessor<TimeSpan?> PauseTimeBetweenBatchesProperty;
             public readonly PropertyAccessor<bool?> PrioritizeUnhealthyInstancesProperty;
             public readonly PropertyAccessor<bool?> RollbackFailedInstancesOnPolicyBreachProperty;
 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Batch
                 this.MaxBatchInstancePercentProperty = this.CreatePropertyAccessor<int?>(nameof(MaxBatchInstancePercent), BindingAccess.Read | BindingAccess.Write);
                 this.MaxUnhealthyInstancePercentProperty = this.CreatePropertyAccessor<int?>(nameof(MaxUnhealthyInstancePercent), BindingAccess.Read | BindingAccess.Write);
                 this.MaxUnhealthyUpgradedInstancePercentProperty = this.CreatePropertyAccessor<int?>(nameof(MaxUnhealthyUpgradedInstancePercent), BindingAccess.Read | BindingAccess.Write);
-                this.PauseTimeBetweenBatchesProperty = this.CreatePropertyAccessor<string>(nameof(PauseTimeBetweenBatches), BindingAccess.Read | BindingAccess.Write);
+                this.PauseTimeBetweenBatchesProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(PauseTimeBetweenBatches), BindingAccess.Read | BindingAccess.Write);
                 this.PrioritizeUnhealthyInstancesProperty = this.CreatePropertyAccessor<bool?>(nameof(PrioritizeUnhealthyInstances), BindingAccess.Read | BindingAccess.Write);
                 this.RollbackFailedInstancesOnPolicyBreachProperty = this.CreatePropertyAccessor<bool?>(nameof(RollbackFailedInstancesOnPolicyBreach), BindingAccess.Read | BindingAccess.Write);
             }
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets the wait time between completing the update for all virtual machines in one batch and starting the 
         /// next batch. The time duration should be specified in ISO 8601 format.
         /// </summary>
-        public string PauseTimeBetweenBatches
+        public TimeSpan? PauseTimeBetweenBatches
         {
             get { return this.propertyContainer.PauseTimeBetweenBatchesProperty.Value; }
             set { this.propertyContainer.PauseTimeBetweenBatchesProperty.Value = value; }

@@ -1086,7 +1086,7 @@ namespace BatchClientIntegrationTests
                             MaxBatchInstancePercent = 20,
                             MaxUnhealthyInstancePercent = 20,
                             MaxUnhealthyUpgradedInstancePercent = 20,
-                            PauseTimeBetweenBatches = "PT0S",
+                            PauseTimeBetweenBatches = TimeSpan.FromSeconds(5),
                             PrioritizeUnhealthyInstances = false,
                             RollbackFailedInstancesOnPolicyBreach = false
                         }

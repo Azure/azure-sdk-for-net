@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="rollbackFailedInstancesOnPolicyBreach">Rollback failed
         /// instances to previous model if the Rolling Upgrade policy is
         /// violated.</param>
-        public RollingUpgradePolicy(bool? enableCrossZoneUpgrade = default(bool?), int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), string pauseTimeBetweenBatches = default(string), bool? prioritizeUnhealthyInstances = default(bool?), bool? rollbackFailedInstancesOnPolicyBreach = default(bool?))
+        public RollingUpgradePolicy(bool? enableCrossZoneUpgrade = default(bool?), int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), System.TimeSpan? pauseTimeBetweenBatches = default(System.TimeSpan?), bool? prioritizeUnhealthyInstances = default(bool?), bool? rollbackFailedInstancesOnPolicyBreach = default(bool?))
         {
             EnableCrossZoneUpgrade = enableCrossZoneUpgrade;
             MaxBatchInstancePercent = maxBatchInstancePercent;
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// duration should be specified in ISO 8601 format.
         /// </summary>
         [JsonProperty(PropertyName = "pauseTimeBetweenBatches")]
-        public string PauseTimeBetweenBatches { get; set; }
+        public System.TimeSpan? PauseTimeBetweenBatches { get; set; }
 
         /// <summary>
         /// Gets or sets upgrade all unhealthy instances in a scale set before
