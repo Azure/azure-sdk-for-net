@@ -132,7 +132,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJobOffer(offerId, jobId, capacityCost, Optional.ToNullable(offeredAt), Optional.ToNullable(expiresAt), serializedAdditionalRawData);
+            return new RouterJobOffer(
+                offerId,
+                jobId,
+                capacityCost,
+                Optional.ToNullable(offeredAt),
+                Optional.ToNullable(expiresAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJobOffer>.Write(ModelReaderWriterOptions options)

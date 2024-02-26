@@ -249,7 +249,20 @@ namespace Azure.ResourceManager.Confluent
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOrganizationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), Optional.ToNullable(organizationId), ssoUrl.Value, offerDetail, userDetail, serializedAdditionalRawData);
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(organizationId),
+                ssoUrl.Value,
+                offerDetail,
+                userDetail,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options)

@@ -303,7 +303,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GetDatasetMetadataActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, dataset, fieldList ?? new ChangeTrackingList<BinaryData>(), storeSettings.Value, formatSettings.Value);
+            return new GetDatasetMetadataActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                dataset,
+                fieldList ?? new ChangeTrackingList<BinaryData>(),
+                storeSettings.Value,
+                formatSettings.Value);
         }
 
         BinaryData IPersistableModel<GetDatasetMetadataActivity>.Write(ModelReaderWriterOptions options)

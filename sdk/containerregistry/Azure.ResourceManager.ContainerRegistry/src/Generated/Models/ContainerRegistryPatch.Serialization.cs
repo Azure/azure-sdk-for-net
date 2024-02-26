@@ -251,7 +251,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), serializedAdditionalRawData);
+            return new ContainerRegistryPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                Optional.ToNullable(adminUserEnabled),
+                networkRuleSet.Value,
+                policies.Value,
+                encryption.Value,
+                Optional.ToNullable(dataEndpointEnabled),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(networkRuleBypassOptions),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPatch>.Write(ModelReaderWriterOptions options)

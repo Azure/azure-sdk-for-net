@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTrustedAccessRoleBindingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), sourceResourceId, roles, serializedAdditionalRawData);
+            return new ContainerServiceTrustedAccessRoleBindingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                sourceResourceId,
+                roles,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Write(ModelReaderWriterOptions options)

@@ -211,7 +211,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppInitContainer(image.Value, name.Value, command ?? new ChangeTrackingList<string>(), args ?? new ChangeTrackingList<string>(), env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(), resources.Value, volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>(), serializedAdditionalRawData);
+            return new ContainerAppInitContainer(
+                image.Value,
+                name.Value,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(),
+                resources.Value,
+                volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppInitContainer>.Write(ModelReaderWriterOptions options)

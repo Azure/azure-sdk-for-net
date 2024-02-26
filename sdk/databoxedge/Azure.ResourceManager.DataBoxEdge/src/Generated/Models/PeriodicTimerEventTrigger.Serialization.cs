@@ -173,7 +173,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeriodicTimerEventTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData, sourceInfo, sinkInfo, customContextTag.Value);
+            return new PeriodicTimerEventTrigger(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                sourceInfo,
+                sinkInfo,
+                customContextTag.Value);
         }
 
         BinaryData IPersistableModel<PeriodicTimerEventTrigger>.Write(ModelReaderWriterOptions options)

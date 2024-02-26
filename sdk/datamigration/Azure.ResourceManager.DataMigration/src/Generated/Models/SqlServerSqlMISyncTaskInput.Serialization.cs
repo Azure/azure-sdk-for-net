@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerSqlMISyncTaskInput(selectedDatabases, backupFileShare.Value, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp, serializedAdditionalRawData);
+            return new SqlServerSqlMISyncTaskInput(
+                selectedDatabases,
+                backupFileShare.Value,
+                storageResourceId,
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                azureApp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerSqlMISyncTaskInput>.Write(ModelReaderWriterOptions options)

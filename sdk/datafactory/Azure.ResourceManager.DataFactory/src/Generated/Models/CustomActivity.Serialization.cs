@@ -356,7 +356,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, command, resourceLinkedService, folderPath.Value, referenceObjects.Value, extendedProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), retentionTimeInDays.Value, autoUserSpecification.Value);
+            return new CustomActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                command,
+                resourceLinkedService,
+                folderPath.Value,
+                referenceObjects.Value,
+                extendedProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                retentionTimeInDays.Value,
+                autoUserSpecification.Value);
         }
 
         BinaryData IPersistableModel<CustomActivity>.Write(ModelReaderWriterOptions options)

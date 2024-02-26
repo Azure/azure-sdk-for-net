@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), aadBasedSecurityPrincipals ?? new ChangeTrackingList<AadBasedSecurityPrincipal>(), certBasedSecurityPrincipals ?? new ChangeTrackingList<CertBasedSecurityPrincipal>(), serializedAdditionalRawData);
+            return new ConfidentialLedgerProperties(
+                ledgerName.Value,
+                ledgerUri.Value,
+                identityServiceUri.Value,
+                ledgerInternalNamespace.Value,
+                Optional.ToNullable(runningState),
+                Optional.ToNullable(ledgerType),
+                Optional.ToNullable(provisioningState),
+                aadBasedSecurityPrincipals ?? new ChangeTrackingList<AadBasedSecurityPrincipal>(),
+                certBasedSecurityPrincipals ?? new ChangeTrackingList<CertBasedSecurityPrincipal>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfidentialLedgerProperties>.Write(ModelReaderWriterOptions options)

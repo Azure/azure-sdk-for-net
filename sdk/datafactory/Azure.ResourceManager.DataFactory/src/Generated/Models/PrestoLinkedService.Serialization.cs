@@ -366,7 +366,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PrestoLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, host, serverVersion, catalog, port.Value, authenticationType, username.Value, password, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, timeZoneId.Value, encryptedCredential.Value);
+            return new PrestoLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                serverVersion,
+                catalog,
+                port.Value,
+                authenticationType,
+                username.Value,
+                password,
+                enableSsl.Value,
+                trustedCertPath.Value,
+                useSystemTrustStore.Value,
+                allowHostNameCNMismatch.Value,
+                allowSelfSignedServerCert.Value,
+                timeZoneId.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<PrestoLinkedService>.Write(ModelReaderWriterOptions options)

@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.CostManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new CostManagementAlertData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                definition.Value,
+                description.Value,
+                Optional.ToNullable(source),
+                details.Value,
+                costEntityId.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(closeTime),
+                Optional.ToNullable(modificationTime),
+                statusModificationUserName.Value,
+                Optional.ToNullable(statusModificationTime),
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementAlertData>.Write(ModelReaderWriterOptions options)

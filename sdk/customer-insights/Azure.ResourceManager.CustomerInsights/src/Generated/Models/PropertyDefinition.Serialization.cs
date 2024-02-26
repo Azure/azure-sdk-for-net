@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyDefinition(arrayValueSeparator.Value, enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(), serializedAdditionalRawData);
+            return new PropertyDefinition(
+                arrayValueSeparator.Value,
+                enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(),
+                fieldName,
+                fieldType,
+                Optional.ToNullable(isArray),
+                Optional.ToNullable(isEnum),
+                Optional.ToNullable(isFlagEnum),
+                Optional.ToNullable(isImage),
+                Optional.ToNullable(isLocalizedString),
+                Optional.ToNullable(isName),
+                Optional.ToNullable(isRequired),
+                propertyId.Value,
+                schemaItemPropLink.Value,
+                Optional.ToNullable(maxLength),
+                Optional.ToNullable(isAvailableInGraph),
+                dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyDefinition>.Write(ModelReaderWriterOptions options)

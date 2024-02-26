@@ -226,7 +226,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), identityDetails.Value, objectType, serializedAdditionalRawData);
+            return new DataProtectionBackupInstanceProperties(
+                friendlyName.Value,
+                dataSourceInfo,
+                dataSourceSetInfo.Value,
+                policyInfo,
+                protectionStatus.Value,
+                Optional.ToNullable(currentProtectionState),
+                protectionErrorDetails.Value,
+                provisioningState.Value,
+                datasourceAuthCredentials.Value,
+                Optional.ToNullable(validationType),
+                identityDetails.Value,
+                objectType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupInstanceProperties>.Write(ModelReaderWriterOptions options)

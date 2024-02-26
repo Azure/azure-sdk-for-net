@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineImageBase(id.Value, serializedAdditionalRawData, name, location, tags ?? new ChangeTrackingDictionary<string, string>(), extendedLocation);
+            return new VirtualMachineImageBase(
+                id.Value,
+                serializedAdditionalRawData,
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                extendedLocation);
         }
 
         BinaryData IPersistableModel<VirtualMachineImageBase>.Write(ModelReaderWriterOptions options)

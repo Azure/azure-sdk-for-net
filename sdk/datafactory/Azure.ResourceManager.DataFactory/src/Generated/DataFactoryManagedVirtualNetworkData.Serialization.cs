@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.DataFactory
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryManagedVirtualNetworkData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DataFactoryManagedVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Write(ModelReaderWriterOptions options)

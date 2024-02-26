@@ -265,7 +265,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value, serializedAdditionalRawData);
+            return new ManagedClusterAutoScalerProfile(
+                balanceSimilarNodeGroups.Value,
+                Optional.ToNullable(expander),
+                maxEmptyBulkDelete.Value,
+                maxGracefulTerminationSec.Value,
+                maxNodeProvisionTime.Value,
+                maxTotalUnreadyPercentage.Value,
+                newPodScaleUpDelay.Value,
+                okTotalUnreadyCount.Value,
+                scanInterval.Value,
+                scaleDownDelayAfterAdd.Value,
+                scaleDownDelayAfterDelete.Value,
+                scaleDownDelayAfterFailure.Value,
+                scaleDownUnneededTime.Value,
+                scaleDownUnreadyTime.Value,
+                scaleDownUtilizationThreshold.Value,
+                skipNodesWithLocalStorage.Value,
+                skipNodesWithSystemPods.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAutoScalerProfile>.Write(ModelReaderWriterOptions options)

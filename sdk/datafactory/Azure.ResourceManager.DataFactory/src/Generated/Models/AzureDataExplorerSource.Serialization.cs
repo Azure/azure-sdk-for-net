@@ -204,7 +204,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, query, noTruncation.Value, queryTimeout.Value, additionalColumns.Value);
+            return new AzureDataExplorerSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                query,
+                noTruncation.Value,
+                queryTimeout.Value,
+                additionalColumns.Value);
         }
 
         BinaryData IPersistableModel<AzureDataExplorerSource>.Write(ModelReaderWriterOptions options)

@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionResourceProperties(appliedScopes ?? new ChangeTrackingList<string>(), Optional.ToNullable(onDemandRate), product.Value, region.Value, Optional.ToNullable(reservationRate), resourceType.Value, serializedAdditionalRawData);
+            return new ConsumptionResourceProperties(
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(onDemandRate),
+                product.Value,
+                region.Value,
+                Optional.ToNullable(reservationRate),
+                resourceType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionResourceProperties>.Write(ModelReaderWriterOptions options)

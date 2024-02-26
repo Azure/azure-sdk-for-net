@@ -163,7 +163,16 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageDetails(supportedProtocols ?? new ChangeTrackingList<MessageProtocol>(), Optional.ToNullable(recurrence), helpMessage.Value, optOutMessage.Value, optInMessage.Value, optInReply.Value, confirmationMessage.Value, Optional.ToNullable(directionality), useCases ?? new ChangeTrackingList<UseCase>());
+            return new MessageDetails(
+                supportedProtocols ?? new ChangeTrackingList<MessageProtocol>(),
+                Optional.ToNullable(recurrence),
+                helpMessage.Value,
+                optOutMessage.Value,
+                optInMessage.Value,
+                optInReply.Value,
+                confirmationMessage.Value,
+                Optional.ToNullable(directionality),
+                useCases ?? new ChangeTrackingList<UseCase>());
         }
     }
 }

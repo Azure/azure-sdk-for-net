@@ -711,7 +711,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), identity, consistencyPolicy.Value, locations ?? new ChangeTrackingList<CosmosDBAccountLocation>(), ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>(), virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>(), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, backupPolicy.Value, cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(), Optional.ToNullable(networkAclBypass), networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), diagnosticLogSettings.Value, Optional.ToNullable(disableLocalAuth), capacity.Value, Optional.ToNullable(enableMaterializedViews), keysMetadata.Value, Optional.ToNullable(enablePartitionMerge), Optional.ToNullable(enableBurstCapacity), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(customerManagedKeyStatus), Optional.ToNullable(enablePriorityBasedExecution), Optional.ToNullable(defaultPriorityLevel), serializedAdditionalRawData);
+            return new CosmosDBAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                identity,
+                consistencyPolicy.Value,
+                locations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
+                ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
+                Optional.ToNullable(isVirtualNetworkFilterEnabled),
+                Optional.ToNullable(enableAutomaticFailover),
+                capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>(),
+                virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>(),
+                Optional.ToNullable(enableMultipleWriteLocations),
+                Optional.ToNullable(enableCassandraConnector),
+                Optional.ToNullable(connectorOffer),
+                Optional.ToNullable(disableKeyBasedMetadataWriteAccess),
+                keyVaultKeyUri.Value,
+                defaultIdentity.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(enableFreeTier),
+                apiProperties.Value,
+                Optional.ToNullable(enableAnalyticalStorage),
+                analyticalStorageConfiguration.Value,
+                backupPolicy.Value,
+                cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(),
+                Optional.ToNullable(networkAclBypass),
+                networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                diagnosticLogSettings.Value,
+                Optional.ToNullable(disableLocalAuth),
+                capacity.Value,
+                Optional.ToNullable(enableMaterializedViews),
+                keysMetadata.Value,
+                Optional.ToNullable(enablePartitionMerge),
+                Optional.ToNullable(enableBurstCapacity),
+                Optional.ToNullable(minimalTlsVersion),
+                Optional.ToNullable(customerManagedKeyStatus),
+                Optional.ToNullable(enablePriorityBasedExecution),
+                Optional.ToNullable(defaultPriorityLevel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountPatch>.Write(ModelReaderWriterOptions options)

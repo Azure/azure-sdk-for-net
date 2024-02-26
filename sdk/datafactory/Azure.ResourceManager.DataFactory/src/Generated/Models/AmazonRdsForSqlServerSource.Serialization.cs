@@ -300,7 +300,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRdsForSqlServerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, storedProcedureParameters.Value, isolationLevel.Value, produceAdditionalTypes.Value, partitionOption.Value, partitionSettings.Value);
+            return new AmazonRdsForSqlServerSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                sqlReaderQuery.Value,
+                sqlReaderStoredProcedureName.Value,
+                storedProcedureParameters.Value,
+                isolationLevel.Value,
+                produceAdditionalTypes.Value,
+                partitionOption.Value,
+                partitionSettings.Value);
         }
 
         BinaryData IPersistableModel<AmazonRdsForSqlServerSource>.Write(ModelReaderWriterOptions options)

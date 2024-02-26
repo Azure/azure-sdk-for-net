@@ -267,7 +267,21 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppConnectedEnvironmentData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, defaultDomain.Value, staticIP.Value, daprAIConnectionString.Value, customDomainConfiguration.Value, serializedAdditionalRawData);
+            return new ContainerAppConnectedEnvironmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                Optional.ToNullable(provisioningState),
+                deploymentErrors.Value,
+                defaultDomain.Value,
+                staticIP.Value,
+                daprAIConnectionString.Value,
+                customDomainConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppConnectedEnvironmentData>.Write(ModelReaderWriterOptions options)

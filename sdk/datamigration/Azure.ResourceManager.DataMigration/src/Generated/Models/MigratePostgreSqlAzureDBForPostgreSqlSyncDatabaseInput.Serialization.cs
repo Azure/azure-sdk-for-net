@@ -229,7 +229,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(name.Value, id.Value, targetDatabaseName.Value, migrationSetting ?? new ChangeTrackingDictionary<string, BinaryData>(), sourceSetting ?? new ChangeTrackingDictionary<string, string>(), targetSetting ?? new ChangeTrackingDictionary<string, string>(), selectedTables ?? new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>(), serializedAdditionalRawData);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(
+                name.Value,
+                id.Value,
+                targetDatabaseName.Value,
+                migrationSetting ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                selectedTables ?? new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>.Write(ModelReaderWriterOptions options)

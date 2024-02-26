@@ -335,7 +335,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ImpalaLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, host, port.Value, authenticationType, username.Value, password, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new ImpalaLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                port.Value,
+                authenticationType,
+                username.Value,
+                password,
+                enableSsl.Value,
+                trustedCertPath.Value,
+                useSystemTrustStore.Value,
+                allowHostNameCNMismatch.Value,
+                allowSelfSignedServerCert.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<ImpalaLinkedService>.Write(ModelReaderWriterOptions options)

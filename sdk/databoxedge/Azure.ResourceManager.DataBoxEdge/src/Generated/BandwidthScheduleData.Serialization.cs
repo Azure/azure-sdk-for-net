@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BandwidthScheduleData(id, name, type, systemData.Value, start, stop, rateInMbps, days, serializedAdditionalRawData);
+            return new BandwidthScheduleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                start,
+                stop,
+                rateInMbps,
+                days,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BandwidthScheduleData>.Write(ModelReaderWriterOptions options)

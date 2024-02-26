@@ -244,7 +244,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OracleCloudStorageLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, accessKeyId.Value, secretAccessKey, serviceUrl.Value, encryptedCredential.Value);
+            return new OracleCloudStorageLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                accessKeyId.Value,
+                secretAccessKey,
+                serviceUrl.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<OracleCloudStorageLinkedService>.Write(ModelReaderWriterOptions options)

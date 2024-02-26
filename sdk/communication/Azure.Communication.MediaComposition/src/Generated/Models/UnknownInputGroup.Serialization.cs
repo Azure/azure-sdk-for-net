@@ -99,7 +99,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode));
+            return new UnknownInputGroup(
+                kind,
+                position.Value,
+                width.Value,
+                height.Value,
+                layer.Value,
+                Optional.ToNullable(scalingMode));
         }
     }
 }

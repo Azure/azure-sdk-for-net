@@ -265,7 +265,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryTriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, properties ?? new ChangeTrackingDictionary<string, string>(), triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(), runDimension ?? new ChangeTrackingDictionary<string, string>(), dependencyStatus ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalProperties);
+            return new DataFactoryTriggerRun(
+                triggerRunId.Value,
+                triggerName.Value,
+                triggerType.Value,
+                Optional.ToNullable(triggerRunTimestamp),
+                Optional.ToNullable(status),
+                message.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
+                runDimension ?? new ChangeTrackingDictionary<string, string>(),
+                dependencyStatus ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryTriggerRun>.Write(ModelReaderWriterOptions options)

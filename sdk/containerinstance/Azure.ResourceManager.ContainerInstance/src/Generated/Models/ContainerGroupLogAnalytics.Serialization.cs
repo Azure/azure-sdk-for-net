@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupLogAnalytics(workspaceId, workspaceKey, Optional.ToNullable(logType), metadata ?? new ChangeTrackingDictionary<string, string>(), workspaceResourceId.Value, serializedAdditionalRawData);
+            return new ContainerGroupLogAnalytics(
+                workspaceId,
+                workspaceKey,
+                Optional.ToNullable(logType),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                workspaceResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupLogAnalytics>.Write(ModelReaderWriterOptions options)

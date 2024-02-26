@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.DataFactory
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryIntegrationRuntimeData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DataFactoryIntegrationRuntimeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryIntegrationRuntimeData>.Write(ModelReaderWriterOptions options)

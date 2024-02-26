@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), adminGroupObjectIds ?? new ChangeTrackingList<Guid>(), Optional.ToNullable(clientAppId), Optional.ToNullable(serverAppId), serverAppSecret.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ManagedClusterAadProfile(
+                Optional.ToNullable(managed),
+                Optional.ToNullable(enableAzureRBAC),
+                adminGroupObjectIds ?? new ChangeTrackingList<Guid>(),
+                Optional.ToNullable(clientAppId),
+                Optional.ToNullable(serverAppId),
+                serverAppSecret.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAadProfile>.Write(ModelReaderWriterOptions options)

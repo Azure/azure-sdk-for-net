@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.DataShare
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderShareSubscriptionData(id, name, type, systemData.Value, consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(createdAt), Optional.ToNullable(expirationDate), providerEmail.Value, providerName.Value, Optional.ToNullable(sharedAt), shareSubscriptionObjectId.Value, Optional.ToNullable(shareSubscriptionStatus), serializedAdditionalRawData);
+            return new ProviderShareSubscriptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                consumerEmail.Value,
+                consumerName.Value,
+                consumerTenantName.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(expirationDate),
+                providerEmail.Value,
+                providerName.Value,
+                Optional.ToNullable(sharedAt),
+                shareSubscriptionObjectId.Value,
+                Optional.ToNullable(shareSubscriptionStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderShareSubscriptionData>.Write(ModelReaderWriterOptions options)

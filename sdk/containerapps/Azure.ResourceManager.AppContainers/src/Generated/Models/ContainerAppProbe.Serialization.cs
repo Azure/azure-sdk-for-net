@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppProbe(Optional.ToNullable(failureThreshold), httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(successThreshold), tcpSocket.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ContainerAppProbe(
+                Optional.ToNullable(failureThreshold),
+                httpGet.Value,
+                Optional.ToNullable(initialDelaySeconds),
+                Optional.ToNullable(periodSeconds),
+                Optional.ToNullable(successThreshold),
+                tcpSocket.Value,
+                Optional.ToNullable(terminationGracePeriodSeconds),
+                Optional.ToNullable(timeoutSeconds),
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppProbe>.Write(ModelReaderWriterOptions options)

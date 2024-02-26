@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogAgreementResourceProperties(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DatadogAgreementResourceProperties(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogAgreementResourceProperties>.Write(ModelReaderWriterOptions options)

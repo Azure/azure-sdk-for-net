@@ -305,7 +305,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WarehouseLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, artifactId, endpoint, workspaceId.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, encryptedCredential.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential);
+            return new WarehouseLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                artifactId,
+                endpoint,
+                workspaceId.Value,
+                servicePrincipalId.Value,
+                servicePrincipalKey,
+                tenant.Value,
+                encryptedCredential.Value,
+                servicePrincipalCredentialType.Value,
+                servicePrincipalCredential);
         }
 
         BinaryData IPersistableModel<WarehouseLinkedService>.Write(ModelReaderWriterOptions options)

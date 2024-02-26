@@ -421,7 +421,29 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(), adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(), Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ConsumptionBalanceResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                currency.Value,
+                Optional.ToNullable(beginningBalance),
+                Optional.ToNullable(endingBalance),
+                Optional.ToNullable(newPurchases),
+                Optional.ToNullable(adjustments),
+                Optional.ToNullable(utilized),
+                Optional.ToNullable(serviceOverage),
+                Optional.ToNullable(chargesBilledSeparately),
+                Optional.ToNullable(totalOverage),
+                Optional.ToNullable(totalUsage),
+                Optional.ToNullable(azureMarketplaceServiceCharges),
+                Optional.ToNullable(billingFrequency),
+                Optional.ToNullable(priceHidden),
+                newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(),
+                adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(),
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBalanceResult>.Write(ModelReaderWriterOptions options)

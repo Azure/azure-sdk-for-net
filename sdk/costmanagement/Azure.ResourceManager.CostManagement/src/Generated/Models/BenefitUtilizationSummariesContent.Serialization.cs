@@ -157,7 +157,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitUtilizationSummariesContent(billingAccountId.Value, billingProfileId.Value, benefitOrderId.Value, benefitId.Value, grain, startDate, endDate, Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new BenefitUtilizationSummariesContent(
+                billingAccountId.Value,
+                billingProfileId.Value,
+                benefitOrderId.Value,
+                benefitId.Value,
+                grain,
+                startDate,
+                endDate,
+                Optional.ToNullable(kind),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummariesContent>.Write(ModelReaderWriterOptions options)

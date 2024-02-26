@@ -275,7 +275,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SybaseLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, server, database, schema.Value, Optional.ToNullable(authenticationType), username.Value, password, encryptedCredential.Value);
+            return new SybaseLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                server,
+                database,
+                schema.Value,
+                Optional.ToNullable(authenticationType),
+                username.Value,
+                password,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SybaseLinkedService>.Write(ModelReaderWriterOptions options)

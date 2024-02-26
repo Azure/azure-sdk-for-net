@@ -282,7 +282,22 @@ namespace Azure.ResourceManager.CostManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledActionData(id, name, type, systemData.Value, displayName.Value, fileDestination.Value, notification.Value, notificationEmail.Value, schedule.Value, scope.Value, Optional.ToNullable(status), viewId.Value, Optional.ToNullable(eTag), Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new ScheduledActionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                fileDestination.Value,
+                notification.Value,
+                notificationEmail.Value,
+                schedule.Value,
+                scope.Value,
+                Optional.ToNullable(status),
+                viewId.Value,
+                Optional.ToNullable(eTag),
+                Optional.ToNullable(kind),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledActionData>.Write(ModelReaderWriterOptions options)

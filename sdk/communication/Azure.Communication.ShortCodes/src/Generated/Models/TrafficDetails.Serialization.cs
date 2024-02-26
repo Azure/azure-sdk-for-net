@@ -113,7 +113,13 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new TrafficDetails(Optional.ToNullable(totalMonthlyVolume), Optional.ToNullable(monthlyAverageMessagesFromUser), Optional.ToNullable(monthlyAverageMessagesToUser), Optional.ToNullable(isSpiky), spikeDetails.Value, Optional.ToNullable(estimatedRampUpTimeInDays));
+            return new TrafficDetails(
+                Optional.ToNullable(totalMonthlyVolume),
+                Optional.ToNullable(monthlyAverageMessagesFromUser),
+                Optional.ToNullable(monthlyAverageMessagesToUser),
+                Optional.ToNullable(isSpiky),
+                spikeDetails.Value,
+                Optional.ToNullable(estimatedRampUpTimeInDays));
         }
     }
 }

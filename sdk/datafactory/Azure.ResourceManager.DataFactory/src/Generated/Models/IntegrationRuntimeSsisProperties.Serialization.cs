@@ -208,7 +208,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(), packageStores ?? new ChangeTrackingList<DataFactoryPackageStore>(), credential.Value, additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo.Value,
+                Optional.ToNullable(licenseType),
+                customSetupScriptProperties.Value,
+                dataProxyProperties.Value,
+                Optional.ToNullable(edition),
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                packageStores ?? new ChangeTrackingList<DataFactoryPackageStore>(),
+                credential.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)

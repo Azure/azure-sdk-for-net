@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareNetworkInterfaceUpdate(name.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), Optional.ToNullable(deviceKey), serializedAdditionalRawData);
+            return new VMwareNetworkInterfaceUpdate(
+                name.Value,
+                networkId.Value,
+                Optional.ToNullable(nicType),
+                Optional.ToNullable(powerOnBoot),
+                Optional.ToNullable(deviceKey),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareNetworkInterfaceUpdate>.Write(ModelReaderWriterOptions options)
