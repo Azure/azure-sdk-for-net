@@ -66,7 +66,13 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RemoveParticipantFailedInternal(operationContext.Value, resultInformation.Value, participant.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new RemoveParticipantFailedInternal(
+                operationContext.Value,
+                resultInformation.Value,
+                participant.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value);
         }
     }
 }

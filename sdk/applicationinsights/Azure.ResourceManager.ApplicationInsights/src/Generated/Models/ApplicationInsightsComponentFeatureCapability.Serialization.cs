@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFeatureCapability(name.Value, description.Value, value.Value, unit.Value, meterId.Value, meterRateFrequency.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFeatureCapability(
+                name.Value,
+                description.Value,
+                value.Value,
+                unit.Value,
+                meterId.Value,
+                meterRateFrequency.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFeatureCapability>.Write(ModelReaderWriterOptions options)

@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementDeletedServiceData(id, name, type, systemData.Value, Optional.ToNullable(location), serviceId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletionDate), serializedAdditionalRawData);
+            return new ApiManagementDeletedServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                serviceId.Value,
+                Optional.ToNullable(scheduledPurgeDate),
+                Optional.ToNullable(deletionDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementDeletedServiceData>.Write(ModelReaderWriterOptions options)

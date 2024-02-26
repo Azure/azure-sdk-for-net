@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetCoreZipUploadedUserSourceInfo(type, version.Value, serializedAdditionalRawData, relativePath.Value, netCoreMainEntryPath.Value, runtimeVersion.Value);
+            return new NetCoreZipUploadedUserSourceInfo(
+                type,
+                version.Value,
+                serializedAdditionalRawData,
+                relativePath.Value,
+                netCoreMainEntryPath.Value,
+                runtimeVersion.Value);
         }
 
         BinaryData IPersistableModel<NetCoreZipUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

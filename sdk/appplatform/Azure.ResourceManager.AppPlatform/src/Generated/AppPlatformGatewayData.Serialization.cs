@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayData(id, name, type, systemData.Value, properties.Value, sku.Value, serializedAdditionalRawData);
+            return new AppPlatformGatewayData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayData>.Write(ModelReaderWriterOptions options)

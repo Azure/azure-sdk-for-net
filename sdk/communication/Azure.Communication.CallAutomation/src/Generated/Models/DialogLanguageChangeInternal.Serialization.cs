@@ -87,7 +87,16 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogLanguageChangeInternal(selectedLanguage.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, ivrContext.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new DialogLanguageChangeInternal(
+                selectedLanguage.Value,
+                operationContext.Value,
+                resultInformation.Value,
+                Optional.ToNullable(dialogInputType),
+                dialogId.Value,
+                ivrContext.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value);
         }
     }
 }

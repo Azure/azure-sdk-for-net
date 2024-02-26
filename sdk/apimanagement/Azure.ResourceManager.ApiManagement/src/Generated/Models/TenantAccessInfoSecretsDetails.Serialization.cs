@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantAccessInfoSecretsDetails(id.Value, principalId.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new TenantAccessInfoSecretsDetails(
+                id.Value,
+                principalId.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantAccessInfoSecretsDetails>.Write(ModelReaderWriterOptions options)

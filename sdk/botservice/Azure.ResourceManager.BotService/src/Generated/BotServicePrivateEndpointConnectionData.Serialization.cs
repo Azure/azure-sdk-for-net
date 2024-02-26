@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.BotService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServicePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new BotServicePrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                groupIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

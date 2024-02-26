@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptParameter(Core.Optional.ToNullable(type), name.Value, description.Value, Core.Optional.ToNullable(visibility), Core.Optional.ToNullable(optional), serializedAdditionalRawData);
+            return new ScriptParameter(
+                Core.Optional.ToNullable(type),
+                name.Value,
+                description.Value,
+                Core.Optional.ToNullable(visibility),
+                Core.Optional.ToNullable(optional),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptParameter>.Write(ModelReaderWriterOptions options)

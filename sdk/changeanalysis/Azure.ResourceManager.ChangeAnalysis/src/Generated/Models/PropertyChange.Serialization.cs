@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyChange(Optional.ToNullable(changeType), Optional.ToNullable(changeCategory), jsonPath.Value, displayName.Value, Optional.ToNullable(level), description.Value, oldValue.Value, newValue.Value, Optional.ToNullable(isDataMasked), serializedAdditionalRawData);
+            return new PropertyChange(
+                Optional.ToNullable(changeType),
+                Optional.ToNullable(changeCategory),
+                jsonPath.Value,
+                displayName.Value,
+                Optional.ToNullable(level),
+                description.Value,
+                oldValue.Value,
+                newValue.Value,
+                Optional.ToNullable(isDataMasked),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyChange>.Write(ModelReaderWriterOptions options)

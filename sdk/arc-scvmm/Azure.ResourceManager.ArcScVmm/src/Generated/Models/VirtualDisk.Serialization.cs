@@ -252,7 +252,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDisk(name.Value, displayName.Value, diskId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(maxDiskSizeGB), Optional.ToNullable(bus), Optional.ToNullable(lun), busType.Value, vhdType.Value, volumeType.Value, vhdFormatType.Value, templateDiskId.Value, storageQoSPolicy.Value, Optional.ToNullable(createDiffDisk), serializedAdditionalRawData);
+            return new VirtualDisk(
+                name.Value,
+                displayName.Value,
+                diskId.Value,
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(maxDiskSizeGB),
+                Optional.ToNullable(bus),
+                Optional.ToNullable(lun),
+                busType.Value,
+                vhdType.Value,
+                volumeType.Value,
+                vhdFormatType.Value,
+                templateDiskId.Value,
+                storageQoSPolicy.Value,
+                Optional.ToNullable(createDiffDisk),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDisk>.Write(ModelReaderWriterOptions options)

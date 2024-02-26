@@ -204,7 +204,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayCorsProperties(allowedOrigins ?? new ChangeTrackingList<string>(), allowedMethods ?? new ChangeTrackingList<string>(), allowedHeaders ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), exposedHeaders ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AppPlatformGatewayCorsProperties(
+                allowedOrigins ?? new ChangeTrackingList<string>(),
+                allowedMethods ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(maxAge),
+                Optional.ToNullable(allowCredentials),
+                exposedHeaders ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayCorsProperties>.Write(ModelReaderWriterOptions options)

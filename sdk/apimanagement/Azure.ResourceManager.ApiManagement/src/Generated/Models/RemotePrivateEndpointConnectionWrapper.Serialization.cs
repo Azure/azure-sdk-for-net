@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemotePrivateEndpointConnectionWrapper(id.Value, name.Value, Optional.ToNullable(type), privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new RemotePrivateEndpointConnectionWrapper(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                provisioningState.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemotePrivateEndpointConnectionWrapper>.Write(ModelReaderWriterOptions options)

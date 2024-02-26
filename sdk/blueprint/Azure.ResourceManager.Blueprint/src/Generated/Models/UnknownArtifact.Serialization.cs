@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownArtifact(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactData>.Write(ModelReaderWriterOptions options)

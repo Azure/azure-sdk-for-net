@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformContentCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, dnsNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData, content.Value);
+            return new AppPlatformContentCertificateProperties(
+                type,
+                thumbprint.Value,
+                issuer.Value,
+                Optional.ToNullable(issuedDate),
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(activateDate),
+                subjectName.Value,
+                dnsNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData,
+                content.Value);
         }
 
         BinaryData IPersistableModel<AppPlatformContentCertificateProperties>.Write(ModelReaderWriterOptions options)

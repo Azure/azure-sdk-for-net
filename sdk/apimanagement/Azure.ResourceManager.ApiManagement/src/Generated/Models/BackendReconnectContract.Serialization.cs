@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendReconnectContract(id, name, type, systemData.Value, Optional.ToNullable(after), serializedAdditionalRawData);
+            return new BackendReconnectContract(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(after),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendReconnectContract>.Write(ModelReaderWriterOptions options)

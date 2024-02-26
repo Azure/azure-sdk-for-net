@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectedChangeData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DetectedChangeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectedChangeData>.Write(ModelReaderWriterOptions options)

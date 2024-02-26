@@ -375,7 +375,27 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeReport(Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(startTime), type.Value, reportId.Value, status.Value, refreshMode.Value, rebootRequested.Value, reportFormatVersion.Value, configurationVersion.Value, id.Value, errors ?? new ChangeTrackingList<DscReportError>(), resources ?? new ChangeTrackingList<DscReportResource>(), metaConfiguration.Value, hostName.Value, ipV4Addresses ?? new ChangeTrackingList<string>(), ipV6Addresses ?? new ChangeTrackingList<string>(), Optional.ToNullable(numberOfResources), rawErrors.Value, serializedAdditionalRawData);
+            return new DscNodeReport(
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(startTime),
+                type.Value,
+                reportId.Value,
+                status.Value,
+                refreshMode.Value,
+                rebootRequested.Value,
+                reportFormatVersion.Value,
+                configurationVersion.Value,
+                id.Value,
+                errors ?? new ChangeTrackingList<DscReportError>(),
+                resources ?? new ChangeTrackingList<DscReportResource>(),
+                metaConfiguration.Value,
+                hostName.Value,
+                ipV4Addresses ?? new ChangeTrackingList<string>(),
+                ipV6Addresses ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(numberOfResources),
+                rawErrors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeReport>.Write(ModelReaderWriterOptions options)

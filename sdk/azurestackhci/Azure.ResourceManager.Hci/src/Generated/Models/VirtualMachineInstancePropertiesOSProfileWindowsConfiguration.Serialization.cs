@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(Optional.ToNullable(enableAutomaticUpdates), ssh.Value, timeZone.Value, Optional.ToNullable(provisionVmAgent), Optional.ToNullable(provisionVmConfigAgent), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(
+                Optional.ToNullable(enableAutomaticUpdates),
+                ssh.Value,
+                timeZone.Value,
+                Optional.ToNullable(provisionVmAgent),
+                Optional.ToNullable(provisionVmConfigAgent),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>.Write(ModelReaderWriterOptions options)

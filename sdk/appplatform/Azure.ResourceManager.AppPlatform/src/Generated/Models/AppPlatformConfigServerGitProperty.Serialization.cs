@@ -213,7 +213,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigServerGitProperty(repositories ?? new ChangeTrackingList<ConfigServerGitPatternRepository>(), uri, label.Value, searchPaths ?? new ChangeTrackingList<string>(), username.Value, password.Value, hostKey.Value, hostKeyAlgorithm.Value, privateKey.Value, Optional.ToNullable(strictHostKeyChecking), serializedAdditionalRawData);
+            return new AppPlatformConfigServerGitProperty(
+                repositories ?? new ChangeTrackingList<ConfigServerGitPatternRepository>(),
+                uri,
+                label.Value,
+                searchPaths ?? new ChangeTrackingList<string>(),
+                username.Value,
+                password.Value,
+                hostKey.Value,
+                hostKeyAlgorithm.Value,
+                privateKey.Value,
+                Optional.ToNullable(strictHostKeyChecking),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigServerGitProperty>.Write(ModelReaderWriterOptions options)

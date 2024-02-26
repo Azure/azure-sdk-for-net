@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportError(errorSource.Value, resourceId.Value, errorCode.Value, errorMessage.Value, locale.Value, errorDetails.Value, serializedAdditionalRawData);
+            return new DscReportError(
+                errorSource.Value,
+                resourceId.Value,
+                errorCode.Value,
+                errorMessage.Value,
+                locale.Value,
+                errorDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportError>.Write(ModelReaderWriterOptions options)

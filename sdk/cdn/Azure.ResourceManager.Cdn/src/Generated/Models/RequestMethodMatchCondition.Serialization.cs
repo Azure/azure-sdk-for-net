@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestMethodMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), transforms ?? new ChangeTrackingList<PreTransformCategory>(), matchValues ?? new ChangeTrackingList<RequestMethodMatchConditionMatchValue>(), serializedAdditionalRawData);
+            return new RequestMethodMatchCondition(
+                typeName,
+                @operator,
+                Optional.ToNullable(negateCondition),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                matchValues ?? new ChangeTrackingList<RequestMethodMatchConditionMatchValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestMethodMatchCondition>.Write(ModelReaderWriterOptions options)

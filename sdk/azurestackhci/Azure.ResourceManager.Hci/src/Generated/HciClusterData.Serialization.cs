@@ -513,7 +513,36 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), softwareAssuranceProperties.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, resourceProviderObjectId.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type0), userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
+            return new HciClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                Optional.ToNullable(cloudId),
+                cloudManagementEndpoint.Value,
+                Optional.ToNullable(aadClientId),
+                Optional.ToNullable(aadTenantId),
+                Optional.ToNullable(aadApplicationObjectId),
+                Optional.ToNullable(aadServicePrincipalObjectId),
+                softwareAssuranceProperties.Value,
+                desiredProperties.Value,
+                reportedProperties.Value,
+                Optional.ToNullable(trialDaysRemaining),
+                billingModel.Value,
+                Optional.ToNullable(registrationTimestamp),
+                Optional.ToNullable(lastSyncTimestamp),
+                Optional.ToNullable(lastBillingTimestamp),
+                serviceEndpoint.Value,
+                resourceProviderObjectId.Value,
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(type0),
+                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterData>.Write(ModelReaderWriterOptions options)

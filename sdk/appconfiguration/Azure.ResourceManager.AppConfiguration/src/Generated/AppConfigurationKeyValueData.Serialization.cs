@@ -254,7 +254,20 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationKeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, Optional.ToNullable(eTag), Optional.ToNullable(lastModified), Optional.ToNullable(locked), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AppConfigurationKeyValueData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                key.Value,
+                label.Value,
+                value.Value,
+                contentType.Value,
+                Optional.ToNullable(eTag),
+                Optional.ToNullable(lastModified),
+                Optional.ToNullable(locked),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationKeyValueData>.Write(ModelReaderWriterOptions options)

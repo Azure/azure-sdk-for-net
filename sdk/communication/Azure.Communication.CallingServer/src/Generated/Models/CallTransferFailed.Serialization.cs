@@ -73,7 +73,15 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallTransferFailed(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallTransferFailed(
+                eventSource.Value,
+                operationContext.Value,
+                resultInformation.Value,
+                version.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value,
+                publicEventType.Value);
         }
     }
 }

@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosCapabilityData(id, name, type, systemData.Value, publisher.Value, targetType.Value, description.Value, parametersSchema.Value, urn.Value, serializedAdditionalRawData);
+            return new ChaosCapabilityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                publisher.Value,
+                targetType.Value,
+                description.Value,
+                parametersSchema.Value,
+                urn.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosCapabilityData>.Write(ModelReaderWriterOptions options)
