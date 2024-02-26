@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PrivateRanges))
+            if (!(PrivateRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateRanges"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AutoLearnPrivateRanges))
+            if (AutoLearnPrivateRanges.HasValue)
             {
                 writer.WritePropertyName("autoLearnPrivateRanges"u8);
                 writer.WriteStringValue(AutoLearnPrivateRanges.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> privateRanges = default;
+            IList<string> privateRanges = default;
             Optional<AutoLearnPrivateRangesMode> autoLearnPrivateRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicySnat(Optional.ToList(privateRanges), Optional.ToNullable(autoLearnPrivateRanges), serializedAdditionalRawData);
+            return new FirewallPolicySnat(privateRanges ?? new ChangeTrackingList<string>(), Optional.ToNullable(autoLearnPrivateRanges), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicySnat>.Write(ModelReaderWriterOptions options)

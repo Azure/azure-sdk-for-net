@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         public ClusterPoolNetworkProfile(ResourceIdentifier subnetId)
         {
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            if (subnetId == null)
+            {
+                throw new ArgumentNullException(nameof(subnetId));
+            }
 
             SubnetId = subnetId;
         }

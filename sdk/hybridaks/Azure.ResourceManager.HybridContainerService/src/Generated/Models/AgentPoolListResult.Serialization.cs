@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HybridContainerServiceAgentPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridContainerServiceAgentPoolData>> value = default;
+            IReadOnlyList<HybridContainerServiceAgentPoolData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceAgentPoolData> array = new List<HybridContainerServiceAgentPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(item));
+                        array.Add(HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AgentPoolListResult(value ?? new ChangeTrackingList<HybridContainerServiceAgentPoolData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolListResult>.Write(ModelReaderWriterOptions options)

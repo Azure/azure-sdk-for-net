@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkAddressSpace))
+            if (VirtualNetworkAddressSpace != null)
             {
                 writer.WritePropertyName("virtualNetworkAddressSpace"u8);
                 writer.WriteStringValue(VirtualNetworkAddressSpace);
             }
-            if (Optional.IsDefined(AccessEndpoint))
+            if (AccessEndpoint != null)
             {
                 writer.WritePropertyName("accessEndpoint"u8);
                 writer.WriteObjectValue(AccessEndpoint);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<LogicResourceReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<string> virtualNetworkAddressSpace = default;
             Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
-            Optional<IList<LogicResourceReference>> subnets = default;
+            IList<LogicResourceReference> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value);
+                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subnets"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicResourceReference> array = new List<LogicResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicResourceReference.DeserializeLogicResourceReference(item));
+                        array.Add(LogicResourceReference.DeserializeLogicResourceReference(item, options));
                     }
                     subnets = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace.Value, accessEndpoint.Value, Optional.ToList(subnets), serializedAdditionalRawData);
+            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace.Value, accessEndpoint.Value, subnets ?? new ChangeTrackingList<LogicResourceReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceNetworkConfiguration>.Write(ModelReaderWriterOptions options)

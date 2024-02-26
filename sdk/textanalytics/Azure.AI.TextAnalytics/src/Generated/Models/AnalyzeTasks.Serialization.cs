@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Models
             int failed = default;
             int inProgress = default;
             int total = default;
-            Optional<IReadOnlyList<AnalyzeTextLROResult>> items = default;
+            IReadOnlyList<AnalyzeTextLROResult> items = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"u8))
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(items));
+            return new AnalyzeTasks(completed, failed, inProgress, total, items ?? new ChangeTrackingList<AnalyzeTextLROResult>());
         }
     }
 }

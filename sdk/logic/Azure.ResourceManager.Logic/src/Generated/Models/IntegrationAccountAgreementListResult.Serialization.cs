@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IntegrationAccountAgreementData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountAgreementData>> value = default;
+            IReadOnlyList<IntegrationAccountAgreementData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountAgreementData> array = new List<IntegrationAccountAgreementData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountAgreementData.DeserializeIntegrationAccountAgreementData(item));
+                        array.Add(IntegrationAccountAgreementData.DeserializeIntegrationAccountAgreementData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAgreementListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationAccountAgreementListResult(value ?? new ChangeTrackingList<IntegrationAccountAgreementData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAgreementListResult>.Write(ModelReaderWriterOptions options)

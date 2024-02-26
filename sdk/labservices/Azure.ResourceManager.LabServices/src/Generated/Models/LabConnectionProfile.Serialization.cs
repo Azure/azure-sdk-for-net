@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WebSshAccess))
+            if (WebSshAccess.HasValue)
             {
                 writer.WritePropertyName("webSshAccess"u8);
                 writer.WriteStringValue(WebSshAccess.Value.ToSerialString());
             }
-            if (Optional.IsDefined(WebRdpAccess))
+            if (WebRdpAccess.HasValue)
             {
                 writer.WritePropertyName("webRdpAccess"u8);
                 writer.WriteStringValue(WebRdpAccess.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ClientSshAccess))
+            if (ClientSshAccess.HasValue)
             {
                 writer.WritePropertyName("clientSshAccess"u8);
                 writer.WriteStringValue(ClientSshAccess.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ClientRdpAccess))
+            if (ClientRdpAccess.HasValue)
             {
                 writer.WritePropertyName("clientRdpAccess"u8);
                 writer.WriteStringValue(ClientRdpAccess.Value.ToSerialString());

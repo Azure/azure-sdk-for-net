@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SqlServerDatabaseReplicationLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerDatabaseReplicationLinkData>> value = default;
+            IReadOnlyList<SqlServerDatabaseReplicationLinkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerDatabaseReplicationLinkData> array = new List<SqlServerDatabaseReplicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(item));
+                        array.Add(SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationLinkListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ReplicationLinkListResult(value ?? new ChangeTrackingList<SqlServerDatabaseReplicationLinkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationLinkListResult>.Write(ModelReaderWriterOptions options)

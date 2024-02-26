@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UpdatesAvailable))
+            if (options.Format != "W" && UpdatesAvailable.HasValue)
             {
                 writer.WritePropertyName("updatesAvailable"u8);
                 writer.WriteStringValue(UpdatesAvailable.Value.ToString());

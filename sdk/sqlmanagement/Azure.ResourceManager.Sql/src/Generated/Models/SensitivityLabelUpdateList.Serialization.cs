@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<SensitivityLabelUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IList<SensitivityLabelUpdate>> operations = default;
+            IList<SensitivityLabelUpdate> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SensitivityLabelUpdate> array = new List<SensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SensitivityLabelUpdate.DeserializeSensitivityLabelUpdate(item));
+                        array.Add(SensitivityLabelUpdate.DeserializeSensitivityLabelUpdate(item, options));
                     }
                     operations = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabelUpdateList(Optional.ToList(operations), serializedAdditionalRawData);
+            return new SensitivityLabelUpdateList(operations ?? new ChangeTrackingList<SensitivityLabelUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabelUpdateList>.Write(ModelReaderWriterOptions options)

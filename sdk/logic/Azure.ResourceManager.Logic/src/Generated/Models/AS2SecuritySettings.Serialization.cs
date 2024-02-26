@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("overrideGroupSigningCertificate"u8);
             writer.WriteBooleanValue(OverrideGroupSigningCertificate);
-            if (Optional.IsDefined(SigningCertificateName))
+            if (SigningCertificateName != null)
             {
                 writer.WritePropertyName("signingCertificateName"u8);
                 writer.WriteStringValue(SigningCertificateName);
             }
-            if (Optional.IsDefined(EncryptionCertificateName))
+            if (EncryptionCertificateName != null)
             {
                 writer.WritePropertyName("encryptionCertificateName"u8);
                 writer.WriteStringValue(EncryptionCertificateName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(EnableNrrForOutboundDecodedMessages);
             writer.WritePropertyName("enableNRRForInboundMDN"u8);
             writer.WriteBooleanValue(EnableNrrForInboundMdn);
-            if (Optional.IsDefined(Sha2AlgorithmFormat))
+            if (Sha2AlgorithmFormat != null)
             {
                 writer.WritePropertyName("sha2AlgorithmFormat"u8);
                 writer.WriteStringValue(Sha2AlgorithmFormat);

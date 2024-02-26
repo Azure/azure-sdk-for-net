@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AnyOf))
+            if (!(AnyOf is ChangeTrackingList<AlertRuleLeafCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("anyOf"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Field))
+            if (Field != null)
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Optional.IsDefined(EqualsValue))
+            if (EqualsValue != null)
             {
                 writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
-            if (Optional.IsCollectionDefined(ContainsAny))
+            if (!(ContainsAny is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<AlertRuleLeafCondition>> anyOf = default;
+            IList<AlertRuleLeafCondition> anyOf = default;
             Optional<string> field = default;
             Optional<string> @equals = default;
-            Optional<IList<string>> containsAny = default;
+            IList<string> containsAny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AlertRuleLeafCondition> array = new List<AlertRuleLeafCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeAlertRuleLeafCondition(item));
+                        array.Add(DeserializeAlertRuleLeafCondition(item, options));
                     }
                     anyOf = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), serializedAdditionalRawData, Optional.ToList(anyOf));
+            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>());
         }
 
         BinaryData IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>.Write(ModelReaderWriterOptions options)

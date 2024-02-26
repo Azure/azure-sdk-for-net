@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoggerType))
+            if (LoggerType.HasValue)
             {
                 writer.WritePropertyName("loggerType"u8);
                 writer.WriteStringValue(LoggerType.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Credentials))
+            if (!(Credentials is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsBuffered))
+            if (IsBuffered.HasValue)
             {
                 writer.WritePropertyName("isBuffered"u8);
                 writer.WriteBooleanValue(IsBuffered.Value);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             Optional<LoggerType> loggerType = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> credentials = default;
+            IDictionary<string, string> credentials = default;
             Optional<bool> isBuffered = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementLoggerPatch(Optional.ToNullable(loggerType), description.Value, Optional.ToDictionary(credentials), Optional.ToNullable(isBuffered), serializedAdditionalRawData);
+            return new ApiManagementLoggerPatch(Optional.ToNullable(loggerType), description.Value, credentials ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(isBuffered), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementLoggerPatch>.Write(ModelReaderWriterOptions options)

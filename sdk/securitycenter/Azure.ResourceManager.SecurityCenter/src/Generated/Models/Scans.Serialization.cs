@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SqlVulnerabilityAssessmentScanData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlVulnerabilityAssessmentScanData>> value = default;
+            IReadOnlyList<SqlVulnerabilityAssessmentScanData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SqlVulnerabilityAssessmentScanData> array = new List<SqlVulnerabilityAssessmentScanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlVulnerabilityAssessmentScanData.DeserializeSqlVulnerabilityAssessmentScanData(item));
+                        array.Add(SqlVulnerabilityAssessmentScanData.DeserializeSqlVulnerabilityAssessmentScanData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Scans(Optional.ToList(value), serializedAdditionalRawData);
+            return new Scans(value ?? new ChangeTrackingList<SqlVulnerabilityAssessmentScanData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Scans>.Write(ModelReaderWriterOptions options)

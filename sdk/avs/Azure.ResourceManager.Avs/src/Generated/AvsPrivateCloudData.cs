@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudData(AzureLocation location, AvsSku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();

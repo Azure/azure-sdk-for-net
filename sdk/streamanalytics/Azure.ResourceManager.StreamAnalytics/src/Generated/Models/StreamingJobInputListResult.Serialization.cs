@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<StreamingJobInputData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingJobInputData>> value = default;
+            IReadOnlyList<StreamingJobInputData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobInputData> array = new List<StreamingJobInputData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item));
+                        array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobInputListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StreamingJobInputListResult(value ?? new ChangeTrackingList<StreamingJobInputData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobInputListResult>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AppPlatformCertificateData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformCertificateData>> value = default;
+            IReadOnlyList<AppPlatformCertificateData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformCertificateData> array = new List<AppPlatformCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformCertificateData.DeserializeAppPlatformCertificateData(item));
+                        array.Add(AppPlatformCertificateData.DeserializeAppPlatformCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CertificateResourceList(value ?? new ChangeTrackingList<AppPlatformCertificateData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateResourceList>.Write(ModelReaderWriterOptions options)

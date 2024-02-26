@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownValidationInputResponse(document.RootElement, options);
+            return DeserializeDataBoxValidationInputResult(document.RootElement, options);
         }
 
         internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element, ModelReaderWriterOptions options = null)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownValidationInputResponse(document.RootElement, options);
+                        return DeserializeDataBoxValidationInputResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataBoxValidationInputResult)} does not support '{options.Format}' format.");

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (Optional.IsCollectionDefined(PlanIds))
+            if (!(PlanIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             Optional<string> context = default;
-            Optional<IList<string>> planIds = default;
+            IList<string> planIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContextAndPlansDetails(context.Value, Optional.ToList(planIds), serializedAdditionalRawData);
+            return new ContextAndPlansDetails(context.Value, planIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContextAndPlansDetails>.Write(ModelReaderWriterOptions options)

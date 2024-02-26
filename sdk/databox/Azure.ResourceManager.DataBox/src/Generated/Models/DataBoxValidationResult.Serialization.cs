@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IndividualResponseDetails))
+            if (options.Format != "W" && !(IndividualResponseDetails is ChangeTrackingList<DataBoxValidationInputResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("individualResponseDetails"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             Optional<OverallValidationStatus> status = default;
-            Optional<IReadOnlyList<DataBoxValidationInputResult>> individualResponseDetails = default;
+            IReadOnlyList<DataBoxValidationInputResult> individualResponseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxValidationInputResult> array = new List<DataBoxValidationInputResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxValidationInputResult.DeserializeDataBoxValidationInputResult(item));
+                                array.Add(DataBoxValidationInputResult.DeserializeDataBoxValidationInputResult(item, options));
                             }
                             individualResponseDetails = array;
                             continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxValidationResult(Optional.ToNullable(status), Optional.ToList(individualResponseDetails), serializedAdditionalRawData);
+            return new DataBoxValidationResult(Optional.ToNullable(status), individualResponseDetails ?? new ChangeTrackingList<DataBoxValidationInputResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxValidationResult>.Write(ModelReaderWriterOptions options)

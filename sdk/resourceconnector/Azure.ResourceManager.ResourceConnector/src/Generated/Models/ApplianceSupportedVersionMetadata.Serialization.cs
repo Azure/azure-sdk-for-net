@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CatalogVersion))
+            if (options.Format != "W" && CatalogVersion != null)
             {
                 writer.WritePropertyName("catalogVersion"u8);
                 writer.WriteObjectValue(CatalogVersion);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    catalogVersion = ApplianceSupportedVersionCatalogVersion.DeserializeApplianceSupportedVersionCatalogVersion(property.Value);
+                    catalogVersion = ApplianceSupportedVersionCatalogVersion.DeserializeApplianceSupportedVersionCatalogVersion(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

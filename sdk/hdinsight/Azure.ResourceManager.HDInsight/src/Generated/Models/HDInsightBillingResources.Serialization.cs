@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Region))
+            if (Region.HasValue)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (Optional.IsCollectionDefined(BillingMeters))
+            if (!(BillingMeters is ChangeTrackingList<HDInsightBillingMeters> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("billingMeters"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DiskBillingMeters))
+            if (!(DiskBillingMeters is ChangeTrackingList<HDInsightDiskBillingMeters> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("diskBillingMeters"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             Optional<AzureLocation> region = default;
-            Optional<IReadOnlyList<HDInsightBillingMeters>> billingMeters = default;
-            Optional<IReadOnlyList<HDInsightDiskBillingMeters>> diskBillingMeters = default;
+            IReadOnlyList<HDInsightBillingMeters> billingMeters = default;
+            IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightBillingMeters> array = new List<HDInsightBillingMeters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightBillingMeters.DeserializeHDInsightBillingMeters(item));
+                        array.Add(HDInsightBillingMeters.DeserializeHDInsightBillingMeters(item, options));
                     }
                     billingMeters = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightDiskBillingMeters> array = new List<HDInsightDiskBillingMeters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightDiskBillingMeters.DeserializeHDInsightDiskBillingMeters(item));
+                        array.Add(HDInsightDiskBillingMeters.DeserializeHDInsightDiskBillingMeters(item, options));
                     }
                     diskBillingMeters = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightBillingResources(Optional.ToNullable(region), Optional.ToList(billingMeters), Optional.ToList(diskBillingMeters), serializedAdditionalRawData);
+            return new HDInsightBillingResources(Optional.ToNullable(region), billingMeters ?? new ChangeTrackingList<HDInsightBillingMeters>(), diskBillingMeters ?? new ChangeTrackingList<HDInsightDiskBillingMeters>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightBillingResources>.Write(ModelReaderWriterOptions options)

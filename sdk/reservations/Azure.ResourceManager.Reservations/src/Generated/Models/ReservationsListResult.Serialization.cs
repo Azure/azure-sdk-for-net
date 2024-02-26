@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ReservationDetailData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteObjectValue(Summary);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReservationDetailData>> value = default;
+            IReadOnlyList<ReservationDetailData> value = default;
             Optional<string> nextLink = default;
             Optional<ReservationSummary> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationDetailData> array = new List<ReservationDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                        array.Add(ReservationDetailData.DeserializeReservationDetailData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    summary = ReservationSummary.DeserializeReservationSummary(property.Value);
+                    summary = ReservationSummary.DeserializeReservationSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationsListResult(Optional.ToList(value), nextLink.Value, summary.Value, serializedAdditionalRawData);
+            return new ReservationsListResult(value ?? new ChangeTrackingList<ReservationDetailData>(), nextLink.Value, summary.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationsListResult>.Write(ModelReaderWriterOptions options)

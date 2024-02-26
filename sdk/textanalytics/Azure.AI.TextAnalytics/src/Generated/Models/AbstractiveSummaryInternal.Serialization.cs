@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsCollectionDefined(Contexts))
+            if (!(Contexts is ChangeTrackingList<SummaryContextInternal> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("contexts"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             string text = default;
-            Optional<IList<SummaryContextInternal>> contexts = default;
+            IList<SummaryContextInternal> contexts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummaryInternal(text, Optional.ToList(contexts));
+            return new AbstractiveSummaryInternal(text, contexts ?? new ChangeTrackingList<SummaryContextInternal>());
         }
     }
 }

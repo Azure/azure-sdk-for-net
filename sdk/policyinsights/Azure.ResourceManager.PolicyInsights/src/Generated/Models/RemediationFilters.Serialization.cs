@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IList<AzureLocation>> locations = default;
+            IList<AzureLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationFilters(Optional.ToList(locations), serializedAdditionalRawData);
+            return new RemediationFilters(locations ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationFilters>.Write(ModelReaderWriterOptions options)

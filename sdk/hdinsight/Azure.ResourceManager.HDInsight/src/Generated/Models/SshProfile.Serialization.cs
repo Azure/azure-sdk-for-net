@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PublicKeys))
+            if (!(PublicKeys is ChangeTrackingList<HDInsightSshPublicKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightSshPublicKey>> publicKeys = default;
+            IList<HDInsightSshPublicKey> publicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightSshPublicKey> array = new List<HDInsightSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item));
+                        array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SshProfile(Optional.ToList(publicKeys), serializedAdditionalRawData);
+            return new SshProfile(publicKeys ?? new ChangeTrackingList<HDInsightSshPublicKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SshProfile>.Write(ModelReaderWriterOptions options)

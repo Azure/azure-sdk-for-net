@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPercentUnhealthyNodes))
+            if (MaxPercentUnhealthyNodes.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyNodes.Value);
             }
-            if (Optional.IsDefined(MaxPercentUnhealthyApplications))
+            if (MaxPercentUnhealthyApplications.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyApplications.Value);
             }
-            if (Optional.IsCollectionDefined(ApplicationHealthPolicies))
+            if (!(ApplicationHealthPolicies is ChangeTrackingDictionary<string, ApplicationHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applicationHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             Optional<int> maxPercentUnhealthyNodes = default;
             Optional<int> maxPercentUnhealthyApplications = default;
-            Optional<IDictionary<string, ApplicationHealthPolicy>> applicationHealthPolicies = default;
+            IDictionary<string, ApplicationHealthPolicy> applicationHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ApplicationHealthPolicy> dictionary = new Dictionary<string, ApplicationHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value, options));
                     }
                     applicationHealthPolicies = dictionary;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterHealthPolicy(Optional.ToNullable(maxPercentUnhealthyNodes), Optional.ToNullable(maxPercentUnhealthyApplications), Optional.ToDictionary(applicationHealthPolicies), serializedAdditionalRawData);
+            return new ClusterHealthPolicy(Optional.ToNullable(maxPercentUnhealthyNodes), Optional.ToNullable(maxPercentUnhealthyApplications), applicationHealthPolicies ?? new ChangeTrackingDictionary<string, ApplicationHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterHealthPolicy>.Write(ModelReaderWriterOptions options)

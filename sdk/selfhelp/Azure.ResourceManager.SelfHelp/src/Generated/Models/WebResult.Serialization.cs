@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplacementKey))
+            if (ReplacementKey != null)
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
-            if (Optional.IsCollectionDefined(SearchResults))
+            if (!(SearchResults is ChangeTrackingList<SearchResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("searchResults"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             Optional<string> replacementKey = default;
-            Optional<IList<SearchResult>> searchResults = default;
+            IList<SearchResult> searchResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SearchResult> array = new List<SearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
+                        array.Add(SearchResult.DeserializeSearchResult(item, options));
                     }
                     searchResults = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebResult(replacementKey.Value, Optional.ToList(searchResults), serializedAdditionalRawData);
+            return new WebResult(replacementKey.Value, searchResults ?? new ChangeTrackingList<SearchResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebResult>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Payload))
+            if (Payload != null)
             {
                 writer.WritePropertyName("payload"u8);
 #if NET6_0_OR_GREATER
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(PayloadUri))
+            if (PayloadUri != null)
             {
                 writer.WritePropertyName("payloadUri"u8);
                 writer.WriteStringValue(PayloadUri.AbsoluteUri);

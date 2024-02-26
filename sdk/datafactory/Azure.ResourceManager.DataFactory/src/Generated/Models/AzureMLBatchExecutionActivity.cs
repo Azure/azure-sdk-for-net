@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLBatchExecutionActivity(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             GlobalParameters = new ChangeTrackingDictionary<string, BinaryData>();
             WebServiceOutputs = new ChangeTrackingDictionary<string, AzureMLWebServiceFile>();

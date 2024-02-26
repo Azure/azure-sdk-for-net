@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoginParameters))
+            if (!(LoginParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loginParameters"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsWwwAuthenticateDisabled))
+            if (IsWwwAuthenticateDisabled.HasValue)
             {
                 writer.WritePropertyName("disableWWWAuthenticate"u8);
                 writer.WriteBooleanValue(IsWwwAuthenticateDisabled.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> loginParameters = default;
+            IList<string> loginParameters = default;
             Optional<bool> disableWWWAuthenticate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadLoginFlow(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate), serializedAdditionalRawData);
+            return new AppServiceAadLoginFlow(loginParameters ?? new ChangeTrackingList<string>(), Optional.ToNullable(disableWWWAuthenticate), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadLoginFlow>.Write(ModelReaderWriterOptions options)

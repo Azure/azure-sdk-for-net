@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
+            if (!(DeliveryAttributeMappings is ChangeTrackingList<DeliveryAttributeMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             EndpointType endpointType = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item));
+                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item, options));
                             }
                             deliveryAttributeMappings = array;
                             continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, Optional.ToList(deliveryAttributeMappings));
+            return new HybridConnectionEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>());
         }
 
         BinaryData IPersistableModel<HybridConnectionEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

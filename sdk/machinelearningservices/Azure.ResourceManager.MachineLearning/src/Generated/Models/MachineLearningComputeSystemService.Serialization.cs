@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SystemServiceType))
+            if (options.Format != "W" && SystemServiceType != null)
             {
                 writer.WritePropertyName("systemServiceType"u8);
                 writer.WriteStringValue(SystemServiceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            if (options.Format != "W" && PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

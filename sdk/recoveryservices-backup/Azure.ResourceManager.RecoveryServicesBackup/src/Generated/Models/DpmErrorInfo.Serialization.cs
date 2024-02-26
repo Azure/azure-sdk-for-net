@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorString))
+            if (ErrorString != null)
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (Optional.IsCollectionDefined(Recommendations))
+            if (!(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             Optional<string> errorString = default;
-            Optional<IList<string>> recommendations = default;
+            IList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmErrorInfo(errorString.Value, Optional.ToList(recommendations), serializedAdditionalRawData);
+            return new DpmErrorInfo(errorString.Value, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DpmErrorInfo>.Write(ModelReaderWriterOptions options)

@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncodedCertificate))
+            if (EncodedCertificate != null)
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
-            if (Optional.IsDefined(CertificatePassword))
+            if (CertificatePassword != null)
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
             writer.WritePropertyName("storeName"u8);
             writer.WriteStringValue(StoreName.ToString());
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value);
+                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

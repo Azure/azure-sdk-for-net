@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeletedSasDefinitionItem>> value = default;
+            IReadOnlyList<DeletedSasDefinitionItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedSasDefinitionListResult(Optional.ToList(value), nextLink.Value);
+            return new DeletedSasDefinitionListResult(value ?? new ChangeTrackingList<DeletedSasDefinitionItem>(), nextLink.Value);
         }
     }
 }

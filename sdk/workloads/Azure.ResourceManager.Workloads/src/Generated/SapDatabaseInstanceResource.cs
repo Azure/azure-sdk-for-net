@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SapDatabaseInstanceResource>> UpdateAsync(WaitUntil waitUntil, SapDatabaseInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.Update");
             scope.Start();
@@ -330,7 +333,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SapDatabaseInstanceResource> Update(WaitUntil waitUntil, SapDatabaseInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.Update");
             scope.Start();
@@ -546,8 +552,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SapDatabaseInstanceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.AddTag");
             scope.Start();
@@ -608,8 +620,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SapDatabaseInstanceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.AddTag");
             scope.Start();
@@ -669,7 +687,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SapDatabaseInstanceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.SetTags");
             scope.Start();
@@ -726,7 +747,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SapDatabaseInstanceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.SetTags");
             scope.Start();
@@ -783,7 +807,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SapDatabaseInstanceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.RemoveTag");
             scope.Start();
@@ -843,7 +870,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SapDatabaseInstanceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceResource.RemoveTag");
             scope.Start();

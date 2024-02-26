@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(VendorOSVersion))
+            if (VendorOSVersion != null)
             {
                 writer.WritePropertyName("vendorOsVersion"u8);
                 writer.WriteStringValue(VendorOSVersion);
             }
-            if (Optional.IsDefined(VendorFirmwareVersion))
+            if (VendorFirmwareVersion != null)
             {
                 writer.WritePropertyName("vendorFirmwareVersion"u8);
                 writer.WriteStringValue(VendorFirmwareVersion);
             }
-            if (Optional.IsDefined(IsDefault))
+            if (IsDefault.HasValue)
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteStringValue(IsDefault.Value.ToString());

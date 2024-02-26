@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<string>> messages = default;
+            IReadOnlyList<string> messages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceGitReposValidationMessages(name.Value, Optional.ToList(messages), serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceGitReposValidationMessages(name.Value, messages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceGitReposValidationMessages>.Write(ModelReaderWriterOptions options)

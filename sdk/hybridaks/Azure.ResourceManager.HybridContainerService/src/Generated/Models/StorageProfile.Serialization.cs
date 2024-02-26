@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SmbCsiDriver))
+            if (SmbCsiDriver != null)
             {
                 writer.WritePropertyName("smbCsiDriver"u8);
                 writer.WriteObjectValue(SmbCsiDriver);
             }
-            if (Optional.IsDefined(NfsCsiDriver))
+            if (NfsCsiDriver != null)
             {
                 writer.WritePropertyName("nfsCsiDriver"u8);
                 writer.WriteObjectValue(NfsCsiDriver);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    smbCsiDriver = StorageProfileSmbCSIDriver.DeserializeStorageProfileSmbCSIDriver(property.Value);
+                    smbCsiDriver = StorageProfileSmbCSIDriver.DeserializeStorageProfileSmbCSIDriver(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfsCsiDriver"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    nfsCsiDriver = StorageProfileNfsCSIDriver.DeserializeStorageProfileNfsCSIDriver(property.Value);
+                    nfsCsiDriver = StorageProfileNfsCSIDriver.DeserializeStorageProfileNfsCSIDriver(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

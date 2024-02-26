@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<FirmwareCve> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FirmwareCve>> value = default;
+            IReadOnlyList<FirmwareCve> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<FirmwareCve> array = new List<FirmwareCve>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareCve.DeserializeFirmwareCve(item));
+                        array.Add(FirmwareCve.DeserializeFirmwareCve(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CveList(value ?? new ChangeTrackingList<FirmwareCve>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveList>.Write(ModelReaderWriterOptions options)

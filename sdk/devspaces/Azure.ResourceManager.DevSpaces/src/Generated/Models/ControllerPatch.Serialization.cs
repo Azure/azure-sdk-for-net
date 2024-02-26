@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetContainerHostCredentialsBase64))
+            if (TargetContainerHostCredentialsBase64 != null)
             {
                 writer.WritePropertyName("targetContainerHostCredentialsBase64"u8);
                 writer.WriteStringValue(TargetContainerHostCredentialsBase64);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> targetContainerHostCredentialsBase64 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerPatch(Optional.ToDictionary(tags), targetContainerHostCredentialsBase64.Value, serializedAdditionalRawData);
+            return new ControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), targetContainerHostCredentialsBase64.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerPatch>.Write(ModelReaderWriterOptions options)

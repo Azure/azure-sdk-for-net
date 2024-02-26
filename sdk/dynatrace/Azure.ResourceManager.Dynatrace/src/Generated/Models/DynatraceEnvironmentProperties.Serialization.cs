@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(AccountInfo))
+            if (AccountInfo != null)
             {
                 writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
-            if (Optional.IsDefined(EnvironmentInfo))
+            if (EnvironmentInfo != null)
             {
                 writer.WritePropertyName("environmentInfo"u8);
                 writer.WriteObjectValue(EnvironmentInfo);
             }
-            if (Optional.IsDefined(SingleSignOnProperties))
+            if (SingleSignOnProperties != null)
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    accountInfo = DynatraceAccountInfo.DeserializeDynatraceAccountInfo(property.Value);
+                    accountInfo = DynatraceAccountInfo.DeserializeDynatraceAccountInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentInfo"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    environmentInfo = DynatraceEnvironmentInfo.DeserializeDynatraceEnvironmentInfo(property.Value);
+                    environmentInfo = DynatraceEnvironmentInfo.DeserializeDynatraceEnvironmentInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = DynatraceSingleSignOnProperties.DeserializeDynatraceSingleSignOnProperties(property.Value);
+                    singleSignOnProperties = DynatraceSingleSignOnProperties.DeserializeDynatraceSingleSignOnProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

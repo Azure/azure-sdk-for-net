@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Limit))
+            if (options.Format != "W" && Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
+            if (options.Format != "W" && CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    name = StorageCacheUsageName.DeserializeStorageCacheUsageName(property.Value);
+                    name = StorageCacheUsageName.DeserializeStorageCacheUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

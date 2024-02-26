@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kubernetesVersion"u8);
             writer.WriteStringValue(KubernetesVersion);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (!(Upgrades is ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string kubernetesVersion = default;
             Optional<string> name = default;
             ContainerServiceOSType osType = default;
-            Optional<IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem>> upgrades = default;
+            IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterPoolUpgradeProfileUpgradesItem> array = new List<ManagedClusterPoolUpgradeProfileUpgradesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterPoolUpgradeProfileUpgradesItem.DeserializeManagedClusterPoolUpgradeProfileUpgradesItem(item));
+                        array.Add(ManagedClusterPoolUpgradeProfileUpgradesItem.DeserializeManagedClusterPoolUpgradeProfileUpgradesItem(item, options));
                     }
                     upgrades = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, Optional.ToList(upgrades), serializedAdditionalRawData);
+            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, upgrades ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPoolUpgradeProfile>.Write(ModelReaderWriterOptions options)

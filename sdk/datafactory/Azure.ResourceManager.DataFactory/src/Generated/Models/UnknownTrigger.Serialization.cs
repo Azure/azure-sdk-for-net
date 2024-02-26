@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
+            if (options.Format != "W" && RuntimeState.HasValue)
             {
                 writer.WritePropertyName("runtimeState"u8);
                 writer.WriteStringValue(RuntimeState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTrigger(document.RootElement, options);
+            return DeserializeDataFactoryTriggerProperties(document.RootElement, options);
         }
 
         internal static UnknownTrigger DeserializeUnknownTrigger(JsonElement element, ModelReaderWriterOptions options = null)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = "Unknown";
             Optional<string> description = default;
             Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties);
+            return new UnknownTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryTriggerProperties>.Write(ModelReaderWriterOptions options)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTrigger(document.RootElement, options);
+                        return DeserializeDataFactoryTriggerProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryTriggerProperties)} does not support '{options.Format}' format.");

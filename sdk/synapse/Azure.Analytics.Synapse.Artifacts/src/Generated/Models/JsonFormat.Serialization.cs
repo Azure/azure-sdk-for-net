@@ -19,39 +19,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilePattern))
+            if (FilePattern != null)
             {
                 writer.WritePropertyName("filePattern"u8);
                 writer.WriteObjectValue(FilePattern);
             }
-            if (Optional.IsDefined(NestingSeparator))
+            if (NestingSeparator != null)
             {
                 writer.WritePropertyName("nestingSeparator"u8);
                 writer.WriteObjectValue(NestingSeparator);
             }
-            if (Optional.IsDefined(EncodingName))
+            if (EncodingName != null)
             {
                 writer.WritePropertyName("encodingName"u8);
                 writer.WriteObjectValue(EncodingName);
             }
-            if (Optional.IsDefined(JsonNodeReference))
+            if (JsonNodeReference != null)
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
                 writer.WriteObjectValue(JsonNodeReference);
             }
-            if (Optional.IsDefined(JsonPathDefinition))
+            if (JsonPathDefinition != null)
             {
                 writer.WritePropertyName("jsonPathDefinition"u8);
                 writer.WriteObjectValue(JsonPathDefinition);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Serializer))
+            if (Serializer != null)
             {
                 writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Deserializer != null)
             {
                 writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);

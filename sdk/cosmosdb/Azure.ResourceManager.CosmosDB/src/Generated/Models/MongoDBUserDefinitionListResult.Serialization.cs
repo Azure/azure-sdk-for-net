@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MongoDBUserDefinitionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MongoDBUserDefinitionData>> value = default;
+            IReadOnlyList<MongoDBUserDefinitionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoDBUserDefinitionData> array = new List<MongoDBUserDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(item));
+                        array.Add(MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBUserDefinitionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MongoDBUserDefinitionListResult(value ?? new ChangeTrackingList<MongoDBUserDefinitionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBUserDefinitionListResult>.Write(ModelReaderWriterOptions options)

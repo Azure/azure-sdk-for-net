@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(CountIPv6))
+            if (CountIPv6.HasValue)
             {
                 writer.WritePropertyName("countIPv6"u8);
                 writer.WriteNumberValue(CountIPv6.Value);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (PricingCurrencyTotal != null)
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "D");
             }
-            if (Optional.IsDefined(NextPaymentDueOn))
+            if (NextPaymentDueOn.HasValue)
             {
                 writer.WritePropertyName("nextPaymentDueDate"u8);
                 writer.WriteStringValue(NextPaymentDueOn.Value, "D");
             }
-            if (Optional.IsCollectionDefined(Transactions))
+            if (!(Transactions is ChangeTrackingList<SavingsPlanOrderPaymentDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transactions"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
-            Optional<IList<SavingsPlanOrderPaymentDetail>> transactions = default;
+            IList<SavingsPlanOrderPaymentDetail> transactions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<SavingsPlanOrderPaymentDetail> array = new List<SavingsPlanOrderPaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanOrderPaymentDetail.DeserializeSavingsPlanOrderPaymentDetail(item));
+                        array.Add(SavingsPlanOrderPaymentDetail.DeserializeSavingsPlanOrderPaymentDetail(item, options));
                     }
                     transactions = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions), serializedAdditionalRawData);
+            return new BillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), transactions ?? new ChangeTrackingList<SavingsPlanOrderPaymentDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPlanInformation>.Write(ModelReaderWriterOptions options)

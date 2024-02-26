@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublisherName))
+            if (PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (Optional.IsDefined(ProductName))
+            if (ProductName != null)
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (Optional.IsDefined(BinaryName))
+            if (BinaryName != null)
             {
                 writer.WritePropertyName("binaryName"u8);
                 writer.WriteStringValue(BinaryName);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("pipelineTopology"u8);
             writer.WriteObjectValue(PipelineTopology);
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);

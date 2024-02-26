@@ -4934,6 +4934,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string CommunityGalleryImageId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Uri Uri { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } set { } }
         Azure.ResourceManager.Compute.Models.GalleryArtifactVersionFullSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryArtifactVersionFullSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryArtifactVersionFullSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.GalleryArtifactVersionFullSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryArtifactVersionFullSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

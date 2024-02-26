@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SymmetricKey))
+            if (SymmetricKey != null)
             {
                 writer.WritePropertyName("symmetricKey"u8);
                 writer.WriteObjectValue(SymmetricKey);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    symmetricKey = DataBoxEdgeSymmetricKey.DeserializeDataBoxEdgeSymmetricKey(property.Value);
+                    symmetricKey = DataBoxEdgeSymmetricKey.DeserializeDataBoxEdgeSymmetricKey(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

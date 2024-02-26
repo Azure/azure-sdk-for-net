@@ -99,7 +99,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupAsync(string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
+            if (managementGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(managementGroupName));
+            }
+            if (managementGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupName));
+            }
 
             using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForManagementGroup(string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
+            if (managementGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(managementGroupName));
+            }
+            if (managementGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupName));
+            }
 
             using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -204,7 +218,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionAsync(string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -231,7 +252,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForSubscription(string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -312,8 +340,22 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -341,8 +383,22 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroup(string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -423,7 +479,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceAsync(string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             using var message = CreateListQueryResultsForResourceRequest(resourceId, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -449,7 +508,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForResource(string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             using var message = CreateListQueryResultsForResourceRequest(resourceId, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -532,8 +594,22 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionAsync(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var message = CreateListQueryResultsForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -561,8 +637,22 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForPolicySetDefinition(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var message = CreateListQueryResultsForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -645,8 +735,22 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policyDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policyDefinitionName));
+            }
+            if (policyDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
+            }
 
             using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -674,8 +778,22 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForPolicyDefinition(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policyDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policyDefinitionName));
+            }
+            if (policyDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
+            }
 
             using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -758,8 +876,22 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policyAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(policyAssignmentName));
+            }
+            if (policyAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
+            }
 
             using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -787,8 +919,22 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policyAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(policyAssignmentName));
+            }
+            if (policyAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
+            }
 
             using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -874,9 +1020,30 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (policyAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(policyAssignmentName));
+            }
+            if (policyAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
+            }
 
             using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -905,9 +1072,30 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (policyAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(policyAssignmentName));
+            }
+            if (policyAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
+            }
 
             using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -949,8 +1137,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupNextPageAsync(string nextLink, string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (managementGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(managementGroupName));
+            }
+            if (managementGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupName));
+            }
 
             using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -978,8 +1176,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForManagementGroupNextPage(string nextLink, string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (managementGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(managementGroupName));
+            }
+            if (managementGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupName));
+            }
 
             using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -1021,8 +1229,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionNextPageAsync(string nextLink, string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1050,8 +1268,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionNextPage(string nextLink, string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -1094,9 +1322,26 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1125,9 +1370,26 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -1168,8 +1430,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceNextPageAsync(string nextLink, string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1196,8 +1464,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForResourceNextPage(string nextLink, string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -1240,9 +1514,26 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionNextPageAsync(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var message = CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, subscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1271,9 +1562,26 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForPolicySetDefinitionNextPage(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var message = CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, subscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -1316,9 +1624,26 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionNextPageAsync(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policyDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policyDefinitionName));
+            }
+            if (policyDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
+            }
 
             using var message = CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, subscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1347,9 +1672,26 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForPolicyDefinitionNextPage(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policyDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policyDefinitionName));
+            }
+            if (policyDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
+            }
 
             using var message = CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, subscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -1392,9 +1734,26 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policyAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(policyAssignmentName));
+            }
+            if (policyAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
+            }
 
             using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1423,9 +1782,26 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (policyAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(policyAssignmentName));
+            }
+            if (policyAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
+            }
 
             using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -1469,10 +1845,34 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (policyAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(policyAssignmentName));
+            }
+            if (policyAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
+            }
 
             using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyAssignmentName, policyEventType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1502,10 +1902,34 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (policyAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(policyAssignmentName));
+            }
+            if (policyAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
+            }
 
             using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyAssignmentName, policyEventType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);

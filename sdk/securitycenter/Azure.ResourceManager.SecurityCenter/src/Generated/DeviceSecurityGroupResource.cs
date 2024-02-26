@@ -279,7 +279,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceSecurityGroupResource>> UpdateAsync(WaitUntil waitUntil, DeviceSecurityGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Update");
             scope.Start();
@@ -325,7 +328,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceSecurityGroupResource> Update(WaitUntil waitUntil, DeviceSecurityGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Update");
             scope.Start();

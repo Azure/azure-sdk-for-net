@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(CabinetPodSecrets))
+            if (options.Format != "W" && !(CabinetPodSecrets is ChangeTrackingList<DataBoxHeavySecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("cabinetPodSecrets"u8);
                 writer.WriteStartArray();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
+            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxHeavySecret>> cabinetPodSecrets = default;
+            IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets = default;
             DataBoxOrderType jobSecretsType = default;
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxHeavySecret> array = new List<DataBoxHeavySecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxHeavySecret.DeserializeDataBoxHeavySecret(item));
+                        array.Add(DataBoxHeavySecret.DeserializeDataBoxHeavySecret(item, options));
                     }
                     cabinetPodSecrets = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxHeavyJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, Optional.ToList(cabinetPodSecrets));
+            return new DataBoxHeavyJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, cabinetPodSecrets ?? new ChangeTrackingList<DataBoxHeavySecret>());
         }
 
         BinaryData IPersistableModel<DataBoxHeavyJobSecrets>.Write(ModelReaderWriterOptions options)

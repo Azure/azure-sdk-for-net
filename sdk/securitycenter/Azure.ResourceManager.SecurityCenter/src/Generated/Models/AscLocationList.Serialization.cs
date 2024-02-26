@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SecurityCenterLocationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityCenterLocationData>> value = default;
+            IReadOnlyList<SecurityCenterLocationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityCenterLocationData> array = new List<SecurityCenterLocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityCenterLocationData.DeserializeSecurityCenterLocationData(item));
+                        array.Add(SecurityCenterLocationData.DeserializeSecurityCenterLocationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AscLocationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AscLocationList(value ?? new ChangeTrackingList<SecurityCenterLocationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AscLocationList>.Write(ModelReaderWriterOptions options)

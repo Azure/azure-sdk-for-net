@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (!(Streams is ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LabelIncludeFilter))
+            if (!(LabelIncludeFilter is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("labelIncludeFilter"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>> streams = default;
-            Optional<IDictionary<string, string>> labelIncludeFilter = default;
+            IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> streams = default;
+            IDictionary<string, string> labelIncludeFilter = default;
             Optional<string> name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrometheusForwarderDataSource(Optional.ToList(streams), Optional.ToDictionary(labelIncludeFilter), name.Value, serializedAdditionalRawData);
+            return new PrometheusForwarderDataSource(streams ?? new ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>(), labelIncludeFilter ?? new ChangeTrackingDictionary<string, string>(), name.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrometheusForwarderDataSource>.Write(ModelReaderWriterOptions options)

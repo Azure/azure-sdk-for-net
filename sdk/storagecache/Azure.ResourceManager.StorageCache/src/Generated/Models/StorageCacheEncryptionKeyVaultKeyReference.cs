@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> or <paramref name="sourceVault"/> is null. </exception>
         public StorageCacheEncryptionKeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault)
         {
-            Argument.AssertNotNull(keyUri, nameof(keyUri));
-            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
+            if (keyUri == null)
+            {
+                throw new ArgumentNullException(nameof(keyUri));
+            }
+            if (sourceVault == null)
+            {
+                throw new ArgumentNullException(nameof(sourceVault));
+            }
 
             KeyUri = keyUri;
             SourceVault = sourceVault;

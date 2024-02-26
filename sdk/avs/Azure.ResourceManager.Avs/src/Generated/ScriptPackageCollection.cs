@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
         public virtual async Task<Response<ScriptPackageResource>> GetAsync(string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+            if (scriptPackageName == null)
+            {
+                throw new ArgumentNullException(nameof(scriptPackageName));
+            }
+            if (scriptPackageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
+            }
 
             using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
         public virtual Response<ScriptPackageResource> Get(string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+            if (scriptPackageName == null)
+            {
+                throw new ArgumentNullException(nameof(scriptPackageName));
+            }
+            if (scriptPackageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
+            }
 
             using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+            if (scriptPackageName == null)
+            {
+                throw new ArgumentNullException(nameof(scriptPackageName));
+            }
+            if (scriptPackageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
+            }
 
             using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
         public virtual Response<bool> Exists(string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+            if (scriptPackageName == null)
+            {
+                throw new ArgumentNullException(nameof(scriptPackageName));
+            }
+            if (scriptPackageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
+            }
 
             using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScriptPackageResource>> GetIfExistsAsync(string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+            if (scriptPackageName == null)
+            {
+                throw new ArgumentNullException(nameof(scriptPackageName));
+            }
+            if (scriptPackageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
+            }
 
             using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
         public virtual NullableResponse<ScriptPackageResource> GetIfExists(string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+            if (scriptPackageName == null)
+            {
+                throw new ArgumentNullException(nameof(scriptPackageName));
+            }
+            if (scriptPackageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
+            }
 
             using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageCollection.GetIfExists");
             scope.Start();

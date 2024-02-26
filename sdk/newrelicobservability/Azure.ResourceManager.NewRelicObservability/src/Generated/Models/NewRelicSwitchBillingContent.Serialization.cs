@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureResourceId))
+            if (AzureResourceId != null)
             {
                 writer.WritePropertyName("azureResourceId"u8);
                 writer.WriteStringValue(AzureResourceId);
             }
-            if (Optional.IsDefined(OrganizationId))
+            if (OrganizationId != null)
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
-            if (Optional.IsDefined(PlanData))
+            if (PlanData != null)
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property.Value);
+                    planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userEmail"u8))

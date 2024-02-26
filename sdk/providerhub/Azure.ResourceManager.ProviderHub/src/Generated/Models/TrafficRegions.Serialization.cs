@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<AzureLocation>> regions = default;
+            IList<AzureLocation> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficRegions(Optional.ToList(regions), serializedAdditionalRawData);
+            return new TrafficRegions(regions ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficRegions>.Write(ModelReaderWriterOptions options)

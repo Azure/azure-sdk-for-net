@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsCollectionDefined(RuleGroupOverrides))
+            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverride> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
+            IList<ManagedRuleGroupOverride> ruleGroupOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ManagedRuleGroupOverride> array = new List<ManagedRuleGroupOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleGroupOverride.DeserializeManagedRuleGroupOverride(item));
+                        array.Add(ManagedRuleGroupOverride.DeserializeManagedRuleGroupOverride(item, options));
                     }
                     ruleGroupOverrides = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToList(ruleGroupOverrides), serializedAdditionalRawData);
+            return new ManagedRuleSet(ruleSetType, ruleSetVersion, ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverride>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSet>.Write(ModelReaderWriterOptions options)

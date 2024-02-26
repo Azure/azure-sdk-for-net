@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceBusRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusRuleData>> value = default;
+            IReadOnlyList<ServiceBusRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusRuleData> array = new List<ServiceBusRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusRuleData.DeserializeServiceBusRuleData(item));
+                        array.Add(ServiceBusRuleData.DeserializeServiceBusRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RuleListResult(value ?? new ChangeTrackingList<ServiceBusRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RuleListResult>.Write(ModelReaderWriterOptions options)

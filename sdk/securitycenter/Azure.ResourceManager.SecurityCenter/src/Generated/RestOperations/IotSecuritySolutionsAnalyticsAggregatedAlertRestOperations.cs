@@ -72,9 +72,30 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotSecurityAggregatedAlertList>> ListAsync(string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (solutionName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionName));
+            }
+            if (solutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, solutionName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,9 +123,30 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotSecurityAggregatedAlertList> List(string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (solutionName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionName));
+            }
+            if (solutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, solutionName, top);
             _pipeline.Send(message, cancellationToken);
@@ -154,10 +196,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotSecurityAggregatedAlertData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (solutionName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionName));
+            }
+            if (solutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
+            }
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, solutionName, aggregatedAlertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,10 +257,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotSecurityAggregatedAlertData> Get(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (solutionName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionName));
+            }
+            if (solutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
+            }
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, solutionName, aggregatedAlertName);
             _pipeline.Send(message, cancellationToken);
@@ -243,10 +341,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DismissAsync(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (solutionName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionName));
+            }
+            if (solutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
+            }
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var message = CreateDismissRequest(subscriptionId, resourceGroupName, solutionName, aggregatedAlertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -269,10 +395,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionName"/> or <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Dismiss(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (solutionName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionName));
+            }
+            if (solutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
+            }
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var message = CreateDismissRequest(subscriptionId, resourceGroupName, solutionName, aggregatedAlertName);
             _pipeline.Send(message, cancellationToken);
@@ -310,10 +464,34 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotSecurityAggregatedAlertList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (solutionName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionName));
+            }
+            if (solutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, solutionName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -342,10 +520,34 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotSecurityAggregatedAlertList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string solutionName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (solutionName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionName));
+            }
+            if (solutionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, solutionName, top);
             _pipeline.Send(message, cancellationToken);

@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RedisNameAvailabilityContent(string name, ResourceType resourceType)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             ResourceType = resourceType;

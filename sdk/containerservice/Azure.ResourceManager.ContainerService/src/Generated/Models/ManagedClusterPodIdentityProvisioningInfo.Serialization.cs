@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    error = ManagedClusterPodIdentityProvisioningError.DeserializeManagedClusterPodIdentityProvisioningError(property.Value);
+                    error = ManagedClusterPodIdentityProvisioningError.DeserializeManagedClusterPodIdentityProvisioningError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

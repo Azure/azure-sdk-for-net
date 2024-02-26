@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LocalRulestackRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string priority, LocalRulestackRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
-            Argument.AssertNotNull(data, nameof(data));
+            if (priority == null)
+            {
+                throw new ArgumentNullException(nameof(priority));
+            }
+            if (priority.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LocalRulestackRuleResource> CreateOrUpdate(WaitUntil waitUntil, string priority, LocalRulestackRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
-            Argument.AssertNotNull(data, nameof(data));
+            if (priority == null)
+            {
+                throw new ArgumentNullException(nameof(priority));
+            }
+            if (priority.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         public virtual async Task<Response<LocalRulestackRuleResource>> GetAsync(string priority, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            if (priority == null)
+            {
+                throw new ArgumentNullException(nameof(priority));
+            }
+            if (priority.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
+            }
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         public virtual Response<LocalRulestackRuleResource> Get(string priority, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            if (priority == null)
+            {
+                throw new ArgumentNullException(nameof(priority));
+            }
+            if (priority.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
+            }
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string priority, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            if (priority == null)
+            {
+                throw new ArgumentNullException(nameof(priority));
+            }
+            if (priority.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
+            }
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         public virtual Response<bool> Exists(string priority, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            if (priority == null)
+            {
+                throw new ArgumentNullException(nameof(priority));
+            }
+            if (priority.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
+            }
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         public virtual async Task<NullableResponse<LocalRulestackRuleResource>> GetIfExistsAsync(string priority, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            if (priority == null)
+            {
+                throw new ArgumentNullException(nameof(priority));
+            }
+            if (priority.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
+            }
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         public virtual NullableResponse<LocalRulestackRuleResource> GetIfExists(string priority, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            if (priority == null)
+            {
+                throw new ArgumentNullException(nameof(priority));
+            }
+            if (priority.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
+            }
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.GetIfExists");
             scope.Start();

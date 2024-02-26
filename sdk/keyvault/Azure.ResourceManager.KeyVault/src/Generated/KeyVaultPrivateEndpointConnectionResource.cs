@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KeyVaultPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, KeyVaultPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KeyVaultPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, KeyVaultPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.Update");
             scope.Start();

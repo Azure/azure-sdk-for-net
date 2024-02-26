@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DscNodeReport> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DscNodeReport>> value = default;
+            IReadOnlyList<DscNodeReport> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscNodeReport> array = new List<DscNodeReport>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscNodeReport.DeserializeDscNodeReport(item));
+                        array.Add(DscNodeReport.DeserializeDscNodeReport(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeReportListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DscNodeReportListResult(value ?? new ChangeTrackingList<DscNodeReport>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeReportListResult>.Write(ModelReaderWriterOptions options)

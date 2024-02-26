@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Profiles))
+            if (!(Profiles is ChangeTrackingList<VectorSearchProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Algorithms))
+            if (!(Algorithms is ChangeTrackingList<VectorSearchAlgorithmConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("algorithms"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Vectorizers))
+            if (!(Vectorizers is ChangeTrackingList<VectorSearchVectorizer> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vectorizers"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<VectorSearchProfile>> profiles = default;
-            Optional<IList<VectorSearchAlgorithmConfiguration>> algorithms = default;
-            Optional<IList<VectorSearchVectorizer>> vectorizers = default;
+            IList<VectorSearchProfile> profiles = default;
+            IList<VectorSearchAlgorithmConfiguration> algorithms = default;
+            IList<VectorSearchVectorizer> vectorizers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profiles"u8))
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new VectorSearch(Optional.ToList(profiles), Optional.ToList(algorithms), Optional.ToList(vectorizers));
+            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>());
         }
     }
 }

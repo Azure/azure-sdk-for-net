@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(OrgsCount))
+            if (OrgsCount.HasValue)
             {
                 writer.WritePropertyName("orgsCount"u8);
                 writer.WriteNumberValue(OrgsCount.Value);
             }
-            if (Optional.IsDefined(ProjectsCount))
+            if (ProjectsCount.HasValue)
             {
                 writer.WritePropertyName("projectsCount"u8);
                 writer.WriteNumberValue(ProjectsCount.Value);
             }
-            if (Optional.IsDefined(ReposCount))
+            if (ReposCount.HasValue)
             {
                 writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SapBitsStorageAccountId);
             writer.WritePropertyName("softwareVersion"u8);
             writer.WriteStringValue(SoftwareVersion);
-            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
+            if (HighAvailabilitySoftwareConfiguration != null)
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    highAvailabilitySoftwareConfiguration = HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value);
+                    highAvailabilitySoftwareConfiguration = HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softwareInstallationType"u8))

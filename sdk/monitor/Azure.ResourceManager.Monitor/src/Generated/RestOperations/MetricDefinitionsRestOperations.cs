@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<MetricDefinitionCollection>> ListAsync(string resourceUri, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
 
             using var message = CreateListRequest(resourceUri, metricnamespace);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -90,7 +93,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<MetricDefinitionCollection> List(string resourceUri, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
 
             using var message = CreateListRequest(resourceUri, metricnamespace);
             _pipeline.Send(message, cancellationToken);

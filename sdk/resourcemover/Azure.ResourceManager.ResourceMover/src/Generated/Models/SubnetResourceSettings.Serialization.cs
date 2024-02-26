@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AddressPrefix))
+            if (AddressPrefix != null)
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(NetworkSecurityGroup))
+            if (NetworkSecurityGroup != null)
             {
                 if (NetworkSecurityGroup != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         networkSecurityGroup = null;
                         continue;
                     }
-                    networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value);
+                    networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

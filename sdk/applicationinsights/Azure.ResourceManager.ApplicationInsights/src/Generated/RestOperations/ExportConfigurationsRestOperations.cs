@@ -68,9 +68,30 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<ApplicationInsightsComponentExportConfiguration>>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,9 +123,30 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<ApplicationInsightsComponentExportConfiguration>> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -162,10 +204,34 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<ApplicationInsightsComponentExportConfiguration>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (exportProperties == null)
+            {
+                throw new ArgumentNullException(nameof(exportProperties));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, exportProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -198,10 +264,34 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<ApplicationInsightsComponentExportConfiguration>> Create(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (exportProperties == null)
+            {
+                throw new ArgumentNullException(nameof(exportProperties));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, exportProperties);
             _pipeline.Send(message, cancellationToken);
@@ -256,10 +346,38 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationInsightsComponentExportConfiguration>> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string exportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, exportId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -287,10 +405,38 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationInsightsComponentExportConfiguration> Delete(string subscriptionId, string resourceGroupName, string resourceName, string exportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, exportId);
             _pipeline.Send(message, cancellationToken);
@@ -340,10 +486,38 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationInsightsComponentExportConfiguration>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string exportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, exportId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -371,10 +545,38 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationInsightsComponentExportConfiguration> Get(string subscriptionId, string resourceGroupName, string resourceName, string exportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, exportId);
             _pipeline.Send(message, cancellationToken);
@@ -429,11 +631,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationInsightsComponentExportConfiguration>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
+            if (exportProperties == null)
+            {
+                throw new ArgumentNullException(nameof(exportProperties));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, exportId, exportProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -462,11 +695,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationInsightsComponentExportConfiguration> Update(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
+            if (exportProperties == null)
+            {
+                throw new ArgumentNullException(nameof(exportProperties));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, exportId, exportProperties);
             _pipeline.Send(message, cancellationToken);

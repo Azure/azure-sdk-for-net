@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -36,12 +35,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="companyId"/>, <paramref name="consumerKey"/>, <paramref name="consumerSecret"/>, <paramref name="accessToken"/> or <paramref name="accessTokenSecret"/> is null. </exception>
         public QuickBooksLinkedService(object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(companyId, nameof(companyId));
-            Argument.AssertNotNull(consumerKey, nameof(consumerKey));
-            Argument.AssertNotNull(consumerSecret, nameof(consumerSecret));
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
-            Argument.AssertNotNull(accessTokenSecret, nameof(accessTokenSecret));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (companyId == null)
+            {
+                throw new ArgumentNullException(nameof(companyId));
+            }
+            if (consumerKey == null)
+            {
+                throw new ArgumentNullException(nameof(consumerKey));
+            }
+            if (consumerSecret == null)
+            {
+                throw new ArgumentNullException(nameof(consumerSecret));
+            }
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
+            if (accessTokenSecret == null)
+            {
+                throw new ArgumentNullException(nameof(accessTokenSecret));
+            }
 
             Endpoint = endpoint;
             CompanyId = companyId;

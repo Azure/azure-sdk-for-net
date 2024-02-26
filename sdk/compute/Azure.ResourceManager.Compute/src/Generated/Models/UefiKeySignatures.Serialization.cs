@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pk))
+            if (Pk != null)
             {
                 writer.WritePropertyName("pk"u8);
                 writer.WriteObjectValue(Pk);
             }
-            if (Optional.IsCollectionDefined(Kek))
+            if (!(Kek is ChangeTrackingList<UefiKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kek"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Db))
+            if (!(Db is ChangeTrackingList<UefiKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("db"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Dbx))
+            if (!(Dbx is ChangeTrackingList<UefiKey> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dbx"u8);
                 writer.WriteStartArray();
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<UefiKey> pk = default;
-            Optional<IList<UefiKey>> kek = default;
-            Optional<IList<UefiKey>> db = default;
-            Optional<IList<UefiKey>> dbx = default;
+            IList<UefiKey> kek = default;
+            IList<UefiKey> db = default;
+            IList<UefiKey> dbx = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    pk = UefiKey.DeserializeUefiKey(property.Value);
+                    pk = UefiKey.DeserializeUefiKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kek"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     kek = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     db = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     dbx = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UefiKeySignatures(pk.Value, Optional.ToList(kek), Optional.ToList(db), Optional.ToList(dbx), serializedAdditionalRawData);
+            return new UefiKeySignatures(pk.Value, kek ?? new ChangeTrackingList<UefiKey>(), db ?? new ChangeTrackingList<UefiKey>(), dbx ?? new ChangeTrackingList<UefiKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UefiKeySignatures>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalizationClusterData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalizationClusterData>> value = default;
+            IReadOnlyList<OperationalizationClusterData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<OperationalizationClusterData> array = new List<OperationalizationClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalizationClusterData.DeserializeOperationalizationClusterData(item));
+                        array.Add(OperationalizationClusterData.DeserializeOperationalizationClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaginatedOperationalizationClustersList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PaginatedOperationalizationClustersList(value ?? new ChangeTrackingList<OperationalizationClusterData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaginatedOperationalizationClustersList>.Write(ModelReaderWriterOptions options)

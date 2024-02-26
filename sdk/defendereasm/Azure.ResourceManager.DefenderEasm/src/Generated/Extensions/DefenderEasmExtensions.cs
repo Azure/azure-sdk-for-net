@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> Returns a <see cref="EasmWorkspaceResource"/> object. </returns>
         public static EasmWorkspaceResource GetEasmWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDefenderEasmArmClient(client).GetEasmWorkspaceResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> Returns a <see cref="EasmLabelResource"/> object. </returns>
         public static EasmLabelResource GetEasmLabelResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDefenderEasmArmClient(client).GetEasmLabelResource(id);
         }
@@ -84,7 +90,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> An object representing collection of EasmWorkspaceResources and their operations over a EasmWorkspaceResource. </returns>
         public static EasmWorkspaceCollection GetEasmWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDefenderEasmResourceGroupResource(resourceGroupResource).GetEasmWorkspaces();
         }
@@ -122,7 +131,10 @@ namespace Azure.ResourceManager.DefenderEasm
         [ForwardsClientCalls]
         public static async Task<Response<EasmWorkspaceResource>> GetEasmWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDefenderEasmResourceGroupResource(resourceGroupResource).GetEasmWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -160,7 +172,10 @@ namespace Azure.ResourceManager.DefenderEasm
         [ForwardsClientCalls]
         public static Response<EasmWorkspaceResource> GetEasmWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDefenderEasmResourceGroupResource(resourceGroupResource).GetEasmWorkspace(workspaceName, cancellationToken);
         }
@@ -196,7 +211,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> An async collection of <see cref="EasmWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EasmWorkspaceResource> GetEasmWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDefenderEasmSubscriptionResource(subscriptionResource).GetEasmWorkspacesAsync(cancellationToken);
         }
@@ -232,7 +250,10 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> A collection of <see cref="EasmWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EasmWorkspaceResource> GetEasmWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDefenderEasmSubscriptionResource(subscriptionResource).GetEasmWorkspaces(cancellationToken);
         }

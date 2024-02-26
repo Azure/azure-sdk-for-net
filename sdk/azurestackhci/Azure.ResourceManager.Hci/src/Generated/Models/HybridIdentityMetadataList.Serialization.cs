@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HybridIdentityMetadataData> array = new List<HybridIdentityMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(item));
+                        array.Add(HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(item, options));
                     }
                     value = array;
                     continue;

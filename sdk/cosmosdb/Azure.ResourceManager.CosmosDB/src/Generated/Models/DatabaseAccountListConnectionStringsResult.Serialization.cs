@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ConnectionStrings))
+            if (!(ConnectionStrings is ChangeTrackingList<CosmosDBAccountConnectionString> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionStrings"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBAccountConnectionString>> connectionStrings = default;
+            IReadOnlyList<CosmosDBAccountConnectionString> connectionStrings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBAccountConnectionString> array = new List<CosmosDBAccountConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString(item));
+                        array.Add(CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString(item, options));
                     }
                     connectionStrings = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseAccountListConnectionStringsResult(Optional.ToList(connectionStrings), serializedAdditionalRawData);
+            return new DatabaseAccountListConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<CosmosDBAccountConnectionString>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseAccountListConnectionStringsResult>.Write(ModelReaderWriterOptions options)

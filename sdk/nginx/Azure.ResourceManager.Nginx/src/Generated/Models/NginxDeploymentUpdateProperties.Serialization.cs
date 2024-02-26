@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableDiagnosticsSupport))
+            if (EnableDiagnosticsSupport.HasValue)
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
-            if (Optional.IsDefined(Logging))
+            if (Logging != null)
             {
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
-            if (Optional.IsDefined(ScalingProperties))
+            if (ScalingProperties != null)
             {
                 writer.WritePropertyName("scalingProperties"u8);
                 writer.WriteObjectValue(ScalingProperties);
             }
-            if (Optional.IsDefined(UserProfile))
+            if (UserProfile != null)
             {
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    logging = NginxLogging.DeserializeNginxLogging(property.Value);
+                    logging = NginxLogging.DeserializeNginxLogging(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scalingProperties"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value);
+                    scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userProfile"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value);
+                    userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

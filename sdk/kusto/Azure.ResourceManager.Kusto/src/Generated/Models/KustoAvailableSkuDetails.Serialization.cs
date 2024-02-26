@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    sku = KustoSku.DeserializeKustoSku(property.Value);
+                    sku = KustoSku.DeserializeKustoSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    capacity = KustoCapacity.DeserializeKustoCapacity(property.Value);
+                    capacity = KustoCapacity.DeserializeKustoCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

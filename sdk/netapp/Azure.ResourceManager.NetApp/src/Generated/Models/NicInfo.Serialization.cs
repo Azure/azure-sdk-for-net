@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsCollectionDefined(VolumeResourceIds))
+            if (!(VolumeResourceIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("volumeResourceIds"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             Optional<string> ipAddress = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> volumeResourceIds = default;
+            IReadOnlyList<ResourceIdentifier> volumeResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicInfo(ipAddress.Value, Optional.ToList(volumeResourceIds), serializedAdditionalRawData);
+            return new NicInfo(ipAddress.Value, volumeResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicInfo>.Write(ModelReaderWriterOptions options)

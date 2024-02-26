@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerGroupData>> value = default;
+            IReadOnlyList<ContainerGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerGroupData> array = new List<ContainerGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerGroupData.DeserializeContainerGroupData(item));
+                        array.Add(ContainerGroupData.DeserializeContainerGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerGroupListResult(value ?? new ChangeTrackingList<ContainerGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupListResult>.Write(ModelReaderWriterOptions options)

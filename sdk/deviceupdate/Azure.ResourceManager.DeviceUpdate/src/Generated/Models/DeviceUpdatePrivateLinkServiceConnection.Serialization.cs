@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequestMessage))
+            if (RequestMessage != null)
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> groupIds = default;
             Optional<string> requestMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateLinkServiceConnection(name.Value, Optional.ToList(groupIds), requestMessage.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateLinkServiceConnection(name.Value, groupIds ?? new ChangeTrackingList<string>(), requestMessage.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>.Write(ModelReaderWriterOptions options)

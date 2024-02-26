@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPConfiguration))
+            if (IPConfiguration != null)
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 JsonSerializer.Serialize(writer, IPConfiguration);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);

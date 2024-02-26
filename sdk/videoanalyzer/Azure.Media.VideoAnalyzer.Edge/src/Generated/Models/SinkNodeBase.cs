@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -25,8 +24,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         protected SinkNodeBase(string name, IEnumerable<NodeInput> inputs)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (inputs == null)
+            {
+                throw new ArgumentNullException(nameof(inputs));
+            }
 
             Name = name;
             Inputs = inputs.ToList();

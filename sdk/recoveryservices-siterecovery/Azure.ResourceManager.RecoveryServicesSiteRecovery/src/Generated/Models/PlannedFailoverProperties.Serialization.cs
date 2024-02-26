@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FailoverDirection))
+            if (FailoverDirection != null)
             {
                 writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = PlannedFailoverProviderSpecificFailoverContent.DeserializePlannedFailoverProviderSpecificFailoverContent(property.Value);
+                    providerSpecificDetails = PlannedFailoverProviderSpecificFailoverContent.DeserializePlannedFailoverProviderSpecificFailoverContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

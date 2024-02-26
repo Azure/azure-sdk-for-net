@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IntegrationAccountAssemblyDefinitionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountAssemblyDefinitionData>> value = default;
+            IReadOnlyList<IntegrationAccountAssemblyDefinitionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountAssemblyDefinitionData> array = new List<IntegrationAccountAssemblyDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(item));
+                        array.Add(IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAssemblyList(Optional.ToList(value), serializedAdditionalRawData);
+            return new IntegrationAccountAssemblyList(value ?? new ChangeTrackingList<IntegrationAccountAssemblyDefinitionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAssemblyList>.Write(ModelReaderWriterOptions options)

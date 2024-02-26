@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateLinkServiceId))
+            if (PrivateLinkServiceId != null)
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestMessage))
+            if (options.Format != "W" && RequestMessage != null)
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (PrivateLinkServiceConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> groupIds = default;
             Optional<string> requestMessage = default;
             Optional<StreamAnalyticsPrivateLinkConnectionState> privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = StreamAnalyticsPrivateLinkConnectionState.DeserializeStreamAnalyticsPrivateLinkConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = StreamAnalyticsPrivateLinkConnectionState.DeserializeStreamAnalyticsPrivateLinkConnectionState(property0.Value, options);
                             continue;
                         }
                     }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsPrivateLinkServiceConnection(privateLinkServiceId.Value, Optional.ToList(groupIds), requestMessage.Value, privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsPrivateLinkServiceConnection(privateLinkServiceId.Value, groupIds ?? new ChangeTrackingList<string>(), requestMessage.Value, privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsPrivateLinkServiceConnection>.Write(ModelReaderWriterOptions options)

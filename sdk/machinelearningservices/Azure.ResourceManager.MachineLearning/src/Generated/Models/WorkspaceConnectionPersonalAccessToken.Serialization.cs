@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pat))
+            if (Pat != null)
             {
                 writer.WritePropertyName("pat"u8);
                 writer.WriteStringValue(Pat);

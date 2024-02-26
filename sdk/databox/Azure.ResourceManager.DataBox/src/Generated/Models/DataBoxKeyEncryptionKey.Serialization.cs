@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kekType"u8);
             writer.WriteStringValue(KekType.ToSerialString());
-            if (Optional.IsDefined(ManagedIdentity))
+            if (ManagedIdentity != null)
             {
                 writer.WritePropertyName("identityProperties"u8);
                 writer.WriteObjectValue(ManagedIdentity);
             }
-            if (Optional.IsDefined(KekUri))
+            if (KekUri != null)
             {
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KekVaultResourceId))
+            if (KekVaultResourceId != null)
             {
                 writer.WritePropertyName("kekVaultResourceID"u8);
                 writer.WriteStringValue(KekVaultResourceId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value);
+                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kekUrl"u8))

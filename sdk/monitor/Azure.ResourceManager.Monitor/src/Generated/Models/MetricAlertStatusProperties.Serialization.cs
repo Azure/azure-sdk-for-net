@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> dimensions = default;
+            IReadOnlyDictionary<string, string> dimensions = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> timestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertStatusProperties(Optional.ToDictionary(dimensions), status.Value, Optional.ToNullable(timestamp), serializedAdditionalRawData);
+            return new MetricAlertStatusProperties(dimensions ?? new ChangeTrackingDictionary<string, string>(), status.Value, Optional.ToNullable(timestamp), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertStatusProperties>.Write(ModelReaderWriterOptions options)

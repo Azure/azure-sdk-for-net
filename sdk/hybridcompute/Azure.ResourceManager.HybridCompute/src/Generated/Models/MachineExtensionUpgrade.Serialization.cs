@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExtensionTargets))
+            if (!(ExtensionTargets is ChangeTrackingDictionary<string, ExtensionTargetProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensionTargets"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, ExtensionTargetProperties>> extensionTargets = default;
+            IDictionary<string, ExtensionTargetProperties> extensionTargets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     Dictionary<string, ExtensionTargetProperties> dictionary = new Dictionary<string, ExtensionTargetProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ExtensionTargetProperties.DeserializeExtensionTargetProperties(property0.Value));
+                        dictionary.Add(property0.Name, ExtensionTargetProperties.DeserializeExtensionTargetProperties(property0.Value, options));
                     }
                     extensionTargets = dictionary;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineExtensionUpgrade(Optional.ToDictionary(extensionTargets), serializedAdditionalRawData);
+            return new MachineExtensionUpgrade(extensionTargets ?? new ChangeTrackingDictionary<string, ExtensionTargetProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineExtensionUpgrade>.Write(ModelReaderWriterOptions options)

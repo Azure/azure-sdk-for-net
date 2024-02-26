@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             string location = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TrackedResource(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location);
+            return new TrackedResource(id.Value, name.Value, type.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location);
         }
 
         internal partial class TrackedResourceConverter : JsonConverter<TrackedResource>

@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             DocumentFormulaKind kind = default;
             string value = default;
-            Optional<IReadOnlyList<float>> polygon = default;
+            IReadOnlyList<float> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentFormula(kind, value, Optional.ToList(polygon), span, confidence);
+            return new DocumentFormula(kind, value, polygon ?? new ChangeTrackingList<float>(), span, confidence);
         }
     }
 }

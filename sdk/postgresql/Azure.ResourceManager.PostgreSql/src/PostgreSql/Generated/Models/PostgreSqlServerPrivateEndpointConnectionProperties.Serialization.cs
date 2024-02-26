@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (PrivateLinkServiceConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = PostgreSqlServerPrivateLinkServiceConnectionStateProperty.DeserializePostgreSqlServerPrivateLinkServiceConnectionStateProperty(property.Value);
+                    privateLinkServiceConnectionState = PostgreSqlServerPrivateLinkServiceConnectionStateProperty.DeserializePostgreSqlServerPrivateLinkServiceConnectionStateProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

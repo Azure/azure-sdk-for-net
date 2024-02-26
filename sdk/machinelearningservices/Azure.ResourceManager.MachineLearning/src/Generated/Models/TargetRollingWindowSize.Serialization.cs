@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Auto": return AutoTargetRollingWindowSize.DeserializeAutoTargetRollingWindowSize(element);
-                    case "Custom": return CustomTargetRollingWindowSize.DeserializeCustomTargetRollingWindowSize(element);
+                    case "Auto": return AutoTargetRollingWindowSize.DeserializeAutoTargetRollingWindowSize(element, options);
+                    case "Custom": return CustomTargetRollingWindowSize.DeserializeCustomTargetRollingWindowSize(element, options);
                 }
             }
-            return UnknownTargetRollingWindowSize.DeserializeUnknownTargetRollingWindowSize(element);
+            return UnknownTargetRollingWindowSize.DeserializeUnknownTargetRollingWindowSize(element, options);
         }
 
         BinaryData IPersistableModel<TargetRollingWindowSize>.Write(ModelReaderWriterOptions options)

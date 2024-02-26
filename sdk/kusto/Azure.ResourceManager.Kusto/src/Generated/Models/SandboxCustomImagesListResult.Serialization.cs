@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SandboxCustomImageData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SandboxCustomImageData>> value = default;
+            IReadOnlyList<SandboxCustomImageData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<SandboxCustomImageData> array = new List<SandboxCustomImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SandboxCustomImageData.DeserializeSandboxCustomImageData(item));
+                        array.Add(SandboxCustomImageData.DeserializeSandboxCustomImageData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SandboxCustomImagesListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SandboxCustomImagesListResult(nextLink.Value, value ?? new ChangeTrackingList<SandboxCustomImageData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SandboxCustomImagesListResult>.Write(ModelReaderWriterOptions options)

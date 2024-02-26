@@ -21,8 +21,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="duration"/> is null. </exception>
         public RemoteDependencyData(int version, string name, string duration) : base(version)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(duration, nameof(duration));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (duration == null)
+            {
+                throw new ArgumentNullException(nameof(duration));
+            }
 
             Name = name;
             Duration = duration;

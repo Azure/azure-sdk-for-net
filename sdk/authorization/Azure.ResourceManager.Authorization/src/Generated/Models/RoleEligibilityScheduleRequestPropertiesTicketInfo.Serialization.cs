@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TicketNumber))
+            if (TicketNumber != null)
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteStringValue(TicketNumber);
             }
-            if (Optional.IsDefined(TicketSystem))
+            if (TicketSystem != null)
             {
                 writer.WritePropertyName("ticketSystem"u8);
                 writer.WriteStringValue(TicketSystem);

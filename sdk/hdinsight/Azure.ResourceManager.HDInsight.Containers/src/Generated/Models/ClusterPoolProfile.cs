@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolVersion"/> is null. </exception>
         public ClusterPoolProfile(string clusterPoolVersion)
         {
-            Argument.AssertNotNull(clusterPoolVersion, nameof(clusterPoolVersion));
+            if (clusterPoolVersion == null)
+            {
+                throw new ArgumentNullException(nameof(clusterPoolVersion));
+            }
 
             ClusterPoolVersion = clusterPoolVersion;
         }

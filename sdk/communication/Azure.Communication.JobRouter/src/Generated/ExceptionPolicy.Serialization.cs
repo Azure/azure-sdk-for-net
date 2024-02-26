@@ -37,12 +37,12 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(ExceptionRules))
+            if (!(ExceptionRules is ChangeTrackingList<ExceptionRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exceptionRules"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.Communication.JobRouter
             ETag etag = default;
             string id = default;
             Optional<string> name = default;
-            Optional<IList<ExceptionRule>> exceptionRules = default;
+            IList<ExceptionRule> exceptionRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter
                     List<ExceptionRule> array = new List<ExceptionRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExceptionRule.DeserializeExceptionRule(item));
+                        array.Add(ExceptionRule.DeserializeExceptionRule(item, options));
                     }
                     exceptionRules = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExceptionPolicy(etag, id, name.Value, Optional.ToList(exceptionRules), serializedAdditionalRawData);
+            return new ExceptionPolicy(etag, id, name.Value, exceptionRules ?? new ChangeTrackingList<ExceptionRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExceptionPolicy>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WebChatEmbedCode))
+            if (options.Format != "W" && WebChatEmbedCode != null)
             {
                 writer.WritePropertyName("webChatEmbedCode"u8);
                 writer.WriteStringValue(WebChatEmbedCode);
             }
-            if (Optional.IsCollectionDefined(Sites))
+            if (!(Sites is ChangeTrackingList<WebChatSite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             Optional<string> webChatEmbedCode = default;
-            Optional<IList<WebChatSite>> sites = default;
+            IList<WebChatSite> sites = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<WebChatSite> array = new List<WebChatSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebChatSite.DeserializeWebChatSite(item));
+                        array.Add(WebChatSite.DeserializeWebChatSite(item, options));
                     }
                     sites = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebChatChannelProperties(webChatEmbedCode.Value, Optional.ToList(sites), serializedAdditionalRawData);
+            return new WebChatChannelProperties(webChatEmbedCode.Value, sites ?? new ChangeTrackingList<WebChatSite>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebChatChannelProperties>.Write(ModelReaderWriterOptions options)

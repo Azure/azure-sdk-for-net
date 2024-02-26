@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
-            if (Optional.IsDefined(StorageApplianceName))
+            if (StorageApplianceName != null)
             {
                 writer.WritePropertyName("storageApplianceName"u8);
                 writer.WriteStringValue(StorageApplianceName);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("adminCredentials"u8))
                 {
-                    adminCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value);
+                    adminCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rackSlot"u8))

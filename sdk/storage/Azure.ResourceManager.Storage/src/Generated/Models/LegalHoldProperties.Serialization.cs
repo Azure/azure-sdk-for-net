@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
+            if (options.Format != "W" && HasLegalHold.HasValue)
             {
                 writer.WritePropertyName("hasLegalHold"u8);
                 writer.WriteBooleanValue(HasLegalHold.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<LegalHoldTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProtectedAppendWritesHistory))
+            if (ProtectedAppendWritesHistory != null)
             {
                 writer.WritePropertyName("protectedAppendWritesHistory"u8);
                 writer.WriteObjectValue(ProtectedAppendWritesHistory);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             Optional<bool> hasLegalHold = default;
-            Optional<IReadOnlyList<LegalHoldTag>> tags = default;
+            IReadOnlyList<LegalHoldTag> tags = default;
             Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<LegalHoldTag> array = new List<LegalHoldTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item));
+                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item, options));
                     }
                     tags = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value);
+                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LegalHoldProperties(Optional.ToNullable(hasLegalHold), Optional.ToList(tags), protectedAppendWritesHistory.Value, serializedAdditionalRawData);
+            return new LegalHoldProperties(Optional.ToNullable(hasLegalHold), tags ?? new ChangeTrackingList<LegalHoldTag>(), protectedAppendWritesHistory.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LegalHoldProperties>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<DatabaseAdvancedThreatProtectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatabaseAdvancedThreatProtectionData>> value = default;
+            IReadOnlyList<DatabaseAdvancedThreatProtectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DatabaseAdvancedThreatProtectionData> array = new List<DatabaseAdvancedThreatProtectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseAdvancedThreatProtectionData.DeserializeDatabaseAdvancedThreatProtectionData(item));
+                        array.Add(DatabaseAdvancedThreatProtectionData.DeserializeDatabaseAdvancedThreatProtectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseAdvancedThreatProtectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatabaseAdvancedThreatProtectionListResult(value ?? new ChangeTrackingList<DatabaseAdvancedThreatProtectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseAdvancedThreatProtectionListResult>.Write(ModelReaderWriterOptions options)

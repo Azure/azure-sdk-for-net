@@ -27,17 +27,11 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinConcurrentOffers))
-            {
-                writer.WritePropertyName("minConcurrentOffers"u8);
-                writer.WriteNumberValue(MinConcurrentOffers);
-            }
-            if (Optional.IsDefined(MaxConcurrentOffers))
-            {
-                writer.WritePropertyName("maxConcurrentOffers"u8);
-                writer.WriteNumberValue(MaxConcurrentOffers);
-            }
-            if (Optional.IsDefined(BypassSelectors))
+            writer.WritePropertyName("minConcurrentOffers"u8);
+            writer.WriteNumberValue(MinConcurrentOffers);
+            writer.WritePropertyName("maxConcurrentOffers"u8);
+            writer.WriteNumberValue(MaxConcurrentOffers);
+            if (BypassSelectors.HasValue)
             {
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
@@ -86,12 +80,12 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "bestWorker": return BestWorkerMode.DeserializeBestWorkerMode(element);
-                    case "longestIdle": return LongestIdleMode.DeserializeLongestIdleMode(element);
-                    case "roundRobin": return RoundRobinMode.DeserializeRoundRobinMode(element);
+                    case "bestWorker": return BestWorkerMode.DeserializeBestWorkerMode(element, options);
+                    case "longestIdle": return LongestIdleMode.DeserializeLongestIdleMode(element, options);
+                    case "roundRobin": return RoundRobinMode.DeserializeRoundRobinMode(element, options);
                 }
             }
-            return UnknownDistributionMode.DeserializeUnknownDistributionMode(element);
+            return UnknownDistributionMode.DeserializeUnknownDistributionMode(element, options);
         }
 
         BinaryData IPersistableModel<DistributionMode>.Write(ModelReaderWriterOptions options)

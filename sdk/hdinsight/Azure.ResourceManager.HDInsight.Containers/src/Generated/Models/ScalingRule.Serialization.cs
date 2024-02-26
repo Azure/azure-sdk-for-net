@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("comparisonRule"u8))
                 {
-                    comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value);
+                    comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

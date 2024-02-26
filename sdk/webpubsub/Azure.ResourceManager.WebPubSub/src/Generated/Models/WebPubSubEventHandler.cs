@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="urlTemplate"/> is null. </exception>
         public WebPubSubEventHandler(string urlTemplate)
         {
-            Argument.AssertNotNull(urlTemplate, nameof(urlTemplate));
+            if (urlTemplate == null)
+            {
+                throw new ArgumentNullException(nameof(urlTemplate));
+            }
 
             UrlTemplate = urlTemplate;
             SystemEvents = new ChangeTrackingList<string>();

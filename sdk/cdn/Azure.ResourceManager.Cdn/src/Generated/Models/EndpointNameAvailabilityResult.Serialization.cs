@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NameAvailable))
+            if (options.Format != "W" && NameAvailable.HasValue)
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(NameAvailable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableHostname))
+            if (options.Format != "W" && AvailableHostname != null)
             {
                 writer.WritePropertyName("availableHostname"u8);
                 writer.WriteStringValue(AvailableHostname);
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

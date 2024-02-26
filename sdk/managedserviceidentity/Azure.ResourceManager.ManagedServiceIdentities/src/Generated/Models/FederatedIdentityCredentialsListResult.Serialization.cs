@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<FederatedIdentityCredentialData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FederatedIdentityCredentialData>> value = default;
+            IReadOnlyList<FederatedIdentityCredentialData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     List<FederatedIdentityCredentialData> array = new List<FederatedIdentityCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(item));
+                        array.Add(FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FederatedIdentityCredentialsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FederatedIdentityCredentialsListResult(value ?? new ChangeTrackingList<FederatedIdentityCredentialData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FederatedIdentityCredentialsListResult>.Write(ModelReaderWriterOptions options)

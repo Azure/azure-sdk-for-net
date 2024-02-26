@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = BotServiceProviderProperties.DeserializeBotServiceProviderProperties(property.Value);
+                    properties = BotServiceProviderProperties.DeserializeBotServiceProviderProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

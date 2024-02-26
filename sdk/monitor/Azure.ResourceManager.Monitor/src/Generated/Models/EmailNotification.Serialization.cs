@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendToSubscriptionAdministrator))
+            if (SendToSubscriptionAdministrator.HasValue)
             {
                 writer.WritePropertyName("sendToSubscriptionAdministrator"u8);
                 writer.WriteBooleanValue(SendToSubscriptionAdministrator.Value);
             }
-            if (Optional.IsDefined(SendToSubscriptionCoAdministrators))
+            if (SendToSubscriptionCoAdministrators.HasValue)
             {
                 writer.WritePropertyName("sendToSubscriptionCoAdministrators"u8);
                 writer.WriteBooleanValue(SendToSubscriptionCoAdministrators.Value);
             }
-            if (Optional.IsCollectionDefined(CustomEmails))
+            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             Optional<bool> sendToSubscriptionAdministrator = default;
             Optional<bool> sendToSubscriptionCoAdministrators = default;
-            Optional<IList<string>> customEmails = default;
+            IList<string> customEmails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailNotification(Optional.ToNullable(sendToSubscriptionAdministrator), Optional.ToNullable(sendToSubscriptionCoAdministrators), Optional.ToList(customEmails), serializedAdditionalRawData);
+            return new EmailNotification(Optional.ToNullable(sendToSubscriptionAdministrator), Optional.ToNullable(sendToSubscriptionCoAdministrators), customEmails ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmailNotification>.Write(ModelReaderWriterOptions options)

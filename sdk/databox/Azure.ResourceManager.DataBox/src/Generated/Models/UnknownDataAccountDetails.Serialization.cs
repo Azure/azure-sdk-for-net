@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Optional.IsDefined(SharePassword))
+            if (SharePassword != null)
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataAccountDetails(document.RootElement, options);
+            return DeserializeDataAccountDetails(document.RootElement, options);
         }
 
         internal static UnknownDataAccountDetails DeserializeUnknownDataAccountDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataAccountDetails(document.RootElement, options);
+                        return DeserializeDataAccountDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{options.Format}' format.");

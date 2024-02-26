@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("redirectType"u8);
             writer.WriteStringValue(RedirectType.ToString());
-            if (Optional.IsDefined(DestinationProtocol))
+            if (DestinationProtocol.HasValue)
             {
                 writer.WritePropertyName("destinationProtocol"u8);
                 writer.WriteStringValue(DestinationProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(CustomPath))
+            if (CustomPath != null)
             {
                 writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
-            if (Optional.IsDefined(CustomHostname))
+            if (CustomHostname != null)
             {
                 writer.WritePropertyName("customHostname"u8);
                 writer.WriteStringValue(CustomHostname);
             }
-            if (Optional.IsDefined(CustomQueryString))
+            if (CustomQueryString != null)
             {
                 writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
             }
-            if (Optional.IsDefined(CustomFragment))
+            if (CustomFragment != null)
             {
                 writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);

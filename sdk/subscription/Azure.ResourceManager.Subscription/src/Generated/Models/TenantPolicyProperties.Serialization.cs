@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyId))
+            if (options.Format != "W" && PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(BlockSubscriptionsLeavingTenant))
+            if (BlockSubscriptionsLeavingTenant.HasValue)
             {
                 writer.WritePropertyName("blockSubscriptionsLeavingTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsLeavingTenant.Value);
             }
-            if (Optional.IsDefined(BlockSubscriptionsIntoTenant))
+            if (BlockSubscriptionsIntoTenant.HasValue)
             {
                 writer.WritePropertyName("blockSubscriptionsIntoTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsIntoTenant.Value);
             }
-            if (Optional.IsCollectionDefined(ExemptedPrincipals))
+            if (!(ExemptedPrincipals is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exemptedPrincipals"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<string> policyId = default;
             Optional<bool> blockSubscriptionsLeavingTenant = default;
             Optional<bool> blockSubscriptionsIntoTenant = default;
-            Optional<IReadOnlyList<Guid>> exemptedPrincipals = default;
+            IReadOnlyList<Guid> exemptedPrincipals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantPolicyProperties(policyId.Value, Optional.ToNullable(blockSubscriptionsLeavingTenant), Optional.ToNullable(blockSubscriptionsIntoTenant), Optional.ToList(exemptedPrincipals), serializedAdditionalRawData);
+            return new TenantPolicyProperties(policyId.Value, Optional.ToNullable(blockSubscriptionsLeavingTenant), Optional.ToNullable(blockSubscriptionsIntoTenant), exemptedPrincipals ?? new ChangeTrackingList<Guid>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantPolicyProperties>.Write(ModelReaderWriterOptions options)

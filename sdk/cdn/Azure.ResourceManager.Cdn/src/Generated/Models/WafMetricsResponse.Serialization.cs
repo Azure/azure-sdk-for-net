@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateTimeBegin))
+            if (DateTimeBegin.HasValue)
             {
                 writer.WritePropertyName("dateTimeBegin"u8);
                 writer.WriteStringValue(DateTimeBegin.Value, "O");
             }
-            if (Optional.IsDefined(DateTimeEnd))
+            if (DateTimeEnd.HasValue)
             {
                 writer.WritePropertyName("dateTimeEnd"u8);
                 writer.WriteStringValue(DateTimeEnd.Value, "O");
             }
-            if (Optional.IsDefined(Granularity))
+            if (Granularity.HasValue)
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Series))
+            if (!(Series is ChangeTrackingList<WafMetricsResponseSeriesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("series"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<DateTimeOffset> dateTimeBegin = default;
             Optional<DateTimeOffset> dateTimeEnd = default;
             Optional<WafMetricsResponseGranularity> granularity = default;
-            Optional<IReadOnlyList<WafMetricsResponseSeriesItem>> series = default;
+            IReadOnlyList<WafMetricsResponseSeriesItem> series = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafMetricsResponseSeriesItem> array = new List<WafMetricsResponseSeriesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item));
+                        array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item, options));
                     }
                     series = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafMetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series), serializedAdditionalRawData);
+            return new WafMetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), series ?? new ChangeTrackingList<WafMetricsResponseSeriesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafMetricsResponse>.Write(ModelReaderWriterOptions options)

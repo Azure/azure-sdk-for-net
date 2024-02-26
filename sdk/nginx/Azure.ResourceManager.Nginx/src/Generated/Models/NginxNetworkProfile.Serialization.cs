@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FrontEndIPConfiguration))
+            if (FrontEndIPConfiguration != null)
             {
                 writer.WritePropertyName("frontEndIPConfiguration"u8);
                 writer.WriteObjectValue(FrontEndIPConfiguration);
             }
-            if (Optional.IsDefined(NetworkInterfaceConfiguration))
+            if (NetworkInterfaceConfiguration != null)
             {
                 writer.WritePropertyName("networkInterfaceConfiguration"u8);
                 writer.WriteObjectValue(NetworkInterfaceConfiguration);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    frontEndIPConfiguration = NginxFrontendIPConfiguration.DeserializeNginxFrontendIPConfiguration(property.Value);
+                    frontEndIPConfiguration = NginxFrontendIPConfiguration.DeserializeNginxFrontendIPConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaceConfiguration"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    networkInterfaceConfiguration = NginxNetworkInterfaceConfiguration.DeserializeNginxNetworkInterfaceConfiguration(property.Value);
+                    networkInterfaceConfiguration = NginxNetworkInterfaceConfiguration.DeserializeNginxNetworkInterfaceConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

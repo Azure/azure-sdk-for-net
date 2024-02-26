@@ -22,8 +22,8 @@ namespace Azure.Maps.Geolocation
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
-            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
+            IReadOnlyList<ErrorDetail> details = default;
+            IReadOnlyList<ErrorAdditionalInfo> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -70,7 +70,7 @@ namespace Azure.Maps.Geolocation
                     continue;
                 }
             }
-            return new ErrorDetail(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            return new ErrorDetail(code.Value, message.Value, target.Value, details ?? new ChangeTrackingList<ErrorDetail>(), additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>());
         }
     }
 }

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HardwareProfile))
+            if (HardwareProfile != null)
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsCollectionDefined(AvailabilitySets))
+            if (!(AvailabilitySets is ChangeTrackingList<AvailabilitySetListItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<HardwareProfileUpdate> hardwareProfile = default;
             Optional<StorageProfileUpdate> storageProfile = default;
             Optional<NetworkProfileUpdate> networkProfile = default;
-            Optional<IList<AvailabilitySetListItem>> availabilitySets = default;
+            IList<AvailabilitySetListItem> availabilitySets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value);
+                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value);
+                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value);
+                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilitySets"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<AvailabilitySetListItem> array = new List<AvailabilitySetListItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilitySetListItem.DeserializeAvailabilitySetListItem(item));
+                        array.Add(AvailabilitySetListItem.DeserializeAvailabilitySetListItem(item, options));
                     }
                     availabilitySets = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineUpdateProperties(hardwareProfile.Value, storageProfile.Value, networkProfile.Value, Optional.ToList(availabilitySets), serializedAdditionalRawData);
+            return new VirtualMachineUpdateProperties(hardwareProfile.Value, storageProfile.Value, networkProfile.Value, availabilitySets ?? new ChangeTrackingList<AvailabilitySetListItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineUpdateProperties>.Write(ModelReaderWriterOptions options)

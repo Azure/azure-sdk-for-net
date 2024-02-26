@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDefault))
+            if (IsDefault.HasValue)
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<SourceLifeCycle> array = new List<SourceLifeCycle>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceLifeCycle.DeserializeSourceLifeCycle(item));
+                        array.Add(SourceLifeCycle.DeserializeSourceLifeCycle(item, options));
                     }
                     lifecycles = array;
                     continue;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(IncrementPercent))
+            if (IncrementPercent.HasValue)
             {
                 writer.WritePropertyName("incrementPercent"u8);
                 writer.WriteNumberValue(IncrementPercent.Value);

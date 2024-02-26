@@ -27,12 +27,12 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClassificationPolicyId))
+            if (ClassificationPolicyId != null)
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (Optional.IsCollectionDefined(_labelsToUpsert))
+            if (!(_labelsToUpsert is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labelsToUpsert"u8);
                 writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -101,7 +101,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             Optional<string> classificationPolicyId = default;
-            Optional<IDictionary<string, BinaryData>> labelsToUpsert = default;
+            IDictionary<string, BinaryData> labelsToUpsert = default;
             Optional<string> id = default;
             ExceptionActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,7 +150,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReclassifyExceptionAction(id.Value, kind, serializedAdditionalRawData, classificationPolicyId.Value, Optional.ToDictionary(labelsToUpsert));
+            return new ReclassifyExceptionAction(id.Value, kind, serializedAdditionalRawData, classificationPolicyId.Value, labelsToUpsert ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<ReclassifyExceptionAction>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StoragePrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<StoragePrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StoragePrivateEndpointConnectionData> array = new List<StoragePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item));
+                        array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new StoragePrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

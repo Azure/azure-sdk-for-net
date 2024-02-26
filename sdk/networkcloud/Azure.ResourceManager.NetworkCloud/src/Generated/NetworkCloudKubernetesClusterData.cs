@@ -62,11 +62,26 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="controlPlaneNodeConfiguration"/>, <paramref name="initialAgentPoolConfigurations"/>, <paramref name="kubernetesVersion"/> or <paramref name="networkConfiguration"/> is null. </exception>
         public NetworkCloudKubernetesClusterData(AzureLocation location, ExtendedLocation extendedLocation, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, KubernetesClusterNetworkConfiguration networkConfiguration) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(controlPlaneNodeConfiguration, nameof(controlPlaneNodeConfiguration));
-            Argument.AssertNotNull(initialAgentPoolConfigurations, nameof(initialAgentPoolConfigurations));
-            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
-            Argument.AssertNotNull(networkConfiguration, nameof(networkConfiguration));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (controlPlaneNodeConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(controlPlaneNodeConfiguration));
+            }
+            if (initialAgentPoolConfigurations == null)
+            {
+                throw new ArgumentNullException(nameof(initialAgentPoolConfigurations));
+            }
+            if (kubernetesVersion == null)
+            {
+                throw new ArgumentNullException(nameof(kubernetesVersion));
+            }
+            if (networkConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(networkConfiguration));
+            }
 
             ExtendedLocation = extendedLocation;
             AttachedNetworkIds = new ChangeTrackingList<ResourceIdentifier>();

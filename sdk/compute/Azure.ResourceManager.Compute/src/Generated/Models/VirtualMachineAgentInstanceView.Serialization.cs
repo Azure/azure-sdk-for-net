@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmAgentVersion))
+            if (VmAgentVersion != null)
             {
                 writer.WritePropertyName("vmAgentVersion"u8);
                 writer.WriteStringValue(VmAgentVersion);
             }
-            if (Optional.IsCollectionDefined(ExtensionHandlers))
+            if (!(ExtensionHandlers is ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensionHandlers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<string> vmAgentVersion = default;
-            Optional<IReadOnlyList<VirtualMachineExtensionHandlerInstanceView>> extensionHandlers = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            IReadOnlyList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineExtensionHandlerInstanceView> array = new List<VirtualMachineExtensionHandlerInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionHandlerInstanceView.DeserializeVirtualMachineExtensionHandlerInstanceView(item));
+                        array.Add(VirtualMachineExtensionHandlerInstanceView.DeserializeVirtualMachineExtensionHandlerInstanceView(item, options));
                     }
                     extensionHandlers = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineAgentInstanceView(vmAgentVersion.Value, Optional.ToList(extensionHandlers), Optional.ToList(statuses), serializedAdditionalRawData);
+            return new VirtualMachineAgentInstanceView(vmAgentVersion.Value, extensionHandlers ?? new ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineAgentInstanceView>.Write(ModelReaderWriterOptions options)

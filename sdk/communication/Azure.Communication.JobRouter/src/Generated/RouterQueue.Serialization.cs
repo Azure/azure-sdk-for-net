@@ -37,17 +37,17 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DistributionPolicyId))
+            if (DistributionPolicyId != null)
             {
                 writer.WritePropertyName("distributionPolicyId"u8);
                 writer.WriteStringValue(DistributionPolicyId);
             }
-            if (Optional.IsCollectionDefined(_labels))
+            if (!(_labels is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ExceptionPolicyId))
+            if (ExceptionPolicyId != null)
             {
                 writer.WritePropertyName("exceptionPolicyId"u8);
                 writer.WriteStringValue(ExceptionPolicyId);
@@ -110,7 +110,7 @@ namespace Azure.Communication.JobRouter
             string id = default;
             Optional<string> name = default;
             Optional<string> distributionPolicyId = default;
-            Optional<IDictionary<string, object>> labels = default;
+            IDictionary<string, object> labels = default;
             Optional<string> exceptionPolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -168,7 +168,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterQueue(etag, id, name.Value, distributionPolicyId.Value, Optional.ToDictionary(labels), exceptionPolicyId.Value, serializedAdditionalRawData);
+            return new RouterQueue(etag, id, name.Value, distributionPolicyId.Value, labels ?? new ChangeTrackingDictionary<string, object>(), exceptionPolicyId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterQueue>.Write(ModelReaderWriterOptions options)

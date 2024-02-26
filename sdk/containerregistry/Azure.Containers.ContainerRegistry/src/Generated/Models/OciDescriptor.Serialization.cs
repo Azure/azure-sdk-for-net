@@ -17,22 +17,22 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
+            if (MediaType != null)
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (Optional.IsDefined(SizeInBytes))
+            if (SizeInBytes.HasValue)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (Optional.IsDefined(Digest))
+            if (Digest != null)
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
-            if (Optional.IsCollectionDefined(Urls))
+            if (!(Urls is ChangeTrackingList<Uri> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Annotations))
+            if (Annotations != null)
             {
                 if (Annotations != null)
                 {
@@ -71,7 +71,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<IList<Uri>> urls = default;
+            IList<Uri> urls = default;
             Optional<OciAnnotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, urls ?? new ChangeTrackingList<Uri>(), annotations.Value);
         }
     }
 }

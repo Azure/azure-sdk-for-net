@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ThirdPartyProviderConsent))
+            if (ThirdPartyProviderConsent != null)
             {
                 writer.WritePropertyName("thirdPartyProviderConsent"u8);
                 writer.WriteObjectValue(ThirdPartyProviderConsent);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    thirdPartyProviderConsent = ProviderConsentDefinition.DeserializeProviderConsentDefinition(property.Value);
+                    thirdPartyProviderConsent = ProviderConsentDefinition.DeserializeProviderConsentDefinition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,12 +15,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TollFreeNumber))
+            if (TollFreeNumber != null)
             {
                 writer.WritePropertyName("tollFreeNumber"u8);
                 writer.WriteStringValue(TollFreeNumber);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);

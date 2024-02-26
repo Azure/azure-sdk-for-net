@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MobileNetworkSimPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MobileNetworkSimPolicyData>> value = default;
+            IReadOnlyList<MobileNetworkSimPolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkSimPolicyData> array = new List<MobileNetworkSimPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(item));
+                        array.Add(MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SimPolicyListResult(value ?? new ChangeTrackingList<MobileNetworkSimPolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimPolicyListResult>.Write(ModelReaderWriterOptions options)

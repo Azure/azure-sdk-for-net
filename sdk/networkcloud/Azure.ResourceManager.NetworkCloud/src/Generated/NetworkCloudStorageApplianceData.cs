@@ -63,11 +63,26 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="administratorCredentials"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="storageApplianceSkuId"/> is null. </exception>
         public NetworkCloudStorageApplianceData(AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
-            Argument.AssertNotNull(rackId, nameof(rackId));
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
-            Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (administratorCredentials == null)
+            {
+                throw new ArgumentNullException(nameof(administratorCredentials));
+            }
+            if (rackId == null)
+            {
+                throw new ArgumentNullException(nameof(rackId));
+            }
+            if (serialNumber == null)
+            {
+                throw new ArgumentNullException(nameof(serialNumber));
+            }
+            if (storageApplianceSkuId == null)
+            {
+                throw new ArgumentNullException(nameof(storageApplianceSkuId));
+            }
 
             ExtendedLocation = extendedLocation;
             AdministratorCredentials = administratorCredentials;

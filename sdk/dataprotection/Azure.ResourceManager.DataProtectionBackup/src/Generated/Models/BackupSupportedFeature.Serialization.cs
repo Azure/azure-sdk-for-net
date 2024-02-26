@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FeatureName))
+            if (FeatureName != null)
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (Optional.IsDefined(SupportStatus))
+            if (SupportStatus.HasValue)
             {
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExposureControlledFeatures))
+            if (!(ExposureControlledFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exposureControlledFeatures"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             Optional<string> featureName = default;
             Optional<FeatureSupportStatus> supportStatus = default;
-            Optional<IReadOnlyList<string>> exposureControlledFeatures = default;
+            IReadOnlyList<string> exposureControlledFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupSupportedFeature(featureName.Value, Optional.ToNullable(supportStatus), Optional.ToList(exposureControlledFeatures), serializedAdditionalRawData);
+            return new BackupSupportedFeature(featureName.Value, Optional.ToNullable(supportStatus), exposureControlledFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupSupportedFeature>.Write(ModelReaderWriterOptions options)

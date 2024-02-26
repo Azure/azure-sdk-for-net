@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsCollectionDefined(ContainerCredentials))
+            if (!(ContainerCredentials is ChangeTrackingList<AzureStorageAccountContainerCredential> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containerCredentials"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Expiry))
+            if (Expiry.HasValue)
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(Expiry.Value, "O");
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<IReadOnlyList<AzureStorageAccountContainerCredential>> containerCredentials = default;
+            IReadOnlyList<AzureStorageAccountContainerCredential> containerCredentials = default;
             Optional<DateTimeOffset> expiry = default;
             CredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureStorageAccountContainerCredential> array = new List<AzureStorageAccountContainerCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item));
+                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item, options));
                     }
                     containerCredentials = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageAccountCredential(credentialType, serializedAdditionalRawData, storageAccountId.Value, Optional.ToList(containerCredentials), Optional.ToNullable(expiry));
+            return new AzureStorageAccountCredential(credentialType, serializedAdditionalRawData, storageAccountId.Value, containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>(), Optional.ToNullable(expiry));
         }
 
         BinaryData IPersistableModel<AzureStorageAccountCredential>.Write(ModelReaderWriterOptions options)

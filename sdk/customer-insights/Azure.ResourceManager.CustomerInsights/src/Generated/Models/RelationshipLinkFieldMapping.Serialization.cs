@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("interactionFieldName"u8);
             writer.WriteStringValue(InteractionFieldName);
-            if (Optional.IsDefined(LinkType))
+            if (LinkType.HasValue)
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToSerialString());

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AlertRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AlertRuleData>> value = default;
+            IReadOnlyList<AlertRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AlertRuleData> array = new List<AlertRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertRuleData.DeserializeAlertRuleData(item));
+                        array.Add(AlertRuleData.DeserializeAlertRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleResourceCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new AlertRuleResourceCollection(value ?? new ChangeTrackingList<AlertRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleResourceCollection>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SearchPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SearchPrivateLinkResource>> value = default;
+            IReadOnlyList<SearchPrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchPrivateLinkResource> array = new List<SearchPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource(item));
+                        array.Add(SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkResourcesResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PrivateLinkResourcesResult(value ?? new ChangeTrackingList<SearchPrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkResourcesResult>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("requests"u8);
             writer.WriteObjectValue(Requests);
-            if (Optional.IsDefined(Limits))
+            if (Limits != null)
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 if (property.NameEquals("requests"u8))
                 {
-                    requests = ContainerResourceRequestsContent.DeserializeContainerResourceRequestsContent(property.Value);
+                    requests = ContainerResourceRequestsContent.DeserializeContainerResourceRequestsContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    limits = ContainerResourceLimits.DeserializeContainerResourceLimits(property.Value);
+                    limits = ContainerResourceLimits.DeserializeContainerResourceLimits(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

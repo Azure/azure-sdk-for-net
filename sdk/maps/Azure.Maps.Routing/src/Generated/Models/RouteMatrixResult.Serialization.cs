@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing.Models
                 return null;
             }
             Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<IList<RouteMatrix>>> matrix = default;
+            IReadOnlyList<IList<RouteMatrix>> matrix = default;
             Optional<RouteMatrixSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteMatrixResult(formatVersion.Value, Optional.ToList(matrix), summary.Value);
+            return new RouteMatrixResult(formatVersion.Value, matrix ?? new ChangeTrackingList<IList<RouteMatrix>>(), summary.Value);
         }
     }
 }

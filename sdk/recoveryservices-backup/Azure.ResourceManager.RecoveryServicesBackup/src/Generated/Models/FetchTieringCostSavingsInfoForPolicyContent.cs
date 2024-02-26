@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -21,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public FetchTieringCostSavingsInfoForPolicyContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string policyName) : base(sourceTierType, targetTierType)
         {
-            Argument.AssertNotNull(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
 
             PolicyName = policyName;
             ObjectType = "FetchTieringCostSavingsInfoForPolicyRequest";

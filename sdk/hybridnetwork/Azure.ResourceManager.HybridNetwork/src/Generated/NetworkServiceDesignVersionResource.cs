@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual async Task<Response<NetworkServiceDesignVersionResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            if (tagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(tagsObject));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.Update");
             scope.Start();
@@ -325,7 +328,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual Response<NetworkServiceDesignVersionResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            if (tagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(tagsObject));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.Update");
             scope.Start();
@@ -368,7 +374,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionUpdateState"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkServiceDesignVersionUpdateState>> UpdateStateAsync(WaitUntil waitUntil, NetworkServiceDesignVersionUpdateState networkServiceDesignVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkServiceDesignVersionUpdateState, nameof(networkServiceDesignVersionUpdateState));
+            if (networkServiceDesignVersionUpdateState == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionUpdateState));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.UpdateState");
             scope.Start();
@@ -414,7 +423,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionUpdateState"/> is null. </exception>
         public virtual ArmOperation<NetworkServiceDesignVersionUpdateState> UpdateState(WaitUntil waitUntil, NetworkServiceDesignVersionUpdateState networkServiceDesignVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkServiceDesignVersionUpdateState, nameof(networkServiceDesignVersionUpdateState));
+            if (networkServiceDesignVersionUpdateState == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionUpdateState));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.UpdateState");
             scope.Start();
@@ -460,8 +472,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetworkServiceDesignVersionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.AddTag");
             scope.Start();
@@ -522,8 +540,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetworkServiceDesignVersionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.AddTag");
             scope.Start();
@@ -583,7 +607,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkServiceDesignVersionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.SetTags");
             scope.Start();
@@ -640,7 +667,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkServiceDesignVersionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.SetTags");
             scope.Start();
@@ -697,7 +727,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetworkServiceDesignVersionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.RemoveTag");
             scope.Start();
@@ -757,7 +790,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetworkServiceDesignVersionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionResource.RemoveTag");
             scope.Start();

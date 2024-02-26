@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -21,8 +20,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="workerSelectors"/> is null. </exception>
         internal ConditionalWorkerSelectorAttachment(RouterRule condition, IEnumerable<RouterWorkerSelector> workerSelectors)
         {
-            Argument.AssertNotNull(condition, nameof(condition));
-            Argument.AssertNotNull(workerSelectors, nameof(workerSelectors));
+            if (condition == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+            if (workerSelectors == null)
+            {
+                throw new ArgumentNullException(nameof(workerSelectors));
+            }
 
             Kind = WorkerSelectorAttachmentKind.Conditional;
             Condition = condition;

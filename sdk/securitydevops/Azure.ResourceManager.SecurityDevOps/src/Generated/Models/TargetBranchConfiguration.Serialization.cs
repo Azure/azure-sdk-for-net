@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Names))
+            if (!(Names is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IList<string>> names = default;
+            IList<string> names = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetBranchConfiguration(Optional.ToList(names), serializedAdditionalRawData);
+            return new TargetBranchConfiguration(names ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetBranchConfiguration>.Write(ModelReaderWriterOptions options)

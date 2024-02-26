@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Service))
+            if (Service != null)
             {
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> service = default;
-            Optional<IList<AzureLocation>> locations = default;
+            IList<AzureLocation> locations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEndpointProperties(service.Value, Optional.ToList(locations), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ServiceEndpointProperties(service.Value, locations ?? new ChangeTrackingList<AzureLocation>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceEndpointProperties>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    plan = LogicResourceReference.DeserializeLogicResourceReference(property.Value);
+                    plan = LogicResourceReference.DeserializeLogicResourceReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

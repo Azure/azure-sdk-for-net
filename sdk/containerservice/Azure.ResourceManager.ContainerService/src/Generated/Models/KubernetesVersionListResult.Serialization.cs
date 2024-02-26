@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<KubernetesVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KubernetesVersion>> values = default;
+            IReadOnlyList<KubernetesVersion> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<KubernetesVersion> array = new List<KubernetesVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersion.DeserializeKubernetesVersion(item));
+                        array.Add(KubernetesVersion.DeserializeKubernetesVersion(item, options));
                     }
                     values = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionListResult(Optional.ToList(values), serializedAdditionalRawData);
+            return new KubernetesVersionListResult(values ?? new ChangeTrackingList<KubernetesVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionListResult>.Write(ModelReaderWriterOptions options)

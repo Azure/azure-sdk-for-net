@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArtifactAccessCredential(document.RootElement, options);
+            return DeserializeArtifactAccessCredential(document.RootElement, options);
         }
 
         internal static UnknownArtifactAccessCredential DeserializeUnknownArtifactAccessCredential(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownArtifactAccessCredential(document.RootElement, options);
+                        return DeserializeArtifactAccessCredential(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ArtifactAccessCredential)} does not support '{options.Format}' format.");

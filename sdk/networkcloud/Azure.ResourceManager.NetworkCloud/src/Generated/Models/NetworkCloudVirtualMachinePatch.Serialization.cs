@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmImageRepositoryCredentials))
+            if (VmImageRepositoryCredentials != null)
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
                 writer.WriteObjectValue(VmImageRepositoryCredentials);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ImageRepositoryCredentials> vmImageRepositoryCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            vmImageRepositoryCredentials = ImageRepositoryCredentials.DeserializeImageRepositoryCredentials(property0.Value);
+                            vmImageRepositoryCredentials = ImageRepositoryCredentials.DeserializeImageRepositoryCredentials(property0.Value, options);
                             continue;
                         }
                     }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudVirtualMachinePatch(Optional.ToDictionary(tags), vmImageRepositoryCredentials.Value, serializedAdditionalRawData);
+            return new NetworkCloudVirtualMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), vmImageRepositoryCredentials.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudVirtualMachinePatch>.Write(ModelReaderWriterOptions options)

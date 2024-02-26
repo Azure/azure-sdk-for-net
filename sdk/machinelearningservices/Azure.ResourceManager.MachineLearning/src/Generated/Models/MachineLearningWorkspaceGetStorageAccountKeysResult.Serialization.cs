@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
+            if (options.Format != "W" && UserStorageKey != null)
             {
                 writer.WritePropertyName("userStorageKey"u8);
                 writer.WriteStringValue(UserStorageKey);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BootDiagnostics))
+            if (BootDiagnostics != null)
             {
                 writer.WritePropertyName("bootDiagnostics"u8);
                 writer.WriteObjectValue(BootDiagnostics);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    bootDiagnostics = BootDiagnostics.DeserializeBootDiagnostics(property.Value);
+                    bootDiagnostics = BootDiagnostics.DeserializeBootDiagnostics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

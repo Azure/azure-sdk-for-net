@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewPrivateLinkResourceData> array = new List<PurviewPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(item));
+                        array.Add(PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

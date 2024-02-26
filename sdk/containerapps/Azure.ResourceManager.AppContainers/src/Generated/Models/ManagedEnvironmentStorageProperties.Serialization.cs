@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureFile))
+            if (AzureFile != null)
             {
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value);
+                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SelectedItemValuePath))
+            if (SelectedItemValuePath != null)
             {
                 writer.WritePropertyName("selectedItemValuePath"u8);
                 writer.WriteStringValue(SelectedItemValuePath);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ParameterReference))
+            if (ParameterReference != null)
             {
                 writer.WritePropertyName("parameterReference"u8);
                 writer.WriteStringValue(ParameterReference);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (IsRequired.HasValue)
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);

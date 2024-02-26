@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public HubspotLinkedService(object clientId)
         {
-            Argument.AssertNotNull(clientId, nameof(clientId));
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
 
             ClientId = clientId;
             Type = "Hubspot";

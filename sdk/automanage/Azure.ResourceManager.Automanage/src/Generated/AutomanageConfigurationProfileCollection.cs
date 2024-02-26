@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomanageConfigurationProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationProfileName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileName));
+            }
+            if (configurationProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutomanageConfigurationProfileResource> CreateOrUpdate(WaitUntil waitUntil, string configurationProfileName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileName));
+            }
+            if (configurationProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         public virtual async Task<Response<AutomanageConfigurationProfileResource>> GetAsync(string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
+            if (configurationProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileName));
+            }
+            if (configurationProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileName));
+            }
 
             using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         public virtual Response<AutomanageConfigurationProfileResource> Get(string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
+            if (configurationProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileName));
+            }
+            if (configurationProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileName));
+            }
 
             using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
+            if (configurationProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileName));
+            }
+            if (configurationProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileName));
+            }
 
             using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
+            if (configurationProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileName));
+            }
+            if (configurationProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileName));
+            }
 
             using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomanageConfigurationProfileResource>> GetIfExistsAsync(string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
+            if (configurationProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileName));
+            }
+            if (configurationProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileName));
+            }
 
             using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         public virtual NullableResponse<AutomanageConfigurationProfileResource> GetIfExists(string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
+            if (configurationProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileName));
+            }
+            if (configurationProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileName));
+            }
 
             using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.GetIfExists");
             scope.Start();

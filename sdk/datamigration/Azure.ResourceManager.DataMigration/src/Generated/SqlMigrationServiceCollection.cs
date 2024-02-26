@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlMigrationServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sqlMigrationServiceName, SqlMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sqlMigrationServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlMigrationServiceName));
+            }
+            if (sqlMigrationServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlMigrationServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlMigrationServiceResource> CreateOrUpdate(WaitUntil waitUntil, string sqlMigrationServiceName, SqlMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sqlMigrationServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlMigrationServiceName));
+            }
+            if (sqlMigrationServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlMigrationServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> is null. </exception>
         public virtual async Task<Response<SqlMigrationServiceResource>> GetAsync(string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
+            if (sqlMigrationServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlMigrationServiceName));
+            }
+            if (sqlMigrationServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlMigrationServiceName));
+            }
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> is null. </exception>
         public virtual Response<SqlMigrationServiceResource> Get(string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
+            if (sqlMigrationServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlMigrationServiceName));
+            }
+            if (sqlMigrationServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlMigrationServiceName));
+            }
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
+            if (sqlMigrationServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlMigrationServiceName));
+            }
+            if (sqlMigrationServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlMigrationServiceName));
+            }
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
+            if (sqlMigrationServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlMigrationServiceName));
+            }
+            if (sqlMigrationServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlMigrationServiceName));
+            }
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlMigrationServiceResource>> GetIfExistsAsync(string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
+            if (sqlMigrationServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlMigrationServiceName));
+            }
+            if (sqlMigrationServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlMigrationServiceName));
+            }
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> is null. </exception>
         public virtual NullableResponse<SqlMigrationServiceResource> GetIfExists(string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
+            if (sqlMigrationServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlMigrationServiceName));
+            }
+            if (sqlMigrationServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlMigrationServiceName));
+            }
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.GetIfExists");
             scope.Start();

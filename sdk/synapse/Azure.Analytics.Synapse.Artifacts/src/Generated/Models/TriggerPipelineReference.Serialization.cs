@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PipelineReference))
+            if (PipelineReference != null)
             {
                 writer.WritePropertyName("pipelineReference"u8);
                 writer.WriteObjectValue(PipelineReference);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             Optional<PipelineReference> pipelineReference = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            IDictionary<string, object> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineReference"u8))
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TriggerPipelineReference(pipelineReference.Value, Optional.ToDictionary(parameters));
+            return new TriggerPipelineReference(pipelineReference.Value, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class TriggerPipelineReferenceConverter : JsonConverter<TriggerPipelineReference>

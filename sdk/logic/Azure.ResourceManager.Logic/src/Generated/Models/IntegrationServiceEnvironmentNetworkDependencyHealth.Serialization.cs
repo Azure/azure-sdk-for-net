@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = IntegrationServiceErrorInfo.DeserializeIntegrationServiceErrorInfo(property.Value);
+                    error = IntegrationServiceErrorInfo.DeserializeIntegrationServiceErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))

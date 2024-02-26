@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceAppendTags"/> is null. </exception>
         public virtual async Task<Response> AppendTagsAsync(ThreatIntelligenceAppendTags threatIntelligenceAppendTags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceAppendTags, nameof(threatIntelligenceAppendTags));
+            if (threatIntelligenceAppendTags == null)
+            {
+                throw new ArgumentNullException(nameof(threatIntelligenceAppendTags));
+            }
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorResource.AppendTags");
             scope.Start();
@@ -323,7 +326,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceAppendTags"/> is null. </exception>
         public virtual Response AppendTags(ThreatIntelligenceAppendTags threatIntelligenceAppendTags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceAppendTags, nameof(threatIntelligenceAppendTags));
+            if (threatIntelligenceAppendTags == null)
+            {
+                throw new ArgumentNullException(nameof(threatIntelligenceAppendTags));
+            }
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorResource.AppendTags");
             scope.Start();

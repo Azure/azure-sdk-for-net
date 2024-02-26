@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.Sphere.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(OSFeedType))
+            if (OSFeedType.HasValue)
             {
                 writer.WritePropertyName("osFeedType"u8);
                 writer.WriteStringValue(OSFeedType.Value.ToString());
             }
-            if (Optional.IsDefined(UpdatePolicy))
+            if (UpdatePolicy.HasValue)
             {
                 writer.WritePropertyName("updatePolicy"u8);
                 writer.WriteStringValue(UpdatePolicy.Value.ToString());
             }
-            if (Optional.IsDefined(AllowCrashDumpsCollection))
+            if (AllowCrashDumpsCollection.HasValue)
             {
                 writer.WritePropertyName("allowCrashDumpsCollection"u8);
                 writer.WriteStringValue(AllowCrashDumpsCollection.Value.ToString());
             }
-            if (Optional.IsDefined(RegionalDataBoundary))
+            if (RegionalDataBoundary.HasValue)
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());

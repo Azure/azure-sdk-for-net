@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="isPrimaryNic"/> is null. </exception>
         public InMageRcmNicContent(string nicId, string isPrimaryNic)
         {
-            Argument.AssertNotNull(nicId, nameof(nicId));
-            Argument.AssertNotNull(isPrimaryNic, nameof(isPrimaryNic));
+            if (nicId == null)
+            {
+                throw new ArgumentNullException(nameof(nicId));
+            }
+            if (isPrimaryNic == null)
+            {
+                throw new ArgumentNullException(nameof(isPrimaryNic));
+            }
 
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;

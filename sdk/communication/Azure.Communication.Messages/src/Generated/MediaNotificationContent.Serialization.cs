@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);

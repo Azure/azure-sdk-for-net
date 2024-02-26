@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMessageTextAnnotation(document.RootElement, options);
+            return DeserializeMessageTextAnnotation(document.RootElement, options);
         }
 
         internal static UnknownMessageTextAnnotation DeserializeUnknownMessageTextAnnotation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMessageTextAnnotation(document.RootElement, options);
+                        return DeserializeMessageTextAnnotation(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MessageTextAnnotation)} does not support '{options.Format}' format.");

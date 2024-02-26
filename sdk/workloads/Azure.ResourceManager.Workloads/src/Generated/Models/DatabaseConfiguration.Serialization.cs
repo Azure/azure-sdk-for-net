@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatabaseType))
+            if (DatabaseType.HasValue)
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(VirtualMachineConfiguration);
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
-            if (Optional.IsDefined(DiskConfiguration))
+            if (DiskConfiguration != null)
             {
                 writer.WritePropertyName("diskConfiguration"u8);
                 writer.WriteObjectValue(DiskConfiguration);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    diskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value);
+                    diskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

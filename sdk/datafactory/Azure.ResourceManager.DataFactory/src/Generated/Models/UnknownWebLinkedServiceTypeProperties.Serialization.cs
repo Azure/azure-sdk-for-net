@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWebLinkedServiceTypeProperties(document.RootElement, options);
+            return DeserializeWebLinkedServiceTypeProperties(document.RootElement, options);
         }
 
         internal static UnknownWebLinkedServiceTypeProperties DeserializeUnknownWebLinkedServiceTypeProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWebLinkedServiceTypeProperties(document.RootElement, options);
+                        return DeserializeWebLinkedServiceTypeProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(WebLinkedServiceTypeProperties)} does not support '{options.Format}' format.");

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendMetrics))
+            if (SendMetrics.HasValue)
             {
                 writer.WritePropertyName("sendMetrics"u8);
                 writer.WriteStringValue(SendMetrics.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<NewRelicObservabilityFilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UserEmail))
+            if (UserEmail != null)
             {
                 writer.WritePropertyName("userEmail"u8);
                 writer.WriteStringValue(UserEmail);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             Optional<NewRelicObservabilitySendMetricsStatus> sendMetrics = default;
-            Optional<IList<NewRelicObservabilityFilteringTag>> filteringTags = default;
+            IList<NewRelicObservabilityFilteringTag> filteringTags = default;
             Optional<string> userEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicObservabilityFilteringTag> array = new List<NewRelicObservabilityFilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityFilteringTag.DeserializeNewRelicObservabilityFilteringTag(item));
+                        array.Add(NewRelicObservabilityFilteringTag.DeserializeNewRelicObservabilityFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityMetricRules(Optional.ToNullable(sendMetrics), Optional.ToList(filteringTags), userEmail.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityMetricRules(Optional.ToNullable(sendMetrics), filteringTags ?? new ChangeTrackingList<NewRelicObservabilityFilteringTag>(), userEmail.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityMetricRules>.Write(ModelReaderWriterOptions options)

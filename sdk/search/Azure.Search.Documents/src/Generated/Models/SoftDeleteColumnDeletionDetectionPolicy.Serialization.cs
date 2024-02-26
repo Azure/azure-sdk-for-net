@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftDeleteColumnName))
+            if (SoftDeleteColumnName != null)
             {
                 writer.WritePropertyName("softDeleteColumnName"u8);
                 writer.WriteStringValue(SoftDeleteColumnName);
             }
-            if (Optional.IsDefined(SoftDeleteMarkerValue))
+            if (SoftDeleteMarkerValue != null)
             {
                 writer.WritePropertyName("softDeleteMarkerValue"u8);
                 writer.WriteStringValue(SoftDeleteMarkerValue);

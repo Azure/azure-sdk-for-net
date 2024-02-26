@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string content = default;
-            Optional<IReadOnlyList<float>> polygon = default;
+            IReadOnlyList<float> polygon = default;
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentLine(content, Optional.ToList(polygon), spans);
+            return new DocumentLine(content, polygon ?? new ChangeTrackingList<float>(), spans);
         }
     }
 }

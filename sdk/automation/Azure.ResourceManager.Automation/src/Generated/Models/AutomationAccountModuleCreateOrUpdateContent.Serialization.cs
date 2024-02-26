@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AutomationContentLink contentLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("contentLink"u8))
                         {
-                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                     }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountModuleCreateOrUpdateContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), contentLink, serializedAdditionalRawData);
+            return new AutomationAccountModuleCreateOrUpdateContent(name.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), contentLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountModuleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

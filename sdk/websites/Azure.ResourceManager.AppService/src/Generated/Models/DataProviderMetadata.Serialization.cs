@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderName))
+            if (ProviderName != null)
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PropertyBag))
+            if (options.Format != "W" && !(PropertyBag is ChangeTrackingList<DataProviderKeyValuePair> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<string> providerName = default;
-            Optional<IReadOnlyList<DataProviderKeyValuePair>> propertyBag = default;
+            IReadOnlyList<DataProviderKeyValuePair> propertyBag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
+                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
                     }
                     propertyBag = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProviderMetadata(providerName.Value, Optional.ToList(propertyBag), serializedAdditionalRawData);
+            return new DataProviderMetadata(providerName.Value, propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProviderMetadata>.Write(ModelReaderWriterOptions options)

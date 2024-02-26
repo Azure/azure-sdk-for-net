@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(SourcePropertyName);
             writer.WritePropertyName("targetPropertyName"u8);
             writer.WriteStringValue(TargetPropertyName);
-            if (Optional.IsDefined(LinkType))
+            if (LinkType.HasValue)
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToSerialString());

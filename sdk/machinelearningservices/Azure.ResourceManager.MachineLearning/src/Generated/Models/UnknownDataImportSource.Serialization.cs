@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Connection))
+            if (Connection != null)
             {
                 if (Connection != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataImportSource(document.RootElement, options);
+            return DeserializeDataImportSource(document.RootElement, options);
         }
 
         internal static UnknownDataImportSource DeserializeUnknownDataImportSource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataImportSource(document.RootElement, options);
+                        return DeserializeDataImportSource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataImportSource)} does not support '{options.Format}' format.");

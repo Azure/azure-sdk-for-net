@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVault))
+            if (SourceVault != null)
             {
                 writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
             }
-            if (Optional.IsCollectionDefined(VaultCertificates))
+            if (!(VaultCertificates is ChangeTrackingList<VaultCertificate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vaultCertificates"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<WritableSubResource> sourceVault = default;
-            Optional<IList<VaultCertificate>> vaultCertificates = default;
+            IList<VaultCertificate> vaultCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VaultCertificate> array = new List<VaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultCertificate.DeserializeVaultCertificate(item));
+                        array.Add(VaultCertificate.DeserializeVaultCertificate(item, options));
                     }
                     vaultCertificates = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultSecretGroup(sourceVault, Optional.ToList(vaultCertificates), serializedAdditionalRawData);
+            return new VaultSecretGroup(sourceVault, vaultCertificates ?? new ChangeTrackingList<VaultCertificate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultSecretGroup>.Write(ModelReaderWriterOptions options)

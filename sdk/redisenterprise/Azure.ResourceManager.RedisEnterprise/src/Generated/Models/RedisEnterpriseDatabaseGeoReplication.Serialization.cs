@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupNickname))
+            if (GroupNickname != null)
             {
                 writer.WritePropertyName("groupNickname"u8);
                 writer.WriteStringValue(GroupNickname);
             }
-            if (Optional.IsCollectionDefined(LinkedDatabases))
+            if (!(LinkedDatabases is ChangeTrackingList<RedisEnterpriseLinkedDatabase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkedDatabases"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             Optional<string> groupNickname = default;
-            Optional<IList<RedisEnterpriseLinkedDatabase>> linkedDatabases = default;
+            IList<RedisEnterpriseLinkedDatabase> linkedDatabases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterpriseLinkedDatabase> array = new List<RedisEnterpriseLinkedDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterpriseLinkedDatabase.DeserializeRedisEnterpriseLinkedDatabase(item));
+                        array.Add(RedisEnterpriseLinkedDatabase.DeserializeRedisEnterpriseLinkedDatabase(item, options));
                     }
                     linkedDatabases = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDatabaseGeoReplication(groupNickname.Value, Optional.ToList(linkedDatabases), serializedAdditionalRawData);
+            return new RedisEnterpriseDatabaseGeoReplication(groupNickname.Value, linkedDatabases ?? new ChangeTrackingList<RedisEnterpriseLinkedDatabase>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabaseGeoReplication>.Write(ModelReaderWriterOptions options)

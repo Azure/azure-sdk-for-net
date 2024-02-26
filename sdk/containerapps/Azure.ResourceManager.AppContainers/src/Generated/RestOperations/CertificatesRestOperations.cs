@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CertificateCollection>> ListAsync(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CertificateCollection> List(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -148,10 +190,38 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAppCertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, environmentName, certificateName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +251,38 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAppCertificateData> Get(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, environmentName, certificateName);
             _pipeline.Send(message, cancellationToken);
@@ -241,11 +339,42 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAppCertificateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, ContainerAppCertificateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, environmentName, certificateName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -274,11 +403,42 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAppCertificateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, ContainerAppCertificateData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, environmentName, certificateName, data);
             _pipeline.Send(message, cancellationToken);
@@ -328,10 +488,38 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, environmentName, certificateName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -355,10 +543,38 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, environmentName, certificateName);
             _pipeline.Send(message, cancellationToken);
@@ -409,11 +625,42 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAppCertificateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, ContainerAppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, environmentName, certificateName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -442,11 +689,42 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAppCertificateData> Update(string subscriptionId, string resourceGroupName, string environmentName, string certificateName, ContainerAppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, environmentName, certificateName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -488,10 +766,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CertificateCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -519,10 +821,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CertificateCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, environmentName);
             _pipeline.Send(message, cancellationToken);

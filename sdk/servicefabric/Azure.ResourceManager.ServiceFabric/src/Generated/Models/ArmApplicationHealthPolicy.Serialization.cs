@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConsiderWarningAsError))
+            if (ConsiderWarningAsError.HasValue)
             {
                 writer.WritePropertyName("considerWarningAsError"u8);
                 writer.WriteBooleanValue(ConsiderWarningAsError.Value);
             }
-            if (Optional.IsDefined(MaxPercentUnhealthyDeployedApplications))
+            if (MaxPercentUnhealthyDeployedApplications.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyDeployedApplications.Value);
             }
-            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
+            if (DefaultServiceTypeHealthPolicy != null)
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
+            if (!(ServiceTypeHealthPolicyMap is ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicyMap"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<bool> considerWarningAsError = default;
             Optional<int> maxPercentUnhealthyDeployedApplications = default;
             Optional<ArmServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
-            Optional<IDictionary<string, ArmServiceTypeHealthPolicy>> serviceTypeHealthPolicyMap = default;
+            IDictionary<string, ArmServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    defaultServiceTypeHealthPolicy = ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(property.Value);
+                    defaultServiceTypeHealthPolicy = ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceTypeHealthPolicyMap"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ArmServiceTypeHealthPolicy> dictionary = new Dictionary<string, ArmServiceTypeHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(property0.Value, options));
                     }
                     serviceTypeHealthPolicyMap = dictionary;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationHealthPolicy(Optional.ToNullable(considerWarningAsError), Optional.ToNullable(maxPercentUnhealthyDeployedApplications), defaultServiceTypeHealthPolicy.Value, Optional.ToDictionary(serviceTypeHealthPolicyMap), serializedAdditionalRawData);
+            return new ArmApplicationHealthPolicy(Optional.ToNullable(considerWarningAsError), Optional.ToNullable(maxPercentUnhealthyDeployedApplications), defaultServiceTypeHealthPolicy.Value, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)

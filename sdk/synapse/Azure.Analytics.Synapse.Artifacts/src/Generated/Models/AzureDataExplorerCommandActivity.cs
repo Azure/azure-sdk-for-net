@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
         public AzureDataExplorerCommandActivity(string name, object command) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(command, nameof(command));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
 
             Command = command;
             Type = "AzureDataExplorerCommand";

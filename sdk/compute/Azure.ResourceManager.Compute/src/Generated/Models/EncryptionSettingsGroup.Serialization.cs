@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (Optional.IsCollectionDefined(EncryptionSettings))
+            if (!(EncryptionSettings is ChangeTrackingList<EncryptionSettingsElement> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EncryptionSettingsVersion))
+            if (EncryptionSettingsVersion != null)
             {
                 writer.WritePropertyName("encryptionSettingsVersion"u8);
                 writer.WriteStringValue(EncryptionSettingsVersion);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool enabled = default;
-            Optional<IList<EncryptionSettingsElement>> encryptionSettings = default;
+            IList<EncryptionSettingsElement> encryptionSettings = default;
             Optional<string> encryptionSettingsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<EncryptionSettingsElement> array = new List<EncryptionSettingsElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionSettingsElement.DeserializeEncryptionSettingsElement(item));
+                        array.Add(EncryptionSettingsElement.DeserializeEncryptionSettingsElement(item, options));
                     }
                     encryptionSettings = array;
                     continue;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionSettingsGroup(enabled, Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value, serializedAdditionalRawData);
+            return new EncryptionSettingsGroup(enabled, encryptionSettings ?? new ChangeTrackingList<EncryptionSettingsElement>(), encryptionSettingsVersion.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionSettingsGroup>.Write(ModelReaderWriterOptions options)

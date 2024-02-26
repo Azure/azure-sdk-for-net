@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SystemCreatedAcrAccount))
+            if (SystemCreatedAcrAccount != null)
             {
                 if (SystemCreatedAcrAccount != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemCreatedAcrAccount");
                 }
             }
-            if (Optional.IsDefined(UserCreatedAcrAccount))
+            if (UserCreatedAcrAccount != null)
             {
                 if (UserCreatedAcrAccount != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         systemCreatedAcrAccount = null;
                         continue;
                     }
-                    systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value);
+                    systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userCreatedAcrAccount"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userCreatedAcrAccount = null;
                         continue;
                     }
-                    userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value);
+                    userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPercentUnhealthyServices))
+            if (MaxPercentUnhealthyServices.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);

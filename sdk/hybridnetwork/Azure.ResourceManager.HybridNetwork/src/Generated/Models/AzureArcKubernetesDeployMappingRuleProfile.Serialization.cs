@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HelmMappingRuleProfile))
+            if (HelmMappingRuleProfile != null)
             {
                 writer.WritePropertyName("helmMappingRuleProfile"u8);
                 writer.WriteObjectValue(HelmMappingRuleProfile);
             }
-            if (Optional.IsDefined(ApplicationEnablement))
+            if (ApplicationEnablement.HasValue)
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    helmMappingRuleProfile = HelmMappingRuleProfile.DeserializeHelmMappingRuleProfile(property.Value);
+                    helmMappingRuleProfile = HelmMappingRuleProfile.DeserializeHelmMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))

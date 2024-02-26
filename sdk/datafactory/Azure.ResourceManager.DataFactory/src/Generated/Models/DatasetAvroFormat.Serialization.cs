@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Optional.IsDefined(Serializer))
+            if (Serializer != null)
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Deserializer != null)
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);

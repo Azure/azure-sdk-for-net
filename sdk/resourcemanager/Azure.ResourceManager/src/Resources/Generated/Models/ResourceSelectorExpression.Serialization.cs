@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(In))
+            if (!(In is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("in"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotIn))
+            if (!(NotIn is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notIn"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             Optional<ResourceSelectorKind> kind = default;
-            Optional<IList<string>> @in = default;
-            Optional<IList<string>> notIn = default;
+            IList<string> @in = default;
+            IList<string> notIn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSelectorExpression(Optional.ToNullable(kind), Optional.ToList(@in), Optional.ToList(notIn), serializedAdditionalRawData);
+            return new ResourceSelectorExpression(Optional.ToNullable(kind), @in ?? new ChangeTrackingList<string>(), notIn ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSelectorExpression>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Options))
+            if (Options != null)
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStringValue(Options);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IList<string>> resources = default;
+            IList<string> resources = default;
             Optional<string> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportTemplate(Optional.ToList(resources), options0.Value, serializedAdditionalRawData);
+            return new ExportTemplate(resources ?? new ChangeTrackingList<string>(), options0.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportTemplate>.Write(ModelReaderWriterOptions options)

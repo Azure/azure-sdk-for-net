@@ -27,12 +27,12 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Grounding))
+            if (Grounding != null)
             {
                 writer.WritePropertyName("grounding"u8);
                 writer.WriteObjectValue(Grounding);
             }
-            if (Optional.IsDefined(Ocr))
+            if (Ocr != null)
             {
                 writer.WritePropertyName("ocr"u8);
                 writer.WriteObjectValue(Ocr);
@@ -87,7 +87,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    grounding = AzureChatGroundingEnhancementConfiguration.DeserializeAzureChatGroundingEnhancementConfiguration(property.Value);
+                    grounding = AzureChatGroundingEnhancementConfiguration.DeserializeAzureChatGroundingEnhancementConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ocr"u8))
@@ -96,7 +96,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    ocr = AzureChatOCREnhancementConfiguration.DeserializeAzureChatOCREnhancementConfiguration(property.Value);
+                    ocr = AzureChatOCREnhancementConfiguration.DeserializeAzureChatOCREnhancementConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

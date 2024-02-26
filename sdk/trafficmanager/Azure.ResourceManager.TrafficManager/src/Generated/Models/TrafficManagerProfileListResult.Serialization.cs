@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<TrafficManagerProfileData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TrafficManagerProfileData>> value = default;
+            IReadOnlyList<TrafficManagerProfileData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerProfileData> array = new List<TrafficManagerProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrafficManagerProfileData.DeserializeTrafficManagerProfileData(item));
+                        array.Add(TrafficManagerProfileData.DeserializeTrafficManagerProfileData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerProfileListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new TrafficManagerProfileListResult(value ?? new ChangeTrackingList<TrafficManagerProfileData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerProfileListResult>.Write(ModelReaderWriterOptions options)
