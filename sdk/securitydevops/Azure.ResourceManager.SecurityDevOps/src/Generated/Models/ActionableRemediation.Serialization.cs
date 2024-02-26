@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SeverityLevels))
+            if (!(SeverityLevels is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("severityLevels"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<ActionableRemediationRuleCategory> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BranchConfiguration))
+            if (BranchConfiguration != null)
             {
                 writer.WritePropertyName("branchConfiguration"u8);
                 writer.WriteObjectValue(BranchConfiguration);
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 return null;
             }
             Optional<ActionableRemediationState> state = default;
-            Optional<IList<string>> severityLevels = default;
-            Optional<IList<ActionableRemediationRuleCategory>> categories = default;
+            IList<string> severityLevels = default;
+            IList<ActionableRemediationRuleCategory> categories = default;
             Optional<TargetBranchConfiguration> branchConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value);
+                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionableRemediation(Optional.ToNullable(state), Optional.ToList(severityLevels), Optional.ToList(categories), branchConfiguration.Value, serializedAdditionalRawData);
+            return new ActionableRemediation(Optional.ToNullable(state), severityLevels ?? new ChangeTrackingList<string>(), categories ?? new ChangeTrackingList<ActionableRemediationRuleCategory>(), branchConfiguration.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionableRemediation>.Write(ModelReaderWriterOptions options)

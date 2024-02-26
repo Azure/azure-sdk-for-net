@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="expression"/> is null. </exception>
         public KpiAlias(string aliasName, string expression)
         {
-            Argument.AssertNotNull(aliasName, nameof(aliasName));
-            Argument.AssertNotNull(expression, nameof(expression));
+            if (aliasName == null)
+            {
+                throw new ArgumentNullException(nameof(aliasName));
+            }
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
 
             AliasName = aliasName;
             Expression = expression;

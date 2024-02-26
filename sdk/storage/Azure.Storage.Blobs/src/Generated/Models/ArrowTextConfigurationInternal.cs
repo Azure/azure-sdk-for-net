@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/> is null. </exception>
         public ArrowTextConfigurationInternal(IEnumerable<ArrowFieldInternal> schema)
         {
-            Argument.AssertNotNull(schema, nameof(schema));
+            if (schema == null)
+            {
+                throw new ArgumentNullException(nameof(schema));
+            }
 
             Schema = schema.ToList();
         }

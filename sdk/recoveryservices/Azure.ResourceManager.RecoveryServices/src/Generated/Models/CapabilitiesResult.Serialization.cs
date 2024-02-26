@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = CapabilitiesResultProperties.DeserializeCapabilitiesResultProperties(property.Value);
+                    properties = CapabilitiesResultProperties.DeserializeCapabilitiesResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

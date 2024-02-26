@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EstimatedLabCost))
+            if (EstimatedLabCost.HasValue)
             {
                 writer.WritePropertyName("estimatedLabCost"u8);
                 writer.WriteNumberValue(EstimatedLabCost.Value);

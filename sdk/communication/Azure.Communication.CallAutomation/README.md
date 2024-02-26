@@ -114,7 +114,7 @@ public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events
 
 ### Handle Mid-Connection events with CallAutomation's EventProcessor
 To easily handle mid-connection events, Call Automation's SDK provides easier way to handle these events.
-Take a look at `CallAutomationEventProcessor`. this will ensure corelation between call and events more easily.
+Take a look at `CallAutomationEventProcessor`. this will ensure correlation between call and events more easily.
 ```C#
 [HttpPost]
 [Route("/CallBackEvent")]

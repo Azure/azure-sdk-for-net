@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (!(ApiVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SwaggerSpecFolderUri))
+            if (SwaggerSpecFolderUri != null)
             {
                 writer.WritePropertyName("swaggerSpecFolderUri"u8);
                 writer.WriteStringValue(SwaggerSpecFolderUri.AbsoluteUri);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> apiVersions = default;
+            IList<string> apiVersions = default;
             Optional<Uri> swaggerSpecFolderUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerSpecification(Optional.ToList(apiVersions), swaggerSpecFolderUri.Value, serializedAdditionalRawData);
+            return new SwaggerSpecification(apiVersions ?? new ChangeTrackingList<string>(), swaggerSpecFolderUri.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerSpecification>.Write(ModelReaderWriterOptions options)

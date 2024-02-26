@@ -72,11 +72,46 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,11 +136,46 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName);
             _pipeline.Send(message, cancellationToken);
@@ -159,12 +229,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -190,12 +298,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -244,11 +390,46 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFunctionDefinitionVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -279,11 +460,46 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFunctionDefinitionVersionData> Get(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName);
             _pipeline.Send(message, cancellationToken);
@@ -343,12 +559,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFunctionDefinitionVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
+            if (tagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(tagsObject));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, tagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -378,12 +632,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFunctionDefinitionVersionData> Update(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
+            if (tagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(tagsObject));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, tagsObject);
             _pipeline.Send(message, cancellationToken);
@@ -434,10 +726,38 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFunctionDefinitionVersionListResult>> ListByNetworkFunctionDefinitionGroupAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var message = CreateListByNetworkFunctionDefinitionGroupRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -465,10 +785,38 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFunctionDefinitionVersionListResult> ListByNetworkFunctionDefinitionGroup(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var message = CreateListByNetworkFunctionDefinitionGroupRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -527,12 +875,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateStateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(networkFunctionDefinitionVersionUpdateState, nameof(networkFunctionDefinitionVersionUpdateState));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionUpdateState == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionUpdateState));
+            }
 
             using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, networkFunctionDefinitionVersionUpdateState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -558,12 +944,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateState(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(networkFunctionDefinitionVersionUpdateState, nameof(networkFunctionDefinitionVersionUpdateState));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
+            }
+            if (networkFunctionDefinitionVersionUpdateState == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionUpdateState));
+            }
 
             using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, networkFunctionDefinitionVersionUpdateState);
             _pipeline.Send(message, cancellationToken);
@@ -602,11 +1026,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFunctionDefinitionVersionListResult>> ListByNetworkFunctionDefinitionGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var message = CreateListByNetworkFunctionDefinitionGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -635,11 +1090,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFunctionDefinitionVersionListResult> ListByNetworkFunctionDefinitionGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (publisherName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
+            }
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var message = CreateListByNetworkFunctionDefinitionGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName);
             _pipeline.Send(message, cancellationToken);

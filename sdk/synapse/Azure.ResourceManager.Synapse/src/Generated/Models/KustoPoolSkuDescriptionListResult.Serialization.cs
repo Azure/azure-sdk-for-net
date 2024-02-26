@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<KustoPoolSkuDescription> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoPoolSkuDescription>> value = default;
+            IReadOnlyList<KustoPoolSkuDescription> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<KustoPoolSkuDescription> array = new List<KustoPoolSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription(item));
+                        array.Add(KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoPoolSkuDescriptionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new KustoPoolSkuDescriptionListResult(value ?? new ChangeTrackingList<KustoPoolSkuDescription>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoPoolSkuDescriptionListResult>.Write(ModelReaderWriterOptions options)

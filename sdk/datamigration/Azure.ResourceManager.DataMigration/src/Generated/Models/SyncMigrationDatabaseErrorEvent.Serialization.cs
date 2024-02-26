@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TimestampString))
+            if (options.Format != "W" && TimestampString != null)
             {
                 writer.WritePropertyName("timestampString"u8);
                 writer.WriteStringValue(TimestampString);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventTypeString))
+            if (options.Format != "W" && EventTypeString != null)
             {
                 writer.WritePropertyName("eventTypeString"u8);
                 writer.WriteStringValue(EventTypeString);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventText))
+            if (options.Format != "W" && EventText != null)
             {
                 writer.WritePropertyName("eventText"u8);
                 writer.WriteStringValue(EventText);

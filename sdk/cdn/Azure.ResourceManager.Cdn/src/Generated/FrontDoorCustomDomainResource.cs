@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorCustomDomainResource>> UpdateAsync(WaitUntil waitUntil, FrontDoorCustomDomainPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<FrontDoorCustomDomainResource> Update(WaitUntil waitUntil, FrontDoorCustomDomainPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainResource.Update");
             scope.Start();

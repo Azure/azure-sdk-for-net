@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointId))
+            if (RecoveryPointId != null)
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("providerSpecificDetails"u8))
                 {
-                    providerSpecificDetails = SiteRecoveryApplyRecoveryPointProviderSpecificContent.DeserializeSiteRecoveryApplyRecoveryPointProviderSpecificContent(property.Value);
+                    providerSpecificDetails = SiteRecoveryApplyRecoveryPointProviderSpecificContent.DeserializeSiteRecoveryApplyRecoveryPointProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

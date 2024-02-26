@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.GraphServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<GraphServicesAccountResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 return null;
             }
             Optional<Uri> nextLink = default;
-            Optional<IReadOnlyList<GraphServicesAccountResourceData>> value = default;
+            IReadOnlyList<GraphServicesAccountResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                     List<GraphServicesAccountResourceData> array = new List<GraphServicesAccountResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item));
+                        array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphServicesAccountResourceList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new GraphServicesAccountResourceList(nextLink.Value, value ?? new ChangeTrackingList<GraphServicesAccountResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphServicesAccountResourceList>.Write(ModelReaderWriterOptions options)

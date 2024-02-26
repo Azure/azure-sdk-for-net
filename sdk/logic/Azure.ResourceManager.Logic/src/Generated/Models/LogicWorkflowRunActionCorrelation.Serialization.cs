@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionTrackingId))
+            if (ActionTrackingId.HasValue)
             {
                 writer.WritePropertyName("actionTrackingId"u8);
                 writer.WriteStringValue(ActionTrackingId.Value);
             }
-            if (Optional.IsDefined(ClientTrackingId))
+            if (ClientTrackingId != null)
             {
                 writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);
             }
-            if (Optional.IsCollectionDefined(ClientKeywords))
+            if (!(ClientKeywords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clientKeywords"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<Guid> actionTrackingId = default;
             Optional<string> clientTrackingId = default;
-            Optional<IList<string>> clientKeywords = default;
+            IList<string> clientKeywords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunActionCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords), serializedAdditionalRawData, Optional.ToNullable(actionTrackingId));
+            return new LogicWorkflowRunActionCorrelation(clientTrackingId.Value, clientKeywords ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, Optional.ToNullable(actionTrackingId));
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunActionCorrelation>.Write(ModelReaderWriterOptions options)

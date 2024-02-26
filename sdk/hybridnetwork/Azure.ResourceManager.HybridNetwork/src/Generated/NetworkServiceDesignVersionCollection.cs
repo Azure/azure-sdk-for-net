@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkServiceDesignVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkServiceDesignVersionName, NetworkServiceDesignVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkServiceDesignVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
+            }
+            if (networkServiceDesignVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkServiceDesignVersionResource> CreateOrUpdate(WaitUntil waitUntil, string networkServiceDesignVersionName, NetworkServiceDesignVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkServiceDesignVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
+            }
+            if (networkServiceDesignVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
         public virtual async Task<Response<NetworkServiceDesignVersionResource>> GetAsync(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            if (networkServiceDesignVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
+            }
+            if (networkServiceDesignVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
         public virtual Response<NetworkServiceDesignVersionResource> Get(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            if (networkServiceDesignVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
+            }
+            if (networkServiceDesignVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            if (networkServiceDesignVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
+            }
+            if (networkServiceDesignVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            if (networkServiceDesignVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
+            }
+            if (networkServiceDesignVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkServiceDesignVersionResource>> GetIfExistsAsync(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            if (networkServiceDesignVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
+            }
+            if (networkServiceDesignVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
         public virtual NullableResponse<NetworkServiceDesignVersionResource> GetIfExists(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            if (networkServiceDesignVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
+            }
+            if (networkServiceDesignVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
+            }
 
             using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.GetIfExists");
             scope.Start();

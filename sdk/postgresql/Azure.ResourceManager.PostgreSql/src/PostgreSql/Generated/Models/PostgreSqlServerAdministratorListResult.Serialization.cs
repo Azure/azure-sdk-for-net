@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PostgreSqlServerAdministratorData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlServerAdministratorData>> value = default;
+            IReadOnlyList<PostgreSqlServerAdministratorData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlServerAdministratorData> array = new List<PostgreSqlServerAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlServerAdministratorData.DeserializePostgreSqlServerAdministratorData(item));
+                        array.Add(PostgreSqlServerAdministratorData.DeserializePostgreSqlServerAdministratorData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerAdministratorListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PostgreSqlServerAdministratorListResult(value ?? new ChangeTrackingList<PostgreSqlServerAdministratorData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerAdministratorListResult>.Write(ModelReaderWriterOptions options)

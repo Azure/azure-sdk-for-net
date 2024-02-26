@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Context))
+            if (options.Format != "W" && Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
             writer.WritePropertyName("offers"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PrivateStoreOfferResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             Optional<string> context = default;
-            Optional<IReadOnlyList<PrivateStoreOfferResult>> value = default;
+            IReadOnlyList<PrivateStoreOfferResult> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                             List<PrivateStoreOfferResult> array = new List<PrivateStoreOfferResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item));
+                                array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item, options));
                             }
                             value = array;
                             continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionOffersByContext(context.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new CollectionOffersByContext(context.Value, value ?? new ChangeTrackingList<PrivateStoreOfferResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionOffersByContext>.Write(ModelReaderWriterOptions options)

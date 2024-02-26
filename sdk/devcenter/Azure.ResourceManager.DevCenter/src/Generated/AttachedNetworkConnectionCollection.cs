@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AttachedNetworkConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attachedNetworkConnectionName, AttachedNetworkConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attachedNetworkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedNetworkConnectionName));
+            }
+            if (attachedNetworkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedNetworkConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AttachedNetworkConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string attachedNetworkConnectionName, AttachedNetworkConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attachedNetworkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedNetworkConnectionName));
+            }
+            if (attachedNetworkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedNetworkConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         public virtual async Task<Response<AttachedNetworkConnectionResource>> GetAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+            if (attachedNetworkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedNetworkConnectionName));
+            }
+            if (attachedNetworkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedNetworkConnectionName));
+            }
 
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         public virtual Response<AttachedNetworkConnectionResource> Get(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+            if (attachedNetworkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedNetworkConnectionName));
+            }
+            if (attachedNetworkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedNetworkConnectionName));
+            }
 
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+            if (attachedNetworkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedNetworkConnectionName));
+            }
+            if (attachedNetworkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedNetworkConnectionName));
+            }
 
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+            if (attachedNetworkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedNetworkConnectionName));
+            }
+            if (attachedNetworkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedNetworkConnectionName));
+            }
 
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<AttachedNetworkConnectionResource>> GetIfExistsAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+            if (attachedNetworkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedNetworkConnectionName));
+            }
+            if (attachedNetworkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedNetworkConnectionName));
+            }
 
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
         public virtual NullableResponse<AttachedNetworkConnectionResource> GetIfExists(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+            if (attachedNetworkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedNetworkConnectionName));
+            }
+            if (attachedNetworkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedNetworkConnectionName));
+            }
 
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.GetIfExists");
             scope.Start();

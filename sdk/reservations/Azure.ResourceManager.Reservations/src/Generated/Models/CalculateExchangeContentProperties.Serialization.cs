@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ReservationsToPurchase))
+            if (!(ReservationsToPurchase is ChangeTrackingList<ReservationPurchaseContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
+            if (!(SavingsPlansToPurchase is ChangeTrackingList<SavingsPlanPurchase> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlansToPurchase"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservationsToExchange))
+            if (!(ReservationsToExchange is ChangeTrackingList<ReservationToReturn> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IList<ReservationPurchaseContent>> reservationsToPurchase = default;
-            Optional<IList<SavingsPlanPurchase>> savingsPlansToPurchase = default;
-            Optional<IList<ReservationToReturn>> reservationsToExchange = default;
+            IList<ReservationPurchaseContent> reservationsToPurchase = default;
+            IList<SavingsPlanPurchase> savingsPlansToPurchase = default;
+            IList<ReservationToReturn> reservationsToExchange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationPurchaseContent> array = new List<ReservationPurchaseContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item));
+                        array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item, options));
                     }
                     reservationsToPurchase = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SavingsPlanPurchase> array = new List<SavingsPlanPurchase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item));
+                        array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item, options));
                     }
                     savingsPlansToPurchase = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToReturn> array = new List<ReservationToReturn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToReturn.DeserializeReservationToReturn(item));
+                        array.Add(ReservationToReturn.DeserializeReservationToReturn(item, options));
                     }
                     reservationsToExchange = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeContentProperties(Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), serializedAdditionalRawData);
+            return new CalculateExchangeContentProperties(reservationsToPurchase ?? new ChangeTrackingList<ReservationPurchaseContent>(), savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanPurchase>(), reservationsToExchange ?? new ChangeTrackingList<ReservationToReturn>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeContentProperties>.Write(ModelReaderWriterOptions options)

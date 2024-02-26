@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Kubernetes": return KubernetesConnectionDetails.DeserializeKubernetesConnectionDetails(element);
+                    case "Kubernetes": return KubernetesConnectionDetails.DeserializeKubernetesConnectionDetails(element, options);
                 }
             }
-            return UnknownOrchestratorSpecificConnectionDetails.DeserializeUnknownOrchestratorSpecificConnectionDetails(element);
+            return UnknownOrchestratorSpecificConnectionDetails.DeserializeUnknownOrchestratorSpecificConnectionDetails(element, options);
         }
 
         BinaryData IPersistableModel<OrchestratorSpecificConnectionDetails>.Write(ModelReaderWriterOptions options)

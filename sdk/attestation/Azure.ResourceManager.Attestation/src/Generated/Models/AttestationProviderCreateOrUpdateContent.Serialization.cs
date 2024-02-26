@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Attestation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AttestationServiceCreationSpecificParams.DeserializeAttestationServiceCreationSpecificParams(property.Value);
+                    properties = AttestationServiceCreationSpecificParams.DeserializeAttestationServiceCreationSpecificParams(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

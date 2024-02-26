@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPreview))
+            if (options.Format != "W" && IsPreview.HasValue)
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PatchVersions))
+            if (options.Format != "W" && !(PatchVersions is ChangeTrackingDictionary<string, KubernetesPatchVersions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patchVersions"u8);
                 writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     Dictionary<string, KubernetesPatchVersions> dictionary = new Dictionary<string, KubernetesPatchVersions>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KubernetesPatchVersions.DeserializeKubernetesPatchVersions(property0.Value));
+                        dictionary.Add(property0.Name, KubernetesPatchVersions.DeserializeKubernetesPatchVersions(property0.Value, options));
                     }
                     patchVersions = dictionary;
                     continue;

@@ -62,9 +62,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="azureGroupId"/> or <paramref name="userList"/> is null. </exception>
         public NetworkCloudBmcKeySetData(AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, DateTimeOffset expireOn, BmcKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
-            Argument.AssertNotNull(userList, nameof(userList));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (azureGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(azureGroupId));
+            }
+            if (userList == null)
+            {
+                throw new ArgumentNullException(nameof(userList));
+            }
 
             ExtendedLocation = extendedLocation;
             AzureGroupId = azureGroupId;

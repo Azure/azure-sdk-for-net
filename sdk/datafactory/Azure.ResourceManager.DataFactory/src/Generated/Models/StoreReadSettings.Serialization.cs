@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -77,23 +77,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonS3CompatibleReadSettings": return AmazonS3CompatibleReadSettings.DeserializeAmazonS3CompatibleReadSettings(element);
-                    case "AmazonS3ReadSettings": return AmazonS3ReadSettings.DeserializeAmazonS3ReadSettings(element);
-                    case "AzureBlobFSReadSettings": return AzureBlobFSReadSettings.DeserializeAzureBlobFSReadSettings(element);
-                    case "AzureBlobStorageReadSettings": return AzureBlobStorageReadSettings.DeserializeAzureBlobStorageReadSettings(element);
-                    case "AzureDataLakeStoreReadSettings": return AzureDataLakeStoreReadSettings.DeserializeAzureDataLakeStoreReadSettings(element);
-                    case "AzureFileStorageReadSettings": return AzureFileStorageReadSettings.DeserializeAzureFileStorageReadSettings(element);
-                    case "FileServerReadSettings": return FileServerReadSettings.DeserializeFileServerReadSettings(element);
-                    case "FtpReadSettings": return FtpReadSettings.DeserializeFtpReadSettings(element);
-                    case "GoogleCloudStorageReadSettings": return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element);
-                    case "HdfsReadSettings": return HdfsReadSettings.DeserializeHdfsReadSettings(element);
-                    case "HttpReadSettings": return HttpReadSettings.DeserializeHttpReadSettings(element);
-                    case "LakeHouseReadSettings": return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element);
-                    case "OracleCloudStorageReadSettings": return OracleCloudStorageReadSettings.DeserializeOracleCloudStorageReadSettings(element);
-                    case "SftpReadSettings": return SftpReadSettings.DeserializeSftpReadSettings(element);
+                    case "AmazonS3CompatibleReadSettings": return AmazonS3CompatibleReadSettings.DeserializeAmazonS3CompatibleReadSettings(element, options);
+                    case "AmazonS3ReadSettings": return AmazonS3ReadSettings.DeserializeAmazonS3ReadSettings(element, options);
+                    case "AzureBlobFSReadSettings": return AzureBlobFSReadSettings.DeserializeAzureBlobFSReadSettings(element, options);
+                    case "AzureBlobStorageReadSettings": return AzureBlobStorageReadSettings.DeserializeAzureBlobStorageReadSettings(element, options);
+                    case "AzureDataLakeStoreReadSettings": return AzureDataLakeStoreReadSettings.DeserializeAzureDataLakeStoreReadSettings(element, options);
+                    case "AzureFileStorageReadSettings": return AzureFileStorageReadSettings.DeserializeAzureFileStorageReadSettings(element, options);
+                    case "FileServerReadSettings": return FileServerReadSettings.DeserializeFileServerReadSettings(element, options);
+                    case "FtpReadSettings": return FtpReadSettings.DeserializeFtpReadSettings(element, options);
+                    case "GoogleCloudStorageReadSettings": return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element, options);
+                    case "HdfsReadSettings": return HdfsReadSettings.DeserializeHdfsReadSettings(element, options);
+                    case "HttpReadSettings": return HttpReadSettings.DeserializeHttpReadSettings(element, options);
+                    case "LakeHouseReadSettings": return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element, options);
+                    case "OracleCloudStorageReadSettings": return OracleCloudStorageReadSettings.DeserializeOracleCloudStorageReadSettings(element, options);
+                    case "SftpReadSettings": return SftpReadSettings.DeserializeSftpReadSettings(element, options);
                 }
             }
-            return UnknownStoreReadSettings.DeserializeUnknownStoreReadSettings(element);
+            return UnknownStoreReadSettings.DeserializeUnknownStoreReadSettings(element, options);
         }
 
         BinaryData IPersistableModel<StoreReadSettings>.Write(ModelReaderWriterOptions options)

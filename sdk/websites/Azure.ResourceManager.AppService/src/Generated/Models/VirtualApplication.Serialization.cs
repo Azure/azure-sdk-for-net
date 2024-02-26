@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualPath))
+            if (VirtualPath != null)
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
-            if (Optional.IsDefined(PhysicalPath))
+            if (PhysicalPath != null)
             {
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
             }
-            if (Optional.IsDefined(IsPreloadEnabled))
+            if (IsPreloadEnabled.HasValue)
             {
                 writer.WritePropertyName("preloadEnabled"u8);
                 writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualDirectories))
+            if (!(VirtualDirectories is ChangeTrackingList<VirtualDirectory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualDirectories"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> virtualPath = default;
             Optional<string> physicalPath = default;
             Optional<bool> preloadEnabled = default;
-            Optional<IList<VirtualDirectory>> virtualDirectories = default;
+            IList<VirtualDirectory> virtualDirectories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<VirtualDirectory> array = new List<VirtualDirectory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDirectory.DeserializeVirtualDirectory(item));
+                        array.Add(VirtualDirectory.DeserializeVirtualDirectory(item, options));
                     }
                     virtualDirectories = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplication(virtualPath.Value, physicalPath.Value, Optional.ToNullable(preloadEnabled), Optional.ToList(virtualDirectories), serializedAdditionalRawData);
+            return new VirtualApplication(virtualPath.Value, physicalPath.Value, Optional.ToNullable(preloadEnabled), virtualDirectories ?? new ChangeTrackingList<VirtualDirectory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplication>.Write(ModelReaderWriterOptions options)

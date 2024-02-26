@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Workflow))
+            if (Workflow != null)
             {
                 writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
             }
-            if (Optional.IsDefined(Connector))
+            if (Connector != null)
             {
                 writer.WritePropertyName("connector"u8);
                 writer.WriteObjectValue(Connector);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
+                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connector"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
+                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

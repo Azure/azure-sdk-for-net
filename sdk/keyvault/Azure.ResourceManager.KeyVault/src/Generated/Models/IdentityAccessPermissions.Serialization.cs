@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Keys))
+            if (!(Keys is ChangeTrackingList<IdentityAccessKeyPermission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<IdentityAccessSecretPermission> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingList<IdentityAccessCertificatePermission> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Storage))
+            if (!(Storage is ChangeTrackingList<IdentityAccessStoragePermission> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteStartArray();
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IList<IdentityAccessKeyPermission>> keys = default;
-            Optional<IList<IdentityAccessSecretPermission>> secrets = default;
-            Optional<IList<IdentityAccessCertificatePermission>> certificates = default;
-            Optional<IList<IdentityAccessStoragePermission>> storage = default;
+            IList<IdentityAccessKeyPermission> keys = default;
+            IList<IdentityAccessSecretPermission> secrets = default;
+            IList<IdentityAccessCertificatePermission> certificates = default;
+            IList<IdentityAccessStoragePermission> storage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdentityAccessPermissions(Optional.ToList(keys), Optional.ToList(secrets), Optional.ToList(certificates), Optional.ToList(storage), serializedAdditionalRawData);
+            return new IdentityAccessPermissions(keys ?? new ChangeTrackingList<IdentityAccessKeyPermission>(), secrets ?? new ChangeTrackingList<IdentityAccessSecretPermission>(), certificates ?? new ChangeTrackingList<IdentityAccessCertificatePermission>(), storage ?? new ChangeTrackingList<IdentityAccessStoragePermission>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityAccessPermissions>.Write(ModelReaderWriterOptions options)

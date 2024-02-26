@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ControlPlaneNodeConfiguration))
+            if (ControlPlaneNodeConfiguration != null)
             {
                 writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
                 writer.WriteObjectValue(ControlPlaneNodeConfiguration);
             }
-            if (Optional.IsDefined(KubernetesVersion))
+            if (KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            controlPlaneNodeConfiguration = ControlPlaneNodePatchConfiguration.DeserializeControlPlaneNodePatchConfiguration(property0.Value);
+                            controlPlaneNodeConfiguration = ControlPlaneNodePatchConfiguration.DeserializeControlPlaneNodePatchConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kubernetesVersion"u8))

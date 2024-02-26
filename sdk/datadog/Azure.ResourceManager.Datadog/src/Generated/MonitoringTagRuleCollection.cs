@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MonitoringTagRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, MonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ruleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetName));
+            }
+            if (ruleSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MonitoringTagRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, MonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ruleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetName));
+            }
+            if (ruleSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<MonitoringTagRuleResource>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            if (ruleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetName));
+            }
+            if (ruleSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
+            }
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<MonitoringTagRuleResource> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            if (ruleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetName));
+            }
+            if (ruleSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
+            }
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            if (ruleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetName));
+            }
+            if (ruleSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
+            }
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            if (ruleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetName));
+            }
+            if (ruleSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
+            }
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<NullableResponse<MonitoringTagRuleResource>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            if (ruleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetName));
+            }
+            if (ruleSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
+            }
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual NullableResponse<MonitoringTagRuleResource> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            if (ruleSetName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetName));
+            }
+            if (ruleSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
+            }
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.GetIfExists");
             scope.Start();

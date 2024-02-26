@@ -51,8 +51,14 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ClinicalMatchingClient(Uri endpoint, AzureKeyCredential credential, ClinicalMatchingClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new ClinicalMatchingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -71,7 +77,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
         public virtual async Task<Operation<TrialMatcherResults>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
+            if (trialMatcherData == null)
+            {
+                throw new ArgumentNullException(nameof(trialMatcherData));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = trialMatcherData.ToRequestContent();
@@ -88,7 +97,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
         public virtual Operation<TrialMatcherResults> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
+            if (trialMatcherData == null)
+            {
+                throw new ArgumentNullException(nameof(trialMatcherData));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = trialMatcherData.ToRequestContent();
@@ -120,7 +132,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> MatchTrialsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ClinicalMatchingClient.MatchTrials");
             scope.Start();
@@ -160,7 +175,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> MatchTrials(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ClinicalMatchingClient.MatchTrials");
             scope.Start();

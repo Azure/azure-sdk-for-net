@@ -16,17 +16,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinGram))
+            if (MinGram.HasValue)
             {
                 writer.WritePropertyName("minGram"u8);
                 writer.WriteNumberValue(MinGram.Value);
             }
-            if (Optional.IsDefined(MaxGram))
+            if (MaxGram.HasValue)
             {
                 writer.WritePropertyName("maxGram"u8);
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (Optional.IsCollectionDefined(TokenChars))
+            if (!(TokenChars is ChangeTrackingList<TokenCharacterKind> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tokenChars"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             Optional<int> minGram = default;
             Optional<int> maxGram = default;
-            Optional<IList<TokenCharacterKind>> tokenChars = default;
+            IList<TokenCharacterKind> tokenChars = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new NGramTokenizer(odataType, name, Optional.ToNullable(minGram), Optional.ToNullable(maxGram), Optional.ToList(tokenChars));
+            return new NGramTokenizer(odataType, name, Optional.ToNullable(minGram), Optional.ToNullable(maxGram), tokenChars ?? new ChangeTrackingList<TokenCharacterKind>());
         }
     }
 }

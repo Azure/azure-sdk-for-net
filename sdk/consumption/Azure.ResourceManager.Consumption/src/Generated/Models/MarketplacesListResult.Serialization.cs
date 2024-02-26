@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ConsumptionMarketplace> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionMarketplace>> value = default;
+            IReadOnlyList<ConsumptionMarketplace> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionMarketplace> array = new List<ConsumptionMarketplace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionMarketplace.DeserializeConsumptionMarketplace(item));
+                        array.Add(ConsumptionMarketplace.DeserializeConsumptionMarketplace(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplacesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MarketplacesListResult(value ?? new ChangeTrackingList<ConsumptionMarketplace>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplacesListResult>.Write(ModelReaderWriterOptions options)

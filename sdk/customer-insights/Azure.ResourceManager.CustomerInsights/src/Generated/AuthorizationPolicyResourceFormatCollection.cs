@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AuthorizationPolicyResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationPolicyName, AuthorizationPolicyResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (authorizationPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationPolicyName));
+            }
+            if (authorizationPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationPolicyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AuthorizationPolicyResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationPolicyName, AuthorizationPolicyResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (authorizationPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationPolicyName));
+            }
+            if (authorizationPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationPolicyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
         public virtual async Task<Response<AuthorizationPolicyResourceFormatResource>> GetAsync(string authorizationPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
+            if (authorizationPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationPolicyName));
+            }
+            if (authorizationPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationPolicyName));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
         public virtual Response<AuthorizationPolicyResourceFormatResource> Get(string authorizationPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
+            if (authorizationPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationPolicyName));
+            }
+            if (authorizationPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationPolicyName));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authorizationPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
+            if (authorizationPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationPolicyName));
+            }
+            if (authorizationPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationPolicyName));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string authorizationPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
+            if (authorizationPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationPolicyName));
+            }
+            if (authorizationPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationPolicyName));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<AuthorizationPolicyResourceFormatResource>> GetIfExistsAsync(string authorizationPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
+            if (authorizationPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationPolicyName));
+            }
+            if (authorizationPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationPolicyName));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
         public virtual NullableResponse<AuthorizationPolicyResourceFormatResource> GetIfExists(string authorizationPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationPolicyName, nameof(authorizationPolicyName));
+            if (authorizationPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationPolicyName));
+            }
+            if (authorizationPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationPolicyName));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.GetIfExists");
             scope.Start();

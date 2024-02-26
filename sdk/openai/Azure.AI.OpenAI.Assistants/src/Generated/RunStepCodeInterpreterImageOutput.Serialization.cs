@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = RunStepCodeInterpreterImageReference.DeserializeRunStepCodeInterpreterImageReference(property.Value);
+                    image = RunStepCodeInterpreterImageReference.DeserializeRunStepCodeInterpreterImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

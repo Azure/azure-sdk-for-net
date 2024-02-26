@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Add))
+            if (!(Add is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Drop))
+            if (!(Drop is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("drop"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IList<string>> @add = default;
-            Optional<IList<string>> drop = default;
+            IList<string> @add = default;
+            IList<string> drop = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerSecurityContextCapabilitiesDefinition(Optional.ToList(@add), Optional.ToList(drop), serializedAdditionalRawData);
+            return new ContainerSecurityContextCapabilitiesDefinition(@add ?? new ChangeTrackingList<string>(), drop ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerSecurityContextCapabilitiesDefinition>.Write(ModelReaderWriterOptions options)

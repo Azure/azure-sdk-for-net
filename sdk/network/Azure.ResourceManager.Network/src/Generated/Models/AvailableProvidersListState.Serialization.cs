@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StateName))
+            if (StateName != null)
             {
                 writer.WritePropertyName("stateName"u8);
                 writer.WriteStringValue(StateName);
             }
-            if (Optional.IsCollectionDefined(Providers))
+            if (!(Providers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Cities))
+            if (!(Cities is ChangeTrackingList<AvailableProvidersListCity> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("cities"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> stateName = default;
-            Optional<IReadOnlyList<string>> providers = default;
-            Optional<IReadOnlyList<AvailableProvidersListCity>> cities = default;
+            IReadOnlyList<string> providers = default;
+            IReadOnlyList<AvailableProvidersListCity> cities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListCity> array = new List<AvailableProvidersListCity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item));
+                        array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item, options));
                     }
                     cities = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListState(stateName.Value, Optional.ToList(providers), Optional.ToList(cities), serializedAdditionalRawData);
+            return new AvailableProvidersListState(stateName.Value, providers ?? new ChangeTrackingList<string>(), cities ?? new ChangeTrackingList<AvailableProvidersListCity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListState>.Write(ModelReaderWriterOptions options)

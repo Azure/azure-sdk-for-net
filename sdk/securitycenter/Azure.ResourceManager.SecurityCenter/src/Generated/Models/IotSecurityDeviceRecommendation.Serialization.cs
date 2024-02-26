@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RecommendationDisplayName))
+            if (options.Format != "W" && RecommendationDisplayName != null)
             {
                 writer.WritePropertyName("recommendationDisplayName"u8);
                 writer.WriteStringValue(RecommendationDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
+            if (options.Format != "W" && ReportedSeverity.HasValue)
             {
                 writer.WritePropertyName("reportedSeverity"u8);
                 writer.WriteStringValue(ReportedSeverity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DevicesCount))
+            if (options.Format != "W" && DevicesCount.HasValue)
             {
                 writer.WritePropertyName("devicesCount"u8);
                 writer.WriteNumberValue(DevicesCount.Value);

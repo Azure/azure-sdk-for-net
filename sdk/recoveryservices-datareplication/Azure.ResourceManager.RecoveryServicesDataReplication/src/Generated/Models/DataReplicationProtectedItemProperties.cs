@@ -57,9 +57,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/>, <paramref name="replicationExtensionName"/> or <paramref name="customProperties"/> is null. </exception>
         public DataReplicationProtectedItemProperties(string policyName, string replicationExtensionName, ProtectedItemModelCustomProperties customProperties)
         {
-            Argument.AssertNotNull(policyName, nameof(policyName));
-            Argument.AssertNotNull(replicationExtensionName, nameof(replicationExtensionName));
-            Argument.AssertNotNull(customProperties, nameof(customProperties));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (customProperties == null)
+            {
+                throw new ArgumentNullException(nameof(customProperties));
+            }
 
             PolicyName = policyName;
             ReplicationExtensionName = replicationExtensionName;

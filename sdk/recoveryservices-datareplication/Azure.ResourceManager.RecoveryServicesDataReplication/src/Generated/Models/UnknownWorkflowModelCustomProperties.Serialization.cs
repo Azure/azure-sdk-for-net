@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && Optional.IsCollectionDefined(AffectedObjectDetails))
+            if (options.Format != "W" && !(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkflowModelCustomProperties(document.RootElement, options);
+            return DeserializeWorkflowModelCustomProperties(document.RootElement, options);
         }
 
         internal static UnknownWorkflowModelCustomProperties DeserializeUnknownWorkflowModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWorkflowModelCustomProperties(document.RootElement, options);
+                        return DeserializeWorkflowModelCustomProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{options.Format}' format.");

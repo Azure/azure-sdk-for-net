@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
-            if (Optional.IsDefined(Istio))
+            if (Istio != null)
             {
                 writer.WritePropertyName("istio"u8);
                 writer.WriteObjectValue(Istio);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    istio = IstioServiceMesh.DeserializeIstioServiceMesh(property.Value);
+                    istio = IstioServiceMesh.DeserializeIstioServiceMesh(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

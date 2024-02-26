@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryResults))
+            if (QueryResults != null)
             {
                 writer.WritePropertyName("queryResults"u8);
                 writer.WriteObjectValue(QueryResults);
             }
-            if (Optional.IsDefined(ValidationErrors))
+            if (ValidationErrors != null)
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteObjectValue(ValidationErrors);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    queryResults = QueryExecutionResult.DeserializeQueryExecutionResult(property.Value);
+                    queryResults = QueryExecutionResult.DeserializeQueryExecutionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value);
+                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

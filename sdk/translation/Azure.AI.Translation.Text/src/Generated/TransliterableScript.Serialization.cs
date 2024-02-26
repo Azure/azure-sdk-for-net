@@ -94,7 +94,7 @@ namespace Azure.AI.Translation.Text
                     List<CommonScriptModel> array = new List<CommonScriptModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommonScriptModel(item));
+                        array.Add(DeserializeCommonScriptModel(item, options));
                     }
                     toScripts = array;
                     continue;

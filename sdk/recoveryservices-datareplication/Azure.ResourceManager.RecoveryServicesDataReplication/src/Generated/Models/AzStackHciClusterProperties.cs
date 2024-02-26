@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -55,10 +54,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/>, <paramref name="resourceName"/>, <paramref name="storageAccountName"/> or <paramref name="storageContainers"/> is null. </exception>
         public AzStackHciClusterProperties(string clusterName, string resourceName, string storageAccountName, IEnumerable<StorageContainerProperties> storageContainers)
         {
-            Argument.AssertNotNull(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
-            Argument.AssertNotNull(storageContainers, nameof(storageContainers));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (storageAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountName));
+            }
+            if (storageContainers == null)
+            {
+                throw new ArgumentNullException(nameof(storageContainers));
+            }
 
             ClusterName = clusterName;
             ResourceName = resourceName;

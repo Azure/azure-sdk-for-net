@@ -23,7 +23,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="line"/> is null. </exception>
         public SpatialAnalysisPersonLineCrossingLineEvents(NamedLineBase line)
         {
-            Argument.AssertNotNull(line, nameof(line));
+            if (line == null)
+            {
+                throw new ArgumentNullException(nameof(line));
+            }
 
             Line = line;
             Events = new ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>();

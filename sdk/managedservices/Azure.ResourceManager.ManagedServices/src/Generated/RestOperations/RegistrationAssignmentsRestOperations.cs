@@ -68,8 +68,18 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedServicesRegistrationAssignmentData>> GetAsync(string scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (registrationAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(registrationAssignmentId));
+            }
+            if (registrationAssignmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationAssignmentId));
+            }
 
             using var message = CreateGetRequest(scope, registrationAssignmentId, expandRegistrationDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,8 +108,18 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedServicesRegistrationAssignmentData> Get(string scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (registrationAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(registrationAssignmentId));
+            }
+            if (registrationAssignmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationAssignmentId));
+            }
 
             using var message = CreateGetRequest(scope, registrationAssignmentId, expandRegistrationDefinition);
             _pipeline.Send(message, cancellationToken);
@@ -145,8 +165,18 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string scope, string registrationAssignmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (registrationAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(registrationAssignmentId));
+            }
+            if (registrationAssignmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationAssignmentId));
+            }
 
             using var message = CreateDeleteRequest(scope, registrationAssignmentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -169,8 +199,18 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string scope, string registrationAssignmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (registrationAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(registrationAssignmentId));
+            }
+            if (registrationAssignmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationAssignmentId));
+            }
 
             using var message = CreateDeleteRequest(scope, registrationAssignmentId);
             _pipeline.Send(message, cancellationToken);
@@ -216,9 +256,22 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string scope, string registrationAssignmentId, ManagedServicesRegistrationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (registrationAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(registrationAssignmentId));
+            }
+            if (registrationAssignmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationAssignmentId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(scope, registrationAssignmentId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -241,9 +294,22 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string scope, string registrationAssignmentId, ManagedServicesRegistrationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (registrationAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(registrationAssignmentId));
+            }
+            if (registrationAssignmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationAssignmentId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(scope, registrationAssignmentId, data);
             _pipeline.Send(message, cancellationToken);
@@ -290,7 +356,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ManagedServicesRegistrationAssignmentListResult>> ListAsync(string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope, expandRegistrationDefinition, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -316,7 +385,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ManagedServicesRegistrationAssignmentListResult> List(string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope, expandRegistrationDefinition, filter);
             _pipeline.Send(message, cancellationToken);
@@ -357,8 +429,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<ManagedServicesRegistrationAssignmentListResult>> ListNextPageAsync(string nextLink, string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, scope, expandRegistrationDefinition, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -385,8 +463,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<ManagedServicesRegistrationAssignmentListResult> ListNextPage(string nextLink, string scope, bool? expandRegistrationDefinition = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, scope, expandRegistrationDefinition, filter);
             _pipeline.Send(message, cancellationToken);

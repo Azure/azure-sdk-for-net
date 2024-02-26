@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="vmSkuName"/> is null. </exception>
         public NetworkCloudAgentPoolData(AzureLocation location, long count, NetworkCloudAgentPoolMode mode, string vmSkuName) : base(location)
         {
-            Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
+            if (vmSkuName == null)
+            {
+                throw new ArgumentNullException(nameof(vmSkuName));
+            }
 
             AvailabilityZones = new ChangeTrackingList<string>();
             Count = count;

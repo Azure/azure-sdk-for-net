@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EventHubNamespace))
+            if (options.Format != "W" && EventHubNamespace != null)
             {
                 writer.WritePropertyName("eventHubNamespace"u8);
                 writer.WriteStringValue(EventHubNamespace);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccount))
+            if (options.Format != "W" && StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);

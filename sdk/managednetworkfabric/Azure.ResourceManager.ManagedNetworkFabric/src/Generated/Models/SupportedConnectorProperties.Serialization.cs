@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectorType))
+            if (ConnectorType != null)
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType);
             }
-            if (Optional.IsDefined(MaxSpeedInMbps))
+            if (MaxSpeedInMbps.HasValue)
             {
                 writer.WritePropertyName("maxSpeedInMbps"u8);
                 writer.WriteNumberValue(MaxSpeedInMbps.Value);

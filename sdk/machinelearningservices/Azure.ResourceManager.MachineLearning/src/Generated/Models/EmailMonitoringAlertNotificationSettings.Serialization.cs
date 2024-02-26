@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EmailNotificationSetting))
+            if (EmailNotificationSetting != null)
             {
                 if (EmailNotificationSetting != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         emailNotificationSetting = null;
                         continue;
                     }
-                    emailNotificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    emailNotificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("alertNotificationType"u8))

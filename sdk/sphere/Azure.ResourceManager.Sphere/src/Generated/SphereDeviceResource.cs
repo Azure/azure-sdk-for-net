@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereDeviceResource>> UpdateAsync(WaitUntil waitUntil, SphereDevicePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.Update");
             scope.Start();
@@ -330,7 +333,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SphereDeviceResource> Update(WaitUntil waitUntil, SphereDevicePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.Update");
             scope.Start();
@@ -376,7 +382,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SignedCapabilityImageResponse>> GenerateCapabilityImageAsync(WaitUntil waitUntil, GenerateCapabilityImageContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.GenerateCapabilityImage");
             scope.Start();
@@ -422,7 +431,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SignedCapabilityImageResponse> GenerateCapabilityImage(WaitUntil waitUntil, GenerateCapabilityImageContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceResource.GenerateCapabilityImage");
             scope.Start();

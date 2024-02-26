@@ -26,59 +26,59 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherName))
+            if (options.Format != "W" && PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
+            if (options.Format != "W" && PublisherScope.HasValue)
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionGroupName))
+            if (options.Format != "W" && NetworkFunctionDefinitionGroupName != null)
             {
                 writer.WritePropertyName("networkFunctionDefinitionGroupName"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionVersion))
+            if (options.Format != "W" && NetworkFunctionDefinitionVersion != null)
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersion"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
+            if (options.Format != "W" && NetworkFunctionDefinitionOfferingLocation != null)
             {
                 writer.WritePropertyName("networkFunctionDefinitionOfferingLocation"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionOfferingLocation);
             }
-            if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
+            if (NetworkFunctionDefinitionVersionResourceReference != null)
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersionResourceReference"u8);
                 writer.WriteObjectValue(NetworkFunctionDefinitionVersionResourceReference);
             }
-            if (Optional.IsDefined(NfviType))
+            if (NfviType.HasValue)
             {
                 writer.WritePropertyName("nfviType"u8);
                 writer.WriteStringValue(NfviType.Value.ToString());
             }
-            if (Optional.IsDefined(NfviId))
+            if (NfviId != null)
             {
                 writer.WritePropertyName("nfviId"u8);
                 writer.WriteStringValue(NfviId);
             }
-            if (Optional.IsDefined(AllowSoftwareUpdate))
+            if (AllowSoftwareUpdate.HasValue)
             {
                 writer.WritePropertyName("allowSoftwareUpdate"u8);
                 writer.WriteBooleanValue(AllowSoftwareUpdate.Value);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
-            if (Optional.IsCollectionDefined(RoleOverrideValues))
+            if (!(RoleOverrideValues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roleOverrideValues"u8);
                 writer.WriteStartArray();
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element);
-                    case "Secret": return NetworkFunctionValueWithSecrets.DeserializeNetworkFunctionValueWithSecrets(element);
+                    case "Open": return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element, options);
+                    case "Secret": return NetworkFunctionValueWithSecrets.DeserializeNetworkFunctionValueWithSecrets(element, options);
                 }
             }
-            return UnknownNetworkFunctionPropertiesFormat.DeserializeUnknownNetworkFunctionPropertiesFormat(element);
+            return UnknownNetworkFunctionPropertiesFormat.DeserializeUnknownNetworkFunctionPropertiesFormat(element, options);
         }
 
         BinaryData IPersistableModel<NetworkFunctionPropertiesFormat>.Write(ModelReaderWriterOptions options)

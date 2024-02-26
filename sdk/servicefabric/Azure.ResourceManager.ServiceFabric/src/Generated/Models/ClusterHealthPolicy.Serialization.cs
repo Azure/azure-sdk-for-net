@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPercentUnhealthyNodes))
+            if (MaxPercentUnhealthyNodes.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyNodes.Value);
             }
-            if (Optional.IsDefined(MaxPercentUnhealthyApplications))
+            if (MaxPercentUnhealthyApplications.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyApplications.Value);
             }
-            if (Optional.IsCollectionDefined(ApplicationHealthPolicies))
+            if (!(ApplicationHealthPolicies is ChangeTrackingDictionary<string, ApplicationHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applicationHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ApplicationHealthPolicy> dictionary = new Dictionary<string, ApplicationHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value, options));
                     }
                     applicationHealthPolicies = dictionary;
                     continue;

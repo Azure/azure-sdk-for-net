@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpgrade))
+            if (ForceUpgrade.HasValue)
             {
                 writer.WritePropertyName("forceUpgrade"u8);
                 writer.WriteBooleanValue(ForceUpgrade.Value);
             }
-            if (Optional.IsDefined(Until))
+            if (Until.HasValue)
             {
                 writer.WritePropertyName("until"u8);
                 writer.WriteStringValue(Until.Value, "O");

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<PolicyTrackedResourceRecord> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyTrackedResourceRecord>> value = default;
+            IReadOnlyList<PolicyTrackedResourceRecord> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyTrackedResourceRecord> array = new List<PolicyTrackedResourceRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(item));
+                        array.Add(PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyTrackedResourcesQueryResults(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PolicyTrackedResourcesQueryResults(value ?? new ChangeTrackingList<PolicyTrackedResourceRecord>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyTrackedResourcesQueryResults>.Write(ModelReaderWriterOptions options)

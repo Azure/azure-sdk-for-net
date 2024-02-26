@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            if (!(ExperimentalOptions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Filters))
+            if (Filters != null)
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    filters = FilteringOperations.DeserializeFilteringOperations(property.Value);
+                    filters = FilteringOperations.DeserializeFilteringOperations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("codecs"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaCodecBase> array = new List<MediaCodecBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaCodecBase.DeserializeMediaCodecBase(item));
+                        array.Add(MediaCodecBase.DeserializeMediaCodecBase(item, options));
                     }
                     codecs = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaFormatBase> array = new List<MediaFormatBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaFormatBase.DeserializeMediaFormatBase(item));
+                        array.Add(MediaFormatBase.DeserializeMediaFormatBase(item, options));
                     }
                     formats = array;
                     continue;

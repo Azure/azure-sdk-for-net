@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
             JsonSerializer.Serialize(writer, PackagePath);
-            if (Optional.IsDefined(PackageName))
+            if (PackageName != null)
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
             JsonSerializer.Serialize(writer, PackageContent);
-            if (Optional.IsDefined(PackageLastModifiedDate))
+            if (PackageLastModifiedDate != null)
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);

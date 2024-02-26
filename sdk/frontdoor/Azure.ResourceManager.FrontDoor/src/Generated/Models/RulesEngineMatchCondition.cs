@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineMatchValue"/> is null. </exception>
         public RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable, RulesEngineOperator rulesEngineOperator, IEnumerable<string> rulesEngineMatchValue)
         {
-            Argument.AssertNotNull(rulesEngineMatchValue, nameof(rulesEngineMatchValue));
+            if (rulesEngineMatchValue == null)
+            {
+                throw new ArgumentNullException(nameof(rulesEngineMatchValue));
+            }
 
             RulesEngineMatchVariable = rulesEngineMatchVariable;
             RulesEngineOperator = rulesEngineOperator;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ConsumptionReservationRecommendation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(PreviousLink))
+            if (options.Format != "W" && PreviousLink != null)
             {
                 writer.WritePropertyName("previousLink"u8);
                 writer.WriteStringValue(PreviousLink);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionReservationRecommendation>> value = default;
+            IReadOnlyList<ConsumptionReservationRecommendation> value = default;
             Optional<string> nextLink = default;
             Optional<string> previousLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionReservationRecommendation> array = new List<ConsumptionReservationRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item));
+                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item, options));
                     }
                     value = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRecommendationsListResult(Optional.ToList(value), nextLink.Value, previousLink.Value, serializedAdditionalRawData);
+            return new ReservationRecommendationsListResult(value ?? new ChangeTrackingList<ConsumptionReservationRecommendation>(), nextLink.Value, previousLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRecommendationsListResult>.Write(ModelReaderWriterOptions options)

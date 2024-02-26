@@ -16,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceIdentifier))
+            if (ServiceIdentifier != null)
             {
                 writer.WritePropertyName("serviceIdentifier"u8);
                 writer.WriteStringValue(ServiceIdentifier);
             }
-            if (Optional.IsDefined(RemoteIPAddress))
+            if (RemoteIPAddress != null)
             {
                 writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -57,8 +57,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             Optional<string> serviceIdentifier = default;
             Optional<string> remoteIPAddress = default;
-            Optional<IList<string>> scopes = default;
-            Optional<IList<string>> endpoints = default;
+            IList<string> scopes = default;
+            IList<string> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceIdentifier"u8))
@@ -100,7 +100,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, Optional.ToList(scopes), Optional.ToList(endpoints));
+            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, scopes ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<string>());
         }
     }
 }

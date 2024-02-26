@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -23,7 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         public GoogleSheetsLinkedService(SecretBase apiToken)
         {
-            Argument.AssertNotNull(apiToken, nameof(apiToken));
+            if (apiToken == null)
+            {
+                throw new ArgumentNullException(nameof(apiToken));
+            }
 
             ApiToken = apiToken;
             Type = "GoogleSheets";

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ApplianceVersion))
+            if (options.Format != "W" && ApplianceVersion != null)
             {
                 writer.WritePropertyName("applianceVersion"u8);
                 writer.WriteStringValue(ApplianceVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVersions))
+            if (options.Format != "W" && !(SupportedVersions is ChangeTrackingList<ApplianceSupportedVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 return null;
             }
             Optional<string> applianceVersion = default;
-            Optional<IReadOnlyList<ApplianceSupportedVersion>> supportedVersions = default;
+            IReadOnlyList<ApplianceSupportedVersion> supportedVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceSupportedVersion> array = new List<ApplianceSupportedVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item));
+                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item, options));
                     }
                     supportedVersions = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceUpgradeGraphProperties(applianceVersion.Value, Optional.ToList(supportedVersions), serializedAdditionalRawData);
+            return new ApplianceUpgradeGraphProperties(applianceVersion.Value, supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceUpgradeGraphProperties>.Write(ModelReaderWriterOptions options)

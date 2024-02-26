@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ExtensionInstanceViewType))
+            if (ExtensionInstanceViewType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtensionInstanceViewType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (TypeHandlerVersion != null)
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = ExtensionInstanceViewStatus.DeserializeExtensionInstanceViewStatus(property.Value);
+                    status = ExtensionInstanceViewStatus.DeserializeExtensionInstanceViewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

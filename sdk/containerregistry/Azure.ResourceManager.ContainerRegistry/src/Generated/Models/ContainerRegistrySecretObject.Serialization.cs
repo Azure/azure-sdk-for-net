@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(ObjectType))
+            if (ObjectType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());

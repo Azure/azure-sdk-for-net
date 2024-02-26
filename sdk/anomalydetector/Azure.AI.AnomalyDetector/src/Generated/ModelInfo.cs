@@ -66,7 +66,10 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public ModelInfo(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
+            if (dataSource == null)
+            {
+                throw new ArgumentNullException(nameof(dataSource));
+            }
 
             DataSource = dataSource;
             StartTime = startTime;

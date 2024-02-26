@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Left))
+            if (Left != null)
             {
                 writer.WritePropertyName("left"u8);
                 writer.WriteStringValue(Left);
             }
-            if (Optional.IsDefined(Top))
+            if (Top != null)
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteStringValue(Top);
             }
-            if (Optional.IsDefined(Width))
+            if (Width != null)
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Height != null)
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);

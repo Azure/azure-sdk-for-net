@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InboundNatRulePortMappings))
+            if (!(InboundNatRulePortMappings is ChangeTrackingList<InboundNatRulePortMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatRulePortMappings"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InboundNatRulePortMapping>> inboundNatRulePortMappings = default;
+            IReadOnlyList<InboundNatRulePortMapping> inboundNatRulePortMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<InboundNatRulePortMapping> array = new List<InboundNatRulePortMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatRulePortMapping.DeserializeInboundNatRulePortMapping(item));
+                        array.Add(InboundNatRulePortMapping.DeserializeInboundNatRulePortMapping(item, options));
                     }
                     inboundNatRulePortMappings = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendAddressInboundNatRulePortMappings(Optional.ToList(inboundNatRulePortMappings), serializedAdditionalRawData);
+            return new BackendAddressInboundNatRulePortMappings(inboundNatRulePortMappings ?? new ChangeTrackingList<InboundNatRulePortMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendAddressInboundNatRulePortMappings>.Write(ModelReaderWriterOptions options)

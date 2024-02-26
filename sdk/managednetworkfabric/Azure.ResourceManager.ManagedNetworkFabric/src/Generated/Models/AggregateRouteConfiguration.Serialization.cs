@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPv4Routes))
+            if (!(IPv4Routes is ChangeTrackingList<AggregateRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6Routes))
+            if (!(IPv6Routes is ChangeTrackingList<AggregateRoute> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<AggregateRoute>> ipv4Routes = default;
-            Optional<IList<AggregateRoute>> ipv6Routes = default;
+            IList<AggregateRoute> ipv4Routes = default;
+            IList<AggregateRoute> ipv6Routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
                     ipv4Routes = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
                     ipv6Routes = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AggregateRouteConfiguration(Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes), serializedAdditionalRawData);
+            return new AggregateRouteConfiguration(ipv4Routes ?? new ChangeTrackingList<AggregateRoute>(), ipv6Routes ?? new ChangeTrackingList<AggregateRoute>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AggregateRouteConfiguration>.Write(ModelReaderWriterOptions options)

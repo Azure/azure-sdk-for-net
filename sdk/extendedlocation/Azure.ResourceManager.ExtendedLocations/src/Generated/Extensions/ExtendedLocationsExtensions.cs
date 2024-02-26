@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> Returns a <see cref="CustomLocationResource"/> object. </returns>
         public static CustomLocationResource GetCustomLocationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableExtendedLocationsArmClient(client).GetCustomLocationResource(id);
         }
@@ -65,7 +68,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
         public static CustomLocationCollection GetCustomLocations(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableExtendedLocationsResourceGroupResource(resourceGroupResource).GetCustomLocations();
         }
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         [ForwardsClientCalls]
         public static async Task<Response<CustomLocationResource>> GetCustomLocationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableExtendedLocationsResourceGroupResource(resourceGroupResource).GetCustomLocationAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -141,7 +150,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         [ForwardsClientCalls]
         public static Response<CustomLocationResource> GetCustomLocation(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableExtendedLocationsResourceGroupResource(resourceGroupResource).GetCustomLocation(resourceName, cancellationToken);
         }
@@ -177,7 +189,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An async collection of <see cref="CustomLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomLocationResource> GetCustomLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableExtendedLocationsSubscriptionResource(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
         }
@@ -213,7 +228,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> A collection of <see cref="CustomLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomLocationResource> GetCustomLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableExtendedLocationsSubscriptionResource(subscriptionResource).GetCustomLocations(cancellationToken);
         }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId.HasValue)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
             }
-            if (Optional.IsDefined(Secret))
+            if (Secret != null)
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);

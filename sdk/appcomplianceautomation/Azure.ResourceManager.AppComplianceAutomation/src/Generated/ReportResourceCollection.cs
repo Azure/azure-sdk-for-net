@@ -88,8 +88,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ReportResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string reportName, ReportResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -137,8 +147,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ReportResource> CreateOrUpdate(WaitUntil waitUntil, string reportName, ReportResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +204,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
         public virtual async Task<Response<ReportResource>> GetAsync(string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResourceCollection.Get");
             scope.Start();
@@ -229,7 +256,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
         public virtual Response<ReportResource> Get(string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResourceCollection.Get");
             scope.Start();
@@ -344,7 +378,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResourceCollection.Exists");
             scope.Start();
@@ -387,7 +428,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
         public virtual Response<bool> Exists(string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResourceCollection.Exists");
             scope.Start();
@@ -430,7 +478,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
         public virtual async Task<NullableResponse<ReportResource>> GetIfExistsAsync(string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResourceCollection.GetIfExists");
             scope.Start();
@@ -475,7 +530,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
         public virtual NullableResponse<ReportResource> GetIfExists(string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResourceCollection.GetIfExists");
             scope.Start();

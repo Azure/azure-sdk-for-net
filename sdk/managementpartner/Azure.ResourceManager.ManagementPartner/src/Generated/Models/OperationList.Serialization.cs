@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationResponse> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationResponse>> value = default;
+            IReadOnlyList<OperationResponse> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     List<OperationResponse> array = new List<OperationResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationResponse.DeserializeOperationResponse(item));
+                        array.Add(OperationResponse.DeserializeOperationResponse(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OperationList(value ?? new ChangeTrackingList<OperationResponse>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationList>.Write(ModelReaderWriterOptions options)

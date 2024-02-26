@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteObjectValue(TrustSubnet);
             writer.WritePropertyName("unTrustSubnet"u8);
             writer.WriteObjectValue(UnTrustSubnet);
-            if (Optional.IsDefined(IPOfTrustSubnetForUdr))
+            if (IPOfTrustSubnetForUdr != null)
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
                 writer.WriteObjectValue(IPOfTrustSubnetForUdr);
@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 if (property.NameEquals("vnet"u8))
                 {
-                    vnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value);
+                    vnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trustSubnet"u8))
                 {
-                    trustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value);
+                    trustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unTrustSubnet"u8))
                 {
-                    unTrustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value);
+                    unTrustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipOfTrustSubnetForUdr"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    ipOfTrustSubnetForUdr = IPAddressInfo.DeserializeIPAddressInfo(property.Value);
+                    ipOfTrustSubnetForUdr = IPAddressInfo.DeserializeIPAddressInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

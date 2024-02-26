@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(KeyVaultEndpoint);
             writer.WritePropertyName("keyVaultClientId"u8);
             writer.WriteStringValue(KeyVaultClientId);
-            if (Optional.IsDefined(KeyVaultClientSecret))
+            if (KeyVaultClientSecret != null)
             {
                 writer.WritePropertyName("keyVaultClientSecret"u8);
                 writer.WriteStringValue(KeyVaultClientSecret);

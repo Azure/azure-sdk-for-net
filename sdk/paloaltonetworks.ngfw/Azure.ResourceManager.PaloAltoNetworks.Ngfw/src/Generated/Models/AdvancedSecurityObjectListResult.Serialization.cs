@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    value = AdvancedSecurityObject.DeserializeAdvancedSecurityObject(property.Value);
+                    value = AdvancedSecurityObject.DeserializeAdvancedSecurityObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))

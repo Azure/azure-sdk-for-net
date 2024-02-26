@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(TaskName))
+            if (TaskName != null)
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);

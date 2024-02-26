@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceUri"/> is null. </exception>
         internal ContainerRegistryWebhookCallbackConfig(Uri serviceUri)
         {
-            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            if (serviceUri == null)
+            {
+                throw new ArgumentNullException(nameof(serviceUri));
+            }
 
             ServiceUri = serviceUri;
             CustomHeaders = new ChangeTrackingDictionary<string, string>();

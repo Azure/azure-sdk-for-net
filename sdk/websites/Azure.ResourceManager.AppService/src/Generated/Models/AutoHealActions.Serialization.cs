@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionType))
+            if (ActionType.HasValue)
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CustomAction))
+            if (CustomAction != null)
             {
                 writer.WritePropertyName("customAction"u8);
                 writer.WriteObjectValue(CustomAction);
             }
-            if (Optional.IsDefined(MinProcessExecutionTime))
+            if (MinProcessExecutionTime != null)
             {
                 writer.WritePropertyName("minProcessExecutionTime"u8);
                 writer.WriteStringValue(MinProcessExecutionTime);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value);
+                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("minProcessExecutionTime"u8))

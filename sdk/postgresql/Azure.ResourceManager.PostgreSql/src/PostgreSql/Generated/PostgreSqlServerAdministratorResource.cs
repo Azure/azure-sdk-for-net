@@ -280,7 +280,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlServerAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PostgreSqlServerAdministratorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlServerAdministratorServerAdministratorsClientDiagnostics.CreateScope("PostgreSqlServerAdministratorResource.CreateOrUpdate");
             scope.Start();
@@ -326,7 +329,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlServerAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, PostgreSqlServerAdministratorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlServerAdministratorServerAdministratorsClientDiagnostics.CreateScope("PostgreSqlServerAdministratorResource.CreateOrUpdate");
             scope.Start();

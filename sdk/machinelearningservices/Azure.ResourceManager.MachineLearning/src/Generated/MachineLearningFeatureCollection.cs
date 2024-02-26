@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual async Task<Response<MachineLearningFeatureResource>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+            if (featureName == null)
+            {
+                throw new ArgumentNullException(nameof(featureName));
+            }
+            if (featureName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(featureName));
+            }
 
             using var scope = _machineLearningFeatureFeaturesClientDiagnostics.CreateScope("MachineLearningFeatureCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<MachineLearningFeatureResource> Get(string featureName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+            if (featureName == null)
+            {
+                throw new ArgumentNullException(nameof(featureName));
+            }
+            if (featureName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(featureName));
+            }
 
             using var scope = _machineLearningFeatureFeaturesClientDiagnostics.CreateScope("MachineLearningFeatureCollection.Get");
             scope.Start();
@@ -238,7 +252,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+            if (featureName == null)
+            {
+                throw new ArgumentNullException(nameof(featureName));
+            }
+            if (featureName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(featureName));
+            }
 
             using var scope = _machineLearningFeatureFeaturesClientDiagnostics.CreateScope("MachineLearningFeatureCollection.Exists");
             scope.Start();
@@ -281,7 +302,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<bool> Exists(string featureName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+            if (featureName == null)
+            {
+                throw new ArgumentNullException(nameof(featureName));
+            }
+            if (featureName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(featureName));
+            }
 
             using var scope = _machineLearningFeatureFeaturesClientDiagnostics.CreateScope("MachineLearningFeatureCollection.Exists");
             scope.Start();
@@ -324,7 +352,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineLearningFeatureResource>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+            if (featureName == null)
+            {
+                throw new ArgumentNullException(nameof(featureName));
+            }
+            if (featureName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(featureName));
+            }
 
             using var scope = _machineLearningFeatureFeaturesClientDiagnostics.CreateScope("MachineLearningFeatureCollection.GetIfExists");
             scope.Start();
@@ -369,7 +404,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual NullableResponse<MachineLearningFeatureResource> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+            if (featureName == null)
+            {
+                throw new ArgumentNullException(nameof(featureName));
+            }
+            if (featureName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(featureName));
+            }
 
             using var scope = _machineLearningFeatureFeaturesClientDiagnostics.CreateScope("MachineLearningFeatureCollection.GetIfExists");
             scope.Start();

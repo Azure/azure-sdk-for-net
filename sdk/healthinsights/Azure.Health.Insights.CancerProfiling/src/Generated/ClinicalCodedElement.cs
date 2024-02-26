@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
@@ -52,8 +51,14 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="system"/> or <paramref name="code"/> is null. </exception>
         public ClinicalCodedElement(string system, string code)
         {
-            Argument.AssertNotNull(system, nameof(system));
-            Argument.AssertNotNull(code, nameof(code));
+            if (system == null)
+            {
+                throw new ArgumentNullException(nameof(system));
+            }
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
 
             System = system;
             Code = code;

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(RuleSequence))
+            if (RuleSequence.HasValue)
             {
                 writer.WritePropertyName("ruleSequence"u8);
                 writer.WriteNumberValue(RuleSequence.Value);
             }
-            if (Optional.IsCollectionDefined(Conditions))
+            if (!(Conditions is ChangeTrackingList<ApplicationGatewayRewriteRuleCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ActionSet))
+            if (ActionSet != null)
             {
                 writer.WritePropertyName("actionSet"u8);
                 writer.WriteObjectValue(ActionSet);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> name = default;
             Optional<int> ruleSequence = default;
-            Optional<IList<ApplicationGatewayRewriteRuleCondition>> conditions = default;
+            IList<ApplicationGatewayRewriteRuleCondition> conditions = default;
             Optional<ApplicationGatewayRewriteRuleActionSet> actionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayRewriteRuleCondition> array = new List<ApplicationGatewayRewriteRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item));
+                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value);
+                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRewriteRule(name.Value, Optional.ToNullable(ruleSequence), Optional.ToList(conditions), actionSet.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayRewriteRule(name.Value, Optional.ToNullable(ruleSequence), conditions ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>(), actionSet.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRewriteRule>.Write(ModelReaderWriterOptions options)

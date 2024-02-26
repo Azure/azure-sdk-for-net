@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SkipValidationsForMachines))
+            if (!(SkipValidationsForMachines is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skipValidationsForMachines"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IList<string>> skipValidationsForMachines = default;
+            IList<string> skipValidationsForMachines = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterDeployContent(Optional.ToList(skipValidationsForMachines), serializedAdditionalRawData);
+            return new ClusterDeployContent(skipValidationsForMachines ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterDeployContent>.Write(ModelReaderWriterOptions options)

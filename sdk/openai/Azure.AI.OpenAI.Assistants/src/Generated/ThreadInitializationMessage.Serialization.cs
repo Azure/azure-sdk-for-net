@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(FileIds))
+            if (!(FileIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Metadata != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
             MessageRole role = default;
             string content = default;
-            Optional<IList<string>> fileIds = default;
+            IList<string> fileIds = default;
             Optional<IDictionary<string, string>> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreadInitializationMessage(role, content, Optional.ToList(fileIds), Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new ThreadInitializationMessage(role, content, fileIds ?? new ChangeTrackingList<string>(), Optional.ToDictionary(metadata), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreadInitializationMessage>.Write(ModelReaderWriterOptions options)

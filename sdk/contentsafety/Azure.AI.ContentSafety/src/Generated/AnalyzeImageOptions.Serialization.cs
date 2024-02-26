@@ -29,7 +29,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<ImageCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputType))
+            if (OutputType.HasValue)
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
@@ -83,7 +83,7 @@ namespace Azure.AI.ContentSafety
                 return null;
             }
             ContentSafetyImageData image = default;
-            Optional<IList<ImageCategory>> categories = default;
+            IList<ImageCategory> categories = default;
             Optional<AnalyzeImageOutputType> outputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.AI.ContentSafety
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value);
+                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))
@@ -123,7 +123,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeImageOptions(image, Optional.ToList(categories), Optional.ToNullable(outputType), serializedAdditionalRawData);
+            return new AnalyzeImageOptions(image, categories ?? new ChangeTrackingList<ImageCategory>(), Optional.ToNullable(outputType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeImageOptions>.Write(ModelReaderWriterOptions options)

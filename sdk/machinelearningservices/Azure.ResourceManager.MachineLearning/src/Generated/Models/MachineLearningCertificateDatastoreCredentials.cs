@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -22,8 +21,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> or <paramref name="thumbprint"/> is null. </exception>
         public MachineLearningCertificateDatastoreCredentials(Guid clientId, MachineLearningCertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint)
         {
-            Argument.AssertNotNull(secrets, nameof(secrets));
-            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
+            if (secrets == null)
+            {
+                throw new ArgumentNullException(nameof(secrets));
+            }
+            if (thumbprint == null)
+            {
+                throw new ArgumentNullException(nameof(thumbprint));
+            }
 
             ClientId = clientId;
             Secrets = secrets;

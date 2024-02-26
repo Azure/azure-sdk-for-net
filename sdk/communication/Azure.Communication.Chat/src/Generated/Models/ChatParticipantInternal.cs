@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -19,7 +18,10 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
         public ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier)
         {
-            Argument.AssertNotNull(communicationIdentifier, nameof(communicationIdentifier));
+            if (communicationIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(communicationIdentifier));
+            }
 
             CommunicationIdentifier = communicationIdentifier;
         }

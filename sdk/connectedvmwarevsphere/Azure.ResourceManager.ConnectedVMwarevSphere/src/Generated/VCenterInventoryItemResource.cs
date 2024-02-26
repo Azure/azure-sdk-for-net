@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VCenterInventoryItemResource>> UpdateAsync(WaitUntil waitUntil, VCenterInventoryItemData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VCenterInventoryItemResource> Update(WaitUntil waitUntil, VCenterInventoryItemData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemResource.Update");
             scope.Start();

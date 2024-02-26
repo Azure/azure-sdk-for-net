@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PartnerNamespaceChannelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string channelName, PartnerNamespaceChannelData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (channelName == null)
+            {
+                throw new ArgumentNullException(nameof(channelName));
+            }
+            if (channelName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PartnerNamespaceChannelResource> CreateOrUpdate(WaitUntil waitUntil, string channelName, PartnerNamespaceChannelData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (channelName == null)
+            {
+                throw new ArgumentNullException(nameof(channelName));
+            }
+            if (channelName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual async Task<Response<PartnerNamespaceChannelResource>> GetAsync(string channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
+            if (channelName == null)
+            {
+                throw new ArgumentNullException(nameof(channelName));
+            }
+            if (channelName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
+            }
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual Response<PartnerNamespaceChannelResource> Get(string channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
+            if (channelName == null)
+            {
+                throw new ArgumentNullException(nameof(channelName));
+            }
+            if (channelName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
+            }
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
+            if (channelName == null)
+            {
+                throw new ArgumentNullException(nameof(channelName));
+            }
+            if (channelName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
+            }
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual Response<bool> Exists(string channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
+            if (channelName == null)
+            {
+                throw new ArgumentNullException(nameof(channelName));
+            }
+            if (channelName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
+            }
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual async Task<NullableResponse<PartnerNamespaceChannelResource>> GetIfExistsAsync(string channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
+            if (channelName == null)
+            {
+                throw new ArgumentNullException(nameof(channelName));
+            }
+            if (channelName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
+            }
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual NullableResponse<PartnerNamespaceChannelResource> GetIfExists(string channelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
+            if (channelName == null)
+            {
+                throw new ArgumentNullException(nameof(channelName));
+            }
+            if (channelName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
+            }
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.GetIfExists");
             scope.Start();

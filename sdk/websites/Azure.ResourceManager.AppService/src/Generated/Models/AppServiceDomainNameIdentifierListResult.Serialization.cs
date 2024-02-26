@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceDomainNameIdentifier> array = new List<AppServiceDomainNameIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(item));
+                        array.Add(AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(item, options));
                     }
                     value = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MyWorkbookData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MyWorkbookData>> value = default;
+            IReadOnlyList<MyWorkbookData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<MyWorkbookData> array = new List<MyWorkbookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MyWorkbookData.DeserializeMyWorkbookData(item));
+                        array.Add(MyWorkbookData.DeserializeMyWorkbookData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MyWorkbooksListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MyWorkbooksListResult(value ?? new ChangeTrackingList<MyWorkbookData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MyWorkbooksListResult>.Write(ModelReaderWriterOptions options)

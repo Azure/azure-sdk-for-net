@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsResolverOutboundEndpoints))
+            if (!(DnsResolverOutboundEndpoints is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsResolverOutboundEndpoints"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IList<WritableSubResource>> dnsResolverOutboundEndpoints = default;
+            IList<WritableSubResource> dnsResolverOutboundEndpoints = default;
             Optional<IDictionary<string, string>> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsForwardingRulesetPatch(Optional.ToList(dnsResolverOutboundEndpoints), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new DnsForwardingRulesetPatch(dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsForwardingRulesetPatch>.Write(ModelReaderWriterOptions options)

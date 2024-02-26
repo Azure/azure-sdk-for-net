@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetBillingSubscriptionName))
+            if (TargetBillingSubscriptionName != null)
             {
                 writer.WritePropertyName("targetBillingSubscriptionName"u8);
                 writer.WriteStringValue(TargetBillingSubscriptionName);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);

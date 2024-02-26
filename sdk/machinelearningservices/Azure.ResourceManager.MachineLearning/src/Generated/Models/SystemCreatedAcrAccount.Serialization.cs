@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AcrAccountName))
+            if (AcrAccountName != null)
             {
                 if (AcrAccountName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrAccountName");
                 }
             }
-            if (Optional.IsDefined(AcrAccountSku))
+            if (AcrAccountSku != null)
             {
                 if (AcrAccountSku != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrAccountSku");
                 }
             }
-            if (Optional.IsDefined(ArmResourceIdentifier))
+            if (ArmResourceIdentifier != null)
             {
                 if (ArmResourceIdentifier != null)
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         armResourceId = null;
                         continue;
                     }
-                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value);
+                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

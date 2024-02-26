@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RoutePrefix))
+            if (!(RoutePrefix is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routePrefix"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Community))
+            if (!(Community is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("community"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AsPath))
+            if (!(AsPath is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MatchCondition))
+            if (MatchCondition.HasValue)
             {
                 writer.WritePropertyName("matchCondition"u8);
                 writer.WriteStringValue(MatchCondition.Value.ToString());
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> routePrefix = default;
-            Optional<IList<string>> community = default;
-            Optional<IList<string>> asPath = default;
+            IList<string> routePrefix = default;
+            IList<string> community = default;
+            IList<string> asPath = default;
             Optional<RouteMapMatchCondition> matchCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteCriterion(Optional.ToList(routePrefix), Optional.ToList(community), Optional.ToList(asPath), Optional.ToNullable(matchCondition), serializedAdditionalRawData);
+            return new RouteCriterion(routePrefix ?? new ChangeTrackingList<string>(), community ?? new ChangeTrackingList<string>(), asPath ?? new ChangeTrackingList<string>(), Optional.ToNullable(matchCondition), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteCriterion>.Write(ModelReaderWriterOptions options)

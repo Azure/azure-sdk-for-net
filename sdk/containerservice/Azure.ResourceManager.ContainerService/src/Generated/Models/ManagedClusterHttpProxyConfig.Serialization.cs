@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HttpProxy))
+            if (HttpProxy != null)
             {
                 writer.WritePropertyName("httpProxy"u8);
                 writer.WriteStringValue(HttpProxy);
             }
-            if (Optional.IsDefined(HttpsProxy))
+            if (HttpsProxy != null)
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
-            if (Optional.IsCollectionDefined(NoProxy))
+            if (!(NoProxy is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrustedCA))
+            if (TrustedCA != null)
             {
                 writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCA);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             Optional<string> httpProxy = default;
             Optional<string> httpsProxy = default;
-            Optional<IList<string>> noProxy = default;
+            IList<string> noProxy = default;
             Optional<string> trustedCA = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCA.Value, serializedAdditionalRawData);
+            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, noProxy ?? new ChangeTrackingList<string>(), trustedCA.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterHttpProxyConfig>.Write(ModelReaderWriterOptions options)

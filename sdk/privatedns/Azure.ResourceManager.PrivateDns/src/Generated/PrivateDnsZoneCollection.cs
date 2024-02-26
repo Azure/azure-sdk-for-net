@@ -85,8 +85,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateDnsZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateZoneName, PrivateDnsZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (privateZoneName == null)
+            {
+                throw new ArgumentNullException(nameof(privateZoneName));
+            }
+            if (privateZoneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.CreateOrUpdate");
             scope.Start();
@@ -136,8 +146,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PrivateDnsZoneResource> CreateOrUpdate(WaitUntil waitUntil, string privateZoneName, PrivateDnsZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (privateZoneName == null)
+            {
+                throw new ArgumentNullException(nameof(privateZoneName));
+            }
+            if (privateZoneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.CreateOrUpdate");
             scope.Start();
@@ -183,7 +203,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
         public virtual async Task<Response<PrivateDnsZoneResource>> GetAsync(string privateZoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (privateZoneName == null)
+            {
+                throw new ArgumentNullException(nameof(privateZoneName));
+            }
+            if (privateZoneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+            }
 
             using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.Get");
             scope.Start();
@@ -228,7 +255,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
         public virtual Response<PrivateDnsZoneResource> Get(string privateZoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (privateZoneName == null)
+            {
+                throw new ArgumentNullException(nameof(privateZoneName));
+            }
+            if (privateZoneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+            }
 
             using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.Get");
             scope.Start();
@@ -335,7 +369,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateZoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (privateZoneName == null)
+            {
+                throw new ArgumentNullException(nameof(privateZoneName));
+            }
+            if (privateZoneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+            }
 
             using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.Exists");
             scope.Start();
@@ -378,7 +419,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateZoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (privateZoneName == null)
+            {
+                throw new ArgumentNullException(nameof(privateZoneName));
+            }
+            if (privateZoneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+            }
 
             using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.Exists");
             scope.Start();
@@ -421,7 +469,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
         public virtual async Task<NullableResponse<PrivateDnsZoneResource>> GetIfExistsAsync(string privateZoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (privateZoneName == null)
+            {
+                throw new ArgumentNullException(nameof(privateZoneName));
+            }
+            if (privateZoneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+            }
 
             using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.GetIfExists");
             scope.Start();
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
         public virtual NullableResponse<PrivateDnsZoneResource> GetIfExists(string privateZoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (privateZoneName == null)
+            {
+                throw new ArgumentNullException(nameof(privateZoneName));
+            }
+            if (privateZoneName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+            }
 
             using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.GetIfExists");
             scope.Start();

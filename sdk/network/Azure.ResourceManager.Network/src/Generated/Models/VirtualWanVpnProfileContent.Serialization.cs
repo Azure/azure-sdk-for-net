@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VpnServerConfigurationResourceId))
+            if (VpnServerConfigurationResourceId != null)
             {
                 writer.WritePropertyName("vpnServerConfigurationResourceId"u8);
                 writer.WriteStringValue(VpnServerConfigurationResourceId);
             }
-            if (Optional.IsDefined(AuthenticationMethod))
+            if (AuthenticationMethod.HasValue)
             {
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());

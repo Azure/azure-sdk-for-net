@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VoiceServicesTestLineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string testLineName, VoiceServicesTestLineData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (testLineName == null)
+            {
+                throw new ArgumentNullException(nameof(testLineName));
+            }
+            if (testLineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(testLineName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VoiceServicesTestLineResource> CreateOrUpdate(WaitUntil waitUntil, string testLineName, VoiceServicesTestLineData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (testLineName == null)
+            {
+                throw new ArgumentNullException(nameof(testLineName));
+            }
+            if (testLineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(testLineName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
         public virtual async Task<Response<VoiceServicesTestLineResource>> GetAsync(string testLineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+            if (testLineName == null)
+            {
+                throw new ArgumentNullException(nameof(testLineName));
+            }
+            if (testLineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(testLineName));
+            }
 
             using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
         public virtual Response<VoiceServicesTestLineResource> Get(string testLineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+            if (testLineName == null)
+            {
+                throw new ArgumentNullException(nameof(testLineName));
+            }
+            if (testLineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(testLineName));
+            }
 
             using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string testLineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+            if (testLineName == null)
+            {
+                throw new ArgumentNullException(nameof(testLineName));
+            }
+            if (testLineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(testLineName));
+            }
 
             using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
         public virtual Response<bool> Exists(string testLineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+            if (testLineName == null)
+            {
+                throw new ArgumentNullException(nameof(testLineName));
+            }
+            if (testLineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(testLineName));
+            }
 
             using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
         public virtual async Task<NullableResponse<VoiceServicesTestLineResource>> GetIfExistsAsync(string testLineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+            if (testLineName == null)
+            {
+                throw new ArgumentNullException(nameof(testLineName));
+            }
+            if (testLineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(testLineName));
+            }
 
             using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
         public virtual NullableResponse<VoiceServicesTestLineResource> GetIfExists(string testLineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+            if (testLineName == null)
+            {
+                throw new ArgumentNullException(nameof(testLineName));
+            }
+            if (testLineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(testLineName));
+            }
 
             using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.GetIfExists");
             scope.Start();

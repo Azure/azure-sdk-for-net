@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IPv4Address))
+            if (IPv4Address != null)
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
-            if (Optional.IsDefined(IPv4Subnet))
+            if (IPv4Subnet != null)
             {
                 writer.WritePropertyName("ipv4Subnet"u8);
                 writer.WriteStringValue(IPv4Subnet);
             }
-            if (Optional.IsDefined(IPv4Gateway))
+            if (IPv4Gateway != null)
             {
                 writer.WritePropertyName("ipv4Gateway"u8);
                 writer.WriteStringValue(IPv4Gateway);

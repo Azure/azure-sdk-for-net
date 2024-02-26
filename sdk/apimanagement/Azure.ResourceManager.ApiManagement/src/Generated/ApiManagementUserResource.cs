@@ -372,7 +372,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ApiManagementUserResource>> UpdateAsync(ETag ifMatch, ApiManagementUserPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Update");
             scope.Start();
@@ -415,7 +418,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ApiManagementUserResource> Update(ETag ifMatch, ApiManagementUserPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Update");
             scope.Start();
@@ -533,7 +539,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<UserTokenResult>> GetSharedAccessTokenAsync(UserTokenContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.GetSharedAccessToken");
             scope.Start();
@@ -575,7 +584,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<UserTokenResult> GetSharedAccessToken(UserTokenContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.GetSharedAccessToken");
             scope.Start();

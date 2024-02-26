@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<AssignmentJobCreatedResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             Optional<AzureResourceManagerError> error = default;
-            Optional<IList<AssignmentJobCreatedResult>> resources = default;
+            IList<AssignmentJobCreatedResult> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    error = AzureResourceManagerError.DeserializeAzureResourceManagerError(property.Value);
+                    error = AzureResourceManagerError.DeserializeAzureResourceManagerError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<AssignmentJobCreatedResult> array = new List<AssignmentJobCreatedResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentJobCreatedResult.DeserializeAssignmentJobCreatedResult(item));
+                        array.Add(AssignmentJobCreatedResult.DeserializeAssignmentJobCreatedResult(item, options));
                     }
                     resources = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentDeploymentJobResult(error.Value, Optional.ToList(resources), serializedAdditionalRawData);
+            return new AssignmentDeploymentJobResult(error.Value, resources ?? new ChangeTrackingList<AssignmentJobCreatedResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentDeploymentJobResult>.Write(ModelReaderWriterOptions options)

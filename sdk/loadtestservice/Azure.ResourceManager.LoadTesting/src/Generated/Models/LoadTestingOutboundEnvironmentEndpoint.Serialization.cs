@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
+            if (options.Format != "W" && !(Endpoints is ChangeTrackingList<LoadTestingEndpointDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 return null;
             }
             Optional<string> category = default;
-            Optional<IReadOnlyList<LoadTestingEndpointDependency>> endpoints = default;
+            IReadOnlyList<LoadTestingEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingEndpointDependency> array = new List<LoadTestingEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingEndpointDependency.DeserializeLoadTestingEndpointDependency(item));
+                        array.Add(LoadTestingEndpointDependency.DeserializeLoadTestingEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, endpoints ?? new ChangeTrackingList<LoadTestingEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

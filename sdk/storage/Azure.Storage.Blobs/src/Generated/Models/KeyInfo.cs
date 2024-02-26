@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expiry"/> is null. </exception>
         public KeyInfo(string expiry)
         {
-            Argument.AssertNotNull(expiry, nameof(expiry));
+            if (expiry == null)
+            {
+                throw new ArgumentNullException(nameof(expiry));
+            }
 
             Expiry = expiry;
         }
