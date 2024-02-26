@@ -927,6 +927,12 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# PRLabel: %Carbon Optimization
+/sdk/carbon/Azure.ResourceManager.CarbonOptimization/               @destinyboyer @liangchenmicrosoft
+
+# ServiceLabel: %Carbon Optimization %Mgmt
+# ServiceOwners:                                                    @destinyboyer
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
