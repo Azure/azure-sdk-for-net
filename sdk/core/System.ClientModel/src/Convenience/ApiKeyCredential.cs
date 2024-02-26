@@ -7,9 +7,9 @@ using System.Threading;
 namespace System.ClientModel;
 
 /// <summary>
-/// API key credential used to authenticate to a service.
-/// This credential type provides the ability to update the key's value without
-/// creating a new client.
+/// A credential used to authenticate to a service that accepts an API key.
+/// This type provides the ability to update the key's value without creating
+/// a new client.
 /// </summary>
 public class ApiKeyCredential
 {
@@ -18,7 +18,8 @@ public class ApiKeyCredential
     /// <summary>
     /// Initializes a new instance of the <see cref="ApiKeyCredential"/> class.
     /// </summary>
-    /// <param name="key">Key to use to authenticate with the service.</param>
+    /// <param name="key">The API key to used to authenticate with the service.
+    /// </param>
     /// <exception cref="System.ArgumentNullException">
     /// Thrown when the <paramref name="key"/> is null.
     /// </exception>
@@ -45,11 +46,13 @@ public class ApiKeyCredential
     public void Deconstruct(out string key) => key = Volatile.Read(ref _key);
 
     /// <summary>
-    /// Updates the service key.
-    /// This is intended to be used when a service key has been regenerated
-    /// and long-lived clients need to use the new value.
+    /// Updates the API key to used to authenticate with the service.
+    /// This method is intended to be called when the API key has been
+    /// regenerated and long-lived clients need to be updated to send the new
+    /// value.
     /// </summary>
-    /// <param name="key">Key to authenticate the service against.</param>
+    /// <param name="key">The new value for the API key to used to authenticate
+    /// with the service.</param>
     /// <exception cref="System.ArgumentNullException">
     /// Thrown when the <paramref name="key"/> is null.
     /// </exception>

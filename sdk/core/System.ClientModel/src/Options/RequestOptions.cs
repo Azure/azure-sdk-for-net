@@ -104,7 +104,8 @@ public class RequestOptions
     /// <param name="policy">The <see cref="PipelinePolicy"/> to add to the
     /// pipeline.</param>
     /// <param name="position">The position of the policy in the pipeline.</param>
-    /// <exception cref="ArgumentException">The policy cannot be null.</exception>
+    /// <exception cref="ArgumentException">Thrown when the provided policy
+    /// is <c>null</c>.</exception>
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
         Argument.AssertNotNull(policy, nameof(policy));
@@ -175,8 +176,9 @@ public class RequestOptions
     /// Assert that <see cref="Freeze"/> has not been called on this
     /// <see cref="RequestOptions"/> instance.
     /// </summary>
-    /// <exception cref="InvalidOperationException">Cannot change the state of
-    /// this instance after <see cref="Freeze"/> has been called.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when an attempt is
+    /// made to change the state of this <see cref="RequestOptions"/> instance
+    /// after <see cref="Freeze"/> has been called.</exception>
     protected void AssertNotFrozen()
     {
         if (_frozen)

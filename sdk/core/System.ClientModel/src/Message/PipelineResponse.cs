@@ -39,6 +39,7 @@ public abstract class PipelineResponse : IDisposable
 
     /// <summary>
     /// Gets or sets the contents of the HTTP response.
+    /// </summary>
     /// <remarks>
     /// <see cref="ContentStream"/> may be a stream that contains the buffered
     /// contents transfered from the network stream that originally held the
@@ -50,17 +51,16 @@ public abstract class PipelineResponse : IDisposable
     /// whether this <see cref="PipelineResponse"/> instance must be disposed
     /// to close the network stream.
     /// </remarks>
-    /// </summary>
     public abstract Stream? ContentStream { get; set; }
 
     /// <summary>
     /// Gets the contents of the HTTP response.
     /// </summary>
-    /// <exception cref="InvalidOperationException">Throws if the response is
+    /// <exception cref="InvalidOperationException">Thrown if the response is
     /// not buffered.</exception>
     /// <remarks>
     /// <see cref="Content"/> holds the in-memory contents of the HTTP response
-    /// when <see cref="PipelineMessage.BufferResponse"/> is <c>true </c> on
+    /// when <see cref="PipelineMessage.BufferResponse"/> is <c>true</c> on
     /// the message sent via <see cref="ClientPipeline.Send(PipelineMessage)"/>.
     /// If this <see cref="PipelineResponse"/> instance was obtained from the
     /// return value of a client's service method, please refer to the

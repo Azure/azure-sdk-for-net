@@ -9,7 +9,8 @@ namespace System.ClientModel;
 /// Represents the result of a cloud service operation, and provides a
 /// strongly-typed representation of the service response value.
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">The type of the value returned in the service response.
+/// </typeparam>
 public class ClientResult<T> : ClientResult
 {
     /// <summary>

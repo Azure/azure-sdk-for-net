@@ -29,7 +29,8 @@ public class ClientResultException : Exception, ISerializable
     /// <param name="response">The service's error response.</param>
     /// <param name="innerException">The <see cref="Exception.InnerException"/>,
     /// if any, that threw the current exception.</param>
-    /// <returns></returns>
+    /// <returns>The <see cref="ClientResultException"/> instance that was
+    /// created.</returns>
     public static async Task<ClientResultException> CreateAsync(PipelineResponse response, Exception? innerException = default)
     {
         string message = await CreateMessageAsync(response).ConfigureAwait(false);

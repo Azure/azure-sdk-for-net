@@ -266,7 +266,8 @@ public class ClientRetryPolicy : PipelinePolicy
     /// pipeline invocation.</param>
     /// <param name="tryCount">A number indicating how many times the policy has
     /// tried to send the request.</param>
-    /// <returns></returns>
+    /// <returns>The amount of time to wait before the next retry attempt.
+    /// </returns>
     protected virtual TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
     {
         // Default implementation is exponential backoff
@@ -283,7 +284,8 @@ public class ClientRetryPolicy : PipelinePolicy
     /// request again.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> used
     /// to cancel the wait if needed.</param>
-    /// <returns></returns>
+    /// <returns>A task that can be awaited to asynchronously delay before the
+    /// next retry attempt.</returns>
     protected virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
     {
         await Task.Delay(time, cancellationToken).ConfigureAwait(false);

@@ -67,7 +67,9 @@ public abstract class PipelineMessageClassifier
     /// </summary>
     /// <param name="message">The <see cref="PipelineMessage"/> to classify.</param>
     /// <param name="exception">An <see cref="Exception"/>, if any, that will
-    /// also be used in the retry classification.</param>
+    /// also be used in the retry classification. Callers are intended to
+    /// provide any exception thrown during the attempt to send the prior
+    /// request.</param>
     /// <param name="isRetriable"><c>true</c> if the
     /// <see cref="PipelineMessage.Request"/> should be retried.</param>
     /// <returns><c>true</c> if the classifier had an opinion regarding whether
