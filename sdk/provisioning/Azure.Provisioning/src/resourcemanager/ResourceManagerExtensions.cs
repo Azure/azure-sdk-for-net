@@ -44,7 +44,10 @@ namespace Azure.Provisioning.ResourceManager
         /// <returns>The see <see cref="Subscription"/>.</returns>
         public static Subscription GetOrCreateSubscription(this IConstruct construct, Guid? subscriptionId = null)
         {
-            return construct.Subscription ?? (subscriptionId != null ? new Subscription(construct, subscriptionId) : construct.GetSingleResource<Subscription>())!;
+            return construct.Subscription ??
+                   (subscriptionId != null
+                       ? new Subscription(construct, subscriptionId)
+                       : construct.GetSingleResource<Subscription>() ?? new Subscription(construct));
         }
     }
 }

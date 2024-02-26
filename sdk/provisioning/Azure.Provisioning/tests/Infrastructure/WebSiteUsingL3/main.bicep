@@ -9,7 +9,7 @@ param sqlAdminPassword string
 param appUserPassword string
 
 
-resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resourceGroup_RKFHPNHNS 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: 'rg-TEST'
   location: 'westus'
   tags: {
@@ -20,7 +20,7 @@ resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01'
 
 module rg_TEST_module './resources/rg_TEST_module/rg_TEST_module.bicep' = {
   name: 'rg_TEST_module'
-  scope: resourceGroup_I6QNkoPsb
+  scope: resourceGroup_RKFHPNHNS
   params: {
     sqlAdminPassword: sqlAdminPassword
     appUserPassword: appUserPassword
