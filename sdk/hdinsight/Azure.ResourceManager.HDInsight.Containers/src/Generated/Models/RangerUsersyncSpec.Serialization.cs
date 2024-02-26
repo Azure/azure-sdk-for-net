@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             Optional<bool> enabled = default;
-            Optional<IList<string>> groups = default;
+            IList<string> groups = default;
             Optional<RangerUsersyncMode> mode = default;
             Optional<string> userMappingLocation = default;
-            Optional<IList<string>> users = default;
+            IList<string> users = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RangerUsersyncSpec(Optional.ToNullable(enabled), Optional.ToList(groups), Optional.ToNullable(mode), userMappingLocation.Value, Optional.ToList(users), serializedAdditionalRawData);
+            return new RangerUsersyncSpec(Optional.ToNullable(enabled), groups ?? new ChangeTrackingList<string>(), Optional.ToNullable(mode), userMappingLocation.Value, users ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RangerUsersyncSpec>.Write(ModelReaderWriterOptions options)

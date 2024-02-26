@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<UpdatableClusterProfile> clusterProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterPatch(Optional.ToDictionary(tags), clusterProfile.Value, serializedAdditionalRawData);
+            return new HDInsightClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), clusterProfile.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterPatch>.Write(ModelReaderWriterOptions options)

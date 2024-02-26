@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             var clusterVersions = await Subscription.GetAvailableClusterVersionsByLocationAsync(Location).ToEnumerableAsync().ConfigureAwait(false);
             var availableClusterVersionResult = clusterVersions.Where(version => version.ClusterType.Equals(clusterType, StringComparison.OrdinalIgnoreCase)).Where(version => version.ClusterPoolVersion.Equals(ClusterPoolVersion)).FirstOrDefault();
 
-            // Create trino cluster
+            // Create flink cluster
             string clusterName = Recording.GenerateAssetName($"sdk-{clusterType}-cluster-");
 
             // create managed user assigned identity with the new package

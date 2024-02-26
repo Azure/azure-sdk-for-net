@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ResourceIdentifier subnetId = default;
             Optional<OutboundType> outboundType = default;
             Optional<bool> enablePrivateApiServer = default;
-            Optional<IList<string>> apiServerAuthorizedIPRanges = default;
+            IList<string> apiServerAuthorizedIPRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPoolNetworkProfile(subnetId, Optional.ToNullable(outboundType), Optional.ToNullable(enablePrivateApiServer), Optional.ToList(apiServerAuthorizedIPRanges), serializedAdditionalRawData);
+            return new ClusterPoolNetworkProfile(subnetId, Optional.ToNullable(outboundType), Optional.ToNullable(enablePrivateApiServer), apiServerAuthorizedIPRanges ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPoolNetworkProfile>.Write(ModelReaderWriterOptions options)
