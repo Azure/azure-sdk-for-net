@@ -12,6 +12,7 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using System.Globalization;
 using Azure.Core.Shared;
+using System.Net.NetworkInformation;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -276,6 +277,27 @@ namespace Azure.Messaging.ServiceBus
                 Status = status,
                 EnablePartitioning = enablePartitioning,
                 MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.NamespaceProperties"/> instance for mocking.
+        /// </summary>
+        public static NamespaceProperties NamespaceProperties(
+            string name,
+            DateTimeOffset createdTime,
+            DateTimeOffset modifiedTime,
+            MessagingSku messagingSku,
+            int messagingUnits,
+            string alias) =>
+            new NamespaceProperties
+            {
+                Name = name,
+                CreatedTime = createdTime,
+                ModifiedTime = modifiedTime,
+                MessagingSku = messagingSku,
+                MessagingUnits = messagingUnits,
+                Alias = alias,
+                NamespaceType = new NamespaceType() // this cannot be created by the user
             };
 
         /// <summary>
