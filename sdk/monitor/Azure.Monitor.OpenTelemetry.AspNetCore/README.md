@@ -34,7 +34,7 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
 * [Live Metrics](https://learn.microsoft.com/azure/azure-monitor/app/live-stream)
   * Integrated support for live metrics through the [Azure.Monitor.OpenTelemetry.LiveMetrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics) package, enabling real-time monitoring of application performance.
 
-* [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor.
+* [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor. Please be aware that resource attributes are only used to set the cloud role and role instance. All other resource attributes are ignored.
 
 ### Install the package
 
