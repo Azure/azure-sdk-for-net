@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: Sphere
 namespace: Azure.ResourceManager.Sphere
-require: https://github.com/Azure/azure-rest-api-specs/blob/a89f3906ba60257ae28a2eed756a1ee4ca72ed51/specification/sphere/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/12457329527160696e47221e2078929834e9f60c/specification/sphere/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
