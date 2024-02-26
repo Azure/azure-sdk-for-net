@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
                 _pipelineRequest = request;
 
                 // Initialize duplicated properties on base type from adapted request.
-                base.SetMethodCore(request.Method);
+                base.MethodCore = request.Method;
 
                 // Uri and Content are initialized to null in constructor
                 // so don't need to be set here.
@@ -40,45 +40,49 @@ namespace Azure.Core.Pipeline
 
             #region Adapt PipelineResponse to inherit functional implementation from ClientModel
 
-            protected override string GetMethodCore()
-                => _pipelineRequest.Method;
-
-            protected override void SetMethodCore(string method)
+            protected override string MethodCore
             {
-                // Update fields on both Request and PipelineRequest.
-                base.SetMethodCore(method);
-                _pipelineRequest.Method = method;
+                get => _pipelineRequest.Method;
+                set
+                {
+                    // Update fields on both Request and PipelineRequest.
+                    base.MethodCore = value;
+                    _pipelineRequest.Method = value;
+                }
+            }
+            protected override Uri? UriCore
+            {
+                get
+                {
+                    Uri uri = Uri.ToUri();
+
+                    // Lazily update the value on the adapted PipelineRequest.
+                    UriCore = uri;
+
+                    return uri;
+                }
+
+                set
+                {
+                    // Update fields on both Request and PipelineRequest.
+                    base.UriCore = value;
+                    _pipelineRequest.Uri = value;
+                }
             }
 
-            protected override Uri GetUriCore()
-            {
-                Uri uri = Uri.ToUri();
-
-                // Lazily update the value on the adapted PipelineRequest.
-                SetUriCore(uri);
-
-                return uri;
-            }
-
-            protected override void SetUriCore(Uri uri)
-            {
-                // Update fields on both Request and PipelineRequest.
-                base.SetUriCore(uri);
-                _pipelineRequest.Uri = uri;
-            }
-
-            protected override BinaryContent? GetContentCore()
-                => _pipelineRequest.Content;
-
-            protected override void SetContentCore(BinaryContent? content)
-            {
-                // Update Content fields on both Request and PipelineRequest.
-                base.SetContentCore(content);
-                _pipelineRequest.Content = content;
-            }
-
-            protected override PipelineRequestHeaders GetHeadersCore()
+            protected override PipelineRequestHeaders HeadersCore
                 => _pipelineRequest.Headers;
+
+            protected override BinaryContent? ContentCore
+            {
+                get => _pipelineRequest.Content;
+                set
+                {
+                    // Update Content fields on both Request and PipelineRequest.
+                    base.ContentCore = value;
+                    _pipelineRequest.Content = value;
+                }
+            }
 
             #endregion
 

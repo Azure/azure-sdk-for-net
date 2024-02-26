@@ -29,7 +29,7 @@ namespace Azure.Core
         public new virtual RequestMethod Method
         {
             get => _method;
-            set => SetMethodCore(value.Method);
+            set => MethodCore = value.Method;
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace Azure.Core
         /// </summary>
         public new virtual RequestContent? Content
         {
-            get => (RequestContent?)GetContentCore();
-            set => SetContentCore(value);
+            get => (RequestContent?)ContentCore;
+            set => ContentCore = value;
         }
 
         /// <summary>
@@ -80,50 +80,44 @@ namespace Azure.Core
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <returns></returns>
-        protected override string GetMethodCore()
-            => _method.Method;
+        protected override string MethodCore
+        {
+            get => _method.Method;
+            set => _method = RequestMethod.Parse(value);
+        }
 
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <param name="method"></param>
-        protected override void SetMethodCore(string method)
-            => _method = RequestMethod.Parse(method);
+        protected override Uri? UriCore
+        {
+            get => Uri.ToUri();
+            set
+            {
+                if (value is null)
+                {
+                    Uri = new();
+                }
+                else
+                {
+                    Uri.Reset(value);
+                }
+            }
+        }
 
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <returns></returns>
-        protected override Uri GetUriCore()
-            => Uri.ToUri();
+        protected override BinaryContent? ContentCore
+        {
+            get => _content;
+            set => _content = (RequestContent?)value;
+        }
 
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <param name="uri"></param>
-        protected override void SetUriCore(Uri uri)
-            => Uri.Reset(uri);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <returns></returns>
-        protected override BinaryContent? GetContentCore()
-            => _content;
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="content"></param>
-        protected override void SetContentCore(BinaryContent? content)
-            => _content = (RequestContent?)content;
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <returns></returns>
-        protected override PipelineRequestHeaders GetHeadersCore()
+        protected override PipelineRequestHeaders HeadersCore
             => new AzureCoreMessageHeaders(Headers);
 
         #endregion

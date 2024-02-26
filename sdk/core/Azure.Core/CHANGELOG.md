@@ -20,8 +20,6 @@
 
 ### Other Changes
 
-- Moved Azure.Core types to use functionality implemented in System.ClientModel library.
-
 - Additional Azure data centers are now included in `AzureLocation`.  The following were added:
   - China East 3
   - China North 3
