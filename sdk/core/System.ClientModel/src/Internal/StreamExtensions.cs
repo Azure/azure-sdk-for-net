@@ -105,6 +105,8 @@ internal static class StreamExtensions
                     break;
                 await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationToken).ConfigureAwait(false);
             }
+
+            await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
         }
         finally
         {
@@ -124,6 +126,8 @@ internal static class StreamExtensions
                 cancellationToken.ThrowIfCancellationRequested();
                 destination.Write(buffer, 0, read);
             }
+
+            destination.Flush();
         }
         finally
         {
