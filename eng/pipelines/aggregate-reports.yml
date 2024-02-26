@@ -152,11 +152,8 @@ stages:
 
           - template: /eng/common/pipelines/templates/steps/credscan.yml
             parameters:
-              BaselineFilePath: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
-
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-            displayName: 'Publish Security Analysis Logs'
-            condition: succeededOrFailed()
+              BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
       - job: APIScan
         timeoutInMinutes: 180
