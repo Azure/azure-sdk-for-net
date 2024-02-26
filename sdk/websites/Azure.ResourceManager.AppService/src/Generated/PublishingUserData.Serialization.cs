@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublishingUserData(id, name, type, systemData.Value, publishingUserName.Value, publishingPassword.Value, publishingPasswordHash.Value, publishingPasswordHashSalt.Value, scmUri.Value, kind.Value, serializedAdditionalRawData);
+            return new PublishingUserData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                publishingUserName.Value,
+                publishingPassword.Value,
+                publishingPasswordHash.Value,
+                publishingPasswordHashSalt.Value,
+                scmUri.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublishingUserData>.Write(ModelReaderWriterOptions options)

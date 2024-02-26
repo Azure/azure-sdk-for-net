@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateOrderAction(id, name, type, systemData.Value, Optional.ToNullable(actionType), Optional.ToNullable(createdAt), kind.Value, serializedAdditionalRawData);
+            return new CertificateOrderAction(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(actionType),
+                Optional.ToNullable(createdAt),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateOrderAction>.Write(ModelReaderWriterOptions options)

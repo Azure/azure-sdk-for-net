@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmStorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType), serializedAdditionalRawData);
+            return new SqlVmStorageConfigurationSettings(
+                sqlDataSettings.Value,
+                sqlLogSettings.Value,
+                sqlTempDBSettings.Value,
+                Optional.ToNullable(sqlSystemDBOnDataDisk),
+                Optional.ToNullable(diskConfigurationType),
+                Optional.ToNullable(storageWorkloadType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmStorageConfigurationSettings>.Write(ModelReaderWriterOptions options)

@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionKey(id, name, type, systemData.Value, sendKeyName.Value, sendKeyValue.Value, kind.Value, serializedAdditionalRawData);
+            return new HybridConnectionKey(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sendKeyName.Value,
+                sendKeyValue.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridConnectionKey>.Write(ModelReaderWriterOptions options)

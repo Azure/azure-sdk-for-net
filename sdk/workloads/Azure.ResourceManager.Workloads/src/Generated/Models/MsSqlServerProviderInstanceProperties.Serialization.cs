@@ -182,7 +182,17 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsSqlServerProviderInstanceProperties(providerType, serializedAdditionalRawData, hostname.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new MsSqlServerProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                hostname.Value,
+                dbPort.Value,
+                dbUsername.Value,
+                dbPassword.Value,
+                dbPasswordUri.Value,
+                sapSid.Value,
+                Optional.ToNullable(sslPreference),
+                sslCertificateUri.Value);
         }
 
         BinaryData IPersistableModel<MsSqlServerProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

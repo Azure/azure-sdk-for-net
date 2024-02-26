@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainOwnershipIdentifierData(id, name, type, systemData.Value, ownershipId.Value, kind.Value, serializedAdditionalRawData);
+            return new DomainOwnershipIdentifierData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                ownershipId.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainOwnershipIdentifierData>.Write(ModelReaderWriterOptions options)

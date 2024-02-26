@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountEncryption(services.Value, Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value, serializedAdditionalRawData);
+            return new StorageAccountEncryption(
+                services.Value,
+                Optional.ToNullable(keySource),
+                Optional.ToNullable(requireInfrastructureEncryption),
+                keyvaultproperties.Value,
+                identity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountEncryption>.Write(ModelReaderWriterOptions options)

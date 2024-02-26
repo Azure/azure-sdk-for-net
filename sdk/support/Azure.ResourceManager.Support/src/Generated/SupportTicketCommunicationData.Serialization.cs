@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportTicketCommunicationData(id, name, type, systemData.Value, Optional.ToNullable(communicationType), Optional.ToNullable(communicationDirection), sender.Value, subject.Value, body.Value, Optional.ToNullable(createdDate), serializedAdditionalRawData);
+            return new SupportTicketCommunicationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(communicationType),
+                Optional.ToNullable(communicationDirection),
+                sender.Value,
+                subject.Value,
+                body.Value,
+                Optional.ToNullable(createdDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportTicketCommunicationData>.Write(ModelReaderWriterOptions options)

@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionStringDictionary(id, name, type, systemData.Value, properties ?? new ChangeTrackingDictionary<string, ConnStringValueTypePair>(), kind.Value, serializedAdditionalRawData);
+            return new ConnectionStringDictionary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingDictionary<string, ConnStringValueTypePair>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionStringDictionary>.Write(ModelReaderWriterOptions options)

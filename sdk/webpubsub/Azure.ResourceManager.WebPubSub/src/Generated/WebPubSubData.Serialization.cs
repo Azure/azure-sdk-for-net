@@ -443,7 +443,32 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, privateEndpointConnections ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>(), sharedPrivateLinkResources ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>(), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkAcls.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth), serializedAdditionalRawData);
+            return new WebPubSubData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                Optional.ToNullable(provisioningState),
+                externalIP.Value,
+                hostName.Value,
+                Optional.ToNullable(publicPort),
+                Optional.ToNullable(serverPort),
+                version.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>(),
+                sharedPrivateLinkResources ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>(),
+                tls.Value,
+                hostNamePrefix.Value,
+                liveTraceConfiguration.Value,
+                resourceLogConfiguration.Value,
+                networkAcls.Value,
+                publicNetworkAccess.Value,
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(disableAadAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubData>.Write(ModelReaderWriterOptions options)

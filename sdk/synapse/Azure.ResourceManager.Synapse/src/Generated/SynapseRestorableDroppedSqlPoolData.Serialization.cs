@@ -253,7 +253,21 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseRestorableDroppedSqlPoolData(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, edition.Value, maxSizeBytes.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), serializedAdditionalRawData);
+            return new SynapseRestorableDroppedSqlPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                databaseName.Value,
+                edition.Value,
+                maxSizeBytes.Value,
+                serviceLevelObjective.Value,
+                elasticPoolName.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(deletionDate),
+                Optional.ToNullable(earliestRestoreDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseRestorableDroppedSqlPoolData>.Write(ModelReaderWriterOptions options)

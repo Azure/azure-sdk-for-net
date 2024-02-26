@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIPFirewallRuleInfoData(id, name, type, systemData.Value, endIPAddress.Value, Optional.ToNullable(provisioningState), startIPAddress.Value, serializedAdditionalRawData);
+            return new SynapseIPFirewallRuleInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                endIPAddress.Value,
+                Optional.ToNullable(provisioningState),
+                startIPAddress.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIPFirewallRuleInfoData>.Write(ModelReaderWriterOptions options)

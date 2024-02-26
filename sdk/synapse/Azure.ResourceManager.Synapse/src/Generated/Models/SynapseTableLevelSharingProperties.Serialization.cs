@@ -224,7 +224,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseTableLevelSharingProperties(tablesToInclude ?? new ChangeTrackingList<string>(), tablesToExclude ?? new ChangeTrackingList<string>(), externalTablesToInclude ?? new ChangeTrackingList<string>(), externalTablesToExclude ?? new ChangeTrackingList<string>(), materializedViewsToInclude ?? new ChangeTrackingList<string>(), materializedViewsToExclude ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SynapseTableLevelSharingProperties(
+                tablesToInclude ?? new ChangeTrackingList<string>(),
+                tablesToExclude ?? new ChangeTrackingList<string>(),
+                externalTablesToInclude ?? new ChangeTrackingList<string>(),
+                externalTablesToExclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToInclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToExclude ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options)

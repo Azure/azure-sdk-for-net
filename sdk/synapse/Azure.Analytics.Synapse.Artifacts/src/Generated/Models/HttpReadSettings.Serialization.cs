@@ -168,7 +168,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, additionalColumns.Value);
+            return new HttpReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                requestMethod.Value,
+                requestBody.Value,
+                additionalHeaders.Value,
+                requestTimeout.Value,
+                enablePartitionDiscovery.Value,
+                partitionRootPath.Value,
+                additionalColumns.Value);
         }
 
         internal partial class HttpReadSettingsConverter : JsonConverter<HttpReadSettings>

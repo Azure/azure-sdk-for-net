@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualIPMapping(virtualIP.Value, Optional.ToNullable(internalHttpPort), Optional.ToNullable(internalHttpsPort), Optional.ToNullable(inUse), serviceName.Value, serializedAdditionalRawData);
+            return new VirtualIPMapping(
+                virtualIP.Value,
+                Optional.ToNullable(internalHttpPort),
+                Optional.ToNullable(internalHttpsPort),
+                Optional.ToNullable(inUse),
+                serviceName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualIPMapping>.Write(ModelReaderWriterOptions options)

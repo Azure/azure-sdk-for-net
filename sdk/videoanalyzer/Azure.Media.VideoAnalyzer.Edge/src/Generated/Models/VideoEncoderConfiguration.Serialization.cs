@@ -117,7 +117,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoEncoderConfiguration(Optional.ToNullable(encoding), Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value);
+            return new VideoEncoderConfiguration(
+                Optional.ToNullable(encoding),
+                Optional.ToNullable(quality),
+                resolution.Value,
+                rateControl.Value,
+                h264.Value,
+                mpeg4.Value);
         }
     }
 }

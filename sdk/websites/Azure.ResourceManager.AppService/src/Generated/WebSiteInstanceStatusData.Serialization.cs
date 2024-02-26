@@ -247,7 +247,19 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebSiteInstanceStatusData(id, name, type, systemData.Value, Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(), kind.Value, serializedAdditionalRawData);
+            return new WebSiteInstanceStatusData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                statusUrl.Value,
+                detectorUrl.Value,
+                consoleUrl.Value,
+                healthCheckUrl.Value,
+                containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebSiteInstanceStatusData>.Write(ModelReaderWriterOptions options)

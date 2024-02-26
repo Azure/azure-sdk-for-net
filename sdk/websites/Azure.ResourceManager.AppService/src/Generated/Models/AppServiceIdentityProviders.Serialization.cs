@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceIdentityProviders(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, legacyMicrosoftAccount.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>(), serializedAdditionalRawData);
+            return new AppServiceIdentityProviders(
+                azureActiveDirectory.Value,
+                facebook.Value,
+                gitHub.Value,
+                google.Value,
+                legacyMicrosoftAccount.Value,
+                twitter.Value,
+                apple.Value,
+                azureStaticWebApps.Value,
+                customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceIdentityProviders>.Write(ModelReaderWriterOptions options)

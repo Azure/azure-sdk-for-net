@@ -194,7 +194,14 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobInventoryPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), excludePrefix ?? new ChangeTrackingList<string>(), blobTypes ?? new ChangeTrackingList<string>(), Optional.ToNullable(includeBlobVersions), Optional.ToNullable(includeSnapshots), Optional.ToNullable(includeDeleted), serializedAdditionalRawData);
+            return new BlobInventoryPolicyFilter(
+                prefixMatch ?? new ChangeTrackingList<string>(),
+                excludePrefix ?? new ChangeTrackingList<string>(),
+                blobTypes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(includeBlobVersions),
+                Optional.ToNullable(includeSnapshots),
+                Optional.ToNullable(includeDeleted),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobInventoryPolicyFilter>.Write(ModelReaderWriterOptions options)

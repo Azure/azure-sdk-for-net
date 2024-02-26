@@ -165,7 +165,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone, serializedAdditionalRawData);
+            return new RegistrationContactInfo(
+                addressMailing.Value,
+                email,
+                fax.Value,
+                jobTitle.Value,
+                nameFirst,
+                nameLast,
+                nameMiddle.Value,
+                organization.Value,
+                phone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistrationContactInfo>.Write(ModelReaderWriterOptions options)

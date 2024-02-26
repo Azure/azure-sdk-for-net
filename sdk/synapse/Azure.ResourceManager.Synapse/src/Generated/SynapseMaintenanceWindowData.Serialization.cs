@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseMaintenanceWindowData(id, name, type, systemData.Value, timeRanges ?? new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>(), serializedAdditionalRawData);
+            return new SynapseMaintenanceWindowData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                timeRanges ?? new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseMaintenanceWindowData>.Write(ModelReaderWriterOptions options)

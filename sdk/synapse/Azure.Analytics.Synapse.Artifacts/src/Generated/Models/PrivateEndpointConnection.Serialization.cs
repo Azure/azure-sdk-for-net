@@ -99,7 +99,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value);
+            return new PrivateEndpointConnection(
+                id.Value,
+                name.Value,
+                type.Value,
+                privateEndpoint.Value,
+                privateLinkServiceConnectionState.Value,
+                provisioningState.Value);
         }
 
         internal partial class PrivateEndpointConnectionConverter : JsonConverter<PrivateEndpointConnection>

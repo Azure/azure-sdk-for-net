@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostNameBindingData(id, name, type, systemData.Value, siteName.Value, domainId.Value, azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), Optional.ToNullable(sslState), thumbprint.Value, virtualIP.Value, kind.Value, serializedAdditionalRawData);
+            return new HostNameBindingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                siteName.Value,
+                domainId.Value,
+                azureResourceName.Value,
+                Optional.ToNullable(azureResourceType),
+                Optional.ToNullable(customHostNameDnsRecordType),
+                Optional.ToNullable(hostNameType),
+                Optional.ToNullable(sslState),
+                thumbprint.Value,
+                virtualIP.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostNameBindingData>.Write(ModelReaderWriterOptions options)

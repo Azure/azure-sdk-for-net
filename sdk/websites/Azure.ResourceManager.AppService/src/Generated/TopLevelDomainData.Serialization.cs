@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopLevelDomainData(id, name, type, systemData.Value, Optional.ToNullable(privacy), kind.Value, serializedAdditionalRawData);
+            return new TopLevelDomainData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(privacy),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopLevelDomainData>.Write(ModelReaderWriterOptions options)

@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppSnapshot(id, name, type, systemData.Value, time.Value, kind.Value, serializedAdditionalRawData);
+            return new AppSnapshot(
+                id,
+                name,
+                type,
+                systemData.Value,
+                time.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppSnapshot>.Write(ModelReaderWriterOptions options)
