@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> SBOM analysis result resource. </summary>
-    public partial class SbomComponentResource : ResourceData
+    public partial class SbomComponentResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SbomComponentResource"/>. </summary>
-        public SbomComponentResource()
+        /// <summary> Initializes a new instance of <see cref="SbomComponentResourceData"/>. </summary>
+        public SbomComponentResourceData()
         {
             FilePaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SbomComponentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SbomComponentResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="license"> License for the component. </param>
         /// <param name="filePaths"> File paths related to the component. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SbomComponentResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IList<string> filePaths, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SbomComponentResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IList<string> filePaths, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComponentId = componentId;
             ComponentName = componentName;

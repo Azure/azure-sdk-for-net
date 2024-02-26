@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BinaryHardening": return BinaryHardeningSummaryResource.DeserializeBinaryHardeningSummaryResource(element, options);
+                    case "BinaryHardening": return BinaryHardeningSummaryResourceInfo.DeserializeBinaryHardeningSummaryResourceInfo(element, options);
                     case "CVE": return CveSummary.DeserializeCveSummary(element, options);
                     case "CryptoCertificate": return FirmwareCryptoCertificateSummaryResource.DeserializeFirmwareCryptoCertificateSummaryResource(element, options);
                     case "CryptoKey": return FirmwareCryptoKeySummaryResource.DeserializeFirmwareCryptoKeySummaryResource(element, options);

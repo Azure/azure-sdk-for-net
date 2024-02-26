@@ -453,12 +453,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BinaryHardeningResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BinaryHardeningResource> GetBinaryHardeningsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BinaryHardeningResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BinaryHardeningResourceData> GetBinaryHardeningsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _binaryHardeningRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _binaryHardeningRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResource.DeserializeBinaryHardeningResource(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardenings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResourceData.DeserializeBinaryHardeningResourceData(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardenings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -479,12 +479,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BinaryHardeningResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BinaryHardeningResource> GetBinaryHardenings(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BinaryHardeningResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BinaryHardeningResourceData> GetBinaryHardenings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _binaryHardeningRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _binaryHardeningRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResource.DeserializeBinaryHardeningResource(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardenings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResourceData.DeserializeBinaryHardeningResourceData(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardenings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -609,12 +609,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CveResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CveResource> GetCvesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CveResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CveResourceData> GetCvesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cvesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cvesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CveResource.DeserializeCveResource(e), _cvesClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CveResourceData.DeserializeCveResourceData(e), _cvesClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -635,12 +635,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CveResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CveResource> GetCves(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CveResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CveResourceData> GetCves(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cvesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cvesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CveResource.DeserializeCveResource(e), _cvesClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CveResourceData.DeserializeCveResourceData(e), _cvesClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -813,12 +813,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PasswordHashResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PasswordHashResource> GetPasswordHashesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PasswordHashResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PasswordHashResourceData> GetPasswordHashesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _passwordHashesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _passwordHashesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PasswordHashResource.DeserializePasswordHashResource(e), _passwordHashesClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PasswordHashResourceData.DeserializePasswordHashResourceData(e), _passwordHashesClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -839,12 +839,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PasswordHashResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PasswordHashResource> GetPasswordHashes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PasswordHashResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PasswordHashResourceData> GetPasswordHashes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _passwordHashesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _passwordHashesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PasswordHashResource.DeserializePasswordHashResource(e), _passwordHashesClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PasswordHashResourceData.DeserializePasswordHashResourceData(e), _passwordHashesClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -865,12 +865,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SbomComponentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SbomComponentResource> GetSbomComponentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SbomComponentResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SbomComponentResourceData> GetSbomComponentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sbomComponentsRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sbomComponentsRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SbomComponentResource.DeserializeSbomComponentResource(e), _sbomComponentsClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SbomComponentResourceData.DeserializeSbomComponentResourceData(e), _sbomComponentsClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -891,12 +891,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SbomComponentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SbomComponentResource> GetSbomComponents(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SbomComponentResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SbomComponentResourceData> GetSbomComponents(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sbomComponentsRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sbomComponentsRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SbomComponentResource.DeserializeSbomComponentResource(e), _sbomComponentsClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SbomComponentResourceData.DeserializeSbomComponentResourceData(e), _sbomComponentsClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
         }
     }
 }

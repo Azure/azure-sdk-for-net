@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class CveResource : IUtf8JsonSerializable, IJsonModel<CveResource>
+    public partial class CveResourceData : IUtf8JsonSerializable, IJsonModel<CveResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CveResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CveResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CveResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CveResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveResourceData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CveId != null)
+            if (CveId.HasValue)
             {
                 if (CveId != null)
                 {
                     writer.WritePropertyName("cveId"u8);
-                    writer.WriteStringValue(CveId);
+                    writer.WriteStringValue(CveId.Value);
                 }
                 else
                 {
@@ -179,19 +179,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteEndObject();
         }
 
-        CveResource IJsonModel<CveResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CveResourceData IJsonModel<CveResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CveResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CveResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveResourceData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCveResource(document.RootElement, options);
+            return DeserializeCveResourceData(document.RootElement, options);
         }
 
-        internal static CveResource DeserializeCveResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CveResourceData DeserializeCveResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> cveId = default;
+            Optional<Guid?> cveId = default;
             Optional<CveComponent> component = default;
             Optional<string> severity = default;
             Optional<string> name0 = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                                 cveId = null;
                                 continue;
                             }
-                            cveId = property0.Value.GetString();
+                            cveId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("component"u8))
@@ -358,38 +358,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveResource(id, name, type, systemData.Value, cveId.Value, component.Value, severity.Value, name0.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, links ?? new ChangeTrackingList<CveLink>(), description.Value, serializedAdditionalRawData);
+            return new CveResourceData(id, name, type, systemData.Value, Optional.ToNullable(cveId), component.Value, severity.Value, name0.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, links ?? new ChangeTrackingList<CveLink>(), description.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CveResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CveResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CveResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CveResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CveResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveResourceData)} does not support '{options.Format}' format.");
             }
         }
 
-        CveResource IPersistableModel<CveResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CveResourceData IPersistableModel<CveResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CveResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CveResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCveResource(document.RootElement, options);
+                        return DeserializeCveResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CveResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveResourceData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CveResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CveResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,15 +11,15 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for a binary hardening analysis summary. </summary>
-    public partial class BinaryHardeningSummaryResource : SummaryResourceProperties
+    public partial class BinaryHardeningSummaryResourceInfo : SummaryResourceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummaryResource"/>. </summary>
-        internal BinaryHardeningSummaryResource()
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummaryResourceInfo"/>. </summary>
+        internal BinaryHardeningSummaryResourceInfo()
         {
             SummaryType = SummaryType.BinaryHardening;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummaryResourceInfo"/>. </summary>
         /// <param name="summaryType"> Describes the type of summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="relro"> RELRO summary percentage. </param>
         /// <param name="canary"> Canary summary percentage. </param>
         /// <param name="stripped"> Stripped summary percentage. </param>
-        internal BinaryHardeningSummaryResource(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalFiles, int? nx, int? pie, int? relro, int? canary, int? stripped) : base(summaryType, serializedAdditionalRawData)
+        internal BinaryHardeningSummaryResourceInfo(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalFiles, int? nx, int? pie, int? relro, int? canary, int? stripped) : base(summaryType, serializedAdditionalRawData)
         {
             TotalFiles = totalFiles;
             Nx = nx;

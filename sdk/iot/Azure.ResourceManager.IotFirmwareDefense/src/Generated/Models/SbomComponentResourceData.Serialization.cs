@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class SbomComponentResource : IUtf8JsonSerializable, IJsonModel<SbomComponentResource>
+    public partial class SbomComponentResourceData : IUtf8JsonSerializable, IJsonModel<SbomComponentResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SbomComponentResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SbomComponentResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<SbomComponentResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SbomComponentResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SbomComponentResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SbomComponentResourceData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -112,19 +112,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteEndObject();
         }
 
-        SbomComponentResource IJsonModel<SbomComponentResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SbomComponentResourceData IJsonModel<SbomComponentResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SbomComponentResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SbomComponentResourceData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSbomComponentResource(document.RootElement, options);
+            return DeserializeSbomComponentResourceData(document.RootElement, options);
         }
 
-        internal static SbomComponentResource DeserializeSbomComponentResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SbomComponentResourceData DeserializeSbomComponentResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -231,38 +231,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SbomComponentResource(id, name, type, systemData.Value, componentId.Value, componentName.Value, version.Value, license.Value, filePaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SbomComponentResourceData(id, name, type, systemData.Value, componentId.Value, componentName.Value, version.Value, license.Value, filePaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SbomComponentResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SbomComponentResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SbomComponentResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SbomComponentResourceData)} does not support '{options.Format}' format.");
             }
         }
 
-        SbomComponentResource IPersistableModel<SbomComponentResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SbomComponentResourceData IPersistableModel<SbomComponentResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSbomComponentResource(document.RootElement, options);
+                        return DeserializeSbomComponentResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SbomComponentResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SbomComponentResourceData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SbomComponentResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SbomComponentResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

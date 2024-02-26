@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> CVE analysis result resource. </summary>
-    public partial class CveResource : ResourceData
+    public partial class CveResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CveResource"/>. </summary>
-        public CveResource()
+        /// <summary> Initializes a new instance of <see cref="CveResourceData"/>. </summary>
+        public CveResourceData()
         {
             Links = new ChangeTrackingList<CveLink>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CveResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="links"> The list of reference links for the CVE. </param>
         /// <param name="description"> The CVE description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CveResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, CveComponent component, string severity, string namePropertiesName, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, IReadOnlyList<CveLink> links, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CveResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? cveId, CveComponent component, string severity, string namePropertiesName, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, IReadOnlyList<CveLink> links, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CveId = cveId;
             Component = component;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> ID of the CVE result. </summary>
-        public string CveId { get; set; }
+        public Guid? CveId { get; set; }
         /// <summary> The SBOM component for the CVE. </summary>
         public CveComponent Component { get; set; }
         /// <summary> Severity of the CVE. </summary>

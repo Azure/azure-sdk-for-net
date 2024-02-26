@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Password hash resource. </summary>
-    public partial class PasswordHashResource : ResourceData
+    public partial class PasswordHashResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PasswordHashResource"/>. </summary>
-        public PasswordHashResource()
+        /// <summary> Initializes a new instance of <see cref="PasswordHashResourceData"/>. </summary>
+        public PasswordHashResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PasswordHashResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PasswordHashResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="username"> User name of password hash. </param>
         /// <param name="algorithm"> Algorithm of the password hash. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PasswordHashResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PasswordHashResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PasswordHashId = passwordHashId;
             FilePath = filePath;

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class BinaryHardeningSummaryResource : IUtf8JsonSerializable, IJsonModel<BinaryHardeningSummaryResource>
+    public partial class BinaryHardeningSummaryResourceInfo : IUtf8JsonSerializable, IJsonModel<BinaryHardeningSummaryResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryHardeningSummaryResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryHardeningSummaryResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<BinaryHardeningSummaryResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BinaryHardeningSummaryResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummaryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BinaryHardeningSummaryResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BinaryHardeningSummaryResourceInfo)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -111,19 +111,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteEndObject();
         }
 
-        BinaryHardeningSummaryResource IJsonModel<BinaryHardeningSummaryResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BinaryHardeningSummaryResourceInfo IJsonModel<BinaryHardeningSummaryResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummaryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BinaryHardeningSummaryResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BinaryHardeningSummaryResourceInfo)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBinaryHardeningSummaryResource(document.RootElement, options);
+            return DeserializeBinaryHardeningSummaryResourceInfo(document.RootElement, options);
         }
 
-        internal static BinaryHardeningSummaryResource DeserializeBinaryHardeningSummaryResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BinaryHardeningSummaryResourceInfo DeserializeBinaryHardeningSummaryResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -212,38 +212,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardeningSummaryResource(summaryType, serializedAdditionalRawData, Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped));
+            return new BinaryHardeningSummaryResourceInfo(summaryType, serializedAdditionalRawData, Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped));
         }
 
-        BinaryData IPersistableModel<BinaryHardeningSummaryResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BinaryHardeningSummaryResourceInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummaryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BinaryHardeningSummaryResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BinaryHardeningSummaryResourceInfo)} does not support '{options.Format}' format.");
             }
         }
 
-        BinaryHardeningSummaryResource IPersistableModel<BinaryHardeningSummaryResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BinaryHardeningSummaryResourceInfo IPersistableModel<BinaryHardeningSummaryResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummaryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBinaryHardeningSummaryResource(document.RootElement, options);
+                        return DeserializeBinaryHardeningSummaryResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BinaryHardeningSummaryResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BinaryHardeningSummaryResourceInfo)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BinaryHardeningSummaryResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BinaryHardeningSummaryResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

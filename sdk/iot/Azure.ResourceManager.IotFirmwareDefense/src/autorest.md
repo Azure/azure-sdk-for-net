@@ -17,8 +17,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-
-
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -74,5 +74,24 @@ rename-mapping:
   Component: SbomComponent
   Workspace: FirmwareWorkspace
   Cve: FirmwareCve
+  BinaryHardeningResource: BinaryHardeningResourceData
+  BinaryHardeningResource.properties.binaryHardeningId: -|uuid
+  BinaryHardeningResource.properties.features.canary: IsCanary
+  BinaryHardeningResource.properties.features.nx: IsNx
+  BinaryHardeningResource.properties.features.pie: IsPie
+  BinaryHardeningResource.properties.features.relro: IsRelro
+  BinaryHardeningResource.properties.features.stripped: IsStripped
+  BinaryHardeningSummaryResource: BinaryHardeningSummaryResourceInfo
+  CveResource: CveResourceData
+  CveResource.properties.cveId: -|uuid
+  FirmwareCryptoCertificateResource: FirmwareCryptoCertificateResourceData
+  FirmwareCryptoCertificateResource.properties.cryptoCertId: -|uuid
+  FirmwareCryptoCertificateSummaryResource: FirmwareCryptoCertificateSummaryResourceInfo
+  FirmwareCryptoKeyResource: FirmwareCryptoKeyResourceData
+  FirmwareCryptoKeyResource.properties.cryptoKeyId: -|uuid
+  FirmwareCryptoKeySummaryResource: FirmwareCryptoKeySummaryResourceInfo
+  PairedKey.id: -|uuid
+  PasswordHashResource: PasswordHashResourceData
+  SbomComponentResource: SbomComponentResourceData
 
 ```

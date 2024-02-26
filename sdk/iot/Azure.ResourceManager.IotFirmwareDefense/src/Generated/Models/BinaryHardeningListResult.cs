@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningListResult"/>. </summary>
         internal BinaryHardeningListResult()
         {
-            Value = new ChangeTrackingList<BinaryHardeningResource>();
+            Value = new ChangeTrackingList<BinaryHardeningResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningListResult"/>. </summary>
         /// <param name="value"> The list of binary hardening results. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BinaryHardeningListResult(IReadOnlyList<BinaryHardeningResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BinaryHardeningListResult(IReadOnlyList<BinaryHardeningResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> The list of binary hardening results. </summary>
-        public IReadOnlyList<BinaryHardeningResource> Value { get; }
+        public IReadOnlyList<BinaryHardeningResourceData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }

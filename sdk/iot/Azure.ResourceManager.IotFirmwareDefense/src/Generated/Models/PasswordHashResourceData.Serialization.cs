@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class PasswordHashResource : IUtf8JsonSerializable, IJsonModel<PasswordHashResource>
+    public partial class PasswordHashResourceData : IUtf8JsonSerializable, IJsonModel<PasswordHashResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PasswordHashResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PasswordHashResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<PasswordHashResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PasswordHashResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PasswordHashResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PasswordHashResourceData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -152,19 +152,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteEndObject();
         }
 
-        PasswordHashResource IJsonModel<PasswordHashResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PasswordHashResourceData IJsonModel<PasswordHashResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PasswordHashResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PasswordHashResourceData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePasswordHashResource(document.RootElement, options);
+            return DeserializePasswordHashResourceData(document.RootElement, options);
         }
 
-        internal static PasswordHashResource DeserializePasswordHashResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PasswordHashResourceData DeserializePasswordHashResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -299,38 +299,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PasswordHashResource(id, name, type, systemData.Value, passwordHashId.Value, filePath.Value, salt.Value, hash.Value, context.Value, username.Value, algorithm.Value, serializedAdditionalRawData);
+            return new PasswordHashResourceData(id, name, type, systemData.Value, passwordHashId.Value, filePath.Value, salt.Value, hash.Value, context.Value, username.Value, algorithm.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PasswordHashResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PasswordHashResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PasswordHashResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PasswordHashResourceData)} does not support '{options.Format}' format.");
             }
         }
 
-        PasswordHashResource IPersistableModel<PasswordHashResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PasswordHashResourceData IPersistableModel<PasswordHashResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PasswordHashResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePasswordHashResource(document.RootElement, options);
+                        return DeserializePasswordHashResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PasswordHashResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PasswordHashResourceData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PasswordHashResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PasswordHashResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

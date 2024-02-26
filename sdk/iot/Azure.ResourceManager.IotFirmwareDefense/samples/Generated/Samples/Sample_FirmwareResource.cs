@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BinaryHardeningResource item in firmware.GetBinaryHardeningsAsync())
+            await foreach (BinaryHardeningResourceData item in firmware.GetBinaryHardeningsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BinaryHardeningResource item in firmware.GetBinaryHardeningsAsync())
+            await foreach (BinaryHardeningResourceData item in firmware.GetBinaryHardeningsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CveResource item in firmware.GetCvesAsync())
+            await foreach (CveResourceData item in firmware.GetCvesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CveResource item in firmware.GetCvesAsync())
+            await foreach (CveResourceData item in firmware.GetCvesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -603,7 +603,7 @@ Message = "ulvhmhokezathzzauiitu",
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PasswordHashResource item in firmware.GetPasswordHashesAsync())
+            await foreach (PasswordHashResourceData item in firmware.GetPasswordHashesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -634,7 +634,7 @@ Message = "ulvhmhokezathzzauiitu",
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PasswordHashResource item in firmware.GetPasswordHashesAsync())
+            await foreach (PasswordHashResourceData item in firmware.GetPasswordHashesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -665,7 +665,7 @@ Message = "ulvhmhokezathzzauiitu",
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SbomComponentResource item in firmware.GetSbomComponentsAsync())
+            await foreach (SbomComponentResourceData item in firmware.GetSbomComponentsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -696,7 +696,7 @@ Message = "ulvhmhokezathzzauiitu",
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SbomComponentResource item in firmware.GetSbomComponentsAsync())
+            await foreach (SbomComponentResourceData item in firmware.GetSbomComponentsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

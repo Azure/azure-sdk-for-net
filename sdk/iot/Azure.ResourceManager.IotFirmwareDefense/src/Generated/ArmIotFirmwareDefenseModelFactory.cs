@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmIotFirmwareDefenseModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="class"> The executable class to indicate 32 or 64 bit. </param>
         /// <param name="runpath"> The runpath of the uploaded firmware. </param>
         /// <param name="rpath"> The rpath of the uploaded firmware. </param>
-        /// <param name="nx"> NX (no-execute) flag. </param>
-        /// <param name="pie"> PIE (position independent executable) flag. </param>
-        /// <param name="relro"> RELRO (relocation read-only) flag. </param>
-        /// <param name="canary"> Canary (stack canaries) flag. </param>
-        /// <param name="stripped"> Stripped flag. </param>
-        /// <returns> A new <see cref="Models.BinaryHardeningResource"/> instance for mocking. </returns>
-        public static BinaryHardeningResource BinaryHardeningResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string binaryHardeningId = null, string architecture = null, string filePath = null, string @class = null, string runpath = null, string rpath = null, bool? nx = null, bool? pie = null, bool? relro = null, bool? canary = null, bool? stripped = null)
+        /// <param name="isNx"> NX (no-execute) flag. </param>
+        /// <param name="isPie"> PIE (position independent executable) flag. </param>
+        /// <param name="isRelro"> RELRO (relocation read-only) flag. </param>
+        /// <param name="isCanary"> Canary (stack canaries) flag. </param>
+        /// <param name="isStripped"> Stripped flag. </param>
+        /// <returns> A new <see cref="Models.BinaryHardeningResourceData"/> instance for mocking. </returns>
+        public static BinaryHardeningResourceData BinaryHardeningResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? binaryHardeningId = null, string architecture = null, string filePath = null, string @class = null, string runpath = null, string rpath = null, bool? isNx = null, bool? isPie = null, bool? isRelro = null, bool? isCanary = null, bool? isStripped = null)
         {
-            return new BinaryHardeningResource(id, name, resourceType, systemData, binaryHardeningId, architecture, filePath, @class, runpath, rpath, nx, pie, relro, canary, stripped, serializedAdditionalRawData: null);
+            return new BinaryHardeningResourceData(id, name, resourceType, systemData, binaryHardeningId, architecture, filePath, @class, runpath, rpath, isNx, isPie, isRelro, isCanary, isStripped, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificateResource"/>. </summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoKeyResource(id, name, resourceType, systemData, firmwareCryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CveResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CveResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="cvssV3Score"> CVSS V3 score of the CVE. </param>
         /// <param name="links"> The list of reference links for the CVE. </param>
         /// <param name="description"> The CVE description. </param>
-        /// <returns> A new <see cref="Models.CveResource"/> instance for mocking. </returns>
-        public static CveResource CveResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cveId = null, CveComponent component = null, string severity = null, string namePropertiesName = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, IEnumerable<CveLink> links = null, string description = null)
+        /// <returns> A new <see cref="Models.CveResourceData"/> instance for mocking. </returns>
+        public static CveResourceData CveResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? cveId = null, CveComponent component = null, string severity = null, string namePropertiesName = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, IEnumerable<CveLink> links = null, string description = null)
         {
             links ??= new List<CveLink>();
 
-            return new CveResource(id, name, resourceType, systemData, cveId, component, severity, namePropertiesName, cvssScore, cvssVersion, cvssV2Score, cvssV3Score, links?.ToList(), description, serializedAdditionalRawData: null);
+            return new CveResourceData(id, name, resourceType, systemData, cveId, component, severity, namePropertiesName, cvssScore, cvssVersion, cvssV2Score, cvssV3Score, links?.ToList(), description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CveLink"/>. </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new UriToken(uri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PasswordHashResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PasswordHashResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -187,13 +187,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="context"> Context of password hash. </param>
         /// <param name="username"> User name of password hash. </param>
         /// <param name="algorithm"> Algorithm of the password hash. </param>
-        /// <returns> A new <see cref="Models.PasswordHashResource"/> instance for mocking. </returns>
-        public static PasswordHashResource PasswordHashResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null)
+        /// <returns> A new <see cref="Models.PasswordHashResourceData"/> instance for mocking. </returns>
+        public static PasswordHashResourceData PasswordHashResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null)
         {
-            return new PasswordHashResource(id, name, resourceType, systemData, passwordHashId, filePath, salt, hash, context, username, algorithm, serializedAdditionalRawData: null);
+            return new PasswordHashResourceData(id, name, resourceType, systemData, passwordHashId, filePath, salt, hash, context, username, algorithm, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SbomComponentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SbomComponentResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="version"> Version for the component. </param>
         /// <param name="license"> License for the component. </param>
         /// <param name="filePaths"> File paths related to the component. </param>
-        /// <returns> A new <see cref="Models.SbomComponentResource"/> instance for mocking. </returns>
-        public static SbomComponentResource SbomComponentResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string componentId = null, string componentName = null, string version = null, string license = null, IEnumerable<string> filePaths = null)
+        /// <returns> A new <see cref="Models.SbomComponentResourceData"/> instance for mocking. </returns>
+        public static SbomComponentResourceData SbomComponentResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string componentId = null, string componentName = null, string version = null, string license = null, IEnumerable<string> filePaths = null)
         {
             filePaths ??= new List<string>();
 
-            return new SbomComponentResource(id, name, resourceType, systemData, componentId, componentName, version, license, filePaths?.ToList(), serializedAdditionalRawData: null);
+            return new SbomComponentResourceData(id, name, resourceType, systemData, componentId, componentName, version, license, filePaths?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.SummaryResourceData"/>. </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="properties">
         /// Properties of an analysis summary.
         /// Please note <see cref="SummaryResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.BinaryHardeningSummaryResource"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareCryptoCertificateSummaryResource"/>, <see cref="Models.FirmwareCryptoKeySummaryResource"/> and <see cref="Models.FirmwareSummary"/>.
+        /// The available derived classes include <see cref="Models.BinaryHardeningSummaryResourceInfo"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareCryptoCertificateSummaryResource"/>, <see cref="Models.FirmwareCryptoKeySummaryResource"/> and <see cref="Models.FirmwareSummary"/>.
         /// </param>
         /// <returns> A new <see cref="IotFirmwareDefense.SummaryResourceData"/> instance for mocking. </returns>
         public static SummaryResourceData SummaryResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SummaryResourceProperties properties = null)
@@ -277,17 +277,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CveSummary(SummaryType.CVE, serializedAdditionalRawData: null, critical, high, medium, low, unknown);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningSummaryResourceInfo"/>. </summary>
         /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
         /// <param name="nx"> NX summary percentage. </param>
         /// <param name="pie"> PIE summary percentage. </param>
         /// <param name="relro"> RELRO summary percentage. </param>
         /// <param name="canary"> Canary summary percentage. </param>
         /// <param name="stripped"> Stripped summary percentage. </param>
-        /// <returns> A new <see cref="Models.BinaryHardeningSummaryResource"/> instance for mocking. </returns>
-        public static BinaryHardeningSummaryResource BinaryHardeningSummaryResource(long? totalFiles = null, int? nx = null, int? pie = null, int? relro = null, int? canary = null, int? stripped = null)
+        /// <returns> A new <see cref="Models.BinaryHardeningSummaryResourceInfo"/> instance for mocking. </returns>
+        public static BinaryHardeningSummaryResourceInfo BinaryHardeningSummaryResourceInfo(long? totalFiles = null, int? nx = null, int? pie = null, int? relro = null, int? canary = null, int? stripped = null)
         {
-            return new BinaryHardeningSummaryResource(SummaryType.BinaryHardening, serializedAdditionalRawData: null, totalFiles, nx, pie, relro, canary, stripped);
+            return new BinaryHardeningSummaryResourceInfo(SummaryType.BinaryHardening, serializedAdditionalRawData: null, totalFiles, nx, pie, relro, canary, stripped);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificateSummaryResource"/>. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<SbomComponentResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SbomComponentResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<SbomComponentResource> value = default;
+            IReadOnlyList<SbomComponentResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<SbomComponentResource> array = new List<SbomComponentResource>();
+                    List<SbomComponentResourceData> array = new List<SbomComponentResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SbomComponentResource.DeserializeSbomComponentResource(item, options));
+                        array.Add(SbomComponentResourceData.DeserializeSbomComponentResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SbomComponentListResult(value ?? new ChangeTrackingList<SbomComponentResource>(), nextLink.Value, serializedAdditionalRawData);
+            return new SbomComponentListResult(value ?? new ChangeTrackingList<SbomComponentResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SbomComponentListResult>.Write(ModelReaderWriterOptions options)

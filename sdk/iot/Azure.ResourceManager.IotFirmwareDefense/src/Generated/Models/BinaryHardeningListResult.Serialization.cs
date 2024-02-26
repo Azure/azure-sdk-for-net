@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<BinaryHardeningResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BinaryHardeningResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<BinaryHardeningResource> value = default;
+            IReadOnlyList<BinaryHardeningResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<BinaryHardeningResource> array = new List<BinaryHardeningResource>();
+                    List<BinaryHardeningResourceData> array = new List<BinaryHardeningResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryHardeningResource.DeserializeBinaryHardeningResource(item, options));
+                        array.Add(BinaryHardeningResourceData.DeserializeBinaryHardeningResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardeningListResult(value ?? new ChangeTrackingList<BinaryHardeningResource>(), nextLink.Value, serializedAdditionalRawData);
+            return new BinaryHardeningListResult(value ?? new ChangeTrackingList<BinaryHardeningResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BinaryHardeningListResult>.Write(ModelReaderWriterOptions options)
