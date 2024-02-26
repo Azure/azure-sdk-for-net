@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which includes several fixes.  One notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
+- Updated the `Azure.Messaging.ServiceBus`, which includes a new build of the AMQP transport library.  One notable but fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
 
 ## 5.13.5 (2023-12-04)
 

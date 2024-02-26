@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which includes several fixes.  One notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+- Updated the `Azure.Messaging.EventHubs`, which includes a new build of the AMQP transport library.  The notable bug fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
 
 ## 6.1.0 (2024-02-13)
 
