@@ -118,7 +118,7 @@ namespace Azure.Core
         /// TBD.
         /// </summary>
         protected override PipelineRequestHeaders HeadersCore
-            => new AzureCoreMessageHeaders(Headers);
+            => new AzureCoreRequestHeaders(Headers);
 
         #endregion
 
@@ -176,16 +176,16 @@ namespace Azure.Core
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
         /// <summary>
-        /// Backwards adapter to MessageHeaders to implement GetHeadersCore
+        /// Backwards adapter to RequestHeaders to implement GetHeadersCore.
         /// </summary>
-        private sealed class AzureCoreMessageHeaders : PipelineRequestHeaders
+        private sealed class AzureCoreRequestHeaders : PipelineRequestHeaders
         {
             /// <summary>
             /// Headers on the Azure.Core.Request type to adapt to.
             /// </summary>
             private readonly RequestHeaders _headers;
 
-            public AzureCoreMessageHeaders(RequestHeaders headers)
+            public AzureCoreRequestHeaders(RequestHeaders headers)
                 => _headers = headers;
 
             public override void Add(string name, string value)
