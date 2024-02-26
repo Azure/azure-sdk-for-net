@@ -3,6 +3,8 @@
 
 using System;
 using System.Globalization;
+using System.Net;
+using System.Net.Http.Headers;
 
 using Microsoft.IdentityModel.JsonWebTokens;
 
@@ -121,6 +123,38 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
 
         /// <summary>
+        /// Get the issuer string based on the token schema version.
+        /// </summary>
+        /// <param name="tokenSchemaVersion">v2 will return v2 odic url, v1 will return v1</param>
+        /// <returns></returns>
+        internal string GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions tokenSchemaVersion)
+        {
+            return tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
+                AuthorityUrl + OpenIdConfigurationPathV2 :
+                AuthorityUrl + OpenIdConfigurationPath;
+        }
+
+        /// <summary>
+        /// Validate the authorization party is accurate to the one in configuration.
+        /// </summary>
+        /// <param name="authoizedPartyValueFromTokenOrHeader">The value from either the token or the header.</param>
+        /// <returns>True if azp/appid value matches the configured value.</returns>
+        internal bool ValidateAuthorizationParty(string authoizedPartyValueFromTokenOrHeader)
+        {
+            return  AuthorizedPartyAppId.EqualsOic(authoizedPartyValueFromTokenOrHeader);
+        }
+
+        /// <summary>
+        /// Checks wheather the header has the correct values for ezauth.
+        /// </summary>
+        /// <param name="headers"><see cref="HttpRequestHeaders"/> headers to check in.</param>
+        /// <returns>True if ezauth is valid</returns>
+        internal bool IsEzAuthValid(HttpRequestHeaders headers)
+        {
+            return EZAuthEnabled && headers.Matches(HEADER_EZAUTH_ICP, HEADER_EZAUTH_ICP_VERIFY);
+        }
+
+        /// <summary>
         /// Get config value from environment variable or use the default value.
         /// </summary>
         /// <param name="environmentVariable">Definied Azure function application settings</param>
@@ -141,28 +175,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     value: Environment.GetEnvironmentVariable(environmentVariable),
                     conversionType: typeof(T),
                     provider: CultureInfo.CurrentCulture);
-        }
-
-        /// <summary>
-        /// Get the issuer string based on the token schema version.
-        /// </summary>
-        /// <param name="tokenSchemaVersion">v2 will return v2 odic url, v1 will return v1</param>
-        /// <returns></returns>
-        internal string GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions tokenSchemaVersion)
-        {
-            return tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
-                AuthorityUrl + OpenIdConfigurationPathV2 :
-                AuthorityUrl + OpenIdConfigurationPath;
-        }
-
-        /// <summary>
-        /// Validate the authorization party is accurate to the one in configuration.
-        /// </summary>
-        /// <param name="authoizedPartyValueFromTokenOrHeader">The value from either the token or the header.</param>
-        /// <returns>True if azp/appid value matches the configured value.</returns>
-        internal bool ValidateAuthorizationParty(string authoizedPartyValueFromTokenOrHeader)
-        {
-            return  AuthorizedPartyAppId.EqualsOic(authoizedPartyValueFromTokenOrHeader);
         }
     }
 }

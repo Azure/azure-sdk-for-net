@@ -94,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     throw new NotSupportedException(AuthenticationEventResource.Ex_Invalid_Inbound);
                 }
 
-                Dictionary<string, string> Claims = GetClaimsAndValidateRequest(request);
+                Dictionary<string, string> Claims = await GetClaimsAndValidateRequest(request).ConfigureAwait(false);
                 string payload = await request.Content.ReadAsStringAsync().ConfigureAwait(false);
                 AuthenticationEventMetadata eventMetadata = GetEventAndValidateSchema(payload);
 
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         #endregion
 
         #region Validators
-        private Dictionary<string, string> GetClaimsAndValidateRequest(HttpRequestMessage requestMessage)
+        private async Task<Dictionary<string, string>> GetClaimsAndValidateRequest(HttpRequestMessage requestMessage)
         {
             ConfigurationManager configurationManager = new ConfigurationManager(_authEventTriggerAttr);
             if (configurationManager.BypassValidation)
@@ -224,11 +224,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 return null;
             }
 
-            TokenValidator validator = configurationManager.EZAuthEnabled && requestMessage.Headers.Matches(ConfigurationManager.HEADER_EZAUTH_ICP, ConfigurationManager.HEADER_EZAUTH_ICP_VERIFY) ?
-                new TokenValidatorEZAuth() :
-                new TokenValidatorInternal();
+            TokenValidator validator = configurationManager.IsEzAuthValid(requestMessage.Headers) ? new TokenValidatorEZAuth() : new TokenValidatorInternal();
 
-            (bool valid, Dictionary<string, string> claims) = validator.ValidateAndGetClaims(requestMessage, configurationManager);
+            (bool valid, Dictionary<string, string> claims) = await validator.ValidateAndGetClaims(requestMessage, configurationManager).ConfigureAwait(false);
             if (valid)
             {
                 return claims;
