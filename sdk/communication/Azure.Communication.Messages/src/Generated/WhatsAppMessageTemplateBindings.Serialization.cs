@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages.Models.Channels
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Header))
+            if (!(Header is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Body))
+            if (!(Body is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Footer))
+            if (!(Footer is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("footer"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Buttons))
+            if (!(Buttons is ChangeTrackingList<WhatsAppMessageTemplateBindingsButton> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("buttons"u8);
                 writer.WriteStartArray();
@@ -107,10 +107,10 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 return null;
             }
-            Optional<IList<WhatsAppMessageTemplateBindingsComponent>> header = default;
-            Optional<IList<WhatsAppMessageTemplateBindingsComponent>> body = default;
-            Optional<IList<WhatsAppMessageTemplateBindingsComponent>> footer = default;
-            Optional<IList<WhatsAppMessageTemplateBindingsButton>> buttons = default;
+            IList<WhatsAppMessageTemplateBindingsComponent> header = default;
+            IList<WhatsAppMessageTemplateBindingsComponent> body = default;
+            IList<WhatsAppMessageTemplateBindingsComponent> footer = default;
+            IList<WhatsAppMessageTemplateBindingsButton> buttons = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     header = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     body = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     footer = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsButton> array = new List<WhatsAppMessageTemplateBindingsButton>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsButton.DeserializeWhatsAppMessageTemplateBindingsButton(item));
+                        array.Add(WhatsAppMessageTemplateBindingsButton.DeserializeWhatsAppMessageTemplateBindingsButton(item, options));
                     }
                     buttons = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatsAppMessageTemplateBindings(kind, serializedAdditionalRawData, Optional.ToList(header), Optional.ToList(body), Optional.ToList(footer), Optional.ToList(buttons));
+            return new WhatsAppMessageTemplateBindings(kind, serializedAdditionalRawData, header ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), body ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), footer ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), buttons ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>());
         }
 
         BinaryData IPersistableModel<WhatsAppMessageTemplateBindings>.Write(ModelReaderWriterOptions options)

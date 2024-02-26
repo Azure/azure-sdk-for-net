@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerVersion))
+            if (ServerVersion != null)
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);

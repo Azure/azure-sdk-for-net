@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
             JsonSerializer.Serialize(writer, Subnet);
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (PrivateIPAllocationMethod.HasValue)
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());

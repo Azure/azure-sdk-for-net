@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -22,9 +21,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="definition"/>, <paramref name="timestamps"/> or <paramref name="metricValues"/> is null. </exception>
         internal MetricSeriesData(MetricSeriesDefinition definition, IEnumerable<DateTimeOffset> timestamps, IEnumerable<double> metricValues)
         {
-            Argument.AssertNotNull(definition, nameof(definition));
-            Argument.AssertNotNull(timestamps, nameof(timestamps));
-            Argument.AssertNotNull(metricValues, nameof(metricValues));
+            if (definition == null)
+            {
+                throw new ArgumentNullException(nameof(definition));
+            }
+            if (timestamps == null)
+            {
+                throw new ArgumentNullException(nameof(timestamps));
+            }
+            if (metricValues == null)
+            {
+                throw new ArgumentNullException(nameof(metricValues));
+            }
 
             Definition = definition;
             Timestamps = timestamps.ToList();

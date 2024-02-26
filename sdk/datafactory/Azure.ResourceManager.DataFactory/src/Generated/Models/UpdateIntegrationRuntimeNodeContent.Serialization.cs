@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConcurrentJobsLimit))
+            if (ConcurrentJobsLimit.HasValue)
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);

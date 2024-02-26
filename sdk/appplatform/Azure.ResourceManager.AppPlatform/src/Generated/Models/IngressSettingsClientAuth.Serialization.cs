@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<string>> certificates = default;
+            IList<string> certificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IngressSettingsClientAuth(Optional.ToList(certificates), serializedAdditionalRawData);
+            return new IngressSettingsClientAuth(certificates ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IngressSettingsClientAuth>.Write(ModelReaderWriterOptions options)

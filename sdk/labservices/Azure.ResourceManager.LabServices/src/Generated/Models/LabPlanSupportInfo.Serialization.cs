@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(Phone))
+            if (Phone != null)
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (Optional.IsDefined(Instructions))
+            if (Instructions != null)
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);

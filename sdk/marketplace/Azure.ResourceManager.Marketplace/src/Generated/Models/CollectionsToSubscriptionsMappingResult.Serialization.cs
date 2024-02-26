@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingDictionary<string, CollectionsSubscriptionsMappingDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails>> details = default;
+            IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     Dictionary<string, CollectionsSubscriptionsMappingDetails> dictionary = new Dictionary<string, CollectionsSubscriptionsMappingDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CollectionsSubscriptionsMappingDetails.DeserializeCollectionsSubscriptionsMappingDetails(property0.Value));
+                        dictionary.Add(property0.Name, CollectionsSubscriptionsMappingDetails.DeserializeCollectionsSubscriptionsMappingDetails(property0.Value, options));
                     }
                     details = dictionary;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionsToSubscriptionsMappingResult(Optional.ToDictionary(details), serializedAdditionalRawData);
+            return new CollectionsToSubscriptionsMappingResult(details ?? new ChangeTrackingDictionary<string, CollectionsSubscriptionsMappingDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionsToSubscriptionsMappingResult>.Write(ModelReaderWriterOptions options)

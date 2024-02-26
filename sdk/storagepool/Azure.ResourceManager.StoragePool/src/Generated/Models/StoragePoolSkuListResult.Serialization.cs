@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StoragePoolSkuInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StoragePoolSkuInfo>> value = default;
+            IReadOnlyList<StoragePoolSkuInfo> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuInfo> array = new List<StoragePoolSkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo(item));
+                        array.Add(StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StoragePoolSkuListResult(value ?? new ChangeTrackingList<StoragePoolSkuInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuListResult>.Write(ModelReaderWriterOptions options)

@@ -82,7 +82,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual async Task<Response<CloudServiceRoleInstanceResource>> GetAsync(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleInstanceName));
+            }
+            if (roleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
+            }
 
             using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.Get");
             scope.Start();
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual Response<CloudServiceRoleInstanceResource> Get(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleInstanceName));
+            }
+            if (roleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
+            }
 
             using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.Get");
             scope.Start();
@@ -236,7 +250,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleInstanceName));
+            }
+            if (roleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
+            }
 
             using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.Exists");
             scope.Start();
@@ -280,7 +301,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleInstanceName));
+            }
+            if (roleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
+            }
 
             using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.Exists");
             scope.Start();
@@ -324,7 +352,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<CloudServiceRoleInstanceResource>> GetIfExistsAsync(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleInstanceName));
+            }
+            if (roleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
+            }
 
             using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.GetIfExists");
             scope.Start();
@@ -370,7 +405,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual NullableResponse<CloudServiceRoleInstanceResource> GetIfExists(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(roleInstanceName));
+            }
+            if (roleInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
+            }
 
             using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.GetIfExists");
             scope.Start();

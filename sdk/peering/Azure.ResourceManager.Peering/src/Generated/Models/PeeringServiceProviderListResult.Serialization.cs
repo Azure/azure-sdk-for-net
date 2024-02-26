@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PeeringServiceProvider> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeeringServiceProvider>> value = default;
+            IReadOnlyList<PeeringServiceProvider> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringServiceProvider> array = new List<PeeringServiceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringServiceProvider.DeserializePeeringServiceProvider(item));
+                        array.Add(PeeringServiceProvider.DeserializePeeringServiceProvider(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceProviderListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeeringServiceProviderListResult(value ?? new ChangeTrackingList<PeeringServiceProvider>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceProviderListResult>.Write(ModelReaderWriterOptions options)

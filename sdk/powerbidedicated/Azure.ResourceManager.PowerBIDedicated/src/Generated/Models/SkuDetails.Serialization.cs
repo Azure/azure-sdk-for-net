@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = CapacitySku.DeserializeCapacitySku(property.Value);
+                    sku = CapacitySku.DeserializeCapacitySku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

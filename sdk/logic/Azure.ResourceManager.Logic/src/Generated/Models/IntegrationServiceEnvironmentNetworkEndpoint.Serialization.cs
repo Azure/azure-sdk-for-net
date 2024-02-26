@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Accessibility))
+            if (Accessibility.HasValue)
             {
                 writer.WritePropertyName("accessibility"u8);
                 writer.WriteStringValue(Accessibility.Value.ToString());
             }
-            if (Optional.IsDefined(DomainName))
+            if (DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsCollectionDefined(Ports))
+            if (!(Ports is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<IntegrationServiceEnvironmentNetworkEndPointAccessibilityState> accessibility = default;
             Optional<string> domainName = default;
-            Optional<IReadOnlyList<string>> ports = default;
+            IReadOnlyList<string> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentNetworkEndpoint(Optional.ToNullable(accessibility), domainName.Value, Optional.ToList(ports), serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentNetworkEndpoint(Optional.ToNullable(accessibility), domainName.Value, ports ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentNetworkEndpoint>.Write(ModelReaderWriterOptions options)

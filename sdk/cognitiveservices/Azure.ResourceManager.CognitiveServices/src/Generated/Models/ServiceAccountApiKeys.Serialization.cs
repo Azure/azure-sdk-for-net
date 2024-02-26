@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key1))
+            if (Key1 != null)
             {
                 writer.WritePropertyName("key1"u8);
                 writer.WriteStringValue(Key1);
             }
-            if (Optional.IsDefined(Key2))
+            if (Key2 != null)
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkloadProfileCategory))
+            if (WorkloadProfileCategory != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(WorkloadProfileCategory);
             }
-            if (Optional.IsDefined(MeterType))
+            if (MeterType != null)
             {
                 writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

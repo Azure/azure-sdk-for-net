@@ -421,7 +421,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceFabricClusterResource>> UpdateAsync(WaitUntil waitUntil, ServiceFabricClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterResource.Update");
             scope.Start();
@@ -467,7 +470,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ServiceFabricClusterResource> Update(WaitUntil waitUntil, ServiceFabricClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterResource.Update");
             scope.Start();
@@ -591,8 +597,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterResource.AddTag");
             scope.Start();
@@ -653,8 +665,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ServiceFabricClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterResource.AddTag");
             scope.Start();
@@ -714,7 +732,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterResource.SetTags");
             scope.Start();
@@ -771,7 +792,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ServiceFabricClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterResource.SetTags");
             scope.Start();
@@ -828,7 +852,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterResource.RemoveTag");
             scope.Start();
@@ -888,7 +915,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ServiceFabricClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterResource.RemoveTag");
             scope.Start();

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<WebTestData> array = new List<WebTestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebTestData.DeserializeWebTestData(item));
+                        array.Add(WebTestData.DeserializeWebTestData(item, options));
                     }
                     value = array;
                     continue;

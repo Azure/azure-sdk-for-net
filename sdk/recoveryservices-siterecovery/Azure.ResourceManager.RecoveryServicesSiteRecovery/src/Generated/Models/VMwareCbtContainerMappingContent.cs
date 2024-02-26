@@ -20,8 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> or <paramref name="targetLocation"/> is null. </exception>
         public VMwareCbtContainerMappingContent(ResourceIdentifier storageAccountId, string targetLocation)
         {
-            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
-            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
+            if (storageAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountId));
+            }
+            if (targetLocation == null)
+            {
+                throw new ArgumentNullException(nameof(targetLocation));
+            }
 
             StorageAccountId = storageAccountId;
             TargetLocation = targetLocation;

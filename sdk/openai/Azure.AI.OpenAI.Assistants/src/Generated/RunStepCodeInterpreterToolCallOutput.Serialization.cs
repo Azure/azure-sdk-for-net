@@ -71,11 +71,11 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "logs": return RunStepCodeInterpreterLogOutput.DeserializeRunStepCodeInterpreterLogOutput(element);
-                    case "image": return RunStepCodeInterpreterImageOutput.DeserializeRunStepCodeInterpreterImageOutput(element);
+                    case "logs": return RunStepCodeInterpreterLogOutput.DeserializeRunStepCodeInterpreterLogOutput(element, options);
+                    case "image": return RunStepCodeInterpreterImageOutput.DeserializeRunStepCodeInterpreterImageOutput(element, options);
                 }
             }
-            return UnknownRunStepCodeInterpreterToolCallOutput.DeserializeUnknownRunStepCodeInterpreterToolCallOutput(element);
+            return UnknownRunStepCodeInterpreterToolCallOutput.DeserializeUnknownRunStepCodeInterpreterToolCallOutput(element, options);
         }
 
         BinaryData IPersistableModel<RunStepCodeInterpreterToolCallOutput>.Write(ModelReaderWriterOptions options)

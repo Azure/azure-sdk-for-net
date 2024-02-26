@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         private OperationsStatusRestOperations _operationsStatusRestClient;
         private ClientDiagnostics _redisEnterpriseClusterRedisEnterpriseClientDiagnostics;
         private RedisEnterpriseRestOperations _redisEnterpriseClusterRedisEnterpriseRestClient;
-        private ClientDiagnostics _skusClientDiagnostics;
-        private SkusRestOperations _skusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableRedisEnterpriseSubscriptionResource"/> class for mocking. </summary>
         protected MockableRedisEnterpriseSubscriptionResource()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         private OperationsStatusRestOperations OperationsStatusRestClient => _operationsStatusRestClient ??= new OperationsStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics RedisEnterpriseClusterRedisEnterpriseClientDiagnostics => _redisEnterpriseClusterRedisEnterpriseClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
         private RedisEnterpriseRestOperations RedisEnterpriseClusterRedisEnterpriseRestClient => _redisEnterpriseClusterRedisEnterpriseRestClient ??= new RedisEnterpriseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RedisEnterpriseClusterResource.ResourceType));
-        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -66,7 +62,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,7 +73,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual async Task<Response<RedisEnterpriseOperationStatus>> GetRedisEnterpriseOperationsStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
 
             using var scope = OperationsStatusClientDiagnostics.CreateScope("MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseOperationsStatus");
             scope.Start();
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +120,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<RedisEnterpriseOperationStatus> GetRedisEnterpriseOperationsStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
 
             using var scope = OperationsStatusClientDiagnostics.CreateScope("MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseOperationsStatus");
             scope.Start();
@@ -146,7 +156,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +186,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,58 +201,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), RedisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about skus in specified location for the given subscription id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisEnterpriseRegionSkuDetail"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail(e), SkusClientDiagnostics, Pipeline, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseSkus", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about skus in specified location for the given subscription id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisEnterpriseRegionSkuDetail"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkus(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail(e), SkusClientDiagnostics, Pipeline, "MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseSkus", "value", null, cancellationToken);
         }
     }
 }

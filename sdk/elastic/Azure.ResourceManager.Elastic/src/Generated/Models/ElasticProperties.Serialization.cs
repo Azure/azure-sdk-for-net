@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ElasticCloudUser))
+            if (ElasticCloudUser != null)
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
                 writer.WriteObjectValue(ElasticCloudUser);
             }
-            if (Optional.IsDefined(ElasticCloudDeployment))
+            if (ElasticCloudDeployment != null)
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
                 writer.WriteObjectValue(ElasticCloudDeployment);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value);
+                    elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("elasticCloudDeployment"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticCloudDeployment = ElasticCloudDeployment.DeserializeElasticCloudDeployment(property.Value);
+                    elasticCloudDeployment = ElasticCloudDeployment.DeserializeElasticCloudDeployment(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

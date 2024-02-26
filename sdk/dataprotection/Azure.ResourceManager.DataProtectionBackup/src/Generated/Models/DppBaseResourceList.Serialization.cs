@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ResourceGuardProtectedObjectData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceGuardProtectedObjectData>> value = default;
+            IReadOnlyList<ResourceGuardProtectedObjectData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResourceGuardProtectedObjectData> array = new List<ResourceGuardProtectedObjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(item));
+                        array.Add(ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DppBaseResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DppBaseResourceList(value ?? new ChangeTrackingList<ResourceGuardProtectedObjectData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DppBaseResourceList>.Write(ModelReaderWriterOptions options)

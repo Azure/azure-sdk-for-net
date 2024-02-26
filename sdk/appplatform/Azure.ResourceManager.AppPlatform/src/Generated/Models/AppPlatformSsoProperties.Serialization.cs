@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Scope))
+            if (!(Scope is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Optional.IsDefined(IssuerUri))
+            if (IssuerUri != null)
             {
                 writer.WritePropertyName("issuerUri"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<string>> scope = default;
+            IList<string> scope = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<Uri> issuerUri = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSsoProperties(Optional.ToList(scope), clientId.Value, clientSecret.Value, issuerUri.Value, serializedAdditionalRawData);
+            return new AppPlatformSsoProperties(scope ?? new ChangeTrackingList<string>(), clientId.Value, clientSecret.Value, issuerUri.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSsoProperties>.Write(ModelReaderWriterOptions options)

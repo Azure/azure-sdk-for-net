@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReservationId))
+            if (ReservationId != null)
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);

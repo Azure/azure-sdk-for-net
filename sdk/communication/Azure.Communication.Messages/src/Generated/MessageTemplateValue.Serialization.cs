@@ -73,15 +73,15 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "text": return MessageTemplateText.DeserializeMessageTemplateText(element);
-                    case "image": return MessageTemplateImage.DeserializeMessageTemplateImage(element);
-                    case "document": return MessageTemplateDocument.DeserializeMessageTemplateDocument(element);
-                    case "video": return MessageTemplateVideo.DeserializeMessageTemplateVideo(element);
-                    case "location": return MessageTemplateLocation.DeserializeMessageTemplateLocation(element);
-                    case "quickAction": return MessageTemplateQuickAction.DeserializeMessageTemplateQuickAction(element);
+                    case "text": return MessageTemplateText.DeserializeMessageTemplateText(element, options);
+                    case "image": return MessageTemplateImage.DeserializeMessageTemplateImage(element, options);
+                    case "document": return MessageTemplateDocument.DeserializeMessageTemplateDocument(element, options);
+                    case "video": return MessageTemplateVideo.DeserializeMessageTemplateVideo(element, options);
+                    case "location": return MessageTemplateLocation.DeserializeMessageTemplateLocation(element, options);
+                    case "quickAction": return MessageTemplateQuickAction.DeserializeMessageTemplateQuickAction(element, options);
                 }
             }
-            return UnknownMessageTemplateValue.DeserializeUnknownMessageTemplateValue(element);
+            return UnknownMessageTemplateValue.DeserializeUnknownMessageTemplateValue(element, options);
         }
 
         BinaryData IPersistableModel<MessageTemplateValue>.Write(ModelReaderWriterOptions options)

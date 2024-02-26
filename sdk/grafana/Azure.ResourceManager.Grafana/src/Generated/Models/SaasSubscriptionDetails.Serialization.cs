@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlanId))
+            if (PlanId != null)
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (Optional.IsDefined(OfferId))
+            if (OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Optional.IsDefined(PublisherId))
+            if (PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsDefined(Term))
+            if (Term != null)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteObjectValue(Term);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    term = SubscriptionTerm.DeserializeSubscriptionTerm(property.Value);
+                    term = SubscriptionTerm.DeserializeSubscriptionTerm(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

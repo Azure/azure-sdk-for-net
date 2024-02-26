@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Classification))
+            if (Classification.HasValue)
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    properties = MetricNamespaceName.DeserializeMetricNamespaceName(property.Value);
+                    properties = MetricNamespaceName.DeserializeMetricNamespaceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

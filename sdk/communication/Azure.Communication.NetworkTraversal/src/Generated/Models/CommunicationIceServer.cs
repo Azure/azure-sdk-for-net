@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Communication.NetworkTraversal
 {
@@ -23,9 +22,18 @@ namespace Azure.Communication.NetworkTraversal
         /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/> or <paramref name="credential"/> is null. </exception>
         public CommunicationIceServer(IEnumerable<string> urls, string username, string credential, RouteType routeType)
         {
-            Argument.AssertNotNull(urls, nameof(urls));
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (urls == null)
+            {
+                throw new ArgumentNullException(nameof(urls));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             Urls = urls.ToList();
             Username = username;

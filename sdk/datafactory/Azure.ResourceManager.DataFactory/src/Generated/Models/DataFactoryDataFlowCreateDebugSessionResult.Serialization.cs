@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);

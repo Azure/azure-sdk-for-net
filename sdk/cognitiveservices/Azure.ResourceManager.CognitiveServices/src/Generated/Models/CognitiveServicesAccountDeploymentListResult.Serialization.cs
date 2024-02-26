@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CognitiveServicesAccountDeploymentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<CognitiveServicesAccountDeploymentData>> value = default;
+            IReadOnlyList<CognitiveServicesAccountDeploymentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesAccountDeploymentData> array = new List<CognitiveServicesAccountDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(item));
+                        array.Add(CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentListResult(nextLink.Value, value ?? new ChangeTrackingList<CognitiveServicesAccountDeploymentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentListResult>.Write(ModelReaderWriterOptions options)

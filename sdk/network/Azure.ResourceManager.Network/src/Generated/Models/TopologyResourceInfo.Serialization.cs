@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Associations))
+            if (!(Associations is ChangeTrackingList<TopologyAssociation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<TopologyAssociation>> associations = default;
+            IReadOnlyList<TopologyAssociation> associations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<TopologyAssociation> array = new List<TopologyAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologyAssociation.DeserializeTopologyAssociation(item));
+                        array.Add(TopologyAssociation.DeserializeTopologyAssociation(item, options));
                     }
                     associations = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologyResourceInfo(name.Value, id.Value, Optional.ToNullable(location), Optional.ToList(associations), serializedAdditionalRawData);
+            return new TopologyResourceInfo(name.Value, id.Value, Optional.ToNullable(location), associations ?? new ChangeTrackingList<TopologyAssociation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologyResourceInfo>.Write(ModelReaderWriterOptions options)

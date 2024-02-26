@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DataReplicationWorkflowData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataReplicationWorkflowData>> value = default;
+            IReadOnlyList<DataReplicationWorkflowData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationWorkflowData> array = new List<DataReplicationWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item));
+                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationWorkflowListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataReplicationWorkflowListResult(value ?? new ChangeTrackingList<DataReplicationWorkflowData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationWorkflowListResult>.Write(ModelReaderWriterOptions options)

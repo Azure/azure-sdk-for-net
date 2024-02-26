@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Optional.IsDefined(Serializer))
+            if (Serializer != null)
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Deserializer != null)
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AvroFormat": return DatasetAvroFormat.DeserializeDatasetAvroFormat(element);
-                    case "JsonFormat": return DatasetJsonFormat.DeserializeDatasetJsonFormat(element);
-                    case "OrcFormat": return DatasetOrcFormat.DeserializeDatasetOrcFormat(element);
-                    case "ParquetFormat": return DatasetParquetFormat.DeserializeDatasetParquetFormat(element);
-                    case "TextFormat": return DatasetTextFormat.DeserializeDatasetTextFormat(element);
+                    case "AvroFormat": return DatasetAvroFormat.DeserializeDatasetAvroFormat(element, options);
+                    case "JsonFormat": return DatasetJsonFormat.DeserializeDatasetJsonFormat(element, options);
+                    case "OrcFormat": return DatasetOrcFormat.DeserializeDatasetOrcFormat(element, options);
+                    case "ParquetFormat": return DatasetParquetFormat.DeserializeDatasetParquetFormat(element, options);
+                    case "TextFormat": return DatasetTextFormat.DeserializeDatasetTextFormat(element, options);
                 }
             }
-            return UnknownDatasetStorageFormat.DeserializeUnknownDatasetStorageFormat(element);
+            return UnknownDatasetStorageFormat.DeserializeUnknownDatasetStorageFormat(element, options);
         }
 
         BinaryData IPersistableModel<DatasetStorageFormat>.Write(ModelReaderWriterOptions options)

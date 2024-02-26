@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("policyDefinitionId"u8);
             writer.WriteStringValue(PolicyDefinitionId);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ArmPolicyParameterValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (PolicyDefinitionReferenceId != null)
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (Optional.IsCollectionDefined(GroupNames))
+            if (!(GroupNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("groupNames"u8);
                 writer.WriteStartArray();
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string policyDefinitionId = default;
-            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
+            IDictionary<string, ArmPolicyParameterValue> parameters = default;
             Optional<string> policyDefinitionReferenceId = default;
-            Optional<IList<string>> groupNames = default;
+            IList<string> groupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources.Models
                     Dictionary<string, ArmPolicyParameterValue> dictionary = new Dictionary<string, ArmPolicyParameterValue>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property0.Value));
+                        dictionary.Add(property0.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionReference(policyDefinitionId, Optional.ToDictionary(parameters), policyDefinitionReferenceId.Value, Optional.ToList(groupNames), serializedAdditionalRawData);
+            return new PolicyDefinitionReference(policyDefinitionId, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(), policyDefinitionReferenceId.Value, groupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionReference>.Write(ModelReaderWriterOptions options)

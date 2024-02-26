@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Key))
+            if (options.Format != "W" && Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

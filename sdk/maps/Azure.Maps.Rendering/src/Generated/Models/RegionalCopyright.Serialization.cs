@@ -19,7 +19,7 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> copyrights = default;
+            IReadOnlyList<string> copyrights = default;
             Optional<RegionalCopyrightCountry> country = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new RegionalCopyright(Optional.ToList(copyrights), country.Value);
+            return new RegionalCopyright(copyrights ?? new ChangeTrackingList<string>(), country.Value);
         }
     }
 }

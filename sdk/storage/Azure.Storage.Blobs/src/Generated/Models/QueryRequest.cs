@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public QueryRequest(string expression)
         {
-            Argument.AssertNotNull(expression, nameof(expression));
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
 
             QueryType = "SQL";
             Expression = expression;

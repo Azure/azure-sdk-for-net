@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendAadLogs))
+            if (SendAadLogs.HasValue)
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteBooleanValue(SendAadLogs.Value);
             }
-            if (Optional.IsDefined(SendSubscriptionLogs))
+            if (SendSubscriptionLogs.HasValue)
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteBooleanValue(SendSubscriptionLogs.Value);
             }
-            if (Optional.IsDefined(SendActivityLogs))
+            if (SendActivityLogs.HasValue)
             {
                 writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteBooleanValue(SendActivityLogs.Value);
             }
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<FilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<bool> sendAadLogs = default;
             Optional<bool> sendSubscriptionLogs = default;
             Optional<bool> sendActivityLogs = default;
-            Optional<IList<FilteringTag>> filteringTags = default;
+            IList<FilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     List<FilteringTag> array = new List<FilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilteringTag.DeserializeFilteringTag(item));
+                        array.Add(FilteringTag.DeserializeFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), Optional.ToList(filteringTags), serializedAdditionalRawData);
+            return new LogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), filteringTags ?? new ChangeTrackingList<FilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogRules>.Write(ModelReaderWriterOptions options)

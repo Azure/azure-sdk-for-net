@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountName))
+            if (options.Format != "W" && AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataAccountType))
+            if (options.Format != "W" && DataAccountType.HasValue)
             {
                 writer.WritePropertyName("dataAccountType"u8);
                 writer.WriteStringValue(DataAccountType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountConnectionString))
+            if (options.Format != "W" && AccountConnectionString != null)
             {
                 writer.WritePropertyName("accountConnectionString"u8);
                 writer.WriteStringValue(AccountConnectionString);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShareCredentialDetails))
+            if (options.Format != "W" && !(ShareCredentialDetails is ChangeTrackingList<ShareCredentialDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("shareCredentialDetails"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> accountName = default;
             Optional<DataAccountType> dataAccountType = default;
             Optional<string> accountConnectionString = default;
-            Optional<IReadOnlyList<ShareCredentialDetails>> shareCredentialDetails = default;
+            IReadOnlyList<ShareCredentialDetails> shareCredentialDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<ShareCredentialDetails> array = new List<ShareCredentialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ShareCredentialDetails.DeserializeShareCredentialDetails(item));
+                        array.Add(Models.ShareCredentialDetails.DeserializeShareCredentialDetails(item, options));
                     }
                     shareCredentialDetails = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxAccountCredentialDetails(accountName.Value, Optional.ToNullable(dataAccountType), accountConnectionString.Value, Optional.ToList(shareCredentialDetails), serializedAdditionalRawData);
+            return new DataBoxAccountCredentialDetails(accountName.Value, Optional.ToNullable(dataAccountType), accountConnectionString.Value, shareCredentialDetails ?? new ChangeTrackingList<ShareCredentialDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxAccountCredentialDetails>.Write(ModelReaderWriterOptions options)

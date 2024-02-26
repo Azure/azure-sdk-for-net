@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tables))
+            if (!(Tables is ChangeTrackingList<SyncGroupSchemaTable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MasterSyncMemberName))
+            if (MasterSyncMemberName != null)
             {
                 writer.WritePropertyName("masterSyncMemberName"u8);
                 writer.WriteStringValue(MasterSyncMemberName);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IList<SyncGroupSchemaTable>> tables = default;
+            IList<SyncGroupSchemaTable> tables = default;
             Optional<string> masterSyncMemberName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncGroupSchemaTable> array = new List<SyncGroupSchemaTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupSchemaTable.DeserializeSyncGroupSchemaTable(item));
+                        array.Add(SyncGroupSchemaTable.DeserializeSyncGroupSchemaTable(item, options));
                     }
                     tables = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupSchema(Optional.ToList(tables), masterSyncMemberName.Value, serializedAdditionalRawData);
+            return new SyncGroupSchema(tables ?? new ChangeTrackingList<SyncGroupSchemaTable>(), masterSyncMemberName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupSchema>.Write(ModelReaderWriterOptions options)

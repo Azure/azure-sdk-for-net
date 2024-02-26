@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateUri))
+            if (CertificateUri != null)
             {
                 writer.WritePropertyName("certificateUrl"u8);
                 writer.WriteStringValue(CertificateUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CertificateStore))
+            if (CertificateStore != null)
             {
                 writer.WritePropertyName("certificateStore"u8);
                 writer.WriteStringValue(CertificateStore);

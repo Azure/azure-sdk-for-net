@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Relay.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RelayPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RelayPrivateLinkResourceData>> value = default;
+            IReadOnlyList<RelayPrivateLinkResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayPrivateLinkResourceData> array = new List<RelayPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(item));
+                        array.Add(RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkResourcesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateLinkResourcesListResult(value ?? new ChangeTrackingList<RelayPrivateLinkResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkResourcesListResult>.Write(ModelReaderWriterOptions options)

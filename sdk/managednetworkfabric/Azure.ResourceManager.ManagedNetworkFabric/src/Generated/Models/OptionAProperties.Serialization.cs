@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mtu))
+            if (Mtu.HasValue)
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Optional.IsDefined(VlanId))
+            if (VlanId.HasValue)
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn.HasValue)
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsDefined(BfdConfiguration))
+            if (BfdConfiguration != null)
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

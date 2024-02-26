@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MySqlPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlPrivateLinkResourceData>> value = default;
+            IReadOnlyList<MySqlPrivateLinkResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlPrivateLinkResourceData> array = new List<MySqlPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlPrivateLinkResourceData.DeserializeMySqlPrivateLinkResourceData(item));
+                        array.Add(MySqlPrivateLinkResourceData.DeserializeMySqlPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlPrivateLinkResourceListResult(value ?? new ChangeTrackingList<MySqlPrivateLinkResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

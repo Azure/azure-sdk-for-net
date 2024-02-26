@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public SapHanaLinkedService(object server)
         {
-            Argument.AssertNotNull(server, nameof(server));
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
 
             Server = server;
             Type = "SapHana";

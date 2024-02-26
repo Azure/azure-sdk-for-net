@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DynamicVNetAssignmentScope))
+            if (DynamicVNetAssignmentScope.HasValue)
             {
                 writer.WritePropertyName("dynamicVnetAssignmentScope"u8);
                 writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EndpointConfiguration))
+            if (EndpointConfiguration != null)
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
                 writer.WriteObjectValue(EndpointConfiguration);
             }
-            if (Optional.IsDefined(PublicIPAddressConfiguration))
+            if (PublicIPAddressConfiguration != null)
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
-            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            if (EnableAcceleratedNetworking.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    endpointConfiguration = PoolEndpointConfiguration.DeserializePoolEndpointConfiguration(property.Value);
+                    endpointConfiguration = PoolEndpointConfiguration.DeserializePoolEndpointConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicIPAddressConfiguration"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    publicIPAddressConfiguration = BatchPublicIPAddressConfiguration.DeserializeBatchPublicIPAddressConfiguration(property.Value);
+                    publicIPAddressConfiguration = BatchPublicIPAddressConfiguration.DeserializeBatchPublicIPAddressConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableAcceleratedNetworking"u8))

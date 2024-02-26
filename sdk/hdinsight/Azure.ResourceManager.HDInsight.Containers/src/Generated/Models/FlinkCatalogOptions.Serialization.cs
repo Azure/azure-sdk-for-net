@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hive))
+            if (Hive != null)
             {
                 writer.WritePropertyName("hive"u8);
                 writer.WriteObjectValue(Hive);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    hive = FlinkHiveCatalogOption.DeserializeFlinkHiveCatalogOption(property.Value);
+                    hive = FlinkHiveCatalogOption.DeserializeFlinkHiveCatalogOption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

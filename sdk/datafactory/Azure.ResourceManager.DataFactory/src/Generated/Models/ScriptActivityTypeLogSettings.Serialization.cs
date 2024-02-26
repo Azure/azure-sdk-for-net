@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
-            if (Optional.IsDefined(LogLocationSettings))
+            if (LogLocationSettings != null)
             {
                 writer.WritePropertyName("logLocationSettings"u8);
                 writer.WriteObjectValue(LogLocationSettings);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
+                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 if (Name != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("name");
                 }
             }
-            if (Optional.IsDefined(SecretInfo))
+            if (SecretInfo != null)
             {
                 if (SecretInfo != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         secretInfo = null;
                         continue;
                     }
-                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value);
+                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))

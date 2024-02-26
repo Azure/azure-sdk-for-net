@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 if (Capacity != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("capacity");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 if (ResourceType != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceType");
                 }
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 if (Sku != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         capacity = null;
                         continue;
                     }
-                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value);
+                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sku = null;
                         continue;
                     }
-                    sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value);
+                    sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

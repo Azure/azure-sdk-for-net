@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Aggregation))
+            if (Aggregation != null)
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteObjectValue(Aggregation);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(DataSource))
+            if (DataSource != null)
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    aggregation = ManagementEventAggregationCondition.DeserializeManagementEventAggregationCondition(property.Value);
+                    aggregation = ManagementEventAggregationCondition.DeserializeManagementEventAggregationCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("odata.type"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
+                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

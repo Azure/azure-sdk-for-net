@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -23,10 +22,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="siteUri"/>, <paramref name="tenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
         public SharePointOnlineListLinkedService(DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey)
         {
-            Argument.AssertNotNull(siteUri, nameof(siteUri));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
+            if (siteUri == null)
+            {
+                throw new ArgumentNullException(nameof(siteUri));
+            }
+            if (tenantId == null)
+            {
+                throw new ArgumentNullException(nameof(tenantId));
+            }
+            if (servicePrincipalId == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalId));
+            }
+            if (servicePrincipalKey == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalKey));
+            }
 
             SiteUri = siteUri;
             TenantId = tenantId;

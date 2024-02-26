@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 JsonSerializer.Serialize(writer, FileName);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatasetLocation(document.RootElement, options);
+            return DeserializeDatasetLocation(document.RootElement, options);
         }
 
         internal static UnknownDatasetLocation DeserializeUnknownDatasetLocation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDatasetLocation(document.RootElement, options);
+                        return DeserializeDatasetLocation(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{options.Format}' format.");

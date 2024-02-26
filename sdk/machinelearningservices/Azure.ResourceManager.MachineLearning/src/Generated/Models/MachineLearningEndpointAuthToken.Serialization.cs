@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessToken))
+            if (AccessToken != null)
             {
                 if (AccessToken != null)
                 {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("accessToken");
                 }
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTimeUtc"u8);
                 writer.WriteNumberValue(ExpireOn.Value, "U");
             }
-            if (Optional.IsDefined(RefreshOn))
+            if (RefreshOn.HasValue)
             {
                 writer.WritePropertyName("refreshAfterTimeUtc"u8);
                 writer.WriteNumberValue(RefreshOn.Value, "U");
             }
-            if (Optional.IsDefined(TokenType))
+            if (TokenType != null)
             {
                 if (TokenType != null)
                 {

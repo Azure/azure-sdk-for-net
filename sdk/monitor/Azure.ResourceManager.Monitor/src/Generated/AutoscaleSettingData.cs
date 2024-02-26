@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="profiles"/> is null. </exception>
         public AutoscaleSettingData(AzureLocation location, IEnumerable<AutoscaleProfile> profiles) : base(location)
         {
-            Argument.AssertNotNull(profiles, nameof(profiles));
+            if (profiles == null)
+            {
+                throw new ArgumentNullException(nameof(profiles));
+            }
 
             Profiles = profiles.ToList();
             Notifications = new ChangeTrackingList<AutoscaleNotification>();

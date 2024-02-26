@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Available))
+            if (!(Available is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> available = default;
+            IReadOnlyList<string> available = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionsCapability(Optional.ToList(available), serializedAdditionalRawData);
+            return new RegionsCapability(available ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionsCapability>.Write(ModelReaderWriterOptions options)

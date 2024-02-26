@@ -72,11 +72,46 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="configurationProfileAssignmentName"/> or <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomanageConfigurationProfileAssignmentReportData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string configurationProfileAssignmentName, string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, configurationProfileAssignmentName, reportName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,11 +142,46 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="configurationProfileAssignmentName"/> or <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomanageConfigurationProfileAssignmentReportData> Get(string subscriptionId, string resourceGroupName, string clusterName, string configurationProfileAssignmentName, string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
+            if (reportName == null)
+            {
+                throw new ArgumentNullException(nameof(reportName));
+            }
+            if (reportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, configurationProfileAssignmentName, reportName);
             _pipeline.Send(message, cancellationToken);
@@ -164,10 +234,38 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReportList>> ListByConfigurationProfileAssignmentsAsync(string subscriptionId, string resourceGroupName, string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
 
             using var message = CreateListByConfigurationProfileAssignmentsRequest(subscriptionId, resourceGroupName, clusterName, configurationProfileAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,10 +293,38 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReportList> ListByConfigurationProfileAssignments(string subscriptionId, string resourceGroupName, string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
 
             using var message = CreateListByConfigurationProfileAssignmentsRequest(subscriptionId, resourceGroupName, clusterName, configurationProfileAssignmentName);
             _pipeline.Send(message, cancellationToken);

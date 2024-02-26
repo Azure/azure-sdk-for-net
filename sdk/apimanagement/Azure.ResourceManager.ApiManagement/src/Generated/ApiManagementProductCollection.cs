@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementProductResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string productId, ApiManagementProductData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+            if (productId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(productId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementProductResource> CreateOrUpdate(WaitUntil waitUntil, string productId, ApiManagementProductData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+            if (productId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(productId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementProductResource>> GetAsync(string productId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+            if (productId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(productId));
+            }
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         public virtual Response<ApiManagementProductResource> Get(string productId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+            if (productId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(productId));
+            }
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductCollection.Get");
             scope.Start();
@@ -340,7 +374,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string productId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+            if (productId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(productId));
+            }
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductCollection.Exists");
             scope.Start();
@@ -383,7 +424,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         public virtual Response<bool> Exists(string productId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+            if (productId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(productId));
+            }
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductCollection.Exists");
             scope.Start();
@@ -426,7 +474,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementProductResource>> GetIfExistsAsync(string productId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+            if (productId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(productId));
+            }
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductCollection.GetIfExists");
             scope.Start();
@@ -471,7 +526,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementProductResource> GetIfExists(string productId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+            if (productId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(productId));
+            }
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductCollection.GetIfExists");
             scope.Start();

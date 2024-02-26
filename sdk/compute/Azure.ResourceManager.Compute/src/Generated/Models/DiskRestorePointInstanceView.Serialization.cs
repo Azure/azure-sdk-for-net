@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ReplicationStatus))
+            if (ReplicationStatus != null)
             {
                 writer.WritePropertyName("replicationStatus"u8);
                 writer.WriteObjectValue(ReplicationStatus);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    replicationStatus = DiskRestorePointReplicationStatus.DeserializeDiskRestorePointReplicationStatus(property.Value);
+                    replicationStatus = DiskRestorePointReplicationStatus.DeserializeDiskRestorePointReplicationStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DynatraceMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, DynatraceMonitorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DynatraceMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, DynatraceMonitorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<Response<DynatraceMonitorResource>> GetAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual Response<DynatraceMonitorResource> Get(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual Response<bool> Exists(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<NullableResponse<DynatraceMonitorResource>> GetIfExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual NullableResponse<DynatraceMonitorResource> GetIfExists(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.GetIfExists");
             scope.Start();

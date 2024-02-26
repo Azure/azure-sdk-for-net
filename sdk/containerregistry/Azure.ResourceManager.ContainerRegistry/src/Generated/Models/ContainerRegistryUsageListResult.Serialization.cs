@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerRegistryUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerRegistryUsage>> value = default;
+            IReadOnlyList<ContainerRegistryUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryUsage> array = new List<ContainerRegistryUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryUsage.DeserializeContainerRegistryUsage(item));
+                        array.Add(ContainerRegistryUsage.DeserializeContainerRegistryUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ContainerRegistryUsageListResult(value ?? new ChangeTrackingList<ContainerRegistryUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryUsageListResult>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(NetworkStatus))
+            if (NetworkStatus != null)
             {
                 writer.WritePropertyName("networkStatus"u8);
                 writer.WriteObjectValue(NetworkStatus);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    networkStatus = NetworkStatusContract.DeserializeNetworkStatusContract(property.Value);
+                    networkStatus = NetworkStatusContract.DeserializeNetworkStatusContract(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

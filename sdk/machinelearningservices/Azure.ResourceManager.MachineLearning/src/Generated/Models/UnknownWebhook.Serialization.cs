@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventType))
+            if (EventType != null)
             {
                 if (EventType != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWebhook(document.RootElement, options);
+            return DeserializeMachineLearningWebhook(document.RootElement, options);
         }
 
         internal static UnknownWebhook DeserializeUnknownWebhook(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWebhook(document.RootElement, options);
+                        return DeserializeMachineLearningWebhook(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningWebhook)} does not support '{options.Format}' format.");

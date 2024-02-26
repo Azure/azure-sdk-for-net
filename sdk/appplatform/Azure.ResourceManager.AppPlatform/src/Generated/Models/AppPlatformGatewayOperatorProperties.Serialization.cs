@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
+            if (options.Format != "W" && ResourceRequests != null)
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
+            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformGatewayInstance> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<AppPlatformGatewayOperatorResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformGatewayInstance>> instances = default;
+            IReadOnlyList<AppPlatformGatewayInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformGatewayOperatorResourceRequirements.DeserializeAppPlatformGatewayOperatorResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformGatewayOperatorResourceRequirements.DeserializeAppPlatformGatewayOperatorResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayInstance> array = new List<AppPlatformGatewayInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayInstance.DeserializeAppPlatformGatewayInstance(item));
+                        array.Add(AppPlatformGatewayInstance.DeserializeAppPlatformGatewayInstance(item, options));
                     }
                     instances = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayOperatorProperties(resourceRequests.Value, Optional.ToList(instances), serializedAdditionalRawData);
+            return new AppPlatformGatewayOperatorProperties(resourceRequests.Value, instances ?? new ChangeTrackingList<AppPlatformGatewayInstance>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayOperatorProperties>.Write(ModelReaderWriterOptions options)

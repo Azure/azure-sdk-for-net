@@ -75,7 +75,14 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<CurrentUsagesBaseResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<CurrentUsagesBaseResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Get");
             scope.Start();
@@ -235,7 +249,14 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
             scope.Start();
@@ -283,7 +304,14 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.Exists");
             scope.Start();
@@ -331,7 +359,14 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<CurrentUsagesBaseResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
             scope.Start();
@@ -381,7 +416,14 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual NullableResponse<CurrentUsagesBaseResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = _currentUsagesBaseUsagesClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetIfExists");
             scope.Start();

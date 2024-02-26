@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InboundConnectedResources))
+            if (options.Format != "W" && !(InboundConnectedResources is ChangeTrackingList<ConnectedResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inboundConnectedResources"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundConnectedResources))
+            if (options.Format != "W" && !(OutboundConnectedResources is ChangeTrackingList<ConnectedResourceInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outboundConnectedResources"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
-            Optional<IReadOnlyList<ConnectedResourceInfo>> inboundConnectedResources = default;
-            Optional<IReadOnlyList<ConnectedResourceInfo>> outboundConnectedResources = default;
+            IReadOnlyList<ConnectedResourceInfo> inboundConnectedResources = default;
+            IReadOnlyList<ConnectedResourceInfo> outboundConnectedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ConnectedResourceInfo> array = new List<ConnectedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item, options));
                     }
                     inboundConnectedResources = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ConnectedResourceInfo> array = new List<ConnectedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item, options));
                     }
                     outboundConnectedResources = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectableResourceInfo(id.Value, Optional.ToList(inboundConnectedResources), Optional.ToList(outboundConnectedResources), serializedAdditionalRawData);
+            return new ConnectableResourceInfo(id.Value, inboundConnectedResources ?? new ChangeTrackingList<ConnectedResourceInfo>(), outboundConnectedResources ?? new ChangeTrackingList<ConnectedResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectableResourceInfo>.Write(ModelReaderWriterOptions options)

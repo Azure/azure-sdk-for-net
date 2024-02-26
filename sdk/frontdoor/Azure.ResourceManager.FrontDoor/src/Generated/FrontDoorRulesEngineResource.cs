@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorRulesEngineResource>> UpdateAsync(WaitUntil waitUntil, FrontDoorRulesEngineData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorRulesEngineResource> Update(WaitUntil waitUntil, FrontDoorRulesEngineData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Update");
             scope.Start();

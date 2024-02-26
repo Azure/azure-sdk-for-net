@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            if (Optional.IsDefined(Threshold))
+            if (Threshold != null)
             {
                 if (Threshold != null)
                 {
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Categorical": return CategoricalDataQualityMetricThreshold.DeserializeCategoricalDataQualityMetricThreshold(element);
-                    case "Numerical": return NumericalDataQualityMetricThreshold.DeserializeNumericalDataQualityMetricThreshold(element);
+                    case "Categorical": return CategoricalDataQualityMetricThreshold.DeserializeCategoricalDataQualityMetricThreshold(element, options);
+                    case "Numerical": return NumericalDataQualityMetricThreshold.DeserializeNumericalDataQualityMetricThreshold(element, options);
                 }
             }
-            return UnknownDataQualityMetricThresholdBase.DeserializeUnknownDataQualityMetricThresholdBase(element);
+            return UnknownDataQualityMetricThresholdBase.DeserializeUnknownDataQualityMetricThresholdBase(element, options);
         }
 
         BinaryData IPersistableModel<DataQualityMetricThresholdBase>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> is null. </exception>
         public ContainerServiceSshPublicKey(string keyData)
         {
-            Argument.AssertNotNull(keyData, nameof(keyData));
+            if (keyData == null)
+            {
+                throw new ArgumentNullException(nameof(keyData));
+            }
 
             KeyData = keyData;
         }

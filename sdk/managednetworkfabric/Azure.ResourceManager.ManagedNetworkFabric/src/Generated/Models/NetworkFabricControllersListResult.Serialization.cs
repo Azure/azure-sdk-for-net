@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkFabricControllerData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricControllerData>> value = default;
+            IReadOnlyList<NetworkFabricControllerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricControllerData> array = new List<NetworkFabricControllerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricControllerData.DeserializeNetworkFabricControllerData(item));
+                        array.Add(NetworkFabricControllerData.DeserializeNetworkFabricControllerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricControllersListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkFabricControllersListResult(value ?? new ChangeTrackingList<NetworkFabricControllerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricControllersListResult>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDesktopPatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, serializedAdditionalRawData);
+            return new VirtualDesktopPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, friendlyName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDesktopPatch>.Write(ModelReaderWriterOptions options)

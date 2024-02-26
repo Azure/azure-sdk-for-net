@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationDestination))
+            if (NotificationDestination != null)
             {
                 writer.WritePropertyName("notificationDestination"u8);
                 writer.WriteStringValue(NotificationDestination);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             Optional<ResourceIdentifier> notificationDestination = default;
-            Optional<IList<AzureLocation>> locations = default;
+            IList<AzureLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationEndpoint(notificationDestination.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new NotificationEndpoint(notificationDestination.Value, locations ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationEndpoint>.Write(ModelReaderWriterOptions options)

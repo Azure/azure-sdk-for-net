@@ -81,8 +81,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubsSchemaGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string schemaGroupName, EventHubsSchemaGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (schemaGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaGroupName));
+            }
+            if (schemaGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -129,8 +139,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventHubsSchemaGroupResource> CreateOrUpdate(WaitUntil waitUntil, string schemaGroupName, EventHubsSchemaGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (schemaGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaGroupName));
+            }
+            if (schemaGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -175,7 +195,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual async Task<Response<EventHubsSchemaGroupResource>> GetAsync(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
+            if (schemaGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaGroupName));
+            }
+            if (schemaGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaGroupName));
+            }
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.Get");
             scope.Start();
@@ -219,7 +246,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual Response<EventHubsSchemaGroupResource> Get(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
+            if (schemaGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaGroupName));
+            }
+            if (schemaGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaGroupName));
+            }
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
+            if (schemaGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaGroupName));
+            }
+            if (schemaGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaGroupName));
+            }
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
+            if (schemaGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaGroupName));
+            }
+            if (schemaGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaGroupName));
+            }
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventHubsSchemaGroupResource>> GetIfExistsAsync(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
+            if (schemaGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaGroupName));
+            }
+            if (schemaGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaGroupName));
+            }
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual NullableResponse<EventHubsSchemaGroupResource> GetIfExists(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
+            if (schemaGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaGroupName));
+            }
+            if (schemaGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaGroupName));
+            }
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupCollection.GetIfExists");
             scope.Start();

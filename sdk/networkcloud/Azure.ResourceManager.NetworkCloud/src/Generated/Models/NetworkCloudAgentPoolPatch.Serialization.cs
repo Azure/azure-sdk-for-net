@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(UpgradeSettings))
+            if (UpgradeSettings != null)
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<long> count = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value);
+                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value, options);
                             continue;
                         }
                     }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudAgentPoolPatch(Optional.ToDictionary(tags), Optional.ToNullable(count), upgradeSettings.Value, serializedAdditionalRawData);
+            return new NetworkCloudAgentPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(count), upgradeSettings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentPoolPatch>.Write(ModelReaderWriterOptions options)

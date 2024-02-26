@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurchaseProperties))
+            if (PurchaseProperties != null)
             {
                 writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties);
             }
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (PricingCurrencyTotal != null)
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsDefined(BillingCurrencyTotal))
+            if (BillingCurrencyTotal != null)
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
+                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = RenewPropertiesPricingCurrencyTotal.DeserializeRenewPropertiesPricingCurrencyTotal(property.Value);
+                    pricingCurrencyTotal = RenewPropertiesPricingCurrencyTotal.DeserializeRenewPropertiesPricingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = RenewPropertiesBillingCurrencyTotal.DeserializeRenewPropertiesBillingCurrencyTotal(property.Value);
+                    billingCurrencyTotal = RenewPropertiesBillingCurrencyTotal.DeserializeRenewPropertiesBillingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RawCertData))
+            if (RawCertData != null)
             {
                 writer.WritePropertyName("rawCertData"u8);
                 writer.WriteStringValue(RawCertData);
             }
-            if (Optional.IsDefined(ContainerIdentityInfo))
+            if (ContainerIdentityInfo != null)
             {
                 writer.WritePropertyName("containerIdentityInfo"u8);
                 writer.WriteObjectValue(ContainerIdentityInfo);
             }
-            if (Optional.IsCollectionDefined(ServiceEndpoints))
+            if (!(ServiceEndpoints is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<string> rawCertData = default;
             Optional<ContainerIdentityInfo> containerIdentityInfo = default;
-            Optional<IDictionary<string, string>> serviceEndpoints = default;
+            IDictionary<string, string> serviceEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value);
+                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceEndpoints"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericContainerExtendedInfo(rawCertData.Value, containerIdentityInfo.Value, Optional.ToDictionary(serviceEndpoints), serializedAdditionalRawData);
+            return new GenericContainerExtendedInfo(rawCertData.Value, containerIdentityInfo.Value, serviceEndpoints ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GenericContainerExtendedInfo>.Write(ModelReaderWriterOptions options)

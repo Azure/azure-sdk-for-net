@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "EnvironmentAsset": return BaseEnvironmentType.DeserializeBaseEnvironmentType(element);
+                    case "EnvironmentAsset": return BaseEnvironmentType.DeserializeBaseEnvironmentType(element, options);
                 }
             }
-            return UnknownBaseEnvironmentSource.DeserializeUnknownBaseEnvironmentSource(element);
+            return UnknownBaseEnvironmentSource.DeserializeUnknownBaseEnvironmentSource(element, options);
         }
 
         BinaryData IPersistableModel<BaseEnvironmentSource>.Write(ModelReaderWriterOptions options)

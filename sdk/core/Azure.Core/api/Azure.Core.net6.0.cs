@@ -23,11 +23,12 @@ namespace Azure
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AzureKeyCredential : System.ClientModel.ApiKeyCredential
+    public partial class AzureKeyCredential
     {
-        public AzureKeyCredential(string key) : base (default(string)) { }
+        public AzureKeyCredential(string key) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Key { get { throw null; } }
+        public void Update(string key) { }
     }
     public partial class AzureNamedKeyCredential
     {
@@ -114,17 +115,16 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
-    public abstract partial class NullableResponse<T> : System.ClientModel.ClientResult<T?>
+    public abstract partial class NullableResponse<T>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected NullableResponse() : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
-        protected NullableResponse(T? value, Azure.Response response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public virtual bool HasValue { get { throw null; } }
+        protected NullableResponse() { }
+        public abstract bool HasValue { get; }
+        public abstract T? Value { get; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public virtual new Azure.Response GetRawResponse() { throw null; }
+        public abstract Azure.Response GetRawResponse();
         public override string ToString() { throw null; }
     }
     public abstract partial class Operation
@@ -137,6 +137,7 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
+        public virtual Azure.Core.RehydrationToken? GetRehydrationToken() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -208,49 +209,49 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext : System.ClientModel.Primitives.RequestOptions
+    public partial class RequestContext
     {
         public RequestContext() { }
-        public new Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.ClientModel.ClientResultException, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
-        public RequestFailedException(Azure.Response response) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
+        public RequestFailedException(Azure.Response response) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
+        public RequestFailedException(int status, string message) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
+        public RequestFailedException(int status, string message, System.Exception? innerException) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
-        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
-        public RequestFailedException(string message) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
-        public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
+        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
+        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public RequestFailedException(string message) { }
+        public RequestFailedException(string message, System.Exception? innerException) { }
         public string? ErrorCode { get { throw null; } }
-        public static System.Threading.Tasks.ValueTask<Azure.RequestFailedException> CreateAsync(Azure.Response response, Azure.Core.RequestFailedDetailsParser? parser = null, System.Exception? innerException = null) { throw null; }
+        public int Status { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public new Azure.Response? GetRawResponse() { throw null; }
+        public Azure.Response? GetRawResponse() { throw null; }
     }
-    public abstract partial class Response : System.ClientModel.Primitives.PipelineResponse
+    public abstract partial class Response : System.IDisposable
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
-        public override System.BinaryData Content { get { throw null; } }
-        public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public virtual System.BinaryData Content { get { throw null; } }
+        public abstract System.IO.Stream? ContentStream { get; set; }
+        public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public virtual bool IsError { get { throw null; } }
+        public abstract string ReasonPhrase { get; }
+        public abstract int Status { get; }
         protected internal abstract bool ContainsHeader(string name);
+        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected override System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore() { throw null; }
-        public override System.BinaryData ReadContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<System.BinaryData> ReadContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected sealed override void SetIsErrorCore(bool isError) { }
         public override string ToString() { throw null; }
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
@@ -264,9 +265,7 @@ namespace Azure
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected Response() { }
-        protected Response(T value, Azure.Response response) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
@@ -383,19 +382,18 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
+    public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
-        public new Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
-        public new Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
+        public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
+        public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        public override void Freeze() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -490,18 +488,23 @@ namespace Azure.Core
             public static string XMsRequestId { get { throw null; } }
         }
     }
-    public sealed partial class HttpMessage : System.ClientModel.Primitives.PipelineMessage
+    public sealed partial class HttpMessage : System.IDisposable
     {
-        public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.ClientModel.Primitives.PipelineRequest)) { }
+        public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) { }
+        public bool BufferResponse { get { throw null; } set { } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
-        public new Azure.Core.Request Request { get { throw null; } }
-        public new Azure.Response Response { get { throw null; } set { } }
-        public new Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
-        public new Azure.Response? ExtractResponse() { throw null; }
+        public Azure.Core.Request Request { get { throw null; } }
+        public Azure.Response Response { get { throw null; } set { } }
+        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
+        public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
+        public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }
+        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
     public enum HttpPipelinePosition
     {
@@ -522,34 +525,45 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class Request : System.ClientModel.Primitives.PipelineRequest
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RehydrationToken : System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>, System.ClientModel.Primitives.IJsonModel<object>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>, System.ClientModel.Primitives.IPersistableModel<object>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public string? Id { get { throw null; } }
+        Azure.Core.RehydrationToken System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        object System.ClientModel.Primitives.IJsonModel<object>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<object>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Core.RehydrationToken System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        object System.ClientModel.Primitives.IPersistableModel<object>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<object>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<object>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class Request : System.IDisposable
     {
         protected Request() { }
-        public virtual string ClientRequestId { get { throw null; } set { } }
-        public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
-        public new Azure.Core.RequestHeaders Headers { get { throw null; } }
-        public virtual new Azure.Core.RequestMethod Method { get { throw null; } set { } }
-        public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
+        public abstract string ClientRequestId { get; set; }
+        public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        public Azure.Core.RequestHeaders Headers { get { throw null; } }
+        public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
+        public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
+        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
-        protected override System.ClientModel.BinaryContent? GetContentCore() { throw null; }
-        protected override System.ClientModel.Primitives.PipelineRequestHeaders GetHeadersCore() { throw null; }
-        protected override string GetMethodCore() { throw null; }
-        protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);
-        protected override void SetContentCore(System.ClientModel.BinaryContent? content) { }
         protected internal virtual void SetHeader(string name, string value) { }
-        protected override void SetMethodCore(string method) { }
-        protected override void SetUriCore(System.Uri uri) { }
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class RequestContent : System.ClientModel.BinaryContent
+    public abstract partial class RequestContent : System.IDisposable
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
-        public static new Azure.Core.RequestContent Create(System.BinaryData content) { throw null; }
+        public static Azure.Core.RequestContent Create(System.BinaryData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
@@ -562,10 +576,13 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
-        public static Azure.Core.RequestContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public abstract void Dispose();
         public static implicit operator Azure.Core.RequestContent (Azure.Core.Serialization.DynamicData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (string content) { throw null; }
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
     public abstract partial class RequestFailedDetailsParser
     {
@@ -689,17 +706,13 @@ namespace Azure.Core
         protected ResponseClassificationHandler() { }
         public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
     }
-    public partial class ResponseClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
+    public partial class ResponseClassifier
     {
         public ResponseClassifier() { }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }
         public virtual bool IsRetriableResponse(Azure.Core.HttpMessage message) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public sealed override bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public sealed override bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResponseHeaders : System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader>, System.Collections.IEnumerable
@@ -730,7 +743,6 @@ namespace Azure.Core
         public System.TimeSpan MaxDelay { get { throw null; } set { } }
         public int MaxRetries { get { throw null; } set { } }
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
@@ -1032,13 +1044,11 @@ namespace Azure.Core.Pipeline
         public Azure.Core.RequestFailedDetailsParser RequestFailedDetailsParser { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
     }
-    public abstract partial class HttpPipelinePolicy : System.ClientModel.Primitives.PipelinePolicy
+    public abstract partial class HttpPipelinePolicy
     {
         protected HttpPipelinePolicy() { }
         public abstract void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);
-        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
         protected static void ProcessNext(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         protected static System.Threading.Tasks.ValueTask ProcessNextAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
@@ -1075,14 +1085,14 @@ namespace Azure.Core.Pipeline
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public RetryPolicy(int maxRetries = 3, Azure.Core.DelayStrategy? delayStrategy = null) { }
-        protected virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
+        protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
+        protected internal virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        protected virtual bool ShouldRetry(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
+        protected internal virtual bool ShouldRetry(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
+        protected internal virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
     }
     public partial class ServerCertificateCustomValidationArgs
     {

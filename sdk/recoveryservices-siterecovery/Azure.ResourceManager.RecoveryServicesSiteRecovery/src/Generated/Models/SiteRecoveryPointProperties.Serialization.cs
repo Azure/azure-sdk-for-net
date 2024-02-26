@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointOn))
+            if (RecoveryPointOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointType))
+            if (RecoveryPointType != null)
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ProviderSpecificRecoveryPointDetails.DeserializeProviderSpecificRecoveryPointDetails(property.Value);
+                    providerSpecificDetails = ProviderSpecificRecoveryPointDetails.DeserializeProviderSpecificRecoveryPointDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

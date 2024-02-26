@@ -85,10 +85,38 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SensitivityLabelListResult>> ListCurrentByDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var message = CreateListCurrentByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName, skipToken, count, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -119,10 +147,38 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SensitivityLabelListResult> ListCurrentByDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var message = CreateListCurrentByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName, skipToken, count, filter);
             _pipeline.Send(message, cancellationToken);
@@ -177,11 +233,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (sensitivityLabelUpdateList == null)
+            {
+                throw new ArgumentNullException(nameof(sensitivityLabelUpdateList));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, sensitivityLabelUpdateList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -205,11 +292,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (sensitivityLabelUpdateList == null)
+            {
+                throw new ArgumentNullException(nameof(sensitivityLabelUpdateList));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, sensitivityLabelUpdateList);
             _pipeline.Send(message, cancellationToken);
@@ -270,10 +388,38 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SensitivityLabelListResult>> ListRecommendedByDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var message = CreateListRecommendedByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -304,10 +450,38 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SensitivityLabelListResult> ListRecommendedByDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var message = CreateListRecommendedByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter);
             _pipeline.Send(message, cancellationToken);
@@ -362,11 +536,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateRecommendedAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (recommendedSensitivityLabelUpdateList == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedSensitivityLabelUpdateList));
+            }
 
             using var message = CreateUpdateRecommendedRequest(subscriptionId, resourceGroupName, serverName, databaseName, recommendedSensitivityLabelUpdateList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -390,11 +595,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateRecommended(string subscriptionId, string resourceGroupName, string serverName, string databaseName, RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (recommendedSensitivityLabelUpdateList == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedSensitivityLabelUpdateList));
+            }
 
             using var message = CreateUpdateRecommendedRequest(subscriptionId, resourceGroupName, serverName, databaseName, recommendedSensitivityLabelUpdateList);
             _pipeline.Send(message, cancellationToken);
@@ -450,13 +686,62 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> EnableRecommendationAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateEnableRecommendationRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -482,13 +767,62 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response EnableRecommendation(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateEnableRecommendationRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName);
             _pipeline.Send(message, cancellationToken);
@@ -544,13 +878,62 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DisableRecommendationAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateDisableRecommendationRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -576,13 +959,62 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DisableRecommendation(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateDisableRecommendationRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName);
             _pipeline.Send(message, cancellationToken);
@@ -639,13 +1071,62 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SensitivityLabelData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName, sensitivityLabelSource);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -679,13 +1160,62 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SensitivityLabelData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName, sensitivityLabelSource);
             _pipeline.Send(message, cancellationToken);
@@ -753,14 +1283,66 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SensitivityLabelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -793,14 +1375,66 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SensitivityLabelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName, data);
             _pipeline.Send(message, cancellationToken);
@@ -861,13 +1495,62 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -893,13 +1576,62 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+            if (schemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (tableName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, databaseName, schemaName, tableName, columnName);
             _pipeline.Send(message, cancellationToken);
@@ -940,11 +1672,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SensitivityLabelListResult>> ListCurrentByDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var message = CreateListCurrentByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, skipToken, count, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -976,11 +1739,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SensitivityLabelListResult> ListCurrentByDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var message = CreateListCurrentByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, skipToken, count, filter);
             _pipeline.Send(message, cancellationToken);
@@ -1026,11 +1820,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SensitivityLabelListResult>> ListRecommendedByDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var message = CreateListRecommendedByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1062,11 +1887,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SensitivityLabelListResult> ListRecommendedByDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var message = CreateListRecommendedByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter);
             _pipeline.Send(message, cancellationToken);

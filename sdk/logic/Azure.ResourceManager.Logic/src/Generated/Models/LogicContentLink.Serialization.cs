@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentVersion))
+            if (options.Format != "W" && ContentVersion != null)
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentSize))
+            if (options.Format != "W" && ContentSize.HasValue)
             {
                 writer.WritePropertyName("contentSize"u8);
                 writer.WriteNumberValue(ContentSize.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentHash))
+            if (options.Format != "W" && ContentHash != null)
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteObjectValue(ContentHash);
             }
-            if (options.Format != "W" && Optional.IsDefined(Metadata))
+            if (options.Format != "W" && Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value);
+                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

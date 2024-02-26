@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 if (Certificate != null)
                 {

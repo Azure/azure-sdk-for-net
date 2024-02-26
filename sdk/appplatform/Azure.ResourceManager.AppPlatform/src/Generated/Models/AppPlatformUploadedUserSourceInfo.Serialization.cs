@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Jar": return JarUploadedUserSourceInfo.DeserializeJarUploadedUserSourceInfo(element);
-                    case "NetCoreZip": return NetCoreZipUploadedUserSourceInfo.DeserializeNetCoreZipUploadedUserSourceInfo(element);
-                    case "Source": return SourceUploadedUserSourceInfo.DeserializeSourceUploadedUserSourceInfo(element);
+                    case "Jar": return JarUploadedUserSourceInfo.DeserializeJarUploadedUserSourceInfo(element, options);
+                    case "NetCoreZip": return NetCoreZipUploadedUserSourceInfo.DeserializeNetCoreZipUploadedUserSourceInfo(element, options);
+                    case "Source": return SourceUploadedUserSourceInfo.DeserializeSourceUploadedUserSourceInfo(element, options);
                 }
             }
             Optional<string> relativePath = default;

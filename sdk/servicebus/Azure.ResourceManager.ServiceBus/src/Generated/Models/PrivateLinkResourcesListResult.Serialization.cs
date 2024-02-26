@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceBusPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusPrivateLinkResource>> value = default;
+            IReadOnlyList<ServiceBusPrivateLinkResource> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusPrivateLinkResource> array = new List<ServiceBusPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource(item));
+                        array.Add(ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkResourcesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateLinkResourcesListResult(value ?? new ChangeTrackingList<ServiceBusPrivateLinkResource>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkResourcesListResult>.Write(ModelReaderWriterOptions options)

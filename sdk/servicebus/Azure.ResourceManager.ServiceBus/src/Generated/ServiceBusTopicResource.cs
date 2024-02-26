@@ -419,7 +419,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceBusTopicResource>> UpdateAsync(WaitUntil waitUntil, ServiceBusTopicData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicResource.Update");
             scope.Start();
@@ -465,7 +468,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceBusTopicResource> Update(WaitUntil waitUntil, ServiceBusTopicData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicResource.Update");
             scope.Start();

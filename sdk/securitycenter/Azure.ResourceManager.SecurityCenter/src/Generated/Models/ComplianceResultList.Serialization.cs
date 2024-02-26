@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ComplianceResultData> array = new List<ComplianceResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceResultData.DeserializeComplianceResultData(item));
+                        array.Add(ComplianceResultData.DeserializeComplianceResultData(item, options));
                     }
                     value = array;
                     continue;

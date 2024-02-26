@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    properties = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value);
+                    properties = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

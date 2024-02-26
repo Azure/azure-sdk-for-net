@@ -285,7 +285,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SyncMemberResource>> UpdateAsync(WaitUntil waitUntil, SyncMemberData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberResource.Update");
             scope.Start();
@@ -331,7 +334,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SyncMemberResource> Update(WaitUntil waitUntil, SyncMemberData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberResource.Update");
             scope.Start();

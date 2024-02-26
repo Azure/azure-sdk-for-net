@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceCallerId))
+            if (SourceCallerId != null)
             {
                 writer.WritePropertyName("sourceCallerId"u8);
                 writer.WriteObjectValue(SourceCallerId);
@@ -27,12 +27,12 @@ namespace Azure.Communication.CallingServer
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(InvitationTimeoutInSeconds))
+            if (InvitationTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("invitationTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InvitationTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(OperationContext))
+            if (OperationContext != null)
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

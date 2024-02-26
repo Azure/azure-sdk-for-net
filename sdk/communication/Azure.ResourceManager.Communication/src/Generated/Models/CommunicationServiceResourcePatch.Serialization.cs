@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Communication.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LinkedDomains))
+            if (!(LinkedDomains is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linkedDomains"u8);
                 writer.WriteStartArray();
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Communication.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<string>> linkedDomains = default;
+            IDictionary<string, string> tags = default;
+            IList<string> linkedDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunicationServiceResourcePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToList(linkedDomains));
+            return new CommunicationServiceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, linkedDomains ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<CommunicationServiceResourcePatch>.Write(ModelReaderWriterOptions options)

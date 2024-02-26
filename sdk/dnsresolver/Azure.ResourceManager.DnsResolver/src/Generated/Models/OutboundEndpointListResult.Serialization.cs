@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DnsResolverOutboundEndpointData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsResolverOutboundEndpointData>> value = default;
+            IReadOnlyList<DnsResolverOutboundEndpointData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<DnsResolverOutboundEndpointData> array = new List<DnsResolverOutboundEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(item));
+                        array.Add(DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEndpointListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OutboundEndpointListResult(value ?? new ChangeTrackingList<DnsResolverOutboundEndpointData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEndpointListResult>.Write(ModelReaderWriterOptions options)

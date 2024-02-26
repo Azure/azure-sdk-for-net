@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReservationId))
+            if (ReservationId != null)
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Optional.IsDefined(BillingRefundAmount))
+            if (BillingRefundAmount != null)
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
                 writer.WriteObjectValue(BillingRefundAmount);
             }
-            if (Optional.IsDefined(BillingInformation))
+            if (BillingInformation != null)
             {
                 writer.WritePropertyName("billingInformation"u8);
                 writer.WriteObjectValue(BillingInformation);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingInformation"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value);
+                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

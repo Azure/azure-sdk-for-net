@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceFieldName"/> is null. </exception>
         public FieldMapping(string sourceFieldName)
         {
-            Argument.AssertNotNull(sourceFieldName, nameof(sourceFieldName));
+            if (sourceFieldName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceFieldName));
+            }
 
             SourceFieldName = sourceFieldName;
         }

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<HealthBotData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<HealthBotData>> value = default;
+            IReadOnlyList<HealthBotData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     List<HealthBotData> array = new List<HealthBotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthBotData.DeserializeHealthBotData(item));
+                        array.Add(HealthBotData.DeserializeHealthBotData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotResponseList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new BotResponseList(nextLink.Value, value ?? new ChangeTrackingList<HealthBotData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotResponseList>.Write(ModelReaderWriterOptions options)

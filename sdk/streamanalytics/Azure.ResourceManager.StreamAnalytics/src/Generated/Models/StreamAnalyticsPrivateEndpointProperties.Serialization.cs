@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
+            if (!(ManualPrivateLinkServiceConnections is ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             Optional<DateTimeOffset> createdDate = default;
-            Optional<IList<StreamAnalyticsPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
+            IList<StreamAnalyticsPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsPrivateLinkServiceConnection> array = new List<StreamAnalyticsPrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsPrivateLinkServiceConnection.DeserializeStreamAnalyticsPrivateLinkServiceConnection(item));
+                        array.Add(StreamAnalyticsPrivateLinkServiceConnection.DeserializeStreamAnalyticsPrivateLinkServiceConnection(item, options));
                     }
                     manualPrivateLinkServiceConnections = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsPrivateEndpointProperties(Optional.ToNullable(createdDate), Optional.ToList(manualPrivateLinkServiceConnections), serializedAdditionalRawData);
+            return new StreamAnalyticsPrivateEndpointProperties(Optional.ToNullable(createdDate), manualPrivateLinkServiceConnections ?? new ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsPrivateEndpointProperties>.Write(ModelReaderWriterOptions options)

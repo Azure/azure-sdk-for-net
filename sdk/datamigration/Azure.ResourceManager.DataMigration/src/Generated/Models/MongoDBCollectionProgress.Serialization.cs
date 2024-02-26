@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteNumberValue(EventsPending);
             writer.WritePropertyName("eventsReplayed"u8);
             writer.WriteNumberValue(EventsReplayed);
-            if (Optional.IsDefined(LastEventOn))
+            if (LastEventOn.HasValue)
             {
                 writer.WritePropertyName("lastEventTime"u8);
                 writer.WriteStringValue(LastEventOn.Value, "O");
             }
-            if (Optional.IsDefined(LastReplayOn))
+            if (LastReplayOn.HasValue)
             {
                 writer.WritePropertyName("lastReplayTime"u8);
                 writer.WriteStringValue(LastReplayOn.Value, "O");
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(QualifiedName))
+            if (QualifiedName != null)
             {
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBError> dictionary = new Dictionary<string, MongoDBError>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value, options));
                     }
                     errors = dictionary;
                     continue;

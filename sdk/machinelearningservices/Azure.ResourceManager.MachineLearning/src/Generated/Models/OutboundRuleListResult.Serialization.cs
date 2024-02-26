@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningOutboundRuleBasicData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningOutboundRuleBasicData>> value = default;
+            IReadOnlyList<MachineLearningOutboundRuleBasicData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningOutboundRuleBasicData> array = new List<MachineLearningOutboundRuleBasicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningOutboundRuleBasicData.DeserializeMachineLearningOutboundRuleBasicData(item));
+                        array.Add(MachineLearningOutboundRuleBasicData.DeserializeMachineLearningOutboundRuleBasicData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundRuleListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new OutboundRuleListResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningOutboundRuleBasicData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundRuleListResult>.Write(ModelReaderWriterOptions options)

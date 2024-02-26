@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.Dns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DnsTxtRecordData> array = new List<DnsTxtRecordData>();

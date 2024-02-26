@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupName))
+            if (GroupName != null)
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskSignature))
+            if (DiskSignature != null)
             {
                 writer.WritePropertyName("diskSignature"u8);
                 writer.WriteStringValue(DiskSignature);

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AppPlatformStorageData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformStorageData>> value = default;
+            IReadOnlyList<AppPlatformStorageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformStorageData> array = new List<AppPlatformStorageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformStorageData.DeserializeAppPlatformStorageData(item));
+                        array.Add(AppPlatformStorageData.DeserializeAppPlatformStorageData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StorageResourceList(value ?? new ChangeTrackingList<AppPlatformStorageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageResourceList>.Write(ModelReaderWriterOptions options)

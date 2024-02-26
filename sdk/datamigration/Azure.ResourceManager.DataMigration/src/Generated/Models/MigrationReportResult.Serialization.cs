@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ReportUri))
+            if (ReportUri != null)
             {
                 writer.WritePropertyName("reportUrl"u8);
                 writer.WriteStringValue(ReportUri.AbsoluteUri);

@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeTriggerResource>> UpdateAsync(WaitUntil waitUntil, DataBoxEdgeTriggerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataBoxEdgeTriggerTriggersClientDiagnostics.CreateScope("DataBoxEdgeTriggerResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataBoxEdgeTriggerResource> Update(WaitUntil waitUntil, DataBoxEdgeTriggerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataBoxEdgeTriggerTriggersClientDiagnostics.CreateScope("DataBoxEdgeTriggerResource.Update");
             scope.Start();

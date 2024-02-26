@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequireHttps))
+            if (RequireHttps.HasValue)
             {
                 writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(RequireHttps.Value);
             }
-            if (Optional.IsDefined(Routes))
+            if (Routes != null)
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (Optional.IsDefined(ForwardProxy))
+            if (ForwardProxy != null)
             {
                 writer.WritePropertyName("forwardProxy"u8);
                 writer.WriteObjectValue(ForwardProxy);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value);
+                    routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("forwardProxy"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    forwardProxy = ContainerAppForwardProxy.DeserializeContainerAppForwardProxy(property.Value);
+                    forwardProxy = ContainerAppForwardProxy.DeserializeContainerAppForwardProxy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

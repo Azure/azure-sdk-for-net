@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
+            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(SharedKey))
+            if (options.Format != "W" && SharedKey != null)
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSshPublicKey>> sshAuthorizedKeys = default;
+            IReadOnlyList<StorageSshPublicKey> sshAuthorizedKeys = default;
             Optional<string> sharedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSshPublicKey> array = new List<StorageSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item));
+                        array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item, options));
                     }
                     sshAuthorizedKeys = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalUserKeys(Optional.ToList(sshAuthorizedKeys), sharedKey.Value, serializedAdditionalRawData);
+            return new LocalUserKeys(sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(), sharedKey.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalUserKeys>.Write(ModelReaderWriterOptions options)

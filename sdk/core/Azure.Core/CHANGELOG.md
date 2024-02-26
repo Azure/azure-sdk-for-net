@@ -12,6 +12,16 @@
 
 - Moved Azure.Core types to use functionality implemented in System.ClientModel library.
 
+## 1.38.0 (2024-02-26)
+
+### Features Added
+
+- Add `GetRehydrationToken` to `Operation` for rehydration purpose.
+
+### Other Changes
+
+- Moved Azure.Core types to use functionality implemented in System.ClientModel library.
+
 - Additional Azure data centers are now included in `AzureLocation`.  The following were added:
   - China East 3
   - China North 3

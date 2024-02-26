@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MonitorPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<MonitorPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorPrivateEndpointConnectionData> array = new List<MonitorPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(item));
+                        array.Add(MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MonitorPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

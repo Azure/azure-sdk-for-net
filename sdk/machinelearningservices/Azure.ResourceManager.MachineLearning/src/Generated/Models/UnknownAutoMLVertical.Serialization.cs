@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogVerbosity))
+            if (LogVerbosity.HasValue)
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (TargetColumnName != null)
             {
                 if (TargetColumnName != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAutoMLVertical(document.RootElement, options);
+            return DeserializeAutoMLVertical(document.RootElement, options);
         }
 
         internal static UnknownAutoMLVertical DeserializeUnknownAutoMLVertical(JsonElement element, ModelReaderWriterOptions options = null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAutoMLVertical(document.RootElement, options);
+                        return DeserializeAutoMLVertical(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{options.Format}' format.");

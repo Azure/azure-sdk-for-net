@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(DeadLetterDestination))
+            if (DeadLetterDestination != null)
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    identity = EventSubscriptionIdentity.DeserializeEventSubscriptionIdentity(property.Value);
+                    identity = EventSubscriptionIdentity.DeserializeEventSubscriptionIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deadLetterDestination"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value);
+                    deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

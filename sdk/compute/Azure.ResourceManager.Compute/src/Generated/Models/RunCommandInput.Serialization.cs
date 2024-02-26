@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("commandId"u8);
             writer.WriteStringValue(CommandId);
-            if (Optional.IsCollectionDefined(Script))
+            if (!(Script is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<RunCommandInputParameter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string commandId = default;
-            Optional<IList<string>> script = default;
-            Optional<IList<RunCommandInputParameter>> parameters = default;
+            IList<string> script = default;
+            IList<RunCommandInputParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunCommandInput(commandId, Optional.ToList(script), Optional.ToList(parameters), serializedAdditionalRawData);
+            return new RunCommandInput(commandId, script ?? new ChangeTrackingList<string>(), parameters ?? new ChangeTrackingList<RunCommandInputParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunCommandInput>.Write(ModelReaderWriterOptions options)

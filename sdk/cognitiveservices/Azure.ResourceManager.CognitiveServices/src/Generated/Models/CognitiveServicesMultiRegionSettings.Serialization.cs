@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoutingMethod))
+            if (RoutingMethod.HasValue)
             {
                 writer.WritePropertyName("routingMethod"u8);
                 writer.WriteStringValue(RoutingMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<CognitiveServicesRegionSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<CognitiveServicesRoutingMethod> routingMethod = default;
-            Optional<IList<CognitiveServicesRegionSetting>> regions = default;
+            IList<CognitiveServicesRegionSetting> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesRegionSetting> array = new List<CognitiveServicesRegionSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesRegionSetting.DeserializeCognitiveServicesRegionSetting(item));
+                        array.Add(CognitiveServicesRegionSetting.DeserializeCognitiveServicesRegionSetting(item, options));
                     }
                     regions = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesMultiRegionSettings(Optional.ToNullable(routingMethod), Optional.ToList(regions), serializedAdditionalRawData);
+            return new CognitiveServicesMultiRegionSettings(Optional.ToNullable(routingMethod), regions ?? new ChangeTrackingList<CognitiveServicesRegionSetting>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesMultiRegionSettings>.Write(ModelReaderWriterOptions options)

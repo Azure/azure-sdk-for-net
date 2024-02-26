@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
         public RulesEngineHeaderAction(RulesEngineHeaderActionType headerActionType, string headerName)
         {
-            Argument.AssertNotNull(headerName, nameof(headerName));
+            if (headerName == null)
+            {
+                throw new ArgumentNullException(nameof(headerName));
+            }
 
             HeaderActionType = headerActionType;
             HeaderName = headerName;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnabledProtocols))
+            if (EnabledProtocols != null)
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
-            if (Optional.IsCollectionDefined(ClearTracks))
+            if (!(ClearTracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentKeys))
+            if (ContentKeys != null)
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
+            if (CustomKeyAcquisitionUriTemplate != null)
             {
                 writer.WritePropertyName("customKeyAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeyAcquisitionUriTemplate);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
+            IList<MediaTrackSelection> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
             Optional<string> customKeyAcquisitionUriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     clearTracks = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
+                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customKeyAcquisitionUrlTemplate"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUriTemplate.Value, serializedAdditionalRawData);
+            return new EnvelopeEncryption(enabledProtocols.Value, clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(), contentKeys.Value, customKeyAcquisitionUriTemplate.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvelopeEncryption>.Write(ModelReaderWriterOptions options)

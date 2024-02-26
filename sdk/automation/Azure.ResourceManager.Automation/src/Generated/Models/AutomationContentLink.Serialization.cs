@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ContentHash))
+            if (ContentHash != null)
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteObjectValue(ContentHash);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    contentHash = AutomationContentHash.DeserializeAutomationContentHash(property.Value);
+                    contentHash = AutomationContentHash.DeserializeAutomationContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

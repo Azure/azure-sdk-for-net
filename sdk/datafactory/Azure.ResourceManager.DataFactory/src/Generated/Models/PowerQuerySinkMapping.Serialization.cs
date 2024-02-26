@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryName))
+            if (QueryName != null)
             {
                 writer.WritePropertyName("queryName"u8);
                 writer.WriteStringValue(QueryName);
             }
-            if (Optional.IsCollectionDefined(DataflowSinks))
+            if (!(DataflowSinks is ChangeTrackingList<PowerQuerySink> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataflowSinks"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<string> queryName = default;
-            Optional<IList<PowerQuerySink>> dataflowSinks = default;
+            IList<PowerQuerySink> dataflowSinks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PowerQuerySink> array = new List<PowerQuerySink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PowerQuerySink.DeserializePowerQuerySink(item));
+                        array.Add(PowerQuerySink.DeserializePowerQuerySink(item, options));
                     }
                     dataflowSinks = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerQuerySinkMapping(queryName.Value, Optional.ToList(dataflowSinks), serializedAdditionalRawData);
+            return new PowerQuerySinkMapping(queryName.Value, dataflowSinks ?? new ChangeTrackingList<PowerQuerySink>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PowerQuerySinkMapping>.Write(ModelReaderWriterOptions options)

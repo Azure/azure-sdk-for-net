@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public HealthcareApisServiceAccessPolicyEntry(string objectId)
         {
-            Argument.AssertNotNull(objectId, nameof(objectId));
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
 
             ObjectId = objectId;
         }

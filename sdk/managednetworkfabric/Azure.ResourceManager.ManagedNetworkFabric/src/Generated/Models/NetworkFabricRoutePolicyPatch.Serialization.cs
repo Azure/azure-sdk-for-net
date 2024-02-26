@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultAction))
+            if (DefaultAction.HasValue)
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Statements))
+            if (!(Statements is ChangeTrackingList<RoutePolicyStatementProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("statements"u8);
                 writer.WriteStartArray();
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<CommunityActionType> defaultAction = default;
-            Optional<IList<RoutePolicyStatementProperties>> statements = default;
+            IList<RoutePolicyStatementProperties> statements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<RoutePolicyStatementProperties> array = new List<RoutePolicyStatementProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item));
+                                array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item, options));
                             }
                             statements = array;
                             continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricRoutePolicyPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(defaultAction), Optional.ToList(statements));
+            return new NetworkFabricRoutePolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(defaultAction), statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>());
         }
 
         BinaryData IPersistableModel<NetworkFabricRoutePolicyPatch>.Write(ModelReaderWriterOptions options)

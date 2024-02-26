@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<ProviderShareSubscriptionData> array = new List<ProviderShareSubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(item));
+                        array.Add(ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(item, options));
                     }
                     value = array;
                     continue;

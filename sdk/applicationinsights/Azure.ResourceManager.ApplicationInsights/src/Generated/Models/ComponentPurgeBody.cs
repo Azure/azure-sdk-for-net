@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> or <paramref name="filters"/> is null. </exception>
         public ComponentPurgeBody(string table, IEnumerable<ComponentPurgeBodyFilters> filters)
         {
-            Argument.AssertNotNull(table, nameof(table));
-            Argument.AssertNotNull(filters, nameof(filters));
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+            if (filters == null)
+            {
+                throw new ArgumentNullException(nameof(filters));
+            }
 
             Table = table;
             Filters = filters.ToList();

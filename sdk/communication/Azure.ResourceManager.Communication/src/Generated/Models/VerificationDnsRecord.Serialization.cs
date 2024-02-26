@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DnsRecordType))
+            if (options.Format != "W" && DnsRecordType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DnsRecordType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeToLiveInSeconds))
+            if (options.Format != "W" && TimeToLiveInSeconds.HasValue)
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(TimeToLiveInSeconds.Value);

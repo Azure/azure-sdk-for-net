@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocalPreference))
+            if (LocalPreference.HasValue)
             {
                 writer.WritePropertyName("localPreference"u8);
                 writer.WriteNumberValue(LocalPreference.Value);
             }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Optional.IsDefined(IPCommunityProperties))
+            if (IPCommunityProperties != null)
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
                 writer.WriteObjectValue(IPCommunityProperties);
             }
-            if (Optional.IsDefined(IPExtendedCommunityProperties))
+            if (IPExtendedCommunityProperties != null)
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
                 writer.WriteObjectValue(IPExtendedCommunityProperties);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCommunityProperties = ActionIPCommunityProperties.DeserializeActionIPCommunityProperties(property.Value);
+                    ipCommunityProperties = ActionIPCommunityProperties.DeserializeActionIPCommunityProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipExtendedCommunityProperties"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipExtendedCommunityProperties = ActionIPExtendedCommunityProperties.DeserializeActionIPExtendedCommunityProperties(property.Value);
+                    ipExtendedCommunityProperties = ActionIPExtendedCommunityProperties.DeserializeActionIPExtendedCommunityProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

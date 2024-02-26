@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ElasticMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, ElasticMonitorResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ElasticMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, ElasticMonitorResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<Response<ElasticMonitorResource>> GetAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual Response<ElasticMonitorResource> Get(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual Response<bool> Exists(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<NullableResponse<ElasticMonitorResource>> GetIfExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual NullableResponse<ElasticMonitorResource> GetIfExists(string monitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            if (monitorName == null)
+            {
+                throw new ArgumentNullException(nameof(monitorName));
+            }
+            if (monitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.GetIfExists");
             scope.Start();

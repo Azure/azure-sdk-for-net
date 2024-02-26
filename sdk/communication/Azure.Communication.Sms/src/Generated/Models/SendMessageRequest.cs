@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication.Sms;
-using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
@@ -23,9 +22,18 @@ namespace Azure.Communication.Sms.Models
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
         public SendMessageRequest(string @from, IEnumerable<SmsRecipient> smsRecipients, string message)
         {
-            Argument.AssertNotNull(@from, nameof(@from));
-            Argument.AssertNotNull(smsRecipients, nameof(smsRecipients));
-            Argument.AssertNotNull(message, nameof(message));
+            if (@from == null)
+            {
+                throw new ArgumentNullException(nameof(@from));
+            }
+            if (smsRecipients == null)
+            {
+                throw new ArgumentNullException(nameof(smsRecipients));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             From = @from;
             SmsRecipients = smsRecipients.ToList();

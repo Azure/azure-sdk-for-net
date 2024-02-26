@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MediaServicesAccountData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OdataNextLink))
+            if (OdataNextLink != null)
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(OdataNextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaServicesAccountData>> value = default;
+            IReadOnlyList<MediaServicesAccountData> value = default;
             Optional<string> odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaServicesAccountData> array = new List<MediaServicesAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesAccountData.DeserializeMediaServicesAccountData(item));
+                        array.Add(MediaServicesAccountData.DeserializeMediaServicesAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesAccountListResult(Optional.ToList(value), odataNextLink.Value, serializedAdditionalRawData);
+            return new MediaServicesAccountListResult(value ?? new ChangeTrackingList<MediaServicesAccountData>(), odataNextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesAccountListResult>.Write(ModelReaderWriterOptions options)

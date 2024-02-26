@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ImageVersionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ImageVersionData>> value = default;
+            IReadOnlyList<ImageVersionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<ImageVersionData> array = new List<ImageVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageVersionData.DeserializeImageVersionData(item));
+                        array.Add(ImageVersionData.DeserializeImageVersionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageVersionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ImageVersionListResult(value ?? new ChangeTrackingList<ImageVersionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageVersionListResult>.Write(ModelReaderWriterOptions options)

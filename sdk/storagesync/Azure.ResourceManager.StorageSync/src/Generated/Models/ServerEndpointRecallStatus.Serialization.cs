@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalRecallErrorsCount))
+            if (options.Format != "W" && TotalRecallErrorsCount.HasValue)
             {
                 writer.WritePropertyName("totalRecallErrorsCount"u8);
                 writer.WriteNumberValue(TotalRecallErrorsCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecallErrors))
+            if (options.Format != "W" && !(RecallErrors is ChangeTrackingList<ServerEndpointRecallError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recallErrors"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<long> totalRecallErrorsCount = default;
-            Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;
+            IReadOnlyList<ServerEndpointRecallError> recallErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<ServerEndpointRecallError> array = new List<ServerEndpointRecallError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerEndpointRecallError.DeserializeServerEndpointRecallError(item));
+                        array.Add(ServerEndpointRecallError.DeserializeServerEndpointRecallError(item, options));
                     }
                     recallErrors = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointRecallStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalRecallErrorsCount), Optional.ToList(recallErrors), serializedAdditionalRawData);
+            return new ServerEndpointRecallStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalRecallErrorsCount), recallErrors ?? new ChangeTrackingList<ServerEndpointRecallError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointRecallStatus>.Write(ModelReaderWriterOptions options)

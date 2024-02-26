@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SourceSettings))
+            if (!(SourceSettings is ChangeTrackingList<DataFlowSourceSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceSettings"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DatasetParameters))
+            if (DatasetParameters != null)
             {
                 writer.WritePropertyName("datasetParameters"u8);
                 writer.WriteObjectValue(DatasetParameters);
@@ -56,8 +56,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            IList<DataFlowSourceSetting> sourceSettings = default;
+            IDictionary<string, object> parameters = default;
             Optional<object> datasetParameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugPackageDebugSettings(Optional.ToList(sourceSettings), Optional.ToDictionary(parameters), datasetParameters.Value);
+            return new DataFlowDebugPackageDebugSettings(sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>(), parameters ?? new ChangeTrackingDictionary<string, object>(), datasetParameters.Value);
         }
     }
 }

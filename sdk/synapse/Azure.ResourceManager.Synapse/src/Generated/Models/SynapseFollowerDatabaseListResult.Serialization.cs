@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseFollowerDatabaseDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseFollowerDatabaseDefinition>> value = default;
+            IReadOnlyList<SynapseFollowerDatabaseDefinition> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseFollowerDatabaseDefinition> array = new List<SynapseFollowerDatabaseDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition(item));
+                        array.Add(SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseFollowerDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseFollowerDatabaseListResult(value ?? new ChangeTrackingList<SynapseFollowerDatabaseDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseFollowerDatabaseListResult>.Write(ModelReaderWriterOptions options)

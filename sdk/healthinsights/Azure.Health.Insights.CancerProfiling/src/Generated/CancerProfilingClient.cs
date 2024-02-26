@@ -51,8 +51,14 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public CancerProfilingClient(Uri endpoint, AzureKeyCredential credential, CancerProfilingClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new CancerProfilingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -71,7 +77,10 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,OncoPhenotypeData,CancellationToken)']/*" />
         public virtual async Task<Operation<OncoPhenotypeResults>> InferCancerProfileAsync(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
+            if (oncoPhenotypeData == null)
+            {
+                throw new ArgumentNullException(nameof(oncoPhenotypeData));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = oncoPhenotypeData.ToRequestContent();
@@ -88,7 +97,10 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,OncoPhenotypeData,CancellationToken)']/*" />
         public virtual Operation<OncoPhenotypeResults> InferCancerProfile(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
+            if (oncoPhenotypeData == null)
+            {
+                throw new ArgumentNullException(nameof(oncoPhenotypeData));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = oncoPhenotypeData.ToRequestContent();
@@ -120,7 +132,10 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> InferCancerProfileAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("CancerProfilingClient.InferCancerProfile");
             scope.Start();
@@ -160,7 +175,10 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> InferCancerProfile(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("CancerProfilingClient.InferCancerProfile");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AvailableAppPlatformSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableAppPlatformSku>> value = default;
+            IReadOnlyList<AvailableAppPlatformSku> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AvailableAppPlatformSku> array = new List<AvailableAppPlatformSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(item));
+                        array.Add(AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSkuList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ResourceSkuList(value ?? new ChangeTrackingList<AvailableAppPlatformSku>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSkuList>.Write(ModelReaderWriterOptions options)

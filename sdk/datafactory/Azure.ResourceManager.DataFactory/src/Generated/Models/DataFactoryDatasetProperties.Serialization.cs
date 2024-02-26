@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Structure))
+            if (Structure != null)
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema != null)
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
@@ -122,110 +122,110 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonMWSObject": return AmazonMwsObjectDataset.DeserializeAmazonMwsObjectDataset(element);
-                    case "AmazonRdsForOracleTable": return AmazonRdsForOracleTableDataset.DeserializeAmazonRdsForOracleTableDataset(element);
-                    case "AmazonRdsForSqlServerTable": return AmazonRdsForSqlServerTableDataset.DeserializeAmazonRdsForSqlServerTableDataset(element);
-                    case "AmazonRedshiftTable": return AmazonRedshiftTableDataset.DeserializeAmazonRedshiftTableDataset(element);
-                    case "AmazonS3Object": return AmazonS3Dataset.DeserializeAmazonS3Dataset(element);
-                    case "Avro": return AvroDataset.DeserializeAvroDataset(element);
-                    case "AzureBlob": return AzureBlobDataset.DeserializeAzureBlobDataset(element);
-                    case "AzureBlobFSFile": return AzureBlobFSDataset.DeserializeAzureBlobFSDataset(element);
-                    case "AzureDataExplorerTable": return AzureDataExplorerTableDataset.DeserializeAzureDataExplorerTableDataset(element);
-                    case "AzureDataLakeStoreFile": return AzureDataLakeStoreDataset.DeserializeAzureDataLakeStoreDataset(element);
-                    case "AzureDatabricksDeltaLakeDataset": return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element);
-                    case "AzureMariaDBTable": return AzureMariaDBTableDataset.DeserializeAzureMariaDBTableDataset(element);
-                    case "AzureMySqlTable": return AzureMySqlTableDataset.DeserializeAzureMySqlTableDataset(element);
-                    case "AzurePostgreSqlTable": return AzurePostgreSqlTableDataset.DeserializeAzurePostgreSqlTableDataset(element);
-                    case "AzureSearchIndex": return AzureSearchIndexDataset.DeserializeAzureSearchIndexDataset(element);
-                    case "AzureSqlDWTable": return AzureSqlDWTableDataset.DeserializeAzureSqlDWTableDataset(element);
-                    case "AzureSqlMITable": return AzureSqlMITableDataset.DeserializeAzureSqlMITableDataset(element);
-                    case "AzureSqlTable": return AzureSqlTableDataset.DeserializeAzureSqlTableDataset(element);
-                    case "AzureTable": return AzureTableDataset.DeserializeAzureTableDataset(element);
-                    case "Binary": return BinaryDataset.DeserializeBinaryDataset(element);
-                    case "CassandraTable": return CassandraTableDataset.DeserializeCassandraTableDataset(element);
-                    case "CommonDataServiceForAppsEntity": return CommonDataServiceForAppsEntityDataset.DeserializeCommonDataServiceForAppsEntityDataset(element);
-                    case "ConcurObject": return ConcurObjectDataset.DeserializeConcurObjectDataset(element);
-                    case "CosmosDbMongoDbApiCollection": return CosmosDBMongoDBApiCollectionDataset.DeserializeCosmosDBMongoDBApiCollectionDataset(element);
-                    case "CosmosDbSqlApiCollection": return CosmosDBSqlApiCollectionDataset.DeserializeCosmosDBSqlApiCollectionDataset(element);
-                    case "CouchbaseTable": return CouchbaseTableDataset.DeserializeCouchbaseTableDataset(element);
-                    case "CustomDataset": return CustomDataset.DeserializeCustomDataset(element);
-                    case "Db2Table": return Db2TableDataset.DeserializeDb2TableDataset(element);
-                    case "DelimitedText": return DelimitedTextDataset.DeserializeDelimitedTextDataset(element);
-                    case "DocumentDbCollection": return DocumentDBCollectionDataset.DeserializeDocumentDBCollectionDataset(element);
-                    case "DrillTable": return DrillTableDataset.DeserializeDrillTableDataset(element);
-                    case "DynamicsAXResource": return DynamicsAXResourceDataset.DeserializeDynamicsAXResourceDataset(element);
-                    case "DynamicsCrmEntity": return DynamicsCrmEntityDataset.DeserializeDynamicsCrmEntityDataset(element);
-                    case "DynamicsEntity": return DynamicsEntityDataset.DeserializeDynamicsEntityDataset(element);
-                    case "EloquaObject": return EloquaObjectDataset.DeserializeEloquaObjectDataset(element);
-                    case "Excel": return ExcelDataset.DeserializeExcelDataset(element);
-                    case "FileShare": return FileShareDataset.DeserializeFileShareDataset(element);
-                    case "GoogleAdWordsObject": return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element);
-                    case "GoogleBigQueryObject": return GoogleBigQueryObjectDataset.DeserializeGoogleBigQueryObjectDataset(element);
-                    case "GreenplumTable": return GreenplumTableDataset.DeserializeGreenplumTableDataset(element);
-                    case "HBaseObject": return HBaseObjectDataset.DeserializeHBaseObjectDataset(element);
-                    case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element);
-                    case "HttpFile": return DataFactoryHttpDataset.DeserializeDataFactoryHttpDataset(element);
-                    case "HubspotObject": return HubspotObjectDataset.DeserializeHubspotObjectDataset(element);
-                    case "ImpalaObject": return ImpalaObjectDataset.DeserializeImpalaObjectDataset(element);
-                    case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element);
-                    case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element);
-                    case "Json": return JsonDataset.DeserializeJsonDataset(element);
-                    case "LakeHouseTable": return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element);
-                    case "MagentoObject": return MagentoObjectDataset.DeserializeMagentoObjectDataset(element);
-                    case "MariaDBTable": return MariaDBTableDataset.DeserializeMariaDBTableDataset(element);
-                    case "MarketoObject": return MarketoObjectDataset.DeserializeMarketoObjectDataset(element);
-                    case "MicrosoftAccessTable": return MicrosoftAccessTableDataset.DeserializeMicrosoftAccessTableDataset(element);
-                    case "MongoDbAtlasCollection": return MongoDBAtlasCollectionDataset.DeserializeMongoDBAtlasCollectionDataset(element);
-                    case "MongoDbCollection": return MongoDBCollectionDataset.DeserializeMongoDBCollectionDataset(element);
-                    case "MongoDbV2Collection": return MongoDBV2CollectionDataset.DeserializeMongoDBV2CollectionDataset(element);
-                    case "MySqlTable": return MySqlTableDataset.DeserializeMySqlTableDataset(element);
-                    case "NetezzaTable": return NetezzaTableDataset.DeserializeNetezzaTableDataset(element);
-                    case "ODataResource": return ODataResourceDataset.DeserializeODataResourceDataset(element);
-                    case "OdbcTable": return OdbcTableDataset.DeserializeOdbcTableDataset(element);
-                    case "Office365Table": return Office365Dataset.DeserializeOffice365Dataset(element);
-                    case "OracleServiceCloudObject": return OracleServiceCloudObjectDataset.DeserializeOracleServiceCloudObjectDataset(element);
-                    case "OracleTable": return OracleTableDataset.DeserializeOracleTableDataset(element);
-                    case "Orc": return OrcDataset.DeserializeOrcDataset(element);
-                    case "Parquet": return ParquetDataset.DeserializeParquetDataset(element);
-                    case "PaypalObject": return PaypalObjectDataset.DeserializePaypalObjectDataset(element);
-                    case "PhoenixObject": return PhoenixObjectDataset.DeserializePhoenixObjectDataset(element);
-                    case "PostgreSqlTable": return PostgreSqlTableDataset.DeserializePostgreSqlTableDataset(element);
-                    case "PrestoObject": return PrestoObjectDataset.DeserializePrestoObjectDataset(element);
-                    case "QuickBooksObject": return QuickBooksObjectDataset.DeserializeQuickBooksObjectDataset(element);
-                    case "RelationalTable": return RelationalTableDataset.DeserializeRelationalTableDataset(element);
-                    case "ResponsysObject": return ResponsysObjectDataset.DeserializeResponsysObjectDataset(element);
-                    case "RestResource": return RestResourceDataset.DeserializeRestResourceDataset(element);
-                    case "SalesforceMarketingCloudObject": return SalesforceMarketingCloudObjectDataset.DeserializeSalesforceMarketingCloudObjectDataset(element);
-                    case "SalesforceObject": return SalesforceObjectDataset.DeserializeSalesforceObjectDataset(element);
-                    case "SalesforceServiceCloudObject": return SalesforceServiceCloudObjectDataset.DeserializeSalesforceServiceCloudObjectDataset(element);
-                    case "SalesforceServiceCloudV2Object": return SalesforceServiceCloudV2ObjectDataset.DeserializeSalesforceServiceCloudV2ObjectDataset(element);
-                    case "SalesforceV2Object": return SalesforceV2ObjectDataset.DeserializeSalesforceV2ObjectDataset(element);
-                    case "SapBwCube": return SapBWCubeDataset.DeserializeSapBWCubeDataset(element);
-                    case "SapCloudForCustomerResource": return SapCloudForCustomerResourceDataset.DeserializeSapCloudForCustomerResourceDataset(element);
-                    case "SapEccResource": return SapEccResourceDataset.DeserializeSapEccResourceDataset(element);
-                    case "SapHanaTable": return SapHanaTableDataset.DeserializeSapHanaTableDataset(element);
-                    case "SapOdpResource": return SapOdpResourceDataset.DeserializeSapOdpResourceDataset(element);
-                    case "SapOpenHubTable": return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element);
-                    case "SapTableResource": return SapTableResourceDataset.DeserializeSapTableResourceDataset(element);
-                    case "ServiceNowObject": return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element);
-                    case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element);
-                    case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element);
-                    case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element);
-                    case "SnowflakeV2Table": return SnowflakeV2Dataset.DeserializeSnowflakeV2Dataset(element);
-                    case "SparkObject": return SparkObjectDataset.DeserializeSparkObjectDataset(element);
-                    case "SqlServerTable": return SqlServerTableDataset.DeserializeSqlServerTableDataset(element);
-                    case "SquareObject": return SquareObjectDataset.DeserializeSquareObjectDataset(element);
-                    case "SybaseTable": return SybaseTableDataset.DeserializeSybaseTableDataset(element);
-                    case "TeradataTable": return TeradataTableDataset.DeserializeTeradataTableDataset(element);
-                    case "VerticaTable": return VerticaTableDataset.DeserializeVerticaTableDataset(element);
-                    case "WarehouseTable": return WarehouseTableDataset.DeserializeWarehouseTableDataset(element);
-                    case "WebTable": return WebTableDataset.DeserializeWebTableDataset(element);
-                    case "XeroObject": return XeroObjectDataset.DeserializeXeroObjectDataset(element);
-                    case "Xml": return XmlDataset.DeserializeXmlDataset(element);
-                    case "ZohoObject": return ZohoObjectDataset.DeserializeZohoObjectDataset(element);
+                    case "AmazonMWSObject": return AmazonMwsObjectDataset.DeserializeAmazonMwsObjectDataset(element, options);
+                    case "AmazonRdsForOracleTable": return AmazonRdsForOracleTableDataset.DeserializeAmazonRdsForOracleTableDataset(element, options);
+                    case "AmazonRdsForSqlServerTable": return AmazonRdsForSqlServerTableDataset.DeserializeAmazonRdsForSqlServerTableDataset(element, options);
+                    case "AmazonRedshiftTable": return AmazonRedshiftTableDataset.DeserializeAmazonRedshiftTableDataset(element, options);
+                    case "AmazonS3Object": return AmazonS3Dataset.DeserializeAmazonS3Dataset(element, options);
+                    case "Avro": return AvroDataset.DeserializeAvroDataset(element, options);
+                    case "AzureBlob": return AzureBlobDataset.DeserializeAzureBlobDataset(element, options);
+                    case "AzureBlobFSFile": return AzureBlobFSDataset.DeserializeAzureBlobFSDataset(element, options);
+                    case "AzureDataExplorerTable": return AzureDataExplorerTableDataset.DeserializeAzureDataExplorerTableDataset(element, options);
+                    case "AzureDataLakeStoreFile": return AzureDataLakeStoreDataset.DeserializeAzureDataLakeStoreDataset(element, options);
+                    case "AzureDatabricksDeltaLakeDataset": return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element, options);
+                    case "AzureMariaDBTable": return AzureMariaDBTableDataset.DeserializeAzureMariaDBTableDataset(element, options);
+                    case "AzureMySqlTable": return AzureMySqlTableDataset.DeserializeAzureMySqlTableDataset(element, options);
+                    case "AzurePostgreSqlTable": return AzurePostgreSqlTableDataset.DeserializeAzurePostgreSqlTableDataset(element, options);
+                    case "AzureSearchIndex": return AzureSearchIndexDataset.DeserializeAzureSearchIndexDataset(element, options);
+                    case "AzureSqlDWTable": return AzureSqlDWTableDataset.DeserializeAzureSqlDWTableDataset(element, options);
+                    case "AzureSqlMITable": return AzureSqlMITableDataset.DeserializeAzureSqlMITableDataset(element, options);
+                    case "AzureSqlTable": return AzureSqlTableDataset.DeserializeAzureSqlTableDataset(element, options);
+                    case "AzureTable": return AzureTableDataset.DeserializeAzureTableDataset(element, options);
+                    case "Binary": return BinaryDataset.DeserializeBinaryDataset(element, options);
+                    case "CassandraTable": return CassandraTableDataset.DeserializeCassandraTableDataset(element, options);
+                    case "CommonDataServiceForAppsEntity": return CommonDataServiceForAppsEntityDataset.DeserializeCommonDataServiceForAppsEntityDataset(element, options);
+                    case "ConcurObject": return ConcurObjectDataset.DeserializeConcurObjectDataset(element, options);
+                    case "CosmosDbMongoDbApiCollection": return CosmosDBMongoDBApiCollectionDataset.DeserializeCosmosDBMongoDBApiCollectionDataset(element, options);
+                    case "CosmosDbSqlApiCollection": return CosmosDBSqlApiCollectionDataset.DeserializeCosmosDBSqlApiCollectionDataset(element, options);
+                    case "CouchbaseTable": return CouchbaseTableDataset.DeserializeCouchbaseTableDataset(element, options);
+                    case "CustomDataset": return CustomDataset.DeserializeCustomDataset(element, options);
+                    case "Db2Table": return Db2TableDataset.DeserializeDb2TableDataset(element, options);
+                    case "DelimitedText": return DelimitedTextDataset.DeserializeDelimitedTextDataset(element, options);
+                    case "DocumentDbCollection": return DocumentDBCollectionDataset.DeserializeDocumentDBCollectionDataset(element, options);
+                    case "DrillTable": return DrillTableDataset.DeserializeDrillTableDataset(element, options);
+                    case "DynamicsAXResource": return DynamicsAXResourceDataset.DeserializeDynamicsAXResourceDataset(element, options);
+                    case "DynamicsCrmEntity": return DynamicsCrmEntityDataset.DeserializeDynamicsCrmEntityDataset(element, options);
+                    case "DynamicsEntity": return DynamicsEntityDataset.DeserializeDynamicsEntityDataset(element, options);
+                    case "EloquaObject": return EloquaObjectDataset.DeserializeEloquaObjectDataset(element, options);
+                    case "Excel": return ExcelDataset.DeserializeExcelDataset(element, options);
+                    case "FileShare": return FileShareDataset.DeserializeFileShareDataset(element, options);
+                    case "GoogleAdWordsObject": return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element, options);
+                    case "GoogleBigQueryObject": return GoogleBigQueryObjectDataset.DeserializeGoogleBigQueryObjectDataset(element, options);
+                    case "GreenplumTable": return GreenplumTableDataset.DeserializeGreenplumTableDataset(element, options);
+                    case "HBaseObject": return HBaseObjectDataset.DeserializeHBaseObjectDataset(element, options);
+                    case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element, options);
+                    case "HttpFile": return DataFactoryHttpDataset.DeserializeDataFactoryHttpDataset(element, options);
+                    case "HubspotObject": return HubspotObjectDataset.DeserializeHubspotObjectDataset(element, options);
+                    case "ImpalaObject": return ImpalaObjectDataset.DeserializeImpalaObjectDataset(element, options);
+                    case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element, options);
+                    case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element, options);
+                    case "Json": return JsonDataset.DeserializeJsonDataset(element, options);
+                    case "LakeHouseTable": return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element, options);
+                    case "MagentoObject": return MagentoObjectDataset.DeserializeMagentoObjectDataset(element, options);
+                    case "MariaDBTable": return MariaDBTableDataset.DeserializeMariaDBTableDataset(element, options);
+                    case "MarketoObject": return MarketoObjectDataset.DeserializeMarketoObjectDataset(element, options);
+                    case "MicrosoftAccessTable": return MicrosoftAccessTableDataset.DeserializeMicrosoftAccessTableDataset(element, options);
+                    case "MongoDbAtlasCollection": return MongoDBAtlasCollectionDataset.DeserializeMongoDBAtlasCollectionDataset(element, options);
+                    case "MongoDbCollection": return MongoDBCollectionDataset.DeserializeMongoDBCollectionDataset(element, options);
+                    case "MongoDbV2Collection": return MongoDBV2CollectionDataset.DeserializeMongoDBV2CollectionDataset(element, options);
+                    case "MySqlTable": return MySqlTableDataset.DeserializeMySqlTableDataset(element, options);
+                    case "NetezzaTable": return NetezzaTableDataset.DeserializeNetezzaTableDataset(element, options);
+                    case "ODataResource": return ODataResourceDataset.DeserializeODataResourceDataset(element, options);
+                    case "OdbcTable": return OdbcTableDataset.DeserializeOdbcTableDataset(element, options);
+                    case "Office365Table": return Office365Dataset.DeserializeOffice365Dataset(element, options);
+                    case "OracleServiceCloudObject": return OracleServiceCloudObjectDataset.DeserializeOracleServiceCloudObjectDataset(element, options);
+                    case "OracleTable": return OracleTableDataset.DeserializeOracleTableDataset(element, options);
+                    case "Orc": return OrcDataset.DeserializeOrcDataset(element, options);
+                    case "Parquet": return ParquetDataset.DeserializeParquetDataset(element, options);
+                    case "PaypalObject": return PaypalObjectDataset.DeserializePaypalObjectDataset(element, options);
+                    case "PhoenixObject": return PhoenixObjectDataset.DeserializePhoenixObjectDataset(element, options);
+                    case "PostgreSqlTable": return PostgreSqlTableDataset.DeserializePostgreSqlTableDataset(element, options);
+                    case "PrestoObject": return PrestoObjectDataset.DeserializePrestoObjectDataset(element, options);
+                    case "QuickBooksObject": return QuickBooksObjectDataset.DeserializeQuickBooksObjectDataset(element, options);
+                    case "RelationalTable": return RelationalTableDataset.DeserializeRelationalTableDataset(element, options);
+                    case "ResponsysObject": return ResponsysObjectDataset.DeserializeResponsysObjectDataset(element, options);
+                    case "RestResource": return RestResourceDataset.DeserializeRestResourceDataset(element, options);
+                    case "SalesforceMarketingCloudObject": return SalesforceMarketingCloudObjectDataset.DeserializeSalesforceMarketingCloudObjectDataset(element, options);
+                    case "SalesforceObject": return SalesforceObjectDataset.DeserializeSalesforceObjectDataset(element, options);
+                    case "SalesforceServiceCloudObject": return SalesforceServiceCloudObjectDataset.DeserializeSalesforceServiceCloudObjectDataset(element, options);
+                    case "SalesforceServiceCloudV2Object": return SalesforceServiceCloudV2ObjectDataset.DeserializeSalesforceServiceCloudV2ObjectDataset(element, options);
+                    case "SalesforceV2Object": return SalesforceV2ObjectDataset.DeserializeSalesforceV2ObjectDataset(element, options);
+                    case "SapBwCube": return SapBWCubeDataset.DeserializeSapBWCubeDataset(element, options);
+                    case "SapCloudForCustomerResource": return SapCloudForCustomerResourceDataset.DeserializeSapCloudForCustomerResourceDataset(element, options);
+                    case "SapEccResource": return SapEccResourceDataset.DeserializeSapEccResourceDataset(element, options);
+                    case "SapHanaTable": return SapHanaTableDataset.DeserializeSapHanaTableDataset(element, options);
+                    case "SapOdpResource": return SapOdpResourceDataset.DeserializeSapOdpResourceDataset(element, options);
+                    case "SapOpenHubTable": return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element, options);
+                    case "SapTableResource": return SapTableResourceDataset.DeserializeSapTableResourceDataset(element, options);
+                    case "ServiceNowObject": return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element, options);
+                    case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element, options);
+                    case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element, options);
+                    case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element, options);
+                    case "SnowflakeV2Table": return SnowflakeV2Dataset.DeserializeSnowflakeV2Dataset(element, options);
+                    case "SparkObject": return SparkObjectDataset.DeserializeSparkObjectDataset(element, options);
+                    case "SqlServerTable": return SqlServerTableDataset.DeserializeSqlServerTableDataset(element, options);
+                    case "SquareObject": return SquareObjectDataset.DeserializeSquareObjectDataset(element, options);
+                    case "SybaseTable": return SybaseTableDataset.DeserializeSybaseTableDataset(element, options);
+                    case "TeradataTable": return TeradataTableDataset.DeserializeTeradataTableDataset(element, options);
+                    case "VerticaTable": return VerticaTableDataset.DeserializeVerticaTableDataset(element, options);
+                    case "WarehouseTable": return WarehouseTableDataset.DeserializeWarehouseTableDataset(element, options);
+                    case "WebTable": return WebTableDataset.DeserializeWebTableDataset(element, options);
+                    case "XeroObject": return XeroObjectDataset.DeserializeXeroObjectDataset(element, options);
+                    case "Xml": return XmlDataset.DeserializeXmlDataset(element, options);
+                    case "ZohoObject": return ZohoObjectDataset.DeserializeZohoObjectDataset(element, options);
                 }
             }
-            return UnknownDataset.DeserializeUnknownDataset(element);
+            return UnknownDataset.DeserializeUnknownDataset(element, options);
         }
 
         BinaryData IPersistableModel<DataFactoryDatasetProperties>.Write(ModelReaderWriterOptions options)

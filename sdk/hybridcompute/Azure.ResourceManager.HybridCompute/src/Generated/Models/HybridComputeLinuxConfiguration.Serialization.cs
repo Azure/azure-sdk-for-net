@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("patchSettings"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssessmentMode))
+            if (AssessmentMode.HasValue)
             {
                 writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
-            if (Optional.IsDefined(PatchMode))
+            if (PatchMode.HasValue)
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());

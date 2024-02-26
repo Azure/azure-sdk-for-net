@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aliases"/> is null. </exception>
         internal ListAliasesResult(IEnumerable<SearchAlias> aliases)
         {
-            Argument.AssertNotNull(aliases, nameof(aliases));
+            if (aliases == null)
+            {
+                throw new ArgumentNullException(nameof(aliases));
+            }
 
             Aliases = aliases.ToList();
         }

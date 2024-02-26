@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecurityServicesTypeListType))
+            if (SecurityServicesTypeListType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecurityServicesTypeListType);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<NameDescriptionObject> array = new List<NameDescriptionObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameDescriptionObject.DeserializeNameDescriptionObject(item));
+                        array.Add(NameDescriptionObject.DeserializeNameDescriptionObject(item, options));
                     }
                     entry = array;
                     continue;

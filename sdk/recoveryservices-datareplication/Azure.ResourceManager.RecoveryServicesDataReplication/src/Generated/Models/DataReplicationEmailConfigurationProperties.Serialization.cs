@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sendToOwners"u8);
             writer.WriteBooleanValue(SendToOwners);
-            if (Optional.IsCollectionDefined(CustomEmailAddresses))
+            if (!(CustomEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Locale))
+            if (Locale != null)
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             bool sendToOwners = default;
-            Optional<IList<string>> customEmailAddresses = default;
+            IList<string> customEmailAddresses = default;
             Optional<string> locale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationEmailConfigurationProperties(sendToOwners, Optional.ToList(customEmailAddresses), locale.Value, serializedAdditionalRawData);
+            return new DataReplicationEmailConfigurationProperties(sendToOwners, customEmailAddresses ?? new ChangeTrackingList<string>(), locale.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationEmailConfigurationProperties>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IntegrationAccountMapData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountMapData>> value = default;
+            IReadOnlyList<IntegrationAccountMapData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountMapData> array = new List<IntegrationAccountMapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountMapData.DeserializeIntegrationAccountMapData(item));
+                        array.Add(IntegrationAccountMapData.DeserializeIntegrationAccountMapData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountMapListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationAccountMapListResult(value ?? new ChangeTrackingList<IntegrationAccountMapData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountMapListResult>.Write(ModelReaderWriterOptions options)

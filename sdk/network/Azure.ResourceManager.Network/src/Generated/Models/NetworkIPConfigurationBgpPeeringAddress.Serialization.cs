@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPConfigurationId))
+            if (IPConfigurationId != null)
             {
                 writer.WritePropertyName("ipconfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultBgpIPAddresses))
+            if (options.Format != "W" && !(DefaultBgpIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("defaultBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomBgpIPAddresses))
+            if (!(CustomBgpIPAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelIPAddresses))
+            if (options.Format != "W" && !(TunnelIPAddresses is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tunnelIpAddresses"u8);
                 writer.WriteStartArray();
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> ipconfigurationId = default;
-            Optional<IReadOnlyList<string>> defaultBgpIPAddresses = default;
-            Optional<IList<string>> customBgpIPAddresses = default;
-            Optional<IReadOnlyList<string>> tunnelIPAddresses = default;
+            IReadOnlyList<string> defaultBgpIPAddresses = default;
+            IList<string> customBgpIPAddresses = default;
+            IReadOnlyList<string> tunnelIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIPAddresses), Optional.ToList(customBgpIPAddresses), Optional.ToList(tunnelIPAddresses), serializedAdditionalRawData);
+            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, defaultBgpIPAddresses ?? new ChangeTrackingList<string>(), customBgpIPAddresses ?? new ChangeTrackingList<string>(), tunnelIPAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>.Write(ModelReaderWriterOptions options)

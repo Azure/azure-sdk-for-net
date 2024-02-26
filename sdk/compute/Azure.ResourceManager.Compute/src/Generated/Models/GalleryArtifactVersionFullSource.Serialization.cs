@@ -26,12 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommunityGalleryImageId))
+            if (CommunityGalleryImageId != null)
             {
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (Optional.IsDefined(Id))
+            if (VirtualMachineId != null)
+            {
+                writer.WritePropertyName("virtualMachineId"u8);
+                writer.WriteStringValue(VirtualMachineId);
+            }
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<string> communityGalleryImageId = default;
+            Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<ResourceIdentifier> id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -83,6 +89,15 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("communityGalleryImageId"u8))
                 {
                     communityGalleryImageId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("virtualMachineId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -100,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryArtifactVersionFullSource(id.Value, serializedAdditionalRawData, communityGalleryImageId.Value);
+            return new GalleryArtifactVersionFullSource(id.Value, serializedAdditionalRawData, communityGalleryImageId.Value, virtualMachineId.Value);
         }
 
         BinaryData IPersistableModel<GalleryArtifactVersionFullSource>.Write(ModelReaderWriterOptions options)

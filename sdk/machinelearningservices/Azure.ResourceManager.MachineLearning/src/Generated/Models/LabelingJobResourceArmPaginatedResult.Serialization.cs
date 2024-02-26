@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningLabelingJobData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningLabelingJobData>> value = default;
+            IReadOnlyList<MachineLearningLabelingJobData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningLabelingJobData> array = new List<MachineLearningLabelingJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningLabelingJobData.DeserializeMachineLearningLabelingJobData(item));
+                        array.Add(MachineLearningLabelingJobData.DeserializeMachineLearningLabelingJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelingJobResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new LabelingJobResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningLabelingJobData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelingJobResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

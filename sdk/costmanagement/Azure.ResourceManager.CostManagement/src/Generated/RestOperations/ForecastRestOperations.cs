@@ -70,8 +70,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public async Task<Response<ForecastResult>> UsageAsync(string scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (forecastDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(forecastDefinition));
+            }
 
             using var message = CreateUsageRequest(scope, forecastDefinition, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -99,8 +105,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public Response<ForecastResult> Usage(string scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (forecastDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(forecastDefinition));
+            }
 
             using var message = CreateUsageRequest(scope, forecastDefinition, filter);
             _pipeline.Send(message, cancellationToken);
@@ -157,8 +169,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ForecastResult>> ExternalCloudProviderUsageAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+            if (externalCloudProviderId == null)
+            {
+                throw new ArgumentNullException(nameof(externalCloudProviderId));
+            }
+            if (externalCloudProviderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
+            }
+            if (forecastDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(forecastDefinition));
+            }
 
             using var message = CreateExternalCloudProviderUsageRequest(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -186,8 +208,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ForecastResult> ExternalCloudProviderUsage(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+            if (externalCloudProviderId == null)
+            {
+                throw new ArgumentNullException(nameof(externalCloudProviderId));
+            }
+            if (externalCloudProviderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
+            }
+            if (forecastDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(forecastDefinition));
+            }
 
             using var message = CreateExternalCloudProviderUsageRequest(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter);
             _pipeline.Send(message, cancellationToken);

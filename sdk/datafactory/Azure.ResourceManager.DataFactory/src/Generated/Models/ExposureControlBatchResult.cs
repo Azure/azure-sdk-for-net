@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResults"/> is null. </exception>
         internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults)
         {
-            Argument.AssertNotNull(exposureControlResults, nameof(exposureControlResults));
+            if (exposureControlResults == null)
+            {
+                throw new ArgumentNullException(nameof(exposureControlResults));
+            }
 
             ExposureControlResults = exposureControlResults.ToList();
         }

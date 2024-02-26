@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppId))
+            if (AppId != null)
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(InstrumentationKey))
+            if (InstrumentationKey != null)
             {
                 writer.WritePropertyName("instrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);

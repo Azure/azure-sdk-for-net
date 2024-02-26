@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmSizeProperties))
+            if (VmSizeProperties != null)
             {
                 writer.WritePropertyName("vmSizeProperties"u8);
                 writer.WriteObjectValue(VmSizeProperties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmSizeProperties = VirtualMachineSizeProperties.DeserializeVirtualMachineSizeProperties(property.Value);
+                    vmSizeProperties = VirtualMachineSizeProperties.DeserializeVirtualMachineSizeProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

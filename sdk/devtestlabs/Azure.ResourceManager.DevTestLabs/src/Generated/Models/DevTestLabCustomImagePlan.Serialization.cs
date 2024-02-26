@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Offer))
+            if (Offer != null)
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);

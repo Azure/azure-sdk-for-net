@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
         public PaypalLinkedService(object host, object clientId)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(clientId, nameof(clientId));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
 
             Host = host;
             ClientId = clientId;

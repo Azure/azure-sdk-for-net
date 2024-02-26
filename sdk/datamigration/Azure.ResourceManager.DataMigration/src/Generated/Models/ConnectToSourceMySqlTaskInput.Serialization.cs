@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (Optional.IsDefined(TargetPlatform))
+            if (TargetPlatform.HasValue)
             {
                 writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
-            if (Optional.IsDefined(CheckPermissionsGroup))
+            if (CheckPermissionsGroup.HasValue)
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsOfflineMigration))
+            if (IsOfflineMigration.HasValue)
             {
                 writer.WritePropertyName("isOfflineMigration"u8);
                 writer.WriteBooleanValue(IsOfflineMigration.Value);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetPlatform"u8))

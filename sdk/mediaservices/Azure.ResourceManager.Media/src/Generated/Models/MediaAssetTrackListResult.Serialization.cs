@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MediaAssetTrackData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaAssetTrackData>> value = default;
+            IReadOnlyList<MediaAssetTrackData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetTrackData> array = new List<MediaAssetTrackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetTrackData.DeserializeMediaAssetTrackData(item));
+                        array.Add(MediaAssetTrackData.DeserializeMediaAssetTrackData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetTrackListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MediaAssetTrackListResult(value ?? new ChangeTrackingList<MediaAssetTrackData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetTrackListResult>.Write(ModelReaderWriterOptions options)

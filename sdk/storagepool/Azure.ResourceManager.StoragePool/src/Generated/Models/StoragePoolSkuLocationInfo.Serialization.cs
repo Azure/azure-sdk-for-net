@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ZoneDetails))
+            if (options.Format != "W" && !(ZoneDetails is ChangeTrackingList<StoragePoolSkuZoneDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<StoragePoolSkuZoneDetails>> zoneDetails = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<StoragePoolSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuZoneDetails> array = new List<StoragePoolSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuZoneDetails.DeserializeStoragePoolSkuZoneDetails(item));
+                        array.Add(StoragePoolSkuZoneDetails.DeserializeStoragePoolSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), serializedAdditionalRawData);
+            return new StoragePoolSkuLocationInfo(Optional.ToNullable(location), zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<StoragePoolSkuZoneDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuLocationInfo>.Write(ModelReaderWriterOptions options)

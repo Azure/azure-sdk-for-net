@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public PostgreSqlConnectionInfo(string serverName, int port)
         {
-            Argument.AssertNotNull(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
 
             ServerName = serverName;
             Port = port;

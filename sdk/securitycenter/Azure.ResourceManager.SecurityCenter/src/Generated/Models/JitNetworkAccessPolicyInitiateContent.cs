@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyInitiateContent(IEnumerable<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines)
         {
-            Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
+            if (virtualMachines == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachines));
+            }
 
             VirtualMachines = virtualMachines.ToList();
         }

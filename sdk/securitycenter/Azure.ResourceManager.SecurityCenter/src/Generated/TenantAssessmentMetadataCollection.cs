@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         public virtual async Task<Response<TenantAssessmentMetadataResource>> GetAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+            if (assessmentMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentMetadataName));
+            }
+            if (assessmentMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
+            }
 
             using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.Get");
             scope.Start();
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         public virtual Response<TenantAssessmentMetadataResource> Get(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+            if (assessmentMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentMetadataName));
+            }
+            if (assessmentMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
+            }
 
             using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.Get");
             scope.Start();
@@ -231,7 +245,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+            if (assessmentMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentMetadataName));
+            }
+            if (assessmentMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
+            }
 
             using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.Exists");
             scope.Start();
@@ -274,7 +295,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         public virtual Response<bool> Exists(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+            if (assessmentMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentMetadataName));
+            }
+            if (assessmentMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
+            }
 
             using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.Exists");
             scope.Start();
@@ -317,7 +345,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         public virtual async Task<NullableResponse<TenantAssessmentMetadataResource>> GetIfExistsAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+            if (assessmentMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentMetadataName));
+            }
+            if (assessmentMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
+            }
 
             using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.GetIfExists");
             scope.Start();
@@ -362,7 +397,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         public virtual NullableResponse<TenantAssessmentMetadataResource> GetIfExists(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+            if (assessmentMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentMetadataName));
+            }
+            if (assessmentMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
+            }
 
             using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.GetIfExists");
             scope.Start();

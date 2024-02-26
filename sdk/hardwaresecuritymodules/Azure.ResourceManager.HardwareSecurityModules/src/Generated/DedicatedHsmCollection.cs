@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DedicatedHsmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DedicatedHsmData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DedicatedHsmResource> CreateOrUpdate(WaitUntil waitUntil, string name, DedicatedHsmData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<DedicatedHsmResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DedicatedHsmResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<DedicatedHsmResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<DedicatedHsmResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.GetIfExists");
             scope.Start();

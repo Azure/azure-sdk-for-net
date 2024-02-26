@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LinkStatus))
+            if (options.Format != "W" && LinkStatus != null)
             {
                 writer.WritePropertyName("linkStatus"u8);
                 writer.WriteStringValue(LinkStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceId))
+            if (options.Format != "W" && NetworkInterfaceId != null)
             {
                 writer.WritePropertyName("networkInterfaceId"u8);
                 writer.WriteStringValue(NetworkInterfaceId);

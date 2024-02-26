@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomationConnectionTypeData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationConnectionTypeData>> value = default;
+            IReadOnlyList<AutomationConnectionTypeData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationConnectionTypeData> array = new List<AutomationConnectionTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(item));
+                        array.Add(AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionTypeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationConnectionTypeListResult(value ?? new ChangeTrackingList<AutomationConnectionTypeData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionTypeListResult>.Write(ModelReaderWriterOptions options)

@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticId, DiagnosticContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (diagnosticId == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticId));
+            }
+            if (diagnosticId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticId, DiagnosticContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (diagnosticId == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticId));
+            }
+            if (diagnosticId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementDiagnosticResource>> GetAsync(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+            if (diagnosticId == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticId));
+            }
+            if (diagnosticId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticId));
+            }
 
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
         public virtual Response<ApiManagementDiagnosticResource> Get(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+            if (diagnosticId == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticId));
+            }
+            if (diagnosticId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticId));
+            }
 
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticCollection.Get");
             scope.Start();
@@ -336,7 +370,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+            if (diagnosticId == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticId));
+            }
+            if (diagnosticId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticId));
+            }
 
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticCollection.Exists");
             scope.Start();
@@ -379,7 +420,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
         public virtual Response<bool> Exists(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+            if (diagnosticId == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticId));
+            }
+            if (diagnosticId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticId));
+            }
 
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticCollection.Exists");
             scope.Start();
@@ -422,7 +470,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementDiagnosticResource>> GetIfExistsAsync(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+            if (diagnosticId == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticId));
+            }
+            if (diagnosticId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticId));
+            }
 
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementDiagnosticResource> GetIfExists(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+            if (diagnosticId == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticId));
+            }
+            if (diagnosticId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticId));
+            }
 
             using var scope = _apiManagementDiagnosticDiagnosticClientDiagnostics.CreateScope("ApiManagementDiagnosticCollection.GetIfExists");
             scope.Start();

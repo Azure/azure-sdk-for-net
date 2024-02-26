@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Triggers))
+            if (Triggers != null)
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
-            if (Optional.IsDefined(Actions))
+            if (Actions != null)
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    triggers = AutoHealTriggers.DeserializeAutoHealTriggers(property.Value);
+                    triggers = AutoHealTriggers.DeserializeAutoHealTriggers(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    actions = AutoHealActions.DeserializeAutoHealActions(property.Value);
+                    actions = AutoHealActions.DeserializeAutoHealActions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -63,11 +63,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="ipv4Prefix"/>, <paramref name="terminalServerConfiguration"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
         public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration) : base(location)
         {
-            Argument.AssertNotNull(networkFabricSku, nameof(networkFabricSku));
-            Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
-            Argument.AssertNotNull(ipv4Prefix, nameof(ipv4Prefix));
-            Argument.AssertNotNull(terminalServerConfiguration, nameof(terminalServerConfiguration));
-            Argument.AssertNotNull(managementNetworkConfiguration, nameof(managementNetworkConfiguration));
+            if (networkFabricSku == null)
+            {
+                throw new ArgumentNullException(nameof(networkFabricSku));
+            }
+            if (networkFabricControllerId == null)
+            {
+                throw new ArgumentNullException(nameof(networkFabricControllerId));
+            }
+            if (ipv4Prefix == null)
+            {
+                throw new ArgumentNullException(nameof(ipv4Prefix));
+            }
+            if (terminalServerConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(terminalServerConfiguration));
+            }
+            if (managementNetworkConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(managementNetworkConfiguration));
+            }
 
             NetworkFabricSku = networkFabricSku;
             RouterIds = new ChangeTrackingList<string>();

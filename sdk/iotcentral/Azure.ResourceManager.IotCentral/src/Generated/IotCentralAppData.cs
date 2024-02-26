@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public IotCentralAppData(AzureLocation location, IotCentralAppSkuInfo sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
             PrivateEndpointConnections = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();

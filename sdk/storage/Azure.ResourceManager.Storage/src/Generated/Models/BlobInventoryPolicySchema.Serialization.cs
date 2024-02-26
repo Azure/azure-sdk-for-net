@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (options.Format != "W" && Optional.IsDefined(Destination))
+            if (options.Format != "W" && Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobInventoryPolicyRule> array = new List<BlobInventoryPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobInventoryPolicyRule.DeserializeBlobInventoryPolicyRule(item));
+                        array.Add(BlobInventoryPolicyRule.DeserializeBlobInventoryPolicyRule(item, options));
                     }
                     rules = array;
                     continue;

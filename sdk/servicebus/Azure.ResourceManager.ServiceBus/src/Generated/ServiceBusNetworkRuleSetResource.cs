@@ -196,7 +196,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceBusNetworkRuleSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ServiceBusNetworkRuleSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceBusNetworkRuleSetNamespacesClientDiagnostics.CreateScope("ServiceBusNetworkRuleSetResource.CreateOrUpdate");
             scope.Start();
@@ -242,7 +245,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceBusNetworkRuleSetResource> CreateOrUpdate(WaitUntil waitUntil, ServiceBusNetworkRuleSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceBusNetworkRuleSetNamespacesClientDiagnostics.CreateScope("ServiceBusNetworkRuleSetResource.CreateOrUpdate");
             scope.Start();

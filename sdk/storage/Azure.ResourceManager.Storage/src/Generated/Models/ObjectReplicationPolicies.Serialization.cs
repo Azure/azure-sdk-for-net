@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ObjectReplicationPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ObjectReplicationPolicyData>> value = default;
+            IReadOnlyList<ObjectReplicationPolicyData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ObjectReplicationPolicyData> array = new List<ObjectReplicationPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(item));
+                        array.Add(ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObjectReplicationPolicies(Optional.ToList(value), serializedAdditionalRawData);
+            return new ObjectReplicationPolicies(value ?? new ChangeTrackingList<ObjectReplicationPolicyData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ObjectReplicationPolicies>.Write(ModelReaderWriterOptions options)

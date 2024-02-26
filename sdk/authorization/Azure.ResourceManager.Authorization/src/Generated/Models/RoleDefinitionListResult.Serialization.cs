@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AuthorizationRoleDefinitionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AuthorizationRoleDefinitionData>> value = default;
+            IReadOnlyList<AuthorizationRoleDefinitionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<AuthorizationRoleDefinitionData> array = new List<AuthorizationRoleDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(item));
+                        array.Add(AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleDefinitionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<AuthorizationRoleDefinitionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleDefinitionListResult>.Write(ModelReaderWriterOptions options)

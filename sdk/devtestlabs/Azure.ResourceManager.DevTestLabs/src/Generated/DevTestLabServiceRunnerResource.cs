@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevTestLabServiceRunnerResource>> UpdateAsync(WaitUntil waitUntil, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevTestLabServiceRunnerResource> Update(WaitUntil waitUntil, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.Update");
             scope.Start();
@@ -374,8 +380,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DevTestLabServiceRunnerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.AddTag");
             scope.Start();
@@ -431,8 +443,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DevTestLabServiceRunnerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.AddTag");
             scope.Start();
@@ -487,7 +505,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DevTestLabServiceRunnerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.SetTags");
             scope.Start();
@@ -543,7 +564,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DevTestLabServiceRunnerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.SetTags");
             scope.Start();
@@ -599,7 +623,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DevTestLabServiceRunnerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.RemoveTag");
             scope.Start();
@@ -654,7 +681,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DevTestLabServiceRunnerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.RemoveTag");
             scope.Start();

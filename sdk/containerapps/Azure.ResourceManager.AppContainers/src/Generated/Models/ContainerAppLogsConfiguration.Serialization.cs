@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
-            if (Optional.IsDefined(LogAnalyticsConfiguration))
+            if (LogAnalyticsConfiguration != null)
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(LogAnalyticsConfiguration);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    logAnalyticsConfiguration = ContainerAppLogAnalyticsConfiguration.DeserializeContainerAppLogAnalyticsConfiguration(property.Value);
+                    logAnalyticsConfiguration = ContainerAppLogAnalyticsConfiguration.DeserializeContainerAppLogAnalyticsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

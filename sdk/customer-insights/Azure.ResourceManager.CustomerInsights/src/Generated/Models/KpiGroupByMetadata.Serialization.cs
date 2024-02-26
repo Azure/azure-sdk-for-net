@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(FieldName))
+            if (FieldName != null)
             {
                 writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
             }
-            if (Optional.IsDefined(FieldType))
+            if (FieldType != null)
             {
                 writer.WritePropertyName("fieldType"u8);
                 writer.WriteStringValue(FieldType);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
+            IReadOnlyDictionary<string, string> displayName = default;
             Optional<string> fieldName = default;
             Optional<string> fieldType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiGroupByMetadata(Optional.ToDictionary(displayName), fieldName.Value, fieldType.Value, serializedAdditionalRawData);
+            return new KpiGroupByMetadata(displayName ?? new ChangeTrackingDictionary<string, string>(), fieldName.Value, fieldType.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiGroupByMetadata>.Write(ModelReaderWriterOptions options)

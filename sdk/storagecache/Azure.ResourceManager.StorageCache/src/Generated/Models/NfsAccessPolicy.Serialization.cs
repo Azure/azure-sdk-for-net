@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<NfsAccessRule> array = new List<NfsAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NfsAccessRule.DeserializeNfsAccessRule(item));
+                        array.Add(NfsAccessRule.DeserializeNfsAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;

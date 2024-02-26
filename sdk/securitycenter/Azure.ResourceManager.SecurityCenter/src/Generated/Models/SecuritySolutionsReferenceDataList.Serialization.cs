@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SecuritySolutionsReferenceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecuritySolutionsReferenceData>> value = default;
+            IReadOnlyList<SecuritySolutionsReferenceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecuritySolutionsReferenceData> array = new List<SecuritySolutionsReferenceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData(item));
+                        array.Add(SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySolutionsReferenceDataList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SecuritySolutionsReferenceDataList(value ?? new ChangeTrackingList<SecuritySolutionsReferenceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySolutionsReferenceDataList>.Write(ModelReaderWriterOptions options)

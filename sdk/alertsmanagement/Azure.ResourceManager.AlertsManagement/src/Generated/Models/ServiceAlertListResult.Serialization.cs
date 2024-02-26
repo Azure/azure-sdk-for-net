@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceAlertData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ServiceAlertData>> value = default;
+            IReadOnlyList<ServiceAlertData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ServiceAlertData> array = new List<ServiceAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertData.DeserializeServiceAlertData(item));
+                        array.Add(ServiceAlertData.DeserializeServiceAlertData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ServiceAlertListResult(nextLink.Value, value ?? new ChangeTrackingList<ServiceAlertData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertListResult>.Write(ModelReaderWriterOptions options)

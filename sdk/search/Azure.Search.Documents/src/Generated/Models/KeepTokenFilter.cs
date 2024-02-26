@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keepWords"/> is null. </exception>
         public KeepTokenFilter(string name, IEnumerable<string> keepWords) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(keepWords, nameof(keepWords));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (keepWords == null)
+            {
+                throw new ArgumentNullException(nameof(keepWords));
+            }
 
             KeepWords = keepWords.ToList();
             ODataType = "#Microsoft.Azure.Search.KeepTokenFilter";

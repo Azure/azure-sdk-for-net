@@ -17,12 +17,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("metricDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("metricDescription"u8);
                 writer.WriteStringValue(Description);

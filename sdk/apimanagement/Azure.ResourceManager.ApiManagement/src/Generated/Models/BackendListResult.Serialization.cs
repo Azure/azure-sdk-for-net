@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ApiManagementBackendData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementBackendData>> value = default;
+            IReadOnlyList<ApiManagementBackendData> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementBackendData> array = new List<ApiManagementBackendData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementBackendData.DeserializeApiManagementBackendData(item));
+                        array.Add(ApiManagementBackendData.DeserializeApiManagementBackendData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new BackendListResult(value ?? new ChangeTrackingList<ApiManagementBackendData>(), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendListResult>.Write(ModelReaderWriterOptions options)

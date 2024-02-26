@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Relay.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RelayPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RelayPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<RelayPrivateEndpointConnectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayPrivateEndpointConnectionData> array = new List<RelayPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item));
+                        array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RelayPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

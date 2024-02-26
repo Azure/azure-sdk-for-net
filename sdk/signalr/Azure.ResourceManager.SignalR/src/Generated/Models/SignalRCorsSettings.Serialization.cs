@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedOrigins))
+            if (!(AllowedOrigins is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedOrigins = default;
+            IList<string> allowedOrigins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRCorsSettings(Optional.ToList(allowedOrigins), serializedAdditionalRawData);
+            return new SignalRCorsSettings(allowedOrigins ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRCorsSettings>.Write(ModelReaderWriterOptions options)

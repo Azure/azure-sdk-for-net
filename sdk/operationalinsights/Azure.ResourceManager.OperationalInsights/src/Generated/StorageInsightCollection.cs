@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageInsightResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageInsightName, StorageInsightData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (storageInsightName == null)
+            {
+                throw new ArgumentNullException(nameof(storageInsightName));
+            }
+            if (storageInsightName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageInsightName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageInsightResource> CreateOrUpdate(WaitUntil waitUntil, string storageInsightName, StorageInsightData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (storageInsightName == null)
+            {
+                throw new ArgumentNullException(nameof(storageInsightName));
+            }
+            if (storageInsightName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageInsightName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
         public virtual async Task<Response<StorageInsightResource>> GetAsync(string storageInsightName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
+            if (storageInsightName == null)
+            {
+                throw new ArgumentNullException(nameof(storageInsightName));
+            }
+            if (storageInsightName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageInsightName));
+            }
 
             using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
         public virtual Response<StorageInsightResource> Get(string storageInsightName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
+            if (storageInsightName == null)
+            {
+                throw new ArgumentNullException(nameof(storageInsightName));
+            }
+            if (storageInsightName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageInsightName));
+            }
 
             using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageInsightName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
+            if (storageInsightName == null)
+            {
+                throw new ArgumentNullException(nameof(storageInsightName));
+            }
+            if (storageInsightName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageInsightName));
+            }
 
             using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageInsightName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
+            if (storageInsightName == null)
+            {
+                throw new ArgumentNullException(nameof(storageInsightName));
+            }
+            if (storageInsightName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageInsightName));
+            }
 
             using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageInsightResource>> GetIfExistsAsync(string storageInsightName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
+            if (storageInsightName == null)
+            {
+                throw new ArgumentNullException(nameof(storageInsightName));
+            }
+            if (storageInsightName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageInsightName));
+            }
 
             using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
         public virtual NullableResponse<StorageInsightResource> GetIfExists(string storageInsightName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
+            if (storageInsightName == null)
+            {
+                throw new ArgumentNullException(nameof(storageInsightName));
+            }
+            if (storageInsightName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageInsightName));
+            }
 
             using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.GetIfExists");
             scope.Start();

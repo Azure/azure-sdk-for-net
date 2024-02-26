@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobVersion))
+            if (JobVersion != null)
             {
                 writer.WritePropertyName("jobVersion"u8);
                 writer.WriteStringValue(JobVersion);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AzureLocations))
+            if (!(AzureLocations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureLocations"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(City))
+            if (City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<AzureLocation>> azureLocations = default;
+            IList<AzureLocation> azureLocations = default;
             Optional<string> country = default;
             Optional<string> state = default;
             Optional<string> city = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListContent(Optional.ToList(azureLocations), country.Value, state.Value, city.Value, serializedAdditionalRawData);
+            return new AvailableProvidersListContent(azureLocations ?? new ChangeTrackingList<AzureLocation>(), country.Value, state.Value, city.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListContent>.Write(ModelReaderWriterOptions options)

@@ -676,7 +676,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
@@ -710,7 +717,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
@@ -1042,7 +1056,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+            if (longTermRetentionServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
@@ -1076,7 +1097,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+            if (longTermRetentionServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
@@ -1109,7 +1137,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SqlNameAvailabilityResponse>> CheckSqlServerNameAvailabilityAsync(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = SqlServerServersClientDiagnostics.CreateScope("MockableSqlSubscriptionResource.CheckSqlServerNameAvailability");
             scope.Start();
@@ -1151,7 +1182,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SqlNameAvailabilityResponse> CheckSqlServerNameAvailability(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = SqlServerServersClientDiagnostics.CreateScope("MockableSqlSubscriptionResource.CheckSqlServerNameAvailability");
             scope.Start();

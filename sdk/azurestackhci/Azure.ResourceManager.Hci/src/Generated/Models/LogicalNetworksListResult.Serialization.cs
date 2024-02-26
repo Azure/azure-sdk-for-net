@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<LogicalNetworkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicalNetworkData>> value = default;
+            IReadOnlyList<LogicalNetworkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<LogicalNetworkData> array = new List<LogicalNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicalNetworkData.DeserializeLogicalNetworkData(item));
+                        array.Add(LogicalNetworkData.DeserializeLogicalNetworkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicalNetworksListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LogicalNetworksListResult(value ?? new ChangeTrackingList<LogicalNetworkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicalNetworksListResult>.Write(ModelReaderWriterOptions options)

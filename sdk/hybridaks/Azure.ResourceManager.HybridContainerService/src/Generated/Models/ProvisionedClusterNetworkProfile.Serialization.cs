@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoadBalancerProfile))
+            if (LoadBalancerProfile != null)
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile);
             }
-            if (Optional.IsDefined(NetworkPolicy))
+            if (NetworkPolicy.HasValue)
             {
                 writer.WritePropertyName("networkPolicy"u8);
                 writer.WriteStringValue(NetworkPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(PodCidr))
+            if (PodCidr != null)
             {
                 writer.WritePropertyName("podCidr"u8);
                 writer.WriteStringValue(PodCidr);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value);
+                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkPolicy"u8))

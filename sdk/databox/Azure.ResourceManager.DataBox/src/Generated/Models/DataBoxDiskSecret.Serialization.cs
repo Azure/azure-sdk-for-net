@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DiskSerialNumber))
+            if (options.Format != "W" && DiskSerialNumber != null)
             {
                 writer.WritePropertyName("diskSerialNumber"u8);
                 writer.WriteStringValue(DiskSerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(BitLockerKey))
+            if (options.Format != "W" && BitLockerKey != null)
             {
                 writer.WritePropertyName("bitLockerKey"u8);
                 writer.WriteStringValue(BitLockerKey);

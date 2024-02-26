@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -20,9 +19,18 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/> or <paramref name="segment"/> is null. </exception>
         internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, BlobFlatListSegment segment)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(segment, nameof(segment));
+            if (serviceEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpoint));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (segment == null)
+            {
+                throw new ArgumentNullException(nameof(segment));
+            }
 
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;

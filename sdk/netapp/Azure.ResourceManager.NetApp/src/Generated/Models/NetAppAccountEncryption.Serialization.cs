@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeySource))
+            if (KeySource.HasValue)
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = NetAppKeyVaultProperties.DeserializeNetAppKeyVaultProperties(property.Value);
+                    keyVaultProperties = NetAppKeyVaultProperties.DeserializeNetAppKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value);
+                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

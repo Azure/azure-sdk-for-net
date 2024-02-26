@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(RetentionInDays))
+            if (RetentionInDays.HasValue)
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
+            if (PrincipalId.HasValue)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EmailAddress))
+            if (options.Format != "W" && EmailAddress != null)
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -55,11 +54,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="address1"/>, <paramref name="city"/>, <paramref name="country"/>, <paramref name="postalCode"/> or <paramref name="state"/> is null. </exception>
         public RegistrationAddressInfo(string address1, string city, string country, string postalCode, string state)
         {
-            Argument.AssertNotNull(address1, nameof(address1));
-            Argument.AssertNotNull(city, nameof(city));
-            Argument.AssertNotNull(country, nameof(country));
-            Argument.AssertNotNull(postalCode, nameof(postalCode));
-            Argument.AssertNotNull(state, nameof(state));
+            if (address1 == null)
+            {
+                throw new ArgumentNullException(nameof(address1));
+            }
+            if (city == null)
+            {
+                throw new ArgumentNullException(nameof(city));
+            }
+            if (country == null)
+            {
+                throw new ArgumentNullException(nameof(country));
+            }
+            if (postalCode == null)
+            {
+                throw new ArgumentNullException(nameof(postalCode));
+            }
+            if (state == null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
 
             Address1 = address1;
             City = city;

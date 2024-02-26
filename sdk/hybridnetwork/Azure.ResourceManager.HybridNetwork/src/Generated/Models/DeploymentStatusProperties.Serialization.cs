@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Resources))
+            if (Resources != null)
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
-            if (Optional.IsDefined(NextExpectedUpdateOn))
+            if (NextExpectedUpdateOn.HasValue)
             {
                 writer.WritePropertyName("nextExpectedUpdateAt"u8);
                 writer.WriteStringValue(NextExpectedUpdateOn.Value, "O");
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value);
+                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nextExpectedUpdateAt"u8))

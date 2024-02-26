@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SapProviderInstanceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapProviderInstanceData>> value = default;
+            IReadOnlyList<SapProviderInstanceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapProviderInstanceData> array = new List<SapProviderInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapProviderInstanceData.DeserializeSapProviderInstanceData(item));
+                        array.Add(SapProviderInstanceData.DeserializeSapProviderInstanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderInstanceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProviderInstanceListResult(value ?? new ChangeTrackingList<SapProviderInstanceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderInstanceListResult>.Write(ModelReaderWriterOptions options)

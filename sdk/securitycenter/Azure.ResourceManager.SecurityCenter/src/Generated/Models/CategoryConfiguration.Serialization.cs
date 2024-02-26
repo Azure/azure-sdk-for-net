@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumSeverityLevel))
+            if (MinimumSeverityLevel != null)
             {
                 writer.WritePropertyName("minimumSeverityLevel"u8);
                 writer.WriteStringValue(MinimumSeverityLevel);
             }
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());

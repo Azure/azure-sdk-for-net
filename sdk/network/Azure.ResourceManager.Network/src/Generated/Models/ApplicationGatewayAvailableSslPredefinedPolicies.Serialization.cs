@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewaySslPredefinedPolicy>> value = default;
+            IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewaySslPredefinedPolicy> array = new List<ApplicationGatewaySslPredefinedPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(item));
+                        array.Add(ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayAvailableSslPredefinedPolicies(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayAvailableSslPredefinedPolicies(value ?? new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayAvailableSslPredefinedPolicies>.Write(ModelReaderWriterOptions options)

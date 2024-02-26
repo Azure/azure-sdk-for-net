@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SqlVmGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlVmGroupData>> value = default;
+            IReadOnlyList<SqlVmGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<SqlVmGroupData> array = new List<SqlVmGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlVmGroupData.DeserializeSqlVmGroupData(item));
+                        array.Add(SqlVmGroupData.DeserializeSqlVmGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SqlVmGroupListResult(value ?? new ChangeTrackingList<SqlVmGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmGroupListResult>.Write(ModelReaderWriterOptions options)

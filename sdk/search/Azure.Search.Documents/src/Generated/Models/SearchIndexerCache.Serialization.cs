@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageConnectionString))
+            if (StorageConnectionString != null)
             {
                 writer.WritePropertyName("storageConnectionString"u8);
                 writer.WriteStringValue(StorageConnectionString);
             }
-            if (Optional.IsDefined(EnableReprocessing))
+            if (EnableReprocessing.HasValue)
             {
                 if (EnableReprocessing != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("enableReprocessing");
                 }
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {

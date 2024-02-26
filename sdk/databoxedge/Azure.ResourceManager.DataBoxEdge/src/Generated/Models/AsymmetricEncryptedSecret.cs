@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AsymmetricEncryptedSecret(string value, DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Value = value;
             EncryptionAlgorithm = encryptionAlgorithm;

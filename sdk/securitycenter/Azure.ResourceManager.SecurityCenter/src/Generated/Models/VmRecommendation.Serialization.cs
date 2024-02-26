@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationStatus))
+            if (ConfigurationStatus.HasValue)
             {
                 writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendationAction))
+            if (RecommendationAction.HasValue)
             {
                 writer.WritePropertyName("recommendationAction"u8);
                 writer.WriteStringValue(RecommendationAction.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(EnforcementSupport))
+            if (EnforcementSupport.HasValue)
             {
                 writer.WritePropertyName("enforcementSupport"u8);
                 writer.WriteStringValue(EnforcementSupport.Value.ToString());

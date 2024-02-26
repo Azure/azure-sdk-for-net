@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();

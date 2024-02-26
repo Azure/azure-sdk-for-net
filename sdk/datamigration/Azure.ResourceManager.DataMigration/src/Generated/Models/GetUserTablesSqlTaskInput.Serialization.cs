@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (EncryptedKeyForSecureFields != null)
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))

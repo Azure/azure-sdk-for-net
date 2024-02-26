@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            credential = RunAsCredentialAssociationProperty.DeserializeRunAsCredentialAssociationProperty(property0.Value);
+                            credential = RunAsCredentialAssociationProperty.DeserializeRunAsCredentialAssociationProperty(property0.Value, options);
                             continue;
                         }
                     }

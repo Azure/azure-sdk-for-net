@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStartObject();
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureDataExplorer": return DataExplorerConnectionProperties.DeserializeDataExplorerConnectionProperties(element);
+                    case "AzureDataExplorer": return DataExplorerConnectionProperties.DeserializeDataExplorerConnectionProperties(element, options);
                 }
             }
-            return UnknownTimeSeriesDatabaseConnectionProperties.DeserializeUnknownTimeSeriesDatabaseConnectionProperties(element);
+            return UnknownTimeSeriesDatabaseConnectionProperties.DeserializeUnknownTimeSeriesDatabaseConnectionProperties(element, options);
         }
 
         BinaryData IPersistableModel<TimeSeriesDatabaseConnectionProperties>.Write(ModelReaderWriterOptions options)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("gitHubAccessCode"u8);
             writer.WriteStringValue(GitHubAccessCode);
-            if (Optional.IsDefined(GitHubClientId))
+            if (GitHubClientId != null)
             {
                 writer.WritePropertyName("gitHubClientId"u8);
                 writer.WriteStringValue(GitHubClientId);
             }
-            if (Optional.IsDefined(GitHubClientSecret))
+            if (GitHubClientSecret != null)
             {
                 writer.WritePropertyName("gitHubClientSecret"u8);
                 writer.WriteObjectValue(GitHubClientSecret);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    gitHubClientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value);
+                    gitHubClientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gitHubAccessTokenBaseUrl"u8))

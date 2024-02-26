@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryGlobalParameterData> array = new List<DataFactoryGlobalParameterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryGlobalParameterData.DeserializeDataFactoryGlobalParameterData(item));
+                        array.Add(DataFactoryGlobalParameterData.DeserializeDataFactoryGlobalParameterData(item, options));
                     }
                     value = array;
                     continue;

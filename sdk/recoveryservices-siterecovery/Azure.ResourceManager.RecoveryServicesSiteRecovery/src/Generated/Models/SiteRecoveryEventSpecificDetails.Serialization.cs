@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "JobStatus": return SiteRecoveryJobStatusEventDetails.DeserializeSiteRecoveryJobStatusEventDetails(element);
+                    case "JobStatus": return SiteRecoveryJobStatusEventDetails.DeserializeSiteRecoveryJobStatusEventDetails(element, options);
                 }
             }
-            return UnknownEventSpecificDetails.DeserializeUnknownEventSpecificDetails(element);
+            return UnknownEventSpecificDetails.DeserializeUnknownEventSpecificDetails(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryEventSpecificDetails>.Write(ModelReaderWriterOptions options)

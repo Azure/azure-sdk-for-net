@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<DevCenterGalleryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevCenterGalleryData>> value = default;
+            IReadOnlyList<DevCenterGalleryData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterGalleryData> array = new List<DevCenterGalleryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterGalleryData.DeserializeDevCenterGalleryData(item));
+                        array.Add(DevCenterGalleryData.DeserializeDevCenterGalleryData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GalleryListResult(value ?? new ChangeTrackingList<DevCenterGalleryData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryListResult>.Write(ModelReaderWriterOptions options)

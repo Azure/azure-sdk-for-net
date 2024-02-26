@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && !(Nodes is ChangeTrackingList<NodeMonitoringData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<NodeMonitoringData>> nodes = default;
+            IReadOnlyList<NodeMonitoringData> nodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<NodeMonitoringData> array = new List<NodeMonitoringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeMonitoringData.DeserializeNodeMonitoringData(item));
+                        array.Add(NodeMonitoringData.DeserializeNodeMonitoringData(item, options));
                     }
                     nodes = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeMonitoringData(name.Value, Optional.ToList(nodes), serializedAdditionalRawData);
+            return new IntegrationRuntimeMonitoringData(name.Value, nodes ?? new ChangeTrackingList<NodeMonitoringData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeMonitoringData>.Write(ModelReaderWriterOptions options)

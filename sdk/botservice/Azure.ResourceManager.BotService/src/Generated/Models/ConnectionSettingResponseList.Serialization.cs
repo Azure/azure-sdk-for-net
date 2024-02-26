@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BotConnectionSettingData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BotConnectionSettingData>> value = default;
+            IReadOnlyList<BotConnectionSettingData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotConnectionSettingData> array = new List<BotConnectionSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotConnectionSettingData.DeserializeBotConnectionSettingData(item));
+                        array.Add(BotConnectionSettingData.DeserializeBotConnectionSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionSettingResponseList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ConnectionSettingResponseList(nextLink.Value, value ?? new ChangeTrackingList<BotConnectionSettingData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionSettingResponseList>.Write(ModelReaderWriterOptions options)

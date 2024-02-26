@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Capabilities))
+            if (Capabilities != null)
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (Optional.IsDefined(IsPreview))
+            if (IsPreview.HasValue)
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (Optional.IsCollectionDefined(PatchVersions))
+            if (!(PatchVersions is ChangeTrackingDictionary<string, KubernetesPatchVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patchVersions"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> version = default;
             Optional<KubernetesVersionCapabilities> capabilities = default;
             Optional<bool> isPreview = default;
-            Optional<IReadOnlyDictionary<string, KubernetesPatchVersion>> patchVersions = default;
+            IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value);
+                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isPreview"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     Dictionary<string, KubernetesPatchVersion> dictionary = new Dictionary<string, KubernetesPatchVersion>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value));
+                        dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value, options));
                     }
                     patchVersions = dictionary;
                     continue;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersion(version.Value, capabilities.Value, Optional.ToNullable(isPreview), Optional.ToDictionary(patchVersions), serializedAdditionalRawData);
+            return new KubernetesVersion(version.Value, capabilities.Value, Optional.ToNullable(isPreview), patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersion>.Write(ModelReaderWriterOptions options)

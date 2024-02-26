@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Plugin))
+            if (Plugin != null)
             {
                 writer.WritePropertyName("plugin"u8);
                 writer.WriteObjectValue(Plugin);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    plugin = IstioPluginCertificateAuthority.DeserializeIstioPluginCertificateAuthority(property.Value);
+                    plugin = IstioPluginCertificateAuthority.DeserializeIstioPluginCertificateAuthority(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

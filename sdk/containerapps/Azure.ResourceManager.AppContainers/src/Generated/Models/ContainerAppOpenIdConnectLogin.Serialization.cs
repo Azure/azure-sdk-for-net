@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NameClaimType))
+            if (NameClaimType != null)
             {
                 writer.WritePropertyName("nameClaimType"u8);
                 writer.WriteStringValue(NameClaimType);
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             Optional<string> nameClaimType = default;
-            Optional<IList<string>> scopes = default;
+            IList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppOpenIdConnectLogin(nameClaimType.Value, Optional.ToList(scopes), serializedAdditionalRawData);
+            return new ContainerAppOpenIdConnectLogin(nameClaimType.Value, scopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppOpenIdConnectLogin>.Write(ModelReaderWriterOptions options)

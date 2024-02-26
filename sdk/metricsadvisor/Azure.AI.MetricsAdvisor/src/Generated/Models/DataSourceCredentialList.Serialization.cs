@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DataSourceCredentialEntity>> value = default;
+            IReadOnlyList<DataSourceCredentialEntity> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataSourceCredentialList(nextLink.Value, Optional.ToList(value));
+            return new DataSourceCredentialList(nextLink.Value, value ?? new ChangeTrackingList<DataSourceCredentialEntity>());
         }
     }
 }

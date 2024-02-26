@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SmartGroupId))
+            if (options.Format != "W" && SmartGroupId.HasValue)
             {
                 writer.WritePropertyName("smartGroupId"u8);
                 writer.WriteStringValue(SmartGroupId.Value);
             }
-            if (Optional.IsCollectionDefined(Modifications))
+            if (!(Modifications is ChangeTrackingList<SmartGroupModificationItemInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 return null;
             }
             Optional<Guid> smartGroupId = default;
-            Optional<IList<SmartGroupModificationItemInfo>> modifications = default;
+            IList<SmartGroupModificationItemInfo> modifications = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<SmartGroupModificationItemInfo> array = new List<SmartGroupModificationItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SmartGroupModificationItemInfo.DeserializeSmartGroupModificationItemInfo(item));
+                        array.Add(SmartGroupModificationItemInfo.DeserializeSmartGroupModificationItemInfo(item, options));
                     }
                     modifications = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmartGroupModificationProperties(Optional.ToNullable(smartGroupId), Optional.ToList(modifications), nextLink.Value, serializedAdditionalRawData);
+            return new SmartGroupModificationProperties(Optional.ToNullable(smartGroupId), modifications ?? new ChangeTrackingList<SmartGroupModificationItemInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmartGroupModificationProperties>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureBackupRGNamePrefix))
+            if (AzureBackupRGNamePrefix != null)
             {
                 writer.WritePropertyName("azureBackupRGNamePrefix"u8);
                 writer.WriteStringValue(AzureBackupRGNamePrefix);
             }
-            if (Optional.IsDefined(AzureBackupRGNameSuffix))
+            if (AzureBackupRGNameSuffix != null)
             {
                 writer.WritePropertyName("azureBackupRGNameSuffix"u8);
                 writer.WriteStringValue(AzureBackupRGNameSuffix);

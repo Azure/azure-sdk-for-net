@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Result))
+            if (options.Format != "W" && Result.HasValue)
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
+            if (options.Format != "W" && DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
+            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Policy))
+            if (options.Format != "W" && Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             Optional<FieldRestrictionResult> result = default;
             Optional<string> defaultValue = default;
-            Optional<IReadOnlyList<string>> values = default;
+            IReadOnlyList<string> values = default;
             Optional<PolicyReference> policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policy = PolicyReference.DeserializePolicyReference(property.Value);
+                    policy = PolicyReference.DeserializePolicyReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FieldRestriction(Optional.ToNullable(result), defaultValue.Value, Optional.ToList(values), policy.Value, serializedAdditionalRawData);
+            return new FieldRestriction(Optional.ToNullable(result), defaultValue.Value, values ?? new ChangeTrackingList<string>(), policy.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FieldRestriction>.Write(ModelReaderWriterOptions options)

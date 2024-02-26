@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NsxtManager))
+            if (options.Format != "W" && NsxtManager != null)
             {
                 writer.WritePropertyName("nsxtManager"u8);
                 writer.WriteStringValue(NsxtManager);
             }
-            if (options.Format != "W" && Optional.IsDefined(Vcsa))
+            if (options.Format != "W" && Vcsa != null)
             {
                 writer.WritePropertyName("vcsa"u8);
                 writer.WriteStringValue(Vcsa);
             }
-            if (options.Format != "W" && Optional.IsDefined(HcxCloudManager))
+            if (options.Format != "W" && HcxCloudManager != null)
             {
                 writer.WritePropertyName("hcxCloudManager"u8);
                 writer.WriteStringValue(HcxCloudManager);

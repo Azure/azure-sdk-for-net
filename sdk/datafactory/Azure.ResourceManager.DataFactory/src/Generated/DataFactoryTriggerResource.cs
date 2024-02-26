@@ -289,7 +289,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryTriggerResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryTriggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Update");
             scope.Start();
@@ -336,7 +339,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryTriggerResource> Update(WaitUntil waitUntil, DataFactoryTriggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Update");
             scope.Start();
@@ -790,7 +796,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response> RerunTriggerRunAsync(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.RerunTriggerRun");
             scope.Start();
@@ -829,7 +842,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response RerunTriggerRun(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.RerunTriggerRun");
             scope.Start();
@@ -868,7 +888,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response> CancelTriggerRunAsync(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.CancelTriggerRun");
             scope.Start();
@@ -907,7 +934,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response CancelTriggerRun(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.CancelTriggerRun");
             scope.Start();

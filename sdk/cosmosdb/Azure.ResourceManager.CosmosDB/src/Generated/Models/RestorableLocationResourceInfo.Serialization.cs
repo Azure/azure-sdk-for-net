@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LocationName))
+            if (options.Format != "W" && LocationName.HasValue)
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegionalDatabaseAccountInstanceId))
+            if (options.Format != "W" && RegionalDatabaseAccountInstanceId != null)
             {
                 writer.WritePropertyName("regionalDatabaseAccountInstanceId"u8);
                 writer.WriteStringValue(RegionalDatabaseAccountInstanceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && DeletedOn.HasValue)
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");

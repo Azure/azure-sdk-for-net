@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
@@ -19,7 +18,10 @@ namespace Azure.MixedReality.RemoteRendering.Models
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal ErrorResponse(RemoteRenderingServiceError error)
         {
-            Argument.AssertNotNull(error, nameof(error));
+            if (error == null)
+            {
+                throw new ArgumentNullException(nameof(error));
+            }
 
             Error = error;
         }

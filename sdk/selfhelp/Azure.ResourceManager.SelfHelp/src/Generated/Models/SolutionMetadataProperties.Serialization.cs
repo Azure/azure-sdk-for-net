@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionId))
+            if (SolutionId != null)
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SolutionType))
+            if (options.Format != "W" && SolutionType.HasValue)
             {
                 writer.WritePropertyName("solutionType"u8);
                 writer.WriteStringValue(SolutionType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredInputs))
+            if (options.Format != "W" && !(RequiredInputs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredInputs"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> solutionId = default;
             Optional<SolutionType> solutionType = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<string>> requiredInputs = default;
+            IReadOnlyList<string> requiredInputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionMetadataProperties(solutionId.Value, Optional.ToNullable(solutionType), description.Value, Optional.ToList(requiredInputs), serializedAdditionalRawData);
+            return new SolutionMetadataProperties(solutionId.Value, Optional.ToNullable(solutionType), description.Value, requiredInputs ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionMetadataProperties>.Write(ModelReaderWriterOptions options)

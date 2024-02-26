@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformBuildResultResource>> GetAsync(string buildResultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildResultName, nameof(buildResultName));
+            if (buildResultName == null)
+            {
+                throw new ArgumentNullException(nameof(buildResultName));
+            }
+            if (buildResultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildResultName));
+            }
 
             using var scope = _appPlatformBuildResultBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResultCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
         public virtual Response<AppPlatformBuildResultResource> Get(string buildResultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildResultName, nameof(buildResultName));
+            if (buildResultName == null)
+            {
+                throw new ArgumentNullException(nameof(buildResultName));
+            }
+            if (buildResultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildResultName));
+            }
 
             using var scope = _appPlatformBuildResultBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResultCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string buildResultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildResultName, nameof(buildResultName));
+            if (buildResultName == null)
+            {
+                throw new ArgumentNullException(nameof(buildResultName));
+            }
+            if (buildResultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildResultName));
+            }
 
             using var scope = _appPlatformBuildResultBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResultCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
         public virtual Response<bool> Exists(string buildResultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildResultName, nameof(buildResultName));
+            if (buildResultName == null)
+            {
+                throw new ArgumentNullException(nameof(buildResultName));
+            }
+            if (buildResultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildResultName));
+            }
 
             using var scope = _appPlatformBuildResultBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResultCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformBuildResultResource>> GetIfExistsAsync(string buildResultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildResultName, nameof(buildResultName));
+            if (buildResultName == null)
+            {
+                throw new ArgumentNullException(nameof(buildResultName));
+            }
+            if (buildResultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildResultName));
+            }
 
             using var scope = _appPlatformBuildResultBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResultCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformBuildResultResource> GetIfExists(string buildResultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildResultName, nameof(buildResultName));
+            if (buildResultName == null)
+            {
+                throw new ArgumentNullException(nameof(buildResultName));
+            }
+            if (buildResultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildResultName));
+            }
 
             using var scope = _appPlatformBuildResultBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResultCollection.GetIfExists");
             scope.Start();

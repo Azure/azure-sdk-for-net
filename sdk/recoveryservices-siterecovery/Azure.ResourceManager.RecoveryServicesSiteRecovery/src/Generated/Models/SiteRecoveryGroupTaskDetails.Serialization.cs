@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (Optional.IsCollectionDefined(ChildTasks))
+            if (!(ChildTasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("childTasks"u8);
                 writer.WriteStartArray();
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "InlineWorkflowTaskDetails": return InlineWorkflowTaskDetails.DeserializeInlineWorkflowTaskDetails(element);
-                    case "RecoveryPlanGroupTaskDetails": return RecoveryPlanGroupTaskDetails.DeserializeRecoveryPlanGroupTaskDetails(element);
-                    case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element);
+                    case "InlineWorkflowTaskDetails": return InlineWorkflowTaskDetails.DeserializeInlineWorkflowTaskDetails(element, options);
+                    case "RecoveryPlanGroupTaskDetails": return RecoveryPlanGroupTaskDetails.DeserializeRecoveryPlanGroupTaskDetails(element, options);
+                    case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element, options);
                 }
             }
-            return UnknownGroupTaskDetails.DeserializeUnknownGroupTaskDetails(element);
+            return UnknownGroupTaskDetails.DeserializeUnknownGroupTaskDetails(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryGroupTaskDetails>.Write(ModelReaderWriterOptions options)

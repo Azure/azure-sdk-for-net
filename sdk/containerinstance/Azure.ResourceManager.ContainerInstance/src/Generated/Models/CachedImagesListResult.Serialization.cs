@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CachedImages> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CachedImages>> value = default;
+            IReadOnlyList<CachedImages> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<CachedImages> array = new List<CachedImages>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CachedImages.DeserializeCachedImages(item));
+                        array.Add(CachedImages.DeserializeCachedImages(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CachedImagesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CachedImagesListResult(value ?? new ChangeTrackingList<CachedImages>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CachedImagesListResult>.Write(ModelReaderWriterOptions options)

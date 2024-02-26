@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AlternativeAuthenticationNameSources))
+            if (!(AlternativeAuthenticationNameSources is ChangeTrackingList<AlternativeAuthenticationNameSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alternativeAuthenticationNameSources"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IList<AlternativeAuthenticationNameSource>> alternativeAuthenticationNameSources = default;
+            IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientAuthenticationSettings(Optional.ToList(alternativeAuthenticationNameSources), serializedAdditionalRawData);
+            return new ClientAuthenticationSettings(alternativeAuthenticationNameSources ?? new ChangeTrackingList<AlternativeAuthenticationNameSource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientAuthenticationSettings>.Write(ModelReaderWriterOptions options)

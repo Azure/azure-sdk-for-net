@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RoleName))
+            if (options.Format != "W" && RoleName != null)
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

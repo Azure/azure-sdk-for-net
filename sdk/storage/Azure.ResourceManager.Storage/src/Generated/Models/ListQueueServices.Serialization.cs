@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<QueueServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QueueServiceData>> value = default;
+            IReadOnlyList<QueueServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<QueueServiceData> array = new List<QueueServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueueServiceData.DeserializeQueueServiceData(item));
+                        array.Add(QueueServiceData.DeserializeQueueServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListQueueServices(Optional.ToList(value), serializedAdditionalRawData);
+            return new ListQueueServices(value ?? new ChangeTrackingList<QueueServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListQueueServices>.Write(ModelReaderWriterOptions options)

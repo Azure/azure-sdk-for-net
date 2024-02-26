@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SignalRSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SignalRSku>> value = default;
+            IReadOnlyList<SignalRSku> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRSku> array = new List<SignalRSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRSku.DeserializeSignalRSku(item));
+                        array.Add(SignalRSku.DeserializeSignalRSku(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRSkuListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRSkuListResult(value ?? new ChangeTrackingList<SignalRSku>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRSkuListResult>.Write(ModelReaderWriterOptions options)
