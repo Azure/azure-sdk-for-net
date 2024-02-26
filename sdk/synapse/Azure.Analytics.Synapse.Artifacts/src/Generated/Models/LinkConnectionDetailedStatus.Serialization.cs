@@ -118,7 +118,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionDetailedStatus(id.Value, name.Value, Optional.ToNullable(isApplyingChanges), Optional.ToNullable(isPartiallyFailed), startTime.Value, stopTime.Value, status.Value, continuousRunId.Value, error.Value, refreshStatus.Value, Optional.ToNullable(landingZoneCredentialExpireTime));
+            return new LinkConnectionDetailedStatus(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(isApplyingChanges),
+                Optional.ToNullable(isPartiallyFailed),
+                startTime.Value,
+                stopTime.Value,
+                status.Value,
+                continuousRunId.Value,
+                error.Value,
+                refreshStatus.Value,
+                Optional.ToNullable(landingZoneCredentialExpireTime));
         }
 
         internal partial class LinkConnectionDetailedStatusConverter : JsonConverter<LinkConnectionDetailedStatus>

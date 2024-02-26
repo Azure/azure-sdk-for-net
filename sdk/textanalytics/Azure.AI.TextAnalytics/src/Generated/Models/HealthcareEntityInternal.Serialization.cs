@@ -131,7 +131,16 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, links ?? new ChangeTrackingList<EntityDataSource>());
+            return new HealthcareEntityInternal(
+                text,
+                category,
+                subcategory.Value,
+                offset,
+                length,
+                confidenceScore,
+                assertion.Value,
+                name.Value,
+                links ?? new ChangeTrackingList<EntityDataSource>());
         }
     }
 }

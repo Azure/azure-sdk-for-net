@@ -228,7 +228,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, openHubDestinationName, excludeLastRequest.Value, baseRequestId.Value);
+            return new SapOpenHubTableDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                additionalProperties,
+                openHubDestinationName,
+                excludeLastRequest.Value,
+                baseRequestId.Value);
         }
 
         internal partial class SapOpenHubTableDatasetConverter : JsonConverter<SapOpenHubTableDataset>

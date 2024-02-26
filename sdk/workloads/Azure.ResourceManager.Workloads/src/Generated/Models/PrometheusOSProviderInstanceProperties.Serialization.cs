@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrometheusOSProviderInstanceProperties(providerType, serializedAdditionalRawData, prometheusUrl.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value, sapSid.Value);
+            return new PrometheusOSProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                prometheusUrl.Value,
+                Optional.ToNullable(sslPreference),
+                sslCertificateUri.Value,
+                sapSid.Value);
         }
 
         BinaryData IPersistableModel<PrometheusOSProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

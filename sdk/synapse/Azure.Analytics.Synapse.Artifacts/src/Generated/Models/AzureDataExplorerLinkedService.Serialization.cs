@@ -228,7 +228,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, endpoint, servicePrincipalId.Value, servicePrincipalKey.Value, database, tenant.Value, credential.Value);
+            return new AzureDataExplorerLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                endpoint,
+                servicePrincipalId.Value,
+                servicePrincipalKey.Value,
+                database,
+                tenant.Value,
+                credential.Value);
         }
 
         internal partial class AzureDataExplorerLinkedServiceConverter : JsonConverter<AzureDataExplorerLinkedService>

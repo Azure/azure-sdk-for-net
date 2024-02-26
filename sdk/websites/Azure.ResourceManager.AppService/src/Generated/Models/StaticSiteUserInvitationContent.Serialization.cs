@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteUserInvitationContent(id, name, type, systemData.Value, domain.Value, provider.Value, userDetails.Value, roles.Value, Optional.ToNullable(numHoursToExpiration), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteUserInvitationContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                domain.Value,
+                provider.Value,
+                userDetails.Value,
+                roles.Value,
+                Optional.ToNullable(numHoursToExpiration),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteUserInvitationContent>.Write(ModelReaderWriterOptions options)

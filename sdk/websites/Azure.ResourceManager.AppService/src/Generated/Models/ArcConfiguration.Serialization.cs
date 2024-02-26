@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcConfiguration(Optional.ToNullable(artifactsStorageType), artifactStorageClassName.Value, artifactStorageMountPath.Value, artifactStorageNodeName.Value, artifactStorageAccessMode.Value, frontEndServiceConfiguration.Value, kubeConfig.Value, serializedAdditionalRawData);
+            return new ArcConfiguration(
+                Optional.ToNullable(artifactsStorageType),
+                artifactStorageClassName.Value,
+                artifactStorageMountPath.Value,
+                artifactStorageNodeName.Value,
+                artifactStorageAccessMode.Value,
+                frontEndServiceConfiguration.Value,
+                kubeConfig.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcConfiguration>.Write(ModelReaderWriterOptions options)

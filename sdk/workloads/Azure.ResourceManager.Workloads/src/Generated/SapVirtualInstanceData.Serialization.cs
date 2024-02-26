@@ -302,7 +302,24 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapVirtualInstanceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity.Value, environment, sapProduct, configuration, managedResourceGroupConfiguration.Value, Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(state), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SapVirtualInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity.Value,
+                environment,
+                sapProduct,
+                configuration,
+                managedResourceGroupConfiguration.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(health),
+                Optional.ToNullable(state),
+                Optional.ToNullable(provisioningState),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapVirtualInstanceData>.Write(ModelReaderWriterOptions options)

@@ -242,7 +242,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3LinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, authenticationType.Value, accessKeyId.Value, secretAccessKey.Value, serviceUrl.Value, sessionToken.Value, encryptedCredential.Value);
+            return new AmazonS3LinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                authenticationType.Value,
+                accessKeyId.Value,
+                secretAccessKey.Value,
+                serviceUrl.Value,
+                sessionToken.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class AmazonS3LinkedServiceConverter : JsonConverter<AmazonS3LinkedService>

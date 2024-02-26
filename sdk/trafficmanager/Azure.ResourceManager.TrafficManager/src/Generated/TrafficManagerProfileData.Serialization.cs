@@ -320,7 +320,21 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerProfileData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), Optional.ToNullable(profileStatus), Optional.ToNullable(trafficRoutingMethod), dnsConfig.Value, monitorConfig.Value, endpoints ?? new ChangeTrackingList<TrafficManagerEndpointData>(), Optional.ToNullable(trafficViewEnrollmentStatus), allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>(), Optional.ToNullable(maxReturn));
+            return new TrafficManagerProfileData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                Optional.ToNullable(profileStatus),
+                Optional.ToNullable(trafficRoutingMethod),
+                dnsConfig.Value,
+                monitorConfig.Value,
+                endpoints ?? new ChangeTrackingList<TrafficManagerEndpointData>(),
+                Optional.ToNullable(trafficViewEnrollmentStatus),
+                allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>(),
+                Optional.ToNullable(maxReturn));
         }
 
         BinaryData IPersistableModel<TrafficManagerProfileData>.Write(ModelReaderWriterOptions options)

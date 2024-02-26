@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsmOperationDescription(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value, serializedAdditionalRawData);
+            return new CsmOperationDescription(
+                name.Value,
+                Optional.ToNullable(isDataAction),
+                display.Value,
+                origin.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CsmOperationDescription>.Write(ModelReaderWriterOptions options)

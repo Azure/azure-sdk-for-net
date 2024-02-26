@@ -199,7 +199,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SharePointOnlineListLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, siteUrl, tenantId, servicePrincipalId, servicePrincipalKey, encryptedCredential.Value);
+            return new SharePointOnlineListLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                siteUrl,
+                tenantId,
+                servicePrincipalId,
+                servicePrincipalKey,
+                encryptedCredential.Value);
         }
 
         internal partial class SharePointOnlineListLinkedServiceConverter : JsonConverter<SharePointOnlineListLinkedService>

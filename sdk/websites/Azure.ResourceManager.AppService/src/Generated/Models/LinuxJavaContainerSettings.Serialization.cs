@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxJavaContainerSettings(java11Runtime.Value, java8Runtime.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), serializedAdditionalRawData);
+            return new LinuxJavaContainerSettings(
+                java11Runtime.Value,
+                java8Runtime.Value,
+                Optional.ToNullable(isPreview),
+                Optional.ToNullable(isDeprecated),
+                Optional.ToNullable(isHidden),
+                Optional.ToNullable(endOfLifeDate),
+                Optional.ToNullable(isAutoUpdate),
+                Optional.ToNullable(isEarlyAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxJavaContainerSettings>.Write(ModelReaderWriterOptions options)

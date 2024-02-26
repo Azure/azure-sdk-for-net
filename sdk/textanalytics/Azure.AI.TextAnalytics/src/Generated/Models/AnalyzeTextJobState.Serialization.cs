@@ -101,7 +101,17 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AnalyzeTextJobState(displayName.Value, createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdatedDateTime, status, errors ?? new ChangeTrackingList<Error>(), nextLink.Value, tasks, statistics.Value);
+            return new AnalyzeTextJobState(
+                displayName.Value,
+                createdDateTime,
+                Optional.ToNullable(expirationDateTime),
+                jobId,
+                lastUpdatedDateTime,
+                status,
+                errors ?? new ChangeTrackingList<Error>(),
+                nextLink.Value,
+                tasks,
+                statistics.Value);
         }
     }
 }

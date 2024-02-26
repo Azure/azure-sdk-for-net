@@ -320,7 +320,23 @@ namespace Azure.ResourceManager.StoragePool
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, managedBy.Value, managedByExtended ?? new ChangeTrackingList<string>(), provisioningState, availabilityZones, status, disks ?? new ChangeTrackingList<WritableSubResource>(), subnetId, additionalCapabilities ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DiskPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                managedBy.Value,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                availabilityZones,
+                status,
+                disks ?? new ChangeTrackingList<WritableSubResource>(),
+                subnetId,
+                additionalCapabilities ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolData>.Write(ModelReaderWriterOptions options)

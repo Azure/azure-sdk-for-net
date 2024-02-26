@@ -198,7 +198,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, errorInfo ?? new ChangeTrackingList<SparkServiceError>(), tags ?? new ChangeTrackingDictionary<string, string>(), id, appId.Value, appInfo ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(state), log ?? new ChangeTrackingList<string>());
+            return new SparkBatchJob(
+                livyInfo.Value,
+                name.Value,
+                workspaceName.Value,
+                sparkPoolName.Value,
+                submitterName.Value,
+                submitterId.Value,
+                artifactId.Value,
+                Optional.ToNullable(jobType),
+                Optional.ToNullable(result),
+                schedulerInfo.Value,
+                pluginInfo.Value,
+                errorInfo ?? new ChangeTrackingList<SparkServiceError>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                id,
+                appId.Value,
+                appInfo ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(state),
+                log ?? new ChangeTrackingList<string>());
         }
 
         internal partial class SparkBatchJobConverter : JsonConverter<SparkBatchJob>

@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsServerFailoverClusterDomainProfile(domainFqdn.Value, ouPath.Value, clusterBootstrapAccount.Value, clusterOperatorAccount.Value, sqlServiceAccount.Value, fileShareWitnessPath.Value, storageAccountUrl.Value, storageAccountPrimaryKey.Value, Optional.ToNullable(clusterSubnetType), serializedAdditionalRawData);
+            return new WindowsServerFailoverClusterDomainProfile(
+                domainFqdn.Value,
+                ouPath.Value,
+                clusterBootstrapAccount.Value,
+                clusterOperatorAccount.Value,
+                sqlServiceAccount.Value,
+                fileShareWitnessPath.Value,
+                storageAccountUrl.Value,
+                storageAccountPrimaryKey.Value,
+                Optional.ToNullable(clusterSubnetType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Write(ModelReaderWriterOptions options)

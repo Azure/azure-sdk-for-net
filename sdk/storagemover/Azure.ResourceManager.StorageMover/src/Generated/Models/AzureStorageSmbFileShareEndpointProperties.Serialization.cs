@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageSmbFileShareEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, storageAccountResourceId, fileShareName);
+            return new AzureStorageSmbFileShareEndpointProperties(
+                endpointType,
+                description.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData,
+                storageAccountResourceId,
+                fileShareName);
         }
 
         BinaryData IPersistableModel<AzureStorageSmbFileShareEndpointProperties>.Write(ModelReaderWriterOptions options)

@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSsisParameter(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value, serializedAdditionalRawData);
+            return new SynapseSsisParameter(
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                dataType.Value,
+                Optional.ToNullable(required),
+                Optional.ToNullable(sensitive),
+                designDefaultValue.Value,
+                defaultValue.Value,
+                sensitiveDefaultValue.Value,
+                valueType.Value,
+                Optional.ToNullable(valueSet),
+                variable.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSsisParameter>.Write(ModelReaderWriterOptions options)

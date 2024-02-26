@@ -322,7 +322,23 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggeredWebJobData(id, name, type, systemData.Value, latestRun.Value, historyUrl.Value, schedulerLogsUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), settings ?? new ChangeTrackingDictionary<string, BinaryData>(), kind.Value, serializedAdditionalRawData);
+            return new TriggeredWebJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                latestRun.Value,
+                historyUrl.Value,
+                schedulerLogsUrl.Value,
+                runCommand.Value,
+                url.Value,
+                extraInfoUrl.Value,
+                Optional.ToNullable(webJobType),
+                error.Value,
+                Optional.ToNullable(usingSdk),
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggeredWebJobData>.Write(ModelReaderWriterOptions options)

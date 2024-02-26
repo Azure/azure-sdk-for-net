@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSupportTicket(Optional.ToNullable(severity), Optional.ToNullable(status), contactDetails.Value, Optional.ToNullable(advancedDiagnosticConsent), secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(), serializedAdditionalRawData);
+            return new UpdateSupportTicket(
+                Optional.ToNullable(severity),
+                Optional.ToNullable(status),
+                contactDetails.Value,
+                Optional.ToNullable(advancedDiagnosticConsent),
+                secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSupportTicket>.Write(ModelReaderWriterOptions options)

@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkRoute(id, name, type, systemData.Value, startAddress.Value, endAddress.Value, Optional.ToNullable(routeType), kind.Value, serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkRoute(
+                id,
+                name,
+                type,
+                systemData.Value,
+                startAddress.Value,
+                endAddress.Value,
+                Optional.ToNullable(routeType),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkRoute>.Write(ModelReaderWriterOptions options)

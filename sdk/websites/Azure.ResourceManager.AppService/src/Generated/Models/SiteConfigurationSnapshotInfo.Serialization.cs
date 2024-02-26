@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteConfigurationSnapshotInfo(id, name, type, systemData.Value, Optional.ToNullable(time), Optional.ToNullable(snapshotId), kind.Value, serializedAdditionalRawData);
+            return new SiteConfigurationSnapshotInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(time),
+                Optional.ToNullable(snapshotId),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteConfigurationSnapshotInfo>.Write(ModelReaderWriterOptions options)
