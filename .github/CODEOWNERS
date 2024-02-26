@@ -62,7 +62,7 @@
 /sdk/core/                                                         @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Azure.Core
-# AzureSdkOwners:                                                  @jsquire @annelo
+# AzureSdkOwners:                                                  @annelo-msft
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
@@ -90,7 +90,7 @@
 # ServiceLabel: %Application Insights
 # ServiceOwners:                                                   @azmonapplicationinsights
 
-# ServiceLabel: %ARM %Service Attention
+# ServiceLabel: %ARM
 # ServiceOwners:                                                   @armleads-azure
 
 # ServiceLabel: %ARM - Templates
@@ -200,7 +200,7 @@
 /sdk/contentsafety/                                                @bowgong @mengaims @JieZhou000
 
 # ServiceLabel: %Cognitive - Content Safety
-# ServiceOwners                     	                           @bowgong @mengaims @JieZhou000
+# ServiceOwners:                     	                           @bowgong @mengaims @JieZhou000
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
@@ -258,7 +258,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
 # ServiceLabel: %Cognitive - QnA Maker
-ServiceOwners:                                                     @bingisbestest @nerajput1607
+# ServiceOwners:                                                   @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga
@@ -681,7 +681,7 @@ ServiceOwners:                                                     @bingisbestes
 /sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners                                                    @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # PRLabel: %Monitor - LiveMetrics
 /sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
@@ -816,7 +816,7 @@ ServiceOwners:                                                     @bingisbestes
 # ServiceOwners:                                                   @darshanhs90 @AshishGargMicrosoft
 
 # ServiceLabel: %Resource Graph
-# Service Owners:                                                  @chiragg4u
+# ServiceOwners:                                                   @chiragg4u
 
 # ServiceLabel: %Resource Health
 # ServiceOwners:                                                   @stephbaron
