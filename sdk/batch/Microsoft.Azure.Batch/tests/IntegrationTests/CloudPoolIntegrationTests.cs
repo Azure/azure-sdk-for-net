@@ -1067,7 +1067,6 @@ namespace BatchClientIntegrationTests
                             imageDetails.ImageReference,
                             imageDetails.NodeAgentSkuId)
                          {
-                             WindowsConfiguration = new WindowsConfiguration(false),
                              NodePlacementConfiguration = new NodePlacementConfiguration(NodePlacementPolicyType.Zonal)
                          }
                          );
@@ -1087,7 +1086,7 @@ namespace BatchClientIntegrationTests
                             MaxBatchInstancePercent = 20,
                             MaxUnhealthyInstancePercent = 20,
                             MaxUnhealthyUpgradedInstancePercent = 20,
-                            PauseTimeBetweenBatches = "PT05",
+                            PauseTimeBetweenBatches = "PT0S",
                             PrioritizeUnhealthyInstances = false,
                             RollbackFailedInstancesOnPolicyBreach = false
                         }
