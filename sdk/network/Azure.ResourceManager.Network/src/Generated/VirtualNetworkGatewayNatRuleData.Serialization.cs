@@ -253,7 +253,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), internalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(), externalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(), ipConfigurationId.Value);
+            return new VirtualNetworkGatewayNatRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(type0),
+                Optional.ToNullable(mode),
+                internalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
+                externalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
+                ipConfigurationId.Value);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayNatRuleData>.Write(ModelReaderWriterOptions options)

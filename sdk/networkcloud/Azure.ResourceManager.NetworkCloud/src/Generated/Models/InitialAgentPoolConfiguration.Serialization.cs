@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, availabilityZones ?? new ChangeTrackingList<string>(), count, labels ?? new ChangeTrackingList<KubernetesLabel>(), mode, name, taints ?? new ChangeTrackingList<KubernetesLabel>(), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
+            return new InitialAgentPoolConfiguration(
+                administratorConfiguration.Value,
+                agentOptions.Value,
+                attachedNetworkConfiguration.Value,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                count,
+                labels ?? new ChangeTrackingList<KubernetesLabel>(),
+                mode,
+                name,
+                taints ?? new ChangeTrackingList<KubernetesLabel>(),
+                upgradeSettings.Value,
+                vmSkuName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitialAgentPoolConfiguration>.Write(ModelReaderWriterOptions options)

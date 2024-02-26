@@ -245,7 +245,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteMapData(id, name, type, systemData.Value, Optional.ToNullable(etag), associatedInboundConnections ?? new ChangeTrackingList<string>(), associatedOutboundConnections ?? new ChangeTrackingList<string>(), rules ?? new ChangeTrackingList<RouteMapRule>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new RouteMapData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                associatedInboundConnections ?? new ChangeTrackingList<string>(),
+                associatedOutboundConnections ?? new ChangeTrackingList<string>(),
+                rules ?? new ChangeTrackingList<RouteMapRule>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteMapData>.Write(ModelReaderWriterOptions options)

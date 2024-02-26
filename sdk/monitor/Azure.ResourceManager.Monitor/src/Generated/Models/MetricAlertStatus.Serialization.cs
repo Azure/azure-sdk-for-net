@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertStatus(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new MetricAlertStatus(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertStatus>.Write(ModelReaderWriterOptions options)

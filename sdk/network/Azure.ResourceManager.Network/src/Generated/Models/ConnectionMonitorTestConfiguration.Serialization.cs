@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestConfiguration(name, Optional.ToNullable(testFrequencySec), protocol, Optional.ToNullable(preferredIPVersion), httpConfiguration.Value, tcpConfiguration.Value, icmpConfiguration.Value, successThreshold.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorTestConfiguration(
+                name,
+                Optional.ToNullable(testFrequencySec),
+                protocol,
+                Optional.ToNullable(preferredIPVersion),
+                httpConfiguration.Value,
+                tcpConfiguration.Value,
+                icmpConfiguration.Value,
+                successThreshold.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestConfiguration>.Write(ModelReaderWriterOptions options)

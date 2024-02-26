@@ -132,7 +132,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptedSimUploadList(version, azureKeyIdentifier, vendorKeyFingerprint, encryptedTransportKey, signedTransportKey, sims, serializedAdditionalRawData);
+            return new EncryptedSimUploadList(
+                version,
+                azureKeyIdentifier,
+                vendorKeyFingerprint,
+                encryptedTransportKey,
+                signedTransportKey,
+                sims,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptedSimUploadList>.Write(ModelReaderWriterOptions options)

@@ -400,7 +400,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkServiceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(), ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(), networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(), Optional.ToNullable(provisioningState), privateEndpointConnections ?? new ChangeTrackingList<NetworkPrivateEndpointConnectionData>(), visibility.Value, autoApproval.Value, fqdns ?? new ChangeTrackingList<string>(), @alias.Value, Optional.ToNullable(enableProxyProtocol));
+            return new PrivateLinkServiceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                Optional.ToNullable(etag),
+                loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
+                ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                Optional.ToNullable(provisioningState),
+                privateEndpointConnections ?? new ChangeTrackingList<NetworkPrivateEndpointConnectionData>(),
+                visibility.Value,
+                autoApproval.Value,
+                fqdns ?? new ChangeTrackingList<string>(),
+                @alias.Value,
+                Optional.ToNullable(enableProxyProtocol));
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options)

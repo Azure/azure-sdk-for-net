@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Optional.ToNullable(azureRegion), serializedAdditionalRawData);
+            return new PeeringServiceLocation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                country.Value,
+                state.Value,
+                Optional.ToNullable(azureRegion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceLocation>.Write(ModelReaderWriterOptions options)

@@ -191,7 +191,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceNavigationLink(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(linkedResourceType), link.Value, Optional.ToNullable(provisioningState));
+            return new ResourceNavigationLink(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(linkedResourceType),
+                link.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ResourceNavigationLink>.Write(ModelReaderWriterOptions options)

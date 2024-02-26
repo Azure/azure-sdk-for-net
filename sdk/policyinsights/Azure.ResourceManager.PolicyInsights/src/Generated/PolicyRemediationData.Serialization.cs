@@ -318,7 +318,25 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value, serializedAdditionalRawData);
+            return new PolicyRemediationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                policyAssignmentId.Value,
+                policyDefinitionReferenceId.Value,
+                Optional.ToNullable(resourceDiscoveryMode),
+                provisioningState.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(lastUpdatedOn),
+                filters.Value,
+                deploymentStatus.Value,
+                statusMessage.Value,
+                correlationId.Value,
+                Optional.ToNullable(resourceCount),
+                Optional.ToNullable(parallelDeployments),
+                failureThreshold.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyRemediationData>.Write(ModelReaderWriterOptions options)

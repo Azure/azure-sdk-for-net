@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, serializedAdditionalRawData);
+            return new PostgreSqlFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFirewallRuleData>.Write(ModelReaderWriterOptions options)

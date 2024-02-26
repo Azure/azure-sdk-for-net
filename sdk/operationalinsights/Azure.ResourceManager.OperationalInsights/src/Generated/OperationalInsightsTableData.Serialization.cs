@@ -315,7 +315,24 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsTableData(id, name, type, systemData.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(totalRetentionInDays), Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(retentionInDaysAsDefault), Optional.ToNullable(totalRetentionInDaysAsDefault), serializedAdditionalRawData);
+            return new OperationalInsightsTableData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(retentionInDays),
+                Optional.ToNullable(totalRetentionInDays),
+                Optional.ToNullable(archiveRetentionInDays),
+                searchResults.Value,
+                restoredLogs.Value,
+                resultStatistics.Value,
+                Optional.ToNullable(plan),
+                lastPlanModifiedDate.Value,
+                schema.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(retentionInDaysAsDefault),
+                Optional.ToNullable(totalRetentionInDaysAsDefault),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsTableData>.Write(ModelReaderWriterOptions options)

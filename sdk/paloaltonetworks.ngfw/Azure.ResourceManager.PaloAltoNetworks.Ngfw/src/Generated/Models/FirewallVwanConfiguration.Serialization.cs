@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallVwanConfiguration(networkVirtualApplianceId.Value, vHub, trustSubnet.Value, unTrustSubnet.Value, ipOfTrustSubnetForUdr.Value, serializedAdditionalRawData);
+            return new FirewallVwanConfiguration(
+                networkVirtualApplianceId.Value,
+                vHub,
+                trustSubnet.Value,
+                unTrustSubnet.Value,
+                ipOfTrustSubnetForUdr.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallVwanConfiguration>.Write(ModelReaderWriterOptions options)

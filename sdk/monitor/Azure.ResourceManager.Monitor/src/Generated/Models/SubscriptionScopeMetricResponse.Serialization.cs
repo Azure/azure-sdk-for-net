@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionScopeMetricResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value, serializedAdditionalRawData);
+            return new SubscriptionScopeMetricResponse(
+                Optional.ToNullable(cost),
+                timespan,
+                Optional.ToNullable(interval),
+                @namespace.Value,
+                resourceregion.Value,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionScopeMetricResponse>.Write(ModelReaderWriterOptions options)

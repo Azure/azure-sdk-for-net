@@ -346,7 +346,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBareMetalMachineKeySetData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, jumpHostsAllowed, Optional.ToNullable(lastValidation), osGroupName.Value, privilegeLevel, Optional.ToNullable(provisioningState), userList, userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(), serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachineKeySetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                azureGroupId,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                expiration,
+                jumpHostsAllowed,
+                Optional.ToNullable(lastValidation),
+                osGroupName.Value,
+                privilegeLevel,
+                Optional.ToNullable(provisioningState),
+                userList,
+                userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Write(ModelReaderWriterOptions options)

@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallRule(ruleId, ruleIdString.Value, Optional.ToNullable(state), Optional.ToNullable(action), description.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayFirewallRule(
+                ruleId,
+                ruleIdString.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(action),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallRule>.Write(ModelReaderWriterOptions options)

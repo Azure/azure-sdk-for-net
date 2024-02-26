@@ -185,7 +185,17 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PineconeChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, environment, indexName, fieldsMapping, embeddingDependency.Value, serializedAdditionalRawData);
+            return new PineconeChatExtensionParameters(
+                authentication.Value,
+                Optional.ToNullable(topNDocuments),
+                Optional.ToNullable(inScope),
+                Optional.ToNullable(strictness),
+                roleInformation.Value,
+                environment,
+                indexName,
+                fieldsMapping,
+                embeddingDependency.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PineconeChatExtensionParameters>.Write(ModelReaderWriterOptions options)

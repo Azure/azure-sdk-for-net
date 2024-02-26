@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsColumn(name.Value, Optional.ToNullable(type), Optional.ToNullable(dataTypeHint), displayName.Value, description.Value, Optional.ToNullable(isDefaultDisplay), Optional.ToNullable(isHidden), serializedAdditionalRawData);
+            return new OperationalInsightsColumn(
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(dataTypeHint),
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(isDefaultDisplay),
+                Optional.ToNullable(isHidden),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsColumn>.Write(ModelReaderWriterOptions options)

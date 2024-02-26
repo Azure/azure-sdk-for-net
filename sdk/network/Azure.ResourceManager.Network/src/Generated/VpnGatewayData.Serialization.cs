@@ -354,7 +354,23 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), virtualHub, connections ?? new ChangeTrackingList<VpnConnectionData>(), bgpSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), ipConfigurations ?? new ChangeTrackingList<VpnGatewayIPConfiguration>(), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(isRoutingPreferenceInternet), natRules ?? new ChangeTrackingList<VpnGatewayNatRuleData>());
+            return new VpnGatewayData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                virtualHub,
+                connections ?? new ChangeTrackingList<VpnConnectionData>(),
+                bgpSettings.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(vpnGatewayScaleUnit),
+                ipConfigurations ?? new ChangeTrackingList<VpnGatewayIPConfiguration>(),
+                Optional.ToNullable(enableBgpRouteTranslationForNat),
+                Optional.ToNullable(isRoutingPreferenceInternet),
+                natRules ?? new ChangeTrackingList<VpnGatewayNatRuleData>());
         }
 
         BinaryData IPersistableModel<VpnGatewayData>.Write(ModelReaderWriterOptions options)

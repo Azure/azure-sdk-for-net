@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.MixedReality
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemoteRenderingAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, plan, sku.Value, kind.Value, storageAccountName.Value, Optional.ToNullable(accountId), accountDomain.Value, serializedAdditionalRawData);
+            return new RemoteRenderingAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                plan,
+                sku.Value,
+                kind.Value,
+                storageAccountName.Value,
+                Optional.ToNullable(accountId),
+                accountDomain.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemoteRenderingAccountData>.Write(ModelReaderWriterOptions options)

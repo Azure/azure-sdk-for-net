@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPlatformConfiguration(type, azureStackEdgeDevice, azureStackEdgeDevices ?? new ChangeTrackingList<WritableSubResource>(), azureStackHciCluster, connectedCluster, customLocation, serializedAdditionalRawData);
+            return new MobileNetworkPlatformConfiguration(
+                type,
+                azureStackEdgeDevice,
+                azureStackEdgeDevices ?? new ChangeTrackingList<WritableSubResource>(),
+                azureStackHciCluster,
+                connectedCluster,
+                customLocation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPlatformConfiguration>.Write(ModelReaderWriterOptions options)

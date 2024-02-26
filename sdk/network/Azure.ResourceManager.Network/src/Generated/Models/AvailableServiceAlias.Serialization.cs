@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableServiceAlias(id, name, type, systemData.Value, resourceName.Value, serializedAdditionalRawData);
+            return new AvailableServiceAlias(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableServiceAlias>.Write(ModelReaderWriterOptions options)

@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorAzureFunctionReceiver(name, functionAppResourceId, functionName, httpTriggerUrl, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
+            return new MonitorAzureFunctionReceiver(
+                name,
+                functionAppResourceId,
+                functionName,
+                httpTriggerUrl,
+                Optional.ToNullable(useCommonAlertSchema),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorAzureFunctionReceiver>.Write(ModelReaderWriterOptions options)

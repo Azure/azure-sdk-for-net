@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(iops), Optional.ToNullable(autoGrow), Optional.ToNullable(logOnDisk), storageSku.Value, Optional.ToNullable(autoIoScaling), serializedAdditionalRawData);
+            return new MySqlFlexibleServerStorage(
+                Optional.ToNullable(storageSizeGB),
+                Optional.ToNullable(iops),
+                Optional.ToNullable(autoGrow),
+                Optional.ToNullable(logOnDisk),
+                storageSku.Value,
+                Optional.ToNullable(autoIoScaling),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerStorage>.Write(ModelReaderWriterOptions options)

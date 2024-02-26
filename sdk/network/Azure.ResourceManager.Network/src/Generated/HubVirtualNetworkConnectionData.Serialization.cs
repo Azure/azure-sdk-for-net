@@ -238,7 +238,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubVirtualNetworkConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), remoteVirtualNetwork, Optional.ToNullable(allowHubToRemoteVnetTransit), Optional.ToNullable(allowRemoteVnetToUseHubVnetGateways), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new HubVirtualNetworkConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                remoteVirtualNetwork,
+                Optional.ToNullable(allowHubToRemoteVnetTransit),
+                Optional.ToNullable(allowRemoteVnetToUseHubVnetGateways),
+                Optional.ToNullable(enableInternetSecurity),
+                routingConfiguration.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<HubVirtualNetworkConnectionData>.Write(ModelReaderWriterOptions options)
