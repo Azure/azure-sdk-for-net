@@ -1408,7 +1408,7 @@ await mockProcessor.Object.StopProcessingAsync();
 ```
 
 ## Get namespace properties using the `ServiceBusAdministrationClient`
-The following snippet demonstrates how to mock the `ServiceBusAdministrationClient` in order to be able to mock the call to `GetNamespaceProperties` using the `ServiceBusModelFactory` to create `NamespaceProperties`.
+The following snippet demonstrates how to mock `ServiceBusAdministrationClient.GetNamespaceProperties()` using the `ServiceBusModelFactory` to create `NamespaceProperties`.
 
 ```C# Snippet:ServiceBus_MockingNamespaceProperties
 Mock<Response<NamespaceProperties>> mockResponse = new Mock<Response<NamespaceProperties>>();
