@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDatastoreData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new MachineLearningDatastoreData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreData>.Write(ModelReaderWriterOptions options)

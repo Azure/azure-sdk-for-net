@@ -81,7 +81,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new StorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, tags ?? new ChangeTrackingDictionary<string, string>());
+            return new StorageBundle(
+                id.Value,
+                resourceId.Value,
+                activeKeyName.Value,
+                Optional.ToNullable(autoRegenerateKey),
+                regenerationPeriod.Value,
+                attributes.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLicenseDetails(Optional.ToNullable(state), Optional.ToNullable(target), Optional.ToNullable(edition), Optional.ToNullable(type), Optional.ToNullable(processors), Optional.ToNullable(assignedLicenses), immutableId.Value, serializedAdditionalRawData);
+            return new HybridComputeLicenseDetails(
+                Optional.ToNullable(state),
+                Optional.ToNullable(target),
+                Optional.ToNullable(edition),
+                Optional.ToNullable(type),
+                Optional.ToNullable(processors),
+                Optional.ToNullable(assignedLicenses),
+                immutableId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLicenseDetails>.Write(ModelReaderWriterOptions options)

@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, supportedVersions ?? new ChangeTrackingList<SupportedVersionProperties>(), supportedRoleTypes ?? new ChangeTrackingList<NetworkDeviceRoleName>(), interfaces ?? new ChangeTrackingList<NetworkDeviceInterfaceProperties>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkDeviceSkuData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                model,
+                manufacturer.Value,
+                supportedVersions ?? new ChangeTrackingList<SupportedVersionProperties>(),
+                supportedRoleTypes ?? new ChangeTrackingList<NetworkDeviceRoleName>(),
+                interfaces ?? new ChangeTrackingList<NetworkDeviceInterfaceProperties>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceSkuData>.Write(ModelReaderWriterOptions options)

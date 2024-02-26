@@ -441,7 +441,28 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, name0.Value, connectionParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), metadata.Value, runtimeUrls ?? new ChangeTrackingList<Uri>(), generalInformation.Value, capabilities ?? new ChangeTrackingList<string>(), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentManagedApiData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                name0.Value,
+                connectionParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                metadata.Value,
+                runtimeUrls ?? new ChangeTrackingList<Uri>(),
+                generalInformation.Value,
+                capabilities ?? new ChangeTrackingList<string>(),
+                backendService.Value,
+                policies.Value,
+                apiDefinitionUrl.Value,
+                apiDefinitions.Value,
+                integrationServiceEnvironment.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(category),
+                deploymentParameters.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Write(ModelReaderWriterOptions options)

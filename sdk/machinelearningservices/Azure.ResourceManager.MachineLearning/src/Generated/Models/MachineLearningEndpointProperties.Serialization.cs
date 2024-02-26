@@ -208,7 +208,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEndpointProperties(authMode, description.Value, keys.Value, properties ?? new ChangeTrackingDictionary<string, string>(), scoringUri.Value, swaggerUri.Value, serializedAdditionalRawData);
+            return new MachineLearningEndpointProperties(
+                authMode,
+                description.Value,
+                keys.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                scoringUri.Value,
+                swaggerUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEndpointProperties>.Write(ModelReaderWriterOptions options)

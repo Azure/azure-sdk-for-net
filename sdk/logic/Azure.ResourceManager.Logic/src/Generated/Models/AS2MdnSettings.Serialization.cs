@@ -159,7 +159,17 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2MdnSettings(needMdn, signMdn, sendMdnAsynchronously, receiptDeliveryUrl.Value, dispositionNotificationTo.Value, signOutboundMdnIfOptional, mdnText.Value, sendInboundMdnToMessageBox, micHashingAlgorithm, serializedAdditionalRawData);
+            return new AS2MdnSettings(
+                needMdn,
+                signMdn,
+                sendMdnAsynchronously,
+                receiptDeliveryUrl.Value,
+                dispositionNotificationTo.Value,
+                signOutboundMdnIfOptional,
+                mdnText.Value,
+                sendInboundMdnToMessageBox,
+                micHashingAlgorithm,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2MdnSettings>.Write(ModelReaderWriterOptions options)

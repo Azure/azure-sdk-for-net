@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesRegistrationProperties(description.Value, authorizations, eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(), registrationDefinitionName.Value, managedByTenantId, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, managedByTenantName.Value, serializedAdditionalRawData);
+            return new ManagedServicesRegistrationProperties(
+                description.Value,
+                authorizations,
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                registrationDefinitionName.Value,
+                managedByTenantId,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(manageeTenantId),
+                manageeTenantName.Value,
+                managedByTenantName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesRegistrationProperties>.Write(ModelReaderWriterOptions options)

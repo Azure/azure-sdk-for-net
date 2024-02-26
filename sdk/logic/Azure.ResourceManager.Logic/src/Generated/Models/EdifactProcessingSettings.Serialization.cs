@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactProcessingSettings(maskSecurityInfo, preserveInterchange, suspendInterchangeOnError, createEmptyXmlTagsForTrailingSeparators, useDotAsDecimalSeparator, serializedAdditionalRawData);
+            return new EdifactProcessingSettings(
+                maskSecurityInfo,
+                preserveInterchange,
+                suspendInterchangeOnError,
+                createEmptyXmlTagsForTrailingSeparators,
+                useDotAsDecimalSeparator,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactProcessingSettings>.Write(ModelReaderWriterOptions options)

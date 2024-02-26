@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.ManagedServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesMarketplaceRegistrationData(id, name, type, systemData.Value, properties.Value, plan.Value, serializedAdditionalRawData);
+            return new ManagedServicesMarketplaceRegistrationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                plan.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationData>.Write(ModelReaderWriterOptions options)

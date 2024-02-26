@@ -291,7 +291,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TextClassificationMultilabel(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, searchSpace ?? new ChangeTrackingList<NlpParameterSubspace>(), sweepSettings.Value, validationData.Value);
+            return new TextClassificationMultilabel(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                Optional.ToNullable(primaryMetric),
+                featurizationSettings.Value,
+                fixedParameters.Value,
+                limitSettings.Value,
+                searchSpace ?? new ChangeTrackingList<NlpParameterSubspace>(),
+                sweepSettings.Value,
+                validationData.Value);
         }
 
         BinaryData IPersistableModel<TextClassificationMultilabel>.Write(ModelReaderWriterOptions options)

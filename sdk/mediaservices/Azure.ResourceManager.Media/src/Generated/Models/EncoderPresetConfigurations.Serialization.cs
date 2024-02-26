@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncoderPresetConfigurations(Optional.ToNullable(complexity), Optional.ToNullable(interleaveOutput), Optional.ToNullable(keyFrameIntervalInSeconds), Optional.ToNullable(maxBitrateBps), Optional.ToNullable(maxHeight), Optional.ToNullable(maxLayers), Optional.ToNullable(minBitrateBps), Optional.ToNullable(minHeight), serializedAdditionalRawData);
+            return new EncoderPresetConfigurations(
+                Optional.ToNullable(complexity),
+                Optional.ToNullable(interleaveOutput),
+                Optional.ToNullable(keyFrameIntervalInSeconds),
+                Optional.ToNullable(maxBitrateBps),
+                Optional.ToNullable(maxHeight),
+                Optional.ToNullable(maxLayers),
+                Optional.ToNullable(minBitrateBps),
+                Optional.ToNullable(minHeight),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncoderPresetConfigurations>.Write(ModelReaderWriterOptions options)

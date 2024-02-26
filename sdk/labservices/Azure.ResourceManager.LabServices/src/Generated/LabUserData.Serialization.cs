@@ -248,7 +248,20 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabUserData(id, name, type, systemData.Value, Optional.ToNullable(additionalUsageQuota), Optional.ToNullable(provisioningState), displayName.Value, email, Optional.ToNullable(registrationState), Optional.ToNullable(invitationState), Optional.ToNullable(invitationSent), Optional.ToNullable(totalUsage), serializedAdditionalRawData);
+            return new LabUserData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(additionalUsageQuota),
+                Optional.ToNullable(provisioningState),
+                displayName.Value,
+                email,
+                Optional.ToNullable(registrationState),
+                Optional.ToNullable(invitationState),
+                Optional.ToNullable(invitationSent),
+                Optional.ToNullable(totalUsage),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabUserData>.Write(ModelReaderWriterOptions options)

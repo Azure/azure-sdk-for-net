@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationSafetyQualityMonitoringSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, metricThresholds, productionData ?? new ChangeTrackingList<MonitoringInputDataBase>(), samplingRate, workspaceConnectionId.Value);
+            return new GenerationSafetyQualityMonitoringSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData ?? new ChangeTrackingList<MonitoringInputDataBase>(),
+                samplingRate,
+                workspaceConnectionId.Value);
         }
 
         BinaryData IPersistableModel<GenerationSafetyQualityMonitoringSignal>.Write(ModelReaderWriterOptions options)

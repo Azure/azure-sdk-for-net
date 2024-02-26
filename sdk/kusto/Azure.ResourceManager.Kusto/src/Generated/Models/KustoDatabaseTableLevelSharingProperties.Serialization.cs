@@ -274,7 +274,16 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoDatabaseTableLevelSharingProperties(tablesToInclude ?? new ChangeTrackingList<string>(), tablesToExclude ?? new ChangeTrackingList<string>(), externalTablesToInclude ?? new ChangeTrackingList<string>(), externalTablesToExclude ?? new ChangeTrackingList<string>(), materializedViewsToInclude ?? new ChangeTrackingList<string>(), materializedViewsToExclude ?? new ChangeTrackingList<string>(), functionsToInclude ?? new ChangeTrackingList<string>(), functionsToExclude ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new KustoDatabaseTableLevelSharingProperties(
+                tablesToInclude ?? new ChangeTrackingList<string>(),
+                tablesToExclude ?? new ChangeTrackingList<string>(),
+                externalTablesToInclude ?? new ChangeTrackingList<string>(),
+                externalTablesToExclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToInclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToExclude ?? new ChangeTrackingList<string>(),
+                functionsToInclude ?? new ChangeTrackingList<string>(),
+                functionsToExclude ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoDatabaseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options)

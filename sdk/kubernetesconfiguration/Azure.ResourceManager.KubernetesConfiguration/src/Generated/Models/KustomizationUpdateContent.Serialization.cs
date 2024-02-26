@@ -245,7 +245,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustomizationUpdateContent(path.Value, dependsOn ?? new ChangeTrackingList<string>(), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(prune), Optional.ToNullable(force), serializedAdditionalRawData);
+            return new KustomizationUpdateContent(
+                path.Value,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(timeoutInSeconds),
+                Optional.ToNullable(syncIntervalInSeconds),
+                Optional.ToNullable(retryIntervalInSeconds),
+                Optional.ToNullable(prune),
+                Optional.ToNullable(force),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustomizationUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JpgImage(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value, layers ?? new ChangeTrackingList<JpgLayer>(), Optional.ToNullable(spriteColumn));
+            return new JpgImage(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode),
+                start,
+                step.Value,
+                range.Value,
+                layers ?? new ChangeTrackingList<JpgLayer>(),
+                Optional.ToNullable(spriteColumn));
         }
 
         BinaryData IPersistableModel<JpgImage>.Write(ModelReaderWriterOptions options)

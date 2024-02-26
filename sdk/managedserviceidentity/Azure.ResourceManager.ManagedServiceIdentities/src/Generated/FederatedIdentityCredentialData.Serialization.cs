@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FederatedIdentityCredentialData(id, name, type, systemData.Value, issuer.Value, subject.Value, audiences ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new FederatedIdentityCredentialData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                issuer.Value,
+                subject.Value,
+                audiences ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FederatedIdentityCredentialData>.Write(ModelReaderWriterOptions options)

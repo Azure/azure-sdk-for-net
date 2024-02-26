@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyFairPlayConfiguration(odataType, serializedAdditionalRawData, ask, fairPlayPfxPassword, fairPlayPfx, rentalAndLeaseKeyType, rentalDuration, offlineRentalConfiguration.Value);
+            return new ContentKeyPolicyFairPlayConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                ask,
+                fairPlayPfxPassword,
+                fairPlayPfx,
+                rentalAndLeaseKeyType,
+                rentalDuration,
+                offlineRentalConfiguration.Value);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyFairPlayConfiguration>.Write(ModelReaderWriterOptions options)

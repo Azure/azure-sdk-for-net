@@ -518,7 +518,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableFixedParameters(booster.Value, boostingType.Value, growPolicy.Value, Optional.ToNullable(learningRate), Optional.ToNullable(maxBin), Optional.ToNullable(maxDepth), Optional.ToNullable(maxLeaves), Optional.ToNullable(minDataInLeaf), Optional.ToNullable(minSplitGain), modelName.Value, Optional.ToNullable(nEstimators), Optional.ToNullable(numLeaves), preprocessorName.Value, Optional.ToNullable(regAlpha), Optional.ToNullable(regLambda), Optional.ToNullable(subsample), Optional.ToNullable(subsampleFreq), treeMethod.Value, Optional.ToNullable(withMean), Optional.ToNullable(withStd), serializedAdditionalRawData);
+            return new TableFixedParameters(
+                booster.Value,
+                boostingType.Value,
+                growPolicy.Value,
+                Optional.ToNullable(learningRate),
+                Optional.ToNullable(maxBin),
+                Optional.ToNullable(maxDepth),
+                Optional.ToNullable(maxLeaves),
+                Optional.ToNullable(minDataInLeaf),
+                Optional.ToNullable(minSplitGain),
+                modelName.Value,
+                Optional.ToNullable(nEstimators),
+                Optional.ToNullable(numLeaves),
+                preprocessorName.Value,
+                Optional.ToNullable(regAlpha),
+                Optional.ToNullable(regLambda),
+                Optional.ToNullable(subsample),
+                Optional.ToNullable(subsampleFreq),
+                treeMethod.Value,
+                Optional.ToNullable(withMean),
+                Optional.ToNullable(withStd),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableFixedParameters>.Write(ModelReaderWriterOptions options)

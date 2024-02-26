@@ -111,7 +111,16 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSection(Optional.ToNullable(startPointIndex), Optional.ToNullable(endPointIndex), Optional.ToNullable(sectionType), Optional.ToNullable(travelMode), Optional.ToNullable(simpleCategory), Optional.ToNullable(effectiveSpeedInKmh), Optional.ToNullable(delayInSeconds), Optional.ToNullable(magnitudeOfDelay), tec.Value);
+            return new RouteSection(
+                Optional.ToNullable(startPointIndex),
+                Optional.ToNullable(endPointIndex),
+                Optional.ToNullable(sectionType),
+                Optional.ToNullable(travelMode),
+                Optional.ToNullable(simpleCategory),
+                Optional.ToNullable(effectiveSpeedInKmh),
+                Optional.ToNullable(delayInSeconds),
+                Optional.ToNullable(magnitudeOfDelay),
+                tec.Value);
         }
     }
 }

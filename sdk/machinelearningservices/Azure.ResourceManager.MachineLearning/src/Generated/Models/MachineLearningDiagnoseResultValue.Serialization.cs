@@ -299,7 +299,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDiagnoseResultValue(userDefinedRouteResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), networkSecurityRuleResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), resourceLockResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), dnsResolutionResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), storageAccountResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), keyVaultResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), containerRegistryResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), applicationInsightsResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), otherResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(), serializedAdditionalRawData);
+            return new MachineLearningDiagnoseResultValue(
+                userDefinedRouteResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                networkSecurityRuleResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                resourceLockResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                dnsResolutionResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                storageAccountResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                keyVaultResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                containerRegistryResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                applicationInsightsResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                otherResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDiagnoseResultValue>.Write(ModelReaderWriterOptions options)

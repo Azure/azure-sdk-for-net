@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEncryptionSetting(cosmosDbResourceId.Value, identity.Value, keyVaultProperties, searchAccountResourceId.Value, status, storageAccountResourceId.Value, serializedAdditionalRawData);
+            return new MachineLearningEncryptionSetting(
+                cosmosDbResourceId.Value,
+                identity.Value,
+                keyVaultProperties,
+                searchAccountResourceId.Value,
+                status,
+                storageAccountResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEncryptionSetting>.Write(ModelReaderWriterOptions options)

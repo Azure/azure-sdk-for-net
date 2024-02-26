@@ -208,7 +208,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H264Video(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(complexity), layers ?? new ChangeTrackingList<H264Layer>(), Optional.ToNullable(rateControlMode), Optional.ToNullable(sceneChangeDetection));
+            return new H264Video(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode),
+                Optional.ToNullable(complexity),
+                layers ?? new ChangeTrackingList<H264Layer>(),
+                Optional.ToNullable(rateControlMode),
+                Optional.ToNullable(sceneChangeDetection));
         }
 
         BinaryData IPersistableModel<H264Video>.Write(ModelReaderWriterOptions options)

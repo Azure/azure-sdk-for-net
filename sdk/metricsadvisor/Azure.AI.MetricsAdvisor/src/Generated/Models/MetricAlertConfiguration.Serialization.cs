@@ -133,7 +133,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricAlertConfiguration(anomalyDetectionConfigurationId, anomalyScopeType, Optional.ToNullable(negationOperation), dimensionAnomalyScope.Value, topNAnomalyScope.Value, severityFilter.Value, snoozeFilter.Value, valueFilter.Value);
+            return new MetricAlertConfiguration(
+                anomalyDetectionConfigurationId,
+                anomalyScopeType,
+                Optional.ToNullable(negationOperation),
+                dimensionAnomalyScope.Value,
+                topNAnomalyScope.Value,
+                severityFilter.Value,
+                snoozeFilter.Value,
+                valueFilter.Value);
         }
     }
 }

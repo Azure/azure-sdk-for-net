@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiDeploymentParameterMetadata(type.Value, Optional.ToNullable(isRequired), displayName.Value, description.Value, Optional.ToNullable(visibility), serializedAdditionalRawData);
+            return new LogicApiDeploymentParameterMetadata(
+                type.Value,
+                Optional.ToNullable(isRequired),
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(visibility),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiDeploymentParameterMetadata>.Write(ModelReaderWriterOptions options)

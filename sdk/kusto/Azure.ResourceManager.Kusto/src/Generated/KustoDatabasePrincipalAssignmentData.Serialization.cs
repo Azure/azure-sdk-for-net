@@ -247,7 +247,20 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoDatabasePrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId), serializedAdditionalRawData);
+            return new KustoDatabasePrincipalAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                principalId.Value,
+                Optional.ToNullable(role),
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(principalType),
+                tenantName.Value,
+                principalName.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(aadObjectId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoDatabasePrincipalAssignmentData>.Write(ModelReaderWriterOptions options)

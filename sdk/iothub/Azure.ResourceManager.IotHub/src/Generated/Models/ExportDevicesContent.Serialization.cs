@@ -157,7 +157,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDevicesContent(exportBlobContainerUri, excludeKeys, exportBlobName.Value, Optional.ToNullable(authenticationType), identity.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value, serializedAdditionalRawData);
+            return new ExportDevicesContent(
+                exportBlobContainerUri,
+                excludeKeys,
+                exportBlobName.Value,
+                Optional.ToNullable(authenticationType),
+                identity.Value,
+                Optional.ToNullable(includeConfigurations),
+                configurationsBlobName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDevicesContent>.Write(ModelReaderWriterOptions options)

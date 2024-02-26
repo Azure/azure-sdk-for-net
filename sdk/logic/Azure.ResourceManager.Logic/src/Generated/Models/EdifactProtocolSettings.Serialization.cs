@@ -240,7 +240,19 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, processingSettings, envelopeOverrides ?? new ChangeTrackingList<EdifactEnvelopeOverride>(), messageFilterList ?? new ChangeTrackingList<EdifactMessageIdentifier>(), schemaReferences, validationOverrides ?? new ChangeTrackingList<EdifactValidationOverride>(), edifactDelimiterOverrides ?? new ChangeTrackingList<EdifactDelimiterOverride>(), serializedAdditionalRawData);
+            return new EdifactProtocolSettings(
+                validationSettings,
+                framingSettings,
+                envelopeSettings,
+                acknowledgementSettings,
+                messageFilter,
+                processingSettings,
+                envelopeOverrides ?? new ChangeTrackingList<EdifactEnvelopeOverride>(),
+                messageFilterList ?? new ChangeTrackingList<EdifactMessageIdentifier>(),
+                schemaReferences,
+                validationOverrides ?? new ChangeTrackingList<EdifactValidationOverride>(),
+                edifactDelimiterOverrides ?? new ChangeTrackingList<EdifactDelimiterOverride>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactProtocolSettings>.Write(ModelReaderWriterOptions options)

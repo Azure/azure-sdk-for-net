@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAudioBase(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
+            return new MediaAudioBase(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(channels),
+                Optional.ToNullable(samplingRate),
+                Optional.ToNullable(bitrate));
         }
 
         BinaryData IPersistableModel<MediaAudioBase>.Write(ModelReaderWriterOptions options)

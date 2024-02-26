@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionProfileData(id, name, type, systemData.Value, extendedLocation.Value, properties.Value, serializedAdditionalRawData);
+            return new KubernetesVersionProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                extendedLocation.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionProfileData>.Write(ModelReaderWriterOptions options)
