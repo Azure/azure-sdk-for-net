@@ -7,10 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A8861001-CA2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F44B9E86-431A-454B-AB2E-AC2154813FE3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{1144D9F2-355F-4F4F-9C02-86BBC3C3CD01}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Tests", "..\..\storage\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj", "{282A961B-A80B-4346-AF52-EF5C39F0639C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.CoreWCF.Azure.StorageQueues", "Microsoft.CoreWCF.Azure.StorageQueues\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj", "{190C23E4-DA1C-424C-A672-78DB9D171671}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.WCF.Azure.StorageQueues", "Microsoft.WCF.Azure.StorageQueues\src\Microsoft.WCF.Azure.StorageQueues.csproj", "{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB}"
@@ -32,14 +28,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1144D9F2-355F-4F4F-9C02-86BBC3C3CD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1144D9F2-355F-4F4F-9C02-86BBC3C3CD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1144D9F2-355F-4F4F-9C02-86BBC3C3CD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1144D9F2-355F-4F4F-9C02-86BBC3C3CD01}.Release|Any CPU.Build.0 = Release|Any CPU
-		{282A961B-A80B-4346-AF52-EF5C39F0639C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{282A961B-A80B-4346-AF52-EF5C39F0639C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{282A961B-A80B-4346-AF52-EF5C39F0639C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{282A961B-A80B-4346-AF52-EF5C39F0639C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{190C23E4-DA1C-424C-A672-78DB9D171671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{190C23E4-DA1C-424C-A672-78DB9D171671}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{190C23E4-DA1C-424C-A672-78DB9D171671}.Release|Any CPU.ActiveCfg = Release|Any CPU

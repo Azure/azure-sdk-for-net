@@ -1,9 +1,10 @@
 <Project>
-	<!-- Need to set IsClientLibrary for CentralPackageManagement versions file in $(root)\eng\Packages.Data.props -->
-	<PropertyGroup>
-		<IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.'))">true</IsClientLibrary>
-		<IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
-	</PropertyGroup>
+  <!-- Need to set IsClientLibrary for CentralPackageManagement versions file in $(root)\eng\Packages.Data.props -->
+  <PropertyGroup>
+    <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.'))">true</IsClientLibrary>
+    <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+    <IsWcfLibrary>true</IsWcfLibrary>
+  </PropertyGroup>
 
-	<Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))"/>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))"/>
 </Project>

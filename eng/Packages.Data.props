@@ -257,9 +257,9 @@
     <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.6.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.1" />
-		<PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.3" />
-		<PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0-beta.1" />
-		<PackageReference Update="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.3" />
+    <PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.1.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
@@ -359,6 +359,19 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'">
+    <PackageReference Update="CoreWCF.Queue" Version="1.5.1" />
+    <PackageReference Update="System.IO.Pipelines" Version="6.0.3" />
+    <PackageReference Update="Microsoft.AspNetCore" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="6.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Primitives" Version="6.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
+    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.17.1" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.17.1" />
   </ItemGroup>
 
   <PropertyGroup>

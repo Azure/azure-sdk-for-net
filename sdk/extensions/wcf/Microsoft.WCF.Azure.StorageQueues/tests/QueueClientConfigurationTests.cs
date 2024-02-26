@@ -78,16 +78,9 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
             }
 
             var endpointUrlString = endpointUri.AbsoluteUri;
-            AzureQueueStorageBinding azureQueueStorageBinding = new()
-            {
-                Security = new()
-                {
-                    Transport = new()
-                    {
-                        ClientCredentialType = AzureClientCredentialType.ConnectionString
-                    }
-                }
-            };
+            AzureQueueStorageBinding azureQueueStorageBinding = new();
+            azureQueueStorageBinding.Security.Transport.ClientCredentialType = AzureClientCredentialType.ConnectionString;
+
             var channelFactory = new ChannelFactory<IOutputChannel>(azureQueueStorageBinding, new EndpointAddress(endpointUrlString));
             channelFactory.UseAzureCredentials(creds =>
             {

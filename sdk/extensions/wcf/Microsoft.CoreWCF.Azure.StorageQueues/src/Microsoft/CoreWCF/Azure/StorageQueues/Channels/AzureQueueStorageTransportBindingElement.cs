@@ -72,6 +72,10 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Channels
             return base.GetProperty<T>(context);
         }
 
+        /// <summary>
+        /// Configures CoreWCF with a dummy net.aqs base address in the case that the endpoint uri is provided in a connection string.
+        /// </summary>
+        /// <param name="app">The ASP.NET Core application builder for the service</param>
         void ITransportServiceBuilder.Configure(IApplicationBuilder app)
         {
             // When using a ConnectionString, the queue endpoint url could be provided

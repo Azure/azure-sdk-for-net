@@ -40,8 +40,6 @@
   </ItemGroup>
     
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\storage\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
-    <ProjectReference Include="..\..\..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
     <ProjectReference Include="..\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj" />
   </ItemGroup>
   

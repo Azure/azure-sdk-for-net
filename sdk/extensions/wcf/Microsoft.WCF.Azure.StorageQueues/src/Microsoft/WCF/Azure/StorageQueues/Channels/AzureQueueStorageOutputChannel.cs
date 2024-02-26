@@ -44,6 +44,9 @@ namespace Microsoft.WCF.Azure.StorageQueues.Channels
         }
 
         #region IOutputChannel_Properties
+        /// <summary>
+        /// Gets the destination of the service to which messages are sent out on the output channel.
+        /// </summary>
         EndpointAddress IOutputChannel.RemoteAddress
         {
             get
@@ -52,6 +55,9 @@ namespace Microsoft.WCF.Azure.StorageQueues.Channels
             }
         }
 
+        /// <summary>
+        /// Gets the URI that contains the transport address to which messages are sent on the output channel.
+        /// </summary>
         Uri IOutputChannel.Via
         {
             get
