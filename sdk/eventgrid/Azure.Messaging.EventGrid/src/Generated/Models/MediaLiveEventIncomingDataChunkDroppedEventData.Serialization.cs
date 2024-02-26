@@ -64,7 +64,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingDataChunkDroppedEventData(timestamp.Value, trackType.Value, Optional.ToNullable(bitrate), timescale.Value, resultCode.Value, trackName.Value);
+            return new MediaLiveEventIncomingDataChunkDroppedEventData(
+                timestamp.Value,
+                trackType.Value,
+                Optional.ToNullable(bitrate),
+                timescale.Value,
+                resultCode.Value,
+                trackName.Value);
         }
 
         internal partial class MediaLiveEventIncomingDataChunkDroppedEventDataConverter : JsonConverter<MediaLiveEventIncomingDataChunkDroppedEventData>

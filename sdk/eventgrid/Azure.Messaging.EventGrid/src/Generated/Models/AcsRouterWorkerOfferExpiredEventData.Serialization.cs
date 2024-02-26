@@ -60,7 +60,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerOfferExpiredEventData(jobId.Value, channelReference.Value, channelId.Value, workerId.Value, queueId.Value, offerId.Value);
+            return new AcsRouterWorkerOfferExpiredEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                workerId.Value,
+                queueId.Value,
+                offerId.Value);
         }
 
         internal partial class AcsRouterWorkerOfferExpiredEventDataConverter : JsonConverter<AcsRouterWorkerOfferExpiredEventData>

@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderAddressData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus), serializedAdditionalRawData);
+            return new EdgeOrderAddressData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                shippingAddress.Value,
+                contactDetails,
+                Optional.ToNullable(addressValidationStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options)

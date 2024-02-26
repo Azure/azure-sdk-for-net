@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabSubnetOverride(resourceId.Value, labSubnetName.Value, Optional.ToNullable(useInVmCreationPermission), Optional.ToNullable(usePublicIPAddressPermission), sharedPublicIPAddressConfiguration.Value, virtualNetworkPoolName.Value, serializedAdditionalRawData);
+            return new DevTestLabSubnetOverride(
+                resourceId.Value,
+                labSubnetName.Value,
+                Optional.ToNullable(useInVmCreationPermission),
+                Optional.ToNullable(usePublicIPAddressPermission),
+                sharedPublicIPAddressConfiguration.Value,
+                virtualNetworkPoolName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabSubnetOverride>.Write(ModelReaderWriterOptions options)

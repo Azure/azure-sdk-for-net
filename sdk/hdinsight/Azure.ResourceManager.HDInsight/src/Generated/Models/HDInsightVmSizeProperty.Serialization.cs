@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVmSizeProperty(name.Value, Optional.ToNullable(cores), dataDiskStorageTier.Value, label.Value, Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(memoryInMB), Optional.ToNullable(supportedByVirtualMachines), Optional.ToNullable(supportedByWebWorkerRoles), Optional.ToNullable(virtualMachineResourceDiskSizeInMB), Optional.ToNullable(webWorkerResourceDiskSizeInMB), serializedAdditionalRawData);
+            return new HDInsightVmSizeProperty(
+                name.Value,
+                Optional.ToNullable(cores),
+                dataDiskStorageTier.Value,
+                label.Value,
+                Optional.ToNullable(maxDataDiskCount),
+                Optional.ToNullable(memoryInMB),
+                Optional.ToNullable(supportedByVirtualMachines),
+                Optional.ToNullable(supportedByWebWorkerRoles),
+                Optional.ToNullable(virtualMachineResourceDiskSizeInMB),
+                Optional.ToNullable(webWorkerResourceDiskSizeInMB),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVmSizeProperty>.Write(ModelReaderWriterOptions options)

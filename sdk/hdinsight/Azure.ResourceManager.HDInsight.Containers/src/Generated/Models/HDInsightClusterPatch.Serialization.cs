@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, clusterProfile.Value, serializedAdditionalRawData);
+            return new HDInsightClusterPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                clusterProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterPatch>.Write(ModelReaderWriterOptions options)

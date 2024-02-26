@@ -240,7 +240,19 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc), serializedAdditionalRawData);
+            return new PartnerNamespaceChannelData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(channelType),
+                partnerTopicInfo.Value,
+                partnerDestinationInfo.Value,
+                messageForActivation.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(readinessState),
+                Optional.ToNullable(expirationTimeIfNotActivatedUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerNamespaceChannelData>.Write(ModelReaderWriterOptions options)

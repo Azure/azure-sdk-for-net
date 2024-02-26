@@ -286,7 +286,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreateOrUpdateProperties(clusterVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterDefinition.Value, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, storageProfile.Value, diskEncryptionProperties.Value, encryptionInTransitProperties.Value, minSupportedTlsVersion.Value, networkProperties.Value, computeIsolationProperties.Value, privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(), serializedAdditionalRawData);
+            return new HDInsightClusterCreateOrUpdateProperties(
+                clusterVersion.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(tier),
+                clusterDefinition.Value,
+                kafkaRestProperties.Value,
+                securityProfile.Value,
+                computeProfile.Value,
+                storageProfile.Value,
+                diskEncryptionProperties.Value,
+                encryptionInTransitProperties.Value,
+                minSupportedTlsVersion.Value,
+                networkProperties.Value,
+                computeIsolationProperties.Value,
+                privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreateOrUpdateProperties>.Write(ModelReaderWriterOptions options)

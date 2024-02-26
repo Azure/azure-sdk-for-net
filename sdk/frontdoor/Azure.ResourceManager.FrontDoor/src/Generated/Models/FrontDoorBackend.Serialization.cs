@@ -262,7 +262,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Optional.ToNullable(privateLinkLocation), Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enabledState), Optional.ToNullable(priority), Optional.ToNullable(weight), backendHostHeader.Value, serializedAdditionalRawData);
+            return new FrontDoorBackend(
+                address.Value,
+                privateLinkAlias.Value,
+                privateLinkResourceId.Value,
+                Optional.ToNullable(privateLinkLocation),
+                Optional.ToNullable(privateEndpointStatus),
+                privateLinkApprovalMessage.Value,
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(priority),
+                Optional.ToNullable(weight),
+                backendHostHeader.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorBackend>.Write(ModelReaderWriterOptions options)

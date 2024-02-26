@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainTopicData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DomainTopicData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainTopicData>.Write(ModelReaderWriterOptions options)

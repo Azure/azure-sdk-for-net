@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, Optional.ToNullable(networkConnectionLocation), Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType), serializedAdditionalRawData);
+            return new AttachedNetworkConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                networkConnectionId.Value,
+                Optional.ToNullable(networkConnectionLocation),
+                Optional.ToNullable(healthCheckStatus),
+                Optional.ToNullable(domainJoinType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttachedNetworkConnectionData>.Write(ModelReaderWriterOptions options)

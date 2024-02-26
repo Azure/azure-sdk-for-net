@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNotificationSettings(Optional.ToNullable(status), Optional.ToNullable(timeInMinutes), webhookUrl.Value, emailRecipient.Value, notificationLocale.Value, serializedAdditionalRawData);
+            return new DevTestLabNotificationSettings(
+                Optional.ToNullable(status),
+                Optional.ToNullable(timeInMinutes),
+                webhookUrl.Value,
+                emailRecipient.Value,
+                notificationLocale.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNotificationSettings>.Write(ModelReaderWriterOptions options)

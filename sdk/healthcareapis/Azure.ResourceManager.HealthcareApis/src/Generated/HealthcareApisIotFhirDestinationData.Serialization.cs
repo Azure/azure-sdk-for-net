@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotFhirDestinationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), resourceIdentityResolutionType, fhirServiceResourceId, fhirMapping, Optional.ToNullable(location), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new HealthcareApisIotFhirDestinationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                resourceIdentityResolutionType,
+                fhirServiceResourceId,
+                fhirMapping,
+                Optional.ToNullable(location),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotFhirDestinationData>.Write(ModelReaderWriterOptions options)

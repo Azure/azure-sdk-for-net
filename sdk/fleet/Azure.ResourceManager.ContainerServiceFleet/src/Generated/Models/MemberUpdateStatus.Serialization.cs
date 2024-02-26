@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MemberUpdateStatus(status.Value, name.Value, clusterResourceId.Value, operationId.Value, message.Value, serializedAdditionalRawData);
+            return new MemberUpdateStatus(
+                status.Value,
+                name.Value,
+                clusterResourceId.Value,
+                operationId.Value,
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MemberUpdateStatus>.Write(ModelReaderWriterOptions options)

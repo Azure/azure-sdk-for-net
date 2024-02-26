@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServicesCertificateData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DeviceProvisioningServicesCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServicesCertificateData>.Write(ModelReaderWriterOptions options)

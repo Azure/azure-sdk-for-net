@@ -144,7 +144,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentClassifierDetails(classifierId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion, docTypes, serializedAdditionalRawData);
+            return new DocumentClassifierDetails(
+                classifierId,
+                description.Value,
+                createdDateTime,
+                Optional.ToNullable(expirationDateTime),
+                apiVersion,
+                docTypes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentClassifierDetails>.Write(ModelReaderWriterOptions options)

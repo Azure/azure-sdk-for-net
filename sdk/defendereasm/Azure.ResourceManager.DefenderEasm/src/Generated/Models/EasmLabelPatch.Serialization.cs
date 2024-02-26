@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmLabelPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, color.Value, serializedAdditionalRawData);
+            return new EasmLabelPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                displayName.Value,
+                color.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmLabelPatch>.Write(ModelReaderWriterOptions options)
