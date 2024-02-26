@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, systemServices ?? new ChangeTrackingList<SystemService>(), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize), serializedAdditionalRawData);
+            return new AcsClusterProperties(
+                clusterFqdn.Value,
+                orchestratorType,
+                orchestratorProperties.Value,
+                systemServices ?? new ChangeTrackingList<SystemService>(),
+                Optional.ToNullable(masterCount),
+                Optional.ToNullable(agentCount),
+                Optional.ToNullable(agentVmSize),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsClusterProperties>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentKubernetesResources(deployments ?? new ChangeTrackingList<KubernetesDeployment>(), pods ?? new ChangeTrackingList<KubernetesPod>(), replicaSets ?? new ChangeTrackingList<KubernetesReplicaSet>(), statefulSets ?? new ChangeTrackingList<KubernetesStatefulSet>(), daemonSets ?? new ChangeTrackingList<KubernetesDaemonSet>(), serializedAdditionalRawData);
+            return new ComponentKubernetesResources(
+                deployments ?? new ChangeTrackingList<KubernetesDeployment>(),
+                pods ?? new ChangeTrackingList<KubernetesPod>(),
+                replicaSets ?? new ChangeTrackingList<KubernetesReplicaSet>(),
+                statefulSets ?? new ChangeTrackingList<KubernetesStatefulSet>(),
+                daemonSets ?? new ChangeTrackingList<KubernetesDaemonSet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentKubernetesResources>.Write(ModelReaderWriterOptions options)

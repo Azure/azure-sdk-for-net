@@ -241,7 +241,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureStoreEntityContainerProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(isArchived), latestVersion.Value, nextVersion.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningFeatureStoreEntityContainerProperties(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(isArchived),
+                latestVersion.Value,
+                nextVersion.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureStoreEntityContainerProperties>.Write(ModelReaderWriterOptions options)

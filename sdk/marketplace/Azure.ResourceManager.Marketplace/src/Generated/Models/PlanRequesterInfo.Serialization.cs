@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlanRequesterInfo(user.Value, date.Value, justification.Value, subscriptionId.Value, subscriptionName.Value, serializedAdditionalRawData);
+            return new PlanRequesterInfo(
+                user.Value,
+                date.Value,
+                justification.Value,
+                subscriptionId.Value,
+                subscriptionName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlanRequesterInfo>.Write(ModelReaderWriterOptions options)

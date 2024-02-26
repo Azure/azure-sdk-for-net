@@ -154,7 +154,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactValidationSettings(validateCharacterSet, checkDuplicateInterchangeControlNumber, interchangeControlNumberValidityDays, checkDuplicateGroupControlNumber, checkDuplicateTransactionSetControlNumber, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, trimLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy, serializedAdditionalRawData);
+            return new EdifactValidationSettings(
+                validateCharacterSet,
+                checkDuplicateInterchangeControlNumber,
+                interchangeControlNumberValidityDays,
+                checkDuplicateGroupControlNumber,
+                checkDuplicateTransactionSetControlNumber,
+                validateEdiTypes,
+                validateXsdTypes,
+                allowLeadingAndTrailingSpacesAndZeroes,
+                trimLeadingAndTrailingSpacesAndZeroes,
+                trailingSeparatorPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactValidationSettings>.Write(ModelReaderWriterOptions options)

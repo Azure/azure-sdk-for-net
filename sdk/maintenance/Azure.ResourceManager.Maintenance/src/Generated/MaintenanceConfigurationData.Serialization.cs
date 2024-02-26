@@ -337,7 +337,24 @@ namespace Azure.ResourceManager.Maintenance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, @namespace.Value, extensionProperties ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value, serializedAdditionalRawData);
+            return new MaintenanceConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                @namespace.Value,
+                extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(maintenanceScope),
+                Optional.ToNullable(visibility),
+                installPatches.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(expirationDateTime),
+                Optional.ToNullable(duration),
+                timeZone.Value,
+                recurEvery.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationData>.Write(ModelReaderWriterOptions options)

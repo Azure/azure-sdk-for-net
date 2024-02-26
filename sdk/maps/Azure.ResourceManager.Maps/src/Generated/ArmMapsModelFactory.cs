@@ -33,7 +33,18 @@ namespace Azure.ResourceManager.Maps.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MapsAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, properties, serializedAdditionalRawData: null);
+            return new MapsAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                kind,
+                identity,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsSku"/>. </summary>
@@ -57,7 +68,13 @@ namespace Azure.ResourceManager.Maps.Models
             linkedResources ??= new List<MapsLinkedResource>();
             corsRulesValue ??= new List<MapsCorsRule>();
 
-            return new MapsAccountProperties(uniqueId, disableLocalAuth, provisioningState, linkedResources?.ToList(), corsRulesValue != null ? new CorsRules(corsRulesValue?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new MapsAccountProperties(
+                uniqueId,
+                disableLocalAuth,
+                provisioningState,
+                linkedResources?.ToList(),
+                corsRulesValue != null ? new CorsRules(corsRulesValue?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsAccountPatch"/>. </summary>
@@ -77,7 +94,17 @@ namespace Azure.ResourceManager.Maps.Models
             linkedResources ??= new List<MapsLinkedResource>();
             corsRulesValue ??= new List<MapsCorsRule>();
 
-            return new MapsAccountPatch(tags, kind, sku, identity, uniqueId, disableLocalAuth, provisioningState, linkedResources?.ToList(), corsRulesValue != null ? new CorsRules(corsRulesValue?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new MapsAccountPatch(
+                tags,
+                kind,
+                sku,
+                identity,
+                uniqueId,
+                disableLocalAuth,
+                provisioningState,
+                linkedResources?.ToList(),
+                corsRulesValue != null ? new CorsRules(corsRulesValue?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsAccountSasContent"/>. </summary>
@@ -92,7 +119,14 @@ namespace Azure.ResourceManager.Maps.Models
         {
             regions ??= new List<string>();
 
-            return new MapsAccountSasContent(signingKey, principalId, regions?.ToList(), maxRatePerSecond, start, expiry, serializedAdditionalRawData: null);
+            return new MapsAccountSasContent(
+                signingKey,
+                principalId,
+                regions?.ToList(),
+                maxRatePerSecond,
+                start,
+                expiry,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsAccountSasToken"/>. </summary>
@@ -127,7 +161,15 @@ namespace Azure.ResourceManager.Maps.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MapsCreatorData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new MapsCreatorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsCreatorProperties"/>. </summary>

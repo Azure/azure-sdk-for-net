@@ -325,7 +325,23 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmProperties(Optional.ToNullable(tenantId), initialAdminObjectIds ?? new ChangeTrackingList<string>(), hsmUri.Value, Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), statusMessage.Value, Optional.ToNullable(provisioningState), networkAcls.Value, regions ?? new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>(), privateEndpointConnections ?? new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(scheduledPurgeDate), securityDomainProperties.Value, serializedAdditionalRawData);
+            return new ManagedHsmProperties(
+                Optional.ToNullable(tenantId),
+                initialAdminObjectIds ?? new ChangeTrackingList<string>(),
+                hsmUri.Value,
+                Optional.ToNullable(enableSoftDelete),
+                Optional.ToNullable(softDeleteRetentionInDays),
+                Optional.ToNullable(enablePurgeProtection),
+                Optional.ToNullable(createMode),
+                statusMessage.Value,
+                Optional.ToNullable(provisioningState),
+                networkAcls.Value,
+                regions ?? new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(scheduledPurgeDate),
+                securityDomainProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmProperties>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownJobOutput(odataType, error.Value, presetOverride.Value, Optional.ToNullable(state), Optional.ToNullable(progress), label.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
+            return new UnknownJobOutput(
+                odataType,
+                error.Value,
+                presetOverride.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(progress),
+                label.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobOutput>.Write(ModelReaderWriterOptions options)

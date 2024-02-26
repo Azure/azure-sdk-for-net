@@ -262,7 +262,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVirtualMachineCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData, properties.Value);
+            return new MachineLearningVirtualMachineCompute(
+                computeType,
+                computeLocation.Value,
+                Optional.ToNullable(provisioningState),
+                description.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(modifiedOn),
+                resourceId.Value,
+                provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(),
+                Optional.ToNullable(isAttachedCompute),
+                Optional.ToNullable(disableLocalAuth),
+                serializedAdditionalRawData,
+                properties.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningVirtualMachineCompute>.Write(ModelReaderWriterOptions options)

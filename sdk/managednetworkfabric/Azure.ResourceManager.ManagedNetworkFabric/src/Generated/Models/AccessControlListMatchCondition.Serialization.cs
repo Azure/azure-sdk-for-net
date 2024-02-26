@@ -269,7 +269,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListMatchCondition(protocolTypes ?? new ChangeTrackingList<string>(), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, etherTypes ?? new ChangeTrackingList<string>(), fragments ?? new ChangeTrackingList<string>(), ipLengths ?? new ChangeTrackingList<string>(), ttlValues ?? new ChangeTrackingList<string>(), dscpMarkings ?? new ChangeTrackingList<string>(), portCondition.Value);
+            return new AccessControlListMatchCondition(
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                vlanMatchCondition.Value,
+                ipCondition.Value,
+                serializedAdditionalRawData,
+                etherTypes ?? new ChangeTrackingList<string>(),
+                fragments ?? new ChangeTrackingList<string>(),
+                ipLengths ?? new ChangeTrackingList<string>(),
+                ttlValues ?? new ChangeTrackingList<string>(),
+                dscpMarkings ?? new ChangeTrackingList<string>(),
+                portCondition.Value);
         }
 
         BinaryData IPersistableModel<AccessControlListMatchCondition>.Write(ModelReaderWriterOptions options)

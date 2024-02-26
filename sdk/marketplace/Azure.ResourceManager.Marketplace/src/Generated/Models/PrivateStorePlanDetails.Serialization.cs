@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStorePlanDetails(planId.Value, Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value, serializedAdditionalRawData);
+            return new PrivateStorePlanDetails(
+                planId.Value,
+                Optional.ToNullable(status),
+                requestDate.Value,
+                justification.Value,
+                subscriptionId.Value,
+                subscriptionName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStorePlanDetails>.Write(ModelReaderWriterOptions options)

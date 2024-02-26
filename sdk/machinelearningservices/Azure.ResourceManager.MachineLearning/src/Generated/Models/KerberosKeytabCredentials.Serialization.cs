@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KerberosKeytabCredentials(credentialsType, serializedAdditionalRawData, secrets, kerberosKdcAddress, kerberosPrincipal, kerberosRealm);
+            return new KerberosKeytabCredentials(
+                credentialsType,
+                serializedAdditionalRawData,
+                secrets,
+                kerberosKdcAddress,
+                kerberosPrincipal,
+                kerberosRealm);
         }
 
         BinaryData IPersistableModel<KerberosKeytabCredentials>.Write(ModelReaderWriterOptions options)

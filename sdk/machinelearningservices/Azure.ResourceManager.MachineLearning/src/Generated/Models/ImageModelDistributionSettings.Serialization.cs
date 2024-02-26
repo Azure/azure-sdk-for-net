@@ -718,7 +718,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageModelDistributionSettings(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, serializedAdditionalRawData);
+            return new ImageModelDistributionSettings(
+                amsGradient.Value,
+                augmentations.Value,
+                beta1.Value,
+                beta2.Value,
+                distributed.Value,
+                earlyStopping.Value,
+                earlyStoppingDelay.Value,
+                earlyStoppingPatience.Value,
+                enableOnnxNormalization.Value,
+                evaluationFrequency.Value,
+                gradientAccumulationStep.Value,
+                layersToFreeze.Value,
+                learningRate.Value,
+                learningRateScheduler.Value,
+                modelName.Value,
+                momentum.Value,
+                nesterov.Value,
+                numberOfEpochs.Value,
+                numberOfWorkers.Value,
+                optimizer.Value,
+                randomSeed.Value,
+                stepLRGamma.Value,
+                stepLRStepSize.Value,
+                trainingBatchSize.Value,
+                validationBatchSize.Value,
+                warmupCosineLRCycles.Value,
+                warmupCosineLRWarmupEpochs.Value,
+                weightDecay.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageModelDistributionSettings>.Write(ModelReaderWriterOptions options)

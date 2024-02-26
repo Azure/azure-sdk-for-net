@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AacAudio(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate), Optional.ToNullable(profile));
+            return new AacAudio(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(channels),
+                Optional.ToNullable(samplingRate),
+                Optional.ToNullable(bitrate),
+                Optional.ToNullable(profile));
         }
 
         BinaryData IPersistableModel<AacAudio>.Write(ModelReaderWriterOptions options)

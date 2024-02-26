@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountTrackingEvent(eventLevel, eventTime, recordType, record.Value, error.Value, serializedAdditionalRawData);
+            return new IntegrationAccountTrackingEvent(
+                eventLevel,
+                eventTime,
+                recordType,
+                record.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountTrackingEvent>.Write(ModelReaderWriterOptions options)

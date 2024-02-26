@@ -268,7 +268,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastingTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode), serializedAdditionalRawData, allowedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>(), blockedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>());
+            return new ForecastingTrainingSettings(
+                Optional.ToNullable(enableDnnTraining),
+                Optional.ToNullable(enableModelExplainability),
+                Optional.ToNullable(enableOnnxCompatibleModels),
+                Optional.ToNullable(enableStackEnsemble),
+                Optional.ToNullable(enableVoteEnsemble),
+                Optional.ToNullable(ensembleModelDownloadTimeout),
+                stackEnsembleSettings.Value,
+                Optional.ToNullable(trainingMode),
+                serializedAdditionalRawData,
+                allowedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>(),
+                blockedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>());
         }
 
         BinaryData IPersistableModel<ForecastingTrainingSettings>.Write(ModelReaderWriterOptions options)

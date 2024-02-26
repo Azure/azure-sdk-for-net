@@ -182,7 +182,17 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingServiceBusQueueEndpointProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, serializedAdditionalRawData);
+            return new RoutingServiceBusQueueEndpointProperties(
+                Optional.ToNullable(id),
+                connectionString.Value,
+                endpointUri.Value,
+                entityPath.Value,
+                Optional.ToNullable(authenticationType),
+                identity.Value,
+                name,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingServiceBusQueueEndpointProperties>.Write(ModelReaderWriterOptions options)

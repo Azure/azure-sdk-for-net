@@ -471,7 +471,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(appInsightsEnabled), dataCollector.Value, Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
+            return new MachineLearningKubernetesOnlineDeployment(
+                codeConfiguration.Value,
+                description.Value,
+                environmentId.Value,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(appInsightsEnabled),
+                dataCollector.Value,
+                Optional.ToNullable(egressPublicNetworkAccess),
+                endpointComputeType,
+                instanceType.Value,
+                livenessProbe.Value,
+                model.Value,
+                modelMountPath.Value,
+                Optional.ToNullable(provisioningState),
+                readinessProbe.Value,
+                requestSettings.Value,
+                scaleSettings.Value,
+                containerResourceRequirements.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningKubernetesOnlineDeployment>.Write(ModelReaderWriterOptions options)

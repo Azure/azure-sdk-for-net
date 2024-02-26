@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceUpdate(Optional.ToNullable(maintenanceScope), Optional.ToNullable(impactType), Optional.ToNullable(status), Optional.ToNullable(impactDurationInSec), Optional.ToNullable(notBefore), resourceId.Value, serializedAdditionalRawData);
+            return new MaintenanceUpdate(
+                Optional.ToNullable(maintenanceScope),
+                Optional.ToNullable(impactType),
+                Optional.ToNullable(status),
+                Optional.ToNullable(impactDurationInSec),
+                Optional.ToNullable(notBefore),
+                resourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceUpdate>.Write(ModelReaderWriterOptions options)

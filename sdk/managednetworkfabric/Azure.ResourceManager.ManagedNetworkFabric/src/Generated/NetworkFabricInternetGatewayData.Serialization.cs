@@ -256,7 +256,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricInternetGatewayData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, annotation.Value, internetGatewayRuleId.Value, ipv4Address.Value, Optional.ToNullable(port), type0, networkFabricControllerId, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricInternetGatewayData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation.Value,
+                internetGatewayRuleId.Value,
+                ipv4Address.Value,
+                Optional.ToNullable(port),
+                type0,
+                networkFabricControllerId,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricInternetGatewayData>.Write(ModelReaderWriterOptions options)

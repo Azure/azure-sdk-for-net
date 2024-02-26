@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMonitoringInputDataBase(columns ?? new ChangeTrackingDictionary<string, string>(), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData);
+            return new UnknownMonitoringInputDataBase(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext.Value,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringInputDataBase>.Write(ModelReaderWriterOptions options)
