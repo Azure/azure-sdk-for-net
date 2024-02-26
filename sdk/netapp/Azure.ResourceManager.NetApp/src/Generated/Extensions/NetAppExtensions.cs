@@ -278,25 +278,25 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupVaultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="BackupVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetAppBackupVaultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetBackupVaultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBackupVaultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BackupVaultResource"/> object. </returns>
-        public static BackupVaultResource GetBackupVaultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBackupVaultResource"/> object. </returns>
+        public static NetAppBackupVaultResource GetNetAppBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
             if (client == null)
             {
                 throw new ArgumentNullException(nameof(client));
             }
 
-            return GetMockableNetAppArmClient(client).GetBackupVaultResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppBackupVaultResource(id);
         }
 
         /// <summary>

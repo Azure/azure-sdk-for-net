@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
-    public partial class Sample_BackupVaultCollection
+    public partial class Sample_NetAppBackupVaultCollection
     {
         // BackupVaults_List
         [NUnit.Framework.Test]
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this BackupVaultResource
-            BackupVaultCollection collection = netAppAccount.GetBackupVaults();
+            // get the collection of this NetAppBackupVaultResource
+            NetAppBackupVaultCollection collection = netAppAccount.GetNetAppBackupVaults();
 
             // invoke the operation and iterate over the result
-            await foreach (BackupVaultResource item in collection.GetAllAsync())
+            await foreach (NetAppBackupVaultResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                BackupVaultData resourceData = item.Data;
+                NetAppBackupVaultData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this BackupVaultResource
-            BackupVaultCollection collection = netAppAccount.GetBackupVaults();
+            // get the collection of this NetAppBackupVaultResource
+            NetAppBackupVaultCollection collection = netAppAccount.GetNetAppBackupVaults();
 
             // invoke the operation
             string backupVaultName = "backupVault1";
-            BackupVaultResource result = await collection.GetAsync(backupVaultName);
+            NetAppBackupVaultResource result = await collection.GetAsync(backupVaultName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupVaultData resourceData = result.Data;
+            NetAppBackupVaultData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this BackupVaultResource
-            BackupVaultCollection collection = netAppAccount.GetBackupVaults();
+            // get the collection of this NetAppBackupVaultResource
+            NetAppBackupVaultCollection collection = netAppAccount.GetNetAppBackupVaults();
 
             // invoke the operation
             string backupVaultName = "backupVault1";
@@ -141,13 +141,13 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this BackupVaultResource
-            BackupVaultCollection collection = netAppAccount.GetBackupVaults();
+            // get the collection of this NetAppBackupVaultResource
+            NetAppBackupVaultCollection collection = netAppAccount.GetNetAppBackupVaults();
 
             // invoke the operation
             string backupVaultName = "backupVault1";
-            NullableResponse<BackupVaultResource> response = await collection.GetIfExistsAsync(backupVaultName);
-            BackupVaultResource result = response.HasValue ? response.Value : null;
+            NullableResponse<NetAppBackupVaultResource> response = await collection.GetIfExistsAsync(backupVaultName);
+            NetAppBackupVaultResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                BackupVaultData resourceData = result.Data;
+                NetAppBackupVaultData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -184,18 +184,18 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this BackupVaultResource
-            BackupVaultCollection collection = netAppAccount.GetBackupVaults();
+            // get the collection of this NetAppBackupVaultResource
+            NetAppBackupVaultCollection collection = netAppAccount.GetNetAppBackupVaults();
 
             // invoke the operation
             string backupVaultName = "backupVault1";
-            BackupVaultData data = new BackupVaultData(new AzureLocation("eastus"));
-            ArmOperation<BackupVaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backupVaultName, data);
-            BackupVaultResource result = lro.Value;
+            NetAppBackupVaultData data = new NetAppBackupVaultData(new AzureLocation("eastus"));
+            ArmOperation<NetAppBackupVaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backupVaultName, data);
+            NetAppBackupVaultResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupVaultData resourceData = result.Data;
+            NetAppBackupVaultData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

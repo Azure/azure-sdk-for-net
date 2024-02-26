@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BackupVaultResource"/> and their operations.
-    /// Each <see cref="BackupVaultResource"/> in the collection will belong to the same instance of <see cref="NetAppAccountResource"/>.
-    /// To get a <see cref="BackupVaultCollection"/> instance call the GetBackupVaults method from an instance of <see cref="NetAppAccountResource"/>.
+    /// A class representing a collection of <see cref="NetAppBackupVaultResource"/> and their operations.
+    /// Each <see cref="NetAppBackupVaultResource"/> in the collection will belong to the same instance of <see cref="NetAppAccountResource"/>.
+    /// To get a <see cref="NetAppBackupVaultCollection"/> instance call the GetNetAppBackupVaults method from an instance of <see cref="NetAppAccountResource"/>.
     /// </summary>
-    public partial class BackupVaultCollection : ArmCollection, IEnumerable<BackupVaultResource>, IAsyncEnumerable<BackupVaultResource>
+    public partial class NetAppBackupVaultCollection : ArmCollection, IEnumerable<NetAppBackupVaultResource>, IAsyncEnumerable<NetAppBackupVaultResource>
     {
-        private readonly ClientDiagnostics _backupVaultClientDiagnostics;
-        private readonly BackupVaultsRestOperations _backupVaultRestClient;
+        private readonly ClientDiagnostics _netAppBackupVaultBackupVaultsClientDiagnostics;
+        private readonly BackupVaultsRestOperations _netAppBackupVaultBackupVaultsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BackupVaultCollection"/> class for mocking. </summary>
-        protected BackupVaultCollection()
+        /// <summary> Initializes a new instance of the <see cref="NetAppBackupVaultCollection"/> class for mocking. </summary>
+        protected NetAppBackupVaultCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupVaultCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppBackupVaultCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal BackupVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetAppBackupVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupVaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", BackupVaultResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BackupVaultResource.ResourceType, out string backupVaultApiVersion);
-            _backupVaultRestClient = new BackupVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupVaultApiVersion);
+            _netAppBackupVaultBackupVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppBackupVaultResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetAppBackupVaultResource.ResourceType, out string netAppBackupVaultBackupVaultsApiVersion);
+            _netAppBackupVaultBackupVaultsRestClient = new BackupVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppBackupVaultBackupVaultsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BackupVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupVaultName, BackupVaultData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetAppBackupVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupVaultName, NetAppBackupVaultData data, CancellationToken cancellationToken = default)
         {
             if (backupVaultName == null)
             {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentNullException(nameof(data));
             }
 
-            using var scope = _backupVaultClientDiagnostics.CreateScope("BackupVaultCollection.CreateOrUpdate");
+            using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _backupVaultRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<BackupVaultResource>(new BackupVaultOperationSource(Client), _backupVaultClientDiagnostics, Pipeline, _backupVaultRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _netAppBackupVaultBackupVaultsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetAppBackupVaultResource>(new NetAppBackupVaultOperationSource(Client), _netAppBackupVaultBackupVaultsClientDiagnostics, Pipeline, _netAppBackupVaultBackupVaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BackupVaultResource> CreateOrUpdate(WaitUntil waitUntil, string backupVaultName, BackupVaultData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetAppBackupVaultResource> CreateOrUpdate(WaitUntil waitUntil, string backupVaultName, NetAppBackupVaultData data, CancellationToken cancellationToken = default)
         {
             if (backupVaultName == null)
             {
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentNullException(nameof(data));
             }
 
-            using var scope = _backupVaultClientDiagnostics.CreateScope("BackupVaultCollection.CreateOrUpdate");
+            using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _backupVaultRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, data, cancellationToken);
-                var operation = new NetAppArmOperation<BackupVaultResource>(new BackupVaultOperationSource(Client), _backupVaultClientDiagnostics, Pipeline, _backupVaultRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _netAppBackupVaultBackupVaultsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, data, cancellationToken);
+                var operation = new NetAppArmOperation<NetAppBackupVaultResource>(new NetAppBackupVaultOperationSource(Client), _netAppBackupVaultBackupVaultsClientDiagnostics, Pipeline, _netAppBackupVaultBackupVaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
-        public virtual async Task<Response<BackupVaultResource>> GetAsync(string backupVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBackupVaultResource>> GetAsync(string backupVaultName, CancellationToken cancellationToken = default)
         {
             if (backupVaultName == null)
             {
@@ -207,14 +207,14 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
             }
 
-            using var scope = _backupVaultClientDiagnostics.CreateScope("BackupVaultCollection.Get");
+            using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.Get");
             scope.Start();
             try
             {
-                var response = await _backupVaultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken).ConfigureAwait(false);
+                var response = await _netAppBackupVaultBackupVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
-        public virtual Response<BackupVaultResource> Get(string backupVaultName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppBackupVaultResource> Get(string backupVaultName, CancellationToken cancellationToken = default)
         {
             if (backupVaultName == null)
             {
@@ -259,14 +259,14 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
             }
 
-            using var scope = _backupVaultClientDiagnostics.CreateScope("BackupVaultCollection.Get");
+            using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.Get");
             scope.Start();
             try
             {
-                var response = _backupVaultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken);
+                var response = _netAppBackupVaultBackupVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,17 +292,17 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupVaultResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppBackupVaultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupVaultRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupVaultRestClient.CreateListByNetAppAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupVaultResource(Client, BackupVaultData.DeserializeBackupVaultData(e)), _backupVaultClientDiagnostics, Pipeline, "BackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppBackupVaultBackupVaultsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppBackupVaultBackupVaultsRestClient.CreateListByNetAppAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppBackupVaultResource(Client, NetAppBackupVaultData.DeserializeNetAppBackupVaultData(e)), _netAppBackupVaultBackupVaultsClientDiagnostics, Pipeline, "NetAppBackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -322,17 +322,17 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupVaultResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppBackupVaultResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupVaultRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupVaultRestClient.CreateListByNetAppAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupVaultResource(Client, BackupVaultData.DeserializeBackupVaultData(e)), _backupVaultClientDiagnostics, Pipeline, "BackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppBackupVaultBackupVaultsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppBackupVaultBackupVaultsRestClient.CreateListByNetAppAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppBackupVaultResource(Client, NetAppBackupVaultData.DeserializeNetAppBackupVaultData(e)), _netAppBackupVaultBackupVaultsClientDiagnostics, Pipeline, "NetAppBackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
             }
 
-            using var scope = _backupVaultClientDiagnostics.CreateScope("BackupVaultCollection.Exists");
+            using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _backupVaultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _netAppBackupVaultBackupVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,11 +421,11 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
             }
 
-            using var scope = _backupVaultClientDiagnostics.CreateScope("BackupVaultCollection.Exists");
+            using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.Exists");
             scope.Start();
             try
             {
-                var response = _backupVaultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken: cancellationToken);
+                var response = _netAppBackupVaultBackupVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
-        public virtual async Task<NullableResponse<BackupVaultResource>> GetIfExistsAsync(string backupVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetAppBackupVaultResource>> GetIfExistsAsync(string backupVaultName, CancellationToken cancellationToken = default)
         {
             if (backupVaultName == null)
             {
@@ -471,14 +471,14 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
             }
 
-            using var scope = _backupVaultClientDiagnostics.CreateScope("BackupVaultCollection.GetIfExists");
+            using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _backupVaultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _netAppBackupVaultBackupVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<BackupVaultResource>(response.GetRawResponse());
-                return Response.FromValue(new BackupVaultResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetAppBackupVaultResource>(response.GetRawResponse());
+                return Response.FromValue(new NetAppBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
-        public virtual NullableResponse<BackupVaultResource> GetIfExists(string backupVaultName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetAppBackupVaultResource> GetIfExists(string backupVaultName, CancellationToken cancellationToken = default)
         {
             if (backupVaultName == null)
             {
@@ -523,14 +523,14 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
             }
 
-            using var scope = _backupVaultClientDiagnostics.CreateScope("BackupVaultCollection.GetIfExists");
+            using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _backupVaultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken: cancellationToken);
+                var response = _netAppBackupVaultBackupVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupVaultName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<BackupVaultResource>(response.GetRawResponse());
-                return Response.FromValue(new BackupVaultResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetAppBackupVaultResource>(response.GetRawResponse());
+                return Response.FromValue(new NetAppBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        IEnumerator<BackupVaultResource> IEnumerable<BackupVaultResource>.GetEnumerator()
+        IEnumerator<NetAppBackupVaultResource> IEnumerable<NetAppBackupVaultResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.NetApp
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BackupVaultResource> IAsyncEnumerable<BackupVaultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetAppBackupVaultResource> IAsyncEnumerable<NetAppBackupVaultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

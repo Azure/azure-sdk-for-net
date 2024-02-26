@@ -16,7 +16,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
-    public partial class Sample_BackupVaultResource
+    public partial class Sample_NetAppBackupVaultResource
     {
         // BackupVaults_Get
         [NUnit.Framework.Test]
@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BackupVaultResource created on azure
-            // for more information of creating BackupVaultResource, please refer to the document of BackupVaultResource
+            // this example assumes you already have this NetAppBackupVaultResource created on azure
+            // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
-            ResourceIdentifier backupVaultResourceId = BackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
-            BackupVaultResource backupVault = client.GetBackupVaultResource(backupVaultResourceId);
+            ResourceIdentifier netAppBackupVaultResourceId = NetAppBackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
+            NetAppBackupVaultResource netAppBackupVault = client.GetNetAppBackupVaultResource(netAppBackupVaultResourceId);
 
             // invoke the operation
-            BackupVaultResource result = await backupVault.GetAsync();
+            NetAppBackupVaultResource result = await netAppBackupVault.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupVaultData resourceData = result.Data;
+            NetAppBackupVaultData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -63,29 +63,29 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BackupVaultResource created on azure
-            // for more information of creating BackupVaultResource, please refer to the document of BackupVaultResource
+            // this example assumes you already have this NetAppBackupVaultResource created on azure
+            // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
-            ResourceIdentifier backupVaultResourceId = BackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
-            BackupVaultResource backupVault = client.GetBackupVaultResource(backupVaultResourceId);
+            ResourceIdentifier netAppBackupVaultResourceId = NetAppBackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
+            NetAppBackupVaultResource netAppBackupVault = client.GetNetAppBackupVaultResource(netAppBackupVaultResourceId);
 
             // invoke the operation
-            BackupVaultPatch patch = new BackupVaultPatch()
+            NetAppBackupVaultPatch patch = new NetAppBackupVaultPatch()
             {
                 Tags =
 {
 ["Tag1"] = "Value1",
 },
             };
-            ArmOperation<BackupVaultResource> lro = await backupVault.UpdateAsync(WaitUntil.Completed, patch);
-            BackupVaultResource result = lro.Value;
+            ArmOperation<NetAppBackupVaultResource> lro = await netAppBackupVault.UpdateAsync(WaitUntil.Completed, patch);
+            NetAppBackupVaultResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupVaultData resourceData = result.Data;
+            NetAppBackupVaultData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BackupVaultResource created on azure
-            // for more information of creating BackupVaultResource, please refer to the document of BackupVaultResource
+            // this example assumes you already have this NetAppBackupVaultResource created on azure
+            // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "resourceGroup";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
-            ResourceIdentifier backupVaultResourceId = BackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
-            BackupVaultResource backupVault = client.GetBackupVaultResource(backupVaultResourceId);
+            ResourceIdentifier netAppBackupVaultResourceId = NetAppBackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
+            NetAppBackupVaultResource netAppBackupVault = client.GetNetAppBackupVaultResource(netAppBackupVaultResourceId);
 
             // invoke the operation
-            await backupVault.DeleteAsync(WaitUntil.Completed);
+            await netAppBackupVault.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

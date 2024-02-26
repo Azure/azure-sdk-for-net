@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppSubvolumeMetadata(id, name, resourceType, systemData, path, parentPath, size, bytesUsed, permissions, createdOn, accessedOn, modifiedOn, changedOn, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.BackupVaultData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -795,12 +795,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <returns> A new <see cref="NetApp.BackupVaultData"/> instance for mocking. </returns>
-        public static BackupVaultData BackupVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string provisioningState = null)
+        /// <returns> A new <see cref="NetApp.NetAppBackupVaultData"/> instance for mocking. </returns>
+        public static NetAppBackupVaultData NetAppBackupVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupVaultData(id, name, resourceType, systemData, tags, location, provisioningState, serializedAdditionalRawData: null);
+            return new NetAppBackupVaultData(id, name, resourceType, systemData, tags, location, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeBackupBackupRestoreFilesContent"/>. </summary>

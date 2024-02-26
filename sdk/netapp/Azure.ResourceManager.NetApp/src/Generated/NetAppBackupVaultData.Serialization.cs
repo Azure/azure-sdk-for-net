@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class BackupVaultData : IUtf8JsonSerializable, IJsonModel<BackupVaultData>
+    public partial class NetAppBackupVaultData : IUtf8JsonSerializable, IJsonModel<NetAppBackupVaultData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupVaultData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBackupVaultData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<BackupVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppBackupVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupVaultData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,19 +86,19 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteEndObject();
         }
 
-        BackupVaultData IJsonModel<BackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppBackupVaultData IJsonModel<NetAppBackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupVaultData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackupVaultData(document.RootElement, options);
+            return DeserializeNetAppBackupVaultData(document.RootElement, options);
         }
 
-        internal static BackupVaultData DeserializeBackupVaultData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppBackupVaultData DeserializeNetAppBackupVaultData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -183,38 +183,38 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, serializedAdditionalRawData);
+            return new NetAppBackupVaultData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BackupVaultData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppBackupVaultData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupVaultData)} does not support '{options.Format}' format.");
             }
         }
 
-        BackupVaultData IPersistableModel<BackupVaultData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppBackupVaultData IPersistableModel<NetAppBackupVaultData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBackupVaultData(document.RootElement, options);
+                        return DeserializeNetAppBackupVaultData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupVaultData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BackupVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppBackupVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

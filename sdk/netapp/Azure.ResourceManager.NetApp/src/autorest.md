@@ -101,6 +101,7 @@ prepend-rp-prefix:
   - KeyVaultStatus
   - RegionInfo
   - EncryptionIdentity
+  - BackupVault
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid

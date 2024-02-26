@@ -8,11 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> Backup Vault information. </summary>
-    public partial class BackupVaultPatch
+    /// <summary>
+    /// A class representing the NetAppBackupVault data model.
+    /// Backup Vault information
+    /// </summary>
+    public partial class NetAppBackupVaultData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +50,33 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackupVaultPatch"/>. </summary>
-        public BackupVaultPatch()
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupVaultData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        public NetAppBackupVaultData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupVaultPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupVaultData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupVaultPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Tags = tags;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupVaultData"/> for deserialization. </summary>
+        internal NetAppBackupVaultData()
+        {
+        }
+
+        /// <summary> Azure lifecycle management. </summary>
+        public string ProvisioningState { get; }
     }
 }

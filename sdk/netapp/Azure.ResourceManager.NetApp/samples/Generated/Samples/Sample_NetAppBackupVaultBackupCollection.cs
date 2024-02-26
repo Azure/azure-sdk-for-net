@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BackupVaultResource created on azure
-            // for more information of creating BackupVaultResource, please refer to the document of BackupVaultResource
+            // this example assumes you already have this NetAppBackupVaultResource created on azure
+            // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
-            ResourceIdentifier backupVaultResourceId = BackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
-            BackupVaultResource backupVault = client.GetBackupVaultResource(backupVaultResourceId);
+            ResourceIdentifier netAppBackupVaultResourceId = NetAppBackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
+            NetAppBackupVaultResource netAppBackupVault = client.GetNetAppBackupVaultResource(netAppBackupVaultResourceId);
 
             // get the collection of this NetAppBackupVaultBackupResource
-            NetAppBackupVaultBackupCollection collection = backupVault.GetNetAppBackupVaultBackups();
+            NetAppBackupVaultBackupCollection collection = netAppBackupVault.GetNetAppBackupVaultBackups();
 
             // invoke the operation and iterate over the result
             await foreach (NetAppBackupVaultBackupResource item in collection.GetAllAsync())
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BackupVaultResource created on azure
-            // for more information of creating BackupVaultResource, please refer to the document of BackupVaultResource
+            // this example assumes you already have this NetAppBackupVaultResource created on azure
+            // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
-            ResourceIdentifier backupVaultResourceId = BackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
-            BackupVaultResource backupVault = client.GetBackupVaultResource(backupVaultResourceId);
+            ResourceIdentifier netAppBackupVaultResourceId = NetAppBackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
+            NetAppBackupVaultResource netAppBackupVault = client.GetNetAppBackupVaultResource(netAppBackupVaultResourceId);
 
             // get the collection of this NetAppBackupVaultBackupResource
-            NetAppBackupVaultBackupCollection collection = backupVault.GetNetAppBackupVaultBackups();
+            NetAppBackupVaultBackupCollection collection = netAppBackupVault.GetNetAppBackupVaultBackups();
 
             // invoke the operation
             string backupName = "backup1";
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BackupVaultResource created on azure
-            // for more information of creating BackupVaultResource, please refer to the document of BackupVaultResource
+            // this example assumes you already have this NetAppBackupVaultResource created on azure
+            // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
-            ResourceIdentifier backupVaultResourceId = BackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
-            BackupVaultResource backupVault = client.GetBackupVaultResource(backupVaultResourceId);
+            ResourceIdentifier netAppBackupVaultResourceId = NetAppBackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
+            NetAppBackupVaultResource netAppBackupVault = client.GetNetAppBackupVaultResource(netAppBackupVaultResourceId);
 
             // get the collection of this NetAppBackupVaultBackupResource
-            NetAppBackupVaultBackupCollection collection = backupVault.GetNetAppBackupVaultBackups();
+            NetAppBackupVaultBackupCollection collection = netAppBackupVault.GetNetAppBackupVaultBackups();
 
             // invoke the operation
             string backupName = "backup1";
@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BackupVaultResource created on azure
-            // for more information of creating BackupVaultResource, please refer to the document of BackupVaultResource
+            // this example assumes you already have this NetAppBackupVaultResource created on azure
+            // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
-            ResourceIdentifier backupVaultResourceId = BackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
-            BackupVaultResource backupVault = client.GetBackupVaultResource(backupVaultResourceId);
+            ResourceIdentifier netAppBackupVaultResourceId = NetAppBackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
+            NetAppBackupVaultResource netAppBackupVault = client.GetNetAppBackupVaultResource(netAppBackupVaultResourceId);
 
             // get the collection of this NetAppBackupVaultBackupResource
-            NetAppBackupVaultBackupCollection collection = backupVault.GetNetAppBackupVaultBackups();
+            NetAppBackupVaultBackupCollection collection = netAppBackupVault.GetNetAppBackupVaultBackups();
 
             // invoke the operation
             string backupName = "backup1";
@@ -180,17 +180,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BackupVaultResource created on azure
-            // for more information of creating BackupVaultResource, please refer to the document of BackupVaultResource
+            // this example assumes you already have this NetAppBackupVaultResource created on azure
+            // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
-            ResourceIdentifier backupVaultResourceId = BackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
-            BackupVaultResource backupVault = client.GetBackupVaultResource(backupVaultResourceId);
+            ResourceIdentifier netAppBackupVaultResourceId = NetAppBackupVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupVaultName);
+            NetAppBackupVaultResource netAppBackupVault = client.GetNetAppBackupVaultResource(netAppBackupVaultResourceId);
 
             // get the collection of this NetAppBackupVaultBackupResource
-            NetAppBackupVaultBackupCollection collection = backupVault.GetNetAppBackupVaultBackups();
+            NetAppBackupVaultBackupCollection collection = netAppBackupVault.GetNetAppBackupVaultBackups();
 
             // invoke the operation
             string backupName = "backup1";

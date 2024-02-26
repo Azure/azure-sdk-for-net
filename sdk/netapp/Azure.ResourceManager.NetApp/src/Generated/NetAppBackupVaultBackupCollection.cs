@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A class representing a collection of <see cref="NetAppBackupVaultBackupResource"/> and their operations.
-    /// Each <see cref="NetAppBackupVaultBackupResource"/> in the collection will belong to the same instance of <see cref="BackupVaultResource"/>.
-    /// To get a <see cref="NetAppBackupVaultBackupCollection"/> instance call the GetNetAppBackupVaultBackups method from an instance of <see cref="BackupVaultResource"/>.
+    /// Each <see cref="NetAppBackupVaultBackupResource"/> in the collection will belong to the same instance of <see cref="NetAppBackupVaultResource"/>.
+    /// To get a <see cref="NetAppBackupVaultBackupCollection"/> instance call the GetNetAppBackupVaultBackups method from an instance of <see cref="NetAppBackupVaultResource"/>.
     /// </summary>
     public partial class NetAppBackupVaultBackupCollection : ArmCollection, IEnumerable<NetAppBackupVaultBackupResource>, IAsyncEnumerable<NetAppBackupVaultBackupResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.NetApp
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BackupVaultResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BackupVaultResource.ResourceType), nameof(id));
+            if (id.ResourceType != NetAppBackupVaultResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetAppBackupVaultResource.ResourceType), nameof(id));
         }
 
         /// <summary>

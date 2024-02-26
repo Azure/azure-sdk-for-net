@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.NetApp.Tests
         internal NetAppAccountBackupCollection _accountBackupCollection;
         internal NetAppVolumeBackupCollection _volumeBackupCollection;
         internal NetAppVolumeResource _volumeResource;
-        internal BackupVaultCollection _backupVaultCollection { get => _netAppAccount.GetBackupVaults(); }
-        internal BackupVaultResource _backupVaultResource;
+        internal NetAppBackupVaultCollection _backupVaultCollection { get => _netAppAccount.GetNetAppBackupVaults(); }
+        internal NetAppBackupVaultResource _backupVaultResource;
         internal NetAppBackupVaultBackupCollection _backupCollection { get => _backupVaultResource.GetNetAppBackupVaultBackups(); }
         public ANFBackupTests(bool isAsync) : base(isAsync)
         {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = await CreateResourceGroupAsync(location:DefaultLocation);
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, DefaultLocation);
             _netAppAccount = (await _netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(location:DefaultLocation))).Value;
-            BackupVaultData backupVaultData = new BackupVaultData(DefaultLocation);
+            NetAppBackupVaultData backupVaultData = new NetAppBackupVaultData(DefaultLocation);
             string backupVaultName = Recording.GenerateAssetName("backupVault-");
-            ArmOperation<BackupVaultResource> lro = await _backupVaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupVaultName, backupVaultData);
+            ArmOperation<NetAppBackupVaultResource> lro = await _backupVaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupVaultName, backupVaultData);
             _backupVaultResource = lro.Value;
 
             CapacityPoolData capactiyPoolData = new(DefaultLocation, _poolSize.Value, NetAppFileServiceLevel.Premium);

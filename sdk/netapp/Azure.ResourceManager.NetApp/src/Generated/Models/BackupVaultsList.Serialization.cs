@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<BackupVaultData> collection && collection.IsUndefined))
+            if (!(Value is ChangeTrackingList<NetAppBackupVaultData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<BackupVaultData> value = default;
+            IReadOnlyList<NetAppBackupVaultData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<BackupVaultData> array = new List<BackupVaultData>();
+                    List<NetAppBackupVaultData> array = new List<NetAppBackupVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupVaultData.DeserializeBackupVaultData(item, options));
+                        array.Add(NetAppBackupVaultData.DeserializeNetAppBackupVaultData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultsList(value ?? new ChangeTrackingList<BackupVaultData>(), nextLink.Value, serializedAdditionalRawData);
+            return new BackupVaultsList(value ?? new ChangeTrackingList<NetAppBackupVaultData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultsList>.Write(ModelReaderWriterOptions options)

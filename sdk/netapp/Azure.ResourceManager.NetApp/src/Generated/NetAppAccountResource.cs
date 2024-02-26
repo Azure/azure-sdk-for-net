@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.NetApp
             return GetNetAppVolumeGroups().Get(volumeGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BackupVaultResources in the NetAppAccount. </summary>
-        /// <returns> An object representing collection of BackupVaultResources and their operations over a BackupVaultResource. </returns>
-        public virtual BackupVaultCollection GetBackupVaults()
+        /// <summary> Gets a collection of NetAppBackupVaultResources in the NetAppAccount. </summary>
+        /// <returns> An object representing collection of NetAppBackupVaultResources and their operations over a NetAppBackupVaultResource. </returns>
+        public virtual NetAppBackupVaultCollection GetNetAppBackupVaults()
         {
-            return GetCachedClient(client => new BackupVaultCollection(client, Id));
+            return GetCachedClient(client => new NetAppBackupVaultCollection(client, Id));
         }
 
         /// <summary>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,9 +411,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BackupVaultResource>> GetBackupVaultAsync(string backupVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBackupVaultResource>> GetNetAppBackupVaultAsync(string backupVaultName, CancellationToken cancellationToken = default)
         {
-            return await GetBackupVaults().GetAsync(backupVaultName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppBackupVaults().GetAsync(backupVaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupVaultResource"/></description>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,9 +442,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BackupVaultResource> GetBackupVault(string backupVaultName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppBackupVaultResource> GetNetAppBackupVault(string backupVaultName, CancellationToken cancellationToken = default)
         {
-            return GetBackupVaults().Get(backupVaultName, cancellationToken);
+            return GetNetAppBackupVaults().Get(backupVaultName, cancellationToken);
         }
 
         /// <summary>

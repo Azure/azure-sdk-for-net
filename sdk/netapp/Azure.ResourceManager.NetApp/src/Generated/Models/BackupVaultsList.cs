@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="BackupVaultsList"/>. </summary>
         internal BackupVaultsList()
         {
-            Value = new ChangeTrackingList<BackupVaultData>();
+            Value = new ChangeTrackingList<NetAppBackupVaultData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupVaultsList"/>. </summary>
         /// <param name="value"> A list of Backup Vaults. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupVaultsList(IReadOnlyList<BackupVaultData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupVaultsList(IReadOnlyList<NetAppBackupVaultData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> A list of Backup Vaults. </summary>
-        public IReadOnlyList<BackupVaultData> Value { get; }
+        public IReadOnlyList<NetAppBackupVaultData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
