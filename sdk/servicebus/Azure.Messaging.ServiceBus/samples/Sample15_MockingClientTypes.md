@@ -28,8 +28,8 @@ For more general information and examples on mocking with the Azure SDK, please 
   - [Simulating the `ServiceBusProcessor` running](#for-the-servicebusprocessor-1)
   - [Simulating the `ServiceBusSessionProcessor` running](#for-the-servicebussessionprocessor-1)
 - **CRUD operations**
-  - []()
-  - [Creating Topics and Subscriptions](#creating-topics-and-subscriptions-using-the-servicebusadministrationclient)
+  - [Getting `NamespaceProperties`](#get-namespace-properties-using-the-servicebusadministrationclient)
+  - [Creating topics and subscriptions](#creating-topics-and-subscriptions-using-the-servicebusadministrationclient)
   - [Creating a queue](#creating-a-queue-using-the-servicebusadministrationclient)
   - [Creating a rule](#creating-a-rule-using-the-servicebusadministrationclient)
 - **Rule Manager**
