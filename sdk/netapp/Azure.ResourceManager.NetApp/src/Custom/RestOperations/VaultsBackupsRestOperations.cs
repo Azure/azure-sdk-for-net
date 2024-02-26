@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupName, true);
             uri.AppendPath("/restoreFiles", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _backup_old_apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 uri.AppendQuery("volumeResourceId", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", _backup_old_apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

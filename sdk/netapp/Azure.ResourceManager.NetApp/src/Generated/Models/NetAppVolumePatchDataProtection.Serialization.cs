@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumePatchDataProtection : IUtf8JsonSerializable, IJsonModel<NetAppVolumePatchDataProtection>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumePatchDataProtection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
         void IJsonModel<NetAppVolumePatchDataProtection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatchDataProtection>)this).GetFormatFromOptions(options) : options.Format;

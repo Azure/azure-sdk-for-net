@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Status of the mirror relationship
-    /// Serialized Name: RelationshipStatus
-    /// </summary>
+    /// <summary> Status of the mirror relationship. </summary>
     public readonly partial struct NetAppRelationshipStatus : IEquatable<NetAppRelationshipStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string IdleValue = "Idle";
         private const string TransferringValue = "Transferring";
 
-        /// <summary>
-        /// Idle
-        /// Serialized Name: RelationshipStatus.Idle
-        /// </summary>
+        /// <summary> Idle. </summary>
         public static NetAppRelationshipStatus Idle { get; } = new NetAppRelationshipStatus(IdleValue);
-        /// <summary>
-        /// Transferring
-        /// Serialized Name: RelationshipStatus.Transferring
-        /// </summary>
+        /// <summary> Transferring. </summary>
         public static NetAppRelationshipStatus Transferring { get; } = new NetAppRelationshipStatus(TransferringValue);
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are the same. </summary>
         public static bool operator ==(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => left.Equals(right);

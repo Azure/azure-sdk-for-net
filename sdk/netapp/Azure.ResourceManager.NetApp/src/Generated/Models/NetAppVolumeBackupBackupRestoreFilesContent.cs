@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Restore payload for Single File Backup Restore
-    /// Serialized Name: BackupRestoreFiles
-    /// </summary>
+    /// <summary> Restore payload for Single File Backup Restore. </summary>
     public partial class NetAppVolumeBackupBackupRestoreFilesContent
     {
         /// <summary>
@@ -51,18 +48,28 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupBackupRestoreFilesContent"/>. </summary>
-        /// <param name="fileList">
-        /// List of files to be restored
-        /// Serialized Name: BackupRestoreFiles.fileList
-        /// </param>
-        /// <param name="restoreFilePath">
-        /// Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default
-        /// Serialized Name: BackupRestoreFiles.restoreFilePath
-        /// </param>
-        /// <param name="destinationVolumeId">
-        /// Resource Id of the destination volume on which the files need to be restored
-        /// Serialized Name: BackupRestoreFiles.destinationVolumeId
-        /// </param>
+        /// <param name="fileList"> List of files to be restored. </param>
+        /// <param name="destinationVolumeId"> Resource Id of the destination volume on which the files need to be restored. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileList"/> or <paramref name="destinationVolumeId"/> is null. </exception>
+        public NetAppVolumeBackupBackupRestoreFilesContent(IEnumerable<string> fileList, ResourceIdentifier destinationVolumeId)
+        {
+            if (fileList == null)
+            {
+                throw new ArgumentNullException(nameof(fileList));
+            }
+            if (destinationVolumeId == null)
+            {
+                throw new ArgumentNullException(nameof(destinationVolumeId));
+            }
+
+            FileList = fileList.ToList();
+            DestinationVolumeId = destinationVolumeId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupBackupRestoreFilesContent"/>. </summary>
+        /// <param name="fileList"> List of files to be restored. </param>
+        /// <param name="restoreFilePath"> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </param>
+        /// <param name="destinationVolumeId"> Resource Id of the destination volume on which the files need to be restored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeBackupBackupRestoreFilesContent(IList<string> fileList, string restoreFilePath, ResourceIdentifier destinationVolumeId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,5 +83,12 @@ namespace Azure.ResourceManager.NetApp.Models
         internal NetAppVolumeBackupBackupRestoreFilesContent()
         {
         }
+
+        /// <summary> List of files to be restored. </summary>
+        public IList<string> FileList { get; }
+        /// <summary> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </summary>
+        public string RestoreFilePath { get; set; }
+        /// <summary> Resource Id of the destination volume on which the files need to be restored. </summary>
+        public ResourceIdentifier DestinationVolumeId { get; }
     }
 }

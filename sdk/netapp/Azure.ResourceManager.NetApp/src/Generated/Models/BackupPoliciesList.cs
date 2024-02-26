@@ -12,10 +12,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List of Backup Policies
-    /// Serialized Name: BackupPoliciesList
-    /// </summary>
+    /// <summary> List of Backup Policies. </summary>
     internal partial class BackupPoliciesList
     {
         /// <summary>
@@ -57,10 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupPoliciesList"/>. </summary>
-        /// <param name="value">
-        /// A list of backup policies
-        /// Serialized Name: BackupPoliciesList.value
-        /// </param>
+        /// <param name="value"> A list of backup policies. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupPoliciesList(IReadOnlyList<NetAppBackupPolicyData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,10 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of backup policies
-        /// Serialized Name: BackupPoliciesList.value
-        /// </summary>
+        /// <summary> A list of backup policies. </summary>
         public IReadOnlyList<NetAppBackupPolicyData> Value { get; }
     }
 }

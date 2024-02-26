@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Encryption migration request
-    /// Serialized Name: EncryptionMigrationRequest
-    /// </summary>
+    /// <summary> Encryption migration request. </summary>
     public partial class EncryptionMigrationContent
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EncryptionMigrationContent"/>. </summary>
-        /// <param name="virtualNetworkId">
-        /// Identifier for the virtual network
-        /// Serialized Name: EncryptionMigrationRequest.virtualNetworkId
-        /// </param>
-        /// <param name="privateEndpointId">
-        /// Identifier of the private endpoint to reach the Azure Key Vault
-        /// Serialized Name: EncryptionMigrationRequest.privateEndpointId
-        /// </param>
+        /// <param name="virtualNetworkId"> Identifier for the virtual network. </param>
+        /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> or <paramref name="privateEndpointId"/> is null. </exception>
         public EncryptionMigrationContent(string virtualNetworkId, string privateEndpointId)
         {
@@ -74,14 +65,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EncryptionMigrationContent"/>. </summary>
-        /// <param name="virtualNetworkId">
-        /// Identifier for the virtual network
-        /// Serialized Name: EncryptionMigrationRequest.virtualNetworkId
-        /// </param>
-        /// <param name="privateEndpointId">
-        /// Identifier of the private endpoint to reach the Azure Key Vault
-        /// Serialized Name: EncryptionMigrationRequest.privateEndpointId
-        /// </param>
+        /// <param name="virtualNetworkId"> Identifier for the virtual network. </param>
+        /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EncryptionMigrationContent(string virtualNetworkId, string privateEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,15 +80,9 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// Identifier for the virtual network
-        /// Serialized Name: EncryptionMigrationRequest.virtualNetworkId
-        /// </summary>
+        /// <summary> Identifier for the virtual network. </summary>
         public string VirtualNetworkId { get; }
-        /// <summary>
-        /// Identifier of the private endpoint to reach the Azure Key Vault
-        /// Serialized Name: EncryptionMigrationRequest.privateEndpointId
-        /// </summary>
+        /// <summary> Identifier of the private endpoint to reach the Azure Key Vault. </summary>
         public string PrivateEndpointId { get; }
     }
 }

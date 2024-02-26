@@ -12,10 +12,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List of Backups
-    /// Serialized Name: BackupsList
-    /// </summary>
+    /// <summary> List of Backups. </summary>
     internal partial class BackupsList
     {
         /// <summary>
@@ -51,14 +48,14 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackupsList"/>. </summary>
-        /// <param name="value">
-        /// A list of Backups
-        /// Serialized Name: BackupsList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of results.
-        /// Serialized Name: BackupsList.nextLink
-        /// </param>
+        internal BackupsList()
+        {
+            Value = new ChangeTrackingList<NetAppBackupData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupsList"/>. </summary>
+        /// <param name="value"> A list of Backups. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupsList(IReadOnlyList<NetAppBackupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +63,10 @@ namespace Azure.ResourceManager.NetApp.Models
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary>
-        /// URL to get the next set of results.
-        /// Serialized Name: BackupsList.nextLink
-        /// </summary>
+
+        /// <summary> A list of Backups. </summary>
+        public IReadOnlyList<NetAppBackupData> Value { get; }
+        /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

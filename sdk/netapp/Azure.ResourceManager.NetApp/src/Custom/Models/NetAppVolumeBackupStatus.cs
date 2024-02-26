@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models

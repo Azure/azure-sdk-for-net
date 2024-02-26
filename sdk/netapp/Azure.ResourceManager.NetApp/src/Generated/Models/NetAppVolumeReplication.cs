@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Replication properties
-    /// Serialized Name: Replication
-    /// </summary>
+    /// <summary> Replication properties. </summary>
     public partial class NetAppVolumeReplication
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
-        /// <param name="remoteVolumeResourceId">
-        /// The resource ID of the remote volume.
-        /// Serialized Name: Replication.remoteVolumeResourceId
-        /// </param>
+        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
         internal NetAppVolumeReplication(ResourceIdentifier remoteVolumeResourceId)
         {
@@ -66,22 +60,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
-        /// <param name="endpointType">
-        /// Indicates whether the local volume is the source or destination for the Volume Replication
-        /// Serialized Name: Replication.endpointType
-        /// </param>
-        /// <param name="replicationSchedule">
-        /// Schedule
-        /// Serialized Name: Replication.replicationSchedule
-        /// </param>
-        /// <param name="remoteVolumeResourceId">
-        /// The resource ID of the remote volume.
-        /// Serialized Name: Replication.remoteVolumeResourceId
-        /// </param>
-        /// <param name="remoteVolumeRegion">
-        /// The remote region for the other end of the Volume Replication.
-        /// Serialized Name: Replication.remoteVolumeRegion
-        /// </param>
+        /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
+        /// <param name="replicationSchedule"> Schedule. </param>
+        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
+        /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeReplication(NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -97,25 +79,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// Indicates whether the local volume is the source or destination for the Volume Replication
-        /// Serialized Name: Replication.endpointType
-        /// </summary>
+        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
         public NetAppEndpointType? EndpointType { get; }
-        /// <summary>
-        /// Schedule
-        /// Serialized Name: Replication.replicationSchedule
-        /// </summary>
+        /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; }
-        /// <summary>
-        /// The resource ID of the remote volume.
-        /// Serialized Name: Replication.remoteVolumeResourceId
-        /// </summary>
+        /// <summary> The resource ID of the remote volume. </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; }
-        /// <summary>
-        /// The remote region for the other end of the Volume Replication.
-        /// Serialized Name: Replication.remoteVolumeRegion
-        /// </summary>
+        /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; }
     }
 }

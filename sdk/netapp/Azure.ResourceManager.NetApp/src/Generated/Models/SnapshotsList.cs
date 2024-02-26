@@ -12,10 +12,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List of Snapshots
-    /// Serialized Name: SnapshotsList
-    /// </summary>
+    /// <summary> List of Snapshots. </summary>
     internal partial class SnapshotsList
     {
         /// <summary>
@@ -57,10 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
-        /// <param name="value">
-        /// A list of Snapshots
-        /// Serialized Name: SnapshotsList.value
-        /// </param>
+        /// <param name="value"> A list of Snapshots. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotsList(IReadOnlyList<NetAppVolumeSnapshotData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,10 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of Snapshots
-        /// Serialized Name: SnapshotsList.value
-        /// </summary>
+        /// <summary> A list of Snapshots. </summary>
         public IReadOnlyList<NetAppVolumeSnapshotData> Value { get; }
     }
 }

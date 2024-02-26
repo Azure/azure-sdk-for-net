@@ -20,6 +20,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -246,6 +249,4 @@ directive:
   # remove this operation because the Snapshots_Update defines an empty object
   - remove-operation: Snapshots_Update
 
-mgmt-debug:
-  show-serialized-names: true
 ```

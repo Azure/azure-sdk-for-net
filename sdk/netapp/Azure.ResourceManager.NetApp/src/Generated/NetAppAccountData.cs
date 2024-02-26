@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppAccount data model.
     /// NetApp account resource
-    /// Serialized Name: NetAppAccount
     /// </summary>
     public partial class NetAppAccountData : TrackedResourceData
     {
@@ -67,38 +66,14 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: NetAppAccount.etag
-        /// </param>
-        /// <param name="identity">
-        /// The identity used for the resource.
-        /// Serialized Name: NetAppAccount.identity
-        /// </param>
-        /// <param name="provisioningState">
-        /// Azure lifecycle management
-        /// Serialized Name: NetAppAccount.properties.provisioningState
-        /// </param>
-        /// <param name="activeDirectories">
-        /// Active Directories
-        /// Serialized Name: NetAppAccount.properties.activeDirectories
-        /// </param>
-        /// <param name="encryption">
-        /// Encryption settings
-        /// Serialized Name: NetAppAccount.properties.encryption
-        /// </param>
-        /// <param name="disableShowmount">
-        /// Shows the status of disableShowmount for all volumes under the subscription, null equals false
-        /// Serialized Name: NetAppAccount.properties.disableShowmount
-        /// </param>
-        /// <param name="nfsV4IdDomain">
-        /// Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes.
-        /// Serialized Name: NetAppAccount.properties.nfsV4IDDomain
-        /// </param>
-        /// <param name="isMultiAdEnabled">
-        /// This will have true value only if account is Multiple AD enabled.
-        /// Serialized Name: NetAppAccount.properties.isMultiAdEnabled
-        /// </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> The identity used for the resource. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="activeDirectories"> Active Directories. </param>
+        /// <param name="encryption"> Encryption settings. </param>
+        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
+        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
+        /// <param name="isMultiAdEnabled"> This will have true value only if account is Multiple AD enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, bool? isMultiAdEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -118,45 +93,21 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary>
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: NetAppAccount.etag
-        /// </summary>
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// The identity used for the resource.
-        /// Serialized Name: NetAppAccount.identity
-        /// </summary>
+        /// <summary> The identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Azure lifecycle management
-        /// Serialized Name: NetAppAccount.properties.provisioningState
-        /// </summary>
+        /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Active Directories
-        /// Serialized Name: NetAppAccount.properties.activeDirectories
-        /// </summary>
+        /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
-        /// <summary>
-        /// Encryption settings
-        /// Serialized Name: NetAppAccount.properties.encryption
-        /// </summary>
+        /// <summary> Encryption settings. </summary>
         public NetAppAccountEncryption Encryption { get; set; }
-        /// <summary>
-        /// Shows the status of disableShowmount for all volumes under the subscription, null equals false
-        /// Serialized Name: NetAppAccount.properties.disableShowmount
-        /// </summary>
+        /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
         public bool? DisableShowmount { get; }
-        /// <summary>
-        /// Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes.
-        /// Serialized Name: NetAppAccount.properties.nfsV4IDDomain
-        /// </summary>
+        /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
         public string NfsV4IdDomain { get; set; }
-        /// <summary>
-        /// This will have true value only if account is Multiple AD enabled.
-        /// Serialized Name: NetAppAccount.properties.isMultiAdEnabled
-        /// </summary>
+        /// <summary> This will have true value only if account is Multiple AD enabled. </summary>
         public bool? IsMultiAdEnabled { get; }
     }
 }
