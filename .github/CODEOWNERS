@@ -87,9 +87,6 @@
 # ServiceLabel: %Alerts Management
 # ServiceOwners:                                                   @liadtal @yairgil
 
-# ServiceLabel: %Application Insights
-# ServiceOwners:                                                   @azmonapplicationinsights
-
 # ServiceLabel: %ARM
 # ServiceOwners:                                                   @armleads-azure
 
@@ -156,9 +153,6 @@
 
 # ServiceLabel: %Azure Stack
 # ServiceOwners:                                                   @sijuman @sarathys @bganapa @rakku-ms
-
-# ServiceLabel: %Azure.Spring - Cosmos
-# ServiceOwners:                                                   @kushagraThapar
 
 # ServiceLabel: %Azure Arc Enabled Servers
 # ServiceOwners:                                                   @rpsqrd @edyoung
@@ -246,12 +240,6 @@
 /sdk/healthinsights/                                               @asaflevi-ms
 
 # ServiceLabel: %Cognitive - Health Insights
-# ServiceOwners:                                                   @asaflevi-ms
-
-# ServiceLabel: %Cognitive - Health Insights Cancer Profiling
-# ServiceOwners:                                                   @asaflevi-ms
-
-# ServiceLabel: %Cognitive - Health Insights Clinical Matching
 # ServiceOwners:                                                   @asaflevi-ms
 
 # PRLabel: %Cognitive - QnA Maker
@@ -368,9 +356,6 @@
 # ServiceLabel: %Confidential Ledger
 # ServiceOwners:                                                   @PallabPaul
 
-# ServiceLabel: %Consumption
-# ServiceOwners:                                                   @ccmbpxpcrew @ccmaxpcrew @ccmixpdevs @ccmshowbackdevs @TiagoCrewGitHubIssues
-
 # ServiceLabel: %Consumption - Billing
 # ServiceOwners:                                                   @ccmbpxpcrew
 
@@ -404,9 +389,6 @@
 
 # ServiceLabel: %Cosmos
 /sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
-
-# ServiceLabel: %Cost Management
-# ServiceOwners:                                                   @ccmbpxpcrew @ccmaxpcrew @ccmixpdevs @ccmshowbackdevs @TiagoCrewGitHubIssues
 
 # ServiceLabel: %Cost Management - Billing
 # ServiceOwners:                                                   @ccmbpxpcrew
@@ -483,9 +465,6 @@
 # ServiceLabel: %DevOps
 # ServiceOwners:                                                   @narula0781 @ashishonce @romil07
 
-# ServiceLabel: %Device Provisioning Service
-# ServiceOwners:                                                   @nberdy
-
 # PRLabel: %Device Update
 /sdk/deviceupdate/                                                 @dpokluda @sedols
 
@@ -497,15 +476,6 @@
 
 # ServiceLabel: %Digital Twins
 # ServiceOwners:                                                   @johngallardo @efriesner @abhinav-ghai @Aashish93-stack @sjiherzig @Satya-Kolluri
-
-# ServiceLabel: %IoT - CLI
-# ServiceOwners:                                                   @Azure/azure-iot-cli-triage
-
-# PRLabel: %IoT Models Repository
-/sdk/modelsrepository/                                             @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
-
-# ServiceLabel: %IoT Models Repository
-# ServiceOwners:                                                   @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
 
 # PRLabel: %TimeSeriesInsights
 /sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
@@ -567,23 +537,14 @@
 # PRLabel: %Iot
 /sdk/iot*/                                                         @ethanann-ms @vighatke
 
+# PRLabel: %Iot
+/sdk/modelsrepository/                                             @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
+
 # ServiceLabel: %IoT
-# ServiceOwners:                                                   @ethanann-ms @vighatke
+# ServiceOwners:                                                   @ethanann-ms @vighatke @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
 
-# PRLabel: %IotHub
-/sdk/iothub/                                                       @ethanann-ms @vighatke
-
-# ServiceLabel: %IotHub
-# ServiceOwners:                                                   @ethanann-ms @vighatke
-
-# ServiceLabel: %IotCentral
-# ServiceOwners:                                                   @iluican @jlian
-
-# ServiceLabel: %IotDPS
-# ServiceOwners:                                                   @iluican @jlian
-
-# ServiceLabel: %IotHub
-# ServiceOwners:                                                   @rkmanda @chieftn
+# ServiceLabel: %IoT - CLI
+# ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
 /sdk/keyvault/                                                     @heaths @schaabs @Azure/azsdk-keyvault
@@ -625,7 +586,7 @@
 # ServiceLabel: %Machine Learning Experimentation
 # ServiceOwners:                                                   @aashishb
 
-# ServiceLabel: %Managed Services
+# ServiceLabel: %ManagedServices
 # ServiceOwners:                                                   @Lighthouse-Azure
 
 # PRLabel: %Maps
@@ -667,6 +628,7 @@
 
 # ServiceLabel: %Monitor - Query
 # AzureSdkOwners:                                                  @nisha-bhatia
+# ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA
 
 # ServiceLabel: %Monitor - ApplicationInsights
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
@@ -778,9 +740,6 @@
 
 # ServiceLabel: %Image Analysis
 # ServiceOwners:                                                   @rhurey @dargilco
-
-# ServiceLabel: %Monitor - Operational Insights
-# ServiceOwners:                                                   @anatse @raronen @ischrei @danhadari @AzmonLogA
 
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva
@@ -923,9 +882,6 @@
 
 # ServiceLabel: %TimeseriesInsights
 # ServiceOwners:                                                   @Shipra1Mishra
-
-# ServiceLabel: %vFXT
-# ServiceOwners:                                                   @zhusijia26
 
 # PRLabel: %VideoAnalyzer
 /sdk/videoanalyzer/                                                @giakas
