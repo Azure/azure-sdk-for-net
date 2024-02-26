@@ -348,7 +348,27 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebChatSite(Optional.ToNullable(tenantId), siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), trustedOrigins ?? new ChangeTrackingList<string>(), Optional.ToNullable(isWebChatSpeechEnabled), Optional.ToNullable(isWebchatPreviewEnabled), serializedAdditionalRawData);
+            return new WebChatSite(
+                Optional.ToNullable(tenantId),
+                siteId.Value,
+                siteName,
+                key.Value,
+                key2.Value,
+                isEnabled,
+                Optional.ToNullable(isTokenEnabled),
+                Optional.ToNullable(isEndpointParametersEnabled),
+                Optional.ToNullable(isDetailedLoggingEnabled),
+                Optional.ToNullable(isBlockUserUploadEnabled),
+                Optional.ToNullable(isNoStorageEnabled),
+                Optional.ToNullable(eTag),
+                appId.Value,
+                Optional.ToNullable(isV1Enabled),
+                Optional.ToNullable(isV3Enabled),
+                Optional.ToNullable(isSecureSiteEnabled),
+                trustedOrigins ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isWebChatSpeechEnabled),
+                Optional.ToNullable(isWebchatPreviewEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebChatSite>.Write(ModelReaderWriterOptions options)

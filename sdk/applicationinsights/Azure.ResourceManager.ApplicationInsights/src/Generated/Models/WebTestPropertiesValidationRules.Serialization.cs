@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestPropertiesValidationRules(contentValidation.Value, Optional.ToNullable(sslCheck), Optional.ToNullable(sslCertRemainingLifetimeCheck), Optional.ToNullable(expectedHttpStatusCode), Optional.ToNullable(ignoreHttpStatusCode), serializedAdditionalRawData);
+            return new WebTestPropertiesValidationRules(
+                contentValidation.Value,
+                Optional.ToNullable(sslCheck),
+                Optional.ToNullable(sslCertRemainingLifetimeCheck),
+                Optional.ToNullable(expectedHttpStatusCode),
+                Optional.ToNullable(ignoreHttpStatusCode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestPropertiesValidationRules>.Write(ModelReaderWriterOptions options)

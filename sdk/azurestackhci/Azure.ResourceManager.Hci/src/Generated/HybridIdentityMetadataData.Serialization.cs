@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridIdentityMetadataData(id, name, type, systemData.Value, resourceUid.Value, publicKey.Value, identity, provisioningState.Value, serializedAdditionalRawData);
+            return new HybridIdentityMetadataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceUid.Value,
+                publicKey.Value,
+                identity,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridIdentityMetadataData>.Write(ModelReaderWriterOptions options)

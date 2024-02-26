@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName.Value, segments ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new UnknownWorkloadNetworkDhcpEntity(
+                dhcpType,
+                displayName.Value,
+                segments ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpEntity>.Write(ModelReaderWriterOptions options)

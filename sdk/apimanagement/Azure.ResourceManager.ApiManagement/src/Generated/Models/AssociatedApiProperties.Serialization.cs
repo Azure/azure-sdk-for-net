@@ -352,7 +352,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociatedApiProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, serializedAdditionalRawData, id.Value, name.Value, serviceUri.Value, path.Value, protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>());
+            return new AssociatedApiProperties(
+                description.Value,
+                authenticationSettings.Value,
+                subscriptionKeyParameterNames.Value,
+                Optional.ToNullable(type),
+                apiRevision.Value,
+                apiVersion.Value,
+                Optional.ToNullable(isCurrent),
+                Optional.ToNullable(isOnline),
+                apiRevisionDescription.Value,
+                apiVersionDescription.Value,
+                apiVersionSetId.Value,
+                Optional.ToNullable(subscriptionRequired),
+                termsOfServiceUri.Value,
+                contact.Value,
+                license.Value,
+                serializedAdditionalRawData,
+                id.Value,
+                name.Value,
+                serviceUri.Value,
+                path.Value,
+                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>());
         }
 
         BinaryData IPersistableModel<AssociatedApiProperties>.Write(ModelReaderWriterOptions options)

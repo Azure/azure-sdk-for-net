@@ -275,7 +275,21 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCustomDomainData(id, name, type, systemData.Value, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value, serializedAdditionalRawData);
+            return new FrontDoorCustomDomainData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                profileName.Value,
+                tlsSettings.Value,
+                azureDnsZone,
+                preValidatedCustomDomainResourceId.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deploymentStatus),
+                Optional.ToNullable(domainValidationState),
+                hostName.Value,
+                validationProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainData>.Write(ModelReaderWriterOptions options)

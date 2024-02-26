@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosTargetData(id, name, type, systemData.Value, Optional.ToNullable(location), properties, serializedAdditionalRawData);
+            return new ChaosTargetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosTargetData>.Write(ModelReaderWriterOptions options)

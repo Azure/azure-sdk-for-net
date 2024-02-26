@@ -258,7 +258,19 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunbookTestJob(Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), parameters ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new RunbookTestJob(
+                Optional.ToNullable(creationTime),
+                status.Value,
+                statusDetails.Value,
+                runOn.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                exception.Value,
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(lastStatusModifiedTime),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(logActivityTrace),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunbookTestJob>.Write(ModelReaderWriterOptions options)

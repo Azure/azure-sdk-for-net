@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookDraft(Optional.ToNullable(inEdit), draftContentLink.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(), outputTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AutomationRunbookDraft(
+                Optional.ToNullable(inEdit),
+                draftContentLink.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(),
+                outputTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookDraft>.Write(ModelReaderWriterOptions options)

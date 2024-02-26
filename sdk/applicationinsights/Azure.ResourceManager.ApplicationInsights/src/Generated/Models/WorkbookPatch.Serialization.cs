@@ -234,7 +234,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookPatch(Optional.ToNullable(kind), tags ?? new ChangeTrackingDictionary<string, string>(), displayName.Value, serializedData.Value, category.Value, tags0 ?? new ChangeTrackingList<string>(), description.Value, revision.Value, serializedAdditionalRawData);
+            return new WorkbookPatch(
+                Optional.ToNullable(kind),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                displayName.Value,
+                serializedData.Value,
+                category.Value,
+                tags0 ?? new ChangeTrackingList<string>(),
+                description.Value,
+                revision.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookPatch>.Write(ModelReaderWriterOptions options)

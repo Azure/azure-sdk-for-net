@@ -341,7 +341,26 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceData(id, name, type, systemData.Value, extendedLocation.Value, identity, hardwareProfile.Value, networkProfile.Value, osProfile.Value, securityProfile.Value, storageProfile.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningState), instanceView.Value, status.Value, guestAgentInstallStatus.Value, vmId.Value, resourceUid.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                extendedLocation.Value,
+                identity,
+                hardwareProfile.Value,
+                networkProfile.Value,
+                osProfile.Value,
+                securityProfile.Value,
+                storageProfile.Value,
+                httpProxyConfig.Value,
+                Optional.ToNullable(provisioningState),
+                instanceView.Value,
+                status.Value,
+                guestAgentInstallStatus.Value,
+                vmId.Value,
+                resourceUid.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceData>.Write(ModelReaderWriterOptions options)

@@ -205,7 +205,18 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkypeChannelProperties(Optional.ToNullable(enableMessaging), Optional.ToNullable(enableMediaCards), Optional.ToNullable(enableVideo), Optional.ToNullable(enableCalling), Optional.ToNullable(enableScreenSharing), Optional.ToNullable(enableGroups), groupsMode.Value, callingWebHook.Value, incomingCallRoute.Value, isEnabled, serializedAdditionalRawData);
+            return new SkypeChannelProperties(
+                Optional.ToNullable(enableMessaging),
+                Optional.ToNullable(enableMediaCards),
+                Optional.ToNullable(enableVideo),
+                Optional.ToNullable(enableCalling),
+                Optional.ToNullable(enableScreenSharing),
+                Optional.ToNullable(enableGroups),
+                groupsMode.Value,
+                callingWebHook.Value,
+                incomingCallRoute.Value,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkypeChannelProperties>.Write(ModelReaderWriterOptions options)

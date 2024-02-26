@@ -67,7 +67,14 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TeamsComplianceRecordingStateChanged"/> instance for mocking. </returns>
         public static TeamsComplianceRecordingStateChanged TeamsComplianceRecordingStateChanged(string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, RecordingType? recordingType = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TeamsComplianceRecordingStateChanged(recordingId, state, startDateTime, recordingType, callConnectionId, serverCallId, correlationId);
+            return new TeamsComplianceRecordingStateChanged(
+                recordingId,
+                state,
+                startDateTime,
+                recordingType,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TeamsRecordingStateChanged"/>. </summary>
@@ -81,7 +88,14 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TeamsRecordingStateChanged"/> instance for mocking. </returns>
         public static TeamsRecordingStateChanged TeamsRecordingStateChanged(string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, RecordingType? recordingType = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TeamsRecordingStateChanged(recordingId, state, startDateTime, recordingType, callConnectionId, serverCallId, correlationId);
+            return new TeamsRecordingStateChanged(
+                recordingId,
+                state,
+                startDateTime,
+                recordingType,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.CollectTonesResult"/>. </summary>
@@ -142,7 +156,13 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionStarted"/> instance for mocking. </returns>
         public static TranscriptionStarted TranscriptionStarted(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TranscriptionStarted(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+            return new TranscriptionStarted(
+                operationContext,
+                resultInformation,
+                transcriptionUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdate"/>. </summary>
@@ -164,7 +184,13 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionStopped"/> instance for mocking. </returns>
         public static TranscriptionStopped TranscriptionStopped(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TranscriptionStopped(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+            return new TranscriptionStopped(
+                operationContext,
+                resultInformation,
+                transcriptionUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
@@ -177,7 +203,13 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionFailed"/> instance for mocking. </returns>
         public static TranscriptionFailed TranscriptionFailed(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TranscriptionFailed(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+            return new TranscriptionFailed(
+                operationContext,
+                resultInformation,
+                transcriptionUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdated"/>. </summary>
@@ -190,7 +222,13 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdated"/> instance for mocking. </returns>
         public static TranscriptionUpdated TranscriptionUpdated(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new TranscriptionUpdated(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+            return new TranscriptionUpdated(
+                operationContext,
+                resultInformation,
+                transcriptionUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
     }
 }

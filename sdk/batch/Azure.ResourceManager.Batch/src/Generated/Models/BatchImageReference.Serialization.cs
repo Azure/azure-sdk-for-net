@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchImageReference(publisher.Value, offer.Value, sku.Value, version.Value, id.Value, serializedAdditionalRawData);
+            return new BatchImageReference(
+                publisher.Value,
+                offer.Value,
+                sku.Value,
+                version.Value,
+                id.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchImageReference>.Write(ModelReaderWriterOptions options)

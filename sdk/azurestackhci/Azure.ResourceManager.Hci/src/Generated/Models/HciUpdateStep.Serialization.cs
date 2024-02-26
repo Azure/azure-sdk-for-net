@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), steps ?? new ChangeTrackingList<HciUpdateStep>(), serializedAdditionalRawData);
+            return new HciUpdateStep(
+                name.Value,
+                description.Value,
+                errorMessage.Value,
+                status.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(endTimeUtc),
+                Optional.ToNullable(lastUpdatedTimeUtc),
+                steps ?? new ChangeTrackingList<HciUpdateStep>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciUpdateStep>.Write(ModelReaderWriterOptions options)

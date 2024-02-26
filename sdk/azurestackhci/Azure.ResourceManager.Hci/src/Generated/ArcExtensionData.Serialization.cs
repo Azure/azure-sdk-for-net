@@ -327,7 +327,23 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), perNodeExtensionDetails ?? new ChangeTrackingList<PerNodeExtensionState>(), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
+            return new ArcExtensionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(aggregateState),
+                perNodeExtensionDetails ?? new ChangeTrackingList<PerNodeExtensionState>(),
+                forceUpdateTag.Value,
+                publisher.Value,
+                type0.Value,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                settings.Value,
+                protectedSettings.Value,
+                Optional.ToNullable(enableAutomaticUpgrade),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcExtensionData>.Write(ModelReaderWriterOptions options)

@@ -262,7 +262,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGroupUserData(id, name, type, systemData.Value, Optional.ToNullable(state), note.Value, identities ?? new ChangeTrackingList<UserIdentityContract>(), firstName.Value, lastName.Value, email.Value, Optional.ToNullable(registrationDate), groups ?? new ChangeTrackingList<GroupContractProperties>(), serializedAdditionalRawData);
+            return new ApiManagementGroupUserData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                note.Value,
+                identities ?? new ChangeTrackingList<UserIdentityContract>(),
+                firstName.Value,
+                lastName.Value,
+                email.Value,
+                Optional.ToNullable(registrationDate),
+                groups ?? new ChangeTrackingList<GroupContractProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGroupUserData>.Write(ModelReaderWriterOptions options)

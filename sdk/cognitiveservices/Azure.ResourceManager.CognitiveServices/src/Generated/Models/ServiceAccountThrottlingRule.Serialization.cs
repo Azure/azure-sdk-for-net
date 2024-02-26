@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountThrottlingRule(key.Value, Optional.ToNullable(renewalPeriod), Optional.ToNullable(count), Optional.ToNullable(minCount), Optional.ToNullable(dynamicThrottlingEnabled), matchPatterns ?? new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>(), serializedAdditionalRawData);
+            return new ServiceAccountThrottlingRule(
+                key.Value,
+                Optional.ToNullable(renewalPeriod),
+                Optional.ToNullable(count),
+                Optional.ToNullable(minCount),
+                Optional.ToNullable(dynamicThrottlingEnabled),
+                matchPatterns ?? new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountThrottlingRule>.Write(ModelReaderWriterOptions options)

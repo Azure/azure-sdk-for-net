@@ -354,7 +354,26 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(timeStarted), Optional.ToNullable(lastUpdatedTime), duration.Value, Optional.ToNullable(state), name0.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), steps ?? new ChangeTrackingList<HciUpdateStep>(), serializedAdditionalRawData);
+            return new UpdateRunData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(timeStarted),
+                Optional.ToNullable(lastUpdatedTime),
+                duration.Value,
+                Optional.ToNullable(state),
+                name0.Value,
+                description.Value,
+                errorMessage.Value,
+                status.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(endTimeUtc),
+                Optional.ToNullable(lastUpdatedTimeUtc),
+                steps ?? new ChangeTrackingList<HciUpdateStep>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateRunData>.Write(ModelReaderWriterOptions options)

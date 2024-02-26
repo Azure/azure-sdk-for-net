@@ -200,7 +200,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TelephonyChannelResourceApiConfiguration(id.Value, providerName.Value, cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, cognitiveServiceResourceId.Value, defaultLocale.Value, serializedAdditionalRawData);
+            return new TelephonyChannelResourceApiConfiguration(
+                id.Value,
+                providerName.Value,
+                cognitiveServiceSubscriptionKey.Value,
+                cognitiveServiceRegion.Value,
+                cognitiveServiceResourceId.Value,
+                defaultLocale.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TelephonyChannelResourceApiConfiguration>.Write(ModelReaderWriterOptions options)

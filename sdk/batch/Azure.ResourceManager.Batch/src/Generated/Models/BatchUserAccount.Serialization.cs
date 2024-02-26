@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchUserAccount(name, password, Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value, serializedAdditionalRawData);
+            return new BatchUserAccount(
+                name,
+                password,
+                Optional.ToNullable(elevationLevel),
+                linuxUserConfiguration.Value,
+                windowsUserConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchUserAccount>.Write(ModelReaderWriterOptions options)

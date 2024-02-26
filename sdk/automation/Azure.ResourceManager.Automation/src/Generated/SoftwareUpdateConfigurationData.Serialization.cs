@@ -248,7 +248,21 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationData(id, name, type, systemData.Value, updateConfiguration, scheduleInfo, provisioningState.Value, error.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                updateConfiguration,
+                scheduleInfo,
+                provisioningState.Value,
+                error.Value,
+                Optional.ToNullable(creationTime),
+                createdBy.Value,
+                Optional.ToNullable(lastModifiedTime),
+                lastModifiedBy.Value,
+                tasks.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationData>.Write(ModelReaderWriterOptions options)

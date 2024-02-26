@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(creationTime), configuration.Value, source.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
+            return new DscNodeConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(creationTime),
+                configuration.Value,
+                source.Value,
+                Optional.ToNullable(nodeCount),
+                Optional.ToNullable(incrementNodeConfigurationBuild),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeConfigurationData>.Write(ModelReaderWriterOptions options)

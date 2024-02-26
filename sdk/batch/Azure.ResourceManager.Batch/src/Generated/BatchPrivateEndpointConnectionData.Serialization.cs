@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                privateEndpoint,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

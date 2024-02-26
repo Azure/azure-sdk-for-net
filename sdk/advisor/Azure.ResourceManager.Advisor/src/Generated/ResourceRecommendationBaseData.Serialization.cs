@@ -559,7 +559,31 @@ namespace Azure.ResourceManager.Advisor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), metadata ?? new ChangeTrackingDictionary<string, BinaryData>(), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, suppressionIds ?? new ChangeTrackingList<Guid>(), extendedProperties ?? new ChangeTrackingDictionary<string, string>(), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, actions ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(), remediation ?? new ChangeTrackingDictionary<string, BinaryData>(), exposedMetadataProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new ResourceRecommendationBaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(category),
+                Optional.ToNullable(impact),
+                impactedField.Value,
+                impactedValue.Value,
+                Optional.ToNullable(lastUpdated),
+                metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                recommendationTypeId.Value,
+                Optional.ToNullable(risk),
+                shortDescription.Value,
+                suppressionIds ?? new ChangeTrackingList<Guid>(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                resourceMetadata.Value,
+                description.Value,
+                label.Value,
+                learnMoreLink.Value,
+                potentialBenefits.Value,
+                actions ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(),
+                remediation ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                exposedMetadataProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceRecommendationBaseData>.Write(ModelReaderWriterOptions options)

@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), profileName.Value, serializedAdditionalRawData);
+            return new FrontDoorRuleSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deploymentStatus),
+                profileName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRuleSetData>.Write(ModelReaderWriterOptions options)

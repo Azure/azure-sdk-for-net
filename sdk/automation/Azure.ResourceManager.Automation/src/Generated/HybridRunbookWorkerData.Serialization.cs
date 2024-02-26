@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkerData(id, name, type, systemData.Value, ip.Value, Optional.ToNullable(registeredDateTime), Optional.ToNullable(lastSeenDateTime), vmResourceId.Value, Optional.ToNullable(workerType), workerName.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                ip.Value,
+                Optional.ToNullable(registeredDateTime),
+                Optional.ToNullable(lastSeenDateTime),
+                vmResourceId.Value,
+                Optional.ToNullable(workerType),
+                workerName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkerData>.Write(ModelReaderWriterOptions options)

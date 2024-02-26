@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetadata(resourceId, resourceType.Value, resourceKind.Value, resourceName.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ResourceMetadata(
+                resourceId,
+                resourceType.Value,
+                resourceKind.Value,
+                resourceName.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetadata>.Write(ModelReaderWriterOptions options)

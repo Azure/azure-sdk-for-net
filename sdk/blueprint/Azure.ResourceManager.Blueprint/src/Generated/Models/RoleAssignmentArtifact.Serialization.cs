@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, dependsOn ?? new ChangeTrackingList<string>(), roleDefinitionId, principalIds, resourceGroup.Value);
+            return new RoleAssignmentArtifact(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                displayName.Value,
+                description.Value,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                roleDefinitionId,
+                principalIds,
+                resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<RoleAssignmentArtifact>.Write(ModelReaderWriterOptions options)

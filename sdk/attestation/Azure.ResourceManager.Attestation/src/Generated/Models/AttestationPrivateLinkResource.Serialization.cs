@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AttestationPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationPrivateLinkResource>.Write(ModelReaderWriterOptions options)

@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationPrivateEndpointConnectionReference(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new AppConfigurationPrivateEndpointConnectionReference(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>.Write(ModelReaderWriterOptions options)

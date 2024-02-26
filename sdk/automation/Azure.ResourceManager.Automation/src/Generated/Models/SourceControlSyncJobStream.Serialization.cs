@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobStream(id.Value, sourceControlSyncJobStreamId.Value, summary.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), serializedAdditionalRawData);
+            return new SourceControlSyncJobStream(
+                id.Value,
+                sourceControlSyncJobStreamId.Value,
+                summary.Value,
+                Optional.ToNullable(time),
+                Optional.ToNullable(streamType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobStream>.Write(ModelReaderWriterOptions options)
