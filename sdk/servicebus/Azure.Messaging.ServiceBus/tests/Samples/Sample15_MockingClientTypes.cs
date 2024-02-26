@@ -1325,7 +1325,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             var namespacePropertiesResponse = await administrationClient.GetNamespacePropertiesAsync(CancellationToken.None);
             #endregion
 
-            Assert.That(namespacePropertiesResponse, Is.EqualTo(namespaceProperties));
+            Assert.That(namespacePropertiesResponse.Value, Is.EqualTo(namespaceProperties));
         }
 
         [Test]
