@@ -1414,11 +1414,11 @@ The following snippet demonstrates how to mock the `ServiceBusAdministrationClie
 Mock<Response<NamespaceProperties>> mockResponse = new Mock<Response<NamespaceProperties>>();
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new Mock<ServiceBusAdministrationClient>();
 
-NamespaceProperties namespaceProperties = ServiceBusModelFactory.NamespaceProperties("name", DateTimeOffset.UtcNow, DateTime.UtcNow, MessagingSku.Basic, 100, "alias");
+NamespaceProperties mockNamespaceProperties = ServiceBusModelFactory.NamespaceProperties("name", DateTimeOffset.UtcNow, DateTime.UtcNow, MessagingSku.Basic, 100, "alias");
 
 mockResponse
     .SetupGet(response => response.Value)
-    .Returns(namespaceProperties);
+    .Returns(mockNamespaceProperties);
 
 mockAdministrationClient
     .Setup(client => client.GetNamespacePropertiesAsync(It.IsAny<CancellationToken>()))
@@ -1429,7 +1429,8 @@ ServiceBusAdministrationClient administrationClient = mockAdministrationClient.O
 // The rest of this snippet illustrates how to access the namespace properties using the mocked service bus
 // administration client above, this would be where application methods calling GetNamespaceProperties() would be called.
 
-var namespacePropertiesResponse = await administrationClient.GetNamespacePropertiesAsync(CancellationToken.None);
+Response<NamespaceProperties> namespacePropertiesResponse = await administrationClient.GetNamespacePropertiesAsync(CancellationToken.None);
+NamespaceProperties namespaceProperties = namespacePropertiesResponse.Value;
 ```
 
 
