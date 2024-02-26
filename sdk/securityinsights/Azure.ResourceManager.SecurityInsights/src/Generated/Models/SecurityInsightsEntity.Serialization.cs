@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -89,30 +89,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Account": return SecurityInsightsAccountEntity.DeserializeSecurityInsightsAccountEntity(element);
-                    case "AzureResource": return SecurityInsightsAzureResourceEntity.DeserializeSecurityInsightsAzureResourceEntity(element);
-                    case "Bookmark": return SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(element);
-                    case "CloudApplication": return SecurityInsightsCloudApplicationEntity.DeserializeSecurityInsightsCloudApplicationEntity(element);
-                    case "DnsResolution": return SecurityInsightsDnsEntity.DeserializeSecurityInsightsDnsEntity(element);
-                    case "File": return SecurityInsightsFileEntity.DeserializeSecurityInsightsFileEntity(element);
-                    case "FileHash": return SecurityInsightsFileHashEntity.DeserializeSecurityInsightsFileHashEntity(element);
-                    case "Host": return SecurityInsightsHostEntity.DeserializeSecurityInsightsHostEntity(element);
-                    case "IoTDevice": return SecurityInsightsIotDeviceEntity.DeserializeSecurityInsightsIotDeviceEntity(element);
-                    case "Ip": return SecurityInsightsIPEntity.DeserializeSecurityInsightsIPEntity(element);
-                    case "MailCluster": return SecurityInsightsMailClusterEntity.DeserializeSecurityInsightsMailClusterEntity(element);
-                    case "MailMessage": return SecurityInsightsMailMessageEntity.DeserializeSecurityInsightsMailMessageEntity(element);
-                    case "Mailbox": return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element);
-                    case "Malware": return SecurityInsightsMalwareEntity.DeserializeSecurityInsightsMalwareEntity(element);
-                    case "Process": return SecurityInsightsProcessEntity.DeserializeSecurityInsightsProcessEntity(element);
-                    case "RegistryKey": return SecurityInsightsRegistryKeyEntity.DeserializeSecurityInsightsRegistryKeyEntity(element);
-                    case "RegistryValue": return SecurityInsightsRegistryValueEntity.DeserializeSecurityInsightsRegistryValueEntity(element);
-                    case "SecurityAlert": return SecurityInsightsAlert.DeserializeSecurityInsightsAlert(element);
-                    case "SecurityGroup": return SecurityInsightsGroupEntity.DeserializeSecurityInsightsGroupEntity(element);
-                    case "SubmissionMail": return SecurityInsightsSubmissionMailEntity.DeserializeSecurityInsightsSubmissionMailEntity(element);
-                    case "Url": return SecurityInsightsUriEntity.DeserializeSecurityInsightsUriEntity(element);
+                    case "Account": return SecurityInsightsAccountEntity.DeserializeSecurityInsightsAccountEntity(element, options);
+                    case "AzureResource": return SecurityInsightsAzureResourceEntity.DeserializeSecurityInsightsAzureResourceEntity(element, options);
+                    case "Bookmark": return SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(element, options);
+                    case "CloudApplication": return SecurityInsightsCloudApplicationEntity.DeserializeSecurityInsightsCloudApplicationEntity(element, options);
+                    case "DnsResolution": return SecurityInsightsDnsEntity.DeserializeSecurityInsightsDnsEntity(element, options);
+                    case "File": return SecurityInsightsFileEntity.DeserializeSecurityInsightsFileEntity(element, options);
+                    case "FileHash": return SecurityInsightsFileHashEntity.DeserializeSecurityInsightsFileHashEntity(element, options);
+                    case "Host": return SecurityInsightsHostEntity.DeserializeSecurityInsightsHostEntity(element, options);
+                    case "IoTDevice": return SecurityInsightsIotDeviceEntity.DeserializeSecurityInsightsIotDeviceEntity(element, options);
+                    case "Ip": return SecurityInsightsIPEntity.DeserializeSecurityInsightsIPEntity(element, options);
+                    case "MailCluster": return SecurityInsightsMailClusterEntity.DeserializeSecurityInsightsMailClusterEntity(element, options);
+                    case "MailMessage": return SecurityInsightsMailMessageEntity.DeserializeSecurityInsightsMailMessageEntity(element, options);
+                    case "Mailbox": return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element, options);
+                    case "Malware": return SecurityInsightsMalwareEntity.DeserializeSecurityInsightsMalwareEntity(element, options);
+                    case "Process": return SecurityInsightsProcessEntity.DeserializeSecurityInsightsProcessEntity(element, options);
+                    case "RegistryKey": return SecurityInsightsRegistryKeyEntity.DeserializeSecurityInsightsRegistryKeyEntity(element, options);
+                    case "RegistryValue": return SecurityInsightsRegistryValueEntity.DeserializeSecurityInsightsRegistryValueEntity(element, options);
+                    case "SecurityAlert": return SecurityInsightsAlert.DeserializeSecurityInsightsAlert(element, options);
+                    case "SecurityGroup": return SecurityInsightsGroupEntity.DeserializeSecurityInsightsGroupEntity(element, options);
+                    case "SubmissionMail": return SecurityInsightsSubmissionMailEntity.DeserializeSecurityInsightsSubmissionMailEntity(element, options);
+                    case "Url": return SecurityInsightsUriEntity.DeserializeSecurityInsightsUriEntity(element, options);
                 }
             }
-            return UnknownEntity.DeserializeUnknownEntity(element);
+            return UnknownEntity.DeserializeUnknownEntity(element, options);
         }
 
         BinaryData IPersistableModel<SecurityInsightsEntity>.Write(ModelReaderWriterOptions options)

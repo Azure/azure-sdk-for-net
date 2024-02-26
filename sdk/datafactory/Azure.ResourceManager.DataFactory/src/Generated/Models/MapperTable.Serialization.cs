@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Schema))
+            if (!(Schema is ChangeTrackingList<MapperTableSchema> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DslConnectorProperties))
+            if (!(DslConnectorProperties is ChangeTrackingList<MapperDslConnectorProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dslConnectorProperties"u8);
                 writer.WriteStartArray();
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IList<MapperTableSchema>> schema = default;
-            Optional<IList<MapperDslConnectorProperties>> dslConnectorProperties = default;
+            IList<MapperTableSchema> schema = default;
+            IList<MapperDslConnectorProperties> dslConnectorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<MapperTableSchema> array = new List<MapperTableSchema>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperTableSchema.DeserializeMapperTableSchema(item));
+                                array.Add(MapperTableSchema.DeserializeMapperTableSchema(item, options));
                             }
                             schema = array;
                             continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<MapperDslConnectorProperties> array = new List<MapperDslConnectorProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                                array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item, options));
                             }
                             dslConnectorProperties = array;
                             continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperTable(name.Value, Optional.ToList(schema), Optional.ToList(dslConnectorProperties), serializedAdditionalRawData);
+            return new MapperTable(name.Value, schema ?? new ChangeTrackingList<MapperTableSchema>(), dslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperTable>.Write(ModelReaderWriterOptions options)

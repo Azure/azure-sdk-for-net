@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element);
-                    case "#Microsoft.Media.Audio": return MediaAudioBase.DeserializeMediaAudioBase(element);
-                    case "#Microsoft.Media.CopyAudio": return CodecCopyAudio.DeserializeCodecCopyAudio(element);
-                    case "#Microsoft.Media.CopyVideo": return CodecCopyVideo.DeserializeCodecCopyVideo(element);
-                    case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element);
-                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element);
-                    case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element);
-                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element);
-                    case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element);
-                    case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element);
-                    case "#Microsoft.Media.Video": return MediaVideoBase.DeserializeMediaVideoBase(element);
+                    case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element, options);
+                    case "#Microsoft.Media.Audio": return MediaAudioBase.DeserializeMediaAudioBase(element, options);
+                    case "#Microsoft.Media.CopyAudio": return CodecCopyAudio.DeserializeCodecCopyAudio(element, options);
+                    case "#Microsoft.Media.CopyVideo": return CodecCopyVideo.DeserializeCodecCopyVideo(element, options);
+                    case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element, options);
+                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element, options);
+                    case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element, options);
+                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element, options);
+                    case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element, options);
+                    case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element, options);
+                    case "#Microsoft.Media.Video": return MediaVideoBase.DeserializeMediaVideoBase(element, options);
                 }
             }
-            return UnknownCodec.DeserializeUnknownCodec(element);
+            return UnknownCodec.DeserializeUnknownCodec(element, options);
         }
 
         BinaryData IPersistableModel<MediaCodecBase>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SupportAzureServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SupportAzureServiceData>> value = default;
+            IReadOnlyList<SupportAzureServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportAzureServiceData> array = new List<SupportAzureServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportAzureServiceData.DeserializeSupportAzureServiceData(item));
+                        array.Add(SupportAzureServiceData.DeserializeSupportAzureServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServicesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ServicesListResult(value ?? new ChangeTrackingList<SupportAzureServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServicesListResult>.Write(ModelReaderWriterOptions options)

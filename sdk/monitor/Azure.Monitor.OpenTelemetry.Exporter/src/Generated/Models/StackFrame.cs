@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="method"/> is null. </exception>
         public StackFrame(int level, string method)
         {
-            Argument.AssertNotNull(method, nameof(method));
+            if (method == null)
+            {
+                throw new ArgumentNullException(nameof(method));
+            }
 
             Level = level;
             Method = method;

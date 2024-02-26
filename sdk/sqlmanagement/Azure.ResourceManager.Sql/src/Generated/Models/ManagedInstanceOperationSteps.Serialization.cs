@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TotalSteps))
+            if (options.Format != "W" && TotalSteps != null)
             {
                 writer.WritePropertyName("totalSteps"u8);
                 writer.WriteStringValue(TotalSteps);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentStep))
+            if (options.Format != "W" && CurrentStep.HasValue)
             {
                 writer.WritePropertyName("currentStep"u8);
                 writer.WriteNumberValue(CurrentStep.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StepsList))
+            if (options.Format != "W" && !(StepsList is ChangeTrackingList<UpsertManagedServerOperationStep> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stepsList"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             Optional<string> totalSteps = default;
             Optional<int> currentStep = default;
-            Optional<IReadOnlyList<UpsertManagedServerOperationStep>> stepsList = default;
+            IReadOnlyList<UpsertManagedServerOperationStep> stepsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<UpsertManagedServerOperationStep> array = new List<UpsertManagedServerOperationStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item));
+                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item, options));
                     }
                     stepsList = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationSteps(totalSteps.Value, Optional.ToNullable(currentStep), Optional.ToList(stepsList), serializedAdditionalRawData);
+            return new ManagedInstanceOperationSteps(totalSteps.Value, Optional.ToNullable(currentStep), stepsList ?? new ChangeTrackingList<UpsertManagedServerOperationStep>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationSteps>.Write(ModelReaderWriterOptions options)

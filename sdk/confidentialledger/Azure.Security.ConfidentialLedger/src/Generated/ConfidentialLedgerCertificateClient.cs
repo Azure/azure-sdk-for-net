@@ -54,7 +54,14 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <include file="Docs/ConfidentialLedgerCertificateClient.xml" path="doc/members/member[@name='GetLedgerIdentityAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
+            if (ledgerId == null)
+            {
+                throw new ArgumentNullException(nameof(ledgerId));
+            }
+            if (ledgerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerCertificateClient.GetLedgerIdentity");
             scope.Start();
@@ -89,7 +96,14 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <include file="Docs/ConfidentialLedgerCertificateClient.xml" path="doc/members/member[@name='GetLedgerIdentity(string,RequestContext)']/*" />
         public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
+            if (ledgerId == null)
+            {
+                throw new ArgumentNullException(nameof(ledgerId));
+            }
+            if (ledgerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerCertificateClient.GetLedgerIdentity");
             scope.Start();

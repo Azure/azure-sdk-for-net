@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CosmosDb))
+            if (CosmosDb != null)
             {
                 writer.WritePropertyName("cosmosDb"u8);
                 writer.WriteObjectValue(CosmosDb);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cosmosDb = CosmosDbSettings.DeserializeCosmosDbSettings(property.Value);
+                    cosmosDb = CosmosDbSettings.DeserializeCosmosDbSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

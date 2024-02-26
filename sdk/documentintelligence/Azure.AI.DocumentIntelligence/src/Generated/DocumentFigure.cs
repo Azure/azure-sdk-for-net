@@ -52,7 +52,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
         internal DocumentFigure(IEnumerable<DocumentSpan> spans)
         {
-            Argument.AssertNotNull(spans, nameof(spans));
+            if (spans == null)
+            {
+                throw new ArgumentNullException(nameof(spans));
+            }
 
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();

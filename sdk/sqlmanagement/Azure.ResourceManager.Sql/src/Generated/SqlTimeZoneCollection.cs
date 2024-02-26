@@ -84,7 +84,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual async Task<Response<SqlTimeZoneResource>> GetAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
+            if (timeZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(timeZoneId));
+            }
+            if (timeZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timeZoneId));
+            }
 
             using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.Get");
             scope.Start();
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual Response<SqlTimeZoneResource> Get(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
+            if (timeZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(timeZoneId));
+            }
+            if (timeZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timeZoneId));
+            }
 
             using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.Get");
             scope.Start();
@@ -234,7 +248,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
+            if (timeZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(timeZoneId));
+            }
+            if (timeZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timeZoneId));
+            }
 
             using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();
@@ -277,7 +298,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual Response<bool> Exists(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
+            if (timeZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(timeZoneId));
+            }
+            if (timeZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timeZoneId));
+            }
 
             using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();
@@ -320,7 +348,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlTimeZoneResource>> GetIfExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
+            if (timeZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(timeZoneId));
+            }
+            if (timeZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timeZoneId));
+            }
 
             using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
             scope.Start();
@@ -365,7 +400,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual NullableResponse<SqlTimeZoneResource> GetIfExists(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
+            if (timeZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(timeZoneId));
+            }
+            if (timeZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timeZoneId));
+            }
 
             using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
             scope.Start();

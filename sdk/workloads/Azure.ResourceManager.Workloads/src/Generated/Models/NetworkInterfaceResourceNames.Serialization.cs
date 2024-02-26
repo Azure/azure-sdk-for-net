@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkInterfaceName))
+            if (NetworkInterfaceName != null)
             {
                 writer.WritePropertyName("networkInterfaceName"u8);
                 writer.WriteStringValue(NetworkInterfaceName);

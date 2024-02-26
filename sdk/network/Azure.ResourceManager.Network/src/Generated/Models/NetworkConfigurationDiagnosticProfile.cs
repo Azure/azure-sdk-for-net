@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -55,10 +54,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="protocol"/>, <paramref name="source"/>, <paramref name="destination"/> or <paramref name="destinationPort"/> is null. </exception>
         public NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection direction, string protocol, string source, string destination, string destinationPort)
         {
-            Argument.AssertNotNull(protocol, nameof(protocol));
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(destination, nameof(destination));
-            Argument.AssertNotNull(destinationPort, nameof(destinationPort));
+            if (protocol == null)
+            {
+                throw new ArgumentNullException(nameof(protocol));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
+            if (destinationPort == null)
+            {
+                throw new ArgumentNullException(nameof(destinationPort));
+            }
 
             Direction = direction;
             Protocol = protocol;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourceOracleSyncTaskInput(OracleConnectionInfo sourceConnectionInfo)
         {
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
+            if (sourceConnectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(sourceConnectionInfo));
+            }
 
             SourceConnectionInfo = sourceConnectionInfo;
         }

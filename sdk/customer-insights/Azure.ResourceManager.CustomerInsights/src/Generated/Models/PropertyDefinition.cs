@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="fieldType"/> is null. </exception>
         public PropertyDefinition(string fieldName, string fieldType)
         {
-            Argument.AssertNotNull(fieldName, nameof(fieldName));
-            Argument.AssertNotNull(fieldType, nameof(fieldType));
+            if (fieldName == null)
+            {
+                throw new ArgumentNullException(nameof(fieldName));
+            }
+            if (fieldType == null)
+            {
+                throw new ArgumentNullException(nameof(fieldType));
+            }
 
             EnumValidValues = new ChangeTrackingList<ProfileEnumValidValuesFormat>();
             FieldName = fieldName;

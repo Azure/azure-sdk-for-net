@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsManagementGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsManagementGroup>> value = default;
+            IReadOnlyList<OperationalInsightsManagementGroup> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsManagementGroup> array = new List<OperationalInsightsManagementGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(item));
+                        array.Add(OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceListManagementGroupsResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new WorkspaceListManagementGroupsResult(value ?? new ChangeTrackingList<OperationalInsightsManagementGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceListManagementGroupsResult>.Write(ModelReaderWriterOptions options)

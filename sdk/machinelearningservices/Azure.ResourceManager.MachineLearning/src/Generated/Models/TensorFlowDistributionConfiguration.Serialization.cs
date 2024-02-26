@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParameterServerCount))
+            if (ParameterServerCount.HasValue)
             {
                 writer.WritePropertyName("parameterServerCount"u8);
                 writer.WriteNumberValue(ParameterServerCount.Value);
             }
-            if (Optional.IsDefined(WorkerCount))
+            if (WorkerCount.HasValue)
             {
                 if (WorkerCount != null)
                 {

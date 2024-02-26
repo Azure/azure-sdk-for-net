@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Quota.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            if (Optional.IsDefined(UsagesType))
+            if (UsagesType.HasValue)
             {
                 writer.WritePropertyName("usagesType"u8);
                 writer.WriteStringValue(UsagesType.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsMultiVmSyncPoint))
+            if (options.Format != "W" && IsMultiVmSyncPoint != null)
             {
                 writer.WritePropertyName("isMultiVmSyncPoint"u8);
                 writer.WriteStringValue(IsMultiVmSyncPoint);

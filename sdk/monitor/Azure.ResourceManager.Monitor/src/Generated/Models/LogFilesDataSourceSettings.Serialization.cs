@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteObjectValue(Text);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value);
+                    text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

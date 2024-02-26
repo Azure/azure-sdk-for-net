@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppId))
+            if (AppId != null)
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(AppSecretSettingName))
+            if (AppSecretSettingName != null)
             {
                 writer.WritePropertyName("appSecretSettingName"u8);
                 writer.WriteStringValue(AppSecretSettingName);

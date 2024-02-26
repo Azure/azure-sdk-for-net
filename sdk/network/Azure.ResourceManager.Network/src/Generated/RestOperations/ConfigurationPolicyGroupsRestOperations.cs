@@ -74,11 +74,42 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnServerConfigurationName"/> or <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
-            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
+            if (configurationPolicyGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
+            }
+            if (configurationPolicyGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -103,11 +134,42 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnServerConfigurationName"/> or <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
-            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
+            if (configurationPolicyGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
+            }
+            if (configurationPolicyGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName, data);
             _pipeline.Send(message, cancellationToken);
@@ -153,10 +215,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnServerConfigurationName"/> or <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
-            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
+            if (configurationPolicyGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
+            }
+            if (configurationPolicyGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +271,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnServerConfigurationName"/> or <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
-            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
+            if (configurationPolicyGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
+            }
+            if (configurationPolicyGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -231,10 +349,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnServerConfigurationName"/> or <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VpnServerConfigurationPolicyGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
-            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
+            if (configurationPolicyGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
+            }
+            if (configurationPolicyGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -264,10 +410,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vpnServerConfigurationName"/> or <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VpnServerConfigurationPolicyGroupData> Get(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
-            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
+            if (configurationPolicyGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
+            }
+            if (configurationPolicyGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vpnServerConfigurationName, configurationPolicyGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -317,9 +491,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListVpnServerConfigurationPolicyGroupsResult>> ListByVpnServerConfigurationAsync(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
 
             using var message = CreateListByVpnServerConfigurationRequest(subscriptionId, resourceGroupName, vpnServerConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -346,9 +541,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListVpnServerConfigurationPolicyGroupsResult> ListByVpnServerConfiguration(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
 
             using var message = CreateListByVpnServerConfigurationRequest(subscriptionId, resourceGroupName, vpnServerConfigurationName);
             _pipeline.Send(message, cancellationToken);
@@ -390,10 +606,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListVpnServerConfigurationPolicyGroupsResult>> ListByVpnServerConfigurationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
 
             using var message = CreateListByVpnServerConfigurationNextPageRequest(nextLink, subscriptionId, resourceGroupName, vpnServerConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -421,10 +661,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListVpnServerConfigurationPolicyGroupsResult> ListByVpnServerConfigurationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vpnServerConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(vpnServerConfigurationName));
+            }
+            if (vpnServerConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vpnServerConfigurationName));
+            }
 
             using var message = CreateListByVpnServerConfigurationNextPageRequest(nextLink, subscriptionId, resourceGroupName, vpnServerConfigurationName);
             _pipeline.Send(message, cancellationToken);

@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteCircuitResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string circuitName, ExpressRouteCircuitData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCircuitResource> CreateOrUpdate(WaitUntil waitUntil, string circuitName, ExpressRouteCircuitData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteCircuitResource>> GetAsync(string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
         public virtual Response<ExpressRouteCircuitResource> Get(string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
         public virtual Response<bool> Exists(string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRouteCircuitResource>> GetIfExistsAsync(string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
         public virtual NullableResponse<ExpressRouteCircuitResource> GetIfExists(string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitCollection.GetIfExists");
             scope.Start();

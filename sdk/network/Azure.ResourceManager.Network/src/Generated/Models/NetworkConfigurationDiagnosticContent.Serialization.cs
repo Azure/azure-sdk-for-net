@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            if (Optional.IsDefined(VerbosityLevel))
+            if (VerbosityLevel.HasValue)
             {
                 writer.WritePropertyName("verbosityLevel"u8);
                 writer.WriteStringValue(VerbosityLevel.Value.ToString());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationDiagnosticProfile> array = new List<NetworkConfigurationDiagnosticProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item));
+                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item, options));
                     }
                     profiles = array;
                     continue;

@@ -20,7 +20,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public TelemetryEventData(int version, string name) : base(version)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             Properties = new ChangeTrackingDictionary<string, string>();

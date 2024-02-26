@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
         public async Task<Response<KubernetesVersionProfileData>> GetKubernetesVersionsAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
 
             using var message = CreateGetKubernetesVersionsRequest(customLocationResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -85,7 +88,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
         public Response<KubernetesVersionProfileData> GetKubernetesVersions(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
 
             using var message = CreateGetKubernetesVersionsRequest(customLocationResourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -133,8 +139,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response> PutKubernetesVersionsAsync(string customLocationResourceUri, KubernetesVersionProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
-            Argument.AssertNotNull(data, nameof(data));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreatePutKubernetesVersionsRequest(customLocationResourceUri, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -155,8 +167,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
         public Response PutKubernetesVersions(string customLocationResourceUri, KubernetesVersionProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
-            Argument.AssertNotNull(data, nameof(data));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreatePutKubernetesVersionsRequest(customLocationResourceUri, data);
             _pipeline.Send(message, cancellationToken);
@@ -193,7 +211,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
         public async Task<Response> DeleteKubernetesVersionsAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
 
             using var message = CreateDeleteKubernetesVersionsRequest(customLocationResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -213,7 +234,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
         public Response DeleteKubernetesVersions(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
 
             using var message = CreateDeleteKubernetesVersionsRequest(customLocationResourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -250,7 +274,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
         public async Task<Response<HybridContainerServiceVmSkuData>> GetVmSkusAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
 
             using var message = CreateGetVmSkusRequest(customLocationResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -276,7 +303,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
         public Response<HybridContainerServiceVmSkuData> GetVmSkus(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
 
             using var message = CreateGetVmSkusRequest(customLocationResourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -324,8 +354,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response> PutVmSkusAsync(string customLocationResourceUri, HybridContainerServiceVmSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
-            Argument.AssertNotNull(data, nameof(data));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreatePutVmSkusRequest(customLocationResourceUri, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -346,8 +382,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
         public Response PutVmSkus(string customLocationResourceUri, HybridContainerServiceVmSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
-            Argument.AssertNotNull(data, nameof(data));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreatePutVmSkusRequest(customLocationResourceUri, data);
             _pipeline.Send(message, cancellationToken);
@@ -384,7 +426,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
         public async Task<Response> DeleteVmSkusAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
 
             using var message = CreateDeleteVmSkusRequest(customLocationResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -404,7 +449,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
         public Response DeleteVmSkus(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            if (customLocationResourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(customLocationResourceUri));
+            }
 
             using var message = CreateDeleteVmSkusRequest(customLocationResourceUri);
             _pipeline.Send(message, cancellationToken);

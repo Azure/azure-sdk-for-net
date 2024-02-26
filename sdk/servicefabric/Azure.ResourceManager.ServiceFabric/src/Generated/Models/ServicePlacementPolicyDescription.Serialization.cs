@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            return UnknownServicePlacementPolicyDescription.DeserializeUnknownServicePlacementPolicyDescription(element);
+            return UnknownServicePlacementPolicyDescription.DeserializeUnknownServicePlacementPolicyDescription(element, options);
         }
 
         BinaryData IPersistableModel<ServicePlacementPolicyDescription>.Write(ModelReaderWriterOptions options)

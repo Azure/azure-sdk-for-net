@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> repositories = default;
+            IReadOnlyList<string> repositories = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Repositories(Optional.ToList(repositories), link.Value);
+            return new Repositories(repositories ?? new ChangeTrackingList<string>(), link.Value);
         }
     }
 }

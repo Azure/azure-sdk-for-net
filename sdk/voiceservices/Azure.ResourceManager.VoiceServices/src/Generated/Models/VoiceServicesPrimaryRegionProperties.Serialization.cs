@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(EsrpAddresses))
+            if (!(EsrpAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("esrpAddresses"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedSignalingSourceAddressPrefixes))
+            if (!(AllowedSignalingSourceAddressPrefixes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedSignalingSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedMediaSourceAddressPrefixes))
+            if (!(AllowedMediaSourceAddressPrefixes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowedMediaSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 return null;
             }
             IList<string> operatorAddresses = default;
-            Optional<IList<string>> esrpAddresses = default;
-            Optional<IList<string>> allowedSignalingSourceAddressPrefixes = default;
-            Optional<IList<string>> allowedMediaSourceAddressPrefixes = default;
+            IList<string> esrpAddresses = default;
+            IList<string> allowedSignalingSourceAddressPrefixes = default;
+            IList<string> allowedMediaSourceAddressPrefixes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VoiceServicesPrimaryRegionProperties(operatorAddresses, Optional.ToList(esrpAddresses), Optional.ToList(allowedSignalingSourceAddressPrefixes), Optional.ToList(allowedMediaSourceAddressPrefixes), serializedAdditionalRawData);
+            return new VoiceServicesPrimaryRegionProperties(operatorAddresses, esrpAddresses ?? new ChangeTrackingList<string>(), allowedSignalingSourceAddressPrefixes ?? new ChangeTrackingList<string>(), allowedMediaSourceAddressPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VoiceServicesPrimaryRegionProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceFabricCluster))
+            if (ServiceFabricCluster != null)
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
                 writer.WriteObjectValue(ServiceFabricCluster);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(property.Value);
+                    serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

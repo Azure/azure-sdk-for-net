@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<BatchApplicationPackageData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BatchApplicationPackageData>> value = default;
+            IReadOnlyList<BatchApplicationPackageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchApplicationPackageData> array = new List<BatchApplicationPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchApplicationPackageData.DeserializeBatchApplicationPackageData(item));
+                        array.Add(BatchApplicationPackageData.DeserializeBatchApplicationPackageData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListApplicationPackagesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListApplicationPackagesResult(value ?? new ChangeTrackingList<BatchApplicationPackageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListApplicationPackagesResult>.Write(ModelReaderWriterOptions options)

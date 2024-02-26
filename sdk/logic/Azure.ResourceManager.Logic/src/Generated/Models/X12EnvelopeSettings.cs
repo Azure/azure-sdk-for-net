@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -71,11 +70,26 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="senderApplicationId"/>, <paramref name="receiverApplicationId"/>, <paramref name="controlVersionNumber"/>, <paramref name="groupHeaderAgencyCode"/> or <paramref name="groupHeaderVersion"/> is null. </exception>
         public X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator)
         {
-            Argument.AssertNotNull(senderApplicationId, nameof(senderApplicationId));
-            Argument.AssertNotNull(receiverApplicationId, nameof(receiverApplicationId));
-            Argument.AssertNotNull(controlVersionNumber, nameof(controlVersionNumber));
-            Argument.AssertNotNull(groupHeaderAgencyCode, nameof(groupHeaderAgencyCode));
-            Argument.AssertNotNull(groupHeaderVersion, nameof(groupHeaderVersion));
+            if (senderApplicationId == null)
+            {
+                throw new ArgumentNullException(nameof(senderApplicationId));
+            }
+            if (receiverApplicationId == null)
+            {
+                throw new ArgumentNullException(nameof(receiverApplicationId));
+            }
+            if (controlVersionNumber == null)
+            {
+                throw new ArgumentNullException(nameof(controlVersionNumber));
+            }
+            if (groupHeaderAgencyCode == null)
+            {
+                throw new ArgumentNullException(nameof(groupHeaderAgencyCode));
+            }
+            if (groupHeaderVersion == null)
+            {
+                throw new ArgumentNullException(nameof(groupHeaderVersion));
+            }
 
             ControlStandardsId = controlStandardsId;
             UseControlStandardsIdAsRepetitionCharacter = useControlStandardsIdAsRepetitionCharacter;

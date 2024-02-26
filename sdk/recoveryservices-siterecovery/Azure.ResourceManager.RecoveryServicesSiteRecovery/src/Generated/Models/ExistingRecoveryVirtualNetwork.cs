@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryVirtualNetworkId"/> is null. </exception>
         public ExistingRecoveryVirtualNetwork(ResourceIdentifier recoveryVirtualNetworkId)
         {
-            Argument.AssertNotNull(recoveryVirtualNetworkId, nameof(recoveryVirtualNetworkId));
+            if (recoveryVirtualNetworkId == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryVirtualNetworkId));
+            }
 
             RecoveryVirtualNetworkId = recoveryVirtualNetworkId;
             ResourceType = "Existing";

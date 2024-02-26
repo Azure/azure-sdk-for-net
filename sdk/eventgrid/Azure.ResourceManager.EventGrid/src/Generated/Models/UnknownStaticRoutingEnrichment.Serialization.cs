@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStaticRoutingEnrichment(document.RootElement, options);
+            return DeserializeStaticRoutingEnrichment(document.RootElement, options);
         }
 
         internal static UnknownStaticRoutingEnrichment DeserializeUnknownStaticRoutingEnrichment(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownStaticRoutingEnrichment(document.RootElement, options);
+                        return DeserializeStaticRoutingEnrichment(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StaticRoutingEnrichment)} does not support '{options.Format}' format.");

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomationUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationUsage>> value = default;
+            IReadOnlyList<AutomationUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationUsage> array = new List<AutomationUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationUsage.DeserializeAutomationUsage(item));
+                        array.Add(AutomationUsage.DeserializeAutomationUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AutomationUsageListResult(value ?? new ChangeTrackingList<AutomationUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationUsageListResult>.Write(ModelReaderWriterOptions options)

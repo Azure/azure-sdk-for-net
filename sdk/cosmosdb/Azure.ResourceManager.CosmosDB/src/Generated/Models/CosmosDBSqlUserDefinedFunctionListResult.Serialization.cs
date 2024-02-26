@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CosmosDBSqlUserDefinedFunctionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBSqlUserDefinedFunctionData>> value = default;
+            IReadOnlyList<CosmosDBSqlUserDefinedFunctionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlUserDefinedFunctionData> array = new List<CosmosDBSqlUserDefinedFunctionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(item));
+                        array.Add(CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlUserDefinedFunctionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBSqlUserDefinedFunctionListResult(value ?? new ChangeTrackingList<CosmosDBSqlUserDefinedFunctionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlUserDefinedFunctionListResult>.Write(ModelReaderWriterOptions options)

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (property.NameEquals("sourceRepository"u8))
                 {
-                    sourceRepository = SourceCodeRepoProperties.DeserializeSourceCodeRepoProperties(property.Value);
+                    sourceRepository = SourceCodeRepoProperties.DeserializeSourceCodeRepoProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceTriggerEvents"u8))

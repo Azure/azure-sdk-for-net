@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferName))
+            if (OfferName != null)
             {
                 writer.WritePropertyName("offerName"u8);
                 writer.WriteStringValue(OfferName);
             }
-            if (Optional.IsDefined(ValueInMbps))
+            if (ValueInMbps.HasValue)
             {
                 writer.WritePropertyName("valueInMbps"u8);
                 writer.WriteNumberValue(ValueInMbps.Value);

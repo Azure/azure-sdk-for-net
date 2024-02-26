@@ -15,37 +15,37 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobId))
+            if (JobId != null)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(Type))
+            if (Type.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(CloudToDeviceMethod))
+            if (CloudToDeviceMethod != null)
             {
                 writer.WritePropertyName("cloudToDeviceMethod"u8);
                 writer.WriteObjectValue(CloudToDeviceMethod);
             }
-            if (Optional.IsDefined(UpdateTwin))
+            if (UpdateTwin != null)
             {
                 writer.WritePropertyName("updateTwin"u8);
                 writer.WriteObjectValue(UpdateTwin);
             }
-            if (Optional.IsDefined(QueryCondition))
+            if (QueryCondition != null)
             {
                 writer.WritePropertyName("queryCondition"u8);
                 writer.WriteStringValue(QueryCondition);
             }
-            if (Optional.IsDefined(StartTime))
+            if (StartTime.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (Optional.IsDefined(MaxExecutionTimeInSeconds))
+            if (MaxExecutionTimeInSeconds.HasValue)
             {
                 writer.WritePropertyName("maxExecutionTimeInSeconds"u8);
                 writer.WriteNumberValue(MaxExecutionTimeInSeconds.Value);

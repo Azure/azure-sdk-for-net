@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubjectName))
+            if (options.Format != "W" && SubjectName != null)
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (Optional.IsCollectionDefined(HostNames))
+            if (!(HostNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -77,87 +77,87 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PfxBlob))
+            if (PfxBlob != null)
             {
                 writer.WritePropertyName("pfxBlob"u8);
                 writer.WriteBase64StringValue(PfxBlob, "D");
             }
-            if (options.Format != "W" && Optional.IsDefined(SiteName))
+            if (options.Format != "W" && SiteName != null)
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SelfLink))
+            if (options.Format != "W" && SelfLink != null)
             {
                 writer.WritePropertyName("selfLink"u8);
                 writer.WriteStringValue(SelfLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(Issuer))
+            if (options.Format != "W" && Issuer != null)
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (options.Format != "W" && Optional.IsDefined(IssueOn))
+            if (options.Format != "W" && IssueOn.HasValue)
             {
                 writer.WritePropertyName("issueDate"u8);
                 writer.WriteStringValue(IssueOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
+            if (options.Format != "W" && ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsValid))
+            if (options.Format != "W" && IsValid.HasValue)
             {
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CerBlob))
+            if (options.Format != "W" && CerBlob != null)
             {
                 writer.WritePropertyName("cerBlob"u8);
                 writer.WriteBase64StringValue(CerBlob, "D");
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicKeyHash))
+            if (options.Format != "W" && PublicKeyHash != null)
             {
                 writer.WritePropertyName("publicKeyHash"u8);
                 writer.WriteStringValue(PublicKeyHash);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostingEnvironmentProfile))
+            if (options.Format != "W" && HostingEnvironmentProfile != null)
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
                 writer.WriteObjectValue(HostingEnvironmentProfile);
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (KeyVaultId != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (Optional.IsDefined(KeyVaultSecretName))
+            if (KeyVaultSecretName != null)
             {
                 writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyVaultSecretStatus))
+            if (options.Format != "W" && KeyVaultSecretStatus.HasValue)
             {
                 writer.WritePropertyName("keyVaultSecretStatus"u8);
                 writer.WriteStringValue(KeyVaultSecretStatus.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (ServerFarmId != null)
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (Optional.IsDefined(CanonicalName))
+            if (CanonicalName != null)
             {
                 writer.WritePropertyName("canonicalName"u8);
                 writer.WriteStringValue(CanonicalName);
             }
-            if (Optional.IsDefined(DomainValidationMethod))
+            if (DomainValidationMethod != null)
             {
                 writer.WritePropertyName("domainValidationMethod"u8);
                 writer.WriteStringValue(DomainValidationMethod);

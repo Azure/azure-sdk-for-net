@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StorageAccountLocalUserData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageAccountLocalUserData>> value = default;
+            IReadOnlyList<StorageAccountLocalUserData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountLocalUserData> array = new List<StorageAccountLocalUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(item));
+                        array.Add(StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalUsers(Optional.ToList(value), serializedAdditionalRawData);
+            return new LocalUsers(value ?? new ChangeTrackingList<StorageAccountLocalUserData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalUsers>.Write(ModelReaderWriterOptions options)

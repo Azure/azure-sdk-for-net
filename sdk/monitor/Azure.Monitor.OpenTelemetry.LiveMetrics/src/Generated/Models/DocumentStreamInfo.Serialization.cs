@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 return null;
             }
             Optional<string> id = default;
-            Optional<IReadOnlyList<DocumentFilterConjunctionGroupInfo>> documentFilterGroups = default;
+            IReadOnlyList<DocumentFilterConjunctionGroupInfo> documentFilterGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new DocumentStreamInfo(id.Value, Optional.ToList(documentFilterGroups));
+            return new DocumentStreamInfo(id.Value, documentFilterGroups ?? new ChangeTrackingList<DocumentFilterConjunctionGroupInfo>());
         }
     }
 }

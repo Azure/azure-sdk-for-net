@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceInfo"/> is null. </exception>
         public RestoreTargetInfo(RecoverySetting recoverySetting, DataSourceInfo dataSourceInfo) : base(recoverySetting)
         {
-            Argument.AssertNotNull(dataSourceInfo, nameof(dataSourceInfo));
+            if (dataSourceInfo == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceInfo));
+            }
 
             DataSourceInfo = dataSourceInfo;
             ObjectType = "RestoreTargetInfo";

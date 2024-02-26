@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "keyVaultSecretReference": return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element);
-                    case "keyVaultSecretUri": return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element);
-                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element);
+                    case "keyVaultSecretReference": return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element, options);
+                    case "keyVaultSecretUri": return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element, options);
+                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element, options);
                 }
             }
-            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element);
+            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element, options);
         }
 
         BinaryData IPersistableModel<SecretBaseInfo>.Write(ModelReaderWriterOptions options)

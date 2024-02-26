@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ActiveBaseSecurityAdminRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SkipToken))
+            if (SkipToken != null)
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ActiveBaseSecurityAdminRule>> value = default;
+            IReadOnlyList<ActiveBaseSecurityAdminRule> value = default;
             Optional<string> skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ActiveBaseSecurityAdminRule> array = new List<ActiveBaseSecurityAdminRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(item));
+                        array.Add(ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveSecurityAdminRulesListResult(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+            return new ActiveSecurityAdminRulesListResult(value ?? new ChangeTrackingList<ActiveBaseSecurityAdminRule>(), skipToken.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActiveSecurityAdminRulesListResult>.Write(ModelReaderWriterOptions options)

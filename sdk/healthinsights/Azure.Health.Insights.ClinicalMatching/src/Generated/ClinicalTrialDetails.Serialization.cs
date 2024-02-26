@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(EligibilityCriteriaText))
+            if (EligibilityCriteriaText != null)
             {
                 writer.WritePropertyName("eligibilityCriteriaText"u8);
                 writer.WriteStringValue(EligibilityCriteriaText);
             }
-            if (Optional.IsDefined(Demographics))
+            if (Demographics != null)
             {
                 writer.WritePropertyName("demographics"u8);
                 writer.WriteObjectValue(Demographics);
@@ -103,12 +103,12 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    demographics = ClinicalTrialDemographics.DeserializeClinicalTrialDemographics(property.Value);
+                    demographics = ClinicalTrialDemographics.DeserializeClinicalTrialDemographics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value);
+                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

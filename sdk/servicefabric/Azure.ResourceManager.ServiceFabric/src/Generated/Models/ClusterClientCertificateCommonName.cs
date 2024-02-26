@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateCommonName"/> or <paramref name="certificateIssuerThumbprint"/> is null. </exception>
         public ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, BinaryData certificateIssuerThumbprint)
         {
-            Argument.AssertNotNull(certificateCommonName, nameof(certificateCommonName));
-            Argument.AssertNotNull(certificateIssuerThumbprint, nameof(certificateIssuerThumbprint));
+            if (certificateCommonName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateCommonName));
+            }
+            if (certificateIssuerThumbprint == null)
+            {
+                throw new ArgumentNullException(nameof(certificateIssuerThumbprint));
+            }
 
             IsAdmin = isAdmin;
             CertificateCommonName = certificateCommonName;

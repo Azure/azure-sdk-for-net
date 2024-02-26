@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FederatedIdentityCredentialResource>> UpdateAsync(WaitUntil waitUntil, FederatedIdentityCredentialData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FederatedIdentityCredentialResource> Update(WaitUntil waitUntil, FederatedIdentityCredentialData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialResource.Update");
             scope.Start();

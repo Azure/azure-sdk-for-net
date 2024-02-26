@@ -16,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TopologyName))
+            if (TopologyName != null)
             {
                 writer.WritePropertyName("topologyName"u8);
                 writer.WriteStringValue(TopologyName);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<ParameterDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -52,7 +52,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             Optional<string> description = default;
             Optional<string> topologyName = default;
-            Optional<IList<ParameterDefinition>> parameters = default;
+            IList<ParameterDefinition> parameters = default;
             Optional<LivePipelineState> state = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,7 +90,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineProperties(description.Value, topologyName.Value, Optional.ToList(parameters), Optional.ToNullable(state));
+            return new LivePipelineProperties(description.Value, topologyName.Value, parameters ?? new ChangeTrackingList<ParameterDefinition>(), Optional.ToNullable(state));
         }
     }
 }

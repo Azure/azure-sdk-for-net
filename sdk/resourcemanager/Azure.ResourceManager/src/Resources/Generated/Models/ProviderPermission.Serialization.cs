@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId != null)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Optional.IsDefined(RoleDefinition))
+            if (RoleDefinition != null)
             {
                 writer.WritePropertyName("roleDefinition"u8);
                 writer.WriteObjectValue(RoleDefinition);
             }
-            if (Optional.IsDefined(ManagedByRoleDefinition))
+            if (ManagedByRoleDefinition != null)
             {
                 writer.WritePropertyName("managedByRoleDefinition"u8);
                 writer.WriteObjectValue(ManagedByRoleDefinition);
             }
-            if (Optional.IsDefined(ProviderAuthorizationConsentState))
+            if (ProviderAuthorizationConsentState.HasValue)
             {
                 writer.WritePropertyName("providerAuthorizationConsentState"u8);
                 writer.WriteStringValue(ProviderAuthorizationConsentState.Value.ToString());
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
+                    roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedByRoleDefinition"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
+                    managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerAuthorizationConsentState"u8))

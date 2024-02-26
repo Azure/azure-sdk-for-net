@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsStdOutEnabled))
+            if (IsStdOutEnabled.HasValue)
             {
                 writer.WritePropertyName("stdOutEnabled"u8);
                 writer.WriteBooleanValue(IsStdOutEnabled.Value);
             }
-            if (Optional.IsDefined(IsStdErrorEnabled))
+            if (IsStdErrorEnabled.HasValue)
             {
                 writer.WritePropertyName("stdErrorEnabled"u8);
                 writer.WriteBooleanValue(IsStdErrorEnabled.Value);

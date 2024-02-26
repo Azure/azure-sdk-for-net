@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultRoleDefinition>> value = default;
+            IReadOnlyList<KeyVaultRoleDefinition> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new RoleDefinitionListResult(Optional.ToList(value), nextLink.Value);
+            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<KeyVaultRoleDefinition>(), nextLink.Value);
         }
     }
 }

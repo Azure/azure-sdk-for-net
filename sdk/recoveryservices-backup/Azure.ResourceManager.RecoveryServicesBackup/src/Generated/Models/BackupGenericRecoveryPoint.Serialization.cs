@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShareRecoveryPoint": return FileShareRecoveryPoint.DeserializeFileShareRecoveryPoint(element);
-                    case "AzureWorkloadPointInTimeRecoveryPoint": return WorkloadPointInTimeRecoveryPoint.DeserializeWorkloadPointInTimeRecoveryPoint(element);
-                    case "AzureWorkloadRecoveryPoint": return WorkloadRecoveryPoint.DeserializeWorkloadRecoveryPoint(element);
-                    case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint": return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element);
-                    case "AzureWorkloadSAPHanaRecoveryPoint": return WorkloadSapHanaRecoveryPoint.DeserializeWorkloadSapHanaRecoveryPoint(element);
-                    case "AzureWorkloadSQLPointInTimeRecoveryPoint": return WorkloadSqlPointInTimeRecoveryPoint.DeserializeWorkloadSqlPointInTimeRecoveryPoint(element);
-                    case "AzureWorkloadSQLRecoveryPoint": return WorkloadSqlRecoveryPoint.DeserializeWorkloadSqlRecoveryPoint(element);
-                    case "GenericRecoveryPoint": return GenericRecoveryPoint.DeserializeGenericRecoveryPoint(element);
-                    case "IaasVMRecoveryPoint": return IaasVmRecoveryPoint.DeserializeIaasVmRecoveryPoint(element);
+                    case "AzureFileShareRecoveryPoint": return FileShareRecoveryPoint.DeserializeFileShareRecoveryPoint(element, options);
+                    case "AzureWorkloadPointInTimeRecoveryPoint": return WorkloadPointInTimeRecoveryPoint.DeserializeWorkloadPointInTimeRecoveryPoint(element, options);
+                    case "AzureWorkloadRecoveryPoint": return WorkloadRecoveryPoint.DeserializeWorkloadRecoveryPoint(element, options);
+                    case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint": return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element, options);
+                    case "AzureWorkloadSAPHanaRecoveryPoint": return WorkloadSapHanaRecoveryPoint.DeserializeWorkloadSapHanaRecoveryPoint(element, options);
+                    case "AzureWorkloadSQLPointInTimeRecoveryPoint": return WorkloadSqlPointInTimeRecoveryPoint.DeserializeWorkloadSqlPointInTimeRecoveryPoint(element, options);
+                    case "AzureWorkloadSQLRecoveryPoint": return WorkloadSqlRecoveryPoint.DeserializeWorkloadSqlRecoveryPoint(element, options);
+                    case "GenericRecoveryPoint": return GenericRecoveryPoint.DeserializeGenericRecoveryPoint(element, options);
+                    case "IaasVMRecoveryPoint": return IaasVmRecoveryPoint.DeserializeIaasVmRecoveryPoint(element, options);
                 }
             }
-            return UnknownRecoveryPoint.DeserializeUnknownRecoveryPoint(element);
+            return UnknownRecoveryPoint.DeserializeUnknownRecoveryPoint(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericRecoveryPoint>.Write(ModelReaderWriterOptions options)

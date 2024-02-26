@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PluginId))
+            if (options.Format != "W" && PluginId != null)
             {
                 writer.WritePropertyName("pluginId"u8);
                 writer.WriteStringValue(PluginId);

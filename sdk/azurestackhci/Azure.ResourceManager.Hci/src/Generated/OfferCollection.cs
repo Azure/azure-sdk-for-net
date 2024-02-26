@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
         public virtual async Task<Response<OfferResource>> GetAsync(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+            if (offerName == null)
+            {
+                throw new ArgumentNullException(nameof(offerName));
+            }
+            if (offerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offerName));
+            }
 
             using var scope = _offerClientDiagnostics.CreateScope("OfferCollection.Get");
             scope.Start();
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
         public virtual Response<OfferResource> Get(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+            if (offerName == null)
+            {
+                throw new ArgumentNullException(nameof(offerName));
+            }
+            if (offerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offerName));
+            }
 
             using var scope = _offerClientDiagnostics.CreateScope("OfferCollection.Get");
             scope.Start();
@@ -235,7 +249,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+            if (offerName == null)
+            {
+                throw new ArgumentNullException(nameof(offerName));
+            }
+            if (offerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offerName));
+            }
 
             using var scope = _offerClientDiagnostics.CreateScope("OfferCollection.Exists");
             scope.Start();
@@ -279,7 +300,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
         public virtual Response<bool> Exists(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+            if (offerName == null)
+            {
+                throw new ArgumentNullException(nameof(offerName));
+            }
+            if (offerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offerName));
+            }
 
             using var scope = _offerClientDiagnostics.CreateScope("OfferCollection.Exists");
             scope.Start();
@@ -323,7 +351,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
         public virtual async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+            if (offerName == null)
+            {
+                throw new ArgumentNullException(nameof(offerName));
+            }
+            if (offerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offerName));
+            }
 
             using var scope = _offerClientDiagnostics.CreateScope("OfferCollection.GetIfExists");
             scope.Start();
@@ -369,7 +404,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
         public virtual NullableResponse<OfferResource> GetIfExists(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+            if (offerName == null)
+            {
+                throw new ArgumentNullException(nameof(offerName));
+            }
+            if (offerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offerName));
+            }
 
             using var scope = _offerClientDiagnostics.CreateScope("OfferCollection.GetIfExists");
             scope.Start();

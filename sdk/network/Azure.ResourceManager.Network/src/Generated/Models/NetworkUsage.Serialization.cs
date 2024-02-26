@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = NetworkUsageName.DeserializeNetworkUsageName(property.Value);
+                    name = NetworkUsageName.DeserializeNetworkUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

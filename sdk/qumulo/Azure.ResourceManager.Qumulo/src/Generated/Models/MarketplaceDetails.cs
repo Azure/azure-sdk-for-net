@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <exception cref="ArgumentNullException"> <paramref name="planId"/>, <paramref name="offerId"/> or <paramref name="publisherId"/> is null. </exception>
         public MarketplaceDetails(string planId, string offerId, string publisherId)
         {
-            Argument.AssertNotNull(planId, nameof(planId));
-            Argument.AssertNotNull(offerId, nameof(offerId));
-            Argument.AssertNotNull(publisherId, nameof(publisherId));
+            if (planId == null)
+            {
+                throw new ArgumentNullException(nameof(planId));
+            }
+            if (offerId == null)
+            {
+                throw new ArgumentNullException(nameof(offerId));
+            }
+            if (publisherId == null)
+            {
+                throw new ArgumentNullException(nameof(publisherId));
+            }
 
             PlanId = planId;
             OfferId = offerId;

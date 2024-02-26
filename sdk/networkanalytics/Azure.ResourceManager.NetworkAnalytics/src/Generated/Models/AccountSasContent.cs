@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
         public AccountSasContent(DateTimeOffset startTimeStamp, DateTimeOffset expiryTimeStamp, string ipAddress)
         {
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+            if (ipAddress == null)
+            {
+                throw new ArgumentNullException(nameof(ipAddress));
+            }
 
             StartTimeStamp = startTimeStamp;
             ExpiryTimeStamp = expiryTimeStamp;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerType))
+            if (ContainerType.HasValue)
             {
                 writer.WritePropertyName("containerType"u8);
                 writer.WriteStringValue(ContainerType.Value.ToString());
             }
-            if (Optional.IsDefined(Tail))
+            if (Tail.HasValue)
             {
                 if (Tail != null)
                 {

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderCspmGcpOfferingVmScannersConfiguration.DeserializeDefenderCspmGcpOfferingVmScannersConfiguration(property.Value);
+                    configuration = DefenderCspmGcpOfferingVmScannersConfiguration.DeserializeDefenderCspmGcpOfferingVmScannersConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

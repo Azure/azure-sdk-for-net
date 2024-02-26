@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CollectionOffersByContext> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CollectionOffersByContext>> value = default;
+            IReadOnlyList<CollectionOffersByContext> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<CollectionOffersByContext> array = new List<CollectionOffersByContext>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectionOffersByContext.DeserializeCollectionOffersByContext(item));
+                        array.Add(CollectionOffersByContext.DeserializeCollectionOffersByContext(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionOffersByContextList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CollectionOffersByContextList(value ?? new ChangeTrackingList<CollectionOffersByContext>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionOffersByContextList>.Write(ModelReaderWriterOptions options)

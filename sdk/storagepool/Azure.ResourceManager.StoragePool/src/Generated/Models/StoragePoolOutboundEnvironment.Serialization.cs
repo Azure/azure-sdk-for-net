@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<OutboundEndpointDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             Optional<string> category = default;
-            Optional<IReadOnlyList<OutboundEndpointDependency>> endpoints = default;
+            IReadOnlyList<OutboundEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<OutboundEndpointDependency> array = new List<OutboundEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEndpointDependency.DeserializeOutboundEndpointDependency(item));
+                        array.Add(OutboundEndpointDependency.DeserializeOutboundEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolOutboundEnvironment(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new StoragePoolOutboundEnvironment(category.Value, endpoints ?? new ChangeTrackingList<OutboundEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolOutboundEnvironment>.Write(ModelReaderWriterOptions options)

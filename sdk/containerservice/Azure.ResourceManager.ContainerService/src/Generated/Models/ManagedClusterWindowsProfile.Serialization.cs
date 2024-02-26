@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
-            if (Optional.IsDefined(AdminPassword))
+            if (AdminPassword != null)
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(IsCsiProxyEnabled))
+            if (IsCsiProxyEnabled.HasValue)
             {
                 writer.WritePropertyName("enableCSIProxy"u8);
                 writer.WriteBooleanValue(IsCsiProxyEnabled.Value);
             }
-            if (Optional.IsDefined(GmsaProfile))
+            if (GmsaProfile != null)
             {
                 writer.WritePropertyName("gmsaProfile"u8);
                 writer.WriteObjectValue(GmsaProfile);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    gmsaProfile = WindowsGmsaProfile.DeserializeWindowsGmsaProfile(property.Value);
+                    gmsaProfile = WindowsGmsaProfile.DeserializeWindowsGmsaProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AvailabilityGroupListenerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string availabilityGroupListenerName, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AvailabilityGroupListenerResource> CreateOrUpdate(WaitUntil waitUntil, string availabilityGroupListenerName, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
         public virtual async Task<Response<AvailabilityGroupListenerResource>> GetAsync(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
         public virtual Response<AvailabilityGroupListenerResource> Get(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
         public virtual Response<bool> Exists(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.Exists");
             scope.Start();
@@ -419,7 +467,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
         public virtual async Task<NullableResponse<AvailabilityGroupListenerResource>> GetIfExistsAsync(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
         public virtual NullableResponse<AvailabilityGroupListenerResource> GetIfExists(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.GetIfExists");
             scope.Start();

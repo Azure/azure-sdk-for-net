@@ -19,7 +19,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IReadOnlyList<HierarchyHit>> hits = default;
+            IReadOnlyList<HierarchyHit> hits = default;
             Optional<int> hitCount = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new SearchHierarchyNodesResponse(Optional.ToList(hits), Optional.ToNullable(hitCount), continuationToken.Value);
+            return new SearchHierarchyNodesResponse(hits ?? new ChangeTrackingList<HierarchyHit>(), Optional.ToNullable(hitCount), continuationToken.Value);
         }
     }
 }

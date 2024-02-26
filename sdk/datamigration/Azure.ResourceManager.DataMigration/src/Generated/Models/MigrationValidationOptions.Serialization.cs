@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableSchemaValidation))
+            if (EnableSchemaValidation.HasValue)
             {
                 writer.WritePropertyName("enableSchemaValidation"u8);
                 writer.WriteBooleanValue(EnableSchemaValidation.Value);
             }
-            if (Optional.IsDefined(EnableDataIntegrityValidation))
+            if (EnableDataIntegrityValidation.HasValue)
             {
                 writer.WritePropertyName("enableDataIntegrityValidation"u8);
                 writer.WriteBooleanValue(EnableDataIntegrityValidation.Value);
             }
-            if (Optional.IsDefined(EnableQueryAnalysisValidation))
+            if (EnableQueryAnalysisValidation.HasValue)
             {
                 writer.WritePropertyName("enableQueryAnalysisValidation"u8);
                 writer.WriteBooleanValue(EnableQueryAnalysisValidation.Value);

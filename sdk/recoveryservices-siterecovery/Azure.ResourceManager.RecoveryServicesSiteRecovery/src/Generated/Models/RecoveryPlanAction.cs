@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -59,10 +58,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/>, <paramref name="failoverTypes"/>, <paramref name="failoverDirections"/> or <paramref name="customDetails"/> is null. </exception>
         public RecoveryPlanAction(string actionName, IEnumerable<ReplicationProtectedItemOperation> failoverTypes, IEnumerable<PossibleOperationsDirection> failoverDirections, RecoveryPlanActionDetails customDetails)
         {
-            Argument.AssertNotNull(actionName, nameof(actionName));
-            Argument.AssertNotNull(failoverTypes, nameof(failoverTypes));
-            Argument.AssertNotNull(failoverDirections, nameof(failoverDirections));
-            Argument.AssertNotNull(customDetails, nameof(customDetails));
+            if (actionName == null)
+            {
+                throw new ArgumentNullException(nameof(actionName));
+            }
+            if (failoverTypes == null)
+            {
+                throw new ArgumentNullException(nameof(failoverTypes));
+            }
+            if (failoverDirections == null)
+            {
+                throw new ArgumentNullException(nameof(failoverDirections));
+            }
+            if (customDetails == null)
+            {
+                throw new ArgumentNullException(nameof(customDetails));
+            }
 
             ActionName = actionName;
             FailoverTypes = failoverTypes.ToList();

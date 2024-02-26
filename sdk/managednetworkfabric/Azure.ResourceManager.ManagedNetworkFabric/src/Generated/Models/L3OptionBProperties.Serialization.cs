@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ImportRouteTargets))
+            if (!(ImportRouteTargets is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("importRouteTargets"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExportRouteTargets))
+            if (!(ExportRouteTargets is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("exportRouteTargets"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RouteTargets))
+            if (RouteTargets != null)
             {
                 writer.WritePropertyName("routeTargets"u8);
                 writer.WriteObjectValue(RouteTargets);
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> importRouteTargets = default;
-            Optional<IList<string>> exportRouteTargets = default;
+            IList<string> importRouteTargets = default;
+            IList<string> exportRouteTargets = default;
             Optional<RouteTargetInformation> routeTargets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value);
+                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L3OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets), routeTargets.Value, serializedAdditionalRawData);
+            return new L3OptionBProperties(importRouteTargets ?? new ChangeTrackingList<string>(), exportRouteTargets ?? new ChangeTrackingList<string>(), routeTargets.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L3OptionBProperties>.Write(ModelReaderWriterOptions options)

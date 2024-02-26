@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MetricAlertData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetricAlertData>> value = default;
+            IReadOnlyList<MetricAlertData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricAlertData> array = new List<MetricAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertData.DeserializeMetricAlertData(item));
+                        array.Add(MetricAlertData.DeserializeMetricAlertData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertResourceCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new MetricAlertResourceCollection(value ?? new ChangeTrackingList<MetricAlertData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertResourceCollection>.Write(ModelReaderWriterOptions options)

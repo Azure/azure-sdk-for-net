@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IotHubCertificateDescriptionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubCertificateDescriptionData>> value = default;
+            IReadOnlyList<IotHubCertificateDescriptionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubCertificateDescriptionData> array = new List<IotHubCertificateDescriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(item));
+                        array.Add(IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubCertificateListDescription(Optional.ToList(value), serializedAdditionalRawData);
+            return new IotHubCertificateListDescription(value ?? new ChangeTrackingList<IotHubCertificateDescriptionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubCertificateListDescription>.Write(ModelReaderWriterOptions options)

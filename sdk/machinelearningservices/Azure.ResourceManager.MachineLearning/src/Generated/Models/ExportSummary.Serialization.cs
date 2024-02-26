@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endDateTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ExportedRowCount))
+            if (options.Format != "W" && ExportedRowCount.HasValue)
             {
                 if (ExportedRowCount != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            if (options.Format != "W" && Optional.IsDefined(LabelingJobId))
+            if (options.Format != "W" && LabelingJobId != null)
             {
                 if (LabelingJobId != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("labelingJobId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element);
-                    case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element);
-                    case "Dataset": return DatasetExportSummary.DeserializeDatasetExportSummary(element);
+                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element, options);
+                    case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element, options);
+                    case "Dataset": return DatasetExportSummary.DeserializeDatasetExportSummary(element, options);
                 }
             }
-            return UnknownExportSummary.DeserializeUnknownExportSummary(element);
+            return UnknownExportSummary.DeserializeUnknownExportSummary(element, options);
         }
 
         BinaryData IPersistableModel<ExportSummary>.Write(ModelReaderWriterOptions options)

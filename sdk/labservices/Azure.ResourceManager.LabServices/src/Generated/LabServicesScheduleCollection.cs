@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LabServicesScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scheduleName, LabServicesScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LabServicesScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string scheduleName, LabServicesScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual async Task<Response<LabServicesScheduleResource>> GetAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
 
             using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual Response<LabServicesScheduleResource> Get(string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
 
             using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
 
             using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual Response<bool> Exists(string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
 
             using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual async Task<NullableResponse<LabServicesScheduleResource>> GetIfExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
 
             using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual NullableResponse<LabServicesScheduleResource> GetIfExists(string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
 
             using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetIfExists");
             scope.Start();

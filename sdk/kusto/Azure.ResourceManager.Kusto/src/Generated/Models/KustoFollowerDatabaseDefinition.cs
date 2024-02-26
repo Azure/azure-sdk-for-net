@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterResourceId"/> or <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public KustoFollowerDatabaseDefinition(ResourceIdentifier clusterResourceId, string attachedDatabaseConfigurationName)
         {
-            Argument.AssertNotNull(clusterResourceId, nameof(clusterResourceId));
-            Argument.AssertNotNull(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            if (clusterResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceId));
+            }
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
 
             ClusterResourceId = clusterResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;

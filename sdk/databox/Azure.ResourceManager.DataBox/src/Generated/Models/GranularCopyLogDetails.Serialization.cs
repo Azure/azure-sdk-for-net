@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBoxCustomerDisk": return DataBoxDiskGranularCopyLogDetails.DeserializeDataBoxDiskGranularCopyLogDetails(element);
+                    case "DataBoxCustomerDisk": return DataBoxDiskGranularCopyLogDetails.DeserializeDataBoxDiskGranularCopyLogDetails(element, options);
                 }
             }
-            return UnknownGranularCopyLogDetails.DeserializeUnknownGranularCopyLogDetails(element);
+            return UnknownGranularCopyLogDetails.DeserializeUnknownGranularCopyLogDetails(element, options);
         }
 
         BinaryData IPersistableModel<GranularCopyLogDetails>.Write(ModelReaderWriterOptions options)

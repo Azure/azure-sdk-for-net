@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MatchingRecordsCount))
+            if (MatchingRecordsCount.HasValue)
             {
                 writer.WritePropertyName("matchingRecordsCount"u8);
                 writer.WriteNumberValue(MatchingRecordsCount.Value);
             }
-            if (Optional.IsCollectionDefined(Signatures))
+            if (!(Signatures is ChangeTrackingList<IdpsSignatureResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("signatures"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<long> matchingRecordsCount = default;
-            Optional<IReadOnlyList<IdpsSignatureResult>> signatures = default;
+            IReadOnlyList<IdpsSignatureResult> signatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IdpsSignatureResult> array = new List<IdpsSignatureResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdpsSignatureResult.DeserializeIdpsSignatureResult(item));
+                        array.Add(IdpsSignatureResult.DeserializeIdpsSignatureResult(item, options));
                     }
                     signatures = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsSignatureListResult(Optional.ToNullable(matchingRecordsCount), Optional.ToList(signatures), serializedAdditionalRawData);
+            return new IdpsSignatureListResult(Optional.ToNullable(matchingRecordsCount), signatures ?? new ChangeTrackingList<IdpsSignatureResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsSignatureListResult>.Write(ModelReaderWriterOptions options)

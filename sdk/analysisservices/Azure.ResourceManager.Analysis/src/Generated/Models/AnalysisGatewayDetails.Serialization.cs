@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GatewayResourceId))
+            if (GatewayResourceId != null)
             {
                 writer.WritePropertyName("gatewayResourceId"u8);
                 writer.WriteStringValue(GatewayResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayObjectId))
+            if (options.Format != "W" && GatewayObjectId != null)
             {
                 writer.WritePropertyName("gatewayObjectId"u8);
                 writer.WriteStringValue(GatewayObjectId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DmtsClusterUri))
+            if (options.Format != "W" && DmtsClusterUri != null)
             {
                 writer.WritePropertyName("dmtsClusterUri"u8);
                 writer.WriteStringValue(DmtsClusterUri.AbsoluteUri);

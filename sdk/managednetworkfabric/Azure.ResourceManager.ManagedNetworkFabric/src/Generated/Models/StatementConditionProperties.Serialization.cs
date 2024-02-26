@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoutePolicyConditionType))
+            if (RoutePolicyConditionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
             }
-            if (Optional.IsDefined(IPPrefixId))
+            if (IPPrefixId != null)
             {
                 writer.WritePropertyName("ipPrefixId"u8);
                 writer.WriteStringValue(IPPrefixId);
             }
-            if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
+            if (!(IPExtendedCommunityIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPCommunityIds))
+            if (!(IPCommunityIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipCommunityIds"u8);
                 writer.WriteStartArray();
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<RoutePolicyConditionType> type = default;
             Optional<ResourceIdentifier> ipPrefixId = default;
-            Optional<IList<ResourceIdentifier>> ipExtendedCommunityIds = default;
-            Optional<IList<ResourceIdentifier>> ipCommunityIds = default;
+            IList<ResourceIdentifier> ipExtendedCommunityIds = default;
+            IList<ResourceIdentifier> ipCommunityIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatementConditionProperties(Optional.ToList(ipCommunityIds), serializedAdditionalRawData, Optional.ToNullable(type), ipPrefixId.Value, Optional.ToList(ipExtendedCommunityIds));
+            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, Optional.ToNullable(type), ipPrefixId.Value, ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>());
         }
 
         BinaryData IPersistableModel<StatementConditionProperties>.Write(ModelReaderWriterOptions options)

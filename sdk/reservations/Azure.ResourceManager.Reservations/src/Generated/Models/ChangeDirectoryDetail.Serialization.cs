@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReservationOrder))
+            if (ReservationOrder != null)
             {
                 writer.WritePropertyName("reservationOrder"u8);
                 writer.WriteObjectValue(ReservationOrder);
             }
-            if (Optional.IsCollectionDefined(Reservations))
+            if (!(Reservations is ChangeTrackingList<ChangeDirectoryResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reservations"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             Optional<ChangeDirectoryResult> reservationOrder = default;
-            Optional<IReadOnlyList<ChangeDirectoryResult>> reservations = default;
+            IReadOnlyList<ChangeDirectoryResult> reservations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value);
+                    reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reservations"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ChangeDirectoryResult> array = new List<ChangeDirectoryResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChangeDirectoryResult.DeserializeChangeDirectoryResult(item));
+                        array.Add(ChangeDirectoryResult.DeserializeChangeDirectoryResult(item, options));
                     }
                     reservations = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDirectoryDetail(reservationOrder.Value, Optional.ToList(reservations), serializedAdditionalRawData);
+            return new ChangeDirectoryDetail(reservationOrder.Value, reservations ?? new ChangeTrackingList<ChangeDirectoryResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDirectoryDetail>.Write(ModelReaderWriterOptions options)

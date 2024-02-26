@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<IReadOnlyList<AcrErrorInfo>> errors = default;
+            IReadOnlyList<AcrErrorInfo> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"u8))
@@ -37,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new AcrErrors(Optional.ToList(errors));
+            return new AcrErrors(errors ?? new ChangeTrackingList<AcrErrorInfo>());
         }
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (GroupId.HasValue)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteNumberValue(GroupId.Value);
             }
-            if (Optional.IsDefined(ActionText))
+            if (ActionText != null)
             {
                 writer.WritePropertyName("actionText"u8);
                 writer.WriteStringValue(ActionText);

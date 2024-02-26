@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
+            if (options.Format != "W" && !(Endpoints is ChangeTrackingList<BatchAccountEndpointDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             Optional<string> category = default;
-            Optional<IReadOnlyList<BatchAccountEndpointDependency>> endpoints = default;
+            IReadOnlyList<BatchAccountEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchAccountEndpointDependency> array = new List<BatchAccountEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchAccountEndpointDependency.DeserializeBatchAccountEndpointDependency(item));
+                        array.Add(BatchAccountEndpointDependency.DeserializeBatchAccountEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new BatchAccountOutboundEnvironmentEndpoint(category.Value, endpoints ?? new ChangeTrackingList<BatchAccountEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

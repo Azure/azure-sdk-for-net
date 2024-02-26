@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<RestorableMongoDBCollection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableMongoDBCollection>> value = default;
+            IReadOnlyList<RestorableMongoDBCollection> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableMongoDBCollection> array = new List<RestorableMongoDBCollection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection(item));
+                        array.Add(RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableMongoDBCollectionsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RestorableMongoDBCollectionsListResult(value ?? new ChangeTrackingList<RestorableMongoDBCollection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableMongoDBCollectionsListResult>.Write(ModelReaderWriterOptions options)

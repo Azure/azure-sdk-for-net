@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAutomationAction(document.RootElement, options);
+            return DeserializeSecurityAutomationAction(document.RootElement, options);
         }
 
         internal static UnknownAutomationAction DeserializeUnknownAutomationAction(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAutomationAction(document.RootElement, options);
+                        return DeserializeSecurityAutomationAction(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support '{options.Format}' format.");

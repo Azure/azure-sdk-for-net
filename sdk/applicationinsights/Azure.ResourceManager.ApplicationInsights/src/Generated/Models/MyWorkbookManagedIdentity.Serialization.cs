@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentities))
+            if (UserAssignedIdentities != null)
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteObjectValue(UserAssignedIdentities);
             }
-            if (Optional.IsDefined(IdentityType))
+            if (IdentityType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    userAssignedIdentities = MyWorkbookUserAssignedIdentities.DeserializeMyWorkbookUserAssignedIdentities(property.Value);
+                    userAssignedIdentities = MyWorkbookUserAssignedIdentities.DeserializeMyWorkbookUserAssignedIdentities(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

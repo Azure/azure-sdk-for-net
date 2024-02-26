@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VmId))
+            if (options.Format != "W" && VmId.HasValue)
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmResourceId))
+            if (options.Format != "W" && VmResourceId != null)
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
+            if (options.Format != "W" && ComplianceStatus.HasValue)
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestReportId))
+            if (options.Format != "W" && LatestReportId.HasValue)
             {
                 if (LatestReportId != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("latestReportId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceCheckedOn))
+            if (options.Format != "W" && LastComplianceCheckedOn.HasValue)
             {
                 if (LastComplianceCheckedOn != null)
                 {

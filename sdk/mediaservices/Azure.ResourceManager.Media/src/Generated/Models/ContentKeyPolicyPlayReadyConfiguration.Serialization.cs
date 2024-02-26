@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ResponseCustomData))
+            if (ResponseCustomData != null)
             {
                 writer.WritePropertyName("responseCustomData"u8);
 #if NET6_0_OR_GREATER
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyPlayReadyLicense> array = new List<ContentKeyPolicyPlayReadyLicense>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyPlayReadyLicense.DeserializeContentKeyPolicyPlayReadyLicense(item));
+                        array.Add(ContentKeyPolicyPlayReadyLicense.DeserializeContentKeyPolicyPlayReadyLicense(item, options));
                     }
                     licenses = array;
                     continue;

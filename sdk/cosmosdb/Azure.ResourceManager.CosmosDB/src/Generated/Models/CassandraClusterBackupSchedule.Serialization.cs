@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduleName))
+            if (ScheduleName != null)
             {
                 writer.WritePropertyName("scheduleName"u8);
                 writer.WriteStringValue(ScheduleName);
             }
-            if (Optional.IsDefined(CronExpression))
+            if (CronExpression != null)
             {
                 writer.WritePropertyName("cronExpression"u8);
                 writer.WriteStringValue(CronExpression);
             }
-            if (Optional.IsDefined(RetentionInHours))
+            if (RetentionInHours.HasValue)
             {
                 writer.WritePropertyName("retentionInHours"u8);
                 writer.WriteNumberValue(RetentionInHours.Value);

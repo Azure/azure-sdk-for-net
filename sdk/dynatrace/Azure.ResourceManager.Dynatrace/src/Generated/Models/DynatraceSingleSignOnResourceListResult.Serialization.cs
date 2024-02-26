@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceSingleSignOnData> array = new List<DynatraceSingleSignOnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(item));
+                        array.Add(DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(item, options));
                     }
                     value = array;
                     continue;

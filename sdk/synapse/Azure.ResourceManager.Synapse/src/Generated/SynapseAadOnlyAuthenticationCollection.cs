@@ -82,7 +82,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseAadOnlyAuthenticationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, SynapseAadOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +132,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseAadOnlyAuthenticationResource> CreateOrUpdate(WaitUntil waitUntil, SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, SynapseAadOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();

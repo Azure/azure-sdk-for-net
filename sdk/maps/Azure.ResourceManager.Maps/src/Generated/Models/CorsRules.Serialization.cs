@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CorsRulesValue))
+            if (!(CorsRulesValue is ChangeTrackingList<MapsCorsRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<IList<MapsCorsRule>> corsRules = default;
+            IList<MapsCorsRule> corsRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsCorsRule> array = new List<MapsCorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsCorsRule.DeserializeMapsCorsRule(item));
+                        array.Add(MapsCorsRule.DeserializeMapsCorsRule(item, options));
                     }
                     corsRules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CorsRules(Optional.ToList(corsRules), serializedAdditionalRawData);
+            return new CorsRules(corsRules ?? new ChangeTrackingList<MapsCorsRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CorsRules>.Write(ModelReaderWriterOptions options)

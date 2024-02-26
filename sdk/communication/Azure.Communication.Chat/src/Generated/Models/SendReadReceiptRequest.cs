@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="chatMessageId"/> is null. </exception>
         public SendReadReceiptRequest(string chatMessageId)
         {
-            Argument.AssertNotNull(chatMessageId, nameof(chatMessageId));
+            if (chatMessageId == null)
+            {
+                throw new ArgumentNullException(nameof(chatMessageId));
+            }
 
             ChatMessageId = chatMessageId;
         }

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CategoryName))
+            if (options.Format != "W" && CategoryName != null)
             {
                 writer.WritePropertyName("categoryName"u8);
                 writer.WriteStringValue(CategoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CategoryType))
+            if (options.Format != "W" && CategoryType.HasValue)
             {
                 writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CategoryStatus))
+            if (options.Format != "W" && CategoryStatus.HasValue)
             {
                 writer.WritePropertyName("categoryStatus"u8);
                 writer.WriteStringValue(CategoryStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ControlFamilies))
+            if (options.Format != "W" && !(ControlFamilies is ChangeTrackingList<ControlFamily> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("controlFamilies"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> categoryName = default;
             Optional<CategoryType> categoryType = default;
             Optional<CategoryStatus> categoryStatus = default;
-            Optional<IReadOnlyList<ControlFamily>> controlFamilies = default;
+            IReadOnlyList<ControlFamily> controlFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ControlFamily> array = new List<ControlFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControlFamily.DeserializeControlFamily(item));
+                        array.Add(ControlFamily.DeserializeControlFamily(item, options));
                     }
                     controlFamilies = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Category(categoryName.Value, Optional.ToNullable(categoryType), Optional.ToNullable(categoryStatus), Optional.ToList(controlFamilies), serializedAdditionalRawData);
+            return new Category(categoryName.Value, Optional.ToNullable(categoryType), Optional.ToNullable(categoryStatus), controlFamilies ?? new ChangeTrackingList<ControlFamily>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Category>.Write(ModelReaderWriterOptions options)

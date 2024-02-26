@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeliveryAttributeMapping(document.RootElement, options);
+            return DeserializeDeliveryAttributeMapping(document.RootElement, options);
         }
 
         internal static UnknownDeliveryAttributeMapping DeserializeUnknownDeliveryAttributeMapping(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDeliveryAttributeMapping(document.RootElement, options);
+                        return DeserializeDeliveryAttributeMapping(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DeliveryAttributeMapping)} does not support '{options.Format}' format.");

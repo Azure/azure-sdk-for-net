@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionEndpointData> array = new List<DataCollectionEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionEndpointData.DeserializeDataCollectionEndpointData(item));
+                        array.Add(DataCollectionEndpointData.DeserializeDataCollectionEndpointData(item, options));
                     }
                     value = array;
                     continue;

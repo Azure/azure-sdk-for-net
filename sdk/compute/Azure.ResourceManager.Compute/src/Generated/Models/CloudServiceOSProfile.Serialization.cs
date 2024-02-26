@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<CloudServiceVaultSecretGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<CloudServiceVaultSecretGroup>> secrets = default;
+            IList<CloudServiceVaultSecretGroup> secrets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceVaultSecretGroup> array = new List<CloudServiceVaultSecretGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceVaultSecretGroup.DeserializeCloudServiceVaultSecretGroup(item));
+                        array.Add(CloudServiceVaultSecretGroup.DeserializeCloudServiceVaultSecretGroup(item, options));
                     }
                     secrets = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceOSProfile(Optional.ToList(secrets), serializedAdditionalRawData);
+            return new CloudServiceOSProfile(secrets ?? new ChangeTrackingList<CloudServiceVaultSecretGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceOSProfile>.Write(ModelReaderWriterOptions options)

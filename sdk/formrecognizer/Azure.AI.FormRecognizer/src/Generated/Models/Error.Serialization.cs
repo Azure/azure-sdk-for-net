@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             string code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<Error>> details = default;
+            IReadOnlyList<Error> details = default;
             Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new Error(code, message, target.Value, details ?? new ChangeTrackingList<Error>(), innererror.Value);
         }
     }
 }

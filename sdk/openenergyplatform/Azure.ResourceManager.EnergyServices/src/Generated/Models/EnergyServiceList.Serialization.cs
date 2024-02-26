@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EnergyServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<EnergyServiceData>> value = default;
+            IReadOnlyList<EnergyServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<EnergyServiceData> array = new List<EnergyServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnergyServiceData.DeserializeEnergyServiceData(item));
+                        array.Add(EnergyServiceData.DeserializeEnergyServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnergyServiceList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new EnergyServiceList(nextLink.Value, value ?? new ChangeTrackingList<EnergyServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnergyServiceList>.Write(ModelReaderWriterOptions options)

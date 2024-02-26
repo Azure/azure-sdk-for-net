@@ -21,9 +21,18 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/>, <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
         public SingleServerConfiguration(string appResourceGroup, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration) : base(appResourceGroup)
         {
-            Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
-            Argument.AssertNotNull(virtualMachineConfiguration, nameof(virtualMachineConfiguration));
+            if (appResourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(appResourceGroup));
+            }
+            if (subnetId == null)
+            {
+                throw new ArgumentNullException(nameof(subnetId));
+            }
+            if (virtualMachineConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineConfiguration));
+            }
 
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;

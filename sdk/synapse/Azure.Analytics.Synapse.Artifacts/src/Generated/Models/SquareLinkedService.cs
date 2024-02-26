@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,9 +20,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="clientId"/> or <paramref name="redirectUri"/> is null. </exception>
         public SquareLinkedService(object host, object clientId, object redirectUri)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(clientId, nameof(clientId));
-            Argument.AssertNotNull(redirectUri, nameof(redirectUri));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
+            if (redirectUri == null)
+            {
+                throw new ArgumentNullException(nameof(redirectUri));
+            }
 
             Host = host;
             ClientId = clientId;

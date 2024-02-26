@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EvaluatedExpressions))
+            if (!(EvaluatedExpressions is ChangeTrackingList<ExpressionEvaluationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evaluatedExpressions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IfNotExistsDetails))
+            if (IfNotExistsDetails != null)
             {
                 writer.WritePropertyName("ifNotExistsDetails"u8);
                 writer.WriteObjectValue(IfNotExistsDetails);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpressionEvaluationDetails>> evaluatedExpressions = default;
+            IReadOnlyList<ExpressionEvaluationDetails> evaluatedExpressions = default;
             Optional<IfNotExistsEvaluationDetails> ifNotExistsDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ExpressionEvaluationDetails> array = new List<ExpressionEvaluationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressionEvaluationDetails.DeserializeExpressionEvaluationDetails(item));
+                        array.Add(ExpressionEvaluationDetails.DeserializeExpressionEvaluationDetails(item, options));
                     }
                     evaluatedExpressions = array;
                     continue;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    ifNotExistsDetails = IfNotExistsEvaluationDetails.DeserializeIfNotExistsEvaluationDetails(property.Value);
+                    ifNotExistsDetails = IfNotExistsEvaluationDetails.DeserializeIfNotExistsEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyEvaluationDetails(Optional.ToList(evaluatedExpressions), ifNotExistsDetails.Value, serializedAdditionalRawData);
+            return new PolicyEvaluationDetails(evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>(), ifNotExistsDetails.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEvaluationDetails>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -55,7 +54,10 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/> is null. </exception>
         protected InfrastructureConfiguration(string appResourceGroup)
         {
-            Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
+            if (appResourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(appResourceGroup));
+            }
 
             AppResourceGroup = appResourceGroup;
         }

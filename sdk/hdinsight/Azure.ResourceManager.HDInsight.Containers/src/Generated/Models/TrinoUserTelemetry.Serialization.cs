@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Storage))
+            if (Storage != null)
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteObjectValue(Storage);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value);
+                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

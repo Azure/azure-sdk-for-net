@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Start))
+            if (Start != null)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteObjectValue(Start);
             }
-            if (Optional.IsDefined(End))
+            if (End != null)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteObjectValue(End);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    start = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value);
+                    start = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("end"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    end = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value);
+                    end = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

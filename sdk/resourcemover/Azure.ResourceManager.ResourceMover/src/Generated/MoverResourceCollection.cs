@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MoverResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moverResourceName, MoverResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (moverResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceName));
+            }
+            if (moverResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MoverResource> CreateOrUpdate(WaitUntil waitUntil, string moverResourceName, MoverResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (moverResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceName));
+            }
+            if (moverResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
         public virtual async Task<Response<MoverResource>> GetAsync(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
+            if (moverResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceName));
+            }
+            if (moverResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceName));
+            }
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
         public virtual Response<MoverResource> Get(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
+            if (moverResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceName));
+            }
+            if (moverResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceName));
+            }
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
+            if (moverResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceName));
+            }
+            if (moverResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceName));
+            }
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
+            if (moverResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceName));
+            }
+            if (moverResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceName));
+            }
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<MoverResource>> GetIfExistsAsync(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
+            if (moverResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceName));
+            }
+            if (moverResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceName));
+            }
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
         public virtual NullableResponse<MoverResource> GetIfExists(string moverResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
+            if (moverResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceName));
+            }
+            if (moverResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceName));
+            }
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.GetIfExists");
             scope.Start();

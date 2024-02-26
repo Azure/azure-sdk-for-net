@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="configs"/> is null. </exception>
         public SynapseSparkConfigurationData(IDictionary<string, string> configs)
         {
-            Argument.AssertNotNull(configs, nameof(configs));
+            if (configs == null)
+            {
+                throw new ArgumentNullException(nameof(configs));
+            }
 
             Configs = configs;
             Annotations = new ChangeTrackingList<string>();

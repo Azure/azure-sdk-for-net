@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<RestorableGremlinResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableGremlinResourceData>> value = default;
+            IReadOnlyList<RestorableGremlinResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableGremlinResourceData> array = new List<RestorableGremlinResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData(item));
+                        array.Add(RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableGremlinResourcesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RestorableGremlinResourcesListResult(value ?? new ChangeTrackingList<RestorableGremlinResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableGremlinResourcesListResult>.Write(ModelReaderWriterOptions options)

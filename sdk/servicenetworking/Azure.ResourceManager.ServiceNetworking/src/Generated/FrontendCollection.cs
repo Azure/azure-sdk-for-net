@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontendResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string frontendName, FrontendData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (frontendName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendName));
+            }
+            if (frontendName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontendResource> CreateOrUpdate(WaitUntil waitUntil, string frontendName, FrontendData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (frontendName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendName));
+            }
+            if (frontendName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
         public virtual async Task<Response<FrontendResource>> GetAsync(string frontendName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            if (frontendName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendName));
+            }
+            if (frontendName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendName));
+            }
 
             using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
         public virtual Response<FrontendResource> Get(string frontendName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            if (frontendName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendName));
+            }
+            if (frontendName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendName));
+            }
 
             using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string frontendName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            if (frontendName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendName));
+            }
+            if (frontendName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendName));
+            }
 
             using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
         public virtual Response<bool> Exists(string frontendName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            if (frontendName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendName));
+            }
+            if (frontendName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendName));
+            }
 
             using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontendResource>> GetIfExistsAsync(string frontendName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            if (frontendName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendName));
+            }
+            if (frontendName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendName));
+            }
 
             using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
         public virtual NullableResponse<FrontendResource> GetIfExists(string frontendName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            if (frontendName == null)
+            {
+                throw new ArgumentNullException(nameof(frontendName));
+            }
+            if (frontendName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendName));
+            }
 
             using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.GetIfExists");
             scope.Start();

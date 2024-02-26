@@ -86,8 +86,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
         public virtual async Task<Response<TopicNetworkSecurityPerimeterConfigurationResource>> GetAsync(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(perimeterGuid, nameof(perimeterGuid));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (perimeterGuid == null)
+            {
+                throw new ArgumentNullException(nameof(perimeterGuid));
+            }
+            if (perimeterGuid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(perimeterGuid));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _topicNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("TopicNetworkSecurityPerimeterConfigurationCollection.Get");
             scope.Start();
@@ -133,8 +147,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
         public virtual Response<TopicNetworkSecurityPerimeterConfigurationResource> Get(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(perimeterGuid, nameof(perimeterGuid));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (perimeterGuid == null)
+            {
+                throw new ArgumentNullException(nameof(perimeterGuid));
+            }
+            if (perimeterGuid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(perimeterGuid));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _topicNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("TopicNetworkSecurityPerimeterConfigurationCollection.Get");
             scope.Start();
@@ -230,8 +258,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(perimeterGuid, nameof(perimeterGuid));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (perimeterGuid == null)
+            {
+                throw new ArgumentNullException(nameof(perimeterGuid));
+            }
+            if (perimeterGuid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(perimeterGuid));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _topicNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("TopicNetworkSecurityPerimeterConfigurationCollection.Exists");
             scope.Start();
@@ -275,8 +317,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
         public virtual Response<bool> Exists(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(perimeterGuid, nameof(perimeterGuid));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (perimeterGuid == null)
+            {
+                throw new ArgumentNullException(nameof(perimeterGuid));
+            }
+            if (perimeterGuid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(perimeterGuid));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _topicNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("TopicNetworkSecurityPerimeterConfigurationCollection.Exists");
             scope.Start();
@@ -320,8 +376,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
         public virtual async Task<NullableResponse<TopicNetworkSecurityPerimeterConfigurationResource>> GetIfExistsAsync(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(perimeterGuid, nameof(perimeterGuid));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (perimeterGuid == null)
+            {
+                throw new ArgumentNullException(nameof(perimeterGuid));
+            }
+            if (perimeterGuid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(perimeterGuid));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _topicNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("TopicNetworkSecurityPerimeterConfigurationCollection.GetIfExists");
             scope.Start();
@@ -367,8 +437,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
         public virtual NullableResponse<TopicNetworkSecurityPerimeterConfigurationResource> GetIfExists(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(perimeterGuid, nameof(perimeterGuid));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (perimeterGuid == null)
+            {
+                throw new ArgumentNullException(nameof(perimeterGuid));
+            }
+            if (perimeterGuid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(perimeterGuid));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _topicNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("TopicNetworkSecurityPerimeterConfigurationCollection.GetIfExists");
             scope.Start();

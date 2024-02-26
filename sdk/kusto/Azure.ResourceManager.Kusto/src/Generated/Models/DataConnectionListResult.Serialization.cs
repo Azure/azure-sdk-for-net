@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoDataConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoDataConnectionData>> value = default;
+            IReadOnlyList<KustoDataConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDataConnectionData> array = new List<KustoDataConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDataConnectionData.DeserializeKustoDataConnectionData(item));
+                        array.Add(KustoDataConnectionData.DeserializeKustoDataConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new DataConnectionListResult(value ?? new ChangeTrackingList<KustoDataConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataConnectionListResult>.Write(ModelReaderWriterOptions options)

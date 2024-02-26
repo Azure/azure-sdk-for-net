@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KerberosPassword))
+            if (KerberosPassword != null)
             {
                 if (KerberosPassword != null)
                 {

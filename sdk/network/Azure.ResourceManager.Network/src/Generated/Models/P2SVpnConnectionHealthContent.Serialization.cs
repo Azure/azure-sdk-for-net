@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VpnUserNamesFilter))
+            if (!(VpnUserNamesFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vpnUserNamesFilter"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputBlobSasUri))
+            if (OutputBlobSasUri != null)
             {
                 writer.WritePropertyName("outputBlobSasUrl"u8);
                 writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> vpnUserNamesFilter = default;
+            IList<string> vpnUserNamesFilter = default;
             Optional<Uri> outputBlobSasUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new P2SVpnConnectionHealthContent(Optional.ToList(vpnUserNamesFilter), outputBlobSasUrl.Value, serializedAdditionalRawData);
+            return new P2SVpnConnectionHealthContent(vpnUserNamesFilter ?? new ChangeTrackingList<string>(), outputBlobSasUrl.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<P2SVpnConnectionHealthContent>.Write(ModelReaderWriterOptions options)

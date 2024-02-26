@@ -60,7 +60,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ViewListResult>> ListByScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListByScopeRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ViewListResult> ListByScope(string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListByScopeRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -125,7 +131,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementViewData>> GetAsync(string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
 
             using var message = CreateGetRequest(viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -152,7 +165,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementViewData> Get(string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
 
             using var message = CreateGetRequest(viewName);
             _pipeline.Send(message, cancellationToken);
@@ -200,8 +220,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementViewData>> CreateOrUpdateAsync(string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(viewName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -228,8 +258,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementViewData> CreateOrUpdate(string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(viewName, data);
             _pipeline.Send(message, cancellationToken);
@@ -271,7 +311,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
 
             using var message = CreateDeleteRequest(viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -292,7 +339,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
 
             using var message = CreateDeleteRequest(viewName);
             _pipeline.Send(message, cancellationToken);
@@ -332,8 +386,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementViewData>> GetByScopeAsync(string scope, string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
 
             using var message = CreateGetByScopeRequest(scope, viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -361,8 +425,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementViewData> GetByScope(string scope, string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
 
             using var message = CreateGetByScopeRequest(scope, viewName);
             _pipeline.Send(message, cancellationToken);
@@ -413,9 +487,22 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementViewData>> CreateOrUpdateByScopeAsync(string scope, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateByScopeRequest(scope, viewName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -443,9 +530,22 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementViewData> CreateOrUpdateByScope(string scope, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateByScopeRequest(scope, viewName, data);
             _pipeline.Send(message, cancellationToken);
@@ -490,8 +590,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteByScopeAsync(string scope, string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
 
             using var message = CreateDeleteByScopeRequest(scope, viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -513,8 +623,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteByScope(string scope, string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (viewName == null)
+            {
+                throw new ArgumentNullException(nameof(viewName));
+            }
+            if (viewName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
+            }
 
             using var message = CreateDeleteByScopeRequest(scope, viewName);
             _pipeline.Send(message, cancellationToken);
@@ -549,8 +669,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<ViewListResult>> ListByScopeNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListByScopeNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -575,8 +701,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<ViewListResult> ListByScopeNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListByScopeNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

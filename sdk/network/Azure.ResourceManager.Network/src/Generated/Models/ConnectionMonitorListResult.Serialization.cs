@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ConnectionMonitorData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectionMonitorData>> value = default;
+            IReadOnlyList<ConnectionMonitorData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionMonitorData> array = new List<ConnectionMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorData.DeserializeConnectionMonitorData(item));
+                        array.Add(ConnectionMonitorData.DeserializeConnectionMonitorData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ConnectionMonitorListResult(value ?? new ChangeTrackingList<ConnectionMonitorData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorListResult>.Write(ModelReaderWriterOptions options)

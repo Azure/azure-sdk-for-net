@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TriggerDependencyReference(DataFactoryTriggerReference referenceTrigger)
         {
-            Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
+            if (referenceTrigger == null)
+            {
+                throw new ArgumentNullException(nameof(referenceTrigger));
+            }
 
             ReferenceTrigger = referenceTrigger;
             DependencyReferenceType = "TriggerDependencyReference";

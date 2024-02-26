@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Changes))
+            if (!(Changes is ChangeTrackingList<WhatIfChange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("changes"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<string> status = default;
             Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<WhatIfChange>> changes = default;
+            IReadOnlyList<WhatIfChange> changes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<WhatIfChange> array = new List<WhatIfChange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WhatIfChange.DeserializeWhatIfChange(item));
+                                array.Add(WhatIfChange.DeserializeWhatIfChange(item, options));
                             }
                             changes = array;
                             continue;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatIfOperationResult(status.Value, error.Value, Optional.ToList(changes), serializedAdditionalRawData);
+            return new WhatIfOperationResult(status.Value, error.Value, changes ?? new ChangeTrackingList<WhatIfChange>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WhatIfOperationResult>.Write(ModelReaderWriterOptions options)

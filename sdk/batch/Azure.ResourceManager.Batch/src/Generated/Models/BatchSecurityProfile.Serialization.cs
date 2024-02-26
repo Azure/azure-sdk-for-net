@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecurityType))
+            if (SecurityType.HasValue)
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionAtHost))
+            if (EncryptionAtHost.HasValue)
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
-            if (Optional.IsDefined(UefiSettings))
+            if (UefiSettings != null)
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value);
+                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

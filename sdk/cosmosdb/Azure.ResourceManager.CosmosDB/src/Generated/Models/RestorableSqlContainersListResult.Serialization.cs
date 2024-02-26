@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<RestorableSqlContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableSqlContainer>> value = default;
+            IReadOnlyList<RestorableSqlContainer> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableSqlContainer> array = new List<RestorableSqlContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableSqlContainer.DeserializeRestorableSqlContainer(item));
+                        array.Add(RestorableSqlContainer.DeserializeRestorableSqlContainer(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableSqlContainersListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RestorableSqlContainersListResult(value ?? new ChangeTrackingList<RestorableSqlContainer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableSqlContainersListResult>.Write(ModelReaderWriterOptions options)

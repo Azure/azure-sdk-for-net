@@ -26,8 +26,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="issuer"/> or <paramref name="audience"/> is null. </exception>
         public ContentKeyPolicyTokenRestriction(string issuer, string audience, ContentKeyPolicyRestrictionTokenKey primaryVerificationKey, ContentKeyPolicyRestrictionTokenType restrictionTokenType)
         {
-            Argument.AssertNotNull(issuer, nameof(issuer));
-            Argument.AssertNotNull(audience, nameof(audience));
+            if (issuer == null)
+            {
+                throw new ArgumentNullException(nameof(issuer));
+            }
+            if (audience == null)
+            {
+                throw new ArgumentNullException(nameof(audience));
+            }
 
             Issuer = issuer;
             Audience = audience;

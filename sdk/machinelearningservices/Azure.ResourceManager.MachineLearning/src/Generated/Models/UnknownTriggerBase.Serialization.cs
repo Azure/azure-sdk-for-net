@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndTime))
+            if (EndTime != null)
             {
                 if (EndTime != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(StartTime))
+            if (StartTime != null)
             {
                 if (StartTime != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTriggerBase(document.RootElement, options);
+            return DeserializeMachineLearningTriggerBase(document.RootElement, options);
         }
 
         internal static UnknownTriggerBase DeserializeUnknownTriggerBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTriggerBase(document.RootElement, options);
+                        return DeserializeMachineLearningTriggerBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningTriggerBase)} does not support '{options.Format}' format.");

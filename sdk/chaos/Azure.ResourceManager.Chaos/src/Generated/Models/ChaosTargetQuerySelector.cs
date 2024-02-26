@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -22,9 +21,18 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="queryString"/> or <paramref name="subscriptionIds"/> is null. </exception>
         public ChaosTargetQuerySelector(string id, string queryString, IEnumerable<string> subscriptionIds) : base(id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(queryString, nameof(queryString));
-            Argument.AssertNotNull(subscriptionIds, nameof(subscriptionIds));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (queryString == null)
+            {
+                throw new ArgumentNullException(nameof(queryString));
+            }
+            if (subscriptionIds == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionIds));
+            }
 
             QueryString = queryString;
             SubscriptionIds = subscriptionIds.ToList();

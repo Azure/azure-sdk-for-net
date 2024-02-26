@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteNumberValue(MemoryInGB);
             writer.WritePropertyName("cpu"u8);
             writer.WriteNumberValue(Cpu);
-            if (Optional.IsDefined(Gpu))
+            if (Gpu != null)
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value);
+                    gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

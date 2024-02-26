@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IotCentralPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotCentralPrivateLinkResourceData>> value = default;
+            IReadOnlyList<IotCentralPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralPrivateLinkResourceData> array = new List<IotCentralPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(item));
+                        array.Add(IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new IotCentralPrivateLinkResourceListResult(value ?? new ChangeTrackingList<IotCentralPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

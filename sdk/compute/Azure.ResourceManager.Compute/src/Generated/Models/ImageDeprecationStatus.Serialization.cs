@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageState))
+            if (ImageState.HasValue)
             {
                 writer.WritePropertyName("imageState"u8);
                 writer.WriteStringValue(ImageState.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledDeprecationOn))
+            if (ScheduledDeprecationOn.HasValue)
             {
                 writer.WritePropertyName("scheduledDeprecationTime"u8);
                 writer.WriteStringValue(ScheduledDeprecationOn.Value, "O");
             }
-            if (Optional.IsDefined(AlternativeOption))
+            if (AlternativeOption != null)
             {
                 writer.WritePropertyName("alternativeOption"u8);
                 writer.WriteObjectValue(AlternativeOption);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(property.Value);
+                    alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

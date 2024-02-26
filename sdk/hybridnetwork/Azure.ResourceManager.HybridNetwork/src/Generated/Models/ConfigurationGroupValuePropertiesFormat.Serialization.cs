@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherName))
+            if (options.Format != "W" && PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
+            if (options.Format != "W" && PublisherScope.HasValue)
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaName))
+            if (options.Format != "W" && ConfigurationGroupSchemaName != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaName"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaOfferingLocation))
+            if (options.Format != "W" && ConfigurationGroupSchemaOfferingLocation != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaOfferingLocation"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation);
             }
-            if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
+            if (ConfigurationGroupSchemaResourceReference != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
                 writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return ConfigurationValueWithoutSecrets.DeserializeConfigurationValueWithoutSecrets(element);
-                    case "Secret": return ConfigurationValueWithSecrets.DeserializeConfigurationValueWithSecrets(element);
+                    case "Open": return ConfigurationValueWithoutSecrets.DeserializeConfigurationValueWithoutSecrets(element, options);
+                    case "Secret": return ConfigurationValueWithSecrets.DeserializeConfigurationValueWithSecrets(element, options);
                 }
             }
-            return UnknownConfigurationGroupValuePropertiesFormat.DeserializeUnknownConfigurationGroupValuePropertiesFormat(element);
+            return UnknownConfigurationGroupValuePropertiesFormat.DeserializeUnknownConfigurationGroupValuePropertiesFormat(element, options);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupValuePropertiesFormat>.Write(ModelReaderWriterOptions options)

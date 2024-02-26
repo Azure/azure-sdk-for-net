@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(TargetResourceName))
+            if (TargetResourceName != null)
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Optional.IsDefined(TargetResourceGroupName))
+            if (TargetResourceGroupName != null)
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownResourceSettings(document.RootElement, options);
+            return DeserializeMoverResourceSettings(document.RootElement, options);
         }
 
         internal static UnknownResourceSettings DeserializeUnknownResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownResourceSettings(document.RootElement, options);
+                        return DeserializeMoverResourceSettings(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceSettings)} does not support '{options.Format}' format.");
