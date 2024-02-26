@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
                 return null;
             }
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), nameServers ?? new ChangeTrackingList<string>(), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(), consent.Value, domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceDomainData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), nameServers ?? new ChangeTrackingList<string>(), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(), consent.Value, domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDomainData>.Write(ModelReaderWriterOptions options)

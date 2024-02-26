@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<RedisCommonConfiguration> redisConfiguration = default;
             Optional<string> redisVersion = default;
             Optional<bool> enableNonSslPort = default;
             Optional<int> replicasPerMaster = default;
             Optional<int> replicasPerPrimary = default;
-            Optional<IDictionary<string, string>> tenantSettings = default;
+            IDictionary<string, string> tenantSettings = default;
             Optional<int> shardCount = default;
             Optional<RedisTlsVersion> minimumTlsVersion = default;
             Optional<RedisPublicNetworkAccess> publicNetworkAccess = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisPatch(Optional.ToDictionary(tags), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), Optional.ToDictionary(tenantSettings), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(updateChannel), sku.Value, serializedAdditionalRawData);
+            return new RedisPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), tenantSettings ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(updateChannel), sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPatch>.Write(ModelReaderWriterOptions options)

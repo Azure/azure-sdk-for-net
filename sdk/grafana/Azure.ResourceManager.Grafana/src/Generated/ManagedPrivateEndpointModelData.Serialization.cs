@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Grafana
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedPrivateEndpointModelData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), privateLinkResourceId.Value, privateLinkResourceRegion.Value, groupIds ?? new ChangeTrackingList<string>(), requestMessage.Value, connectionState.Value, privateLinkServiceUrl.Value, privateLinkServicePrivateIP.Value, serializedAdditionalRawData);
+            return new ManagedPrivateEndpointModelData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), privateLinkResourceId.Value, privateLinkResourceRegion.Value, groupIds ?? new ChangeTrackingList<string>(), requestMessage.Value, connectionState.Value, privateLinkServiceUrl.Value, privateLinkServicePrivateIP.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedPrivateEndpointModelData>.Write(ModelReaderWriterOptions options)

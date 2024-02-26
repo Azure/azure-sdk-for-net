@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> args = default;
             Optional<string> savePointName = default;
             Optional<FlinkJobAction> action = default;
-            Optional<IDictionary<string, string>> flinkConfiguration = default;
+            IDictionary<string, string> flinkConfiguration = default;
             Optional<string> jobId = default;
             Optional<string> status = default;
             Optional<string> jobOutput = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkJobProperties(jobType, serializedAdditionalRawData, jobName, jobJarDirectory.Value, jarName.Value, entryClass.Value, args.Value, savePointName.Value, Optional.ToNullable(action), Optional.ToDictionary(flinkConfiguration), jobId.Value, status.Value, jobOutput.Value, actionResult.Value, lastSavePoint.Value);
+            return new FlinkJobProperties(jobType, serializedAdditionalRawData, jobName, jobJarDirectory.Value, jarName.Value, entryClass.Value, args.Value, savePointName.Value, Optional.ToNullable(action), flinkConfiguration ?? new ChangeTrackingDictionary<string, string>(), jobId.Value, status.Value, jobOutput.Value, actionResult.Value, lastSavePoint.Value);
         }
 
         BinaryData IPersistableModel<FlinkJobProperties>.Write(ModelReaderWriterOptions options)

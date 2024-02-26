@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             Optional<GranularityType> granularity = default;
             Optional<QueryDatasetConfiguration> configuration = default;
-            Optional<IDictionary<string, QueryAggregation>> aggregation = default;
+            IDictionary<string, QueryAggregation> aggregation = default;
             IList<QueryGrouping> grouping = default;
             Optional<QueryFilter> filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), grouping ?? new ChangeTrackingList<QueryGrouping>(), filter.Value, serializedAdditionalRawData);
+            return new QueryDataset(Optional.ToNullable(granularity), configuration.Value, aggregation ?? new ChangeTrackingDictionary<string, QueryAggregation>(), grouping ?? new ChangeTrackingList<QueryGrouping>(), filter.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryDataset>.Write(ModelReaderWriterOptions options)

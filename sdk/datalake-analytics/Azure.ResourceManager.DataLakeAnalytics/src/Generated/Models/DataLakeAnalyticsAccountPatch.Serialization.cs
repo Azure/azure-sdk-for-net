@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent> dataLakeStoreAccounts = default;
             IList<StorageAccountForDataLakeAnalyticsAccountUpdateContent> storageAccounts = default;
             IList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent> computePolicies = default;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsAccountPatch(Optional.ToDictionary(tags), dataLakeStoreAccounts ?? new ChangeTrackingList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>(), storageAccounts ?? new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountUpdateContent>(), computePolicies ?? new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>(), firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>(), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), serializedAdditionalRawData);
+            return new DataLakeAnalyticsAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), dataLakeStoreAccounts ?? new ChangeTrackingList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>(), storageAccounts ?? new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountUpdateContent>(), computePolicies ?? new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>(), firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>(), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountPatch>.Write(ModelReaderWriterOptions options)

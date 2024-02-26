@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             PostgreSqlFlexibleServerIdentityType type = default;
             Optional<Guid> tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(Optional.ToDictionary(userAssignedIdentities), type, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), type, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerUserAssignedIdentity>.Write(ModelReaderWriterOptions options)

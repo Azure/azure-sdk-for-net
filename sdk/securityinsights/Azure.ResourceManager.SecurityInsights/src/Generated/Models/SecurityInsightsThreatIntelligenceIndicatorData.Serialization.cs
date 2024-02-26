@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             IList<string> threatIntelligenceTags = default;
             Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<DateTimeOffset> validUntil = default;
             Optional<DateTimeOffset> created = default;
             Optional<string> modified = default;
-            Optional<IDictionary<string, BinaryData>> extensions = default;
+            IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, threatIntelligenceTags ?? new ChangeTrackingList<string>(), Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, indicatorTypes ?? new ChangeTrackingList<string>(), pattern.Value, patternType.Value, patternVersion.Value, killChainPhases ?? new ChangeTrackingList<ThreatIntelligenceKillChainPhase>(), parsedPattern ?? new ChangeTrackingList<ThreatIntelligenceParsedPattern>(), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), Optional.ToNullable(externalLastUpdatedTimeUtc), externalReferences ?? new ChangeTrackingList<ThreatIntelligenceExternalReference>(), granularMarkings ?? new ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>(), labels ?? new ChangeTrackingList<string>(), Optional.ToNullable(revoked), Optional.ToNullable(confidence), objectMarkingRefs ?? new ChangeTrackingList<string>(), language.Value, threatTypes ?? new ChangeTrackingList<string>(), Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToNullable(created), modified.Value, Optional.ToDictionary(extensions));
+            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, threatIntelligenceTags ?? new ChangeTrackingList<string>(), Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, indicatorTypes ?? new ChangeTrackingList<string>(), pattern.Value, patternType.Value, patternVersion.Value, killChainPhases ?? new ChangeTrackingList<ThreatIntelligenceKillChainPhase>(), parsedPattern ?? new ChangeTrackingList<ThreatIntelligenceParsedPattern>(), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), Optional.ToNullable(externalLastUpdatedTimeUtc), externalReferences ?? new ChangeTrackingList<ThreatIntelligenceExternalReference>(), granularMarkings ?? new ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>(), labels ?? new ChangeTrackingList<string>(), Optional.ToNullable(revoked), Optional.ToNullable(confidence), objectMarkingRefs ?? new ChangeTrackingList<string>(), language.Value, threatTypes ?? new ChangeTrackingList<string>(), Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToNullable(created), modified.Value, extensions ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorData>.Write(ModelReaderWriterOptions options)

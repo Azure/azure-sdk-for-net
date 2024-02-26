@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, topDevicesList ?? new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>(), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, topDevicesList ?? new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityAggregatedAlertData>.Write(ModelReaderWriterOptions options)

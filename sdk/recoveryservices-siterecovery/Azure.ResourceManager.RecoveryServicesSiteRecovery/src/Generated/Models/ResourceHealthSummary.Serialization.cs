@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<int> resourceCount = default;
             IReadOnlyList<HealthErrorSummary> issues = default;
-            Optional<IReadOnlyDictionary<string, int>> categorizedResourceCounts = default;
+            IReadOnlyDictionary<string, int> categorizedResourceCounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthSummary(Optional.ToNullable(resourceCount), issues ?? new ChangeTrackingList<HealthErrorSummary>(), Optional.ToDictionary(categorizedResourceCounts), serializedAdditionalRawData);
+            return new ResourceHealthSummary(Optional.ToNullable(resourceCount), issues ?? new ChangeTrackingList<HealthErrorSummary>(), categorizedResourceCounts ?? new ChangeTrackingDictionary<string, int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthSummary>.Write(ModelReaderWriterOptions options)

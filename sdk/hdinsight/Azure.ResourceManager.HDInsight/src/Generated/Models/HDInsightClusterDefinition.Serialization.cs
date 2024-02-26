@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             Optional<string> blueprint = default;
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> componentVersion = default;
+            IDictionary<string, string> componentVersion = default;
             Optional<BinaryData> configurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterDefinition(blueprint.Value, kind.Value, Optional.ToDictionary(componentVersion), configurations.Value, serializedAdditionalRawData);
+            return new HDInsightClusterDefinition(blueprint.Value, kind.Value, componentVersion ?? new ChangeTrackingDictionary<string, string>(), configurations.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterDefinition>.Write(ModelReaderWriterOptions options)

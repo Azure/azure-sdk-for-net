@@ -27,8 +27,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<int> priority = default;
             IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors = default;
             Optional<string> queueId = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<string> jobId = default;
             Optional<string> channelReference = default;
             Optional<string> channelId = default;
@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobClassifiedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), queueDetails.Value, classificationPolicyId.Value, Optional.ToNullable(priority), attachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
+            return new AcsRouterJobClassifiedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), queueDetails.Value, classificationPolicyId.Value, Optional.ToNullable(priority), attachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }
 
         internal partial class AcsRouterJobClassifiedEventDataConverter : JsonConverter<AcsRouterJobClassifiedEventData>

@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<NetworkIPVersion> publicIPAddressVersion = default;
             IList<IPTag> ipTags = default;
             Optional<int> prefixLength = default;
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicIPAddressVersion), ipTags ?? new ChangeTrackingList<IPTag>(), Optional.ToNullable(prefixLength), ipPrefix.Value, publicIPAddresses ?? new ChangeTrackingList<SubResource>(), loadBalancerFrontendIPConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicIPAddressVersion), ipTags ?? new ChangeTrackingList<IPTag>(), Optional.ToNullable(prefixLength), ipPrefix.Value, publicIPAddresses ?? new ChangeTrackingList<SubResource>(), loadBalancerFrontendIPConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
         }
 
         BinaryData IPersistableModel<PublicIPPrefixData>.Write(ModelReaderWriterOptions options)

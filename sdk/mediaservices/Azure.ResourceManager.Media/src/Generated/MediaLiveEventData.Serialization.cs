@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaLiveEventData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, input.Value, preview.Value, encoding.Value, transcriptions ?? new ChangeTrackingList<LiveEventTranscription>(), provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(useStaticHostname), hostnamePrefix.Value, streamOptions ?? new ChangeTrackingList<StreamOptionsFlag>(), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new MediaLiveEventData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, input.Value, preview.Value, encoding.Value, transcriptions ?? new ChangeTrackingList<LiveEventTranscription>(), provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(useStaticHostname), hostnamePrefix.Value, streamOptions ?? new ChangeTrackingList<StreamOptionsFlag>(), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaLiveEventData>.Write(ModelReaderWriterOptions options)

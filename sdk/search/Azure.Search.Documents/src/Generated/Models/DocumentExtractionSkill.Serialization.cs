@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             Optional<BlobIndexerParsingMode?> parsingMode = default;
             Optional<BlobIndexerDataToExtract?> dataToExtract = default;
-            Optional<IDictionary<string, object>> configuration = default;
+            IDictionary<string, object> configuration = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -197,7 +197,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(parsingMode), Optional.ToNullable(dataToExtract), Optional.ToDictionary(configuration));
+            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(parsingMode), Optional.ToNullable(dataToExtract), configuration ?? new ChangeTrackingDictionary<string, object>());
         }
     }
 }

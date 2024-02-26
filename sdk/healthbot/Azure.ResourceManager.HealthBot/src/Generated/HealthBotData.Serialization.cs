@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HealthBot
             HealthBotSku sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<HealthBotProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.HealthBot
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, properties.Value, serializedAdditionalRawData);
+            return new HealthBotData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, identity, properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotData>.Write(ModelReaderWriterOptions options)

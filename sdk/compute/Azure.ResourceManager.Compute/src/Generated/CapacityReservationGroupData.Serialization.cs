@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
                 return null;
             }
             IList<string> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, zones ?? new ChangeTrackingList<string>(), capacityReservations ?? new ChangeTrackingList<SubResource>(), virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(), instanceView.Value, sharingProfile.Value, serializedAdditionalRawData);
+            return new CapacityReservationGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, zones ?? new ChangeTrackingList<string>(), capacityReservations ?? new ChangeTrackingList<SubResource>(), virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(), instanceView.Value, sharingProfile.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupData>.Write(ModelReaderWriterOptions options)

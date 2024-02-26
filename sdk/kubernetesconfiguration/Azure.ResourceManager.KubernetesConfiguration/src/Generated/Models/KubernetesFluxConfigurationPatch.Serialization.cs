@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<KubernetesGitRepositoryUpdateContent> gitRepository = default;
             Optional<KubernetesBucketUpdateContent> bucket = default;
             Optional<KubernetesAzureBlobUpdateContent> azureBlob = default;
-            Optional<IDictionary<string, KustomizationUpdateContent>> kustomizations = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            IDictionary<string, KustomizationUpdateContent> kustomizations = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesFluxConfigurationPatch(Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), serializedAdditionalRawData);
+            return new KubernetesFluxConfigurationPatch(Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, kustomizations ?? new ChangeTrackingDictionary<string, KustomizationUpdateContent>(), configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesFluxConfigurationPatch>.Write(ModelReaderWriterOptions options)

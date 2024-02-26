@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<BatchAccountAutoStorageBaseConfiguration> autoStorage = default;
             Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountCreateOrUpdateContent(location, Optional.ToDictionary(tags), identity, autoStorage.Value, Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, encryption.Value, allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(), serializedAdditionalRawData);
+            return new BatchAccountCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), identity, autoStorage.Value, Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, encryption.Value, allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

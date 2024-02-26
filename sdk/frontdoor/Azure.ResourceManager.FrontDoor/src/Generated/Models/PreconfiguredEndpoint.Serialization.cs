@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreconfiguredEndpoint(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpoint.Value, Optional.ToNullable(endpointType), backend.Value, serializedAdditionalRawData);
+            return new PreconfiguredEndpoint(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, endpoint.Value, Optional.ToNullable(endpointType), backend.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreconfiguredEndpoint>.Write(ModelReaderWriterOptions options)

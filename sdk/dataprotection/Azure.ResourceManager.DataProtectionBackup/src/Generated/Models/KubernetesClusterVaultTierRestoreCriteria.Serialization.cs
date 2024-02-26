@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IList<string> labelSelectors = default;
             Optional<PersistentVolumeRestoreMode> persistentVolumeRestoreMode = default;
             Optional<KubernetesClusterRestoreExistingResourcePolicy> conflictPolicy = default;
-            Optional<IDictionary<string, string>> namespaceMappings = default;
+            IDictionary<string, string> namespaceMappings = default;
             IList<NamespacedName> restoreHookReferences = default;
             Optional<ResourceIdentifier> stagingResourceGroupId = default;
             Optional<ResourceIdentifier> stagingStorageAccountId = default;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterVaultTierRestoreCriteria(objectType, serializedAdditionalRawData, includeClusterScopeResources, includedNamespaces ?? new ChangeTrackingList<string>(), excludedNamespaces ?? new ChangeTrackingList<string>(), includedResourceTypes ?? new ChangeTrackingList<string>(), excludedResourceTypes ?? new ChangeTrackingList<string>(), labelSelectors ?? new ChangeTrackingList<string>(), Optional.ToNullable(persistentVolumeRestoreMode), Optional.ToNullable(conflictPolicy), Optional.ToDictionary(namespaceMappings), restoreHookReferences ?? new ChangeTrackingList<NamespacedName>(), stagingResourceGroupId.Value, stagingStorageAccountId.Value);
+            return new KubernetesClusterVaultTierRestoreCriteria(objectType, serializedAdditionalRawData, includeClusterScopeResources, includedNamespaces ?? new ChangeTrackingList<string>(), excludedNamespaces ?? new ChangeTrackingList<string>(), includedResourceTypes ?? new ChangeTrackingList<string>(), excludedResourceTypes ?? new ChangeTrackingList<string>(), labelSelectors ?? new ChangeTrackingList<string>(), Optional.ToNullable(persistentVolumeRestoreMode), Optional.ToNullable(conflictPolicy), namespaceMappings ?? new ChangeTrackingDictionary<string, string>(), restoreHookReferences ?? new ChangeTrackingList<NamespacedName>(), stagingResourceGroupId.Value, stagingStorageAccountId.Value);
         }
 
         BinaryData IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Write(ModelReaderWriterOptions options)

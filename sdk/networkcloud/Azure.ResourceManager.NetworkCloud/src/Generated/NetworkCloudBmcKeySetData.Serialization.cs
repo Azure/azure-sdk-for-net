@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBmcKeySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, Optional.ToNullable(lastValidation), privilegeLevel, Optional.ToNullable(provisioningState), userList, userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(), serializedAdditionalRawData);
+            return new NetworkCloudBmcKeySetData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, Optional.ToNullable(lastValidation), privilegeLevel, Optional.ToNullable(provisioningState), userList, userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBmcKeySetData>.Write(ModelReaderWriterOptions options)
