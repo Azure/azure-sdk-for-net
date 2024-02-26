@@ -4,7 +4,7 @@
 
 ### Features Added
 
-* Added support for "service.version" in Resource attributes.
+* All three signals (Traces, Metrics, and Logs) now support "service.version" in Resource attributes.
   This is mapped as Application Version in Application Insights.
   ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
 
