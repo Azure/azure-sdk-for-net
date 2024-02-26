@@ -133,7 +133,13 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatsAppMessageTemplateItem(name, language, status, kind, serializedAdditionalRawData, content.Value);
+            return new WhatsAppMessageTemplateItem(
+                name,
+                language,
+                status,
+                kind,
+                serializedAdditionalRawData,
+                content.Value);
         }
 
         BinaryData IPersistableModel<WhatsAppMessageTemplateItem>.Write(ModelReaderWriterOptions options)

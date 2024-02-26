@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage));
+            return new SavingsPlanUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                armSkuName.Value,
+                benefitId.Value,
+                benefitOrderId.Value,
+                Optional.ToNullable(benefitType),
+                Optional.ToNullable(usageDate),
+                Optional.ToNullable(avgUtilizationPercentage),
+                Optional.ToNullable(minUtilizationPercentage),
+                Optional.ToNullable(maxUtilizationPercentage));
         }
 
         BinaryData IPersistableModel<SavingsPlanUtilizationSummary>.Write(ModelReaderWriterOptions options)

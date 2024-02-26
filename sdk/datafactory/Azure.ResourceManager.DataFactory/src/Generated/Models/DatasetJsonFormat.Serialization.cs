@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetJsonFormat(type, serializer.Value, deserializer.Value, additionalProperties, filePattern.Value, nestingSeparator.Value, encodingName.Value, jsonNodeReference.Value, jsonPathDefinition.Value);
+            return new DatasetJsonFormat(
+                type,
+                serializer.Value,
+                deserializer.Value,
+                additionalProperties,
+                filePattern.Value,
+                nestingSeparator.Value,
+                encodingName.Value,
+                jsonNodeReference.Value,
+                jsonPathDefinition.Value);
         }
 
         BinaryData IPersistableModel<DatasetJsonFormat>.Write(ModelReaderWriterOptions options)

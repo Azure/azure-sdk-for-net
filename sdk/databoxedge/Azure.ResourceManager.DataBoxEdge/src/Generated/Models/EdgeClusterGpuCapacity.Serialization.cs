@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeClusterGpuCapacity(gpuType.Value, Optional.ToNullable(gpuUsedUnitsCount), Optional.ToNullable(gpuFreeUnitsCount), Optional.ToNullable(gpuReservedForFailoverUnitsCount), Optional.ToNullable(gpuTotalUnitsCount), serializedAdditionalRawData);
+            return new EdgeClusterGpuCapacity(
+                gpuType.Value,
+                Optional.ToNullable(gpuUsedUnitsCount),
+                Optional.ToNullable(gpuFreeUnitsCount),
+                Optional.ToNullable(gpuReservedForFailoverUnitsCount),
+                Optional.ToNullable(gpuTotalUnitsCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeClusterGpuCapacity>.Write(ModelReaderWriterOptions options)

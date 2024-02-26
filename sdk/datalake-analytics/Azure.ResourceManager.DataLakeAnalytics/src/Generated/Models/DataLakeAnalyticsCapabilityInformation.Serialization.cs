@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState), serializedAdditionalRawData);
+            return new DataLakeAnalyticsCapabilityInformation(
+                Optional.ToNullable(subscriptionId),
+                Optional.ToNullable(state),
+                Optional.ToNullable(maxAccountCount),
+                Optional.ToNullable(accountCount),
+                Optional.ToNullable(migrationState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsCapabilityInformation>.Write(ModelReaderWriterOptions options)

@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerVolume(name, azureFile.Value, emptyDir.Value, secret ?? new ChangeTrackingDictionary<string, string>(), gitRepo.Value, serializedAdditionalRawData);
+            return new ContainerVolume(
+                name,
+                azureFile.Value,
+                emptyDir.Value,
+                secret ?? new ChangeTrackingDictionary<string, string>(),
+                gitRepo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerVolume>.Write(ModelReaderWriterOptions options)

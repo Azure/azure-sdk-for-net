@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, serializedAdditionalRawData, friendlyName.Value, recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>(), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(recoveryPointState));
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(
+                objectType,
+                serializedAdditionalRawData,
+                friendlyName.Value,
+                recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>(),
+                recoveryPointTime,
+                policyName.Value,
+                policyVersion.Value,
+                recoveryPointId.Value,
+                recoveryPointType.Value,
+                retentionTagName.Value,
+                retentionTagVersion.Value,
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(recoveryPointState));
         }
 
         BinaryData IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(ModelReaderWriterOptions options)

@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, additionalColumns.Value);
+            return new HttpReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                requestMethod.Value,
+                requestBody.Value,
+                additionalHeaders.Value,
+                requestTimeout.Value,
+                additionalColumns.Value);
         }
 
         BinaryData IPersistableModel<HttpReadSettings>.Write(ModelReaderWriterOptions options)

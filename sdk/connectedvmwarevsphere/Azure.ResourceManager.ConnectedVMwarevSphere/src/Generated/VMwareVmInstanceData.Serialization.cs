@@ -322,7 +322,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmInstanceData(id, name, type, systemData.Value, extendedLocation, placementProfile.Value, osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, securityProfile.Value, infrastructureProfile.Value, powerState.Value, statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), Optional.ToNullable(provisioningState), resourceUid.Value, serializedAdditionalRawData);
+            return new VMwareVmInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                extendedLocation,
+                placementProfile.Value,
+                osProfile.Value,
+                hardwareProfile.Value,
+                networkProfile.Value,
+                storageProfile.Value,
+                securityProfile.Value,
+                infrastructureProfile.Value,
+                powerState.Value,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                Optional.ToNullable(provisioningState),
+                resourceUid.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVmInstanceData>.Write(ModelReaderWriterOptions options)

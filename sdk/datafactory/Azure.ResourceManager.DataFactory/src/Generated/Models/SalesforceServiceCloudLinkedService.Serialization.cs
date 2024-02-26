@@ -289,7 +289,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceServiceCloudLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, environmentUrl.Value, username.Value, password, securityToken, apiVersion.Value, extendedProperties.Value, encryptedCredential.Value);
+            return new SalesforceServiceCloudLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                environmentUrl.Value,
+                username.Value,
+                password,
+                securityToken,
+                apiVersion.Value,
+                extendedProperties.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SalesforceServiceCloudLinkedService>.Write(ModelReaderWriterOptions options)

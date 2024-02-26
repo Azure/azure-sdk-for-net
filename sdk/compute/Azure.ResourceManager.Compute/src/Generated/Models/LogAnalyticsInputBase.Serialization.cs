@@ -173,7 +173,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsInputBase(blobContainerSasUri, fromTime, toTime, Optional.ToNullable(groupByThrottlePolicy), Optional.ToNullable(groupByOperationName), Optional.ToNullable(groupByResourceName), Optional.ToNullable(groupByClientApplicationId), Optional.ToNullable(groupByUserAgent), serializedAdditionalRawData);
+            return new LogAnalyticsInputBase(
+                blobContainerSasUri,
+                fromTime,
+                toTime,
+                Optional.ToNullable(groupByThrottlePolicy),
+                Optional.ToNullable(groupByOperationName),
+                Optional.ToNullable(groupByResourceName),
+                Optional.ToNullable(groupByClientApplicationId),
+                Optional.ToNullable(groupByUserAgent),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsInputBase>.Write(ModelReaderWriterOptions options)

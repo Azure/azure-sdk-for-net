@@ -134,7 +134,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DistributionPolicy(etag, id, name.Value, Optional.ToNullable(offerExpiresAfterSeconds), mode.Value, serializedAdditionalRawData);
+            return new DistributionPolicy(
+                etag,
+                id,
+                name.Value,
+                Optional.ToNullable(offerExpiresAfterSeconds),
+                mode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistributionPolicy>.Write(ModelReaderWriterOptions options)

@@ -127,7 +127,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceCodeRepoAuthInfo(tokenType, token, refreshToken.Value, scope.Value, Optional.ToNullable(expiresIn), serializedAdditionalRawData);
+            return new SourceCodeRepoAuthInfo(
+                tokenType,
+                token,
+                refreshToken.Value,
+                scope.Value,
+                Optional.ToNullable(expiresIn),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceCodeRepoAuthInfo>.Write(ModelReaderWriterOptions options)

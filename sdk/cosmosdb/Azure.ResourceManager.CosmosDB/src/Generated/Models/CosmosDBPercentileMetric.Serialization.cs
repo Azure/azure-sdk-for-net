@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBPercentileMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, metricValues ?? new ChangeTrackingList<PercentileMetricValue>(), serializedAdditionalRawData);
+            return new CosmosDBPercentileMetric(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeGrain.Value,
+                Optional.ToNullable(unit),
+                name.Value,
+                metricValues ?? new ChangeTrackingList<PercentileMetricValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBPercentileMetric>.Write(ModelReaderWriterOptions options)

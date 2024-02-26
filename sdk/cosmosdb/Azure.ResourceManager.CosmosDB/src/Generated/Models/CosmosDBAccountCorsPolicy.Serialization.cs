@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountCorsPolicy(allowedOrigins, allowedMethods.Value, allowedHeaders.Value, exposedHeaders.Value, Optional.ToNullable(maxAgeInSeconds), serializedAdditionalRawData);
+            return new CosmosDBAccountCorsPolicy(
+                allowedOrigins,
+                allowedMethods.Value,
+                allowedHeaders.Value,
+                exposedHeaders.Value,
+                Optional.ToNullable(maxAgeInSeconds),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountCorsPolicy>.Write(ModelReaderWriterOptions options)

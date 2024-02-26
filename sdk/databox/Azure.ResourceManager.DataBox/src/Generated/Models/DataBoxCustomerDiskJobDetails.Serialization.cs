@@ -517,7 +517,34 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxCustomerDiskJobDetails(jobStages ?? new ChangeTrackingList<DataBoxJobStage>(), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(), dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(), jobDetailsType, preferences.Value, reverseShippingDetails.Value, copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), actions ?? new ChangeTrackingList<CustomerResolutionCode>(), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, importDiskDetailsCollection ?? new ChangeTrackingDictionary<string, ImportDiskDetails>(), exportDiskDetailsCollection ?? new ChangeTrackingDictionary<string, ExportDiskDetails>(), copyProgress ?? new ChangeTrackingList<DataBoxCustomerDiskCopyProgress>(), deliverToDcPackageDetails.Value, returnToCustomerPackageDetails, Optional.ToNullable(enableManifestBackup));
+            return new DataBoxCustomerDiskJobDetails(
+                jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
+                contactDetails,
+                shippingAddress.Value,
+                deliveryPackage.Value,
+                returnPackage.Value,
+                dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(),
+                dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(),
+                jobDetailsType,
+                preferences.Value,
+                reverseShippingDetails.Value,
+                copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(),
+                reverseShipmentLabelSasKey.Value,
+                chainOfCustodySasKey.Value,
+                deviceErasureDetails.Value,
+                keyEncryptionKey.Value,
+                Optional.ToNullable(expectedDataSizeInTerabytes),
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                lastMitigationActionOnJob.Value,
+                dataCenterAddress.Value,
+                Optional.ToNullable(dataCenterCode),
+                serializedAdditionalRawData,
+                importDiskDetailsCollection ?? new ChangeTrackingDictionary<string, ImportDiskDetails>(),
+                exportDiskDetailsCollection ?? new ChangeTrackingDictionary<string, ExportDiskDetails>(),
+                copyProgress ?? new ChangeTrackingList<DataBoxCustomerDiskCopyProgress>(),
+                deliverToDcPackageDetails.Value,
+                returnToCustomerPackageDetails,
+                Optional.ToNullable(enableManifestBackup));
         }
 
         BinaryData IPersistableModel<DataBoxCustomerDiskJobDetails>.Write(ModelReaderWriterOptions options)

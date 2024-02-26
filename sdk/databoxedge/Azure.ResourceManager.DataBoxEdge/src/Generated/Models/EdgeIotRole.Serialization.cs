@@ -276,7 +276,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeIotRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(hostPlatform), iotDeviceDetails.Value, iotEdgeDeviceDetails.Value, shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(), iotEdgeAgentInfo.Value, Optional.ToNullable(hostPlatformType), computeResource.Value, Optional.ToNullable(roleStatus));
+            return new EdgeIotRole(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(hostPlatform),
+                iotDeviceDetails.Value,
+                iotEdgeDeviceDetails.Value,
+                shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
+                iotEdgeAgentInfo.Value,
+                Optional.ToNullable(hostPlatformType),
+                computeResource.Value,
+                Optional.ToNullable(roleStatus));
         }
 
         BinaryData IPersistableModel<EdgeIotRole>.Write(ModelReaderWriterOptions options)

@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryMetadata(publisherUri.Value, publisherContact, eula.Value, publicNames, privacyStatementUri.Value, serializedAdditionalRawData);
+            return new CommunityGalleryMetadata(
+                publisherUri.Value,
+                publisherContact,
+                eula.Value,
+                publicNames,
+                privacyStatementUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunityGalleryMetadata>.Write(ModelReaderWriterOptions options)

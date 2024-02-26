@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppGitHubActionConfiguration(registryInfo.Value, azureCredentials.Value, contextPath.Value, gitHubPersonalAccessToken.Value, image.Value, publishType.Value, os.Value, runtimeStack.Value, runtimeVersion.Value, serializedAdditionalRawData);
+            return new ContainerAppGitHubActionConfiguration(
+                registryInfo.Value,
+                azureCredentials.Value,
+                contextPath.Value,
+                gitHubPersonalAccessToken.Value,
+                image.Value,
+                publishType.Value,
+                os.Value,
+                runtimeStack.Value,
+                runtimeVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppGitHubActionConfiguration>.Write(ModelReaderWriterOptions options)

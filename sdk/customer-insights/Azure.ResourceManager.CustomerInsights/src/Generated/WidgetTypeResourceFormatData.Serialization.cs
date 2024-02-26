@@ -268,7 +268,21 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WidgetTypeResourceFormatData(id, name, type, systemData.Value, widgetTypeName.Value, definition.Value, description.Value, displayName ?? new ChangeTrackingDictionary<string, string>(), imageUrl.Value, Optional.ToNullable(tenantId), widgetVersion.Value, Optional.ToNullable(changed), Optional.ToNullable(created), serializedAdditionalRawData);
+            return new WidgetTypeResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                widgetTypeName.Value,
+                definition.Value,
+                description.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                imageUrl.Value,
+                Optional.ToNullable(tenantId),
+                widgetVersion.Value,
+                Optional.ToNullable(changed),
+                Optional.ToNullable(created),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WidgetTypeResourceFormatData>.Write(ModelReaderWriterOptions options)

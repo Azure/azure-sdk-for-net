@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartitionUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), serializedAdditionalRawData, Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
+            return new PartitionUsage(
+                Optional.ToNullable(unit),
+                name.Value,
+                quotaPeriod.Value,
+                Optional.ToNullable(limit),
+                Optional.ToNullable(currentValue),
+                serializedAdditionalRawData,
+                Optional.ToNullable(partitionId),
+                partitionKeyRangeId.Value);
         }
 
         BinaryData IPersistableModel<PartitionUsage>.Write(ModelReaderWriterOptions options)

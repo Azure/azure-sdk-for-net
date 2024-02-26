@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeOrderStatus(status, Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, additionalOrderDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DataBoxEdgeOrderStatus(
+                status,
+                Optional.ToNullable(updateDateTime),
+                comments.Value,
+                trackingInformation.Value,
+                additionalOrderDetails ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeOrderStatus>.Write(ModelReaderWriterOptions options)

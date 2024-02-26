@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperConnection(linkedService, linkedServiceType.Value, type, Optional.ToNullable(isInlineDataset), commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), serializedAdditionalRawData);
+            return new MapperConnection(
+                linkedService,
+                linkedServiceType.Value,
+                type,
+                Optional.ToNullable(isInlineDataset),
+                commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperConnection>.Write(ModelReaderWriterOptions options)

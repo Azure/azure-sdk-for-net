@@ -165,7 +165,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerQuerySource(name, description.Value, dataset.Value, linkedService, flowlet.Value, serializedAdditionalRawData, schemaLinkedService, script.Value);
+            return new PowerQuerySource(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService,
+                flowlet.Value,
+                serializedAdditionalRawData,
+                schemaLinkedService,
+                script.Value);
         }
 
         BinaryData IPersistableModel<PowerQuerySource>.Write(ModelReaderWriterOptions options)

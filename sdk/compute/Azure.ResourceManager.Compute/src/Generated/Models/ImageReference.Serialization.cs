@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageReference(id.Value, serializedAdditionalRawData, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value);
+            return new ImageReference(
+                id.Value,
+                serializedAdditionalRawData,
+                publisher.Value,
+                offer.Value,
+                sku.Value,
+                version.Value,
+                exactVersion.Value,
+                sharedGalleryImageId.Value,
+                communityGalleryImageId.Value);
         }
 
         BinaryData IPersistableModel<ImageReference>.Write(ModelReaderWriterOptions options)

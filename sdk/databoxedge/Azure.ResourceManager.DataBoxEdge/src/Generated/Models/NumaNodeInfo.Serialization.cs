@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NumaNodeInfo(Optional.ToNullable(numaNodeIndex), Optional.ToNullable(totalMemoryInMb), Optional.ToNullable(logicalCoreCountPerCore), Optional.ToNullable(effectiveAvailableMemoryInMb), freeVCpuIndexesForHpn ?? new ChangeTrackingList<int>(), vCpuIndexesForHpn ?? new ChangeTrackingList<int>(), vCpuIndexesForRoot ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
+            return new NumaNodeInfo(
+                Optional.ToNullable(numaNodeIndex),
+                Optional.ToNullable(totalMemoryInMb),
+                Optional.ToNullable(logicalCoreCountPerCore),
+                Optional.ToNullable(effectiveAvailableMemoryInMb),
+                freeVCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
+                vCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
+                vCpuIndexesForRoot ?? new ChangeTrackingList<int>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NumaNodeInfo>.Write(ModelReaderWriterOptions options)

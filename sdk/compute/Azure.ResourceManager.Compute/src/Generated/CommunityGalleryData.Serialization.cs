@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, disclaimer.Value, artifactTags ?? new ChangeTrackingDictionary<string, string>(), communityMetadata.Value);
+            return new CommunityGalleryData(
+                name.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(type),
+                uniqueId.Value,
+                serializedAdditionalRawData,
+                disclaimer.Value,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>(),
+                communityMetadata.Value);
         }
 
         BinaryData IPersistableModel<CommunityGalleryData>.Write(ModelReaderWriterOptions options)

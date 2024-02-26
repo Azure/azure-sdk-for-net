@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableGremlinDatabase(id, name, type, systemData.Value, resource.Value, serializedAdditionalRawData);
+            return new RestorableGremlinDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resource.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableGremlinDatabase>.Write(ModelReaderWriterOptions options)

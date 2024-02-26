@@ -251,7 +251,20 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionCreditSummary(id, name, type, systemData.Value, balanceSummary.Value, pendingCreditAdjustments.Value, expiredCredit.Value, pendingEligibleCharges.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionCreditSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                balanceSummary.Value,
+                pendingCreditAdjustments.Value,
+                expiredCredit.Value,
+                pendingEligibleCharges.Value,
+                creditCurrency.Value,
+                billingCurrency.Value,
+                reseller.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionCreditSummary>.Write(ModelReaderWriterOptions options)
