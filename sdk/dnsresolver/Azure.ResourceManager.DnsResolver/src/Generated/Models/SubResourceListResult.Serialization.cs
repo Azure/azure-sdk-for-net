@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> value = default;
+            IReadOnlyList<WritableSubResource> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SubResourceListResult(value ?? new ChangeTrackingList<WritableSubResource>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubResourceListResult>.Write(ModelReaderWriterOptions options)

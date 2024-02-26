@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> driverVersion = default;
             Optional<DataFactoryElement<string>> connectionString = default;
             Optional<DataFactoryElement<string>> server = default;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MariaDBLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, driverVersion.Value, connectionString.Value, server.Value, port.Value, username.Value, database.Value, password, encryptedCredential.Value);
+            return new MariaDBLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, driverVersion.Value, connectionString.Value, server.Value, port.Value, username.Value, database.Value, password, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<MariaDBLinkedService>.Write(ModelReaderWriterOptions options)

@@ -204,7 +204,7 @@ namespace Azure.Search.Documents
                 return null;
             }
             Optional<bool> count = default;
-            Optional<IList<string>> facets = default;
+            IList<string> facets = default;
             Optional<string> filter = default;
             Optional<string> highlight = default;
             Optional<string> highlightPostTag = default;
@@ -214,7 +214,7 @@ namespace Azure.Search.Documents
             Optional<SearchQueryType> queryType = default;
             Optional<ScoringStatistics> scoringStatistics = default;
             Optional<string> sessionId = default;
-            Optional<IList<string>> scoringParameters = default;
+            IList<string> scoringParameters = default;
             Optional<string> scoringProfile = default;
             Optional<string> semanticQuery = default;
             Optional<string> semanticConfiguration = default;
@@ -232,7 +232,7 @@ namespace Azure.Search.Documents
             Optional<int> top = default;
             Optional<string> captions = default;
             Optional<string> semanticFields = default;
-            Optional<IList<VectorQuery>> vectorQueries = default;
+            IList<VectorQuery> vectorQueries = default;
             Optional<VectorFilterMode> vectorFilterMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -472,7 +472,7 @@ namespace Azure.Search.Documents
                     continue;
                 }
             }
-            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, semanticQuery.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, Optional.ToList(vectorQueries), Optional.ToNullable(vectorFilterMode));
+            return new SearchOptions(Optional.ToNullable(count), facets ?? new ChangeTrackingList<string>(), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, scoringParameters ?? new ChangeTrackingList<string>(), scoringProfile.Value, semanticQuery.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, vectorQueries ?? new ChangeTrackingList<VectorQuery>(), Optional.ToNullable(vectorFilterMode));
         }
     }
 }

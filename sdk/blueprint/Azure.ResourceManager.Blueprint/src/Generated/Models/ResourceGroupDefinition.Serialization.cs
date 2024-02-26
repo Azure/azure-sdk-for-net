@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<IList<string>> dependsOn = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> dependsOn = default;
+            IDictionary<string, string> tags = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> strongType = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), Optional.ToList(dependsOn), Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
+            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), dependsOn ?? new ChangeTrackingList<string>(), tags ?? new ChangeTrackingDictionary<string, string>(), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupDefinition>.Write(ModelReaderWriterOptions options)

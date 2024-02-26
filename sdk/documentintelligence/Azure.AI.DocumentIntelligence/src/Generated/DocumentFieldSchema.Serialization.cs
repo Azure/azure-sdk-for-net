@@ -97,7 +97,7 @@ namespace Azure.AI.DocumentIntelligence
             Optional<string> description = default;
             Optional<string> example = default;
             Optional<DocumentFieldSchema> items = default;
-            Optional<IReadOnlyDictionary<string, DocumentFieldSchema>> properties = default;
+            IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentFieldSchema>.Write(ModelReaderWriterOptions options)

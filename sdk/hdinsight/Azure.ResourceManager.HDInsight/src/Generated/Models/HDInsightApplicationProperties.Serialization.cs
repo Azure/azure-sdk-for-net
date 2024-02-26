@@ -156,17 +156,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             Optional<ComputeProfile> computeProfile = default;
-            Optional<IList<RuntimeScriptAction>> installScriptActions = default;
-            Optional<IList<RuntimeScriptAction>> uninstallScriptActions = default;
-            Optional<IList<HDInsightApplicationHttpsEndpoint>> httpsEndpoints = default;
-            Optional<IList<HDInsightApplicationEndpoint>> sshEndpoints = default;
+            IList<RuntimeScriptAction> installScriptActions = default;
+            IList<RuntimeScriptAction> uninstallScriptActions = default;
+            IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints = default;
+            IList<HDInsightApplicationEndpoint> sshEndpoints = default;
             Optional<string> provisioningState = default;
             Optional<string> applicationType = default;
             Optional<string> applicationState = default;
-            Optional<IList<ResponseError>> errors = default;
+            IList<ResponseError> errors = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> marketplaceIdentifier = default;
-            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
+            IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationProperties(computeProfile.Value, Optional.ToList(installScriptActions), Optional.ToList(uninstallScriptActions), Optional.ToList(httpsEndpoints), Optional.ToList(sshEndpoints), provisioningState.Value, applicationType.Value, applicationState.Value, Optional.ToList(errors), Optional.ToNullable(createdDate), marketplaceIdentifier.Value, Optional.ToList(privateLinkConfigurations), serializedAdditionalRawData);
+            return new HDInsightApplicationProperties(computeProfile.Value, installScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(), uninstallScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(), httpsEndpoints ?? new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>(), sshEndpoints ?? new ChangeTrackingList<HDInsightApplicationEndpoint>(), provisioningState.Value, applicationType.Value, applicationState.Value, errors ?? new ChangeTrackingList<ResponseError>(), Optional.ToNullable(createdDate), marketplaceIdentifier.Value, privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationProperties>.Write(ModelReaderWriterOptions options)

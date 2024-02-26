@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<DateTimeOffset> dateTimeBegin = default;
             Optional<DateTimeOffset> dateTimeEnd = default;
             Optional<MetricsResponseGranularity> granularity = default;
-            Optional<IReadOnlyList<MetricsResponseSeriesItem>> series = default;
+            IReadOnlyList<MetricsResponseSeriesItem> series = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series), serializedAdditionalRawData);
+            return new MetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), series ?? new ChangeTrackingList<MetricsResponseSeriesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsResponse>.Write(ModelReaderWriterOptions options)

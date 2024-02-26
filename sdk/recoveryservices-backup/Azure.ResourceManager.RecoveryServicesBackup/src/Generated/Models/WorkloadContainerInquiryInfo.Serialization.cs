@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<string> status = default;
             Optional<BackupErrorDetail> errorDetail = default;
-            Optional<IList<WorkloadInquiryDetails>> inquiryDetails = default;
+            IList<WorkloadInquiryDetails> inquiryDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, Optional.ToList(inquiryDetails), serializedAdditionalRawData);
+            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, inquiryDetails ?? new ChangeTrackingList<WorkloadInquiryDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadContainerInquiryInfo>.Write(ModelReaderWriterOptions options)

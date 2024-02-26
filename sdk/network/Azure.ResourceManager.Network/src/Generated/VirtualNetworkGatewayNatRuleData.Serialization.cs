@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<VpnNatRuleType> type0 = default;
             Optional<VpnNatRuleMode> mode = default;
-            Optional<IList<VpnNatRuleMapping>> internalMappings = default;
-            Optional<IList<VpnNatRuleMapping>> externalMappings = default;
+            IList<VpnNatRuleMapping> internalMappings = default;
+            IList<VpnNatRuleMapping> externalMappings = default;
             Optional<string> ipConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value);
+            return new VirtualNetworkGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), internalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(), externalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(), ipConfigurationId.Value);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayNatRuleData>.Write(ModelReaderWriterOptions options)

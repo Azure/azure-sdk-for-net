@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationCertificateData>> value = default;
+            IReadOnlyList<AutomationCertificateData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationCertificateListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationCertificateListResult(value ?? new ChangeTrackingList<AutomationCertificateData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationCertificateListResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SearchServiceData>> value = default;
+            IReadOnlyList<SearchServiceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchServiceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SearchServiceListResult(value ?? new ChangeTrackingList<SearchServiceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchServiceListResult>.Write(ModelReaderWriterOptions options)

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                 return null;
             }
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateData>.Write(ModelReaderWriterOptions options)

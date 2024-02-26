@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Models
                 return null;
             }
             Optional<string> odataMetadata = default;
-            Optional<IReadOnlyList<TableItem>> value = default;
+            IReadOnlyList<TableItem> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.metadata"u8))
@@ -43,7 +43,7 @@ namespace Azure.Data.Tables.Models
                     continue;
                 }
             }
-            return new TableQueryResponse(odataMetadata.Value, Optional.ToList(value));
+            return new TableQueryResponse(odataMetadata.Value, value ?? new ChangeTrackingList<TableItem>());
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ActivityLogAlertData>> value = default;
+            IReadOnlyList<ActivityLogAlertData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AlertRuleList(value ?? new ChangeTrackingList<ActivityLogAlertData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleList>.Write(ModelReaderWriterOptions options)

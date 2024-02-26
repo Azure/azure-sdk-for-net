@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
+            IReadOnlyList<ManifestListAttributes> manifests = default;
             Optional<OciAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OCIIndex(Optional.ToNullable(schemaVersion), Optional.ToList(manifests), annotations.Value);
+            return new OCIIndex(Optional.ToNullable(schemaVersion), manifests ?? new ChangeTrackingList<ManifestListAttributes>(), annotations.Value);
         }
     }
 }

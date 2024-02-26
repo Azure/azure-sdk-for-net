@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Models
             ScheduleAssociationProperty schedule = default;
             RunbookAssociationProperty runbook = default;
             Optional<string> runOn = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            IDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -82,7 +82,7 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            Optional<IReadOnlyList<TextBlocklistMatch>> blocklistsMatch = default;
+            IReadOnlyList<TextBlocklistMatch> blocklistsMatch = default;
             IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +118,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeTextResult(Optional.ToList(blocklistsMatch), categoriesAnalysis, serializedAdditionalRawData);
+            return new AnalyzeTextResult(blocklistsMatch ?? new ChangeTrackingList<TextBlocklistMatch>(), categoriesAnalysis, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeTextResult>.Write(ModelReaderWriterOptions options)

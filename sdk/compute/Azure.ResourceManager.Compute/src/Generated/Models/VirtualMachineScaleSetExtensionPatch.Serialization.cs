@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
             Optional<string> provisioningState = default;
-            Optional<IList<string>> provisionAfterExtensions = default;
+            IList<string> provisionAfterExtensions = default;
             Optional<bool> suppressFailures = default;
             Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetExtensionPatch(id, name, type, systemData.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions), Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetExtensionPatch(id, name, type, systemData.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, provisionAfterExtensions ?? new ChangeTrackingList<string>(), Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetExtensionPatch>.Write(ModelReaderWriterOptions options)

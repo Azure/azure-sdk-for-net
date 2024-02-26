@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<Guid> tenantId = default;
             Optional<string> displayName = default;
             Optional<CreateManagementGroupDetails> details = default;
-            Optional<IReadOnlyList<ManagementGroupChildOptions>> children = default;
+            IReadOnlyList<ManagementGroupChildOptions> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupCreateOrUpdateContent(id.Value, Optional.ToNullable(type), name.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children), serializedAdditionalRawData);
+            return new ManagementGroupCreateOrUpdateContent(id.Value, Optional.ToNullable(type), name.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, children ?? new ChangeTrackingList<ManagementGroupChildOptions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

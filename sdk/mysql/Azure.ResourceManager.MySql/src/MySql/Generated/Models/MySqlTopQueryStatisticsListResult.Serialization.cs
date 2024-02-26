@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlQueryStatisticData>> value = default;
+            IReadOnlyList<MySqlQueryStatisticData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlTopQueryStatisticsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlTopQueryStatisticsListResult(value ?? new ChangeTrackingList<MySqlQueryStatisticData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlTopQueryStatisticsListResult>.Write(ModelReaderWriterOptions options)

@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             string value = default;
             Optional<string> description = default;
             Optional<float> confidenceScore = default;
-            Optional<IReadOnlyList<TrialMatcherInferenceEvidence>> evidence = default;
+            IReadOnlyList<TrialMatcherInferenceEvidence> evidence = default;
             Optional<string> id = default;
             Optional<ClinicalTrialSource> source = default;
             Optional<ClinicalTrialMetadata> metadata = default;
@@ -183,7 +183,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), id.Value, Optional.ToNullable(source), metadata.Value, serializedAdditionalRawData);
+            return new TrialMatcherInference(type, value, description.Value, Optional.ToNullable(confidenceScore), evidence ?? new ChangeTrackingList<TrialMatcherInferenceEvidence>(), id.Value, Optional.ToNullable(source), metadata.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherInference>.Write(ModelReaderWriterOptions options)

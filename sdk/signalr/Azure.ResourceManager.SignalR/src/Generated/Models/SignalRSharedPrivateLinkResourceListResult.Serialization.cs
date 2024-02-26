@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SignalRSharedPrivateLinkResourceData>> value = default;
+            IReadOnlyList<SignalRSharedPrivateLinkResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRSharedPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRSharedPrivateLinkResourceListResult(value ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRSharedPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

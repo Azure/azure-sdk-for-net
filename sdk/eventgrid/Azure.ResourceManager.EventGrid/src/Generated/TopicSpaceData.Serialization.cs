@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<IList<string>> topicTemplates = default;
+            IList<string> topicTemplates = default;
             Optional<TopicSpaceProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicSpaceData(id, name, type, systemData.Value, description.Value, Optional.ToList(topicTemplates), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new TopicSpaceData(id, name, type, systemData.Value, description.Value, topicTemplates ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicSpaceData>.Write(ModelReaderWriterOptions options)

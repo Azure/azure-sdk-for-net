@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<ReasonChronicityType> reasonChronicity = default;
             Optional<DateTimeOffset> reportedTime = default;
             Optional<ResourceHealthAvailabilityStateRecentlyResolved> recentlyResolved = default;
-            Optional<IReadOnlyList<ResourceHealthRecommendedAction>> recommendedActions = default;
-            Optional<IReadOnlyList<ServiceImpactingEvent>> serviceImpactingEvents = default;
+            IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions = default;
+            IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthAvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, Optional.ToList(recommendedActions), Optional.ToList(serviceImpactingEvents), serializedAdditionalRawData);
+            return new ResourceHealthAvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, recommendedActions ?? new ChangeTrackingList<ResourceHealthRecommendedAction>(), serviceImpactingEvents ?? new ChangeTrackingList<ServiceImpactingEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthAvailabilityStatusProperties>.Write(ModelReaderWriterOptions options)

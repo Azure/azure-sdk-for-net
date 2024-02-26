@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SignalRCustomCertificateData>> value = default;
+            IReadOnlyList<SignalRCustomCertificateData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRCustomCertificateListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRCustomCertificateListResult(value ?? new ChangeTrackingList<SignalRCustomCertificateData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRCustomCertificateListResult>.Write(ModelReaderWriterOptions options)

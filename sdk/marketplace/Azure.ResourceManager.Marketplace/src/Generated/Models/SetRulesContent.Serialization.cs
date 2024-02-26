@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IList<MarketplaceRule>> value = default;
+            IList<MarketplaceRule> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SetRulesContent(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SetRulesContent(value ?? new ChangeTrackingList<MarketplaceRule>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SetRulesContent>.Write(ModelReaderWriterOptions options)

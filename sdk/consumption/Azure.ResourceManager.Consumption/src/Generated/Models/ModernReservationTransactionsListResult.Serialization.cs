@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionModernReservationTransaction>> value = default;
+            IReadOnlyList<ConsumptionModernReservationTransaction> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModernReservationTransactionsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ModernReservationTransactionsListResult(value ?? new ChangeTrackingList<ConsumptionModernReservationTransaction>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModernReservationTransactionsListResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryVaultSettingData>> value = default;
+            IReadOnlyList<SiteRecoveryVaultSettingData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryVaultSettingListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SiteRecoveryVaultSettingListResult(value ?? new ChangeTrackingList<SiteRecoveryVaultSettingData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryVaultSettingListResult>.Write(ModelReaderWriterOptions options)

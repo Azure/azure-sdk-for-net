@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<SystemData> systemData = default;
             Optional<MobileNetworkProvisioningState> provisioningState = default;
             MobileNetworkInterfaceProperties userPlaneAccessInterface = default;
-            Optional<IList<string>> userPlaneAccessVirtualIPv4Addresses = default;
+            IList<string> userPlaneAccessVirtualIPv4Addresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCoreDataPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneAccessInterface, Optional.ToList(userPlaneAccessVirtualIPv4Addresses), serializedAdditionalRawData);
+            return new PacketCoreDataPlaneData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCoreDataPlaneData>.Write(ModelReaderWriterOptions options)

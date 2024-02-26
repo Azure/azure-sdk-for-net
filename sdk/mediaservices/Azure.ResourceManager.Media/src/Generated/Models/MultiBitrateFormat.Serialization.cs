@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element, options);
                 }
             }
-            Optional<IList<MediaOutputFile>> outputFiles = default;
+            IList<MediaOutputFile> outputFiles = default;
             string odataType = "#Microsoft.Media.MultiBitrateFormat";
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MultiBitrateFormat(odataType, filenamePattern, serializedAdditionalRawData, Optional.ToList(outputFiles));
+            return new MultiBitrateFormat(odataType, filenamePattern, serializedAdditionalRawData, outputFiles ?? new ChangeTrackingList<MediaOutputFile>());
         }
 
         BinaryData IPersistableModel<MultiBitrateFormat>.Write(ModelReaderWriterOptions options)

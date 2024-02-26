@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevCenter
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), devCenterUri.Value, serializedAdditionalRawData);
+            return new DevCenterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(provisioningState), devCenterUri.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterData>.Write(ModelReaderWriterOptions options)

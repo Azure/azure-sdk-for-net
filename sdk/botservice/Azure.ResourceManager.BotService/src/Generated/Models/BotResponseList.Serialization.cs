@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BotData>> value = default;
+            IReadOnlyList<BotData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotResponseList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new BotResponseList(nextLink.Value, value ?? new ChangeTrackingList<BotData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotResponseList>.Write(ModelReaderWriterOptions options)

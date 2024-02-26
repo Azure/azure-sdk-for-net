@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             string itemPath = default;
             bool isPathRelativeToBackupItem = default;
-            Optional<IList<string>> subItemPathPrefix = default;
+            IList<string> subItemPathPrefix = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ItemPathBasedRestoreCriteria(objectType, serializedAdditionalRawData, itemPath, isPathRelativeToBackupItem, Optional.ToList(subItemPathPrefix));
+            return new ItemPathBasedRestoreCriteria(objectType, serializedAdditionalRawData, itemPath, isPathRelativeToBackupItem, subItemPathPrefix ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ItemPathBasedRestoreCriteria>.Write(ModelReaderWriterOptions options)

@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<IReadOnlyList<SiteRecoveryVmEndpoint>> contentEndpoints = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            IReadOnlyList<SiteRecoveryVmEndpoint> contentEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AVmSyncedConfigDetails(Optional.ToDictionary(tags), Optional.ToList(contentEndpoints), serializedAdditionalRawData);
+            return new A2AVmSyncedConfigDetails(tags ?? new ChangeTrackingDictionary<string, string>(), contentEndpoints ?? new ChangeTrackingList<SiteRecoveryVmEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AVmSyncedConfigDetails>.Write(ModelReaderWriterOptions options)

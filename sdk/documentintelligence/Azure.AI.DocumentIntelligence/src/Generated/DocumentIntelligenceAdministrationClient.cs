@@ -991,6 +991,140 @@ namespace Azure.AI.DocumentIntelligence
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
         }
 
+        /// <summary> Builds a custom document analysis model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="buildRequest"> Build request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> BuildDocumentModelAsync(WaitUntil waitUntil, BuildDocumentModelContent buildRequest, CancellationToken cancellationToken = default)
+        {
+            if (buildRequest == null)
+            {
+                throw new ArgumentNullException(nameof(buildRequest));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = buildRequest.ToRequestContent();
+            Operation<BinaryData> response = await BuildDocumentModelAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
+        }
+
+        /// <summary> Builds a custom document analysis model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="buildRequest"> Build request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> BuildDocumentModel(WaitUntil waitUntil, BuildDocumentModelContent buildRequest, CancellationToken cancellationToken = default)
+        {
+            if (buildRequest == null)
+            {
+                throw new ArgumentNullException(nameof(buildRequest));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = buildRequest.ToRequestContent();
+            Operation<BinaryData> response = BuildDocumentModel(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
+        }
+
+        /// <summary> Creates a new document model from document types of existing document models. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="composeRequest"> Compose request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> ComposeModelAsync(WaitUntil waitUntil, ComposeDocumentModelContent composeRequest, CancellationToken cancellationToken = default)
+        {
+            if (composeRequest == null)
+            {
+                throw new ArgumentNullException(nameof(composeRequest));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = composeRequest.ToRequestContent();
+            Operation<BinaryData> response = await ComposeModelAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
+        }
+
+        /// <summary> Creates a new document model from document types of existing document models. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="composeRequest"> Compose request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> ComposeModel(WaitUntil waitUntil, ComposeDocumentModelContent composeRequest, CancellationToken cancellationToken = default)
+        {
+            if (composeRequest == null)
+            {
+                throw new ArgumentNullException(nameof(composeRequest));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = composeRequest.ToRequestContent();
+            Operation<BinaryData> response = ComposeModel(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
+        }
+
+        /// <summary> Copies document model to the target resource, region, and modelId. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="copyToRequest"> Copy to request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (copyToRequest == null)
+            {
+                throw new ArgumentNullException(nameof(copyToRequest));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = copyToRequest.ToRequestContent();
+            Operation<BinaryData> response = await CopyModelToAsync(waitUntil, modelId, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
+        }
+
+        /// <summary> Copies document model to the target resource, region, and modelId. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="copyToRequest"> Copy to request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelTo(WaitUntil,string,CopyAuthorization,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (modelId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
+            }
+            if (copyToRequest == null)
+            {
+                throw new ArgumentNullException(nameof(copyToRequest));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = copyToRequest.ToRequestContent();
+            Operation<BinaryData> response = CopyModelTo(waitUntil, modelId, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
+        }
+
         /// <summary> Builds a custom document classifier. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="buildRequest"> Build request parameters. </param>
@@ -1029,6 +1163,40 @@ namespace Azure.AI.DocumentIntelligence
             return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
         }
 
+        internal HttpMessage CreateBuildDocumentModelRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels:build", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateComposeModelRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels:compose", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateAuthorizeModelCopyRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1038,6 +1206,25 @@ namespace Azure.AI.DocumentIntelligence
             uri.Reset(_endpoint);
             uri.AppendRaw("/documentintelligence", false);
             uri.AppendPath("/documentModels:authorizeCopy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCopyModelToRequest(string modelId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":copyTo", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1256,12 +1443,30 @@ namespace Azure.AI.DocumentIntelligence
             return new RequestContext() { CancellationToken = cancellationToken };
         }
 
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
+
+        private DocumentModelDetails FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentModelDetails.DeserializeDocumentModelDetails(resultJsonElement);
+        }
+
+        private DocumentModelDetails FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentModelDetails.DeserializeDocumentModelDetails(resultJsonElement);
+        }
+
+        private DocumentModelDetails FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentModelDetails.DeserializeDocumentModelDetails(resultJsonElement);
+        }
 
         private DocumentClassifierDetails FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails(Response response)
         {

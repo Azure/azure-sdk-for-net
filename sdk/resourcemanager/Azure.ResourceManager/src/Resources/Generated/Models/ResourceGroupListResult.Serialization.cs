@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceGroupData>> value = default;
+            IReadOnlyList<ResourceGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ResourceGroupListResult(value ?? new ChangeTrackingList<ResourceGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupListResult>.Write(ModelReaderWriterOptions options)

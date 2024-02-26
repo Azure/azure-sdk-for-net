@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                 return null;
             }
             Optional<int> nJobs = default;
-            Optional<IReadOnlyList<SparkJob>> sparkJobs = default;
+            IReadOnlyList<SparkJob> sparkJobs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nJobs"u8))
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     continue;
                 }
             }
-            return new SparkJobListViewResponse(Optional.ToNullable(nJobs), Optional.ToList(sparkJobs));
+            return new SparkJobListViewResponse(Optional.ToNullable(nJobs), sparkJobs ?? new ChangeTrackingList<SparkJob>());
         }
     }
 }

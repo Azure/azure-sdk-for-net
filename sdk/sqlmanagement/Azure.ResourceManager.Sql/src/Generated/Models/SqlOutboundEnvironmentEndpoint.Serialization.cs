@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<string> category = default;
-            Optional<IReadOnlyList<ManagedInstanceEndpointDependency>> endpoints = default;
+            IReadOnlyList<ManagedInstanceEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new SqlOutboundEnvironmentEndpoint(category.Value, endpoints ?? new ChangeTrackingList<ManagedInstanceEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

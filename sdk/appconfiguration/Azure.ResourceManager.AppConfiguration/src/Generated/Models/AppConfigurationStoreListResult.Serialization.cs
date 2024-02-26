@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppConfigurationStoreData>> value = default;
+            IReadOnlyList<AppConfigurationStoreData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AppConfigurationStoreListResult(value ?? new ChangeTrackingList<AppConfigurationStoreData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreListResult>.Write(ModelReaderWriterOptions options)

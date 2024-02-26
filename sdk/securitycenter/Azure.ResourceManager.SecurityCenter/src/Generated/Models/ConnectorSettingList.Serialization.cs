@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityCloudConnectorData>> value = default;
+            IReadOnlyList<SecurityCloudConnectorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorSettingList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConnectorSettingList(value ?? new ChangeTrackingList<SecurityCloudConnectorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorSettingList>.Write(ModelReaderWriterOptions options)

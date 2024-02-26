@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
-            Optional<IList<string>> excludedKbNumbers = default;
-            Optional<IList<string>> includedKbNumbers = default;
+            IList<string> excludedKbNumbers = default;
+            IList<string> includedKbNumbers = default;
             Optional<string> rebootSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsUpdateConfigurationProperties(Optional.ToNullable(includedUpdateClassifications), Optional.ToList(excludedKbNumbers), Optional.ToList(includedKbNumbers), rebootSetting.Value, serializedAdditionalRawData);
+            return new WindowsUpdateConfigurationProperties(Optional.ToNullable(includedUpdateClassifications), excludedKbNumbers ?? new ChangeTrackingList<string>(), includedKbNumbers ?? new ChangeTrackingList<string>(), rebootSetting.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)

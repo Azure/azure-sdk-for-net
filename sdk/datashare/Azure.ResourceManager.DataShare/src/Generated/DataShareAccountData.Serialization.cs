@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataShare
                 return null;
             }
             ManagedServiceIdentity identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataShare
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), userEmail.Value, userName.Value, serializedAdditionalRawData);
+            return new DataShareAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), userEmail.Value, userName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareAccountData>.Write(ModelReaderWriterOptions options)

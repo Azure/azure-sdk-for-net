@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicWorkflowTriggerHistoryData>> value = default;
+            IReadOnlyList<LogicWorkflowTriggerHistoryData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerHistoryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerHistoryListResult(value ?? new ChangeTrackingList<LogicWorkflowTriggerHistoryData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerHistoryListResult>.Write(ModelReaderWriterOptions options)

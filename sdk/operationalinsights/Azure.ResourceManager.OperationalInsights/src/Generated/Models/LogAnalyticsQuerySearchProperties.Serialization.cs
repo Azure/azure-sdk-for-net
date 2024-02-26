@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             Optional<LogAnalyticsQuerySearchRelatedMetadata> related = default;
-            Optional<IDictionary<string, IList<string>>> tags = default;
+            IDictionary<string, IList<string>> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQuerySearchProperties(related.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new LogAnalyticsQuerySearchProperties(related.Value, tags ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQuerySearchProperties>.Write(ModelReaderWriterOptions options)

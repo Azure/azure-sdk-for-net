@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<DateTimeOffset> expirationTimeUtc = default;
             TriggersOn triggersOn = default;
             TriggersWhen triggersWhen = default;
-            Optional<IList<SecurityInsightsAutomationRuleCondition>> conditions = default;
+            IList<SecurityInsightsAutomationRuleCondition> conditions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAutomationRuleTriggeringLogic(isEnabled, Optional.ToNullable(expirationTimeUtc), triggersOn, triggersWhen, Optional.ToList(conditions), serializedAdditionalRawData);
+            return new SecurityInsightsAutomationRuleTriggeringLogic(isEnabled, Optional.ToNullable(expirationTimeUtc), triggersOn, triggersWhen, conditions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAutomationRuleTriggeringLogic>.Write(ModelReaderWriterOptions options)

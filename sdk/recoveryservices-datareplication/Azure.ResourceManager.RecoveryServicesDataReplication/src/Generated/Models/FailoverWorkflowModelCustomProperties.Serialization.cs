@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FailoverProtectedItemProperties>> protectedItemDetails = default;
+            IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverWorkflowModelCustomProperties(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData, Optional.ToList(protectedItemDetails));
+            return new FailoverWorkflowModelCustomProperties(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>());
         }
 
         BinaryData IPersistableModel<FailoverWorkflowModelCustomProperties>.Write(ModelReaderWriterOptions options)

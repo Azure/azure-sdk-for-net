@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoverySupportedOSProperty>> supportedOSList = default;
+            IReadOnlyList<SiteRecoverySupportedOSProperty> supportedOSList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoverySupportedOSProperties(Optional.ToList(supportedOSList), serializedAdditionalRawData);
+            return new SiteRecoverySupportedOSProperties(supportedOSList ?? new ChangeTrackingList<SiteRecoverySupportedOSProperty>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoverySupportedOSProperties>.Write(ModelReaderWriterOptions options)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<string> kind = default;
             MachineLearningOnlineDeploymentProperties properties = default;
             Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningOnlineDeploymentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, properties, sku.Value, serializedAdditionalRawData);
+            return new MachineLearningOnlineDeploymentData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, kind.Value, properties, sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineDeploymentData>.Write(ModelReaderWriterOptions options)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityGroupNetworkInterface>> networkInterfaces = default;
+            IReadOnlyList<SecurityGroupNetworkInterface> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityGroupViewResult(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new SecurityGroupViewResult(networkInterfaces ?? new ChangeTrackingList<SecurityGroupNetworkInterface>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityGroupViewResult>.Write(ModelReaderWriterOptions options)

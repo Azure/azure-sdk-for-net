@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> supportedSourceOSVersion = default;
-            Optional<IReadOnlyList<string>> supportedTargetOSVersions = default;
+            IReadOnlyList<string> supportedTargetOSVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSUpgradeSupportedVersions(supportedSourceOSVersion.Value, Optional.ToList(supportedTargetOSVersions), serializedAdditionalRawData);
+            return new OSUpgradeSupportedVersions(supportedSourceOSVersion.Value, supportedTargetOSVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSUpgradeSupportedVersions>.Write(ModelReaderWriterOptions options)

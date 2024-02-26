@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(poolId), size, serviceLevel, provisioningState.Value, Optional.ToNullable(totalThroughputMibps), Optional.ToNullable(utilizedThroughputMibps), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), Optional.ToNullable(encryptionType), serializedAdditionalRawData);
+            return new CapacityPoolData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(poolId), size, serviceLevel, provisioningState.Value, Optional.ToNullable(totalThroughputMibps), Optional.ToNullable(utilizedThroughputMibps), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), Optional.ToNullable(encryptionType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityPoolData>.Write(ModelReaderWriterOptions options)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<IList<MapsCorsRule>> corsRules = default;
+            IList<MapsCorsRule> corsRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CorsRules(Optional.ToList(corsRules), serializedAdditionalRawData);
+            return new CorsRules(corsRules ?? new ChangeTrackingList<MapsCorsRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CorsRules>.Write(ModelReaderWriterOptions options)

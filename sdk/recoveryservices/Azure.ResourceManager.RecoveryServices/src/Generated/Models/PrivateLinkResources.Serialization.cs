@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RecoveryServicesPrivateLinkResourceData>> value = default;
+            IReadOnlyList<RecoveryServicesPrivateLinkResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkResources(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateLinkResources(value ?? new ChangeTrackingList<RecoveryServicesPrivateLinkResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkResources>.Write(ModelReaderWriterOptions options)

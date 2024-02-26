@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicWorkflowVersionData>> value = default;
+            IReadOnlyList<LogicWorkflowVersionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowVersionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LogicWorkflowVersionListResult(value ?? new ChangeTrackingList<LogicWorkflowVersionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowVersionListResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisData>> value = default;
+            IReadOnlyList<RedisData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisListResult(value ?? new ChangeTrackingList<RedisData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisListResult>.Write(ModelReaderWriterOptions options)

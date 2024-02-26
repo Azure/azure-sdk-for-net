@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkloadNetworkVirtualMachineData>> value = default;
+            IReadOnlyList<WorkloadNetworkVirtualMachineData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkVirtualMachinesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkVirtualMachinesList(value ?? new ChangeTrackingList<WorkloadNetworkVirtualMachineData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkVirtualMachinesList>.Write(ModelReaderWriterOptions options)

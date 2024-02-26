@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisPrivateLinkResource>> value = default;
+            IReadOnlyList<RedisPrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RedisPrivateLinkResourceListResult(value ?? new ChangeTrackingList<RedisPrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

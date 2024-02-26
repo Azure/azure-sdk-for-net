@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<Uri> releaseNoteUri = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<SupportedOperatingSystemType> supportedOSType = default;
-            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
+            IList<GalleryApplicationCustomAction> customActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationPatch(id, name, type, systemData.Value, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), Optional.ToList(customActions), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryApplicationPatch(id, name, type, systemData.Value, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationPatch>.Write(ModelReaderWriterOptions options)

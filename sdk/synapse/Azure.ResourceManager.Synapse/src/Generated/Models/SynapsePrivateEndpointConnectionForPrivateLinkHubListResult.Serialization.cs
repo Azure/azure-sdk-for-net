@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapsePrivateEndpointConnectionForPrivateLinkHubData>> value = default;
+            IReadOnlyList<SynapsePrivateEndpointConnectionForPrivateLinkHubData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapsePrivateEndpointConnectionForPrivateLinkHubListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapsePrivateEndpointConnectionForPrivateLinkHubListResult(value ?? new ChangeTrackingList<SynapsePrivateEndpointConnectionForPrivateLinkHubData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubListResult>.Write(ModelReaderWriterOptions options)

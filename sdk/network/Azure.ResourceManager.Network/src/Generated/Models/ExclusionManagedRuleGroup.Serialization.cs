@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleGroupName = default;
-            Optional<IList<ExclusionManagedRule>> rules = default;
+            IList<ExclusionManagedRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExclusionManagedRuleGroup(ruleGroupName, Optional.ToList(rules), serializedAdditionalRawData);
+            return new ExclusionManagedRuleGroup(ruleGroupName, rules ?? new ChangeTrackingList<ExclusionManagedRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExclusionManagedRuleGroup>.Write(ModelReaderWriterOptions options)

@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IList<string>> categories = default;
-            Optional<IList<string>> resourceTypes = default;
-            Optional<IList<string>> solutions = default;
+            IList<string> categories = default;
+            IList<string> resourceTypes = default;
+            IList<string> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQueryRelatedMetadata(Optional.ToList(categories), Optional.ToList(resourceTypes), Optional.ToList(solutions), serializedAdditionalRawData);
+            return new LogAnalyticsQueryRelatedMetadata(categories ?? new ChangeTrackingList<string>(), resourceTypes ?? new ChangeTrackingList<string>(), solutions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQueryRelatedMetadata>.Write(ModelReaderWriterOptions options)

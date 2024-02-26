@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             Optional<ContainerServiceWeekDay> day = default;
-            Optional<IList<int>> hourSlots = default;
+            IList<int> hourSlots = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTimeInWeek(Optional.ToNullable(day), Optional.ToList(hourSlots), serializedAdditionalRawData);
+            return new ContainerServiceTimeInWeek(Optional.ToNullable(day), hourSlots ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTimeInWeek>.Write(ModelReaderWriterOptions options)

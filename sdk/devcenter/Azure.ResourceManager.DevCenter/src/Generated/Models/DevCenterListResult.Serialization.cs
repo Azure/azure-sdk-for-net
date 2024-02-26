@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevCenterData>> value = default;
+            IReadOnlyList<DevCenterData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DevCenterListResult(value ?? new ChangeTrackingList<DevCenterData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterListResult>.Write(ModelReaderWriterOptions options)

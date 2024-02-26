@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationServiceEnvironmentData>> value = default;
+            IReadOnlyList<IntegrationServiceEnvironmentData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentListResult(value ?? new ChangeTrackingList<IntegrationServiceEnvironmentData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentListResult>.Write(ModelReaderWriterOptions options)

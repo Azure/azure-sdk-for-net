@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> id = default;
-            Optional<IReadOnlyList<ReportableException>> errors = default;
+            IReadOnlyList<ReportableException> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSyncCompleteCommandOutput(id.Value, Optional.ToList(errors), serializedAdditionalRawData);
+            return new MigrateSyncCompleteCommandOutput(id.Value, errors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSyncCompleteCommandOutput>.Write(ModelReaderWriterOptions options)

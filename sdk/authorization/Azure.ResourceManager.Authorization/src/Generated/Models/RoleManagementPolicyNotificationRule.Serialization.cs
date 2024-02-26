@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<NotificationDeliveryType> notificationType = default;
             Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
             Optional<RoleManagementPolicyRecipientType> recipientType = default;
-            Optional<IList<string>> notificationRecipients = default;
+            IList<string> notificationRecipients = default;
             Optional<bool> isDefaultRecipientsEnabled = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyNotificationRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(notificationType), Optional.ToNullable(notificationLevel), Optional.ToNullable(recipientType), Optional.ToList(notificationRecipients), Optional.ToNullable(isDefaultRecipientsEnabled));
+            return new RoleManagementPolicyNotificationRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(notificationType), Optional.ToNullable(notificationLevel), Optional.ToNullable(recipientType), notificationRecipients ?? new ChangeTrackingList<string>(), Optional.ToNullable(isDefaultRecipientsEnabled));
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyNotificationRule>.Write(ModelReaderWriterOptions options)

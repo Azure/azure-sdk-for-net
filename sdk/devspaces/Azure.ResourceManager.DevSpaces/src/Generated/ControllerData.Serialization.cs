@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DevSpaces
                 return null;
             }
             DevSpacesSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DevSpaces
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(provisioningState), hostSuffix.Value, dataPlaneFqdn.Value, targetContainerHostApiServerFqdn.Value, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData);
+            return new ControllerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, Optional.ToNullable(provisioningState), hostSuffix.Value, dataPlaneFqdn.Value, targetContainerHostApiServerFqdn.Value, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerData>.Write(ModelReaderWriterOptions options)

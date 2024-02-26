@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ResourceIdentifier> subnetId = default;
             Optional<string> version = default;
-            Optional<IReadOnlyList<string>> childResources = default;
+            IReadOnlyList<string> childResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualClusterPatch(Optional.ToDictionary(tags), subnetId.Value, version.Value, Optional.ToList(childResources), serializedAdditionalRawData);
+            return new VirtualClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), subnetId.Value, version.Value, childResources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualClusterPatch>.Write(ModelReaderWriterOptions options)

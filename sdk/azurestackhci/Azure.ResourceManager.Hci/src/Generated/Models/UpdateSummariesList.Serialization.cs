@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<UpdateSummaryData>> value = default;
+            IReadOnlyList<UpdateSummaryData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSummariesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UpdateSummariesList(value ?? new ChangeTrackingList<UpdateSummaryData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSummariesList>.Write(ModelReaderWriterOptions options)

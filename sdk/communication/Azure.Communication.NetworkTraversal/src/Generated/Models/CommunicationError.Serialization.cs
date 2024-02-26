@@ -22,7 +22,7 @@ namespace Azure.Communication.NetworkTraversal
             string code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<CommunicationError>> details = default;
+            IReadOnlyList<CommunicationError> details = default;
             Optional<CommunicationError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.Communication.NetworkTraversal
                     continue;
                 }
             }
-            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new CommunicationError(code, message, target.Value, details ?? new ChangeTrackingList<CommunicationError>(), innererror.Value);
         }
     }
 }

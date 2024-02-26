@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceFabricVmSizeResourceData>> value = default;
+            IReadOnlyList<ServiceFabricVmSizeResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmSizesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VmSizesResult(value ?? new ChangeTrackingList<ServiceFabricVmSizeResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmSizesResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<CommitmentTier>> value = default;
+            IReadOnlyList<CommitmentTier> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentTierListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new CommitmentTierListResult(nextLink.Value, value ?? new ChangeTrackingList<CommitmentTier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentTierListResult>.Write(ModelReaderWriterOptions options)

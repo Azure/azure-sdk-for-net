@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IList<QueryFilter>> and = default;
-            Optional<IList<QueryFilter>> or = default;
+            IList<QueryFilter> and = default;
+            IList<QueryFilter> or = default;
             Optional<QueryComparisonExpression> dimensions = default;
             Optional<QueryComparisonExpression> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryFilter(Optional.ToList(and), Optional.ToList(or), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new QueryFilter(and ?? new ChangeTrackingList<QueryFilter>(), or ?? new ChangeTrackingList<QueryFilter>(), dimensions.Value, tags.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryFilter>.Write(ModelReaderWriterOptions options)

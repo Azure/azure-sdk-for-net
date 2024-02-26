@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Quota
             Optional<string> message = default;
             Optional<ServiceErrorDetail> error = default;
             Optional<DateTimeOffset> requestSubmitTime = default;
-            Optional<IReadOnlyList<QuotaSubRequestDetail>> value = default;
+            IReadOnlyList<QuotaSubRequestDetail> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Quota
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaRequestDetailData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), message.Value, error.Value, Optional.ToNullable(requestSubmitTime), Optional.ToList(value), serializedAdditionalRawData);
+            return new QuotaRequestDetailData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), message.Value, error.Value, Optional.ToNullable(requestSubmitTime), value ?? new ChangeTrackingList<QuotaSubRequestDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaRequestDetailData>.Write(ModelReaderWriterOptions options)

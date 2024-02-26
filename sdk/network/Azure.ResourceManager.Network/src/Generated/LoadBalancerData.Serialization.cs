@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<FrontendIPConfigurationData>> frontendIPConfigurations = default;
-            Optional<IList<BackendAddressPoolData>> backendAddressPools = default;
-            Optional<IList<LoadBalancingRuleData>> loadBalancingRules = default;
-            Optional<IList<ProbeData>> probes = default;
-            Optional<IList<InboundNatRuleData>> inboundNatRules = default;
-            Optional<IList<LoadBalancerInboundNatPool>> inboundNatPools = default;
-            Optional<IList<OutboundRuleData>> outboundRules = default;
+            IDictionary<string, string> tags = default;
+            IList<FrontendIPConfigurationData> frontendIPConfigurations = default;
+            IList<BackendAddressPoolData> backendAddressPools = default;
+            IList<LoadBalancingRuleData> loadBalancingRules = default;
+            IList<ProbeData> probes = default;
+            IList<InboundNatRuleData> inboundNatRules = default;
+            IList<LoadBalancerInboundNatPool> inboundNatPools = default;
+            IList<OutboundRuleData> outboundRules = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), Optional.ToList(loadBalancingRules), Optional.ToList(probes), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new LoadBalancerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), frontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(), backendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(), loadBalancingRules ?? new ChangeTrackingList<LoadBalancingRuleData>(), probes ?? new ChangeTrackingList<ProbeData>(), inboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(), inboundNatPools ?? new ChangeTrackingList<LoadBalancerInboundNatPool>(), outboundRules ?? new ChangeTrackingList<OutboundRuleData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<LoadBalancerData>.Write(ModelReaderWriterOptions options)

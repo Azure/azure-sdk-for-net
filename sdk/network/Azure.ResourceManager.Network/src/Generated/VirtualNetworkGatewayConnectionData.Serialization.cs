@@ -270,13 +270,13 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> authorizationKey = default;
             VirtualNetworkGatewayData virtualNetworkGateway1 = default;
             Optional<VirtualNetworkGatewayData> virtualNetworkGateway2 = default;
             Optional<LocalNetworkGatewayData> localNetworkGateway2 = default;
-            Optional<IList<WritableSubResource>> ingressNatRules = default;
-            Optional<IList<WritableSubResource>> egressNatRules = default;
+            IList<WritableSubResource> ingressNatRules = default;
+            IList<WritableSubResource> egressNatRules = default;
             VirtualNetworkGatewayConnectionType connectionType = default;
             Optional<VirtualNetworkGatewayConnectionProtocol> connectionProtocol = default;
             Optional<int> routingWeight = default;
@@ -284,16 +284,16 @@ namespace Azure.ResourceManager.Network
             Optional<VirtualNetworkGatewayConnectionMode> connectionMode = default;
             Optional<string> sharedKey = default;
             Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
-            Optional<IReadOnlyList<TunnelConnectionHealth>> tunnelConnectionStatus = default;
+            IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus = default;
             Optional<long> egressBytesTransferred = default;
             Optional<long> ingressBytesTransferred = default;
             Optional<WritableSubResource> peer = default;
             Optional<bool> enableBgp = default;
-            Optional<IList<GatewayCustomBgpIPAddressIPConfiguration>> gatewayCustomBgpIPAddresses = default;
+            IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = default;
             Optional<bool> useLocalAzureIPAddress = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
-            Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
+            IList<IPsecPolicy> ipsecPolicies = default;
+            IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> expressRouteGatewayBypass = default;
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules), connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), Optional.ToList(gatewayCustomBgpIPAddresses), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath));
+            return new VirtualNetworkGatewayConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(), egressNatRules ?? new ChangeTrackingList<WritableSubResource>(), connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>(), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), gatewayCustomBgpIPAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(usePolicyBasedTrafficSelectors), ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(), trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath));
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayConnectionData>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RequestReportRecordContract>> value = default;
+            IReadOnlyList<RequestReportRecordContract> value = default;
             Optional<long> count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestReportListResult(Optional.ToList(value), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new RequestReportListResult(value ?? new ChangeTrackingList<RequestReportRecordContract>(), Optional.ToNullable(count), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestReportListResult>.Write(ModelReaderWriterOptions options)

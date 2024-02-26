@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PasswordHash>> value = default;
+            IReadOnlyList<PasswordHash> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PasswordHashList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PasswordHashList(value ?? new ChangeTrackingList<PasswordHash>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PasswordHashList>.Write(ModelReaderWriterOptions options)

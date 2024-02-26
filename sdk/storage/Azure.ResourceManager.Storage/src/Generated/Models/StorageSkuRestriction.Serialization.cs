@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             Optional<string> type = default;
-            Optional<IReadOnlyList<string>> values = default;
+            IReadOnlyList<string> values = default;
             Optional<StorageRestrictionReasonCode> reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSkuRestriction(type.Value, Optional.ToList(values), Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new StorageSkuRestriction(type.Value, values ?? new ChangeTrackingList<string>(), Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSkuRestriction>.Write(ModelReaderWriterOptions options)

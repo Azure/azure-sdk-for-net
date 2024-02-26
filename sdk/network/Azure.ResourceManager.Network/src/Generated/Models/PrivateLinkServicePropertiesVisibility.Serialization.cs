@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> subscriptions = default;
+            IList<string> subscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkServicePropertiesVisibility(Optional.ToList(subscriptions), serializedAdditionalRawData);
+            return new PrivateLinkServicePropertiesVisibility(subscriptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkServicePropertiesVisibility>.Write(ModelReaderWriterOptions options)

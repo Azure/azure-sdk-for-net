@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FederatedIdentityCredentialData>> value = default;
+            IReadOnlyList<FederatedIdentityCredentialData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FederatedIdentityCredentialsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FederatedIdentityCredentialsListResult(value ?? new ChangeTrackingList<FederatedIdentityCredentialData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FederatedIdentityCredentialsListResult>.Write(ModelReaderWriterOptions options)

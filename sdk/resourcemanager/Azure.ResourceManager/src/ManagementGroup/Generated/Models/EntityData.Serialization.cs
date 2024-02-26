@@ -224,8 +224,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<int?> numberOfDescendants = default;
             Optional<int?> numberOfChildren = default;
             Optional<int?> numberOfChildGroups = default;
-            Optional<IReadOnlyList<string>> parentDisplayNameChain = default;
-            Optional<IReadOnlyList<string>> parentNameChain = default;
+            IReadOnlyList<string> parentDisplayNameChain = default;
+            IReadOnlyList<string> parentNameChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EntityData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, parent, Optional.ToNullable(permissions), Optional.ToNullable(inheritedPermissions), Optional.ToNullable(numberOfDescendants), Optional.ToNullable(numberOfChildren), Optional.ToNullable(numberOfChildGroups), Optional.ToList(parentDisplayNameChain), Optional.ToList(parentNameChain), serializedAdditionalRawData);
+            return new EntityData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, parent, Optional.ToNullable(permissions), Optional.ToNullable(inheritedPermissions), Optional.ToNullable(numberOfDescendants), Optional.ToNullable(numberOfChildren), Optional.ToNullable(numberOfChildGroups), parentDisplayNameChain ?? new ChangeTrackingList<string>(), parentNameChain ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EntityData>.Write(ModelReaderWriterOptions options)

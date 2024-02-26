@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media
             Optional<SystemData> systemData = default;
             Optional<PresentationTimeRange> presentationTimeRange = default;
             Optional<FirstQuality> firstQuality = default;
-            Optional<IList<FilterTrackSelection>> tracks = default;
+            IList<FilterTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesAccountFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, Optional.ToList(tracks), serializedAdditionalRawData);
+            return new MediaServicesAccountFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, tracks ?? new ChangeTrackingList<FilterTrackSelection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesAccountFilterData>.Write(ModelReaderWriterOptions options)

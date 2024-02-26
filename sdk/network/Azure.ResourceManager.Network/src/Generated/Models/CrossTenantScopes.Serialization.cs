@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<Guid> tenantId = default;
-            Optional<IReadOnlyList<string>> managementGroups = default;
-            Optional<IReadOnlyList<string>> subscriptions = default;
+            IReadOnlyList<string> managementGroups = default;
+            IReadOnlyList<string> subscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CrossTenantScopes(Optional.ToNullable(tenantId), Optional.ToList(managementGroups), Optional.ToList(subscriptions), serializedAdditionalRawData);
+            return new CrossTenantScopes(Optional.ToNullable(tenantId), managementGroups ?? new ChangeTrackingList<string>(), subscriptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CrossTenantScopes>.Write(ModelReaderWriterOptions options)

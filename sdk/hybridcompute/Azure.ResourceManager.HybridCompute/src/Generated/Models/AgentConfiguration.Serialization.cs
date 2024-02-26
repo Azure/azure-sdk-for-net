@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             Optional<Uri> proxyUrl = default;
-            Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
-            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsAllowList = default;
-            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsBlockList = default;
-            Optional<IReadOnlyList<string>> proxyBypass = default;
+            IReadOnlyList<string> incomingConnectionsPorts = default;
+            IReadOnlyList<HybridComputeConfigurationExtension> extensionsAllowList = default;
+            IReadOnlyList<HybridComputeConfigurationExtension> extensionsBlockList = default;
+            IReadOnlyList<string> proxyBypass = default;
             Optional<string> extensionsEnabled = default;
             Optional<string> guestConfigurationEnabled = default;
             Optional<AgentConfigurationMode> configMode = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentConfiguration(proxyUrl.Value, Optional.ToList(incomingConnectionsPorts), Optional.ToList(extensionsAllowList), Optional.ToList(extensionsBlockList), Optional.ToList(proxyBypass), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode), serializedAdditionalRawData);
+            return new AgentConfiguration(proxyUrl.Value, incomingConnectionsPorts ?? new ChangeTrackingList<string>(), extensionsAllowList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(), extensionsBlockList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(), proxyBypass ?? new ChangeTrackingList<string>(), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentConfiguration>.Write(ModelReaderWriterOptions options)

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<long> leaseTime = default;
             DhcpTypeEnum dhcpType = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> segments = default;
+            IReadOnlyList<string> segments = default;
             Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
             Optional<long> revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDhcpServer(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData, serverAddress.Value, Optional.ToNullable(leaseTime));
+            return new WorkloadNetworkDhcpServer(dhcpType, displayName.Value, segments ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData, serverAddress.Value, Optional.ToNullable(leaseTime));
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpServer>.Write(ModelReaderWriterOptions options)

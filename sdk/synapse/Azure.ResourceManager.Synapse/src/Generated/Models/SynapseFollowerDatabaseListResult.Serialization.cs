@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseFollowerDatabaseDefinition>> value = default;
+            IReadOnlyList<SynapseFollowerDatabaseDefinition> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseFollowerDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseFollowerDatabaseListResult(value ?? new ChangeTrackingList<SynapseFollowerDatabaseDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseFollowerDatabaseListResult>.Write(ModelReaderWriterOptions options)

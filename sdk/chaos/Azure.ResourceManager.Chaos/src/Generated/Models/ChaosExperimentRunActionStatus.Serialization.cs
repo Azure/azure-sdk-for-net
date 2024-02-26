@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Optional<string> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties>> targets = default;
+            IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentRunActionStatus(actionName.Value, actionId.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(targets), serializedAdditionalRawData);
+            return new ChaosExperimentRunActionStatus(actionName.Value, actionId.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), targets ?? new ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentRunActionStatus>.Write(ModelReaderWriterOptions options)

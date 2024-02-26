@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<OSDiskImageEncryption> osDiskImage = default;
-            Optional<IList<DataDiskImageEncryption>> dataDiskImages = default;
+            IList<DataDiskImageEncryption> dataDiskImages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionImages(osDiskImage.Value, Optional.ToList(dataDiskImages), serializedAdditionalRawData);
+            return new EncryptionImages(osDiskImage.Value, dataDiskImages ?? new ChangeTrackingList<DataDiskImageEncryption>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionImages>.Write(ModelReaderWriterOptions options)

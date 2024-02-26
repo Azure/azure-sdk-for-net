@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontDoorRuleData>> value = default;
+            IReadOnlyList<FrontDoorRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RuleListResult(value ?? new ChangeTrackingList<FrontDoorRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RuleListResult>.Write(ModelReaderWriterOptions options)

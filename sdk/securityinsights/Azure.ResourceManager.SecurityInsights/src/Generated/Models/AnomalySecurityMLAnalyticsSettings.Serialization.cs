@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> displayName = default;
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<IList<SecurityMLAnalyticsSettingsDataSource>> requiredDataConnectors = default;
-            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
+            IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors = default;
+            IList<SecurityInsightsAttackTactic> tactics = default;
+            IList<string> techniques = default;
             Optional<string> anomalyVersion = default;
             Optional<BinaryData> customizableObservations = default;
             Optional<TimeSpan> frequency = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToList(requiredDataConnectors), Optional.ToList(tactics), Optional.ToList(techniques), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId));
+            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), requiredDataConnectors ?? new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>(), tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), techniques ?? new ChangeTrackingList<string>(), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId));
         }
 
         BinaryData IPersistableModel<AnomalySecurityMLAnalyticsSettings>.Write(ModelReaderWriterOptions options)

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceConfigurationDictionary(id, name, type, systemData.Value, Optional.ToDictionary(properties), kind.Value, serializedAdditionalRawData);
+            return new AppServiceConfigurationDictionary(id, name, type, systemData.Value, properties ?? new ChangeTrackingDictionary<string, string>(), kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceConfigurationDictionary>.Write(ModelReaderWriterOptions options)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackupManagementUsage>> value = default;
+            IReadOnlyList<BackupManagementUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupManagementUsageList(Optional.ToList(value), serializedAdditionalRawData);
+            return new BackupManagementUsageList(value ?? new ChangeTrackingList<BackupManagementUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupManagementUsageList>.Write(ModelReaderWriterOptions options)

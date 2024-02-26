@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> policyState = default;
             Optional<BackupProtectionState> protectionState = default;
             Optional<long> protectedItemId = default;
-            Optional<IDictionary<string, string>> sourceAssociations = default;
+            IDictionary<string, string> sourceAssociations = default;
             Optional<string> fabricName = default;
             string protectedItemType = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> deferredDeleteTimeRemaining = default;
             Optional<bool> isDeferredDeleteScheduleUpcoming = default;
             Optional<bool> isRehydrate = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> policyName = default;
             Optional<int> softDeleteRetentionPeriodInDays = default;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, policyState.Value, Optional.ToNullable(protectionState), Optional.ToNullable(protectedItemId), Optional.ToDictionary(sourceAssociations), fabricName.Value);
+            return new GenericProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, policyState.Value, Optional.ToNullable(protectionState), Optional.ToNullable(protectedItemId), sourceAssociations ?? new ChangeTrackingDictionary<string, string>(), fabricName.Value);
         }
 
         BinaryData IPersistableModel<GenericProtectedItem>.Write(ModelReaderWriterOptions options)

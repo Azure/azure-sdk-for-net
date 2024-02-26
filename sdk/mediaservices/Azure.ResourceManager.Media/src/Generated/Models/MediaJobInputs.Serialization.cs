@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<MediaJobInputBasicProperties>> inputs = default;
+            IList<MediaJobInputBasicProperties> inputs = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobInputs(odataType, serializedAdditionalRawData, Optional.ToList(inputs));
+            return new MediaJobInputs(odataType, serializedAdditionalRawData, inputs ?? new ChangeTrackingList<MediaJobInputBasicProperties>());
         }
 
         BinaryData IPersistableModel<MediaJobInputs>.Write(ModelReaderWriterOptions options)

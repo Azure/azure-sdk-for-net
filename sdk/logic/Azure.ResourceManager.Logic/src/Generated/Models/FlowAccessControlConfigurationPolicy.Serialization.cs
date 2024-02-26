@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IList<FlowAccessControlIPAddressRange>> allowedCallerIPAddresses = default;
+            IList<FlowAccessControlIPAddressRange> allowedCallerIPAddresses = default;
             Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowAccessControlConfigurationPolicy(Optional.ToList(allowedCallerIPAddresses), openAuthenticationPolicies.Value, serializedAdditionalRawData);
+            return new FlowAccessControlConfigurationPolicy(allowedCallerIPAddresses ?? new ChangeTrackingList<FlowAccessControlIPAddressRange>(), openAuthenticationPolicies.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowAccessControlConfigurationPolicy>.Write(ModelReaderWriterOptions options)

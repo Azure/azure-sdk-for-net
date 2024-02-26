@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementOpenIdConnectProviderData>> value = default;
+            IReadOnlyList<ApiManagementOpenIdConnectProviderData> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdConnectProviderListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new OpenIdConnectProviderListResult(value ?? new ChangeTrackingList<ApiManagementOpenIdConnectProviderData>(), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenIdConnectProviderListResult>.Write(ModelReaderWriterOptions options)

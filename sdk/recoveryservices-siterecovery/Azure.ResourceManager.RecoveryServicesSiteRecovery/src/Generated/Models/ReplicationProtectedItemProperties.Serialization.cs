@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> testFailoverStateDescription = default;
             Optional<string> switchProviderState = default;
             Optional<string> switchProviderStateDescription = default;
-            Optional<IReadOnlyList<string>> allowedOperations = default;
+            IReadOnlyList<string> allowedOperations = default;
             Optional<string> replicationHealth = default;
             Optional<string> failoverHealth = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             Optional<ResourceIdentifier> policyId = default;
             Optional<string> policyFriendlyName = default;
             Optional<DateTimeOffset> lastSuccessfulFailoverTime = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, Optional.ToNullable(eventCorrelationId), serializedAdditionalRawData);
+            return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, allowedOperations ?? new ChangeTrackingList<string>(), replicationHealth.Value, failoverHealth.Value, healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, Optional.ToNullable(eventCorrelationId), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)

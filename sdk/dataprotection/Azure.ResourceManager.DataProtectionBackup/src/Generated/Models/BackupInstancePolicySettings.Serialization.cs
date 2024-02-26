@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
-            Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
+            IList<DataStoreSettings> dataStoreParametersList = default;
+            IList<BackupDataSourceSettings> backupDatasourceParametersList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupInstancePolicySettings(Optional.ToList(dataStoreParametersList), Optional.ToList(backupDatasourceParametersList), serializedAdditionalRawData);
+            return new BackupInstancePolicySettings(dataStoreParametersList ?? new ChangeTrackingList<DataStoreSettings>(), backupDatasourceParametersList ?? new ChangeTrackingList<BackupDataSourceSettings>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupInstancePolicySettings>.Write(ModelReaderWriterOptions options)

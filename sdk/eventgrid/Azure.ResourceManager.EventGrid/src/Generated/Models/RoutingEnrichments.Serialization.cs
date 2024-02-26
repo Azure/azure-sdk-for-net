@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IList<StaticRoutingEnrichment>> @static = default;
-            Optional<IList<DynamicRoutingEnrichment>> @dynamic = default;
+            IList<StaticRoutingEnrichment> @static = default;
+            IList<DynamicRoutingEnrichment> @dynamic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingEnrichments(Optional.ToList(@static), Optional.ToList(@dynamic), serializedAdditionalRawData);
+            return new RoutingEnrichments(@static ?? new ChangeTrackingList<StaticRoutingEnrichment>(), @dynamic ?? new ChangeTrackingList<DynamicRoutingEnrichment>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingEnrichments>.Write(ModelReaderWriterOptions options)

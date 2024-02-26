@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
-            Optional<IList<CognitiveServicesIPRule>> ipRules = default;
-            Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;
+            IList<CognitiveServicesIPRule> ipRules = default;
+            IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesNetworkRuleSet(Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            return new CognitiveServicesNetworkRuleSet(Optional.ToNullable(defaultAction), ipRules ?? new ChangeTrackingList<CognitiveServicesIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesNetworkRuleSet>.Write(ModelReaderWriterOptions options)

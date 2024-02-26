@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> sendToOwners = default;
-            Optional<IReadOnlyList<string>> customEmailAddresses = default;
+            IReadOnlyList<string> customEmailAddresses = default;
             Optional<string> locale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAlertProperties(sendToOwners.Value, Optional.ToList(customEmailAddresses), locale.Value, serializedAdditionalRawData);
+            return new SiteRecoveryAlertProperties(sendToOwners.Value, customEmailAddresses ?? new ChangeTrackingList<string>(), locale.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAlertProperties>.Write(ModelReaderWriterOptions options)

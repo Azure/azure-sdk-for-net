@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.HybridContainerService
             Optional<SystemData> systemData = default;
             Optional<HybridContainerServiceOSType> osType = default;
             Optional<HybridContainerServiceOSSku> ossku = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
+            IDictionary<string, string> nodeLabels = default;
+            IList<string> nodeTaints = default;
             Optional<int> maxCount = default;
             Optional<int> minCount = default;
             Optional<bool> enableAutoScaling = default;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), extendedLocation.Value, Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceAgentPoolData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), extendedLocation.Value, Optional.ToNullable(osType), Optional.ToNullable(ossku), nodeLabels ?? new ChangeTrackingDictionary<string, string>(), nodeTaints ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options)

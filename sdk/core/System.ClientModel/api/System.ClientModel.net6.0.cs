@@ -39,6 +39,7 @@ namespace System.ClientModel
     {
         protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
+        public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives

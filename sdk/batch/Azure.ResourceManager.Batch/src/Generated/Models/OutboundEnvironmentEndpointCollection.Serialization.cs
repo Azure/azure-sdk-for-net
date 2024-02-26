@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BatchAccountOutboundEnvironmentEndpoint>> value = default;
+            IReadOnlyList<BatchAccountOutboundEnvironmentEndpoint> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEnvironmentEndpointCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OutboundEnvironmentEndpointCollection(value ?? new ChangeTrackingList<BatchAccountOutboundEnvironmentEndpoint>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEnvironmentEndpointCollection>.Write(ModelReaderWriterOptions options)
