@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -19,13 +18,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 {
     public partial class Sample_FirmwareCollection
     {
-        // Firmware_ListByWorkspace_MaximumSet_Gen
+        // Firmwares_ListByWorkspace_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_FirmwareListByWorkspaceMaximumSetGen()
+        public async Task GetAll_FirmwaresListByWorkspaceMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListByWorkspace_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmware_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_ListByWorkspace_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -56,13 +55,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Firmware_ListByWorkspace_MinimumSet_Gen
+        // Firmwares_ListByWorkspace_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_FirmwareListByWorkspaceMinimumSetGen()
+        public async Task GetAll_FirmwaresListByWorkspaceMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_ListByWorkspace_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmware_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_ListByWorkspace_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -93,13 +92,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Firmware_Create_MaximumSet_Gen
+        // Firmwares_Create_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_FirmwareCreateMaximumSetGen()
+        public async Task CreateOrUpdate_FirmwaresCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmware_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Create_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -130,9 +129,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
                 Status = Status.Pending,
                 StatusMessages =
 {
-BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+new StatusMessage()
 {
-["message"] = "ulvhmhokezathzzauiitu"})
+Message = "ulvhmhokezathzzauiitu",
+}
 },
             };
             ArmOperation<FirmwareResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firmwareName, data);
@@ -145,13 +145,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firmware_Create_MinimumSet_Gen
+        // Firmwares_Create_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_FirmwareCreateMinimumSetGen()
+        public async Task CreateOrUpdate_FirmwaresCreateMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_Create_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmware_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Create_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -182,13 +182,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firmware_Get_MaximumSet_Gen
+        // Firmwares_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_FirmwareGetMaximumSetGen()
+        public async Task Get_FirmwaresGetMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmware_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -217,13 +217,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firmware_Get_MaximumSet_Gen
+        // Firmwares_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_FirmwareGetMaximumSetGen()
+        public async Task Exists_FirmwaresGetMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmware_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -248,13 +248,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firmware_Get_MaximumSet_Gen
+        // Firmwares_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_FirmwareGetMaximumSetGen()
+        public async Task GetIfExists_FirmwaresGetMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmware_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -291,13 +291,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             }
         }
 
-        // Firmware_Get_MinimumSet_Gen
+        // Firmwares_Get_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_FirmwareGetMinimumSetGen()
+        public async Task Get_FirmwaresGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmware_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -326,13 +326,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firmware_Get_MinimumSet_Gen
+        // Firmwares_Get_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_FirmwareGetMinimumSetGen()
+        public async Task Exists_FirmwaresGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmware_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -357,13 +357,13 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firmware_Get_MinimumSet_Gen
+        // Firmwares_Get_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_FirmwareGetMinimumSetGen()
+        public async Task GetIfExists_FirmwaresGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2023-02-08-preview/examples/Firmware_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmware_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

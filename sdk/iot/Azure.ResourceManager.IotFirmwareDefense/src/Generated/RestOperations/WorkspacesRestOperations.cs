@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-08-preview";
+            _apiVersion = apiVersion ?? "2024-01-10";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> Lists all of the firmware analysis workspaces in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> Lists all of the firmware analysis workspaces in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> Lists all of the firmware analysis workspaces in the specified resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> Lists all of the firmware analysis workspaces in the specified resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> The operation to create or update a firmware analysis workspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="data"> Parameters when creating a firmware analysis workspace. </param>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> The operation to create or update a firmware analysis workspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="data"> Parameters when creating a firmware analysis workspace. </param>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> The operation to update a firmware analysis workspaces. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="patch"> Parameters when updating a firmware analysis workspace. </param>
@@ -423,7 +423,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
                         FirmwareWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -436,7 +435,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> The operation to update a firmware analysis workspaces. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="patch"> Parameters when updating a firmware analysis workspace. </param>
@@ -479,7 +478,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
                         FirmwareWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -512,7 +510,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> The operation to delete a firmware analysis workspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -558,7 +556,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> The operation to delete a firmware analysis workspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -624,7 +622,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> Get firmware analysis workspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -668,7 +666,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                         value = FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 304:
                 case 404:
                     return Response.FromValue((FirmwareWorkspaceData)null, message.Response);
                 default:
@@ -677,7 +674,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> Get firmware analysis workspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -721,7 +718,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                         value = FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 304:
                 case 404:
                     return Response.FromValue((FirmwareWorkspaceData)null, message.Response);
                 default:
@@ -755,7 +751,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> The operation to get a url for file upload. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="content"> Parameters when requesting a URL to upload firmware. </param>
@@ -810,7 +806,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary> The operation to get a url for file upload. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="content"> Parameters when requesting a URL to upload firmware. </param>
@@ -880,7 +876,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary> Lists all of the firmware analysis workspaces in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -917,7 +913,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary> Lists all of the firmware analysis workspaces in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -968,7 +964,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary> Lists all of the firmware analysis workspaces in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -1014,7 +1010,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary> Lists all of the firmware analysis workspaces in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

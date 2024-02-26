@@ -70,25 +70,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(StatusMessages is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (!(StatusMessages is ChangeTrackingList<StatusMessage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusMessages"u8);
                 writer.WriteStartArray();
                 foreach (var item in StatusMessages)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +131,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> description = default;
             Optional<long?> fileSize = default;
             Optional<Status> status = default;
-            IList<BinaryData> statusMessages = default;
+            IList<StatusMessage> statusMessages = default;
             Optional<ProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -208,17 +196,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            List<BinaryData> array = new List<BinaryData>();
+                            List<StatusMessage> array = new List<StatusMessage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(BinaryData.FromString(item.GetRawText()));
-                                }
+                                array.Add(StatusMessage.DeserializeStatusMessage(item, options));
                             }
                             statusMessages = array;
                             continue;
@@ -241,7 +222,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwarePatch(fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), statusMessages ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FirmwarePatch(fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), statusMessages ?? new ChangeTrackingList<StatusMessage>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwarePatch>.Write(ModelReaderWriterOptions options)

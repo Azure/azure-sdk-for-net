@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateEntity"/>. </summary>
-        internal FirmwareCryptoCertificateEntity()
+        public FirmwareCryptoCertificateEntity()
         {
         }
 
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Common name of the certificate entity. </summary>
-        public string CommonName { get; }
+        public string CommonName { get; set; }
         /// <summary> Organization of the certificate entity. </summary>
-        public string Organization { get; }
+        public string Organization { get; set; }
         /// <summary> The organizational unit of the certificate entity. </summary>
-        public string OrganizationalUnit { get; }
+        public string OrganizationalUnit { get; set; }
         /// <summary> Geographical state or province of the certificate entity. </summary>
-        public string State { get; }
+        public string State { get; set; }
         /// <summary> Country code of the certificate entity. </summary>
-        public string Country { get; }
+        public string Country { get; set; }
     }
 }

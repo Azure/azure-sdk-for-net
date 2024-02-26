@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     public partial class FirmwareCollection : ArmCollection, IEnumerable<FirmwareResource>, IAsyncEnumerable<FirmwareResource>
     {
         private readonly ClientDiagnostics _firmwareClientDiagnostics;
-        private readonly FirmwareRestOperations _firmwareRestClient;
+        private readonly FirmwaresRestOperations _firmwareRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FirmwareCollection"/> class for mocking. </summary>
         protected FirmwareCollection()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             _firmwareClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", FirmwareResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FirmwareResource.ResourceType, out string firmwareApiVersion);
-            _firmwareRestClient = new FirmwareRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareApiVersion);
+            _firmwareRestClient = new FirmwaresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Create</description>
+        /// <description>Firmwares_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Create</description>
+        /// <description>Firmwares_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Get</description>
+        /// <description>Firmwares_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Get</description>
+        /// <description>Firmwares_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,11 +284,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_ListByWorkspace</description>
+        /// <description>Firmwares_ListByWorkspace</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_ListByWorkspace</description>
+        /// <description>Firmwares_ListByWorkspace</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,11 +344,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Get</description>
+        /// <description>Firmwares_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -394,11 +394,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Get</description>
+        /// <description>Firmwares_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Get</description>
+        /// <description>Firmwares_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -496,11 +496,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Get</description>
+        /// <description>Firmwares_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

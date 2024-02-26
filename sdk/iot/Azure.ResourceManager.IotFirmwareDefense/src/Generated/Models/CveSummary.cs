@@ -10,63 +10,31 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> CVE summary values. </summary>
-    public partial class CveSummary
+    /// <summary> Properties for a CVE analysis summary. </summary>
+    public partial class CveSummary : SummaryResourceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
         internal CveSummary()
         {
+            SummaryType = SummaryType.CVE;
         }
 
         /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
+        /// <param name="summaryType"> Describes the type of summary. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="critical"> The total number of critical severity CVEs detected. </param>
         /// <param name="high"> The total number of high severity CVEs detected. </param>
         /// <param name="medium"> The total number of medium severity CVEs detected. </param>
         /// <param name="low"> The total number of low severity CVEs detected. </param>
         /// <param name="unknown"> The total number of unknown severity CVEs detected. </param>
-        /// <param name="undefined"> The total number of undefined severity CVEs detected. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CveSummary(long? critical, long? high, long? medium, long? low, long? unknown, long? undefined, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CveSummary(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? critical, long? high, long? medium, long? low, long? unknown) : base(summaryType, serializedAdditionalRawData)
         {
             Critical = critical;
             High = high;
             Medium = medium;
             Low = low;
             Unknown = unknown;
-            Undefined = undefined;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SummaryType = summaryType;
         }
 
         /// <summary> The total number of critical severity CVEs detected. </summary>
@@ -79,7 +47,5 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public long? Low { get; }
         /// <summary> The total number of unknown severity CVEs detected. </summary>
         public long? Unknown { get; }
-        /// <summary> The total number of undefined severity CVEs detected. </summary>
-        public long? Undefined { get; }
     }
 }
