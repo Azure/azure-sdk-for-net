@@ -1300,6 +1300,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
+
+        public async Task MockNamespaceProperties()
+        {
+            #region Snippet:ServiceBus_MockingNamespaceProperties
+            Mock<Response<NamespaceProperties>> mockResponse = new Mock<Response<NamespaceProperties>>();
+            Mock<ServiceBusAdministrationClient> mockAdministrationClient = new Mock<ServiceBusAdministrationClient>();
+
+            NamespaceProperties namespaceProperties = ServiceBusModelFactory.NamespaceProperties("name", DateTimeOffset.UtcNow, DateTime.UtcNow, MessagingSku.Basic, 100, "alias");
+
+            mockResponse
+                .SetupGet(response => response.Value)
+                .Returns(namespaceProperties);
+
+            mockAdministrationClient
+                .Setup(client => client.GetNamespacePropertiesAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(mockResponse.Object);
+
+            ServiceBusAdministrationClient administrationClient = mockAdministrationClient.Object;
+
+            // The rest of this snippet illustrates how to access the namespace properties using the mocked service bus
+            // administration client above, this would be where application methods calling GetNamespaceProperties() would be called.
+
+            var namespacePropertiesResponse = await administrationClient.GetNamespacePropertiesAsync(CancellationToken.None);
+            #endregion
+
+            Assert.That(namespacePropertiesResponse, Is.EqualTo(namespaceProperties));
+        }
+
+        [Test]
         public async Task MockRunningTheProcessor()
         {
             #region Snippet:ServiceBus_SimulateRunningTheProcessor
