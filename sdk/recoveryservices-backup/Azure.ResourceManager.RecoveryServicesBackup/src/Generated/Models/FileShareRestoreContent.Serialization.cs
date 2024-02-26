@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareRestoreContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToNullable(copyOptions), Optional.ToNullable(restoreRequestType), restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(), targetDetails.Value);
+            return new FileShareRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryType),
+                sourceResourceId.Value,
+                Optional.ToNullable(copyOptions),
+                Optional.ToNullable(restoreRequestType),
+                restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(),
+                targetDetails.Value);
         }
 
         BinaryData IPersistableModel<FileShareRestoreContent>.Write(ModelReaderWriterOptions options)

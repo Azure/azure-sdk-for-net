@@ -289,7 +289,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ASwitchProtectionContent(instanceType, serializedAdditionalRawData, recoveryContainerId.Value, vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(), vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(), recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, policyId.Value, recoveryBootDiagStorageAccountId.Value, recoveryAvailabilityZone.Value, recoveryProximityPlacementGroupId.Value, recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, diskEncryptionInfo.Value);
+            return new A2ASwitchProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryContainerId.Value,
+                vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
+                recoveryResourceGroupId.Value,
+                recoveryCloudServiceId.Value,
+                recoveryAvailabilitySetId.Value,
+                policyId.Value,
+                recoveryBootDiagStorageAccountId.Value,
+                recoveryAvailabilityZone.Value,
+                recoveryProximityPlacementGroupId.Value,
+                recoveryVirtualMachineScaleSetId.Value,
+                recoveryCapacityReservationGroupId.Value,
+                diskEncryptionInfo.Value);
         }
 
         BinaryData IPersistableModel<A2ASwitchProtectionContent>.Write(ModelReaderWriterOptions options)

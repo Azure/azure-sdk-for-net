@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData);
+            return new UnknownWorkloadItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                workloadItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadItem>.Write(ModelReaderWriterOptions options)

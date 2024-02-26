@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRCustomDomainData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), domainName, customCertificate, serializedAdditionalRawData);
+            return new SignalRCustomDomainData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                domainName,
+                customCertificate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRCustomDomainData>.Write(ModelReaderWriterOptions options)

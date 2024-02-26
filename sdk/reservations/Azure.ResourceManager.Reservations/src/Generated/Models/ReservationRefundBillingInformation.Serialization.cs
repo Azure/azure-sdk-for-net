@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundBillingInformation(Optional.ToNullable(billingPlan), Optional.ToNullable(completedTransactions), Optional.ToNullable(totalTransactions), billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value, serializedAdditionalRawData);
+            return new ReservationRefundBillingInformation(
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(completedTransactions),
+                Optional.ToNullable(totalTransactions),
+                billingCurrencyTotalPaidAmount.Value,
+                billingCurrencyProratedAmount.Value,
+                billingCurrencyRemainingCommitmentAmount.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundBillingInformation>.Write(ModelReaderWriterOptions options)

@@ -374,7 +374,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtUpdateMigrationItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(), vmDisks ?? new ChangeTrackingList<VMwareCbtUpdateDiskContent>(), Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), performAutoResync.Value, targetVmTags ?? new ChangeTrackingDictionary<string, string>(), targetDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetNicTags ?? new ChangeTrackingDictionary<string, string>());
+            return new VMwareCbtUpdateMigrationItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                targetVmName.Value,
+                targetVmSize.Value,
+                targetResourceGroupId.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                targetBootDiagnosticsStorageAccountId.Value,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(),
+                vmDisks ?? new ChangeTrackingList<VMwareCbtUpdateDiskContent>(),
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(sqlServerLicenseType),
+                performAutoResync.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<VMwareCbtUpdateMigrationItemContent>.Write(ModelReaderWriterOptions options)

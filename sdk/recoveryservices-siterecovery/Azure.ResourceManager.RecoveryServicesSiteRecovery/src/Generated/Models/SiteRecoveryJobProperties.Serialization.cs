@@ -282,7 +282,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, tasks ?? new ChangeTrackingList<AsrTask>(), errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(), Optional.ToNullable(startTime), Optional.ToNullable(endTime), allowedActions ?? new ChangeTrackingList<string>(), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryJobProperties(
+                activityId.Value,
+                scenarioName.Value,
+                friendlyName.Value,
+                state.Value,
+                stateDescription.Value,
+                tasks ?? new ChangeTrackingList<AsrTask>(),
+                errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                allowedActions ?? new ChangeTrackingList<string>(),
+                targetObjectId.Value,
+                targetObjectName.Value,
+                targetInstanceType.Value,
+                customDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobProperties>.Write(ModelReaderWriterOptions options)

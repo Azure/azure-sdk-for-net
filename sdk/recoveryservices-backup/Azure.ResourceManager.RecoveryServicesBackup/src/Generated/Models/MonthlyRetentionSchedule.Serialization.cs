@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonthlyRetentionSchedule(Optional.ToNullable(retentionScheduleFormatType), retentionScheduleDaily.Value, retentionScheduleWeekly.Value, retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(), retentionDuration.Value, serializedAdditionalRawData);
+            return new MonthlyRetentionSchedule(
+                Optional.ToNullable(retentionScheduleFormatType),
+                retentionScheduleDaily.Value,
+                retentionScheduleWeekly.Value,
+                retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                retentionDuration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonthlyRetentionSchedule>.Write(ModelReaderWriterOptions options)

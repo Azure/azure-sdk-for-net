@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityTaskData(id, name, type, systemData.Value, state.Value, Optional.ToNullable(creationTimeUtc), securityTaskParameters.Value, Optional.ToNullable(lastStateChangeTimeUtc), subState.Value, serializedAdditionalRawData);
+            return new SecurityTaskData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                state.Value,
+                Optional.ToNullable(creationTimeUtc),
+                securityTaskParameters.Value,
+                Optional.ToNullable(lastStateChangeTimeUtc),
+                subState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityTaskData>.Write(ModelReaderWriterOptions options)

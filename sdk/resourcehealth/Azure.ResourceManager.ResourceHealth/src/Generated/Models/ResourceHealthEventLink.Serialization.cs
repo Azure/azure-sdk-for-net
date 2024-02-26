@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventLink(Optional.ToNullable(type), displayText.Value, extensionName.Value, bladeName.Value, parameters.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventLink(
+                Optional.ToNullable(type),
+                displayText.Value,
+                extensionName.Value,
+                bladeName.Value,
+                parameters.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventLink>.Write(ModelReaderWriterOptions options)

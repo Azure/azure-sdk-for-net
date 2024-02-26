@@ -397,7 +397,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AProtectedDiskDetails(diskUri.Value, recoveryAzureStorageAccountId.Value, primaryDiskAzureStorageAccountId.Value, recoveryDiskUri.Value, diskName.Value, Optional.ToNullable(diskCapacityInBytes), primaryStagingAzureStorageAccountId.Value, diskType.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(dataPendingInStagingStorageAccountInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), diskState.Value, allowedDiskLevelOperation ?? new ChangeTrackingList<string>(), Optional.ToNullable(isDiskEncrypted), secretIdentifier.Value, dekKeyVaultArmId.Value, Optional.ToNullable(isDiskKeyEncrypted), keyIdentifier.Value, kekKeyVaultArmId.Value, failoverDiskName.Value, tfoDiskName.Value, serializedAdditionalRawData);
+            return new A2AProtectedDiskDetails(
+                diskUri.Value,
+                recoveryAzureStorageAccountId.Value,
+                primaryDiskAzureStorageAccountId.Value,
+                recoveryDiskUri.Value,
+                diskName.Value,
+                Optional.ToNullable(diskCapacityInBytes),
+                primaryStagingAzureStorageAccountId.Value,
+                diskType.Value,
+                Optional.ToNullable(resyncRequired),
+                Optional.ToNullable(monitoringPercentageCompletion),
+                monitoringJobType.Value,
+                Optional.ToNullable(dataPendingInStagingStorageAccountInMB),
+                Optional.ToNullable(dataPendingAtSourceAgentInMB),
+                diskState.Value,
+                allowedDiskLevelOperation ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isDiskEncrypted),
+                secretIdentifier.Value,
+                dekKeyVaultArmId.Value,
+                Optional.ToNullable(isDiskKeyEncrypted),
+                keyIdentifier.Value,
+                kekKeyVaultArmId.Value,
+                failoverDiskName.Value,
+                tfoDiskName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

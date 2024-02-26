@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterprisePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new RedisEnterprisePrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

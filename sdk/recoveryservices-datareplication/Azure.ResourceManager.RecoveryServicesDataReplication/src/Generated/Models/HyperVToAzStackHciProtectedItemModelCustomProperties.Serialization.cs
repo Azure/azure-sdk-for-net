@@ -567,7 +567,48 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciProtectedItemModelCustomProperties(instanceType, serializedAdditionalRawData, Optional.ToNullable(activeLocation), targetHciClusterId, targetArcClusterCustomLocationId, targetAzStackHciClusterName.Value, fabricDiscoveryMachineId, disksToInclude, nicsToInclude, sourceVmName.Value, Optional.ToNullable(sourceCpuCores), Optional.ToNullable(sourceMemoryInMegaBytes), targetVmName.Value, targetResourceGroupId, storageContainerId, hyperVGeneration, targetNetworkId.Value, testNetworkId.Value, Optional.ToNullable(targetCpuCores), Optional.ToNullable(isDynamicRam), dynamicMemoryConfig.Value, Optional.ToNullable(targetMemoryInMegaBytes), runAsAccountId, sourceDraName, targetDraName, sourceApplianceName.Value, targetApplianceName.Value, osType.Value, osName.Value, firmwareType.Value, targetLocation.Value, customLocationRegion, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(resyncProgressPercentage), protectedDisks ?? new ChangeTrackingList<HyperVToAzStackHciProtectedDiskProperties>(), protectedNics ?? new ChangeTrackingList<HyperVToAzStackHciProtectedNicProperties>(), targetVmBiosId.Value, Optional.ToNullable(lastReplicationUpdateTime));
+            return new HyperVToAzStackHciProtectedItemModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(activeLocation),
+                targetHciClusterId,
+                targetArcClusterCustomLocationId,
+                targetAzStackHciClusterName.Value,
+                fabricDiscoveryMachineId,
+                disksToInclude,
+                nicsToInclude,
+                sourceVmName.Value,
+                Optional.ToNullable(sourceCpuCores),
+                Optional.ToNullable(sourceMemoryInMegaBytes),
+                targetVmName.Value,
+                targetResourceGroupId,
+                storageContainerId,
+                hyperVGeneration,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                Optional.ToNullable(targetCpuCores),
+                Optional.ToNullable(isDynamicRam),
+                dynamicMemoryConfig.Value,
+                Optional.ToNullable(targetMemoryInMegaBytes),
+                runAsAccountId,
+                sourceDraName,
+                targetDraName,
+                sourceApplianceName.Value,
+                targetApplianceName.Value,
+                osType.Value,
+                osName.Value,
+                firmwareType.Value,
+                targetLocation.Value,
+                customLocationRegion,
+                failoverRecoveryPointId.Value,
+                Optional.ToNullable(lastRecoveryPointReceived),
+                lastRecoveryPointId.Value,
+                Optional.ToNullable(initialReplicationProgressPercentage),
+                Optional.ToNullable(resyncProgressPercentage),
+                protectedDisks ?? new ChangeTrackingList<HyperVToAzStackHciProtectedDiskProperties>(),
+                protectedNics ?? new ChangeTrackingList<HyperVToAzStackHciProtectedNicProperties>(),
+                targetVmBiosId.Value,
+                Optional.ToNullable(lastReplicationUpdateTime));
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciProtectedItemModelCustomProperties>.Write(ModelReaderWriterOptions options)

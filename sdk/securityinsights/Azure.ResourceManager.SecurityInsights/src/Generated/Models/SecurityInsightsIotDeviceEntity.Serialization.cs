@@ -421,7 +421,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIotDeviceEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, deviceId.Value, deviceName.Value, source.Value, Optional.ToNullable(iotSecurityAgentId), deviceType.Value, vendor.Value, edgeId.Value, macAddress.Value, model.Value, serialNumber.Value, firmwareVersion.Value, operatingSystem.Value, iotHubEntityId.Value, hostEntityId.Value, ipAddressEntityId.Value, threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>(), protocols ?? new ChangeTrackingList<string>());
+            return new SecurityInsightsIotDeviceEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                deviceId.Value,
+                deviceName.Value,
+                source.Value,
+                Optional.ToNullable(iotSecurityAgentId),
+                deviceType.Value,
+                vendor.Value,
+                edgeId.Value,
+                macAddress.Value,
+                model.Value,
+                serialNumber.Value,
+                firmwareVersion.Value,
+                operatingSystem.Value,
+                iotHubEntityId.Value,
+                hostEntityId.Value,
+                ipAddressEntityId.Value,
+                threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>(),
+                protocols ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsIotDeviceEntity>.Write(ModelReaderWriterOptions options)

@@ -718,7 +718,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, threatIntelligenceTags ?? new ChangeTrackingList<string>(), Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, indicatorTypes ?? new ChangeTrackingList<string>(), pattern.Value, patternType.Value, patternVersion.Value, killChainPhases ?? new ChangeTrackingList<ThreatIntelligenceKillChainPhase>(), parsedPattern ?? new ChangeTrackingList<ThreatIntelligenceParsedPattern>(), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), Optional.ToNullable(externalLastUpdatedTimeUtc), externalReferences ?? new ChangeTrackingList<ThreatIntelligenceExternalReference>(), granularMarkings ?? new ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>(), labels ?? new ChangeTrackingList<string>(), Optional.ToNullable(revoked), Optional.ToNullable(confidence), objectMarkingRefs ?? new ChangeTrackingList<string>(), language.Value, threatTypes ?? new ChangeTrackingList<string>(), Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToNullable(created), modified.Value, extensions ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new SecurityInsightsThreatIntelligenceIndicatorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                threatIntelligenceTags ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(lastUpdatedTimeUtc),
+                source.Value,
+                displayName.Value,
+                description.Value,
+                indicatorTypes ?? new ChangeTrackingList<string>(),
+                pattern.Value,
+                patternType.Value,
+                patternVersion.Value,
+                killChainPhases ?? new ChangeTrackingList<ThreatIntelligenceKillChainPhase>(),
+                parsedPattern ?? new ChangeTrackingList<ThreatIntelligenceParsedPattern>(),
+                externalId.Value,
+                createdByRef.Value,
+                Optional.ToNullable(defanged),
+                Optional.ToNullable(externalLastUpdatedTimeUtc),
+                externalReferences ?? new ChangeTrackingList<ThreatIntelligenceExternalReference>(),
+                granularMarkings ?? new ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>(),
+                labels ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(revoked),
+                Optional.ToNullable(confidence),
+                objectMarkingRefs ?? new ChangeTrackingList<string>(),
+                language.Value,
+                threatTypes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(validFrom),
+                Optional.ToNullable(validUntil),
+                Optional.ToNullable(created),
+                modified.Value,
+                extensions ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorData>.Write(ModelReaderWriterOptions options)

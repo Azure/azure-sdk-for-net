@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.SelfHelp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SolutionResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourceData>.Write(ModelReaderWriterOptions options)

@@ -399,7 +399,28 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentMetadataData(id, name, type, systemData.Value, displayName.Value, policyDefinitionId.Value, description.Value, remediationDescription.Value, categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(), Optional.ToNullable(severity), Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), threats ?? new ChangeTrackingList<SecurityThreat>(), Optional.ToNullable(preview), Optional.ToNullable(assessmentType), partnerData.Value, publishDates.Value, plannedDeprecationDate.Value, tactics ?? new ChangeTrackingList<SecurityAssessmentTactic>(), techniques ?? new ChangeTrackingList<SecurityAssessmentTechnique>(), serializedAdditionalRawData);
+            return new SecurityAssessmentMetadataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                policyDefinitionId.Value,
+                description.Value,
+                remediationDescription.Value,
+                categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(userImpact),
+                Optional.ToNullable(implementationEffort),
+                threats ?? new ChangeTrackingList<SecurityThreat>(),
+                Optional.ToNullable(preview),
+                Optional.ToNullable(assessmentType),
+                partnerData.Value,
+                publishDates.Value,
+                plannedDeprecationDate.Value,
+                tactics ?? new ChangeTrackingList<SecurityAssessmentTactic>(),
+                techniques ?? new ChangeTrackingList<SecurityAssessmentTechnique>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentMetadataData>.Write(ModelReaderWriterOptions options)

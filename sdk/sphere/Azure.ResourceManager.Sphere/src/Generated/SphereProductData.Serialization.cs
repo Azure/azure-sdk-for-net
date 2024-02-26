@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereProductData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereProductData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereProductData>.Write(ModelReaderWriterOptions options)

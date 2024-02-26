@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, sku.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new RecoveryServicesVaultPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                sku.Value,
+                identity,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultPatch>.Write(ModelReaderWriterOptions options)

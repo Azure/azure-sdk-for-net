@@ -224,7 +224,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(weight), Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new SecureScoreData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                Optional.ToNullable(weight),
+                Optional.ToNullable(max),
+                Optional.ToNullable(current),
+                Optional.ToNullable(percentage),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreData>.Write(ModelReaderWriterOptions options)

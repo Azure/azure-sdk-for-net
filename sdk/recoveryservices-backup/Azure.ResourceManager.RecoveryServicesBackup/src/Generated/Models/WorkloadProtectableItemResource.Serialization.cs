@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadProtectableItemResource(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new WorkloadProtectableItemResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadProtectableItemResource>.Write(ModelReaderWriterOptions options)

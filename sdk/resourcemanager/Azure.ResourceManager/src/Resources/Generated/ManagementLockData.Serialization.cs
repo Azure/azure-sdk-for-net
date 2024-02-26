@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementLockData(id, name, type, systemData.Value, level, notes.Value, owners ?? new ChangeTrackingList<ManagementLockOwner>(), serializedAdditionalRawData);
+            return new ManagementLockData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                level,
+                notes.Value,
+                owners ?? new ChangeTrackingList<ManagementLockOwner>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementLockData>.Write(ModelReaderWriterOptions options)

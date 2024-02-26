@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVFailoverIPConfigDetails(ipConfigName.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryPublicIPAddressId.Value, recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HyperVFailoverIPConfigDetails(
+                ipConfigName.Value,
+                Optional.ToNullable(isPrimary),
+                Optional.ToNullable(isSeletedForFailover),
+                recoverySubnetName.Value,
+                recoveryStaticIPAddress.Value,
+                recoveryPublicIPAddressId.Value,
+                recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                tfoSubnetName.Value,
+                tfoStaticIPAddress.Value,
+                tfoPublicIPAddressId.Value,
+                tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVFailoverIPConfigDetails>.Write(ModelReaderWriterOptions options)

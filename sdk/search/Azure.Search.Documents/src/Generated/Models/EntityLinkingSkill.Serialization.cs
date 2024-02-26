@@ -174,7 +174,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new EntityLinkingSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), modelVersion.Value);
+            return new EntityLinkingSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                defaultLanguageCode.Value,
+                Optional.ToNullable(minimumPrecision),
+                modelVersion.Value);
         }
     }
 }

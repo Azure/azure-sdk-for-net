@@ -304,7 +304,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Optional.ToNullable(enforcementMode), protectionMode.Value, Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationStatus), issues ?? new ChangeTrackingList<AdaptiveApplicationControlIssueSummary>(), Optional.ToNullable(sourceSystem), vmRecommendations ?? new ChangeTrackingList<VmRecommendation>(), pathRecommendations ?? new ChangeTrackingList<PathRecommendation>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new AdaptiveApplicationControlGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(enforcementMode),
+                protectionMode.Value,
+                Optional.ToNullable(configurationStatus),
+                Optional.ToNullable(recommendationStatus),
+                issues ?? new ChangeTrackingList<AdaptiveApplicationControlIssueSummary>(),
+                Optional.ToNullable(sourceSystem),
+                vmRecommendations ?? new ChangeTrackingList<VmRecommendation>(),
+                pathRecommendations ?? new ChangeTrackingList<PathRecommendation>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdaptiveApplicationControlGroupData>.Write(ModelReaderWriterOptions options)

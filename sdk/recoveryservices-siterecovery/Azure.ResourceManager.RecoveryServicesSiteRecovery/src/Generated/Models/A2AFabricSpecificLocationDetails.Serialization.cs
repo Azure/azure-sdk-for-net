@@ -238,7 +238,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AFabricSpecificLocationDetails(initialPrimaryZone.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialPrimaryFabricLocation), Optional.ToNullable(initialRecoveryFabricLocation), primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), serializedAdditionalRawData);
+            return new A2AFabricSpecificLocationDetails(
+                initialPrimaryZone.Value,
+                initialRecoveryZone.Value,
+                initialPrimaryExtendedLocation.Value,
+                initialRecoveryExtendedLocation.Value,
+                Optional.ToNullable(initialPrimaryFabricLocation),
+                Optional.ToNullable(initialRecoveryFabricLocation),
+                primaryZone.Value,
+                recoveryZone.Value,
+                primaryExtendedLocation.Value,
+                recoveryExtendedLocation.Value,
+                Optional.ToNullable(primaryFabricLocation),
+                Optional.ToNullable(recoveryFabricLocation),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AFabricSpecificLocationDetails>.Write(ModelReaderWriterOptions options)

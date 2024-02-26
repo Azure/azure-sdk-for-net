@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryContent(subscriptions ?? new ChangeTrackingList<string>(), managementGroups ?? new ChangeTrackingList<string>(), query, options0.Value, facets ?? new ChangeTrackingList<FacetRequest>(), serializedAdditionalRawData);
+            return new ResourceQueryContent(
+                subscriptions ?? new ChangeTrackingList<string>(),
+                managementGroups ?? new ChangeTrackingList<string>(),
+                query,
+                options0.Value,
+                facets ?? new ChangeTrackingList<FacetRequest>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryContent>.Write(ModelReaderWriterOptions options)

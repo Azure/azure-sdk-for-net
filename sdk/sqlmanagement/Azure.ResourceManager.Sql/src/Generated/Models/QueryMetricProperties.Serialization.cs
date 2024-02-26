@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryMetricProperties(name.Value, displayName.Value, Optional.ToNullable(unit), Optional.ToNullable(value), Optional.ToNullable(min), Optional.ToNullable(max), Optional.ToNullable(avg), Optional.ToNullable(sum), Optional.ToNullable(stdev), serializedAdditionalRawData);
+            return new QueryMetricProperties(
+                name.Value,
+                displayName.Value,
+                Optional.ToNullable(unit),
+                Optional.ToNullable(value),
+                Optional.ToNullable(min),
+                Optional.ToNullable(max),
+                Optional.ToNullable(avg),
+                Optional.ToNullable(sum),
+                Optional.ToNullable(stdev),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryMetricProperties>.Write(ModelReaderWriterOptions options)

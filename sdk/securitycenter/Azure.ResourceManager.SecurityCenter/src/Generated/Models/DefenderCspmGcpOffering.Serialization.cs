@@ -168,7 +168,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmGcpOffering(offeringType, description.Value, serializedAdditionalRawData, ciemDiscovery.Value, vmScanners.Value, dataSensitivityDiscovery.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
+            return new DefenderCspmGcpOffering(
+                offeringType,
+                description.Value,
+                serializedAdditionalRawData,
+                ciemDiscovery.Value,
+                vmScanners.Value,
+                dataSensitivityDiscovery.Value,
+                mdcContainersImageAssessment.Value,
+                mdcContainersAgentlessDiscoveryK8S.Value);
         }
 
         BinaryData IPersistableModel<DefenderCspmGcpOffering>.Write(ModelReaderWriterOptions options)

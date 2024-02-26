@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TdeCertificate(id, name, type, systemData.Value, privateBlob.Value, certPassword.Value, serializedAdditionalRawData);
+            return new TdeCertificate(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateBlob.Value,
+                certPassword.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TdeCertificate>.Write(ModelReaderWriterOptions options)

@@ -378,7 +378,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ACreateProtectionIntentContent(instanceType, serializedAdditionalRawData, fabricObjectId, primaryLocation, recoveryLocation, recoverySubscriptionId, recoveryAvailabilityType, protectionProfileCustomContent.Value, recoveryResourceGroupId, primaryStagingStorageAccountCustomContent.Value, recoveryAvailabilitySetCustomContent.Value, recoveryVirtualNetworkCustomContent.Value, recoveryProximityPlacementGroupCustomContent.Value, Optional.ToNullable(autoProtectionOfDataDisk), vmDisks ?? new ChangeTrackingList<A2AProtectionIntentDiskDetails>(), vmManagedDisks ?? new ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>(), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, Optional.ToNullable(agentAutoUpdateStatus), Optional.ToNullable(automationAccountAuthenticationType), automationAccountArmId.Value);
+            return new A2ACreateProtectionIntentContent(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricObjectId,
+                primaryLocation,
+                recoveryLocation,
+                recoverySubscriptionId,
+                recoveryAvailabilityType,
+                protectionProfileCustomContent.Value,
+                recoveryResourceGroupId,
+                primaryStagingStorageAccountCustomContent.Value,
+                recoveryAvailabilitySetCustomContent.Value,
+                recoveryVirtualNetworkCustomContent.Value,
+                recoveryProximityPlacementGroupCustomContent.Value,
+                Optional.ToNullable(autoProtectionOfDataDisk),
+                vmDisks ?? new ChangeTrackingList<A2AProtectionIntentDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>(),
+                multiVmGroupName.Value,
+                multiVmGroupId.Value,
+                recoveryBootDiagStorageAccount.Value,
+                diskEncryptionInfo.Value,
+                recoveryAvailabilityZone.Value,
+                Optional.ToNullable(agentAutoUpdateStatus),
+                Optional.ToNullable(automationAccountAuthenticationType),
+                automationAccountArmId.Value);
         }
 
         BinaryData IPersistableModel<A2ACreateProtectionIntentContent>.Write(ModelReaderWriterOptions options)

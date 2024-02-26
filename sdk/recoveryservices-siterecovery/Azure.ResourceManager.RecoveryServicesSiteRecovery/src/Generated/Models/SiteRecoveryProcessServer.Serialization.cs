@@ -559,7 +559,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, mobilityServiceUpdates ?? new ChangeTrackingList<MobilityServiceUpdate>(), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProcessServer(
+                friendlyName.Value,
+                id.Value,
+                ipAddress.Value,
+                osType.Value,
+                agentVersion.Value,
+                Optional.ToNullable(lastHeartbeat),
+                versionStatus.Value,
+                mobilityServiceUpdates ?? new ChangeTrackingList<MobilityServiceUpdate>(),
+                hostId.Value,
+                machineCount.Value,
+                replicationPairCount.Value,
+                systemLoad.Value,
+                systemLoadStatus.Value,
+                cpuLoad.Value,
+                cpuLoadStatus.Value,
+                Optional.ToNullable(totalMemoryInBytes),
+                Optional.ToNullable(availableMemoryInBytes),
+                memoryUsageStatus.Value,
+                Optional.ToNullable(totalSpaceInBytes),
+                Optional.ToNullable(availableSpaceInBytes),
+                spaceUsageStatus.Value,
+                psServiceStatus.Value,
+                Optional.ToNullable(sslCertExpireOn),
+                Optional.ToNullable(sslCertExpiryRemainingDays),
+                osVersion.Value,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(agentExpireOn),
+                agentVersionDetails.Value,
+                Optional.ToNullable(health),
+                Optional.ToNullable(psStatsRefreshTime),
+                Optional.ToNullable(throughputUploadPendingDataInBytes),
+                Optional.ToNullable(throughputInMBps),
+                Optional.ToNullable(throughputInBytes),
+                throughputStatus.Value,
+                marsCommunicationStatus.Value,
+                marsRegistrationStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProcessServer>.Write(ModelReaderWriterOptions options)

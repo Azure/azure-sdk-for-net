@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundResponseProperties(Optional.ToNullable(sessionId), Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value, serializedAdditionalRawData);
+            return new ReservationRefundResponseProperties(
+                Optional.ToNullable(sessionId),
+                Optional.ToNullable(quantity),
+                billingRefundAmount.Value,
+                pricingRefundAmount.Value,
+                policyResult.Value,
+                billingInformation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundResponseProperties>.Write(ModelReaderWriterOptions options)

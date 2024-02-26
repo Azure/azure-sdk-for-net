@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProofOfPossessionNonceResponse(certificate.Value, Optional.ToNullable(status), subject.Value, thumbprint.Value, Optional.ToNullable(expiryUtc), Optional.ToNullable(notBeforeUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ProofOfPossessionNonceResponse(
+                certificate.Value,
+                Optional.ToNullable(status),
+                subject.Value,
+                thumbprint.Value,
+                Optional.ToNullable(expiryUtc),
+                Optional.ToNullable(notBeforeUtc),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProofOfPossessionNonceResponse>.Write(ModelReaderWriterOptions options)

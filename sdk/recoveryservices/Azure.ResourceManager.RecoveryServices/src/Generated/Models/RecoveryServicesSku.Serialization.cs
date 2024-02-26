@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesSku(name, tier.Value, family.Value, size.Value, capacity.Value, serializedAdditionalRawData);
+            return new RecoveryServicesSku(
+                name,
+                tier.Value,
+                family.Value,
+                size.Value,
+                capacity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesSku>.Write(ModelReaderWriterOptions options)

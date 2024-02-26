@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterUpgradePolicy(Optional.ToNullable(forceRestart), healthPolicy.Value, deltaHealthPolicy.Value, monitoringPolicy.Value, upgradeReplicaSetCheckTimeout.Value, serializedAdditionalRawData);
+            return new ManagedClusterUpgradePolicy(
+                Optional.ToNullable(forceRestart),
+                healthPolicy.Value,
+                deltaHealthPolicy.Value,
+                monitoringPolicy.Value,
+                upgradeReplicaSetCheckTimeout.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterUpgradePolicy>.Write(ModelReaderWriterOptions options)

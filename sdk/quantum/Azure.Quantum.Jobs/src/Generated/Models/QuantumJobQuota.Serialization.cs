@@ -83,7 +83,14 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new QuantumJobQuota(dimension.Value, Optional.ToNullable(scope), providerId.Value, Optional.ToNullable(utilization), Optional.ToNullable(holds), Optional.ToNullable(limit), Optional.ToNullable(period));
+            return new QuantumJobQuota(
+                dimension.Value,
+                Optional.ToNullable(scope),
+                providerId.Value,
+                Optional.ToNullable(utilization),
+                Optional.ToNullable(holds),
+                Optional.ToNullable(limit),
+                Optional.ToNullable(period));
         }
     }
 }

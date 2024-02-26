@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeSettingsProperties(Optional.ToNullable(hybridComputeProvisioningState), autoProvision, resourceGroupName.Value, region.Value, proxyServer.Value, servicePrincipal.Value, serializedAdditionalRawData);
+            return new HybridComputeSettingsProperties(
+                Optional.ToNullable(hybridComputeProvisioningState),
+                autoProvision,
+                resourceGroupName.Value,
+                region.Value,
+                proxyServer.Value,
+                servicePrincipal.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeSettingsProperties>.Write(ModelReaderWriterOptions options)

@@ -325,7 +325,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceFilteringCriteria(Optional.ToNullable(pageSize), Optional.ToNullable(minConfidence), Optional.ToNullable(maxConfidence), Optional.ToNullable(minValidUntil), Optional.ToNullable(maxValidUntil), Optional.ToNullable(includeDisabled), sortBy ?? new ChangeTrackingList<ThreatIntelligenceSortingCriteria>(), sources ?? new ChangeTrackingList<string>(), patternTypes ?? new ChangeTrackingList<string>(), threatTypes ?? new ChangeTrackingList<string>(), ids ?? new ChangeTrackingList<string>(), keywords ?? new ChangeTrackingList<string>(), skipToken.Value, serializedAdditionalRawData);
+            return new ThreatIntelligenceFilteringCriteria(
+                Optional.ToNullable(pageSize),
+                Optional.ToNullable(minConfidence),
+                Optional.ToNullable(maxConfidence),
+                Optional.ToNullable(minValidUntil),
+                Optional.ToNullable(maxValidUntil),
+                Optional.ToNullable(includeDisabled),
+                sortBy ?? new ChangeTrackingList<ThreatIntelligenceSortingCriteria>(),
+                sources ?? new ChangeTrackingList<string>(),
+                patternTypes ?? new ChangeTrackingList<string>(),
+                threatTypes ?? new ChangeTrackingList<string>(),
+                ids ?? new ChangeTrackingList<string>(),
+                keywords ?? new ChangeTrackingList<string>(),
+                skipToken.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceFilteringCriteria>.Write(ModelReaderWriterOptions options)

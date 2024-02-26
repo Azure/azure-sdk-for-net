@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupManagementUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new BackupManagementUsage(
+                Optional.ToNullable(unit),
+                quotaPeriod.Value,
+                Optional.ToNullable(nextResetTime),
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupManagementUsage>.Write(ModelReaderWriterOptions options)

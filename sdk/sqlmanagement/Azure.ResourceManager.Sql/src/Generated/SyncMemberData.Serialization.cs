@@ -299,7 +299,24 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncMemberData(id, name, type, systemData.Value, Optional.ToNullable(databaseType), syncAgentId.Value, Optional.ToNullable(sqlServerDatabaseId), syncMemberAzureDatabaseResourceId.Value, Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serverName.Value, databaseName.Value, userName.Value, password.Value, Optional.ToNullable(syncDirection), Optional.ToNullable(syncState), serializedAdditionalRawData);
+            return new SyncMemberData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(databaseType),
+                syncAgentId.Value,
+                Optional.ToNullable(sqlServerDatabaseId),
+                syncMemberAzureDatabaseResourceId.Value,
+                Optional.ToNullable(usePrivateLinkConnection),
+                privateEndpointName.Value,
+                serverName.Value,
+                databaseName.Value,
+                userName.Value,
+                password.Value,
+                Optional.ToNullable(syncDirection),
+                Optional.ToNullable(syncState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncMemberData>.Write(ModelReaderWriterOptions options)

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,14 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of <see cref="ListSkillsetsResult"/>. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsets"/> is null. </exception>
         internal ListSkillsetsResult(IEnumerable<SearchIndexerSkillset> skillsets)
         {
-            if (skillsets == null)
-            {
-                throw new ArgumentNullException(nameof(skillsets));
-            }
-
             Skillsets = skillsets.ToList();
         }
 

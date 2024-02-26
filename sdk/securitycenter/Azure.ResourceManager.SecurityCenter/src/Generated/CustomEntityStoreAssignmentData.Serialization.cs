@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomEntityStoreAssignmentData(id, name, type, systemData.Value, principal.Value, entityStoreDatabaseLink.Value, serializedAdditionalRawData);
+            return new CustomEntityStoreAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                principal.Value,
+                entityStoreDatabaseLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomEntityStoreAssignmentData>.Write(ModelReaderWriterOptions options)

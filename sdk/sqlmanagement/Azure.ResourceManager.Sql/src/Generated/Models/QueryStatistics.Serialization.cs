@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryStatistics(id, name, type, systemData.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, intervals ?? new ChangeTrackingList<QueryMetricInterval>(), serializedAdditionalRawData);
+            return new QueryStatistics(
+                id,
+                name,
+                type,
+                systemData.Value,
+                databaseName.Value,
+                queryId.Value,
+                startTime.Value,
+                endTime.Value,
+                intervals ?? new ChangeTrackingList<QueryMetricInterval>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryStatistics>.Write(ModelReaderWriterOptions options)

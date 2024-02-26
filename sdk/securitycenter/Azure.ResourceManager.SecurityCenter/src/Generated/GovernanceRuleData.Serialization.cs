@@ -391,7 +391,27 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), excludedScopes ?? new ChangeTrackingList<string>(), conditionSets ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value, serializedAdditionalRawData);
+            return new GovernanceRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(tenantId),
+                displayName.Value,
+                description.Value,
+                remediationTimeframe.Value,
+                Optional.ToNullable(isGracePeriod),
+                Optional.ToNullable(rulePriority),
+                Optional.ToNullable(isDisabled),
+                Optional.ToNullable(ruleType),
+                Optional.ToNullable(sourceResourceType),
+                excludedScopes ?? new ChangeTrackingList<string>(),
+                conditionSets ?? new ChangeTrackingList<BinaryData>(),
+                Optional.ToNullable(includeMemberScopes),
+                ownerSource.Value,
+                governanceEmailNotification.Value,
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options)

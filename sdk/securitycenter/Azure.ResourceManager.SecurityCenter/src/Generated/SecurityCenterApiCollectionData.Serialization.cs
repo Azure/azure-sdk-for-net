@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterApiCollectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, discoveredVia.Value, baseUrl.Value, Optional.ToNullable(numberOfApiEndpoints), Optional.ToNullable(numberOfInactiveApiEndpoints), Optional.ToNullable(numberOfUnauthenticatedApiEndpoints), Optional.ToNullable(numberOfExternalApiEndpoints), Optional.ToNullable(numberOfApiEndpointsWithSensitiveDataExposed), sensitivityLabel.Value, serializedAdditionalRawData);
+            return new SecurityCenterApiCollectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                displayName.Value,
+                discoveredVia.Value,
+                baseUrl.Value,
+                Optional.ToNullable(numberOfApiEndpoints),
+                Optional.ToNullable(numberOfInactiveApiEndpoints),
+                Optional.ToNullable(numberOfUnauthenticatedApiEndpoints),
+                Optional.ToNullable(numberOfExternalApiEndpoints),
+                Optional.ToNullable(numberOfApiEndpointsWithSensitiveDataExposed),
+                sensitivityLabel.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterApiCollectionData>.Write(ModelReaderWriterOptions options)

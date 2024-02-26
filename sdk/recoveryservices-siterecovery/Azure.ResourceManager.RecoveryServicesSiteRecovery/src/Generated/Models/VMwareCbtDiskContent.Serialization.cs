@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtDiskContent(diskId, Optional.ToNullable(diskType), isOSDisk, logStorageAccountId, logStorageAccountSasSecretName, diskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new VMwareCbtDiskContent(
+                diskId,
+                Optional.ToNullable(diskType),
+                isOSDisk,
+                logStorageAccountId,
+                logStorageAccountSasSecretName,
+                diskEncryptionSetId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtDiskContent>.Write(ModelReaderWriterOptions options)

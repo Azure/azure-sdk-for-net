@@ -261,7 +261,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryHealthError(innerHealthErrors ?? new ChangeTrackingList<SiteRecoveryInnerHealthError>(), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability), serializedAdditionalRawData);
+            return new SiteRecoveryHealthError(
+                innerHealthErrors ?? new ChangeTrackingList<SiteRecoveryInnerHealthError>(),
+                errorSource.Value,
+                errorType.Value,
+                errorLevel.Value,
+                errorCategory.Value,
+                errorCode.Value,
+                summaryMessage.Value,
+                errorMessage.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                Optional.ToNullable(creationTimeUtc),
+                recoveryProviderErrorMessage.Value,
+                entityId.Value,
+                errorId.Value,
+                Optional.ToNullable(customerResolvability),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryHealthError>.Write(ModelReaderWriterOptions options)

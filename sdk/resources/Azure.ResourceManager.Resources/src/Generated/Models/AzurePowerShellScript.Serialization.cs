@@ -433,7 +433,31 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzurePowerShellScript(id, name, type, systemData.Value, identity.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), kind, serializedAdditionalRawData, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, supportingScriptUris ?? new ChangeTrackingList<Uri>(), scriptContent.Value, arguments.Value, environmentVariables ?? new ChangeTrackingList<ScriptEnvironmentVariable>(), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azPowerShellVersion);
+            return new AzurePowerShellScript(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity.Value,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                serializedAdditionalRawData,
+                containerSettings.Value,
+                storageAccountSettings.Value,
+                Optional.ToNullable(cleanupPreference),
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                outputs.Value,
+                primaryScriptUri.Value,
+                supportingScriptUris ?? new ChangeTrackingList<Uri>(),
+                scriptContent.Value,
+                arguments.Value,
+                environmentVariables ?? new ChangeTrackingList<ScriptEnvironmentVariable>(),
+                forceUpdateTag.Value,
+                retentionInterval,
+                Optional.ToNullable(timeout),
+                azPowerShellVersion);
         }
 
         BinaryData IPersistableModel<AzurePowerShellScript>.Write(ModelReaderWriterOptions options)

@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlSku(name, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new SqlSku(
+                name,
+                tier.Value,
+                size.Value,
+                family.Value,
+                Optional.ToNullable(capacity),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlSku>.Write(ModelReaderWriterOptions options)
