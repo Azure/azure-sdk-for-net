@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> diskSizeGB = default;
             Optional<SupportedOperatingSystemType> osType = default;
             Optional<VirtualHardDisk> image = default;
-            Optional<IList<string>> vhdContainers = default;
+            IList<string> vhdContainers = default;
             Optional<VirtualMachineScaleSetManagedDisk> managedDisk = default;
             Optional<DiskDeleteOptionType> deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetOSDisk(name.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, diffDiskSettings.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(osType), image.Value, Optional.ToList(vhdContainers), managedDisk.Value, Optional.ToNullable(deleteOption), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetOSDisk(name.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, diffDiskSettings.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(osType), image.Value, vhdContainers ?? new ChangeTrackingList<string>(), managedDisk.Value, Optional.ToNullable(deleteOption), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetOSDisk>.Write(ModelReaderWriterOptions options)

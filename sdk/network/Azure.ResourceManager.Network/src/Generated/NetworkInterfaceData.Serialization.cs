@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<WritableSubResource> virtualMachine = default;
             Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
             Optional<PrivateEndpointData> privateEndpoint = default;
-            Optional<IList<NetworkInterfaceIPConfigurationData>> ipConfigurations = default;
-            Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> tapConfigurations = default;
+            IList<NetworkInterfaceIPConfigurationData> ipConfigurations = default;
+            IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations = default;
             Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
             Optional<string> macAddress = default;
             Optional<bool> primary = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableAcceleratedNetworking = default;
             Optional<bool> disableTcpStateTracking = default;
             Optional<bool> enableIPForwarding = default;
-            Optional<IReadOnlyList<string>> hostedWorkloads = default;
+            IReadOnlyList<string> hostedWorkloads = default;
             Optional<WritableSubResource> dscpConfiguration = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, Optional.ToList(ipConfigurations), Optional.ToList(tapConfigurations), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(vnetEncryptionSupported), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableIPForwarding), Optional.ToList(hostedWorkloads), dscpConfiguration, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            return new NetworkInterfaceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, ipConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(), tapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(vnetEncryptionSupported), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableIPForwarding), hostedWorkloads ?? new ChangeTrackingList<string>(), dscpConfiguration, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
         }
 
         BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options)

@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             Optional<string> endpointName = default;
-            Optional<IList<FrontDoorActivatedResourceInfo>> customDomains = default;
+            IList<FrontDoorActivatedResourceInfo> customDomains = default;
             Optional<WritableSubResource> originGroup = default;
             Optional<string> originPath = default;
-            Optional<IList<WritableSubResource>> ruleSets = default;
-            Optional<IList<FrontDoorEndpointProtocol>> supportedProtocols = default;
-            Optional<IList<string>> patternsToMatch = default;
+            IList<WritableSubResource> ruleSets = default;
+            IList<FrontDoorEndpointProtocol> supportedProtocols = default;
+            IList<string> patternsToMatch = default;
             Optional<FrontDoorRouteCacheConfiguration> cacheConfiguration = default;
             Optional<ForwardingProtocol> forwardingProtocol = default;
             Optional<LinkToDefaultDomain> linkToDefaultDomain = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRoutePatch(endpointName.Value, Optional.ToList(customDomains), originGroup, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new FrontDoorRoutePatch(endpointName.Value, customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), originGroup, originPath.Value, ruleSets ?? new ChangeTrackingList<WritableSubResource>(), supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>(), patternsToMatch ?? new ChangeTrackingList<string>(), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRoutePatch>.Write(ModelReaderWriterOptions options)

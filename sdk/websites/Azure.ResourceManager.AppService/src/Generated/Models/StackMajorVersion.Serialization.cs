@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayVersion = default;
             Optional<string> runtimeVersion = default;
             Optional<bool> isDefault = default;
-            Optional<IList<StackMinorVersion>> minorVersions = default;
+            IList<StackMinorVersion> minorVersions = default;
             Optional<bool> applicationInsights = default;
             Optional<bool> isPreview = default;
             Optional<bool> isDeprecated = default;
             Optional<bool> isHidden = default;
-            Optional<IDictionary<string, BinaryData>> appSettingsDictionary = default;
-            Optional<IDictionary<string, BinaryData>> siteConfigPropertiesDictionary = default;
+            IDictionary<string, BinaryData> appSettingsDictionary = default;
+            IDictionary<string, BinaryData> siteConfigPropertiesDictionary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToList(minorVersions), Optional.ToNullable(applicationInsights), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToDictionary(appSettingsDictionary), Optional.ToDictionary(siteConfigPropertiesDictionary), serializedAdditionalRawData);
+            return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), minorVersions ?? new ChangeTrackingList<StackMinorVersion>(), Optional.ToNullable(applicationInsights), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), appSettingsDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(), siteConfigPropertiesDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StackMajorVersion>.Write(ModelReaderWriterOptions options)

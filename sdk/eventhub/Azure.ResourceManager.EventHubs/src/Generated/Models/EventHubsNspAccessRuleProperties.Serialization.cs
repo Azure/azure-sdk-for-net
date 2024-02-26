@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             Optional<EventHubsNspAccessRuleDirection> direction = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<IReadOnlyList<SubResource>> subscriptions = default;
-            Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeter>> networkSecurityPerimeters = default;
-            Optional<IReadOnlyList<string>> fullyQualifiedDomainNames = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            IReadOnlyList<SubResource> subscriptions = default;
+            IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IReadOnlyList<string> fullyQualifiedDomainNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames), serializedAdditionalRawData);
+            return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), addressPrefixes ?? new ChangeTrackingList<string>(), subscriptions ?? new ChangeTrackingList<SubResource>(), networkSecurityPerimeters ?? new ChangeTrackingList<EventHubsNetworkSecurityPerimeter>(), fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNspAccessRuleProperties>.Write(ModelReaderWriterOptions options)

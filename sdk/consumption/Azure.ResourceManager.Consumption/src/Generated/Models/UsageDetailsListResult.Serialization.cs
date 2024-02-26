@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionUsageDetail>> value = default;
+            IReadOnlyList<ConsumptionUsageDetail> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsageDetailsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UsageDetailsListResult(value ?? new ChangeTrackingList<ConsumptionUsageDetail>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsageDetailsListResult>.Write(ModelReaderWriterOptions options)

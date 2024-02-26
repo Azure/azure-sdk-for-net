@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             Optional<string> dnsName = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> authAppId = default;
-            Optional<IList<DataPartitionName>> dataPartitionNames = default;
+            IList<DataPartitionName> dataPartitionNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnergyServiceProperties(dnsName.Value, Optional.ToNullable(provisioningState), authAppId.Value, Optional.ToList(dataPartitionNames), serializedAdditionalRawData);
+            return new EnergyServiceProperties(dnsName.Value, Optional.ToNullable(provisioningState), authAppId.Value, dataPartitionNames ?? new ChangeTrackingList<DataPartitionName>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnergyServiceProperties>.Write(ModelReaderWriterOptions options)

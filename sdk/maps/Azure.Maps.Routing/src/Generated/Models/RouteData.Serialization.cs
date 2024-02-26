@@ -20,8 +20,8 @@ namespace Azure.Maps.Routing.Models
                 return null;
             }
             Optional<RouteSummary> summary = default;
-            Optional<IReadOnlyList<RouteLeg>> legs = default;
-            Optional<IReadOnlyList<RouteSection>> sections = default;
+            IReadOnlyList<RouteLeg> legs = default;
+            IReadOnlyList<RouteSection> sections = default;
             Optional<RouteGuidance> guidance = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,7 +72,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteData(summary.Value, Optional.ToList(legs), Optional.ToList(sections), guidance.Value);
+            return new RouteData(summary.Value, legs ?? new ChangeTrackingList<RouteLeg>(), sections ?? new ChangeTrackingList<RouteSection>(), guidance.Value);
         }
     }
 }

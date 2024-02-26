@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> graphApiComputeEndpoint = default;
-            Optional<IReadOnlyList<GraphApiComputeRegionalService>> locations = default;
+            IReadOnlyList<GraphApiComputeRegionalService> locations = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<CosmosDBServiceSize> instanceSize = default;
             Optional<int> instanceCount = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GraphApiComputeServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, graphApiComputeEndpoint.Value, Optional.ToList(locations));
+            return new GraphApiComputeServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, graphApiComputeEndpoint.Value, locations ?? new ChangeTrackingList<GraphApiComputeRegionalService>());
         }
 
         BinaryData IPersistableModel<GraphApiComputeServiceProperties>.Write(ModelReaderWriterOptions options)

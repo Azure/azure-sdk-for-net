@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<PeeringDirectConnection>> connections = default;
+            IList<PeeringDirectConnection> connections = default;
             Optional<bool> useForPeeringService = default;
             Optional<WritableSubResource> peerAsn = default;
             Optional<DirectPeeringType> directPeeringType = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectPeeringProperties(Optional.ToList(connections), Optional.ToNullable(useForPeeringService), peerAsn, Optional.ToNullable(directPeeringType), serializedAdditionalRawData);
+            return new DirectPeeringProperties(connections ?? new ChangeTrackingList<PeeringDirectConnection>(), Optional.ToNullable(useForPeeringService), peerAsn, Optional.ToNullable(directPeeringType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectPeeringProperties>.Write(ModelReaderWriterOptions options)

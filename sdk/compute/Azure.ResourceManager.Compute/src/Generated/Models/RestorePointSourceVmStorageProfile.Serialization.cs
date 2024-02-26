@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<RestorePointSourceVmOSDisk> osDisk = default;
-            Optional<IList<RestorePointSourceVmDataDisk>> dataDisks = default;
+            IList<RestorePointSourceVmDataDisk> dataDisks = default;
             Optional<DiskControllerType> diskControllerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointSourceVmStorageProfile(osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(diskControllerType), serializedAdditionalRawData);
+            return new RestorePointSourceVmStorageProfile(osDisk.Value, dataDisks ?? new ChangeTrackingList<RestorePointSourceVmDataDisk>(), Optional.ToNullable(diskControllerType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointSourceVmStorageProfile>.Write(ModelReaderWriterOptions options)

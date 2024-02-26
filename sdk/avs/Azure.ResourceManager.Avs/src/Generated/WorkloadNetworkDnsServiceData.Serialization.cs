@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Avs
             Optional<string> displayName = default;
             Optional<IPAddress> dnsServiceIP = default;
             Optional<string> defaultDnsZone = default;
-            Optional<IList<string>> fqdnZones = default;
+            IList<string> fqdnZones = default;
             Optional<DnsServiceLogLevel> logLevel = default;
             Optional<DnsServiceStatus> status = default;
             Optional<WorkloadNetworkDnsServiceProvisioningState> provisioningState = default;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDnsServiceData(id, name, type, systemData.Value, displayName.Value, dnsServiceIP.Value, defaultDnsZone.Value, Optional.ToList(fqdnZones), Optional.ToNullable(logLevel), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkDnsServiceData(id, name, type, systemData.Value, displayName.Value, dnsServiceIP.Value, defaultDnsZone.Value, fqdnZones ?? new ChangeTrackingList<string>(), Optional.ToNullable(logLevel), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDnsServiceData>.Write(ModelReaderWriterOptions options)

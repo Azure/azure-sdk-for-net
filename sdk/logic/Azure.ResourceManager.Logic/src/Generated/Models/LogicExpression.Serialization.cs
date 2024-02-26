@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<string> text = default;
             Optional<BinaryData> value = default;
-            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
+            IReadOnlyList<LogicExpression> subexpressions = default;
             Optional<LogicExpressionErrorInfo> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicExpression(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, serializedAdditionalRawData);
+            return new LogicExpression(text.Value, value.Value, subexpressions ?? new ChangeTrackingList<LogicExpression>(), error.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicExpression>.Write(ModelReaderWriterOptions options)

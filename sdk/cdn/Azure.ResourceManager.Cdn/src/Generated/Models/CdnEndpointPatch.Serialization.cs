@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> originPath = default;
-            Optional<IList<string>> contentTypesToCompress = default;
+            IList<string> contentTypesToCompress = default;
             Optional<string> originHostHeader = default;
             Optional<bool> isCompressionEnabled = default;
             Optional<bool> isHttpAllowed = default;
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
             Optional<OptimizationType?> optimizationType = default;
             Optional<string> probePath = default;
-            Optional<IList<GeoFilter>> geoFilters = default;
+            IList<GeoFilter> geoFilters = default;
             Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
-            Optional<IList<UriSigningKey>> uriSigningKeys = default;
+            IList<UriSigningKey> uriSigningKeys = default;
             Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
             Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnEndpointPatch(Optional.ToDictionary(tags), originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, serializedAdditionalRawData);
+            return new CdnEndpointPatch(tags ?? new ChangeTrackingDictionary<string, string>(), originPath.Value, contentTypesToCompress ?? new ChangeTrackingList<string>(), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, geoFilters ?? new ChangeTrackingList<GeoFilter>(), defaultOriginGroup.Value, uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnEndpointPatch>.Write(ModelReaderWriterOptions options)

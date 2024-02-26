@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<ScheduledQueryRuleTimeAggregationType> timeAggregation = default;
             Optional<string> metricMeasureColumn = default;
             Optional<string> resourceIdColumn = default;
-            Optional<IList<MonitorDimension>> dimensions = default;
+            IList<MonitorDimension> dimensions = default;
             Optional<MonitorConditionOperator> @operator = default;
             Optional<double> threshold = default;
             Optional<ConditionFailingPeriods> failingPeriods = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRuleCondition(query.Value, Optional.ToNullable(timeAggregation), metricMeasureColumn.Value, resourceIdColumn.Value, Optional.ToList(dimensions), Optional.ToNullable(@operator), Optional.ToNullable(threshold), failingPeriods.Value, metricName.Value, serializedAdditionalRawData);
+            return new ScheduledQueryRuleCondition(query.Value, Optional.ToNullable(timeAggregation), metricMeasureColumn.Value, resourceIdColumn.Value, dimensions ?? new ChangeTrackingList<MonitorDimension>(), Optional.ToNullable(@operator), Optional.ToNullable(threshold), failingPeriods.Value, metricName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleCondition>.Write(ModelReaderWriterOptions options)

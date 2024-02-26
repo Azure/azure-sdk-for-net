@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeterConfiguration>> value = default;
+            IReadOnlyList<EventHubsNetworkSecurityPerimeterConfiguration> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationList(Optional.ToList(value), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationList(value ?? new ChangeTrackingList<EventHubsNetworkSecurityPerimeterConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationList>.Write(ModelReaderWriterOptions options)

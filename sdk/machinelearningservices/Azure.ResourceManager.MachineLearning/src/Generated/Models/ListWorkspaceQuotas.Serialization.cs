@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningResourceQuota>> value = default;
+            IReadOnlyList<MachineLearningResourceQuota> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListWorkspaceQuotas(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListWorkspaceQuotas(value ?? new ChangeTrackingList<MachineLearningResourceQuota>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListWorkspaceQuotas>.Write(ModelReaderWriterOptions options)

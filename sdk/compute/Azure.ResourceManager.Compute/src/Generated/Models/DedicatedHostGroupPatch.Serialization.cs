@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             Optional<int> platformFaultDomainCount = default;
-            Optional<IReadOnlyList<SubResource>> hosts = default;
+            IReadOnlyList<SubResource> hosts = default;
             Optional<DedicatedHostGroupInstanceView> instanceView = default;
             Optional<bool> supportAutomaticPlacement = default;
             Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostGroupPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
+            return new DedicatedHostGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(platformFaultDomainCount), hosts ?? new ChangeTrackingList<SubResource>(), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
         }
 
         BinaryData IPersistableModel<DedicatedHostGroupPatch>.Write(ModelReaderWriterOptions options)

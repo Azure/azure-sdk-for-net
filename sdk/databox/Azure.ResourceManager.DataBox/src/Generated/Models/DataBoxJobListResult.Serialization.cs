@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxJobData>> value = default;
+            IReadOnlyList<DataBoxJobData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataBoxJobListResult(value ?? new ChangeTrackingList<DataBoxJobData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobListResult>.Write(ModelReaderWriterOptions options)

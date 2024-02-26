@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DefenderEasm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataPlaneEndpoint.Value, serializedAdditionalRawData);
+            return new EasmWorkspaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), dataPlaneEndpoint.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmWorkspaceData>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlVmData>> value = default;
+            IReadOnlyList<SqlVmData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SqlVmListResult(value ?? new ChangeTrackingList<SqlVmData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmListResult>.Write(ModelReaderWriterOptions options)

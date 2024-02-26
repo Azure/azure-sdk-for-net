@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
+            IList<RoleAssignmentEnablementRuleType> enabledRules = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyEnablementRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToList(enabledRules));
+            return new RoleManagementPolicyEnablementRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, enabledRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>());
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyEnablementRule>.Write(ModelReaderWriterOptions options)

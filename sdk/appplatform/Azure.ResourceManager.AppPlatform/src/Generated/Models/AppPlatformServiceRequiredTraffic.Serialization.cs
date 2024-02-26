@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<string> protocol = default;
             Optional<int> port = default;
-            Optional<IReadOnlyList<IPAddress>> ips = default;
-            Optional<IReadOnlyList<string>> fqdns = default;
+            IReadOnlyList<IPAddress> ips = default;
+            IReadOnlyList<string> fqdns = default;
             Optional<AppPlatformServiceTrafficDirection> direction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceRequiredTraffic(protocol.Value, Optional.ToNullable(port), Optional.ToList(ips), Optional.ToList(fqdns), Optional.ToNullable(direction), serializedAdditionalRawData);
+            return new AppPlatformServiceRequiredTraffic(protocol.Value, Optional.ToNullable(port), ips ?? new ChangeTrackingList<IPAddress>(), fqdns ?? new ChangeTrackingList<string>(), Optional.ToNullable(direction), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceRequiredTraffic>.Write(ModelReaderWriterOptions options)

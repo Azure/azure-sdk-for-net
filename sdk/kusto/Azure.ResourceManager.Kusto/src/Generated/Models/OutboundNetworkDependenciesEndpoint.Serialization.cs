@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> category = default;
-            Optional<IList<EndpointDependency>> endpoints = default;
+            IList<EndpointDependency> endpoints = default;
             Optional<KustoProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundNetworkDependenciesEndpoint(id, name, type, systemData.Value, Optional.ToNullable(etag), category.Value, Optional.ToList(endpoints), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new OutboundNetworkDependenciesEndpoint(id, name, type, systemData.Value, Optional.ToNullable(etag), category.Value, endpoints ?? new ChangeTrackingList<EndpointDependency>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundNetworkDependenciesEndpoint>.Write(ModelReaderWriterOptions options)

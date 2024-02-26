@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricInternetGatewayRuleData>> value = default;
+            IReadOnlyList<NetworkFabricInternetGatewayRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternetGatewayRulesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InternetGatewayRulesListResult(value ?? new ChangeTrackingList<NetworkFabricInternetGatewayRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternetGatewayRulesListResult>.Write(ModelReaderWriterOptions options)

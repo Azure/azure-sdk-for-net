@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -209,8 +209,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<decimal> azureMarketplaceServiceCharges = default;
             Optional<ConsumptionBillingFrequency> billingFrequency = default;
             Optional<bool> priceHidden = default;
-            Optional<IReadOnlyList<ConsumptionBalanceNewPurchasesDetail>> newPurchasesDetails = default;
-            Optional<IReadOnlyList<ConsumptionBalanceAdjustmentDetail>> adjustmentDetails = default;
+            IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = default;
+            IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), Optional.ToList(newPurchasesDetails), Optional.ToList(adjustmentDetails), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(), adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(), Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBalanceResult>.Write(ModelReaderWriterOptions options)

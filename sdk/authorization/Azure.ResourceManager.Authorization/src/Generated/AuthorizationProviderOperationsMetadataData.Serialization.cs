@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Authorization
                 return null;
             }
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<AuthorizationProviderResourceType>> resourceTypes = default;
-            Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
+            IReadOnlyList<AuthorizationProviderResourceType> resourceTypes = default;
+            IReadOnlyList<AuthorizationProviderOperationInfo> operations = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderOperationsMetadataData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(resourceTypes), Optional.ToList(operations), serializedAdditionalRawData);
+            return new AuthorizationProviderOperationsMetadataData(id, name, type, systemData.Value, displayName.Value, resourceTypes ?? new ChangeTrackingList<AuthorizationProviderResourceType>(), operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options)

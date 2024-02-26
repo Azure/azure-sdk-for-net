@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IList<AzureQueryProperties>> azureQueries = default;
-            Optional<IList<NonAzureQueryProperties>> nonAzureQueries = default;
+            IList<AzureQueryProperties> azureQueries = default;
+            IList<NonAzureQueryProperties> nonAzureQueries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationTargetProperties(Optional.ToList(azureQueries), Optional.ToList(nonAzureQueries), serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationTargetProperties(azureQueries ?? new ChangeTrackingList<AzureQueryProperties>(), nonAzureQueries ?? new ChangeTrackingList<NonAzureQueryProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.Write(ModelReaderWriterOptions options)

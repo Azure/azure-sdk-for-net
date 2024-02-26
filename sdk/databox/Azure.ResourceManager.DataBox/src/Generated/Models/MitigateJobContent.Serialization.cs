@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             CustomerResolutionCode customerResolutionCode = default;
-            Optional<IDictionary<string, CustomerResolutionCode>> serialNumberCustomerResolutionMap = default;
+            IDictionary<string, CustomerResolutionCode> serialNumberCustomerResolutionMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MitigateJobContent(customerResolutionCode, Optional.ToDictionary(serialNumberCustomerResolutionMap), serializedAdditionalRawData);
+            return new MitigateJobContent(customerResolutionCode, serialNumberCustomerResolutionMap ?? new ChangeTrackingDictionary<string, CustomerResolutionCode>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MitigateJobContent>.Write(ModelReaderWriterOptions options)

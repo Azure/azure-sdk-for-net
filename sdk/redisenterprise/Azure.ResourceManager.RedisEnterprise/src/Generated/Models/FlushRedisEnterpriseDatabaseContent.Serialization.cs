@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IList<ResourceIdentifier>> ids = default;
+            IList<ResourceIdentifier> ids = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlushRedisEnterpriseDatabaseContent(Optional.ToList(ids), serializedAdditionalRawData);
+            return new FlushRedisEnterpriseDatabaseContent(ids ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlushRedisEnterpriseDatabaseContent>.Write(ModelReaderWriterOptions options)

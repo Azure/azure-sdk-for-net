@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             Optional<string> displayName = default;
             Optional<CommunicationIdentifierModel> participantCommunicationIdentifier = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadParticipantProperties(displayName.Value, participantCommunicationIdentifier.Value, Optional.ToDictionary(metadata));
+            return new AcsChatThreadParticipantProperties(displayName.Value, participantCommunicationIdentifier.Value, metadata ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

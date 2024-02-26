@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<int> coreCount = default;
             Optional<int> timeToLive = default;
             Optional<bool> cleanup = default;
-            Optional<IList<IntegrationRuntimeDataFlowCustomItem>> customProperties = default;
+            IList<IntegrationRuntimeDataFlowCustomItem> customProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), Optional.ToList(customProperties), additionalProperties);
+            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), customProperties ?? new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>(), additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeDataFlowProperties>.Write(ModelReaderWriterOptions options)

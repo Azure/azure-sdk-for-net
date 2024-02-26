@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<IList<string>> azureResourceIds = default;
+            IList<string> azureResourceIds = default;
             string userEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicMetricsStatusContent(Optional.ToList(azureResourceIds), userEmail, serializedAdditionalRawData);
+            return new NewRelicMetricsStatusContent(azureResourceIds ?? new ChangeTrackingList<string>(), userEmail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicMetricsStatusContent>.Write(ModelReaderWriterOptions options)

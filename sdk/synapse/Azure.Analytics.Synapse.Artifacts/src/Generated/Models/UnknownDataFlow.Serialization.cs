@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string type = "Unknown";
             Optional<string> description = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<DataFlowFolder> folder = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new UnknownDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value);
+            return new UnknownDataFlow(type, description.Value, annotations ?? new ChangeTrackingList<object>(), folder.Value);
         }
     }
 }

@@ -114,8 +114,8 @@ namespace Azure.AI.OpenAI.Assistants
             Optional<AssistantThreadCreationOptions> thread = default;
             Optional<string> model = default;
             Optional<string> instructions = default;
-            Optional<IList<ToolDefinition>> tools = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IList<ToolDefinition> tools = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateAndRunThreadOptions(assistantId, thread.Value, model.Value, instructions.Value, Optional.ToList(tools), Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new CreateAndRunThreadOptions(assistantId, thread.Value, model.Value, instructions.Value, tools ?? new ChangeTrackingList<ToolDefinition>(), metadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateAndRunThreadOptions>.Write(ModelReaderWriterOptions options)

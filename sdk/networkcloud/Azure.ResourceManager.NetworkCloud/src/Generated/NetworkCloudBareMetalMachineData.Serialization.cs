@@ -236,13 +236,13 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
+            IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
             string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<string> detailedStatusMessage = default;
             Optional<HardwareInventory> hardwareInventory = default;
             Optional<HardwareValidationStatus> hardwareValidationStatus = default;
-            Optional<IReadOnlyList<string>> hybridAksClustersAssociatedIds = default;
+            IReadOnlyList<string> hybridAksClustersAssociatedIds = default;
             Optional<string> kubernetesNodeName = default;
             Optional<string> kubernetesVersion = default;
             string machineDetails = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<BareMetalMachineReadyState> readyState = default;
             string serialNumber = default;
             Optional<string> serviceTag = default;
-            Optional<IReadOnlyList<string>> virtualMachinesAssociatedIds = default;
+            IReadOnlyList<string> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBareMetalMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, clusterId.Value, Optional.ToNullable(cordonStatus), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hardwareInventory.Value, hardwareValidationStatus.Value, Optional.ToList(hybridAksClustersAssociatedIds), kubernetesNodeName.Value, kubernetesVersion.Value, machineDetails, machineName, machineSkuId, oamIPv4Address.Value, oamIPv6Address.Value, osImage.Value, Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(readyState), serialNumber, serviceTag.Value, Optional.ToList(virtualMachinesAssociatedIds), serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachineData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, clusterId.Value, Optional.ToNullable(cordonStatus), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hardwareInventory.Value, hardwareValidationStatus.Value, hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>(), kubernetesNodeName.Value, kubernetesVersion.Value, machineDetails, machineName, machineSkuId, oamIPv4Address.Value, oamIPv6Address.Value, osImage.Value, Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(readyState), serialNumber, serviceTag.Value, virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineData>.Write(ModelReaderWriterOptions options)

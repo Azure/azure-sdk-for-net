@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<NetworkSecurityPerimeterConfigurationIssueType> issueType = default;
             Optional<NetworkSecurityPerimeterConfigurationIssueSeverity> severity = default;
             Optional<string> description = default;
-            Optional<IList<string>> suggestedResourceIds = default;
-            Optional<IList<string>> suggestedAccessRules = default;
+            IList<string> suggestedResourceIds = default;
+            IList<string> suggestedAccessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationIssues(name.Value, Optional.ToNullable(issueType), Optional.ToNullable(severity), description.Value, Optional.ToList(suggestedResourceIds), Optional.ToList(suggestedAccessRules), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationIssues(name.Value, Optional.ToNullable(issueType), Optional.ToNullable(severity), description.Value, suggestedResourceIds ?? new ChangeTrackingList<string>(), suggestedAccessRules ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>.Write(ModelReaderWriterOptions options)

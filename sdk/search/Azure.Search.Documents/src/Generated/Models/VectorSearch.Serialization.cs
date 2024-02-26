@@ -55,9 +55,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<VectorSearchProfile>> profiles = default;
-            Optional<IList<VectorSearchAlgorithmConfiguration>> algorithms = default;
-            Optional<IList<VectorSearchVectorizer>> vectorizers = default;
+            IList<VectorSearchProfile> profiles = default;
+            IList<VectorSearchAlgorithmConfiguration> algorithms = default;
+            IList<VectorSearchVectorizer> vectorizers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profiles"u8))
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new VectorSearch(Optional.ToList(profiles), Optional.ToList(algorithms), Optional.ToList(vectorizers));
+            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>());
         }
     }
 }

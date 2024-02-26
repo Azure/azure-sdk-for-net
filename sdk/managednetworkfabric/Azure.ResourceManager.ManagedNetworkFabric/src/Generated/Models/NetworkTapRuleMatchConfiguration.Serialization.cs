@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<string> matchConfigurationName = default;
             Optional<long> sequenceNumber = default;
             Optional<NetworkFabricIPAddressType> ipAddressType = default;
-            Optional<IList<NetworkTapRuleMatchCondition>> matchConditions = default;
-            Optional<IList<NetworkTapRuleAction>> actions = default;
+            IList<NetworkTapRuleMatchCondition> matchConditions = default;
+            IList<NetworkTapRuleAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleMatchConfiguration(matchConfigurationName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(ipAddressType), Optional.ToList(matchConditions), Optional.ToList(actions), serializedAdditionalRawData);
+            return new NetworkTapRuleMatchConfiguration(matchConfigurationName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(ipAddressType), matchConditions ?? new ChangeTrackingList<NetworkTapRuleMatchCondition>(), actions ?? new ChangeTrackingList<NetworkTapRuleAction>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleMatchConfiguration>.Write(ModelReaderWriterOptions options)

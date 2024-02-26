@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxEdgeStorageAccountCredentialData>> value = default;
+            IReadOnlyList<DataBoxEdgeStorageAccountCredentialData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountCredentialList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StorageAccountCredentialList(value ?? new ChangeTrackingList<DataBoxEdgeStorageAccountCredentialData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountCredentialList>.Write(ModelReaderWriterOptions options)

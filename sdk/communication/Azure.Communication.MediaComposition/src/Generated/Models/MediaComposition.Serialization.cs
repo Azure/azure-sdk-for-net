@@ -65,8 +65,8 @@ namespace Azure.Communication.MediaComposition
             }
             Optional<string> id = default;
             Optional<MediaCompositionLayout> layout = default;
-            Optional<IDictionary<string, MediaInput>> inputs = default;
-            Optional<IDictionary<string, MediaOutput>> outputs = default;
+            IDictionary<string, MediaInput> inputs = default;
+            IDictionary<string, MediaOutput> outputs = default;
             Optional<CompositionStreamState> streamState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -122,7 +122,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new MediaComposition(id.Value, layout.Value, Optional.ToDictionary(inputs), Optional.ToDictionary(outputs), streamState.Value);
+            return new MediaComposition(id.Value, layout.Value, inputs ?? new ChangeTrackingDictionary<string, MediaInput>(), outputs ?? new ChangeTrackingDictionary<string, MediaOutput>(), streamState.Value);
         }
     }
 }

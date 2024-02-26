@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<TopologyAssociation>> associations = default;
+            IReadOnlyList<TopologyAssociation> associations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologyResourceInfo(name.Value, id.Value, Optional.ToNullable(location), Optional.ToList(associations), serializedAdditionalRawData);
+            return new TopologyResourceInfo(name.Value, id.Value, Optional.ToNullable(location), associations ?? new ChangeTrackingList<TopologyAssociation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologyResourceInfo>.Write(ModelReaderWriterOptions options)

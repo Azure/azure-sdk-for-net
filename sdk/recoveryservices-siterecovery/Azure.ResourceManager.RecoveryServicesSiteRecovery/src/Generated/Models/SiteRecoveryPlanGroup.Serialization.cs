@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             RecoveryPlanGroupType groupType = default;
-            Optional<IList<RecoveryPlanProtectedItem>> replicationProtectedItems = default;
-            Optional<IList<RecoveryPlanAction>> startGroupActions = default;
-            Optional<IList<RecoveryPlanAction>> endGroupActions = default;
+            IList<RecoveryPlanProtectedItem> replicationProtectedItems = default;
+            IList<RecoveryPlanAction> startGroupActions = default;
+            IList<RecoveryPlanAction> endGroupActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryPlanGroup(groupType, Optional.ToList(replicationProtectedItems), Optional.ToList(startGroupActions), Optional.ToList(endGroupActions), serializedAdditionalRawData);
+            return new SiteRecoveryPlanGroup(groupType, replicationProtectedItems ?? new ChangeTrackingList<RecoveryPlanProtectedItem>(), startGroupActions ?? new ChangeTrackingList<RecoveryPlanAction>(), endGroupActions ?? new ChangeTrackingList<RecoveryPlanAction>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryPlanGroup>.Write(ModelReaderWriterOptions options)

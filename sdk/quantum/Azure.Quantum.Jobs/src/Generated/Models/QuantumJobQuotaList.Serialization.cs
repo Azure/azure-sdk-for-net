@@ -19,7 +19,7 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuantumJobQuota>> value = default;
+            IReadOnlyList<QuantumJobQuota> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new QuantumJobQuotaList(Optional.ToList(value), nextLink.Value);
+            return new QuantumJobQuotaList(value ?? new ChangeTrackingList<QuantumJobQuota>(), nextLink.Value);
         }
     }
 }

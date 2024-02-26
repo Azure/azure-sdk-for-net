@@ -120,7 +120,7 @@ namespace Azure.AI.OpenAI
             Optional<ContentFilterResult> hate = default;
             Optional<ContentFilterResult> selfHarm = default;
             Optional<ContentFilterDetectionResult> profanity = default;
-            Optional<IReadOnlyList<ContentFilterBlocklistIdResult>> customBlocklists = default;
+            IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
             Optional<ResponseError> error = default;
             Optional<ContentFilterDetectionResult> protectedMaterialText = default;
             Optional<ContentFilterCitedDetectionResult> protectedMaterialCode = default;
@@ -220,7 +220,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentFilterResultsForChoice(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, Optional.ToList(customBlocklists), error.Value, protectedMaterialText.Value, protectedMaterialCode.Value, serializedAdditionalRawData);
+            return new ContentFilterResultsForChoice(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(), error.Value, protectedMaterialText.Value, protectedMaterialCode.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentFilterResultsForChoice>.Write(ModelReaderWriterOptions options)

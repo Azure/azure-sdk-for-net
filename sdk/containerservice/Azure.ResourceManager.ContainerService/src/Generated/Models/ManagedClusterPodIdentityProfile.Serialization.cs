@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             Optional<bool> enabled = default;
             Optional<bool> allowNetworkPluginKubenet = default;
-            Optional<IList<ManagedClusterPodIdentity>> userAssignedIdentities = default;
-            Optional<IList<ManagedClusterPodIdentityException>> userAssignedIdentityExceptions = default;
+            IList<ManagedClusterPodIdentity> userAssignedIdentities = default;
+            IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPodIdentityProfile(Optional.ToNullable(enabled), Optional.ToNullable(allowNetworkPluginKubenet), Optional.ToList(userAssignedIdentities), Optional.ToList(userAssignedIdentityExceptions), serializedAdditionalRawData);
+            return new ManagedClusterPodIdentityProfile(Optional.ToNullable(enabled), Optional.ToNullable(allowNetworkPluginKubenet), userAssignedIdentities ?? new ChangeTrackingList<ManagedClusterPodIdentity>(), userAssignedIdentityExceptions ?? new ChangeTrackingList<ManagedClusterPodIdentityException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPodIdentityProfile>.Write(ModelReaderWriterOptions options)

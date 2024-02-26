@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KubernetesSourceControlConfigurationData>> value = default;
+            IReadOnlyList<KubernetesSourceControlConfigurationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlConfigurationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SourceControlConfigurationList(value ?? new ChangeTrackingList<KubernetesSourceControlConfigurationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlConfigurationList>.Write(ModelReaderWriterOptions options)

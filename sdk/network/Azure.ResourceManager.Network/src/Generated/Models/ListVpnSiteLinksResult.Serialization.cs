@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VpnSiteLinkData>> value = default;
+            IReadOnlyList<VpnSiteLinkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListVpnSiteLinksResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListVpnSiteLinksResult(value ?? new ChangeTrackingList<VpnSiteLinkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListVpnSiteLinksResult>.Write(ModelReaderWriterOptions options)

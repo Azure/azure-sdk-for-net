@@ -248,21 +248,21 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<VirtualApplianceSkuProperties> nvaSku = default;
             Optional<string> addressPrefix = default;
-            Optional<IList<string>> bootStrapConfigurationBlobs = default;
+            IList<string> bootStrapConfigurationBlobs = default;
             Optional<WritableSubResource> virtualHub = default;
-            Optional<IList<string>> cloudInitConfigurationBlobs = default;
+            IList<string> cloudInitConfigurationBlobs = default;
             Optional<string> cloudInitConfiguration = default;
             Optional<long> virtualApplianceAsn = default;
             Optional<string> sshPublicKey = default;
-            Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
-            Optional<IList<VirtualApplianceAdditionalNicProperties>> additionalNics = default;
-            Optional<IList<WritableSubResource>> internetIngressPublicIPs = default;
-            Optional<IReadOnlyList<WritableSubResource>> virtualApplianceSites = default;
-            Optional<IReadOnlyList<WritableSubResource>> virtualApplianceConnections = default;
-            Optional<IReadOnlyList<WritableSubResource>> inboundSecurityRules = default;
+            IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
+            IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
+            IList<WritableSubResource> internetIngressPublicIPs = default;
+            IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
+            IReadOnlyList<WritableSubResource> virtualApplianceConnections = default;
+            IReadOnlyList<WritableSubResource> inboundSecurityRules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> deploymentType = default;
             Optional<VirtualApplianceDelegationProperties> delegation = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, Optional.ToList(virtualApplianceNics), Optional.ToList(additionalNics), Optional.ToList(internetIngressPublicIPs), Optional.ToList(virtualApplianceSites), Optional.ToList(virtualApplianceConnections), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
+            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>(), virtualHub, cloudInitConfigurationBlobs ?? new ChangeTrackingList<string>(), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(), additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(), internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(), virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(), virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(), inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceData>.Write(ModelReaderWriterOptions options)

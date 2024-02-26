@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> id = default;
             Optional<string> tagName = default;
             Optional<PredefinedTagCount> count = default;
-            Optional<IReadOnlyList<PredefinedTagValue>> values = default;
+            IReadOnlyList<PredefinedTagValue> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredefinedTag(id.Value, tagName.Value, count.Value, Optional.ToList(values), serializedAdditionalRawData);
+            return new PredefinedTag(id.Value, tagName.Value, count.Value, values ?? new ChangeTrackingList<PredefinedTagValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredefinedTag>.Write(ModelReaderWriterOptions options)

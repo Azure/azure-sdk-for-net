@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLicense(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(tenantId), Optional.ToNullable(licenseType), licenseDetails.Value, serializedAdditionalRawData);
+            return new HybridComputeLicense(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), Optional.ToNullable(tenantId), Optional.ToNullable(licenseType), licenseDetails.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLicense>.Write(ModelReaderWriterOptions options)

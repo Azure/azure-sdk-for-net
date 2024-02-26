@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VerifiedPartnerData>> value = default;
+            IReadOnlyList<VerifiedPartnerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VerifiedPartnersListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VerifiedPartnersListResult(value ?? new ChangeTrackingList<VerifiedPartnerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VerifiedPartnersListResult>.Write(ModelReaderWriterOptions options)

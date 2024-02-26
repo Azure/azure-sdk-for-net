@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<ApplicationSourceResourceType> sourceResourceType = default;
-            Optional<IList<BinaryData>> conditionSets = default;
+            IList<BinaryData> conditionSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityApplicationData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(sourceResourceType), Optional.ToList(conditionSets), serializedAdditionalRawData);
+            return new SecurityApplicationData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(sourceResourceType), conditionSets ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityApplicationData>.Write(ModelReaderWriterOptions options)

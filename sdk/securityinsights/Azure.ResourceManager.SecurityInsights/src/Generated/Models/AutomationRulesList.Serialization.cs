@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityInsightsAutomationRuleData>> value = default;
+            IReadOnlyList<SecurityInsightsAutomationRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRulesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationRulesList(value ?? new ChangeTrackingList<SecurityInsightsAutomationRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRulesList>.Write(ModelReaderWriterOptions options)

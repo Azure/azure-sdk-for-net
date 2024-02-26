@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InstancePoolData>> value = default;
+            IReadOnlyList<InstancePoolData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InstancePoolListResult(value ?? new ChangeTrackingList<InstancePoolData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolListResult>.Write(ModelReaderWriterOptions options)

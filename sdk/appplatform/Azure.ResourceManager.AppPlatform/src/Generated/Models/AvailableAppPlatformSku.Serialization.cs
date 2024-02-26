@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> name = default;
             Optional<string> tier = default;
             Optional<AppPlatformSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<AppPlatformSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<AppPlatformSkuRestrictions>> restrictions = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<AppPlatformSkuLocationInfo> locationInfo = default;
+            IReadOnlyList<AppPlatformSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableAppPlatformSku(Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new AvailableAppPlatformSku(Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, locations ?? new ChangeTrackingList<AzureLocation>(), locationInfo ?? new ChangeTrackingList<AppPlatformSkuLocationInfo>(), restrictions ?? new ChangeTrackingList<AppPlatformSkuRestrictions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableAppPlatformSku>.Write(ModelReaderWriterOptions options)

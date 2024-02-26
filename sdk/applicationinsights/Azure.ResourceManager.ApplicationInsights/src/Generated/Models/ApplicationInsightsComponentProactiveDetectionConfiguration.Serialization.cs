@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> name = default;
             Optional<bool> enabled = default;
             Optional<bool> sendEmailsToSubscriptionOwners = default;
-            Optional<IList<string>> customEmails = default;
+            IList<string> customEmails = default;
             Optional<string> lastUpdatedTime = default;
             Optional<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions> ruleDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentProactiveDetectionConfiguration(name.Value, Optional.ToNullable(enabled), Optional.ToNullable(sendEmailsToSubscriptionOwners), Optional.ToList(customEmails), lastUpdatedTime.Value, ruleDefinitions.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentProactiveDetectionConfiguration(name.Value, Optional.ToNullable(enabled), Optional.ToNullable(sendEmailsToSubscriptionOwners), customEmails ?? new ChangeTrackingList<string>(), lastUpdatedTime.Value, ruleDefinitions.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(ModelReaderWriterOptions options)

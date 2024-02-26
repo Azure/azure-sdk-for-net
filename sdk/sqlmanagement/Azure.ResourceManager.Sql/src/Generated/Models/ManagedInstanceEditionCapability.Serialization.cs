@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<ManagedInstanceFamilyCapability>> supportedFamilies = default;
-            Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
+            IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies = default;
+            IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
             Optional<bool> zoneRedundant = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceEditionCapability(name.Value, supportedFamilies ?? new ChangeTrackingList<ManagedInstanceFamilyCapability>(), supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceEditionCapability>.Write(ModelReaderWriterOptions options)

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<ResourceIdentifier> appResourceId = default;
             Optional<GatewayRouteConfigOpenApiProperties> openApi = default;
             Optional<AppPlatformGatewayRouteConfigProtocol> protocol = default;
-            Optional<IList<AppPlatformGatewayApiRoute>> routes = default;
+            IList<AppPlatformGatewayApiRoute> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayRouteConfigProperties(Optional.ToNullable(provisioningState), appResourceId.Value, openApi.Value, Optional.ToNullable(protocol), Optional.ToList(routes), serializedAdditionalRawData);
+            return new AppPlatformGatewayRouteConfigProperties(Optional.ToNullable(provisioningState), appResourceId.Value, openApi.Value, Optional.ToNullable(protocol), routes ?? new ChangeTrackingList<AppPlatformGatewayApiRoute>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayRouteConfigProperties>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionBudgetData>> value = default;
+            IReadOnlyList<ConsumptionBudgetData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BudgetsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BudgetsListResult(value ?? new ChangeTrackingList<ConsumptionBudgetData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BudgetsListResult>.Write(ModelReaderWriterOptions options)

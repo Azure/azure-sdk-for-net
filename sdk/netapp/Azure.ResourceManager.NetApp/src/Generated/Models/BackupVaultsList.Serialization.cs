@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackupVaultData>> value = default;
+            IReadOnlyList<BackupVaultData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BackupVaultsList(value ?? new ChangeTrackingList<BackupVaultData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultsList>.Write(ModelReaderWriterOptions options)

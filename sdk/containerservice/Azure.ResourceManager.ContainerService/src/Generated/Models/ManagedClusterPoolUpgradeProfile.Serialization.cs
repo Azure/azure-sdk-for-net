@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string kubernetesVersion = default;
             Optional<string> name = default;
             ContainerServiceOSType osType = default;
-            Optional<IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem>> upgrades = default;
+            IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, Optional.ToList(upgrades), serializedAdditionalRawData);
+            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, upgrades ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPoolUpgradeProfile>.Write(ModelReaderWriterOptions options)

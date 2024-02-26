@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SecurityCenterFileProtectionMode> protectionMode = default;
             Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             Optional<RecommendationStatus> recommendationStatus = default;
-            Optional<IReadOnlyList<AdaptiveApplicationControlIssueSummary>> issues = default;
+            IReadOnlyList<AdaptiveApplicationControlIssueSummary> issues = default;
             Optional<AdaptiveApplicationControlGroupSourceSystem> sourceSystem = default;
-            Optional<IList<VmRecommendation>> vmRecommendations = default;
-            Optional<IList<PathRecommendation>> pathRecommendations = default;
+            IList<VmRecommendation> vmRecommendations = default;
+            IList<PathRecommendation> pathRecommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Optional.ToNullable(enforcementMode), protectionMode.Value, Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationStatus), Optional.ToList(issues), Optional.ToNullable(sourceSystem), Optional.ToList(vmRecommendations), Optional.ToList(pathRecommendations), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Optional.ToNullable(enforcementMode), protectionMode.Value, Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationStatus), issues ?? new ChangeTrackingList<AdaptiveApplicationControlIssueSummary>(), Optional.ToNullable(sourceSystem), vmRecommendations ?? new ChangeTrackingList<VmRecommendation>(), pathRecommendations ?? new ChangeTrackingList<PathRecommendation>(), Optional.ToNullable(location), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdaptiveApplicationControlGroupData>.Write(ModelReaderWriterOptions options)

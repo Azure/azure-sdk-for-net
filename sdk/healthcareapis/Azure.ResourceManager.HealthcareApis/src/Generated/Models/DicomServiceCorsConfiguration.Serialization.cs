@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<IList<string>> origins = default;
-            Optional<IList<string>> headers = default;
-            Optional<IList<string>> methods = default;
+            IList<string> origins = default;
+            IList<string> headers = default;
+            IList<string> methods = default;
             Optional<int> maxAge = default;
             Optional<bool> allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DicomServiceCorsConfiguration(Optional.ToList(origins), Optional.ToList(headers), Optional.ToList(methods), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+            return new DicomServiceCorsConfiguration(origins ?? new ChangeTrackingList<string>(), headers ?? new ChangeTrackingList<string>(), methods ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DicomServiceCorsConfiguration>.Write(ModelReaderWriterOptions options)

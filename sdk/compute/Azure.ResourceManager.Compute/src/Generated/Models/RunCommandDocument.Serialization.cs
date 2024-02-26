@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<string> script = default;
-            Optional<IReadOnlyList<RunCommandParameterDefinition>> parameters = default;
+            IReadOnlyList<RunCommandParameterDefinition> parameters = default;
             string schema = default;
             string id = default;
             SupportedOperatingSystemType osType = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunCommandDocument(schema, id, osType, label, description, serializedAdditionalRawData, script, Optional.ToList(parameters));
+            return new RunCommandDocument(schema, id, osType, label, description, serializedAdditionalRawData, script, parameters ?? new ChangeTrackingList<RunCommandParameterDefinition>());
         }
 
         BinaryData IPersistableModel<RunCommandDocument>.Write(ModelReaderWriterOptions options)

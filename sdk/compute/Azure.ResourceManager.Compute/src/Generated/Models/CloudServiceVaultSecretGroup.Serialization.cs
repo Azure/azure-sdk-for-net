@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<WritableSubResource> sourceVault = default;
-            Optional<IList<CloudServiceVaultCertificate>> vaultCertificates = default;
+            IList<CloudServiceVaultCertificate> vaultCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceVaultSecretGroup(sourceVault, Optional.ToList(vaultCertificates), serializedAdditionalRawData);
+            return new CloudServiceVaultSecretGroup(sourceVault, vaultCertificates ?? new ChangeTrackingList<CloudServiceVaultCertificate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceVaultSecretGroup>.Write(ModelReaderWriterOptions options)

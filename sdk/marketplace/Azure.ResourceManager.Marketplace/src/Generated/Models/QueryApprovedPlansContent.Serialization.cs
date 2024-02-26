@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             Optional<string> offerId = default;
-            Optional<IList<string>> planIds = default;
-            Optional<IList<string>> subscriptionIds = default;
+            IList<string> planIds = default;
+            IList<string> subscriptionIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovedPlansContent(offerId.Value, Optional.ToList(planIds), Optional.ToList(subscriptionIds), serializedAdditionalRawData);
+            return new QueryApprovedPlansContent(offerId.Value, planIds ?? new ChangeTrackingList<string>(), subscriptionIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovedPlansContent>.Write(ModelReaderWriterOptions options)

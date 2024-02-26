@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.FrontDoor
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorNetworkExperimentProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceState), Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new FrontDoorNetworkExperimentProfileData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(resourceState), Optional.ToNullable(enabledState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorNetworkExperimentProfileData>.Write(ModelReaderWriterOptions options)

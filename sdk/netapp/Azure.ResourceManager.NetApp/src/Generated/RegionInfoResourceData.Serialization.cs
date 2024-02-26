@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetApp
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
-            Optional<IList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
+            IList<AvailabilityZoneMapping> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionInfoResourceData(id, name, type, systemData.Value, Optional.ToNullable(storageToNetworkProximity), Optional.ToList(availabilityZoneMappings), serializedAdditionalRawData);
+            return new RegionInfoResourceData(id, name, type, systemData.Value, Optional.ToNullable(storageToNetworkProximity), availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionInfoResourceData>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HealthMonitorStateChangeData>> value = default;
+            IReadOnlyList<HealthMonitorStateChangeData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthMonitorStateChangeList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HealthMonitorStateChangeList(value ?? new ChangeTrackingList<HealthMonitorStateChangeData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthMonitorStateChangeList>.Write(ModelReaderWriterOptions options)

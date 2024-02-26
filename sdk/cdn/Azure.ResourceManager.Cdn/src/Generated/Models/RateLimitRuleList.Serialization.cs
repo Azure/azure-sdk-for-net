@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<RateLimitRule>> rules = default;
+            IList<RateLimitRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RateLimitRuleList(Optional.ToList(rules), serializedAdditionalRawData);
+            return new RateLimitRuleList(rules ?? new ChangeTrackingList<RateLimitRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RateLimitRuleList>.Write(ModelReaderWriterOptions options)

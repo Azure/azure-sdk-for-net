@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicExpressionRoot>> inputs = default;
+            IReadOnlyList<LogicExpressionRoot> inputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressionTraces(Optional.ToList(inputs), serializedAdditionalRawData);
+            return new ExpressionTraces(inputs ?? new ChangeTrackingList<LogicExpressionRoot>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressionTraces>.Write(ModelReaderWriterOptions options)

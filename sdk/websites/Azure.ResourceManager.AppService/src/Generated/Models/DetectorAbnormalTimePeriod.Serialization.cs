@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> message = default;
             Optional<string> source = default;
             Optional<double> priority = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> metaData = default;
+            IList<IList<AppServiceNameValuePair>> metaData = default;
             Optional<DetectorIssueType> type = default;
-            Optional<IList<DiagnosticSolution>> solutions = default;
+            IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorAbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), message.Value, source.Value, Optional.ToNullable(priority), Optional.ToList(metaData), Optional.ToNullable(type), Optional.ToList(solutions), serializedAdditionalRawData);
+            return new DetectorAbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), message.Value, source.Value, Optional.ToNullable(priority), metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(), Optional.ToNullable(type), solutions ?? new ChangeTrackingList<DiagnosticSolution>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorAbnormalTimePeriod>.Write(ModelReaderWriterOptions options)

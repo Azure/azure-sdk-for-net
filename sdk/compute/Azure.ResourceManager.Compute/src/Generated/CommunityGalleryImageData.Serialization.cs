@@ -182,13 +182,13 @@ namespace Azure.ResourceManager.Compute
             Optional<RecommendedMachineConfiguration> recommended = default;
             Optional<Disallowed> disallowed = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<IReadOnlyList<GalleryImageFeature>> features = default;
+            IReadOnlyList<GalleryImageFeature> features = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
             Optional<ArchitectureType> architecture = default;
             Optional<Uri> privacyStatementUri = default;
             Optional<string> eula = default;
             Optional<string> disclaimer = default;
-            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
+            IReadOnlyDictionary<string, string> artifactTags = default;
             Optional<string> uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, disclaimer.Value, Optional.ToDictionary(artifactTags));
+            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), features ?? new ChangeTrackingList<GalleryImageFeature>(), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, disclaimer.Value, artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageData>.Write(ModelReaderWriterOptions options)

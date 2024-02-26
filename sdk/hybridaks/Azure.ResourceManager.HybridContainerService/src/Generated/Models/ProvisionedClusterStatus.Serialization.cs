@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProvisionedClusterAddonStatusProfile>> controlPlaneStatus = default;
+            IReadOnlyList<ProvisionedClusterAddonStatusProfile> controlPlaneStatus = default;
             Optional<HybridContainerServiceResourceProvisioningState> currentState = default;
             Optional<string> errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterStatus(Optional.ToList(controlPlaneStatus), Optional.ToNullable(currentState), errorMessage.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterStatus(controlPlaneStatus ?? new ChangeTrackingList<ProvisionedClusterAddonStatusProfile>(), Optional.ToNullable(currentState), errorMessage.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterStatus>.Write(ModelReaderWriterOptions options)

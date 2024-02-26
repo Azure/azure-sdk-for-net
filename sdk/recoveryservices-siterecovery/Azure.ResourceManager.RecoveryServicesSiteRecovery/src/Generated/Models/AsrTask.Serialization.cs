@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> name = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
+            IReadOnlyList<string> allowedActions = default;
             Optional<string> friendlyName = default;
             Optional<string> state = default;
             Optional<string> stateDescription = default;
             Optional<string> taskType = default;
             Optional<SiteRecoveryTaskTypeDetails> customDetails = default;
             Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
+            IReadOnlyList<SiteRecoveryJobErrorDetails> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AsrTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, Optional.ToList(errors), serializedAdditionalRawData);
+            return new AsrTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), allowedActions ?? new ChangeTrackingList<string>(), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AsrTask>.Write(ModelReaderWriterOptions options)

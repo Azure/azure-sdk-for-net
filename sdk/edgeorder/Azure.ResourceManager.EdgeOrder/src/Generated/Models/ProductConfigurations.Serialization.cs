@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProductConfiguration>> value = default;
+            IReadOnlyList<ProductConfiguration> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductConfigurations(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProductConfigurations(value ?? new ChangeTrackingList<ProductConfiguration>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductConfigurations>.Write(ModelReaderWriterOptions options)

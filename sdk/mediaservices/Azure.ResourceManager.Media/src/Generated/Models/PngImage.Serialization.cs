@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<PngLayer>> layers = default;
+            IList<PngLayer> layers = default;
             string start = default;
             Optional<string> step = default;
             Optional<string> range = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PngImage(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value, Optional.ToList(layers));
+            return new PngImage(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value, layers ?? new ChangeTrackingList<PngLayer>());
         }
 
         BinaryData IPersistableModel<PngImage>.Write(ModelReaderWriterOptions options)

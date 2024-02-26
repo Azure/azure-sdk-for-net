@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SenderUsernameResourceData>> value = default;
+            IReadOnlyList<SenderUsernameResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SenderUsernameResourceCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SenderUsernameResourceCollection(value ?? new ChangeTrackingList<SenderUsernameResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SenderUsernameResourceCollection>.Write(ModelReaderWriterOptions options)

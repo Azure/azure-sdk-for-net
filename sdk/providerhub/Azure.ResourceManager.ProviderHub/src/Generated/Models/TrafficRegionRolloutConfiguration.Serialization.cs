@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             Optional<TimeSpan> waitDuration = default;
-            Optional<IList<AzureLocation>> regions = default;
+            IList<AzureLocation> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficRegionRolloutConfiguration(Optional.ToList(regions), serializedAdditionalRawData, Optional.ToNullable(waitDuration));
+            return new TrafficRegionRolloutConfiguration(regions ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData, Optional.ToNullable(waitDuration));
         }
 
         BinaryData IPersistableModel<TrafficRegionRolloutConfiguration>.Write(ModelReaderWriterOptions options)

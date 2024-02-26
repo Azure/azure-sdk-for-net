@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> name = default;
             Optional<int> value = default;
             Optional<MaxSizeCapability> includedMaxSize = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedStorageSizes = default;
+            IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes = default;
             Optional<bool> instancePoolSupported = default;
             Optional<bool> standaloneSupported = default;
-            Optional<IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
+            IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceVcoresCapability(name.Value, Optional.ToNullable(value), includedMaxSize.Value, Optional.ToList(supportedStorageSizes), Optional.ToNullable(instancePoolSupported), Optional.ToNullable(standaloneSupported), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceVcoresCapability(name.Value, Optional.ToNullable(value), includedMaxSize.Value, supportedStorageSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), Optional.ToNullable(instancePoolSupported), Optional.ToNullable(standaloneSupported), supportedMaintenanceConfigurations ?? new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceVcoresCapability>.Write(ModelReaderWriterOptions options)

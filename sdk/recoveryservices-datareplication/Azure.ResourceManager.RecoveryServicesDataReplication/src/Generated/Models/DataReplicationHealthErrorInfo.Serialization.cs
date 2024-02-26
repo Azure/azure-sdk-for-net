@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             Optional<string> affectedResourceType = default;
-            Optional<IReadOnlyList<string>> affectedResourceCorrelationIds = default;
-            Optional<IReadOnlyList<DataReplicationInnerHealthErrorInfo>> childErrors = default;
+            IReadOnlyList<string> affectedResourceCorrelationIds = default;
+            IReadOnlyList<DataReplicationInnerHealthErrorInfo> childErrors = default;
             Optional<string> code = default;
             Optional<string> healthCategory = default;
             Optional<string> category = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationHealthErrorInfo(affectedResourceType.Value, Optional.ToList(affectedResourceCorrelationIds), Optional.ToList(childErrors), code.Value, healthCategory.Value, category.Value, severity.Value, source.Value, Optional.ToNullable(creationTime), Optional.ToNullable(isCustomerResolvable), summary.Value, message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
+            return new DataReplicationHealthErrorInfo(affectedResourceType.Value, affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(), childErrors ?? new ChangeTrackingList<DataReplicationInnerHealthErrorInfo>(), code.Value, healthCategory.Value, category.Value, severity.Value, source.Value, Optional.ToNullable(creationTime), Optional.ToNullable(isCustomerResolvable), summary.Value, message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationHealthErrorInfo>.Write(ModelReaderWriterOptions options)

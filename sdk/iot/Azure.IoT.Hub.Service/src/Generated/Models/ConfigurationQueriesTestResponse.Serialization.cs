@@ -20,7 +20,7 @@ namespace Azure.IoT.Hub.Service.Models
                 return null;
             }
             Optional<string> targetConditionError = default;
-            Optional<IReadOnlyDictionary<string, string>> customMetricQueryErrors = default;
+            IReadOnlyDictionary<string, string> customMetricQueryErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConditionError"u8))
@@ -43,7 +43,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationQueriesTestResponse(targetConditionError.Value, Optional.ToDictionary(customMetricQueryErrors));
+            return new ConfigurationQueriesTestResponse(targetConditionError.Value, customMetricQueryErrors ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

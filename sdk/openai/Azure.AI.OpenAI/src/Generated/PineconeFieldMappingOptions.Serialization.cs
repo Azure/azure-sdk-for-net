@@ -118,10 +118,10 @@ namespace Azure.AI.OpenAI
             Optional<string> titleField = default;
             Optional<string> urlField = default;
             Optional<string> filepathField = default;
-            Optional<IList<string>> contentFields = default;
+            IList<string> contentFields = default;
             Optional<string> contentFieldsSeparator = default;
-            Optional<IList<string>> vectorFields = default;
-            Optional<IList<string>> imageVectorFields = default;
+            IList<string> vectorFields = default;
+            IList<string> imageVectorFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PineconeFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, Optional.ToList(contentFields), contentFieldsSeparator.Value, Optional.ToList(vectorFields), Optional.ToList(imageVectorFields), serializedAdditionalRawData);
+            return new PineconeFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, contentFields ?? new ChangeTrackingList<string>(), contentFieldsSeparator.Value, vectorFields ?? new ChangeTrackingList<string>(), imageVectorFields ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PineconeFieldMappingOptions>.Write(ModelReaderWriterOptions options)

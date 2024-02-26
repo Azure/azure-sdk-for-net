@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<NetworkSecurityGroupSecurityRule>> securityRules = default;
+            IDictionary<string, string> tags = default;
+            IList<NetworkSecurityGroupSecurityRule> securityRules = default;
             string resourceType = default;
             Optional<string> targetResourceName = default;
             Optional<string> targetResourceGroupName = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToList(securityRules));
+            return new NetworkSecurityGroupResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), securityRules ?? new ChangeTrackingList<NetworkSecurityGroupSecurityRule>());
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupResourceSettings>.Write(ModelReaderWriterOptions options)

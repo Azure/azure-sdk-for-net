@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> allowClassicOperations = default;
             Optional<string> circuitProvisioningState = default;
             Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
-            Optional<IList<ExpressRouteCircuitAuthorizationData>> authorizations = default;
-            Optional<IList<ExpressRouteCircuitPeeringData>> peerings = default;
+            IList<ExpressRouteCircuitAuthorizationData> authorizations = default;
+            IList<ExpressRouteCircuitPeeringData> peerings = default;
             Optional<string> serviceKey = default;
             Optional<string> serviceProviderNotes = default;
             Optional<ExpressRouteCircuitServiceProviderProperties> serviceProviderProperties = default;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, Optional.ToNullable(etag), Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerETag.Value, Optional.ToNullable(globalReachEnabled), authorizationKey.Value, authorizationStatus.Value);
+            return new ExpressRouteCircuitData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, sku.Value, Optional.ToNullable(etag), Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), authorizations ?? new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>(), peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerETag.Value, Optional.ToNullable(globalReachEnabled), authorizationKey.Value, authorizationStatus.Value);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options)

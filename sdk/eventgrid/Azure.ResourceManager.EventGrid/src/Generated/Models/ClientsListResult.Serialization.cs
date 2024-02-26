@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventGridNamespaceClientData>> value = default;
+            IReadOnlyList<EventGridNamespaceClientData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ClientsListResult(value ?? new ChangeTrackingList<EventGridNamespaceClientData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientsListResult>.Write(ModelReaderWriterOptions options)

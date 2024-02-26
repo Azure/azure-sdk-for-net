@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IList<SynapseLanguageExtension>> value = default;
+            IList<SynapseLanguageExtension> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseLanguageExtensionsList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseLanguageExtensionsList(value ?? new ChangeTrackingList<SynapseLanguageExtension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseLanguageExtensionsList>.Write(ModelReaderWriterOptions options)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableDroppedManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, databaseName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), serializedAdditionalRawData);
+            return new RestorableDroppedManagedDatabaseData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, databaseName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableDroppedManagedDatabaseData>.Write(ModelReaderWriterOptions options)

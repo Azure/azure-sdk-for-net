@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             Optional<string> operationId = default;
             Optional<string> cmdletId = default;
-            Optional<IReadOnlyList<string>> output = default;
+            IReadOnlyList<string> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AvsScriptExecutionEventData(operationId.Value, cmdletId.Value, Optional.ToList(output));
+            return new AvsScriptExecutionEventData(operationId.Value, cmdletId.Value, output ?? new ChangeTrackingList<string>());
         }
 
         internal partial class AvsScriptExecutionEventDataConverter : JsonConverter<AvsScriptExecutionEventData>

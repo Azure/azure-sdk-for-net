@@ -19,7 +19,7 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
+            IReadOnlyList<AcsCallParticipantInternal> participants = default;
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsResponseInternal(Optional.ToList(participants), operationContext.Value);
+            return new AddParticipantsResponseInternal(participants ?? new ChangeTrackingList<AcsCallParticipantInternal>(), operationContext.Value);
         }
     }
 }

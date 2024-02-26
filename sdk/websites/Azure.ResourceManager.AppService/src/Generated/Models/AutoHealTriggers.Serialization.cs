@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             Optional<RequestsBasedTrigger> requests = default;
             Optional<int> privateBytesInKB = default;
-            Optional<IList<StatusCodesBasedTrigger>> statusCodes = default;
+            IList<StatusCodesBasedTrigger> statusCodes = default;
             Optional<SlowRequestsBasedTrigger> slowRequests = default;
-            Optional<IList<SlowRequestsBasedTrigger>> slowRequestsWithPath = default;
-            Optional<IList<StatusCodesRangeBasedTrigger>> statusCodesRange = default;
+            IList<SlowRequestsBasedTrigger> slowRequestsWithPath = default;
+            IList<StatusCodesRangeBasedTrigger> statusCodesRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealTriggers(requests.Value, Optional.ToNullable(privateBytesInKB), Optional.ToList(statusCodes), slowRequests.Value, Optional.ToList(slowRequestsWithPath), Optional.ToList(statusCodesRange), serializedAdditionalRawData);
+            return new AutoHealTriggers(requests.Value, Optional.ToNullable(privateBytesInKB), statusCodes ?? new ChangeTrackingList<StatusCodesBasedTrigger>(), slowRequests.Value, slowRequestsWithPath ?? new ChangeTrackingList<SlowRequestsBasedTrigger>(), statusCodesRange ?? new ChangeTrackingList<StatusCodesRangeBasedTrigger>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealTriggers>.Write(ModelReaderWriterOptions options)

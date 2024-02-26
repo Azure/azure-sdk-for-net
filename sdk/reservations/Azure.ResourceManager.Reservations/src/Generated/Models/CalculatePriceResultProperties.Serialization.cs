@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> skuTitle = default;
             Optional<string> skuDescription = default;
             Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
-            Optional<IReadOnlyList<PaymentDetail>> paymentSchedule = default;
+            IReadOnlyList<PaymentDetail> paymentSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule), serializedAdditionalRawData);
+            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, paymentSchedule ?? new ChangeTrackingList<PaymentDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculatePriceResultProperties>.Write(ModelReaderWriterOptions options)

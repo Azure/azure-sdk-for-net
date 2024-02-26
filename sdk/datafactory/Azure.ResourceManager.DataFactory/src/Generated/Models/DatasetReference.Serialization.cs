@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DatasetReferenceType type = default;
             string referenceName = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatasetReference(type, referenceName, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new DatasetReference(type, referenceName, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatasetReference>.Write(ModelReaderWriterOptions options)

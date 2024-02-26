@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             Optional<ArmPolicyParameterType> type = default;
-            Optional<IList<BinaryData>> allowedValues = default;
+            IList<BinaryData> allowedValues = default;
             Optional<BinaryData> defaultValue = default;
             Optional<ParameterDefinitionsValueMetadata> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmPolicyParameter(Optional.ToNullable(type), Optional.ToList(allowedValues), defaultValue.Value, metadata.Value, serializedAdditionalRawData);
+            return new ArmPolicyParameter(Optional.ToNullable(type), allowedValues ?? new ChangeTrackingList<BinaryData>(), defaultValue.Value, metadata.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmPolicyParameter>.Write(ModelReaderWriterOptions options)

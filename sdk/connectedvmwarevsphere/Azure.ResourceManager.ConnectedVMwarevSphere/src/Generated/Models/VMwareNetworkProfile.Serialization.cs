@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<IList<VMwareNetworkInterface>> networkInterfaces = default;
+            IList<VMwareNetworkInterface> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareNetworkProfile(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new VMwareNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VMwareNetworkInterface>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareNetworkProfile>.Write(ModelReaderWriterOptions options)

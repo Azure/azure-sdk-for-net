@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContentKeyPolicyData>> value = default;
+            IReadOnlyList<ContentKeyPolicyData> value = default;
             Optional<string> odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyListResult(Optional.ToList(value), odataNextLink.Value, serializedAdditionalRawData);
+            return new ContentKeyPolicyListResult(value ?? new ChangeTrackingList<ContentKeyPolicyData>(), odataNextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyListResult>.Write(ModelReaderWriterOptions options)

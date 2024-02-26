@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             Optional<HttpMethodConfiguration> method = default;
-            Optional<IList<long>> validStatusCodes = default;
-            Optional<IList<HttpHeaderConfiguration>> headers = default;
+            IList<long> validStatusCodes = default;
+            IList<HttpHeaderConfiguration> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckRequestHttpConfiguration(Optional.ToNullable(method), Optional.ToList(validStatusCodes), Optional.ToList(headers), serializedAdditionalRawData);
+            return new ConnectivityCheckRequestHttpConfiguration(Optional.ToNullable(method), validStatusCodes ?? new ChangeTrackingList<long>(), headers ?? new ChangeTrackingList<HttpHeaderConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckRequestHttpConfiguration>.Write(ModelReaderWriterOptions options)

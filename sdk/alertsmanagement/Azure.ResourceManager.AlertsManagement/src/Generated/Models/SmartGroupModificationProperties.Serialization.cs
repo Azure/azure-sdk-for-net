@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 return null;
             }
             Optional<Guid> smartGroupId = default;
-            Optional<IList<SmartGroupModificationItemInfo>> modifications = default;
+            IList<SmartGroupModificationItemInfo> modifications = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmartGroupModificationProperties(Optional.ToNullable(smartGroupId), Optional.ToList(modifications), nextLink.Value, serializedAdditionalRawData);
+            return new SmartGroupModificationProperties(Optional.ToNullable(smartGroupId), modifications ?? new ChangeTrackingList<SmartGroupModificationItemInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmartGroupModificationProperties>.Write(ModelReaderWriterOptions options)

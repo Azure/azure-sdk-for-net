@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             Optional<bool> automatic = default;
             Optional<CosmosDBIndexingMode> indexingMode = default;
-            Optional<IList<CosmosDBIncludedPath>> includedPaths = default;
-            Optional<IList<CosmosDBExcludedPath>> excludedPaths = default;
-            Optional<IList<IList<CosmosDBCompositePath>>> compositeIndexes = default;
-            Optional<IList<SpatialSpec>> spatialIndexes = default;
+            IList<CosmosDBIncludedPath> includedPaths = default;
+            IList<CosmosDBExcludedPath> excludedPaths = default;
+            IList<IList<CosmosDBCompositePath>> compositeIndexes = default;
+            IList<SpatialSpec> spatialIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBIndexingPolicy(Optional.ToNullable(automatic), Optional.ToNullable(indexingMode), Optional.ToList(includedPaths), Optional.ToList(excludedPaths), Optional.ToList(compositeIndexes), Optional.ToList(spatialIndexes), serializedAdditionalRawData);
+            return new CosmosDBIndexingPolicy(Optional.ToNullable(automatic), Optional.ToNullable(indexingMode), includedPaths ?? new ChangeTrackingList<CosmosDBIncludedPath>(), excludedPaths ?? new ChangeTrackingList<CosmosDBExcludedPath>(), compositeIndexes ?? new ChangeTrackingList<IList<CosmosDBCompositePath>>(), spatialIndexes ?? new ChangeTrackingList<SpatialSpec>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBIndexingPolicy>.Write(ModelReaderWriterOptions options)

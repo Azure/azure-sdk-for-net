@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> isV1Enabled = default;
             Optional<bool> isV3Enabled = default;
             Optional<bool> isSecureSiteEnabled = default;
-            Optional<IList<string>> trustedOrigins = default;
+            IList<string> trustedOrigins = default;
             Optional<bool> isWebChatSpeechEnabled = default;
             Optional<bool> isWebchatPreviewEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebChatSite(Optional.ToNullable(tenantId), siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), Optional.ToList(trustedOrigins), Optional.ToNullable(isWebChatSpeechEnabled), Optional.ToNullable(isWebchatPreviewEnabled), serializedAdditionalRawData);
+            return new WebChatSite(Optional.ToNullable(tenantId), siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), trustedOrigins ?? new ChangeTrackingList<string>(), Optional.ToNullable(isWebChatSpeechEnabled), Optional.ToNullable(isWebchatPreviewEnabled), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebChatSite>.Write(ModelReaderWriterOptions options)

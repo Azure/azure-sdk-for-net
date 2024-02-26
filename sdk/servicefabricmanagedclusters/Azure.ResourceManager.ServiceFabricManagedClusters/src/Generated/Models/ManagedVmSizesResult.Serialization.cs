@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>> value = default;
+            IReadOnlyList<ServiceFabricManagedUnsupportedVmSize> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedVmSizesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedVmSizesResult(value ?? new ChangeTrackingList<ServiceFabricManagedUnsupportedVmSize>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedVmSizesResult>.Write(ModelReaderWriterOptions options)

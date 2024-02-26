@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, serializedAdditionalRawData);
+            return new BackupVaultData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultData>.Write(ModelReaderWriterOptions options)

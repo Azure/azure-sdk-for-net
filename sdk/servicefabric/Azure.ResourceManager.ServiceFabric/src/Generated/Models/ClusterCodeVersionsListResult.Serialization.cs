@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClusterCodeVersionsResult>> value = default;
+            IReadOnlyList<ClusterCodeVersionsResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCodeVersionsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ClusterCodeVersionsListResult(value ?? new ChangeTrackingList<ClusterCodeVersionsResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCodeVersionsListResult>.Write(ModelReaderWriterOptions options)

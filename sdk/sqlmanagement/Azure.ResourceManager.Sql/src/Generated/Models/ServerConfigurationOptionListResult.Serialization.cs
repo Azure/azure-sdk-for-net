@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedInstanceServerConfigurationOptionData>> value = default;
+            IReadOnlyList<ManagedInstanceServerConfigurationOptionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerConfigurationOptionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServerConfigurationOptionListResult(value ?? new ChangeTrackingList<ManagedInstanceServerConfigurationOptionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerConfigurationOptionListResult>.Write(ModelReaderWriterOptions options)

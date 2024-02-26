@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.TrafficManager
             Optional<long?> minChildEndpoints = default;
             Optional<long?> minChildEndpointsIPv4 = default;
             Optional<long?> minChildEndpointsIPv6 = default;
-            Optional<IList<string>> geoMapping = default;
-            Optional<IList<TrafficManagerEndpointSubnetInfo>> subnets = default;
-            Optional<IList<TrafficManagerEndpointCustomHeaderInfo>> customHeaders = default;
+            IList<string> geoMapping = default;
+            IList<TrafficManagerEndpointSubnetInfo> subnets = default;
+            IList<TrafficManagerEndpointCustomHeaderInfo> customHeaders = default;
             Optional<TrafficManagerEndpointAlwaysServeStatus> alwaysServe = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, targetResourceId.Value, target.Value, Optional.ToNullable(endpointStatus), Optional.ToNullable(weight), Optional.ToNullable(priority), endpointLocation.Value, Optional.ToNullable(endpointMonitorStatus), Optional.ToNullable(minChildEndpoints), Optional.ToNullable(minChildEndpointsIPv4), Optional.ToNullable(minChildEndpointsIPv6), Optional.ToList(geoMapping), Optional.ToList(subnets), Optional.ToList(customHeaders), Optional.ToNullable(alwaysServe));
+            return new TrafficManagerEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, targetResourceId.Value, target.Value, Optional.ToNullable(endpointStatus), Optional.ToNullable(weight), Optional.ToNullable(priority), endpointLocation.Value, Optional.ToNullable(endpointMonitorStatus), Optional.ToNullable(minChildEndpoints), Optional.ToNullable(minChildEndpointsIPv4), Optional.ToNullable(minChildEndpointsIPv6), geoMapping ?? new ChangeTrackingList<string>(), subnets ?? new ChangeTrackingList<TrafficManagerEndpointSubnetInfo>(), customHeaders ?? new ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo>(), Optional.ToNullable(alwaysServe));
         }
 
         BinaryData IPersistableModel<TrafficManagerEndpointData>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationServiceEnvironmentManagedApiData>> value = default;
+            IReadOnlyList<IntegrationServiceEnvironmentManagedApiData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentManagedApiListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentManagedApiListResult(value ?? new ChangeTrackingList<IntegrationServiceEnvironmentManagedApiData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiListResult>.Write(ModelReaderWriterOptions options)
