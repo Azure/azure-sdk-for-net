@@ -12,7 +12,6 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using System.Globalization;
 using Azure.Core.Shared;
-using System.Net.NetworkInformation;
 
 namespace Azure.Messaging.ServiceBus
 {
