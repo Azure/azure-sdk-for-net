@@ -228,7 +228,8 @@
 /sdk/metricsadvisor/                                               @kinelski
 
 # ServiceLabel: %Cognitive - Metrics Advisor
-# AzureSdkOwners: @kinelski
+# AzureSdkOwners:                                                  @kinelski
+# ServiceOwners:                                                   @bowgong
 
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/                                              @conhua @mengaims @juaduan @moreOver0
