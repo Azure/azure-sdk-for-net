@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), files ?? new ChangeTrackingList<NginxConfigurationFile>(), protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(), package.Value, rootFile.Value, serializedAdditionalRawData);
+            return new NginxConfigurationProperties(
+                Optional.ToNullable(provisioningState),
+                files ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                package.Value,
+                rootFile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationProperties>.Write(ModelReaderWriterOptions options)

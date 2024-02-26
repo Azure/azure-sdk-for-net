@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPrivateLinkResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new MySqlPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

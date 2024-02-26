@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), configurationIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(deploymentType), errorMessage.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatus(
+                Optional.ToNullable(commitTime),
+                region.Value,
+                Optional.ToNullable(deploymentStatus),
+                configurationIds ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(deploymentType),
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatus>.Write(ModelReaderWriterOptions options)

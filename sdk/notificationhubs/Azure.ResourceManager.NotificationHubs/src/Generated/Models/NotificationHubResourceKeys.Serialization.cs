@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubResourceKeys(primaryConnectionString.Value, secondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
+            return new NotificationHubResourceKeys(
+                primaryConnectionString.Value,
+                secondaryConnectionString.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                keyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubResourceKeys>.Write(ModelReaderWriterOptions options)

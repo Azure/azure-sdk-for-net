@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagsListResult(id, name, type, systemData.Value, changeNumber.Value, cloud.Value, values ?? new ChangeTrackingList<ServiceTagInformation>(), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceTagsListResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                changeNumber.Value,
+                cloud.Value,
+                values ?? new ChangeTrackingList<ServiceTagInformation>(),
+                nextLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagsListResult>.Write(ModelReaderWriterOptions options)

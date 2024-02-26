@@ -235,7 +235,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(requestBodyInspectLimitInKB), Optional.ToNullable(requestBodyEnforcement), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadEnforcement), Optional.ToNullable(fileUploadLimitInMb), Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, logScrubbing.Value, serializedAdditionalRawData);
+            return new PolicySettings(
+                Optional.ToNullable(state),
+                Optional.ToNullable(mode),
+                Optional.ToNullable(requestBodyCheck),
+                Optional.ToNullable(requestBodyInspectLimitInKB),
+                Optional.ToNullable(requestBodyEnforcement),
+                Optional.ToNullable(maxRequestBodySizeInKb),
+                Optional.ToNullable(fileUploadEnforcement),
+                Optional.ToNullable(fileUploadLimitInMb),
+                Optional.ToNullable(customBlockResponseStatusCode),
+                customBlockResponseBody.Value,
+                logScrubbing.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options)

@@ -234,7 +234,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), hops ?? new ChangeTrackingList<ConnectivityHopInfo>(), serializedAdditionalRawData);
+            return new ConnectionStateSnapshot(
+                Optional.ToNullable(connectionState),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(evaluationState),
+                Optional.ToNullable(avgLatencyInMs),
+                Optional.ToNullable(minLatencyInMs),
+                Optional.ToNullable(maxLatencyInMs),
+                Optional.ToNullable(probesSent),
+                Optional.ToNullable(probesFailed),
+                hops ?? new ChangeTrackingList<ConnectivityHopInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionStateSnapshot>.Write(ModelReaderWriterOptions options)

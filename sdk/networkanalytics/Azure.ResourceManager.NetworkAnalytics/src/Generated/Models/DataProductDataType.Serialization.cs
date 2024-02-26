@@ -239,7 +239,19 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductDataType(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value, serializedAdditionalRawData);
+            return new DataProductDataType(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                stateReason.Value,
+                Optional.ToNullable(storageOutputRetention),
+                Optional.ToNullable(databaseCacheRetention),
+                Optional.ToNullable(databaseRetention),
+                visualizationUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductDataType>.Write(ModelReaderWriterOptions options)

@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicPlanData(id, name, type, systemData.Value, planData.Value, Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource), serializedAdditionalRawData);
+            return new NewRelicPlanData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                planData.Value,
+                Optional.ToNullable(orgCreationSource),
+                Optional.ToNullable(accountCreationSource),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicPlanData>.Write(ModelReaderWriterOptions options)

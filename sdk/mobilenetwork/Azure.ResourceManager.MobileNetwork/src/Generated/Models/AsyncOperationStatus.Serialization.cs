@@ -198,7 +198,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AsyncOperationStatus(id.Value, name.Value, status, resourceId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), properties.Value, error.Value, serializedAdditionalRawData);
+            return new AsyncOperationStatus(
+                id.Value,
+                name.Value,
+                status,
+                resourceId.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(percentComplete),
+                properties.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AsyncOperationStatus>.Write(ModelReaderWriterOptions options)

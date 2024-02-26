@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceProvider(id, name, type, systemData.Value, serviceProviderName.Value, peeringLocations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PeeringServiceProvider(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serviceProviderName.Value,
+                peeringLocations ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceProvider>.Write(ModelReaderWriterOptions options)

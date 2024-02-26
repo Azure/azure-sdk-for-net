@@ -242,7 +242,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, name0.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(asn), Optional.ToNullable(tunnelIdentifier), bgpPeerAddress ?? new ChangeTrackingList<string>(), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value);
+            return new NetworkVirtualApplianceConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                name0.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(asn),
+                Optional.ToNullable(tunnelIdentifier),
+                bgpPeerAddress ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(enableInternetSecurity),
+                routingConfiguration.Value);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceConnectionData>.Write(ModelReaderWriterOptions options)

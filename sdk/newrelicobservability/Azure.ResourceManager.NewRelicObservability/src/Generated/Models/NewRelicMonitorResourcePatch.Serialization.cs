@@ -206,7 +206,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicMonitorResourcePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource), serializedAdditionalRawData);
+            return new NewRelicMonitorResourcePatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                newRelicAccountProperties.Value,
+                userInfo.Value,
+                planData.Value,
+                Optional.ToNullable(orgCreationSource),
+                Optional.ToNullable(accountCreationSource),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicMonitorResourcePatch>.Write(ModelReaderWriterOptions options)

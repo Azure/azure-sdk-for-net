@@ -551,7 +551,37 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayConnectionListEntity(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2, localNetworkGateway2, connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>(), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), gatewayCustomBgpIPAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(), Optional.ToNullable(usePolicyBasedTrafficSelectors), ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(), trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath));
+            return new VirtualNetworkGatewayConnectionListEntity(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                authorizationKey.Value,
+                virtualNetworkGateway1,
+                virtualNetworkGateway2,
+                localNetworkGateway2,
+                connectionType,
+                Optional.ToNullable(connectionProtocol),
+                Optional.ToNullable(routingWeight),
+                Optional.ToNullable(connectionMode),
+                sharedKey.Value,
+                Optional.ToNullable(connectionStatus),
+                tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>(),
+                Optional.ToNullable(egressBytesTransferred),
+                Optional.ToNullable(ingressBytesTransferred),
+                peer,
+                Optional.ToNullable(enableBgp),
+                gatewayCustomBgpIPAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
+                Optional.ToNullable(usePolicyBasedTrafficSelectors),
+                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(expressRouteGatewayBypass),
+                Optional.ToNullable(enablePrivateLinkFastPath));
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayConnectionListEntity>.Write(ModelReaderWriterOptions options)

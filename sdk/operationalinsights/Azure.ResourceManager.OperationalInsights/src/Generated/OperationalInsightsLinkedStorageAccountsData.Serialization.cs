@@ -191,7 +191,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsLinkedStorageAccountsData(id, name, type, systemData.Value, Optional.ToNullable(dataSourceType), storageAccountIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new OperationalInsightsLinkedStorageAccountsData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(dataSourceType),
+                storageAccountIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Write(ModelReaderWriterOptions options)

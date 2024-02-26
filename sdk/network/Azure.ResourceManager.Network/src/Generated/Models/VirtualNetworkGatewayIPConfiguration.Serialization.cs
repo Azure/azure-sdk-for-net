@@ -218,7 +218,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new VirtualNetworkGatewayIPConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(privateIPAllocationMethod),
+                subnet,
+                publicIPAddress,
+                privateIPAddress.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayIPConfiguration>.Write(ModelReaderWriterOptions options)

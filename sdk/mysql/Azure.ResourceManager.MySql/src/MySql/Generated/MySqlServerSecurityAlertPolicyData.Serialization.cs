@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), disabledAlerts ?? new ChangeTrackingList<string>(), emailAddresses ?? new ChangeTrackingList<string>(), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), serializedAdditionalRawData);
+            return new MySqlServerSecurityAlertPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                disabledAlerts ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(emailAccountAdmins),
+                storageEndpoint.Value,
+                storageAccountAccessKey.Value,
+                Optional.ToNullable(retentionDays),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)

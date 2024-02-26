@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), addressPrefix ?? new ChangeTrackingList<string>(), nextHopIPAddress ?? new ChangeTrackingList<string>(), Optional.ToNullable(nextHopType), serializedAdditionalRawData);
+            return new EffectiveRoute(
+                name.Value,
+                Optional.ToNullable(disableBgpRoutePropagation),
+                Optional.ToNullable(source),
+                Optional.ToNullable(state),
+                addressPrefix ?? new ChangeTrackingList<string>(),
+                nextHopIPAddress ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(nextHopType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRoute>.Write(ModelReaderWriterOptions options)

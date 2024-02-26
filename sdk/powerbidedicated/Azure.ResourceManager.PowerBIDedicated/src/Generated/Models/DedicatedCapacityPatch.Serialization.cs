@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedCapacityPatch(sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, serializedAdditionalRawData);
+            return new DedicatedCapacityPatch(
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administration.Value,
+                Optional.ToNullable(mode),
+                Optional.ToNullable(tenantId),
+                friendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedCapacityPatch>.Write(ModelReaderWriterOptions options)

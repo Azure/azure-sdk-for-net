@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlPrivateLinkResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new PostgreSqlPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

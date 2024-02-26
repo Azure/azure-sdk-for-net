@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerStorageEditionCapability(name.Value, Optional.ToNullable(minStorageSize), Optional.ToNullable(maxStorageSize), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxBackupRetentionDays), serializedAdditionalRawData);
+            return new MySqlFlexibleServerStorageEditionCapability(
+                name.Value,
+                Optional.ToNullable(minStorageSize),
+                Optional.ToNullable(maxStorageSize),
+                Optional.ToNullable(minBackupRetentionDays),
+                Optional.ToNullable(maxBackupRetentionDays),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerStorageEditionCapability>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.ProviderHub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeRegistrationData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ResourceTypeRegistrationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeRegistrationData>.Write(ModelReaderWriterOptions options)

@@ -258,7 +258,23 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunStep(id, @object, type, assistantId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, metadata, serializedAdditionalRawData);
+            return new RunStep(
+                id,
+                @object,
+                type,
+                assistantId,
+                threadId,
+                runId,
+                status,
+                stepDetails,
+                lastError,
+                createdAt,
+                expiredAt,
+                completedAt,
+                cancelledAt,
+                failedAt,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunStep>.Write(ModelReaderWriterOptions options)

@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingPredicativeResult(timespan.Value, Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, data ?? new ChangeTrackingList<PredictiveValue>(), serializedAdditionalRawData);
+            return new AutoscaleSettingPredicativeResult(
+                timespan.Value,
+                Optional.ToNullable(interval),
+                metricName.Value,
+                targetResourceId.Value,
+                data ?? new ChangeTrackingList<PredictiveValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingPredicativeResult>.Write(ModelReaderWriterOptions options)

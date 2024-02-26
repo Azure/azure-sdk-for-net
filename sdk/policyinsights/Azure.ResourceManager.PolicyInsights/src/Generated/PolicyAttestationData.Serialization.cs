@@ -298,7 +298,23 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, evidence ?? new ChangeTrackingList<AttestationEvidence>(), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt), Optional.ToNullable(assessmentDate), metadata.Value, serializedAdditionalRawData);
+            return new PolicyAttestationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                policyAssignmentId,
+                policyDefinitionReferenceId.Value,
+                Optional.ToNullable(complianceState),
+                Optional.ToNullable(expiresOn),
+                owner.Value,
+                comments.Value,
+                evidence ?? new ChangeTrackingList<AttestationEvidence>(),
+                provisioningState.Value,
+                Optional.ToNullable(lastComplianceStateChangeAt),
+                Optional.ToNullable(assessmentDate),
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAttestationData>.Write(ModelReaderWriterOptions options)

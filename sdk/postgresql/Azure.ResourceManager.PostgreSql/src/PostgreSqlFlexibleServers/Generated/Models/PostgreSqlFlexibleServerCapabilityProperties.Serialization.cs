@@ -291,7 +291,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerCapabilityProperties(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, name.Value, supportedServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>(), supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>(), Optional.ToNullable(fastProvisioningSupported), supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(), Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToNullable(storageAutoGrowthSupported), Optional.ToNullable(onlineResizeSupported), Optional.ToNullable(restricted));
+            return new PostgreSqlFlexibleServerCapabilityProperties(
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData,
+                name.Value,
+                supportedServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>(),
+                supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>(),
+                Optional.ToNullable(fastProvisioningSupported),
+                supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(),
+                Optional.ToNullable(geoBackupSupported),
+                Optional.ToNullable(zoneRedundantHaSupported),
+                Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported),
+                Optional.ToNullable(storageAutoGrowthSupported),
+                Optional.ToNullable(onlineResizeSupported),
+                Optional.ToNullable(restricted));
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options)

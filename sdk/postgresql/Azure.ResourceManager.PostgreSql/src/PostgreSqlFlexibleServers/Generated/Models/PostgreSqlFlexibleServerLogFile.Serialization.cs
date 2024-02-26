@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(sizeInKb), type0.Value, url.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerLogFile(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(sizeInKb),
+                type0.Value,
+                url.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerLogFile>.Write(ModelReaderWriterOptions options)
