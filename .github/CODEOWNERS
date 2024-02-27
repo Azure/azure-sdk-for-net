@@ -883,3 +883,7 @@
 
 # ServiceLabel: %Large Instance %Service Attention
 #/<NotInRepo>/                                                     @8Gitbrix
+
+# PRLabel: %Device Registry
+# ServiceLabel: %Device Registry
+/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
