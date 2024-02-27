@@ -4,11 +4,18 @@
 
 ### Features Added
 
+- Updated token internal validation to utlizie Microsoft.IdentityModel.Protocols.OpenIdConnect to get OIDC configuration.
+
 ### Breaking Changes
+
+- Removing 'TeantId' from the AuthenticationEventTrigger Attribute API configuration
+- Adding 'AuthorizedPartyAppId', 'AuthorityUrl' to the AuthenticationEventTrigger Attribute API configuration
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Cleaned out unused methods.
 
 ## 1.0.0-beta.5 (2023-12-07)
 
