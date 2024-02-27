@@ -14,6 +14,27 @@ using System.Security.Principal;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> The Translator service client. </summary>
+    // Methods are replaced by the version where clientTraceId parameter is of type System.Guid
+    [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("TransliterateAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("Transliterate", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("TransliterateAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("Transliterate", typeof(string), typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("FindSentenceBoundariesAsync", typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("FindSentenceBoundaries", typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("FindSentenceBoundariesAsync", typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("FindSentenceBoundaries", typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("LookupDictionaryEntriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("LookupDictionaryEntries", typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("LookupDictionaryEntriesAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("LookupDictionaryEntries", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("LookupDictionaryExamplesAsync", typeof(string), typeof(string), typeof(IEnumerable<DictionaryExampleTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("LookupDictionaryExamples", typeof(string), typeof(string), typeof(IEnumerable<DictionaryExampleTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("LookupDictionaryExamplesAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("LookupDictionaryExamples", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class TextTranslationClient
     {
         private const string KEY_HEADER_NAME = "Ocp-Apim-Subscription-Key";
