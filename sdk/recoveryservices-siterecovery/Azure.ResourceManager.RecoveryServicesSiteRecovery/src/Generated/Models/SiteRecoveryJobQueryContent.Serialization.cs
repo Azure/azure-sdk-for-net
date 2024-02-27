@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn != null)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn);
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn != null)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn);
             }
-            if (Optional.IsDefined(FabricId))
+            if (FabricId != null)
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (Optional.IsDefined(AffectedObjectTypes))
+            if (AffectedObjectTypes != null)
             {
                 writer.WritePropertyName("affectedObjectTypes"u8);
                 writer.WriteStringValue(AffectedObjectTypes);
             }
-            if (Optional.IsDefined(JobStatus))
+            if (JobStatus != null)
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(JobStatus);
             }
-            if (Optional.IsDefined(JobOutputType))
+            if (JobOutputType.HasValue)
             {
                 writer.WritePropertyName("jobOutputType"u8);
                 writer.WriteStringValue(JobOutputType.Value.ToString());
             }
-            if (Optional.IsDefined(JobName))
+            if (JobName != null)
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Optional.IsDefined(TimezoneOffset))
+            if (TimezoneOffset.HasValue)
             {
                 writer.WritePropertyName("timezoneOffset"u8);
                 writer.WriteNumberValue(TimezoneOffset.Value);
@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobQueryContent(startTime.Value, endTime.Value, fabricId.Value, affectedObjectTypes.Value, jobStatus.Value, Optional.ToNullable(jobOutputType), jobName.Value, Optional.ToNullable(timezoneOffset), serializedAdditionalRawData);
+            return new SiteRecoveryJobQueryContent(
+                startTime.Value,
+                endTime.Value,
+                fabricId.Value,
+                affectedObjectTypes.Value,
+                jobStatus.Value,
+                Optional.ToNullable(jobOutputType),
+                jobName.Value,
+                Optional.ToNullable(timezoneOffset),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobQueryContent>.Write(ModelReaderWriterOptions options)

@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Batch
             this.Total = protocolObject.Total;
             this.Unknown = protocolObject.Unknown;
             this.Unusable = protocolObject.Unusable;
+            this.UpgradingOS = protocolObject.UpgradingOS;
             this.WaitingForStartTask = protocolObject.WaitingForStartTask;
         }
 
@@ -110,6 +111,11 @@ namespace Microsoft.Azure.Batch
         /// Gets the number of nodes in <see cref="Common.ComputeNodeState.Unusable" />.
         /// </summary>
         public int Unusable { get; }
+
+        /// <summary>
+        /// Gets the number of nodes in <see cref="Common.ComputeNodeState.UpgradingOS" />.
+        /// </summary>
+        public int UpgradingOS { get; }
 
         /// <summary>
         /// Gets the number of nodes in <see cref="Common.ComputeNodeState.WaitingForStartTask" />.

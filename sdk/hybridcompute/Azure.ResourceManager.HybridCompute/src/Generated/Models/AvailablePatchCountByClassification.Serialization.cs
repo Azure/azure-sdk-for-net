@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Security))
+            if (options.Format != "W" && Security.HasValue)
             {
                 writer.WritePropertyName("security"u8);
                 writer.WriteNumberValue(Security.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Critical))
+            if (options.Format != "W" && Critical.HasValue)
             {
                 writer.WritePropertyName("critical"u8);
                 writer.WriteNumberValue(Critical.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Definition))
+            if (options.Format != "W" && Definition.HasValue)
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteNumberValue(Definition.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdateRollup))
+            if (options.Format != "W" && UpdateRollup.HasValue)
             {
                 writer.WritePropertyName("updateRollup"u8);
                 writer.WriteNumberValue(UpdateRollup.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FeaturePack))
+            if (options.Format != "W" && FeaturePack.HasValue)
             {
                 writer.WritePropertyName("featurePack"u8);
                 writer.WriteNumberValue(FeaturePack.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePack))
+            if (options.Format != "W" && ServicePack.HasValue)
             {
                 writer.WritePropertyName("servicePack"u8);
                 writer.WriteNumberValue(ServicePack.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Tools))
+            if (options.Format != "W" && Tools.HasValue)
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteNumberValue(Tools.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Updates))
+            if (options.Format != "W" && Updates.HasValue)
             {
                 writer.WritePropertyName("updates"u8);
                 writer.WriteNumberValue(Updates.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Other))
+            if (options.Format != "W" && Other.HasValue)
             {
                 writer.WritePropertyName("other"u8);
                 writer.WriteNumberValue(Other.Value);
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailablePatchCountByClassification(Optional.ToNullable(security), Optional.ToNullable(critical), Optional.ToNullable(definition), Optional.ToNullable(updateRollup), Optional.ToNullable(featurePack), Optional.ToNullable(servicePack), Optional.ToNullable(tools), Optional.ToNullable(updates), Optional.ToNullable(other), serializedAdditionalRawData);
+            return new AvailablePatchCountByClassification(
+                Optional.ToNullable(security),
+                Optional.ToNullable(critical),
+                Optional.ToNullable(definition),
+                Optional.ToNullable(updateRollup),
+                Optional.ToNullable(featurePack),
+                Optional.ToNullable(servicePack),
+                Optional.ToNullable(tools),
+                Optional.ToNullable(updates),
+                Optional.ToNullable(other),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailablePatchCountByClassification>.Write(ModelReaderWriterOptions options)

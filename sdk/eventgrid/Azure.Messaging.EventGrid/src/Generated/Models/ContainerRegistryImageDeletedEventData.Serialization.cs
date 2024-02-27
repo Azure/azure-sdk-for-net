@@ -102,7 +102,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryImageDeletedEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, request.Value, actor.Value, source.Value, connectedRegistry.Value);
+            return new ContainerRegistryImageDeletedEventData(
+                id.Value,
+                Optional.ToNullable(timestamp),
+                action.Value,
+                location.Value,
+                target.Value,
+                request.Value,
+                actor.Value,
+                source.Value,
+                connectedRegistry.Value);
         }
 
         internal partial class ContainerRegistryImageDeletedEventDataConverter : JsonConverter<ContainerRegistryImageDeletedEventData>

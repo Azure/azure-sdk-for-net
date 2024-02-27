@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OrganizationId))
+            if (OrganizationId != null)
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
-            if (Optional.IsDefined(OrganizationName))
+            if (OrganizationName != null)
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteStringValue(OrganizationName);
             }
-            if (Optional.IsDefined(BillingSource))
+            if (BillingSource.HasValue)
             {
                 writer.WritePropertyName("billingSource"u8);
                 writer.WriteStringValue(BillingSource.Value.ToString());
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicOrganizationResourceData(id, name, type, systemData.Value, organizationId.Value, organizationName.Value, Optional.ToNullable(billingSource), serializedAdditionalRawData);
+            return new NewRelicOrganizationResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                organizationId.Value,
+                organizationName.Value,
+                Optional.ToNullable(billingSource),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicOrganizationResourceData>.Write(ModelReaderWriterOptions options)

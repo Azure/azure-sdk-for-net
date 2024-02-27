@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    properties = GuestConfigurationAssignmentReportProperties.DeserializeGuestConfigurationAssignmentReportProperties(property.Value);
+                    properties = GuestConfigurationAssignmentReportProperties.DeserializeGuestConfigurationAssignmentReportProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

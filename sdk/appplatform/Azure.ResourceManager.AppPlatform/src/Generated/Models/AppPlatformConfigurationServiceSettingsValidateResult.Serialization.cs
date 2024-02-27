@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GitPropertyValidationResult))
+            if (GitPropertyValidationResult != null)
             {
                 writer.WritePropertyName("gitPropertyValidationResult"u8);
                 writer.WriteObjectValue(GitPropertyValidationResult);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    gitPropertyValidationResult = AppPlatformConfigurationServiceGitValidateResult.DeserializeAppPlatformConfigurationServiceGitValidateResult(property.Value);
+                    gitPropertyValidationResult = AppPlatformConfigurationServiceGitValidateResult.DeserializeAppPlatformConfigurationServiceGitValidateResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

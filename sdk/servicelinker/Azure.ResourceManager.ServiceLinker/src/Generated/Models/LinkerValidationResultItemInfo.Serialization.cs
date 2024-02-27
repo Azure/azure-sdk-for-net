@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Result))
+            if (Result.HasValue)
             {
                 if (Result != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("result");
                 }
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 if (ErrorMessage != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("errorMessage");
                 }
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 if (ErrorCode != null)
                 {
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerValidationResultItemInfo(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value, serializedAdditionalRawData);
+            return new LinkerValidationResultItemInfo(
+                name.Value,
+                description.Value,
+                Optional.ToNullable(result),
+                errorMessage.Value,
+                errorCode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerValidationResultItemInfo>.Write(ModelReaderWriterOptions options)

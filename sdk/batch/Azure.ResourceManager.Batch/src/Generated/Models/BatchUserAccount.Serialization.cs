@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
-            if (Optional.IsDefined(ElevationLevel))
+            if (ElevationLevel.HasValue)
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
             }
-            if (Optional.IsDefined(LinuxUserConfiguration))
+            if (LinuxUserConfiguration != null)
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
                 writer.WriteObjectValue(LinuxUserConfiguration);
             }
-            if (Optional.IsDefined(WindowsUserConfiguration))
+            if (WindowsUserConfiguration != null)
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
                 writer.WriteObjectValue(WindowsUserConfiguration);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    linuxUserConfiguration = BatchLinuxUserConfiguration.DeserializeBatchLinuxUserConfiguration(property.Value);
+                    linuxUserConfiguration = BatchLinuxUserConfiguration.DeserializeBatchLinuxUserConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsUserConfiguration"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    windowsUserConfiguration = BatchWindowsUserConfiguration.DeserializeBatchWindowsUserConfiguration(property.Value);
+                    windowsUserConfiguration = BatchWindowsUserConfiguration.DeserializeBatchWindowsUserConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchUserAccount(name, password, Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value, serializedAdditionalRawData);
+            return new BatchUserAccount(
+                name,
+                password,
+                Optional.ToNullable(elevationLevel),
+                linuxUserConfiguration.Value,
+                windowsUserConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchUserAccount>.Write(ModelReaderWriterOptions options)

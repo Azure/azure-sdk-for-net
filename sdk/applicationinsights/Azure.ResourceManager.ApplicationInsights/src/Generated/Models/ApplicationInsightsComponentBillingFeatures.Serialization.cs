@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataVolumeCap))
+            if (DataVolumeCap != null)
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
                 writer.WriteObjectValue(DataVolumeCap);
             }
-            if (Optional.IsCollectionDefined(CurrentBillingFeatures))
+            if (!(CurrentBillingFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("CurrentBillingFeatures"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 return null;
             }
             Optional<ApplicationInsightsComponentDataVolumeCap> dataVolumeCap = default;
-            Optional<IList<string>> currentBillingFeatures = default;
+            IList<string> currentBillingFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value);
+                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("CurrentBillingFeatures"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap.Value, Optional.ToList(currentBillingFeatures), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap.Value, currentBillingFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentBillingFeatures>.Write(ModelReaderWriterOptions options)

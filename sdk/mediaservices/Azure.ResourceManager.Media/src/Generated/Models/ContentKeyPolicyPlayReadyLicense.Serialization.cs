@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("allowTestDevices"u8);
             writer.WriteBooleanValue(AllowTestDevices);
-            if (Optional.IsDefined(SecurityLevel))
+            if (SecurityLevel.HasValue)
             {
                 writer.WritePropertyName("securityLevel"u8);
                 writer.WriteStringValue(SecurityLevel.Value.ToString());
             }
-            if (Optional.IsDefined(BeginOn))
+            if (BeginOn.HasValue)
             {
                 writer.WritePropertyName("beginDate"u8);
                 writer.WriteStringValue(BeginOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(RelativeBeginDate))
+            if (RelativeBeginDate.HasValue)
             {
                 writer.WritePropertyName("relativeBeginDate"u8);
                 writer.WriteStringValue(RelativeBeginDate.Value, "P");
             }
-            if (Optional.IsDefined(RelativeExpirationDate))
+            if (RelativeExpirationDate.HasValue)
             {
                 writer.WritePropertyName("relativeExpirationDate"u8);
                 writer.WriteStringValue(RelativeExpirationDate.Value, "P");
             }
-            if (Optional.IsDefined(GracePeriod))
+            if (GracePeriod.HasValue)
             {
                 writer.WritePropertyName("gracePeriod"u8);
                 writer.WriteStringValue(GracePeriod.Value, "P");
             }
-            if (Optional.IsDefined(PlayRight))
+            if (PlayRight != null)
             {
                 writer.WritePropertyName("playRight"u8);
                 writer.WriteObjectValue(PlayRight);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value);
+                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("contentKeyLocation"u8))
                 {
-                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value);
+                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))
@@ -211,7 +211,19 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyPlayReadyLicense(allowTestDevices, Optional.ToNullable(securityLevel), Optional.ToNullable(beginDate), Optional.ToNullable(expirationDate), Optional.ToNullable(relativeBeginDate), Optional.ToNullable(relativeExpirationDate), Optional.ToNullable(gracePeriod), playRight.Value, licenseType, contentKeyLocation, contentType, serializedAdditionalRawData);
+            return new ContentKeyPolicyPlayReadyLicense(
+                allowTestDevices,
+                Optional.ToNullable(securityLevel),
+                Optional.ToNullable(beginDate),
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(relativeBeginDate),
+                Optional.ToNullable(relativeExpirationDate),
+                Optional.ToNullable(gracePeriod),
+                playRight.Value,
+                licenseType,
+                contentKeyLocation,
+                contentType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyLicense>.Write(ModelReaderWriterOptions options)

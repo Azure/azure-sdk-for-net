@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirmwareName))
+            if (FirmwareName != null)
             {
                 writer.WritePropertyName("firmwareId"u8);
                 writer.WriteStringValue(FirmwareName);

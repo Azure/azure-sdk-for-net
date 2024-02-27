@@ -44,12 +44,12 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(AssistantId))
+            if (AssistantId != null)
             {
                 writer.WritePropertyName("assistant_id"u8);
                 writer.WriteStringValue(AssistantId);
             }
-            if (Optional.IsDefined(RunId))
+            if (RunId != null)
             {
                 writer.WritePropertyName("run_id"u8);
                 writer.WriteStringValue(RunId);
@@ -61,7 +61,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -158,7 +158,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<MessageContent> array = new List<MessageContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageContent.DeserializeMessageContent(item));
+                        array.Add(MessageContent.DeserializeMessageContent(item, options));
                     }
                     content = array;
                     continue;
@@ -204,7 +204,18 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreadMessage(id, @object, createdAt, threadId, role, content, assistantId.Value, runId.Value, fileIds, metadata, serializedAdditionalRawData);
+            return new ThreadMessage(
+                id,
+                @object,
+                createdAt,
+                threadId,
+                role,
+                content,
+                assistantId.Value,
+                runId.Value,
+                fileIds,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreadMessage>.Write(ModelReaderWriterOptions options)

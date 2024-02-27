@@ -25,12 +25,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareMachineId"/>, <paramref name="disksToInclude"/>, <paramref name="dataMoverRunAsAccountId"/>, <paramref name="snapshotRunAsAccountId"/>, <paramref name="targetResourceGroupId"/> or <paramref name="targetNetworkId"/> is null. </exception>
         public VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId, IEnumerable<VMwareCbtDiskContent> disksToInclude, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId)
         {
-            Argument.AssertNotNull(vmwareMachineId, nameof(vmwareMachineId));
-            Argument.AssertNotNull(disksToInclude, nameof(disksToInclude));
-            Argument.AssertNotNull(dataMoverRunAsAccountId, nameof(dataMoverRunAsAccountId));
-            Argument.AssertNotNull(snapshotRunAsAccountId, nameof(snapshotRunAsAccountId));
-            Argument.AssertNotNull(targetResourceGroupId, nameof(targetResourceGroupId));
-            Argument.AssertNotNull(targetNetworkId, nameof(targetNetworkId));
+            if (vmwareMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(vmwareMachineId));
+            }
+            if (disksToInclude == null)
+            {
+                throw new ArgumentNullException(nameof(disksToInclude));
+            }
+            if (dataMoverRunAsAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(dataMoverRunAsAccountId));
+            }
+            if (snapshotRunAsAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotRunAsAccountId));
+            }
+            if (targetResourceGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceGroupId));
+            }
+            if (targetNetworkId == null)
+            {
+                throw new ArgumentNullException(nameof(targetNetworkId));
+            }
 
             VMwareMachineId = vmwareMachineId;
             DisksToInclude = disksToInclude.ToList();

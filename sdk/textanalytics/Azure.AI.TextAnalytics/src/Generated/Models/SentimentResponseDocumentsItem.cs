@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -24,10 +23,22 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="confidenceScores"/> or <paramref name="sentences"/> is null. </exception>
         public SentimentResponseDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, TextSentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<SentenceSentimentInternal> sentences) : base(id, warnings, sentiment, confidenceScores, sentences)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(warnings, nameof(warnings));
-            Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
-            Argument.AssertNotNull(sentences, nameof(sentences));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (warnings == null)
+            {
+                throw new ArgumentNullException(nameof(warnings));
+            }
+            if (confidenceScores == null)
+            {
+                throw new ArgumentNullException(nameof(confidenceScores));
+            }
+            if (sentences == null)
+            {
+                throw new ArgumentNullException(nameof(sentences));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="SentimentResponseDocumentsItem"/>. </summary>

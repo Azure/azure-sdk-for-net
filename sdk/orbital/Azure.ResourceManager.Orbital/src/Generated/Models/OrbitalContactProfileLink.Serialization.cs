@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Polarization.ToString());
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (Optional.IsDefined(GainOverTemperature))
+            if (GainOverTemperature.HasValue)
             {
                 writer.WritePropertyName("gainOverTemperature"u8);
                 writer.WriteNumberValue(GainOverTemperature.Value);
             }
-            if (Optional.IsDefined(EirpdBW))
+            if (EirpdBW.HasValue)
             {
                 writer.WritePropertyName("eirpdBW"u8);
                 writer.WriteNumberValue(EirpdBW.Value);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalContactProfileLinkChannel> array = new List<OrbitalContactProfileLinkChannel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item));
+                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item, options));
                     }
                     channels = array;
                     continue;
@@ -146,7 +146,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileLink(name, polarization, direction, Optional.ToNullable(gainOverTemperature), Optional.ToNullable(eirpdBW), channels, serializedAdditionalRawData);
+            return new OrbitalContactProfileLink(
+                name,
+                polarization,
+                direction,
+                Optional.ToNullable(gainOverTemperature),
+                Optional.ToNullable(eirpdBW),
+                channels,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileLink>.Write(ModelReaderWriterOptions options)

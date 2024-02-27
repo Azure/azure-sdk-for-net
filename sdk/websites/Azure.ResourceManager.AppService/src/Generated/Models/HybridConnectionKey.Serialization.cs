@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SendKeyName))
+            if (options.Format != "W" && SendKeyName != null)
             {
                 writer.WritePropertyName("sendKeyName"u8);
                 writer.WriteStringValue(SendKeyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SendKeyValue))
+            if (options.Format != "W" && SendKeyValue != null)
             {
                 writer.WritePropertyName("sendKeyValue"u8);
                 writer.WriteStringValue(SendKeyValue);
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionKey(id, name, type, systemData.Value, sendKeyName.Value, sendKeyValue.Value, kind.Value, serializedAdditionalRawData);
+            return new HybridConnectionKey(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sendKeyName.Value,
+                sendKeyValue.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridConnectionKey>.Write(ModelReaderWriterOptions options)

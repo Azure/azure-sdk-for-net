@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Delete))
+            if (Delete != null)
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
-            if (Optional.IsDefined(Set))
+            if (Set != null)
             {
                 writer.WritePropertyName("set"u8);
                 writer.WriteObjectValue(Set);
             }
-            if (Optional.IsDefined(Add))
+            if (Add != null)
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteObjectValue(Add);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    delete = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
+                    delete = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("set"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @set = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
+                    @set = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("add"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
+                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

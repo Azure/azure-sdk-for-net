@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipState))
+            if (options.Format != "W" && AcceptOwnershipState.HasValue)
             {
                 writer.WritePropertyName("acceptOwnershipState"u8);
                 writer.WriteStringValue(AcceptOwnershipState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingOwner))
+            if (options.Format != "W" && BillingOwner != null)
             {
                 writer.WritePropertyName("billingOwner"u8);
                 writer.WriteStringValue(BillingOwner);
             }
-            if (Optional.IsDefined(SubscriptionTenantId))
+            if (SubscriptionTenantId.HasValue)
             {
                 writer.WritePropertyName("subscriptionTenantId"u8);
                 writer.WriteStringValue(SubscriptionTenantId.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<string> billingOwner = default;
             Optional<Guid> subscriptionTenantId = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcceptOwnershipStatus(subscriptionId.Value, Optional.ToNullable(acceptOwnershipState), Optional.ToNullable(provisioningState), billingOwner.Value, Optional.ToNullable(subscriptionTenantId), displayName.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new AcceptOwnershipStatus(
+                subscriptionId.Value,
+                Optional.ToNullable(acceptOwnershipState),
+                Optional.ToNullable(provisioningState),
+                billingOwner.Value,
+                Optional.ToNullable(subscriptionTenantId),
+                displayName.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcceptOwnershipStatus>.Write(ModelReaderWriterOptions options)

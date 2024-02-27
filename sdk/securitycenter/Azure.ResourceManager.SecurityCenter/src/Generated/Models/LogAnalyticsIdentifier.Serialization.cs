@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
+            if (options.Format != "W" && WorkspaceId.HasValue)
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceSubscriptionId))
+            if (options.Format != "W" && WorkspaceSubscriptionId != null)
             {
                 writer.WritePropertyName("workspaceSubscriptionId"u8);
                 writer.WriteStringValue(WorkspaceSubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceResourceGroup))
+            if (options.Format != "W" && WorkspaceResourceGroup != null)
             {
                 writer.WritePropertyName("workspaceResourceGroup"u8);
                 writer.WriteStringValue(WorkspaceResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentId))
+            if (options.Format != "W" && AgentId.HasValue)
             {
                 writer.WritePropertyName("agentId"u8);
                 writer.WriteStringValue(AgentId.Value);
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsIdentifier(type, serializedAdditionalRawData, Optional.ToNullable(workspaceId), workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Optional.ToNullable(agentId));
+            return new LogAnalyticsIdentifier(
+                type,
+                serializedAdditionalRawData,
+                Optional.ToNullable(workspaceId),
+                workspaceSubscriptionId.Value,
+                workspaceResourceGroup.Value,
+                Optional.ToNullable(agentId));
         }
 
         BinaryData IPersistableModel<LogAnalyticsIdentifier>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(JobScaleRuleType))
+            if (JobScaleRuleType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(JobScaleRuleType);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Auth))
+            if (!(Auth is ChangeTrackingList<ContainerAppScaleRuleAuth> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<BinaryData> metadata = default;
-            Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
+            IList<ContainerAppScaleRuleAuth> auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppScaleRuleAuth> array = new List<ContainerAppScaleRuleAuth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item));
+                        array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item, options));
                     }
                     auth = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobScaleRule(name.Value, type.Value, metadata.Value, Optional.ToList(auth), serializedAdditionalRawData);
+            return new ContainerAppJobScaleRule(name.Value, type.Value, metadata.Value, auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobScaleRule>.Write(ModelReaderWriterOptions options)

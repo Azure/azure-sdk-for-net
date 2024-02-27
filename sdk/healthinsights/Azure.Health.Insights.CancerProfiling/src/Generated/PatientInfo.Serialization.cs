@@ -27,17 +27,17 @@ namespace Azure.Health.Insights.CancerProfiling
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sex))
+            if (Sex.HasValue)
             {
                 writer.WritePropertyName("sex"u8);
                 writer.WriteStringValue(Sex.Value.ToString());
             }
-            if (Optional.IsDefined(BirthDate))
+            if (BirthDate.HasValue)
             {
                 writer.WritePropertyName("birthDate"u8);
                 writer.WriteStringValue(BirthDate.Value, "D");
             }
-            if (Optional.IsCollectionDefined(ClinicalInfo))
+            if (!(ClinicalInfo is ChangeTrackingList<ClinicalCodedElement> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clinicalInfo"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             Optional<PatientInfoSex> sex = default;
             Optional<DateTimeOffset> birthDate = default;
-            Optional<IList<ClinicalCodedElement>> clinicalInfo = default;
+            IList<ClinicalCodedElement> clinicalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<ClinicalCodedElement> array = new List<ClinicalCodedElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item));
+                        array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item, options));
                     }
                     clinicalInfo = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientInfo(Optional.ToNullable(sex), Optional.ToNullable(birthDate), Optional.ToList(clinicalInfo), serializedAdditionalRawData);
+            return new PatientInfo(Optional.ToNullable(sex), Optional.ToNullable(birthDate), clinicalInfo ?? new ChangeTrackingList<ClinicalCodedElement>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientInfo>.Write(ModelReaderWriterOptions options)

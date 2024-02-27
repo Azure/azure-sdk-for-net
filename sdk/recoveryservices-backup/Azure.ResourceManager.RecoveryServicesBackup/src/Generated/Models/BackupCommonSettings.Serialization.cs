@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(IsSqlCompression))
+            if (IsSqlCompression.HasValue)
             {
                 writer.WritePropertyName("issqlcompression"u8);
                 writer.WriteBooleanValue(IsSqlCompression.Value);
             }
-            if (Optional.IsDefined(IsCompression))
+            if (IsCompression.HasValue)
             {
                 writer.WritePropertyName("isCompression"u8);
                 writer.WriteBooleanValue(IsCompression.Value);

@@ -30,13 +30,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<SparkSessionResultType> result = default;
             Optional<SparkScheduler> schedulerInfo = default;
             Optional<SparkServicePlugin> pluginInfo = default;
-            Optional<IReadOnlyList<SparkServiceError>> errorInfo = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyList<SparkServiceError> errorInfo = default;
+            IReadOnlyDictionary<string, string> tags = default;
             int id = default;
             Optional<string> appId = default;
-            Optional<IReadOnlyDictionary<string, string>> appInfo = default;
+            IReadOnlyDictionary<string, string> appInfo = default;
             Optional<LivyStates> state = default;
-            Optional<IReadOnlyList<string>> log = default;
+            IReadOnlyList<string> log = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livyInfo"u8))
@@ -195,7 +195,25 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkSession(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), Optional.ToNullable(state), Optional.ToList(log));
+            return new SparkSession(
+                livyInfo.Value,
+                name.Value,
+                workspaceName.Value,
+                sparkPoolName.Value,
+                submitterName.Value,
+                submitterId.Value,
+                artifactId.Value,
+                Optional.ToNullable(jobType),
+                Optional.ToNullable(result),
+                schedulerInfo.Value,
+                pluginInfo.Value,
+                errorInfo ?? new ChangeTrackingList<SparkServiceError>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                id,
+                appId.Value,
+                appInfo ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(state),
+                log ?? new ChangeTrackingList<string>());
         }
     }
 }

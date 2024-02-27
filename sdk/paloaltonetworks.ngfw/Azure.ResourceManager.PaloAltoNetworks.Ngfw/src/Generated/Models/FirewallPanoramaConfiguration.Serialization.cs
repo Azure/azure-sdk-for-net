@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartObject();
             writer.WritePropertyName("configString"u8);
             writer.WriteStringValue(ConfigString);
-            if (options.Format != "W" && Optional.IsDefined(VmAuthKey))
+            if (options.Format != "W" && VmAuthKey != null)
             {
                 writer.WritePropertyName("vmAuthKey"u8);
                 writer.WriteStringValue(VmAuthKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(PanoramaServer))
+            if (options.Format != "W" && PanoramaServer != null)
             {
                 writer.WritePropertyName("panoramaServer"u8);
                 writer.WriteStringValue(PanoramaServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(PanoramaServer2))
+            if (options.Format != "W" && PanoramaServer2 != null)
             {
                 writer.WritePropertyName("panoramaServer2"u8);
                 writer.WriteStringValue(PanoramaServer2);
             }
-            if (options.Format != "W" && Optional.IsDefined(DgName))
+            if (options.Format != "W" && DgName != null)
             {
                 writer.WritePropertyName("dgName"u8);
                 writer.WriteStringValue(DgName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TplName))
+            if (options.Format != "W" && TplName != null)
             {
                 writer.WritePropertyName("tplName"u8);
                 writer.WriteStringValue(TplName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CgName))
+            if (options.Format != "W" && CgName != null)
             {
                 writer.WritePropertyName("cgName"u8);
                 writer.WriteStringValue(CgName);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
@@ -159,7 +159,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPanoramaConfiguration(configString, vmAuthKey.Value, panoramaServer.Value, panoramaServer2.Value, dgName.Value, tplName.Value, cgName.Value, hostName.Value, serializedAdditionalRawData);
+            return new FirewallPanoramaConfiguration(
+                configString,
+                vmAuthKey.Value,
+                panoramaServer.Value,
+                panoramaServer2.Value,
+                dgName.Value,
+                tplName.Value,
+                cgName.Value,
+                hostName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPanoramaConfiguration>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StorageSyncServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSyncServiceData>> value = default;
+            IReadOnlyList<StorageSyncServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncServiceData> array = new List<StorageSyncServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncServiceData.DeserializeStorageSyncServiceData(item));
+                        array.Add(StorageSyncServiceData.DeserializeStorageSyncServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServiceArray(Optional.ToList(value), serializedAdditionalRawData);
+            return new StorageSyncServiceArray(value ?? new ChangeTrackingList<StorageSyncServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServiceArray>.Write(ModelReaderWriterOptions options)

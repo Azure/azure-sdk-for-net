@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Remediation))
+            if (Remediation != null)
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (Optional.IsDefined(TargetResourceId))
+            if (TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceID"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (Optional.IsDefined(TargetResourceName))
+            if (TargetResourceName != null)
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(AdditionalData))
+            if (AdditionalData != null)
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStringValue(AdditionalData);
             }
-            if (Optional.IsDefined(HealthCheckSource))
+            if (HealthCheckSource != null)
             {
                 writer.WritePropertyName("healthCheckSource"u8);
                 writer.WriteStringValue(HealthCheckSource);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value);
+                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value, serializedAdditionalRawData);
+            return new HciPrecheckResult(
+                name.Value,
+                tags.Value,
+                title.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(severity),
+                description.Value,
+                remediation.Value,
+                targetResourceId.Value,
+                targetResourceName.Value,
+                Optional.ToNullable(timestamp),
+                additionalData.Value,
+                healthCheckSource.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciPrecheckResult>.Write(ModelReaderWriterOptions options)

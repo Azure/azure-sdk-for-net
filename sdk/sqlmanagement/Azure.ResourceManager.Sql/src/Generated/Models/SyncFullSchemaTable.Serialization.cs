@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Columns))
+            if (options.Format != "W" && !(Columns is ChangeTrackingList<SyncFullSchemaTableColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorId))
+            if (options.Format != "W" && ErrorId != null)
             {
                 writer.WritePropertyName("errorId"u8);
                 writer.WriteStringValue(ErrorId);
             }
-            if (options.Format != "W" && Optional.IsDefined(HasError))
+            if (options.Format != "W" && HasError.HasValue)
             {
                 writer.WritePropertyName("hasError"u8);
                 writer.WriteBooleanValue(HasError.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(QuotedName))
+            if (options.Format != "W" && QuotedName != null)
             {
                 writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SyncFullSchemaTableColumn>> columns = default;
+            IReadOnlyList<SyncFullSchemaTableColumn> columns = default;
             Optional<string> errorId = default;
             Optional<bool> hasError = default;
             Optional<string> name = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncFullSchemaTableColumn> array = new List<SyncFullSchemaTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncFullSchemaTableColumn.DeserializeSyncFullSchemaTableColumn(item));
+                        array.Add(SyncFullSchemaTableColumn.DeserializeSyncFullSchemaTableColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncFullSchemaTable(Optional.ToList(columns), errorId.Value, Optional.ToNullable(hasError), name.Value, quotedName.Value, serializedAdditionalRawData);
+            return new SyncFullSchemaTable(
+                columns ?? new ChangeTrackingList<SyncFullSchemaTableColumn>(),
+                errorId.Value,
+                Optional.ToNullable(hasError),
+                name.Value,
+                quotedName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncFullSchemaTable>.Write(ModelReaderWriterOptions options)

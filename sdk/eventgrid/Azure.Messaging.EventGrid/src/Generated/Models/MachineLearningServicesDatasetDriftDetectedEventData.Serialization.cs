@@ -84,7 +84,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MachineLearningServicesDatasetDriftDetectedEventData(dataDriftId.Value, dataDriftName.Value, runId.Value, baseDatasetId.Value, targetDatasetId.Value, Optional.ToNullable(driftCoefficient), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new MachineLearningServicesDatasetDriftDetectedEventData(
+                dataDriftId.Value,
+                dataDriftName.Value,
+                runId.Value,
+                baseDatasetId.Value,
+                targetDatasetId.Value,
+                Optional.ToNullable(driftCoefficient),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime));
         }
 
         internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>

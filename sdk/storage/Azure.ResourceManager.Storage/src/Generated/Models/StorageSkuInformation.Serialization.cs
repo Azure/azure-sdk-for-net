@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier.HasValue)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<StorageSkuCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Restrictions))
+            if (!(Restrictions is ChangeTrackingList<StorageSkuRestriction> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<StorageSkuTier> tier = default;
             Optional<string> resourceType = default;
             Optional<StorageKind> kind = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<StorageSkuCapability>> capabilities = default;
-            Optional<IReadOnlyList<StorageSkuRestriction>> restrictions = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<StorageSkuCapability> capabilities = default;
+            IReadOnlyList<StorageSkuRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuCapability> array = new List<StorageSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item));
+                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuRestriction> array = new List<StorageSkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item));
+                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -198,7 +198,15 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToNullable(kind), Optional.ToList(locations), Optional.ToList(capabilities), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new StorageSkuInformation(
+                name,
+                Optional.ToNullable(tier),
+                resourceType.Value,
+                Optional.ToNullable(kind),
+                locations ?? new ChangeTrackingList<string>(),
+                capabilities ?? new ChangeTrackingList<StorageSkuCapability>(),
+                restrictions ?? new ChangeTrackingList<StorageSkuRestriction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSkuInformation>.Write(ModelReaderWriterOptions options)

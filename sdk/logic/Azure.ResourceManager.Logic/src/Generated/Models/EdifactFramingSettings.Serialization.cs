@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceCodeListDirectoryVersion))
+            if (ServiceCodeListDirectoryVersion != null)
             {
                 writer.WritePropertyName("serviceCodeListDirectoryVersion"u8);
                 writer.WriteStringValue(ServiceCodeListDirectoryVersion);
             }
-            if (Optional.IsDefined(CharacterEncoding))
+            if (CharacterEncoding != null)
             {
                 writer.WritePropertyName("characterEncoding"u8);
                 writer.WriteStringValue(CharacterEncoding);
@@ -168,7 +168,19 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactFramingSettings(serviceCodeListDirectoryVersion.Value, characterEncoding.Value, protocolVersion, dataElementSeparator, componentSeparator, segmentTerminator, releaseIndicator, repetitionSeparator, characterSet, decimalPointIndicator, segmentTerminatorSuffix, serializedAdditionalRawData);
+            return new EdifactFramingSettings(
+                serviceCodeListDirectoryVersion.Value,
+                characterEncoding.Value,
+                protocolVersion,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                releaseIndicator,
+                repetitionSeparator,
+                characterSet,
+                decimalPointIndicator,
+                segmentTerminatorSuffix,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactFramingSettings>.Write(ModelReaderWriterOptions options)

@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 if (ExpireOn != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("expiryTime");
                 }
             }
-            if (Optional.IsDefined(Interval))
+            if (Interval != null)
             {
                 writer.WritePropertyName("interval"u8);
 #if NET6_0_OR_GREATER
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(AdvancedSchedule))
+            if (AdvancedSchedule != null)
             {
                 writer.WritePropertyName("advancedSchedule"u8);
                 writer.WriteObjectValue(AdvancedSchedule);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property0.Value);
+                            advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property0.Value, options);
                             continue;
                         }
                     }
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationScheduleCreateOrUpdateContent(name, description.Value, startTime, Optional.ToNullable(expiryTime), interval.Value, frequency, timeZone.Value, advancedSchedule.Value, serializedAdditionalRawData);
+            return new AutomationScheduleCreateOrUpdateContent(
+                name,
+                description.Value,
+                startTime,
+                Optional.ToNullable(expiryTime),
+                interval.Value,
+                frequency,
+                timeZone.Value,
+                advancedSchedule.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationScheduleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

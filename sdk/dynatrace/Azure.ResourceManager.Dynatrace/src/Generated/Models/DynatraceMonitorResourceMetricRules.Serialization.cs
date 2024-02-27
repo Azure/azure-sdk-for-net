@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<DynatraceMonitorResourceFilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IList<DynatraceMonitorResourceFilteringTag>> filteringTags = default;
+            IList<DynatraceMonitorResourceFilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceMonitorResourceFilteringTag> array = new List<DynatraceMonitorResourceFilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceMonitorResourceFilteringTag.DeserializeDynatraceMonitorResourceFilteringTag(item));
+                        array.Add(DynatraceMonitorResourceFilteringTag.DeserializeDynatraceMonitorResourceFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitorResourceMetricRules(Optional.ToList(filteringTags), serializedAdditionalRawData);
+            return new DynatraceMonitorResourceMetricRules(filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorResourceMetricRules>.Write(ModelReaderWriterOptions options)

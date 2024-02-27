@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(LanguageCode))
+            if (LanguageCode != null)
             {
                 writer.WritePropertyName("languageCode"u8);
                 writer.WriteStringValue(LanguageCode);
             }
-            if (Optional.IsDefined(HlsSettings))
+            if (HlsSettings != null)
             {
                 writer.WritePropertyName("hlsSettings"u8);
                 writer.WriteObjectValue(HlsSettings);
             }
-            if (Optional.IsDefined(DashSettings))
+            if (DashSettings != null)
             {
                 writer.WritePropertyName("dashSettings"u8);
                 writer.WriteObjectValue(DashSettings);
             }
-            if (Optional.IsDefined(Mpeg4TrackId))
+            if (Mpeg4TrackId.HasValue)
             {
                 if (Mpeg4TrackId != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("mpeg4TrackId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(BitRate))
+            if (options.Format != "W" && BitRate.HasValue)
             {
                 writer.WritePropertyName("bitRate"u8);
                 writer.WriteNumberValue(BitRate.Value);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dashSettings"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value);
+                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mpeg4TrackId"u8))
@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTrack(odataType, serializedAdditionalRawData, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
+            return new AudioTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName.Value,
+                displayName.Value,
+                languageCode.Value,
+                hlsSettings.Value,
+                dashSettings.Value,
+                Optional.ToNullable(mpeg4TrackId),
+                Optional.ToNullable(bitRate));
         }
 
         BinaryData IPersistableModel<AudioTrack>.Write(ModelReaderWriterOptions options)

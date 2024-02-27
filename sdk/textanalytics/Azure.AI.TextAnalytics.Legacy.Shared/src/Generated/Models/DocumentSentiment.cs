@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -25,10 +24,22 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="confidenceScores"/>, <paramref name="sentences"/> or <paramref name="warnings"/> is null. </exception>
         internal DocumentSentiment(string id, DocumentSentimentValue sentiment, SentimentConfidenceScorePerLabel confidenceScores, IEnumerable<SentenceSentiment> sentences, IEnumerable<TextAnalyticsWarning> warnings)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
-            Argument.AssertNotNull(sentences, nameof(sentences));
-            Argument.AssertNotNull(warnings, nameof(warnings));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (confidenceScores == null)
+            {
+                throw new ArgumentNullException(nameof(confidenceScores));
+            }
+            if (sentences == null)
+            {
+                throw new ArgumentNullException(nameof(sentences));
+            }
+            if (warnings == null)
+            {
+                throw new ArgumentNullException(nameof(warnings));
+            }
 
             Id = id;
             Sentiment = sentiment;

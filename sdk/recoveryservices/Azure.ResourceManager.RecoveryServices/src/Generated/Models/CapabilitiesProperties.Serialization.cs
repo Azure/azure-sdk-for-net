@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsZones))
+            if (!(DnsZones is ChangeTrackingList<DnsZone> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IList<DnsZone>> dnsZones = default;
+            IList<DnsZone> dnsZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<DnsZone> array = new List<DnsZone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsZone.DeserializeDnsZone(item));
+                        array.Add(DnsZone.DeserializeDnsZone(item, options));
                     }
                     dnsZones = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilitiesProperties(Optional.ToList(dnsZones), serializedAdditionalRawData);
+            return new CapabilitiesProperties(dnsZones ?? new ChangeTrackingList<DnsZone>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilitiesProperties>.Write(ModelReaderWriterOptions options)

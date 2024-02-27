@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RackSlot))
+            if (options.Format != "W" && RackSlot.HasValue)
             {
                 writer.WritePropertyName("rackSlot"u8);
                 writer.WriteNumberValue(RackSlot.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BootstrapProtocol))
+            if (options.Format != "W" && BootstrapProtocol.HasValue)
             {
                 writer.WritePropertyName("bootstrapProtocol"u8);
                 writer.WriteStringValue(BootstrapProtocol.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuCores))
+            if (options.Format != "W" && CpuCores.HasValue)
             {
                 writer.WritePropertyName("cpuCores"u8);
                 writer.WriteNumberValue(CpuCores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuSockets))
+            if (options.Format != "W" && CpuSockets.HasValue)
             {
                 writer.WritePropertyName("cpuSockets"u8);
                 writer.WriteNumberValue(CpuSockets.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            if (options.Format != "W" && !(Disks is ChangeTrackingList<MachineDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -58,27 +58,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Generation))
+            if (options.Format != "W" && Generation != null)
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteStringValue(Generation);
             }
-            if (options.Format != "W" && Optional.IsDefined(HardwareVersion))
+            if (options.Format != "W" && HardwareVersion != null)
             {
                 writer.WritePropertyName("hardwareVersion"u8);
                 writer.WriteStringValue(HardwareVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemoryCapacityGB))
+            if (options.Format != "W" && MemoryCapacityGB.HasValue)
             {
                 writer.WritePropertyName("memoryCapacityGB"u8);
                 writer.WriteNumberValue(MemoryCapacityGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Model))
+            if (options.Format != "W" && Model != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
+            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkCloudNetworkInterface> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalThreads))
+            if (options.Format != "W" && TotalThreads.HasValue)
             {
                 writer.WritePropertyName("totalThreads"u8);
                 writer.WriteNumberValue(TotalThreads.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Vendor))
+            if (options.Format != "W" && Vendor != null)
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<BootstrapProtocol> bootstrapProtocol = default;
             Optional<long> cpuCores = default;
             Optional<long> cpuSockets = default;
-            Optional<IReadOnlyList<MachineDisk>> disks = default;
+            IReadOnlyList<MachineDisk> disks = default;
             Optional<string> generation = default;
             Optional<string> hardwareVersion = default;
             Optional<long> memoryCapacityGB = default;
             Optional<string> model = default;
-            Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
+            IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces = default;
             Optional<long> totalThreads = default;
             Optional<string> vendor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<MachineDisk> array = new List<MachineDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineDisk.DeserializeMachineDisk(item));
+                                array.Add(MachineDisk.DeserializeMachineDisk(item, options));
                             }
                             disks = array;
                             continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<NetworkCloudNetworkInterface> array = new List<NetworkCloudNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item));
+                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value, serializedAdditionalRawData);
+            return new MachineSkuSlot(
+                Optional.ToNullable(rackSlot),
+                Optional.ToNullable(bootstrapProtocol),
+                Optional.ToNullable(cpuCores),
+                Optional.ToNullable(cpuSockets),
+                disks ?? new ChangeTrackingList<MachineDisk>(),
+                generation.Value,
+                hardwareVersion.Value,
+                Optional.ToNullable(memoryCapacityGB),
+                model.Value,
+                networkInterfaces ?? new ChangeTrackingList<NetworkCloudNetworkInterface>(),
+                Optional.ToNullable(totalThreads),
+                vendor.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineSkuSlot>.Write(ModelReaderWriterOptions options)

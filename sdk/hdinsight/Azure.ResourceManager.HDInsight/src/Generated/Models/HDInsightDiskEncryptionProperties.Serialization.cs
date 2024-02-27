@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VaultUri))
+            if (VaultUri != null)
             {
                 writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyName))
+            if (KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Optional.IsDefined(EncryptionAlgorithm))
+            if (EncryptionAlgorithm.HasValue)
             {
                 if (EncryptionAlgorithm != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("encryptionAlgorithm");
                 }
             }
-            if (Optional.IsDefined(MsiResourceId))
+            if (MsiResourceId != null)
             {
                 if (MsiResourceId != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("msiResourceId");
                 }
             }
-            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
+            if (IsEncryptionAtHostEnabled.HasValue)
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightDiskEncryptionProperties(vaultUri.Value, keyName.Value, keyVersion.Value, Optional.ToNullable(encryptionAlgorithm), msiResourceId.Value, Optional.ToNullable(encryptionAtHost), serializedAdditionalRawData);
+            return new HDInsightDiskEncryptionProperties(
+                vaultUri.Value,
+                keyName.Value,
+                keyVersion.Value,
+                Optional.ToNullable(encryptionAlgorithm),
+                msiResourceId.Value,
+                Optional.ToNullable(encryptionAtHost),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightDiskEncryptionProperties>.Write(ModelReaderWriterOptions options)

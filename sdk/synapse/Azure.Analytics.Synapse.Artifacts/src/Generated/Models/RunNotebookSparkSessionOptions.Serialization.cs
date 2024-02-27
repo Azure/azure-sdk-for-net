@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -30,22 +30,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(ProxyUser))
+            if (ProxyUser != null)
             {
                 writer.WritePropertyName("proxyUser"u8);
                 writer.WriteStringValue(ProxyUser);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Jars))
+            if (!(Jars is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PythonFiles))
+            if (!(PythonFiles is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("pyFiles"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Archives))
+            if (!(Archives is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Queue))
+            if (Queue != null)
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
             }
-            if (Optional.IsCollectionDefined(Configuration))
+            if (!(Configuration is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteStartObject();
@@ -101,37 +101,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DriverMemory))
+            if (DriverMemory != null)
             {
                 writer.WritePropertyName("driverMemory"u8);
                 writer.WriteStringValue(DriverMemory);
             }
-            if (Optional.IsDefined(DriverCores))
+            if (DriverCores.HasValue)
             {
                 writer.WritePropertyName("driverCores"u8);
                 writer.WriteNumberValue(DriverCores.Value);
             }
-            if (Optional.IsDefined(ExecutorMemory))
+            if (ExecutorMemory != null)
             {
                 writer.WritePropertyName("executorMemory"u8);
                 writer.WriteStringValue(ExecutorMemory);
             }
-            if (Optional.IsDefined(ExecutorCores))
+            if (ExecutorCores.HasValue)
             {
                 writer.WritePropertyName("executorCores"u8);
                 writer.WriteNumberValue(ExecutorCores.Value);
             }
-            if (Optional.IsDefined(ExecutorCount))
+            if (ExecutorCount.HasValue)
             {
                 writer.WritePropertyName("numExecutors"u8);
                 writer.WriteNumberValue(ExecutorCount.Value);
             }
-            if (Optional.IsDefined(IsQueueable))
+            if (IsQueueable.HasValue)
             {
                 writer.WritePropertyName("isQueueable"u8);
                 writer.WriteBooleanValue(IsQueueable.Value);
             }
-            if (Optional.IsDefined(HeartbeatTimeoutInSecond))
+            if (HeartbeatTimeoutInSecond.HasValue)
             {
                 writer.WritePropertyName("heartbeatTimeoutInSecond"u8);
                 writer.WriteNumberValue(HeartbeatTimeoutInSecond.Value);
@@ -145,16 +145,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> kind = default;
             Optional<string> proxyUser = default;
             Optional<string> name = default;
-            Optional<IList<string>> jars = default;
-            Optional<IList<string>> pyFiles = default;
-            Optional<IList<string>> files = default;
-            Optional<IList<string>> archives = default;
+            IList<string> jars = default;
+            IList<string> pyFiles = default;
+            IList<string> files = default;
+            IList<string> archives = default;
             Optional<object> queue = default;
-            Optional<IDictionary<string, string>> conf = default;
+            IDictionary<string, string> conf = default;
             Optional<string> driverMemory = default;
             Optional<int> driverCores = default;
             Optional<string> executorMemory = default;
@@ -328,7 +328,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSparkSessionOptions(Optional.ToDictionary(tags), kind.Value, proxyUser.Value, name.Value, Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), queue.Value, Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), Optional.ToNullable(isQueueable), Optional.ToNullable(heartbeatTimeoutInSecond));
+            return new RunNotebookSparkSessionOptions(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind.Value,
+                proxyUser.Value,
+                name.Value,
+                jars ?? new ChangeTrackingList<string>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                queue.Value,
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                driverMemory.Value,
+                Optional.ToNullable(driverCores),
+                executorMemory.Value,
+                Optional.ToNullable(executorCores),
+                Optional.ToNullable(numExecutors),
+                Optional.ToNullable(isQueueable),
+                Optional.ToNullable(heartbeatTimeoutInSecond));
         }
 
         internal partial class RunNotebookSparkSessionOptionsConverter : JsonConverter<RunNotebookSparkSessionOptions>

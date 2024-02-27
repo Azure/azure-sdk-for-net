@@ -27,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPConfigName))
+            if (IPConfigName != null)
             {
                 writer.WritePropertyName("ipConfigName"u8);
                 writer.WriteStringValue(IPConfigName);
             }
-            if (Optional.IsDefined(IsPrimary))
+            if (IsPrimary.HasValue)
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (Optional.IsDefined(IsSeletedForFailover))
+            if (IsSeletedForFailover.HasValue)
             {
                 writer.WritePropertyName("isSeletedForFailover"u8);
                 writer.WriteBooleanValue(IsSeletedForFailover.Value);
             }
-            if (Optional.IsDefined(RecoverySubnetName))
+            if (RecoverySubnetName != null)
             {
                 writer.WritePropertyName("recoverySubnetName"u8);
                 writer.WriteStringValue(RecoverySubnetName);
             }
-            if (Optional.IsDefined(RecoveryStaticIPAddress))
+            if (RecoveryStaticIPAddress != null)
             {
                 writer.WritePropertyName("recoveryStaticIPAddress"u8);
                 writer.WriteStringValue(RecoveryStaticIPAddress.ToString());
             }
-            if (Optional.IsDefined(RecoveryPublicIPAddressId))
+            if (RecoveryPublicIPAddressId != null)
             {
                 writer.WritePropertyName("recoveryPublicIPAddressId"u8);
                 writer.WriteStringValue(RecoveryPublicIPAddressId);
             }
-            if (Optional.IsCollectionDefined(RecoveryLBBackendAddressPoolIds))
+            if (!(RecoveryLBBackendAddressPoolIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recoveryLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();
@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TfoSubnetName))
+            if (TfoSubnetName != null)
             {
                 writer.WritePropertyName("tfoSubnetName"u8);
                 writer.WriteStringValue(TfoSubnetName);
             }
-            if (Optional.IsDefined(TfoStaticIPAddress))
+            if (TfoStaticIPAddress != null)
             {
                 writer.WritePropertyName("tfoStaticIPAddress"u8);
                 writer.WriteStringValue(TfoStaticIPAddress.ToString());
             }
-            if (Optional.IsDefined(TfoPublicIPAddressId))
+            if (TfoPublicIPAddressId != null)
             {
                 writer.WritePropertyName("tfoPublicIPAddressId"u8);
                 writer.WriteStringValue(TfoPublicIPAddressId);
             }
-            if (Optional.IsCollectionDefined(TfoLBBackendAddressPoolIds))
+            if (!(TfoLBBackendAddressPoolIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tfoLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoverySubnetName = default;
             Optional<IPAddress> recoveryStaticIPAddress = default;
             Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
-            Optional<IList<string>> recoveryLBBackendAddressPoolIds = default;
+            IList<string> recoveryLBBackendAddressPoolIds = default;
             Optional<string> tfoSubnetName = default;
             Optional<IPAddress> tfoStaticIPAddress = default;
             Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
-            Optional<IList<string>> tfoLBBackendAddressPoolIds = default;
+            IList<string> tfoLBBackendAddressPoolIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVFailoverIPConfigDetails(ipConfigName.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds), serializedAdditionalRawData);
+            return new HyperVFailoverIPConfigDetails(
+                ipConfigName.Value,
+                Optional.ToNullable(isPrimary),
+                Optional.ToNullable(isSeletedForFailover),
+                recoverySubnetName.Value,
+                recoveryStaticIPAddress.Value,
+                recoveryPublicIPAddressId.Value,
+                recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                tfoSubnetName.Value,
+                tfoStaticIPAddress.Value,
+                tfoPublicIPAddressId.Value,
+                tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVFailoverIPConfigDetails>.Write(ModelReaderWriterOptions options)

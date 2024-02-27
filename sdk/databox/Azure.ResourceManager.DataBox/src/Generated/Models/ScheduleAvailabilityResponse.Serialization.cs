@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableDates))
+            if (options.Format != "W" && !(AvailableDates is ChangeTrackingList<DateTimeOffset> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availableDates"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DateTimeOffset>> availableDates = default;
+            IReadOnlyList<DateTimeOffset> availableDates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduleAvailabilityResponse(Optional.ToList(availableDates), serializedAdditionalRawData);
+            return new ScheduleAvailabilityResponse(availableDates ?? new ChangeTrackingList<DateTimeOffset>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduleAvailabilityResponse>.Write(ModelReaderWriterOptions options)

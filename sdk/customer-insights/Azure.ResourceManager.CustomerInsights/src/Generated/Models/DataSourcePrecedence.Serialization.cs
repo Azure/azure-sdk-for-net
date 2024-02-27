@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Precedence))
+            if (Precedence.HasValue)
             {
                 writer.WritePropertyName("precedence"u8);
                 writer.WriteNumberValue(Precedence.Value);
             }
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSourceType))
+            if (options.Format != "W" && DataSourceType.HasValue)
             {
                 writer.WritePropertyName("dataSourceType"u8);
                 writer.WriteStringValue(DataSourceType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSourceReferenceId))
+            if (options.Format != "W" && DataSourceReferenceId != null)
             {
                 writer.WritePropertyName("dataSourceReferenceId"u8);
                 writer.WriteStringValue(DataSourceReferenceId);
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourcePrecedence(Optional.ToNullable(precedence), name.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id), dataSourceReferenceId.Value, serializedAdditionalRawData);
+            return new DataSourcePrecedence(
+                Optional.ToNullable(precedence),
+                name.Value,
+                Optional.ToNullable(dataSourceType),
+                Optional.ToNullable(status),
+                Optional.ToNullable(id),
+                dataSourceReferenceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourcePrecedence>.Write(ModelReaderWriterOptions options)

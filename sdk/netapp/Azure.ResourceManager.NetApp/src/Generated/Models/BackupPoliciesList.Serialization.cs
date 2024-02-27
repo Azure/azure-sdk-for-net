@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetAppBackupPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppBackupPolicyData>> value = default;
+            IReadOnlyList<NetAppBackupPolicyData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppBackupPolicyData> array = new List<NetAppBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(item));
+                        array.Add(NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupPoliciesList(Optional.ToList(value), serializedAdditionalRawData);
+            return new BackupPoliciesList(value ?? new ChangeTrackingList<NetAppBackupPolicyData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupPoliciesList>.Write(ModelReaderWriterOptions options)

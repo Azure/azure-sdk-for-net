@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            if (LastHeartbeatReceivedOn.HasValue)
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (Optional.IsDefined(VersionStatus))
+            if (VersionStatus != null)
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsCollectionDefined(RetentionVolumes))
+            if (!(RetentionVolumes is ChangeTrackingList<SiteRecoveryRetentionVolume> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("retentionVolumes"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataStores))
+            if (!(DataStores is ChangeTrackingList<SiteRecoveryDataStore> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataStores"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidationErrors))
+            if (!(ValidationErrors is ChangeTrackingList<SiteRecoveryHealthError> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HealthErrors))
+            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -102,37 +102,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiskCount))
+            if (DiskCount.HasValue)
             {
                 writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
-            if (Optional.IsDefined(OSVersion))
+            if (OSVersion != null)
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(AgentExpireOn))
+            if (AgentExpireOn.HasValue)
             {
                 writer.WritePropertyName("agentExpiryDate"u8);
                 writer.WriteStringValue(AgentExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(MarsAgentVersion))
+            if (MarsAgentVersion != null)
             {
                 writer.WritePropertyName("marsAgentVersion"u8);
                 writer.WriteStringValue(MarsAgentVersion);
             }
-            if (Optional.IsDefined(MarsAgentExpireOn))
+            if (MarsAgentExpireOn.HasValue)
             {
                 writer.WritePropertyName("marsAgentExpiryDate"u8);
                 writer.WriteStringValue(MarsAgentExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(AgentVersionDetails))
+            if (AgentVersionDetails != null)
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
                 writer.WriteObjectValue(AgentVersionDetails);
             }
-            if (Optional.IsDefined(MarsAgentVersionDetails))
+            if (MarsAgentVersionDetails != null)
             {
                 writer.WritePropertyName("marsAgentVersionDetails"u8);
                 writer.WriteObjectValue(MarsAgentVersionDetails);
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> agentVersion = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<SiteRecoveryRetentionVolume>> retentionVolumes = default;
-            Optional<IReadOnlyList<SiteRecoveryDataStore>> dataStores = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes = default;
+            IReadOnlyList<SiteRecoveryDataStore> dataStores = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             Optional<int> diskCount = default;
             Optional<string> osVersion = default;
             Optional<DateTimeOffset> agentExpireOn = default;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryRetentionVolume> array = new List<SiteRecoveryRetentionVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item));
+                        array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item, options));
                     }
                     retentionVolumes = array;
                     continue;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDataStore> array = new List<SiteRecoveryDataStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item));
+                        array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item, options));
                     }
                     dataStores = array;
                     continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("marsAgentVersionDetails"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -357,7 +357,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value, serializedAdditionalRawData);
+            return new MasterTargetServer(
+                id.Value,
+                ipAddress.Value,
+                name.Value,
+                osType.Value,
+                agentVersion.Value,
+                Optional.ToNullable(lastHeartbeat),
+                versionStatus.Value,
+                retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(),
+                dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(diskCount),
+                osVersion.Value,
+                Optional.ToNullable(agentExpireOn),
+                marsAgentVersion.Value,
+                Optional.ToNullable(marsAgentExpireOn),
+                agentVersionDetails.Value,
+                marsAgentVersionDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountName))
+            if (options.Format != "W" && AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogLink))
+            if (options.Format != "W" && !(CopyLogLink is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("copyLogLink"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CopyVerboseLogLink))
+            if (options.Format != "W" && !(CopyVerboseLogLink is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("copyVerboseLogLink"u8);
                 writer.WriteStartArray();
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             Optional<string> accountName = default;
-            Optional<IReadOnlyList<string>> copyLogLink = default;
-            Optional<IReadOnlyList<string>> copyVerboseLogLink = default;
+            IReadOnlyList<string> copyLogLink = default;
+            IReadOnlyList<string> copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName.Value, Optional.ToList(copyLogLink), Optional.ToList(copyVerboseLogLink));
+            return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName.Value, copyLogLink ?? new ChangeTrackingList<string>(), copyVerboseLogLink ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DataBoxHeavyAccountCopyLogDetails>.Write(ModelReaderWriterOptions options)

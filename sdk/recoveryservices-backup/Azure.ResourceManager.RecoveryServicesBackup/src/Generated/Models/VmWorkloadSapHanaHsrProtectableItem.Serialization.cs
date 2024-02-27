@@ -26,69 +26,69 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParentName))
+            if (ParentName != null)
             {
                 writer.WritePropertyName("parentName"u8);
                 writer.WriteStringValue(ParentName);
             }
-            if (Optional.IsDefined(ParentUniqueName))
+            if (ParentUniqueName != null)
             {
                 writer.WritePropertyName("parentUniqueName"u8);
                 writer.WriteStringValue(ParentUniqueName);
             }
-            if (Optional.IsDefined(ServerName))
+            if (ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(IsAutoProtectable))
+            if (IsAutoProtectable.HasValue)
             {
                 writer.WritePropertyName("isAutoProtectable"u8);
                 writer.WriteBooleanValue(IsAutoProtectable.Value);
             }
-            if (Optional.IsDefined(IsAutoProtected))
+            if (IsAutoProtected.HasValue)
             {
                 writer.WritePropertyName("isAutoProtected"u8);
                 writer.WriteBooleanValue(IsAutoProtected.Value);
             }
-            if (Optional.IsDefined(SubInquiredItemCount))
+            if (SubInquiredItemCount.HasValue)
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
                 writer.WriteNumberValue(SubInquiredItemCount.Value);
             }
-            if (Optional.IsDefined(SubProtectableItemCount))
+            if (SubProtectableItemCount.HasValue)
             {
                 writer.WritePropertyName("subprotectableitemcount"u8);
                 writer.WriteNumberValue(SubProtectableItemCount.Value);
             }
-            if (Optional.IsDefined(PreBackupValidation))
+            if (PreBackupValidation != null)
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
                 writer.WriteObjectValue(PreBackupValidation);
             }
-            if (Optional.IsDefined(IsProtectable))
+            if (IsProtectable.HasValue)
             {
                 writer.WritePropertyName("isProtectable"u8);
                 writer.WriteBooleanValue(IsProtectable.Value);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType != null)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType != null)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value);
+                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isProtectable"u8))
@@ -253,7 +253,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadSapHanaHsrProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value, Optional.ToNullable(isProtectable));
+            return new VmWorkloadSapHanaHsrProtectableItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                protectableItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData,
+                parentName.Value,
+                parentUniqueName.Value,
+                serverName.Value,
+                Optional.ToNullable(isAutoProtectable),
+                Optional.ToNullable(isAutoProtected),
+                Optional.ToNullable(subinquireditemcount),
+                Optional.ToNullable(subprotectableitemcount),
+                prebackupvalidation.Value,
+                Optional.ToNullable(isProtectable));
         }
 
         BinaryData IPersistableModel<VmWorkloadSapHanaHsrProtectableItem>.Write(ModelReaderWriterOptions options)

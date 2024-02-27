@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerSettings))
+            if (ContainerSettings != null)
             {
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);
             }
-            if (Optional.IsDefined(StorageAccountSettings))
+            if (StorageAccountSettings != null)
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
                 writer.WriteObjectValue(StorageAccountSettings);
             }
-            if (Optional.IsDefined(CleanupPreference))
+            if (CleanupPreference.HasValue)
             {
                 writer.WritePropertyName("cleanupPreference"u8);
                 writer.WriteStringValue(CleanupPreference.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(Outputs))
+            if (options.Format != "W" && Outputs != null)
             {
                 writer.WritePropertyName("outputs"u8);
 #if NET6_0_OR_GREATER
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value);
+                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountSettings"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property.Value);
+                    storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cleanupPreference"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    status = ScriptStatus.DeserializeScriptStatus(property.Value);
+                    status = ScriptStatus.DeserializeScriptStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentScriptPropertiesBase(containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, serializedAdditionalRawData);
+            return new ArmDeploymentScriptPropertiesBase(
+                containerSettings.Value,
+                storageAccountSettings.Value,
+                Optional.ToNullable(cleanupPreference),
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                outputs.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentScriptPropertiesBase>.Write(ModelReaderWriterOptions options)

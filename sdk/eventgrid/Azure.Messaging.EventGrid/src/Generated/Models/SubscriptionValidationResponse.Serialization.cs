@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidationResponse))
+            if (ValidationResponse != null)
             {
                 writer.WritePropertyName("validationResponse"u8);
                 writer.WriteStringValue(ValidationResponse);

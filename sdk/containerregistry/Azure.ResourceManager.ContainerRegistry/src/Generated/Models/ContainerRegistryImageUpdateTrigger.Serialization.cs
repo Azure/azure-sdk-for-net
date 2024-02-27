@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Images))
+            if (!(Images is ChangeTrackingList<ContainerRegistryImageDescriptor> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("images"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             Optional<Guid> id = default;
             Optional<DateTimeOffset> timestamp = default;
-            Optional<IList<ContainerRegistryImageDescriptor>> images = default;
+            IList<ContainerRegistryImageDescriptor> images = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryImageDescriptor> array = new List<ContainerRegistryImageDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(item));
+                        array.Add(ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(item, options));
                     }
                     images = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImageUpdateTrigger(Optional.ToNullable(id), Optional.ToNullable(timestamp), Optional.ToList(images), serializedAdditionalRawData);
+            return new ContainerRegistryImageUpdateTrigger(Optional.ToNullable(id), Optional.ToNullable(timestamp), images ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImageUpdateTrigger>.Write(ModelReaderWriterOptions options)

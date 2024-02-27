@@ -27,37 +27,37 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            if (options.Format != "W" && PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SshAuthority))
+            if (options.Format != "W" && SshAuthority != null)
             {
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (options.Format != "W" && Optional.IsDefined(SshInBrowserUri))
+            if (options.Format != "W" && SshInBrowserUri != null)
             {
                 writer.WritePropertyName("sshInBrowserUrl"u8);
                 writer.WriteStringValue(SshInBrowserUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(RdpAuthority))
+            if (options.Format != "W" && RdpAuthority != null)
             {
                 writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
-            if (options.Format != "W" && Optional.IsDefined(RdpInBrowserUri))
+            if (options.Format != "W" && RdpInBrowserUri != null)
             {
                 writer.WritePropertyName("rdpInBrowserUrl"u8);
                 writer.WriteStringValue(RdpInBrowserUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdminUsername))
+            if (options.Format != "W" && AdminUsername != null)
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (options.Format != "W" && Optional.IsDefined(NonAdminUsername))
+            if (options.Format != "W" && NonAdminUsername != null)
             {
                 writer.WritePropertyName("nonAdminUsername"u8);
                 writer.WriteStringValue(NonAdminUsername);
@@ -164,7 +164,15 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineConnectionProfile(privateIPAddress.Value, sshAuthority.Value, sshInBrowserUrl.Value, rdpAuthority.Value, rdpInBrowserUrl.Value, adminUsername.Value, nonAdminUsername.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineConnectionProfile(
+                privateIPAddress.Value,
+                sshAuthority.Value,
+                sshInBrowserUrl.Value,
+                rdpAuthority.Value,
+                rdpInBrowserUrl.Value,
+                adminUsername.Value,
+                nonAdminUsername.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineConnectionProfile>.Write(ModelReaderWriterOptions options)

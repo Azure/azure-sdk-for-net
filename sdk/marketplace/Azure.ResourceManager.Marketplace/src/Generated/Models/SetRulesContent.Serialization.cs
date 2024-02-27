@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MarketplaceRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IList<MarketplaceRule>> value = default;
+            IList<MarketplaceRule> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<MarketplaceRule> array = new List<MarketplaceRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceRule.DeserializeMarketplaceRule(item));
+                        array.Add(MarketplaceRule.DeserializeMarketplaceRule(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SetRulesContent(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SetRulesContent(value ?? new ChangeTrackingList<MarketplaceRule>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SetRulesContent>.Write(ModelReaderWriterOptions options)

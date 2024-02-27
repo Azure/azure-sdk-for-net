@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MakeSourceServerReadOnly))
+            if (MakeSourceServerReadOnly.HasValue)
             {
                 writer.WritePropertyName("makeSourceServerReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceServerReadOnly.Value);
             }
-            if (Optional.IsDefined(StartedOn))
+            if (StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(OptionalAgentSettings))
+            if (!(OptionalAgentSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("optionalAgentSettings"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (EncryptedKeyForSecureFields != null)
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases = default;
             Optional<bool> makeSourceServerReadOnly = default;
             Optional<DateTimeOffset> startedOn = default;
-            Optional<IDictionary<string, string>> optionalAgentSettings = default;
+            IDictionary<string, string> optionalAgentSettings = default;
             Optional<string> encryptedKeyForSecureFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> array = new List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput.DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(item));
+                        array.Add(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput.DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, Optional.ToNullable(makeSourceServerReadOnly), Optional.ToNullable(startedOn), Optional.ToDictionary(optionalAgentSettings), encryptedKeyForSecureFields.Value, serializedAdditionalRawData);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                selectedDatabases,
+                Optional.ToNullable(makeSourceServerReadOnly),
+                Optional.ToNullable(startedOn),
+                optionalAgentSettings ?? new ChangeTrackingDictionary<string, string>(),
+                encryptedKeyForSecureFields.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskInput>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -22,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountIdentifier"/>, <paramref name="database"/> or <paramref name="warehouse"/> is null. </exception>
         public SnowflakeV2LinkedService(DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> database, DataFactoryElement<string> warehouse)
         {
-            Argument.AssertNotNull(accountIdentifier, nameof(accountIdentifier));
-            Argument.AssertNotNull(database, nameof(database));
-            Argument.AssertNotNull(warehouse, nameof(warehouse));
+            if (accountIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(accountIdentifier));
+            }
+            if (database == null)
+            {
+                throw new ArgumentNullException(nameof(database));
+            }
+            if (warehouse == null)
+            {
+                throw new ArgumentNullException(nameof(warehouse));
+            }
 
             AccountIdentifier = accountIdentifier;
             Database = database;

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RestartCount))
+            if (options.Format != "W" && RestartCount.HasValue)
             {
                 writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentState))
+            if (options.Format != "W" && CurrentState != null)
             {
                 writer.WritePropertyName("currentState"u8);
                 writer.WriteObjectValue(CurrentState);
             }
-            if (options.Format != "W" && Optional.IsDefined(PreviousState))
+            if (options.Format != "W" && PreviousState != null)
             {
                 writer.WritePropertyName("previousState"u8);
                 writer.WriteObjectValue(PreviousState);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
+            if (options.Format != "W" && !(Events is ChangeTrackingList<ContainerEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<int> restartCount = default;
             Optional<ContainerState> currentState = default;
             Optional<ContainerState> previousState = default;
-            Optional<IReadOnlyList<ContainerEvent>> events = default;
+            IReadOnlyList<ContainerEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    currentState = ContainerState.DeserializeContainerState(property.Value);
+                    currentState = ContainerState.DeserializeContainerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previousState"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    previousState = ContainerState.DeserializeContainerState(property.Value);
+                    previousState = ContainerState.DeserializeContainerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("events"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerEvent> array = new List<ContainerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEvent.DeserializeContainerEvent(item));
+                        array.Add(ContainerEvent.DeserializeContainerEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitContainerPropertiesDefinitionInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, Optional.ToList(events), serializedAdditionalRawData);
+            return new InitContainerPropertiesDefinitionInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, events ?? new ChangeTrackingList<ContainerEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitContainerPropertiesDefinitionInstanceView>.Write(ModelReaderWriterOptions options)

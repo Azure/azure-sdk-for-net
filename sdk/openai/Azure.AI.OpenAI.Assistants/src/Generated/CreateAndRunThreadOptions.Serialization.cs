@@ -29,22 +29,22 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartObject();
             writer.WritePropertyName("assistant_id"u8);
             writer.WriteStringValue(AssistantId);
-            if (Optional.IsDefined(Thread))
+            if (Thread != null)
             {
                 writer.WritePropertyName("thread"u8);
                 writer.WriteObjectValue(Thread);
             }
-            if (Optional.IsDefined(OverrideModelName))
+            if (OverrideModelName != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(OverrideModelName);
             }
-            if (Optional.IsDefined(OverrideInstructions))
+            if (OverrideInstructions != null)
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(OverrideInstructions);
             }
-            if (Optional.IsCollectionDefined(OverrideTools))
+            if (!(OverrideTools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Metadata != null)
                 {
@@ -114,8 +114,8 @@ namespace Azure.AI.OpenAI.Assistants
             Optional<AssistantThreadCreationOptions> thread = default;
             Optional<string> model = default;
             Optional<string> instructions = default;
-            Optional<IList<ToolDefinition>> tools = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IList<ToolDefinition> tools = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.AI.OpenAI.Assistants
                     {
                         continue;
                     }
-                    thread = AssistantThreadCreationOptions.DeserializeAssistantThreadCreationOptions(property.Value);
+                    thread = AssistantThreadCreationOptions.DeserializeAssistantThreadCreationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -153,7 +153,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolDefinition> array = new List<ToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        array.Add(ToolDefinition.DeserializeToolDefinition(item, options));
                     }
                     tools = array;
                     continue;
@@ -178,7 +178,14 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateAndRunThreadOptions(assistantId, thread.Value, model.Value, instructions.Value, Optional.ToList(tools), Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new CreateAndRunThreadOptions(
+                assistantId,
+                thread.Value,
+                model.Value,
+                instructions.Value,
+                tools ?? new ChangeTrackingList<ToolDefinition>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateAndRunThreadOptions>.Write(ModelReaderWriterOptions options)

@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<string> message = default;
             Optional<string> target = default;
             Optional<TimeSeriesOperationError> innerError = default;
-            Optional<IReadOnlyList<TimeSeriesOperationErrorDetails>> details = default;
+            IReadOnlyList<TimeSeriesOperationErrorDetails> details = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,13 @@ namespace Azure.IoT.TimeSeriesInsights
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TimeSeriesOperationError(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
+            return new TimeSeriesOperationError(
+                code.Value,
+                message.Value,
+                target.Value,
+                innerError.Value,
+                details ?? new ChangeTrackingList<TimeSeriesOperationErrorDetails>(),
+                additionalProperties);
         }
     }
 }

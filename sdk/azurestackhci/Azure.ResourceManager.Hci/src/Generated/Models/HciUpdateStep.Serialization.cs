@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartTimeUtc))
+            if (StartTimeUtc.HasValue)
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(EndTimeUtc))
+            if (EndTimeUtc.HasValue)
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedTimeUtc))
+            if (LastUpdatedTimeUtc.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Steps))
+            if (!(Steps is ChangeTrackingList<HciUpdateStep> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<IList<HciUpdateStep>> steps = default;
+            IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HciUpdateStep> array = new List<HciUpdateStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeHciUpdateStep(item));
+                        array.Add(DeserializeHciUpdateStep(item, options));
                     }
                     steps = array;
                     continue;
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps), serializedAdditionalRawData);
+            return new HciUpdateStep(
+                name.Value,
+                description.Value,
+                errorMessage.Value,
+                status.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(endTimeUtc),
+                Optional.ToNullable(lastUpdatedTimeUtc),
+                steps ?? new ChangeTrackingList<HciUpdateStep>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciUpdateStep>.Write(ModelReaderWriterOptions options)

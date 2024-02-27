@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TriggerCriteria))
+            if (!(TriggerCriteria is ChangeTrackingList<TriggerCriterion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("triggerCriteria"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,32 +47,32 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SolutionId))
+            if (SolutionId != null)
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(ReplacementMaps))
+            if (ReplacementMaps != null)
             {
                 writer.WritePropertyName("replacementMaps"u8);
                 writer.WriteObjectValue(ReplacementMaps);
             }
-            if (Optional.IsCollectionDefined(Sections))
+            if (!(Sections is ChangeTrackingList<SelfHelpSection> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sections"u8);
                 writer.WriteStartArray();
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IList<TriggerCriterion>> triggerCriteria = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            IList<TriggerCriterion> triggerCriteria = default;
+            IDictionary<string, string> parameters = default;
             Optional<string> solutionId = default;
             Optional<SolutionProvisioningState> provisioningState = default;
             Optional<string> title = default;
             Optional<string> content = default;
             Optional<ReplacementMaps> replacementMaps = default;
-            Optional<IList<SelfHelpSection>> sections = default;
+            IList<SelfHelpSection> sections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TriggerCriterion> array = new List<TriggerCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerCriterion.DeserializeTriggerCriterion(item));
+                        array.Add(TriggerCriterion.DeserializeTriggerCriterion(item, options));
                     }
                     triggerCriteria = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value);
+                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sections"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpSection> array = new List<SelfHelpSection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSection.DeserializeSelfHelpSection(item));
+                        array.Add(SelfHelpSection.DeserializeSelfHelpSection(item, options));
                     }
                     sections = array;
                     continue;
@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionResourceProperties(Optional.ToList(triggerCriteria), Optional.ToDictionary(parameters), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, Optional.ToList(sections), serializedAdditionalRawData);
+            return new SolutionResourceProperties(
+                triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                solutionId.Value,
+                Optional.ToNullable(provisioningState),
+                title.Value,
+                content.Value,
+                replacementMaps.Value,
+                sections ?? new ChangeTrackingList<SelfHelpSection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourceProperties>.Write(ModelReaderWriterOptions options)

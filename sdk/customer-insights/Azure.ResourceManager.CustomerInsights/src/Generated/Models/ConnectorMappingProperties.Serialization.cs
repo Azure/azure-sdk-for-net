@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(FileFilter))
+            if (FileFilter != null)
             {
                 writer.WritePropertyName("fileFilter"u8);
                 writer.WriteStringValue(FileFilter);
             }
-            if (Optional.IsDefined(HasHeader))
+            if (HasHeader.HasValue)
             {
                 writer.WritePropertyName("hasHeader"u8);
                 writer.WriteBooleanValue(HasHeader.Value);
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (property.NameEquals("errorManagement"u8))
                 {
-                    errorManagement = ConnectorMappingErrorManagement.DeserializeConnectorMappingErrorManagement(property.Value);
+                    errorManagement = ConnectorMappingErrorManagement.DeserializeConnectorMappingErrorManagement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("format"u8))
                 {
-                    format = ConnectorMappingFormat.DeserializeConnectorMappingFormat(property.Value);
+                    format = ConnectorMappingFormat.DeserializeConnectorMappingFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availability"u8))
                 {
-                    availability = ConnectorMappingAvailability.DeserializeConnectorMappingAvailability(property.Value);
+                    availability = ConnectorMappingAvailability.DeserializeConnectorMappingAvailability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("structure"u8))
@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ConnectorMappingStructure> array = new List<ConnectorMappingStructure>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectorMappingStructure.DeserializeConnectorMappingStructure(item));
+                        array.Add(ConnectorMappingStructure.DeserializeConnectorMappingStructure(item, options));
                     }
                     structure = array;
                     continue;
                 }
                 if (property.NameEquals("completeOperation"u8))
                 {
-                    completeOperation = ConnectorMappingCompleteOperation.DeserializeConnectorMappingCompleteOperation(property.Value);
+                    completeOperation = ConnectorMappingCompleteOperation.DeserializeConnectorMappingCompleteOperation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingProperties(folderPath.Value, fileFilter.Value, Optional.ToNullable(hasHeader), errorManagement, format, availability, structure, completeOperation, serializedAdditionalRawData);
+            return new ConnectorMappingProperties(
+                folderPath.Value,
+                fileFilter.Value,
+                Optional.ToNullable(hasHeader),
+                errorManagement,
+                format,
+                availability,
+                structure,
+                completeOperation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingProperties>.Write(ModelReaderWriterOptions options)

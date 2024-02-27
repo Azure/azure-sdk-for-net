@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
         public CustomRolloutProperties(CustomRolloutSpecification specification)
         {
-            Argument.AssertNotNull(specification, nameof(specification));
+            if (specification == null)
+            {
+                throw new ArgumentNullException(nameof(specification));
+            }
 
             Specification = specification;
         }

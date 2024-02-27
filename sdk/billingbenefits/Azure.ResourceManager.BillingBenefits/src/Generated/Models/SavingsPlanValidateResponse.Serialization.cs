@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Benefits))
+            if (!(Benefits is ChangeTrackingList<SavingsPlanValidateResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("benefits"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
+            IReadOnlyList<SavingsPlanValidateResult> benefits = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<SavingsPlanValidateResult> array = new List<SavingsPlanValidateResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(item));
+                        array.Add(SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(item, options));
                     }
                     benefits = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanValidateResponse(Optional.ToList(benefits), nextLink.Value, serializedAdditionalRawData);
+            return new SavingsPlanValidateResponse(benefits ?? new ChangeTrackingList<SavingsPlanValidateResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanValidateResponse>.Write(ModelReaderWriterOptions options)

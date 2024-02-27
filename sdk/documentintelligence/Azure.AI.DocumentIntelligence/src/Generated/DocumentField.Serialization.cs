@@ -29,52 +29,52 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(ValueString))
+            if (ValueString != null)
             {
                 writer.WritePropertyName("valueString"u8);
                 writer.WriteStringValue(ValueString);
             }
-            if (Optional.IsDefined(ValueDate))
+            if (ValueDate.HasValue)
             {
                 writer.WritePropertyName("valueDate"u8);
                 writer.WriteStringValue(ValueDate.Value, "D");
             }
-            if (Optional.IsDefined(ValueTime))
+            if (ValueTime.HasValue)
             {
                 writer.WritePropertyName("valueTime"u8);
                 writer.WriteStringValue(ValueTime.Value, "T");
             }
-            if (Optional.IsDefined(ValuePhoneNumber))
+            if (ValuePhoneNumber != null)
             {
                 writer.WritePropertyName("valuePhoneNumber"u8);
                 writer.WriteStringValue(ValuePhoneNumber);
             }
-            if (Optional.IsDefined(ValueNumber))
+            if (ValueNumber.HasValue)
             {
                 writer.WritePropertyName("valueNumber"u8);
                 writer.WriteNumberValue(ValueNumber.Value);
             }
-            if (Optional.IsDefined(ValueInteger))
+            if (ValueInteger.HasValue)
             {
                 writer.WritePropertyName("valueInteger"u8);
                 writer.WriteNumberValue(ValueInteger.Value);
             }
-            if (Optional.IsDefined(ValueSelectionMark))
+            if (ValueSelectionMark.HasValue)
             {
                 writer.WritePropertyName("valueSelectionMark"u8);
                 writer.WriteStringValue(ValueSelectionMark.Value.ToString());
             }
-            if (Optional.IsDefined(ValueSignature))
+            if (ValueSignature.HasValue)
             {
                 writer.WritePropertyName("valueSignature"u8);
                 writer.WriteStringValue(ValueSignature.Value.ToString());
             }
-            if (Optional.IsDefined(ValueCountryRegion))
+            if (ValueCountryRegion != null)
             {
                 writer.WritePropertyName("valueCountryRegion"u8);
                 writer.WriteStringValue(ValueCountryRegion);
             }
-            if (Optional.IsCollectionDefined(ValueArray))
+            if (!(ValueArray is ChangeTrackingList<DocumentField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValueObject))
+            if (!(ValueObject is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
@@ -95,27 +95,27 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ValueCurrency))
+            if (ValueCurrency != null)
             {
                 writer.WritePropertyName("valueCurrency"u8);
                 writer.WriteObjectValue(ValueCurrency);
             }
-            if (Optional.IsDefined(ValueAddress))
+            if (ValueAddress != null)
             {
                 writer.WritePropertyName("valueAddress"u8);
                 writer.WriteObjectValue(ValueAddress);
             }
-            if (Optional.IsDefined(ValueBoolean))
+            if (ValueBoolean.HasValue)
             {
                 writer.WritePropertyName("valueBoolean"u8);
                 writer.WriteBooleanValue(ValueBoolean.Value);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Spans))
+            if (!(Spans is ChangeTrackingList<DocumentSpan> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("spans"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Confidence))
+            if (Confidence.HasValue)
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
@@ -188,14 +188,14 @@ namespace Azure.AI.DocumentIntelligence
             Optional<DocumentSelectionMarkState> valueSelectionMark = default;
             Optional<DocumentSignatureType> valueSignature = default;
             Optional<string> valueCountryRegion = default;
-            Optional<IReadOnlyList<DocumentField>> valueArray = default;
-            Optional<IReadOnlyDictionary<string, DocumentField>> valueObject = default;
+            IReadOnlyList<DocumentField> valueArray = default;
+            IReadOnlyDictionary<string, DocumentField> valueObject = default;
             Optional<CurrencyValue> valueCurrency = default;
             Optional<AddressValue> valueAddress = default;
             Optional<bool> valueBoolean = default;
             Optional<string> content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
-            Optional<IReadOnlyList<DocumentSpan>> spans = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
+            IReadOnlyList<DocumentSpan> spans = default;
             Optional<float> confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -284,7 +284,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentField> array = new List<DocumentField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentField(item));
+                        array.Add(DeserializeDocumentField(item, options));
                     }
                     valueArray = array;
                     continue;
@@ -298,7 +298,7 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentField> dictionary = new Dictionary<string, DocumentField>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeDocumentField(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeDocumentField(property0.Value, options));
                     }
                     valueObject = dictionary;
                     continue;
@@ -309,7 +309,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value);
+                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("valueAddress"u8))
@@ -318,7 +318,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueAddress = AddressValue.DeserializeAddressValue(property.Value);
+                    valueAddress = AddressValue.DeserializeAddressValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("valueBoolean"u8))
@@ -344,7 +344,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<BoundingRegion> array = new List<BoundingRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item));
+                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
@@ -358,7 +358,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -378,7 +378,27 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), valueCurrency.Value, valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence), serializedAdditionalRawData);
+            return new DocumentField(
+                type,
+                valueString.Value,
+                Optional.ToNullable(valueDate),
+                Optional.ToNullable(valueTime),
+                valuePhoneNumber.Value,
+                Optional.ToNullable(valueNumber),
+                Optional.ToNullable(valueInteger),
+                Optional.ToNullable(valueSelectionMark),
+                Optional.ToNullable(valueSignature),
+                valueCountryRegion.Value,
+                valueArray ?? new ChangeTrackingList<DocumentField>(),
+                valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(),
+                valueCurrency.Value,
+                valueAddress.Value,
+                Optional.ToNullable(valueBoolean),
+                content.Value,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
+                Optional.ToNullable(confidence),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentField>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Columns != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (Optional.IsDefined(DataContext))
+            if (DataContext != null)
             {
                 if (DataContext != null)
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMonitoringInputDataBase(document.RootElement, options);
+            return DeserializeMonitoringInputDataBase(document.RootElement, options);
         }
 
         internal static UnknownMonitoringInputDataBase DeserializeUnknownMonitoringInputDataBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> columns = default;
+            IDictionary<string, string> columns = default;
             Optional<string> dataContext = default;
             MonitoringInputDataType inputDataType = "Unknown";
             JobInputType jobInputType = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMonitoringInputDataBase(Optional.ToDictionary(columns), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData);
+            return new UnknownMonitoringInputDataBase(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext.Value,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringInputDataBase>.Write(ModelReaderWriterOptions options)
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMonitoringInputDataBase(document.RootElement, options);
+                        return DeserializeMonitoringInputDataBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support '{options.Format}' format.");

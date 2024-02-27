@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 if (Uri != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (TimeoutInSeconds.HasValue)
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (SyncIntervalInSeconds.HasValue)
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(RepositoryRef))
+            if (RepositoryRef != null)
             {
                 if (RepositoryRef != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("repositoryRef");
                 }
             }
-            if (Optional.IsDefined(SshKnownHosts))
+            if (SshKnownHosts != null)
             {
                 if (SshKnownHosts != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sshKnownHosts");
                 }
             }
-            if (Optional.IsDefined(HttpsUser))
+            if (HttpsUser != null)
             {
                 if (HttpsUser != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsUser");
                 }
             }
-            if (Optional.IsDefined(HttpsCACert))
+            if (HttpsCACert != null)
             {
                 if (HttpsCACert != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsCACert");
                 }
             }
-            if (Optional.IsDefined(LocalAuthRef))
+            if (LocalAuthRef != null)
             {
                 if (LocalAuthRef != null)
                 {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         repositoryRef = null;
                         continue;
                     }
-                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value);
+                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshKnownHosts"u8))
@@ -258,7 +258,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesGitRepositoryUpdateContent(url.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value, serializedAdditionalRawData);
+            return new KubernetesGitRepositoryUpdateContent(
+                url.Value,
+                Optional.ToNullable(timeoutInSeconds),
+                Optional.ToNullable(syncIntervalInSeconds),
+                repositoryRef.Value,
+                sshKnownHosts.Value,
+                httpsUser.Value,
+                httpsCACert.Value,
+                localAuthRef.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesGitRepositoryUpdateContent>.Write(ModelReaderWriterOptions options)

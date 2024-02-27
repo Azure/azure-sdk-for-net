@@ -46,28 +46,28 @@ namespace Azure.ResourceManager.AgFoodPlatform
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions", false);
-            if (farmBeatsExtensionIds != null && Optional.IsCollectionDefined(farmBeatsExtensionIds))
+            if (farmBeatsExtensionIds != null && !(farmBeatsExtensionIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in farmBeatsExtensionIds)
                 {
                     uri.AppendQuery("farmBeatsExtensionIds", param, true);
                 }
             }
-            if (farmBeatsExtensionNames != null && Optional.IsCollectionDefined(farmBeatsExtensionNames))
+            if (farmBeatsExtensionNames != null && !(farmBeatsExtensionNames is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in farmBeatsExtensionNames)
                 {
                     uri.AppendQuery("farmBeatsExtensionNames", param, true);
                 }
             }
-            if (extensionCategories != null && Optional.IsCollectionDefined(extensionCategories))
+            if (extensionCategories != null && !(extensionCategories is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in extensionCategories)
                 {
                     uri.AppendQuery("extensionCategories", param, true);
                 }
             }
-            if (publisherIds != null && Optional.IsCollectionDefined(publisherIds))
+            if (publisherIds != null && !(publisherIds is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in publisherIds)
                 {
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="farmBeatsExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FarmBeatsExtensionData>> GetAsync(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
+            if (farmBeatsExtensionId == null)
+            {
+                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
+            }
+            if (farmBeatsExtensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
+            }
 
             using var message = CreateGetRequest(farmBeatsExtensionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -191,7 +198,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="farmBeatsExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FarmBeatsExtensionData> Get(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
+            if (farmBeatsExtensionId == null)
+            {
+                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
+            }
+            if (farmBeatsExtensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
+            }
 
             using var message = CreateGetRequest(farmBeatsExtensionId);
             _pipeline.Send(message, cancellationToken);
@@ -239,7 +253,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<FarmBeatsExtensionListResponse>> ListNextPageAsync(string nextLink, IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,7 +288,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<FarmBeatsExtensionListResponse> ListNextPage(string nextLink, IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, maxPageSize);
             _pipeline.Send(message, cancellationToken);

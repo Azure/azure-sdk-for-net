@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (options.Format != "W" && Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Average))
+            if (options.Format != "W" && Average.HasValue)
             {
                 writer.WritePropertyName("average"u8);
                 writer.WriteNumberValue(Average.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Maximum))
+            if (options.Format != "W" && Maximum.HasValue)
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Minimum))
+            if (options.Format != "W" && Minimum.HasValue)
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Total))
+            if (options.Format != "W" && Total.HasValue)
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), serializedAdditionalRawData);
+            return new SqlMetricValue(
+                Optional.ToNullable(count),
+                Optional.ToNullable(average),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(total),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMetricValue>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Granularity))
+            if (Granularity.HasValue)
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsCollectionDefined(Aggregation))
+            if (!(Aggregation is ChangeTrackingDictionary<string, QueryAggregation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Grouping))
+            if (!(Grouping is ChangeTrackingList<QueryGrouping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             Optional<GranularityType> granularity = default;
             Optional<QueryDatasetConfiguration> configuration = default;
-            Optional<IDictionary<string, QueryAggregation>> aggregation = default;
-            Optional<IList<QueryGrouping>> grouping = default;
+            IDictionary<string, QueryAggregation> aggregation = default;
+            IList<QueryGrouping> grouping = default;
             Optional<QueryFilter> filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = QueryDatasetConfiguration.DeserializeQueryDatasetConfiguration(property.Value);
+                    configuration = QueryDatasetConfiguration.DeserializeQueryDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, QueryAggregation> dictionary = new Dictionary<string, QueryAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value));
+                        dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryGrouping> array = new List<QueryGrouping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryGrouping.DeserializeQueryGrouping(item));
+                        array.Add(QueryGrouping.DeserializeQueryGrouping(item, options));
                     }
                     grouping = array;
                     continue;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = QueryFilter.DeserializeQueryFilter(property.Value);
+                    filter = QueryFilter.DeserializeQueryFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +170,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), filter.Value, serializedAdditionalRawData);
+            return new QueryDataset(
+                Optional.ToNullable(granularity),
+                configuration.Value,
+                aggregation ?? new ChangeTrackingDictionary<string, QueryAggregation>(),
+                grouping ?? new ChangeTrackingList<QueryGrouping>(),
+                filter.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryDataset>.Write(ModelReaderWriterOptions options)

@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="capacity"/> is null. </exception>
         internal IotHubSkuDescription(IotHubSkuInfo sku, IotHubCapacity capacity)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
-            Argument.AssertNotNull(capacity, nameof(capacity));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (capacity == null)
+            {
+                throw new ArgumentNullException(nameof(capacity));
+            }
 
             Sku = sku;
             Capacity = capacity;

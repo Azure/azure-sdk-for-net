@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PageSize))
+            if (PageSize.HasValue)
             {
                 writer.WritePropertyName("pageSize"u8);
                 writer.WriteNumberValue(PageSize.Value);
             }
-            if (Optional.IsDefined(MinConfidence))
+            if (MinConfidence.HasValue)
             {
                 writer.WritePropertyName("minConfidence"u8);
                 writer.WriteNumberValue(MinConfidence.Value);
             }
-            if (Optional.IsDefined(MaxConfidence))
+            if (MaxConfidence.HasValue)
             {
                 writer.WritePropertyName("maxConfidence"u8);
                 writer.WriteNumberValue(MaxConfidence.Value);
             }
-            if (Optional.IsDefined(MinValidUntil))
+            if (MinValidUntil.HasValue)
             {
                 writer.WritePropertyName("minValidUntil"u8);
                 writer.WriteStringValue(MinValidUntil.Value, "O");
             }
-            if (Optional.IsDefined(MaxValidUntil))
+            if (MaxValidUntil.HasValue)
             {
                 writer.WritePropertyName("maxValidUntil"u8);
                 writer.WriteStringValue(MaxValidUntil.Value, "O");
             }
-            if (Optional.IsDefined(IsIncludeDisabled))
+            if (IsIncludeDisabled.HasValue)
             {
                 writer.WritePropertyName("includeDisabled"u8);
                 writer.WriteBooleanValue(IsIncludeDisabled.Value);
             }
-            if (Optional.IsCollectionDefined(SortBy))
+            if (!(SortBy is ChangeTrackingList<ThreatIntelligenceSortingCriteria> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PatternTypes))
+            if (!(PatternTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("patternTypes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ThreatTypes))
+            if (!(ThreatTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("threatTypes"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ids))
+            if (!(Ids is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Keywords))
+            if (!(Keywords is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SkipToken))
+            if (SkipToken != null)
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<DateTimeOffset> minValidUntil = default;
             Optional<DateTimeOffset> maxValidUntil = default;
             Optional<bool> includeDisabled = default;
-            Optional<IList<ThreatIntelligenceSortingCriteria>> sortBy = default;
-            Optional<IList<string>> sources = default;
-            Optional<IList<string>> patternTypes = default;
-            Optional<IList<string>> threatTypes = default;
-            Optional<IList<string>> ids = default;
-            Optional<IList<string>> keywords = default;
+            IList<ThreatIntelligenceSortingCriteria> sortBy = default;
+            IList<string> sources = default;
+            IList<string> patternTypes = default;
+            IList<string> threatTypes = default;
+            IList<string> ids = default;
+            IList<string> keywords = default;
             Optional<string> skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceSortingCriteria> array = new List<ThreatIntelligenceSortingCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceSortingCriteria.DeserializeThreatIntelligenceSortingCriteria(item));
+                        array.Add(ThreatIntelligenceSortingCriteria.DeserializeThreatIntelligenceSortingCriteria(item, options));
                     }
                     sortBy = array;
                     continue;
@@ -325,7 +325,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceFilteringCriteria(Optional.ToNullable(pageSize), Optional.ToNullable(minConfidence), Optional.ToNullable(maxConfidence), Optional.ToNullable(minValidUntil), Optional.ToNullable(maxValidUntil), Optional.ToNullable(includeDisabled), Optional.ToList(sortBy), Optional.ToList(sources), Optional.ToList(patternTypes), Optional.ToList(threatTypes), Optional.ToList(ids), Optional.ToList(keywords), skipToken.Value, serializedAdditionalRawData);
+            return new ThreatIntelligenceFilteringCriteria(
+                Optional.ToNullable(pageSize),
+                Optional.ToNullable(minConfidence),
+                Optional.ToNullable(maxConfidence),
+                Optional.ToNullable(minValidUntil),
+                Optional.ToNullable(maxValidUntil),
+                Optional.ToNullable(includeDisabled),
+                sortBy ?? new ChangeTrackingList<ThreatIntelligenceSortingCriteria>(),
+                sources ?? new ChangeTrackingList<string>(),
+                patternTypes ?? new ChangeTrackingList<string>(),
+                threatTypes ?? new ChangeTrackingList<string>(),
+                ids ?? new ChangeTrackingList<string>(),
+                keywords ?? new ChangeTrackingList<string>(),
+                skipToken.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceFilteringCriteria>.Write(ModelReaderWriterOptions options)

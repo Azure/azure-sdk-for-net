@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual async Task<Response<SiteInstanceProcessModuleResource>> GetAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
+            if (baseAddress == null)
+            {
+                throw new ArgumentNullException(nameof(baseAddress));
+            }
+            if (baseAddress.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(baseAddress));
+            }
 
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual Response<SiteInstanceProcessModuleResource> Get(string baseAddress, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
+            if (baseAddress == null)
+            {
+                throw new ArgumentNullException(nameof(baseAddress));
+            }
+            if (baseAddress.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(baseAddress));
+            }
 
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
+            if (baseAddress == null)
+            {
+                throw new ArgumentNullException(nameof(baseAddress));
+            }
+            if (baseAddress.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(baseAddress));
+            }
 
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual Response<bool> Exists(string baseAddress, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
+            if (baseAddress == null)
+            {
+                throw new ArgumentNullException(nameof(baseAddress));
+            }
+            if (baseAddress.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(baseAddress));
+            }
 
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteInstanceProcessModuleResource>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
+            if (baseAddress == null)
+            {
+                throw new ArgumentNullException(nameof(baseAddress));
+            }
+            if (baseAddress.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(baseAddress));
+            }
 
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual NullableResponse<SiteInstanceProcessModuleResource> GetIfExists(string baseAddress, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
+            if (baseAddress == null)
+            {
+                throw new ArgumentNullException(nameof(baseAddress));
+            }
+            if (baseAddress.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(baseAddress));
+            }
 
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetIfExists");
             scope.Start();

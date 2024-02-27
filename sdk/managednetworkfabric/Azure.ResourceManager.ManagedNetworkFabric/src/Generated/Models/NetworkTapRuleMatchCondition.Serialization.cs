@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncapsulationType))
+            if (EncapsulationType.HasValue)
             {
                 writer.WritePropertyName("encapsulationType"u8);
                 writer.WriteStringValue(EncapsulationType.Value.ToString());
             }
-            if (Optional.IsDefined(PortCondition))
+            if (PortCondition != null)
             {
                 writer.WritePropertyName("portCondition"u8);
                 writer.WriteObjectValue(PortCondition);
             }
-            if (Optional.IsCollectionDefined(ProtocolTypes))
+            if (!(ProtocolTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VlanMatchCondition))
+            if (VlanMatchCondition != null)
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
                 writer.WriteObjectValue(VlanMatchCondition);
             }
-            if (Optional.IsDefined(IPCondition))
+            if (IPCondition != null)
             {
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<NetworkTapEncapsulationType> encapsulationType = default;
             Optional<NetworkFabricPortCondition> portCondition = default;
-            Optional<IList<string>> protocolTypes = default;
+            IList<string> protocolTypes = default;
             Optional<VlanMatchCondition> vlanMatchCondition = default;
             Optional<IPMatchCondition> ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    portCondition = NetworkFabricPortCondition.DeserializeNetworkFabricPortCondition(property.Value);
+                    portCondition = NetworkFabricPortCondition.DeserializeNetworkFabricPortCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocolTypes"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value);
+                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipCondition"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value);
+                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, Optional.ToNullable(encapsulationType), portCondition.Value);
+            return new NetworkTapRuleMatchCondition(
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                vlanMatchCondition.Value,
+                ipCondition.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(encapsulationType),
+                portCondition.Value);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleMatchCondition>.Write(ModelReaderWriterOptions options)

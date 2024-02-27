@@ -18,27 +18,27 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Position))
+            if (Position != null)
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
-            if (Optional.IsDefined(Width))
+            if (Width != null)
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Height != null)
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Optional.IsDefined(Layer))
+            if (Layer != null)
             {
                 writer.WritePropertyName("layer"u8);
                 writer.WriteStringValue(Layer);
             }
-            if (Optional.IsDefined(ScalingMode))
+            if (ScalingMode.HasValue)
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -99,7 +99,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode));
+            return new UnknownInputGroup(
+                kind,
+                position.Value,
+                width.Value,
+                height.Value,
+                layer.Value,
+                Optional.ToNullable(scalingMode));
         }
     }
 }

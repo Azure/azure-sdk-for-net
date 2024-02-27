@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(StoreType))
+            if (StoreType.HasValue)
             {
                 writer.WritePropertyName("storeType"u8);
                 writer.WriteStringValue(StoreType.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationStrategy))
+            if (ReplicationStrategy.HasValue)
             {
                 writer.WritePropertyName("replicationStrategy"u8);
                 writer.WriteStringValue(ReplicationStrategy.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (ManagedResourceGroupConfiguration != null)
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageResourceId))
+            if (options.Format != "W" && StorageResourceId != null)
             {
                 writer.WritePropertyName("storageResourceId"u8);
                 writer.WriteStringValue(StorageResourceId);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    managedResourceGroupConfiguration = ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.DeserializeArtifactStorePropertiesFormatManagedResourceGroupConfiguration(property.Value);
+                    managedResourceGroupConfiguration = ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.DeserializeArtifactStorePropertiesFormatManagedResourceGroupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageResourceId"u8))
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactStorePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(storeType), Optional.ToNullable(replicationStrategy), managedResourceGroupConfiguration.Value, storageResourceId.Value, serializedAdditionalRawData);
+            return new ArtifactStorePropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(storeType),
+                Optional.ToNullable(replicationStrategy),
+                managedResourceGroupConfiguration.Value,
+                storageResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactStorePropertiesFormat>.Write(ModelReaderWriterOptions options)

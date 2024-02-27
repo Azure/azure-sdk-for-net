@@ -62,11 +62,26 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="hostPartner"/>, <paramref name="guestPartner"/>, <paramref name="hostIdentity"/>, <paramref name="guestIdentity"/> or <paramref name="content"/> is null. </exception>
         public IntegrationAccountAgreementData(AzureLocation location, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(location)
         {
-            Argument.AssertNotNull(hostPartner, nameof(hostPartner));
-            Argument.AssertNotNull(guestPartner, nameof(guestPartner));
-            Argument.AssertNotNull(hostIdentity, nameof(hostIdentity));
-            Argument.AssertNotNull(guestIdentity, nameof(guestIdentity));
-            Argument.AssertNotNull(content, nameof(content));
+            if (hostPartner == null)
+            {
+                throw new ArgumentNullException(nameof(hostPartner));
+            }
+            if (guestPartner == null)
+            {
+                throw new ArgumentNullException(nameof(guestPartner));
+            }
+            if (hostIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(hostIdentity));
+            }
+            if (guestIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(guestIdentity));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             AgreementType = agreementType;
             HostPartner = hostPartner;

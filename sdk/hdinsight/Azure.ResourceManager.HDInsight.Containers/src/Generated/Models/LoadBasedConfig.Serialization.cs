@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteNumberValue(MinNodes);
             writer.WritePropertyName("maxNodes"u8);
             writer.WriteNumberValue(MaxNodes);
-            if (Optional.IsDefined(PollIntervalInSeconds))
+            if (PollIntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("pollInterval"u8);
                 writer.WriteNumberValue(PollIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(CooldownPeriod))
+            if (CooldownPeriod.HasValue)
             {
                 writer.WritePropertyName("cooldownPeriod"u8);
                 writer.WriteNumberValue(CooldownPeriod.Value);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ScalingRule> array = new List<ScalingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScalingRule.DeserializeScalingRule(item));
+                        array.Add(ScalingRule.DeserializeScalingRule(item, options));
                     }
                     scalingRules = array;
                     continue;
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBasedConfig(minNodes, maxNodes, Optional.ToNullable(pollInterval), Optional.ToNullable(cooldownPeriod), scalingRules, serializedAdditionalRawData);
+            return new LoadBasedConfig(
+                minNodes,
+                maxNodes,
+                Optional.ToNullable(pollInterval),
+                Optional.ToNullable(cooldownPeriod),
+                scalingRules,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBasedConfig>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Frequency.ToString());
             writer.WritePropertyName("interval"u8);
             writer.WriteNumberValue(Interval);
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 if (Schedule != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (Optional.IsDefined(EndTime))
+            if (EndTime != null)
             {
                 if (EndTime != null)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(StartTime))
+            if (StartTime != null)
             {
                 if (StartTime != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value);
+                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningRecurrenceTrigger(endTime.Value, startTime.Value, timeZone.Value, triggerType, serializedAdditionalRawData, frequency, interval, schedule.Value);
+            return new MachineLearningRecurrenceTrigger(
+                endTime.Value,
+                startTime.Value,
+                timeZone.Value,
+                triggerType,
+                serializedAdditionalRawData,
+                frequency,
+                interval,
+                schedule.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningRecurrenceTrigger>.Write(ModelReaderWriterOptions options)

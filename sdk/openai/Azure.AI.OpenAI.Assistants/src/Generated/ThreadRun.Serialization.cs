@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStringValue(AssistantId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(RequiredAction))
+            if (RequiredAction != null)
             {
                 if (RequiredAction != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 writer.WriteNull("failed_at");
             }
-            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -230,7 +230,7 @@ namespace Azure.AI.OpenAI.Assistants
                         requiredAction = null;
                         continue;
                     }
-                    requiredAction = RequiredAction.DeserializeRequiredAction(property.Value);
+                    requiredAction = RequiredAction.DeserializeRequiredAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("last_error"u8))
@@ -240,7 +240,7 @@ namespace Azure.AI.OpenAI.Assistants
                         lastError = null;
                         continue;
                     }
-                    lastError = RunError.DeserializeRunError(property.Value);
+                    lastError = RunError.DeserializeRunError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -258,7 +258,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolDefinition> array = new List<ToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        array.Add(ToolDefinition.DeserializeToolDefinition(item, options));
                     }
                     tools = array;
                     continue;
@@ -324,7 +324,26 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreadRun(id, @object, threadId, assistantId, status, requiredAction.Value, lastError, model, instructions, tools, fileIds, createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, metadata, serializedAdditionalRawData);
+            return new ThreadRun(
+                id,
+                @object,
+                threadId,
+                assistantId,
+                status,
+                requiredAction.Value,
+                lastError,
+                model,
+                instructions,
+                tools,
+                fileIds,
+                createdAt,
+                expiresAt,
+                startedAt,
+                completedAt,
+                cancelledAt,
+                failedAt,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreadRun>.Write(ModelReaderWriterOptions options)

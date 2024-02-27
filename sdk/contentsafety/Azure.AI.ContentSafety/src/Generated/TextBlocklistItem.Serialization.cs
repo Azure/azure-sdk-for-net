@@ -32,7 +32,7 @@ namespace Azure.AI.ContentSafety
                 writer.WritePropertyName("blocklistItemId"u8);
                 writer.WriteStringValue(BlocklistItemId);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

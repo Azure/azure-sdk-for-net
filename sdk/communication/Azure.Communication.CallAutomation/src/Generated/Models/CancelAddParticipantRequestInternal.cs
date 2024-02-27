@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
         public CancelAddParticipantRequestInternal(string invitationId)
         {
-            Argument.AssertNotNull(invitationId, nameof(invitationId));
+            if (invitationId == null)
+            {
+                throw new ArgumentNullException(nameof(invitationId));
+            }
 
             InvitationId = invitationId;
         }

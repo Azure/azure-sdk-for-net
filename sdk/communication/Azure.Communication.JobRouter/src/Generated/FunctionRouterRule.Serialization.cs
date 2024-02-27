@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             writer.WritePropertyName("functionUri"u8);
             writer.WriteStringValue(FunctionUri.AbsoluteUri);
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -92,7 +92,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    credential = FunctionRouterRuleCredential.DeserializeFunctionRouterRuleCredential(property.Value);
+                    credential = FunctionRouterRuleCredential.DeserializeFunctionRouterRuleCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

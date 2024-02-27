@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2EnvelopeSettings(messageContentType, transmitFileNameInMimeHeader, fileNameTemplate, suspendMessageOnFileNameGenerationError, autogenerateFileName, serializedAdditionalRawData);
+            return new AS2EnvelopeSettings(
+                messageContentType,
+                transmitFileNameInMimeHeader,
+                fileNameTemplate,
+                suspendMessageOnFileNameGenerationError,
+                autogenerateFileName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2EnvelopeSettings>.Write(ModelReaderWriterOptions options)

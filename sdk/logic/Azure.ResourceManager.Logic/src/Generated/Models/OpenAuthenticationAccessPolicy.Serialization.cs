@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderType))
+            if (ProviderType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Claims))
+            if (!(Claims is ChangeTrackingList<OpenAuthenticationPolicyClaim> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             Optional<OpenAuthenticationProviderType> type = default;
-            Optional<IList<OpenAuthenticationPolicyClaim>> claims = default;
+            IList<OpenAuthenticationPolicyClaim> claims = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<OpenAuthenticationPolicyClaim> array = new List<OpenAuthenticationPolicyClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OpenAuthenticationPolicyClaim.DeserializeOpenAuthenticationPolicyClaim(item));
+                        array.Add(OpenAuthenticationPolicyClaim.DeserializeOpenAuthenticationPolicyClaim(item, options));
                     }
                     claims = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenAuthenticationAccessPolicy(Optional.ToNullable(type), Optional.ToList(claims), serializedAdditionalRawData);
+            return new OpenAuthenticationAccessPolicy(Optional.ToNullable(type), claims ?? new ChangeTrackingList<OpenAuthenticationPolicyClaim>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenAuthenticationAccessPolicy>.Write(ModelReaderWriterOptions options)

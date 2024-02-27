@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceLocation))
+            if (SourceLocation.HasValue)
             {
                 writer.WritePropertyName("sourceRegion"u8);
                 writer.WriteStringValue(SourceLocation.Value);
             }
-            if (Optional.IsDefined(TargetLocation))
+            if (TargetLocation.HasValue)
             {
                 writer.WritePropertyName("targetRegion"u8);
                 writer.WriteStringValue(TargetLocation.Value);
             }
-            if (Optional.IsDefined(MoveLocation))
+            if (MoveLocation.HasValue)
             {
                 writer.WritePropertyName("moveRegion"u8);
                 writer.WriteStringValue(MoveLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(MoveType))
+            if (MoveType.HasValue)
             {
                 writer.WritePropertyName("moveType"u8);
                 writer.WriteStringValue(MoveType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
+            if (options.Format != "W" && Errors != null)
             {
                 if (Errors != null)
                 {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveCollectionPropertiesErrors.DeserializeMoveCollectionPropertiesErrors(property.Value);
+                    errors = MoveCollectionPropertiesErrors.DeserializeMoveCollectionPropertiesErrors(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceSetProperties(Optional.ToNullable(sourceRegion), Optional.ToNullable(targetRegion), Optional.ToNullable(moveRegion), Optional.ToNullable(provisioningState), version.Value, Optional.ToNullable(moveType), errors.Value, serializedAdditionalRawData);
+            return new MoverResourceSetProperties(
+                Optional.ToNullable(sourceRegion),
+                Optional.ToNullable(targetRegion),
+                Optional.ToNullable(moveRegion),
+                Optional.ToNullable(provisioningState),
+                version.Value,
+                Optional.ToNullable(moveType),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceSetProperties>.Write(ModelReaderWriterOptions options)

@@ -18,32 +18,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowDataTruncation))
+            if (AllowDataTruncation != null)
             {
                 writer.WritePropertyName("allowDataTruncation"u8);
                 writer.WriteObjectValue(AllowDataTruncation);
             }
-            if (Optional.IsDefined(TreatBooleanAsNumber))
+            if (TreatBooleanAsNumber != null)
             {
                 writer.WritePropertyName("treatBooleanAsNumber"u8);
                 writer.WriteObjectValue(TreatBooleanAsNumber);
             }
-            if (Optional.IsDefined(DateTimeFormat))
+            if (DateTimeFormat != null)
             {
                 writer.WritePropertyName("dateTimeFormat"u8);
                 writer.WriteObjectValue(DateTimeFormat);
             }
-            if (Optional.IsDefined(DateTimeOffsetFormat))
+            if (DateTimeOffsetFormat != null)
             {
                 writer.WritePropertyName("dateTimeOffsetFormat"u8);
                 writer.WriteObjectValue(DateTimeOffsetFormat);
             }
-            if (Optional.IsDefined(TimeSpanFormat))
+            if (TimeSpanFormat != null)
             {
                 writer.WritePropertyName("timeSpanFormat"u8);
                 writer.WriteObjectValue(TimeSpanFormat);
             }
-            if (Optional.IsDefined(Culture))
+            if (Culture != null)
             {
                 writer.WritePropertyName("culture"u8);
                 writer.WriteObjectValue(Culture);
@@ -120,7 +120,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TypeConversionSettings(allowDataTruncation.Value, treatBooleanAsNumber.Value, dateTimeFormat.Value, dateTimeOffsetFormat.Value, timeSpanFormat.Value, culture.Value);
+            return new TypeConversionSettings(
+                allowDataTruncation.Value,
+                treatBooleanAsNumber.Value,
+                dateTimeFormat.Value,
+                dateTimeOffsetFormat.Value,
+                timeSpanFormat.Value,
+                culture.Value);
         }
 
         internal partial class TypeConversionSettingsConverter : JsonConverter<TypeConversionSettings>

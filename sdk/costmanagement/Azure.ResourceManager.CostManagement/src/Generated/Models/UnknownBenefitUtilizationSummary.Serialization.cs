@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBenefitUtilizationSummary(document.RootElement, options);
+            return DeserializeBenefitUtilizationSummary(document.RootElement, options);
         }
 
         internal static UnknownBenefitUtilizationSummary DeserializeUnknownBenefitUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownBenefitUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownBenefitUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummary>.Write(ModelReaderWriterOptions options)
@@ -156,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBenefitUtilizationSummary(document.RootElement, options);
+                        return DeserializeBenefitUtilizationSummary(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support '{options.Format}' format.");

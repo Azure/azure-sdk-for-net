@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exchange))
+            if (Exchange != null)
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (Optional.IsDefined(SharePoint))
+            if (SharePoint != null)
             {
                 writer.WritePropertyName("sharePoint"u8);
                 writer.WriteObjectValue(SharePoint);
             }
-            if (Optional.IsDefined(Teams))
+            if (Teams != null)
             {
                 writer.WritePropertyName("teams"u8);
                 writer.WriteObjectValue(Teams);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(property.Value);
+                    exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sharePoint"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(property.Value);
+                    sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("teams"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property.Value);
+                    teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

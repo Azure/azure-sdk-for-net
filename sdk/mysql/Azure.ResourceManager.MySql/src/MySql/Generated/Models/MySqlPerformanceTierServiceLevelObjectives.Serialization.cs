@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Edition))
+            if (Edition != null)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (Optional.IsDefined(VCores))
+            if (VCores.HasValue)
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (Optional.IsDefined(HardwareGeneration))
+            if (HardwareGeneration != null)
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration);
             }
-            if (Optional.IsDefined(MaxBackupRetentionDays))
+            if (MaxBackupRetentionDays.HasValue)
             {
                 writer.WritePropertyName("maxBackupRetentionDays"u8);
                 writer.WriteNumberValue(MaxBackupRetentionDays.Value);
             }
-            if (Optional.IsDefined(MinBackupRetentionDays))
+            if (MinBackupRetentionDays.HasValue)
             {
                 writer.WritePropertyName("minBackupRetentionDays"u8);
                 writer.WriteNumberValue(MinBackupRetentionDays.Value);
             }
-            if (Optional.IsDefined(MaxStorageInMB))
+            if (MaxStorageInMB.HasValue)
             {
                 writer.WritePropertyName("maxStorageMB"u8);
                 writer.WriteNumberValue(MaxStorageInMB.Value);
             }
-            if (Optional.IsDefined(MinStorageInMB))
+            if (MinStorageInMB.HasValue)
             {
                 writer.WritePropertyName("minStorageMB"u8);
                 writer.WriteNumberValue(MinStorageInMB.Value);
@@ -182,7 +182,16 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPerformanceTierServiceLevelObjectives(id.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minStorageMB), serializedAdditionalRawData);
+            return new MySqlPerformanceTierServiceLevelObjectives(
+                id.Value,
+                edition.Value,
+                Optional.ToNullable(vCore),
+                hardwareGeneration.Value,
+                Optional.ToNullable(maxBackupRetentionDays),
+                Optional.ToNullable(minBackupRetentionDays),
+                Optional.ToNullable(maxStorageMB),
+                Optional.ToNullable(minStorageMB),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>.Write(ModelReaderWriterOptions options)

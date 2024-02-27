@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityHopType))
+            if (options.Format != "W" && ConnectivityHopType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectivityHopType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Address))
+            if (options.Format != "W" && Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NextHopIds))
+            if (options.Format != "W" && !(NextHopIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nextHopIds"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            if (options.Format != "W" && !(Issues is ChangeTrackingList<ConnectivityIssue> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> id = default;
             Optional<IPAddress> address = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<string>> nextHopIds = default;
-            Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            IReadOnlyList<string> nextHopIds = default;
+            IReadOnlyList<ConnectivityIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ConnectivityIssue> array = new List<ConnectivityIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item));
+                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item, options));
                     }
                     issues = array;
                     continue;
@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(issues), serializedAdditionalRawData);
+            return new ConnectivityHop(
+                type.Value,
+                id.Value,
+                address.Value,
+                resourceId.Value,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityHop>.Write(ModelReaderWriterOptions options)

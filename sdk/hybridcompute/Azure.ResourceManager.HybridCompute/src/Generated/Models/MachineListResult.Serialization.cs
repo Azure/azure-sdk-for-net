@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeMachineData> array = new List<HybridComputeMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineData.DeserializeHybridComputeMachineData(item));
+                        array.Add(HybridComputeMachineData.DeserializeHybridComputeMachineData(item, options));
                     }
                     value = array;
                     continue;

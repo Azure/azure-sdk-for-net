@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Justification))
+            if (Justification != null)
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPolicyInitiateVirtualMachine> array = new List<JitNetworkAccessPolicyInitiateVirtualMachine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPolicyInitiateVirtualMachine.DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(item));
+                        array.Add(JitNetworkAccessPolicyInitiateVirtualMachine.DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(item, options));
                     }
                     virtualMachines = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogAnalytics))
+            if (LogAnalytics != null)
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteObjectValue(LogAnalytics);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    logAnalytics = ContainerGroupLogAnalytics.DeserializeContainerGroupLogAnalytics(property.Value);
+                    logAnalytics = ContainerGroupLogAnalytics.DeserializeContainerGroupLogAnalytics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

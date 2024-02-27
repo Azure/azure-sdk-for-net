@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Proxy))
+            if (Proxy != null)
             {
                 writer.WritePropertyName("proxy"u8);
                 writer.WriteStringValue(Proxy);
             }
-            if (Optional.IsDefined(PrivateLinkScope))
+            if (PrivateLinkScope != null)
             {
                 writer.WritePropertyName("privateLinkScope"u8);
                 writer.WriteStringValue(PrivateLinkScope);

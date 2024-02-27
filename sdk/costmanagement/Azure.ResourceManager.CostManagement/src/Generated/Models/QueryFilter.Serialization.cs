@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(And))
+            if (!(And is ChangeTrackingList<QueryFilter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Or))
+            if (!(Or is ChangeTrackingList<QueryFilter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("or"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Dimensions))
+            if (Dimensions != null)
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IList<QueryFilter>> and = default;
-            Optional<IList<QueryFilter>> or = default;
+            IList<QueryFilter> and = default;
+            IList<QueryFilter> or = default;
             Optional<QueryComparisonExpression> dimensions = default;
             Optional<QueryComparisonExpression> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryFilter> array = new List<QueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeQueryFilter(item));
+                        array.Add(DeserializeQueryFilter(item, options));
                     }
                     and = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryFilter> array = new List<QueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeQueryFilter(item));
+                        array.Add(DeserializeQueryFilter(item, options));
                     }
                     or = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryFilter(Optional.ToList(and), Optional.ToList(or), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new QueryFilter(and ?? new ChangeTrackingList<QueryFilter>(), or ?? new ChangeTrackingList<QueryFilter>(), dimensions.Value, tags.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryFilter>.Write(ModelReaderWriterOptions options)

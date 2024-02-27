@@ -27,51 +27,51 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("dataSourceInfo"u8);
             writer.WriteObjectValue(DataSourceInfo);
-            if (Optional.IsDefined(DataSourceSetInfo))
+            if (DataSourceSetInfo != null)
             {
                 writer.WritePropertyName("dataSourceSetInfo"u8);
                 writer.WriteObjectValue(DataSourceSetInfo);
             }
             writer.WritePropertyName("policyInfo"u8);
             writer.WriteObjectValue(PolicyInfo);
-            if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
+            if (options.Format != "W" && ProtectionStatus != null)
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteObjectValue(ProtectionStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentProtectionState))
+            if (options.Format != "W" && CurrentProtectionState.HasValue)
             {
                 writer.WritePropertyName("currentProtectionState"u8);
                 writer.WriteStringValue(CurrentProtectionState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProtectionErrorDetails))
+            if (options.Format != "W" && ProtectionErrorDetails != null)
             {
                 writer.WritePropertyName("protectionErrorDetails"u8);
                 JsonSerializer.Serialize(writer, ProtectionErrorDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(DataSourceAuthCredentials))
+            if (DataSourceAuthCredentials != null)
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
                 writer.WriteObjectValue(DataSourceAuthCredentials);
             }
-            if (Optional.IsDefined(ValidationType))
+            if (ValidationType.HasValue)
             {
                 writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToString());
             }
-            if (Optional.IsDefined(IdentityDetails))
+            if (IdentityDetails != null)
             {
                 writer.WritePropertyName("identityDetails"u8);
                 writer.WriteObjectValue(IdentityDetails);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("dataSourceInfo"u8))
                 {
-                    dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value);
+                    dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataSourceSetInfo"u8))
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
+                    dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyInfo"u8))
                 {
-                    policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value);
+                    policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectionStatus"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionStatus = BackupInstanceProtectionStatusDetails.DeserializeBackupInstanceProtectionStatusDetails(property.Value);
+                    protectionStatus = BackupInstanceProtectionStatusDetails.DeserializeBackupInstanceProtectionStatusDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currentProtectionState"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value);
+                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationType"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -226,7 +226,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), identityDetails.Value, objectType, serializedAdditionalRawData);
+            return new DataProtectionBackupInstanceProperties(
+                friendlyName.Value,
+                dataSourceInfo,
+                dataSourceSetInfo.Value,
+                policyInfo,
+                protectionStatus.Value,
+                Optional.ToNullable(currentProtectionState),
+                protectionErrorDetails.Value,
+                provisioningState.Value,
+                datasourceAuthCredentials.Value,
+                Optional.ToNullable(validationType),
+                identityDetails.Value,
+                objectType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupInstanceProperties>.Write(ModelReaderWriterOptions options)

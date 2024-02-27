@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GitProperty))
+            if (GitProperty != null)
             {
                 writer.WritePropertyName("gitProperty"u8);
                 writer.WriteObjectValue(GitProperty);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    gitProperty = AppPlatformConfigServerGitProperty.DeserializeAppPlatformConfigServerGitProperty(property.Value);
+                    gitProperty = AppPlatformConfigServerGitProperty.DeserializeAppPlatformConfigServerGitProperty(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

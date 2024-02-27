@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FQDN": return FqdnOutboundRule.DeserializeFqdnOutboundRule(element);
-                    case "PrivateEndpoint": return PrivateEndpointOutboundRule.DeserializePrivateEndpointOutboundRule(element);
-                    case "ServiceTag": return ServiceTagOutboundRule.DeserializeServiceTagOutboundRule(element);
+                    case "FQDN": return FqdnOutboundRule.DeserializeFqdnOutboundRule(element, options);
+                    case "PrivateEndpoint": return PrivateEndpointOutboundRule.DeserializePrivateEndpointOutboundRule(element, options);
+                    case "ServiceTag": return ServiceTagOutboundRule.DeserializeServiceTagOutboundRule(element, options);
                 }
             }
-            return UnknownOutboundRule.DeserializeUnknownOutboundRule(element);
+            return UnknownOutboundRule.DeserializeUnknownOutboundRule(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningOutboundRule>.Write(ModelReaderWriterOptions options)

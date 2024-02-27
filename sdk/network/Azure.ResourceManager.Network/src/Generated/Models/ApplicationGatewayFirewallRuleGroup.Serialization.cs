@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallRule> array = new List<ApplicationGatewayFirewallRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallRule.DeserializeApplicationGatewayFirewallRule(item));
+                        array.Add(ApplicationGatewayFirewallRule.DeserializeApplicationGatewayFirewallRule(item, options));
                     }
                     rules = array;
                     continue;

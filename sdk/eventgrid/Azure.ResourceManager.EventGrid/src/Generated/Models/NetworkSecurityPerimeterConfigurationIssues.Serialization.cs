@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IssueType))
+            if (IssueType.HasValue)
             {
                 writer.WritePropertyName("issueType"u8);
                 writer.WriteStringValue(IssueType.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(SuggestedResourceIds))
+            if (!(SuggestedResourceIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("suggestedResourceIds"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SuggestedAccessRules))
+            if (!(SuggestedAccessRules is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("suggestedAccessRules"u8);
                 writer.WriteStartArray();
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<NetworkSecurityPerimeterConfigurationIssueType> issueType = default;
             Optional<NetworkSecurityPerimeterConfigurationIssueSeverity> severity = default;
             Optional<string> description = default;
-            Optional<IList<string>> suggestedResourceIds = default;
-            Optional<IList<string>> suggestedAccessRules = default;
+            IList<string> suggestedResourceIds = default;
+            IList<string> suggestedAccessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationIssues(name.Value, Optional.ToNullable(issueType), Optional.ToNullable(severity), description.Value, Optional.ToList(suggestedResourceIds), Optional.ToList(suggestedAccessRules), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationIssues(
+                name.Value,
+                Optional.ToNullable(issueType),
+                Optional.ToNullable(severity),
+                description.Value,
+                suggestedResourceIds ?? new ChangeTrackingList<string>(),
+                suggestedAccessRules ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>.Write(ModelReaderWriterOptions options)

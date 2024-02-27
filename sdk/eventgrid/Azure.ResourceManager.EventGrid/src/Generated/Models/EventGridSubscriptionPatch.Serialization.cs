@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Optional.IsDefined(DeliveryWithResourceIdentity))
+            if (DeliveryWithResourceIdentity != null)
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -51,27 +51,27 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(EventDeliverySchema))
+            if (EventDeliverySchema.HasValue)
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (Optional.IsDefined(RetryPolicy))
+            if (RetryPolicy != null)
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (Optional.IsDefined(DeadLetterDestination))
+            if (DeadLetterDestination != null)
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);
             }
-            if (Optional.IsDefined(DeadLetterWithResourceIdentity))
+            if (DeadLetterWithResourceIdentity != null)
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterWithResourceIdentity);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<EventSubscriptionDestination> destination = default;
             Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
             Optional<EventSubscriptionFilter> filter = default;
-            Optional<IList<string>> labels = default;
+            IList<string> labels = default;
             Optional<DateTimeOffset> expirationTimeUtc = default;
             Optional<EventDeliverySchema> eventDeliverySchema = default;
             Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property.Value);
+                    destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deliveryWithResourceIdentity"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value);
+                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("filter"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property.Value);
+                    filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("labels"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property.Value);
+                    retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deadLetterDestination"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value);
+                    deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deadLetterWithResourceIdentity"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value);
+                    deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridSubscriptionPatch(destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value, serializedAdditionalRawData);
+            return new EventGridSubscriptionPatch(
+                destination.Value,
+                deliveryWithResourceIdentity.Value,
+                filter.Value,
+                labels ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(expirationTimeUtc),
+                Optional.ToNullable(eventDeliverySchema),
+                retryPolicy.Value,
+                deadLetterDestination.Value,
+                deadLetterWithResourceIdentity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridSubscriptionPatch>.Write(ModelReaderWriterOptions options)

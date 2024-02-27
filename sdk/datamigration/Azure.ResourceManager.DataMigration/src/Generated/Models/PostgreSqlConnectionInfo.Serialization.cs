@@ -28,56 +28,56 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
-            if (Optional.IsDefined(DataSource))
+            if (DataSource != null)
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
-            if (Optional.IsDefined(ServerVersion))
+            if (ServerVersion != null)
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Optional.IsDefined(EncryptConnection))
+            if (EncryptConnection.HasValue)
             {
                 writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
-            if (Optional.IsDefined(TrustServerCertificate))
+            if (TrustServerCertificate.HasValue)
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
             }
-            if (Optional.IsDefined(AdditionalSettings))
+            if (AdditionalSettings != null)
             {
                 writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
-            if (Optional.IsDefined(ServerBrandVersion))
+            if (ServerBrandVersion != null)
             {
                 writer.WritePropertyName("serverBrandVersion"u8);
                 writer.WriteStringValue(ServerBrandVersion);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Authentication.HasValue)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -220,7 +220,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, serverName, dataSource.Value, serverVersion.Value, databaseName.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), additionalSettings.Value, serverBrandVersion.Value, Optional.ToNullable(authentication));
+            return new PostgreSqlConnectionInfo(
+                type,
+                userName.Value,
+                password.Value,
+                serializedAdditionalRawData,
+                serverName,
+                dataSource.Value,
+                serverVersion.Value,
+                databaseName.Value,
+                port,
+                Optional.ToNullable(encryptConnection),
+                Optional.ToNullable(trustServerCertificate),
+                additionalSettings.Value,
+                serverBrandVersion.Value,
+                Optional.ToNullable(authentication));
         }
 
         BinaryData IPersistableModel<PostgreSqlConnectionInfo>.Write(ModelReaderWriterOptions options)

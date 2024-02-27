@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxBatchInstancePercent))
+            if (MaxBatchInstancePercent.HasValue)
             {
                 writer.WritePropertyName("maxBatchInstancePercent"u8);
                 writer.WriteNumberValue(MaxBatchInstancePercent.Value);
             }
-            if (Optional.IsDefined(MaxUnhealthyInstancePercent))
+            if (MaxUnhealthyInstancePercent.HasValue)
             {
                 writer.WritePropertyName("maxUnhealthyInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyInstancePercent.Value);
             }
-            if (Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
+            if (MaxUnhealthyUpgradedInstancePercent.HasValue)
             {
                 writer.WritePropertyName("maxUnhealthyUpgradedInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyUpgradedInstancePercent.Value);
             }
-            if (Optional.IsDefined(PauseTimeBetweenBatches))
+            if (PauseTimeBetweenBatches != null)
             {
                 writer.WritePropertyName("pauseTimeBetweenBatches"u8);
                 writer.WriteStringValue(PauseTimeBetweenBatches);
             }
-            if (Optional.IsDefined(EnableCrossZoneUpgrade))
+            if (EnableCrossZoneUpgrade.HasValue)
             {
                 writer.WritePropertyName("enableCrossZoneUpgrade"u8);
                 writer.WriteBooleanValue(EnableCrossZoneUpgrade.Value);
             }
-            if (Optional.IsDefined(PrioritizeUnhealthyInstances))
+            if (PrioritizeUnhealthyInstances.HasValue)
             {
                 writer.WritePropertyName("prioritizeUnhealthyInstances"u8);
                 writer.WriteBooleanValue(PrioritizeUnhealthyInstances.Value);
             }
-            if (Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
+            if (RollbackFailedInstancesOnPolicyBreach.HasValue)
             {
                 writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach"u8);
                 writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
             }
-            if (Optional.IsDefined(IsMaxSurgeEnabled))
+            if (IsMaxSurgeEnabled.HasValue)
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteBooleanValue(IsMaxSurgeEnabled.Value);
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(prioritizeUnhealthyInstances), Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach), Optional.ToNullable(maxSurge), serializedAdditionalRawData);
+            return new RollingUpgradePolicy(
+                Optional.ToNullable(maxBatchInstancePercent),
+                Optional.ToNullable(maxUnhealthyInstancePercent),
+                Optional.ToNullable(maxUnhealthyUpgradedInstancePercent),
+                pauseTimeBetweenBatches.Value,
+                Optional.ToNullable(enableCrossZoneUpgrade),
+                Optional.ToNullable(prioritizeUnhealthyInstances),
+                Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach),
+                Optional.ToNullable(maxSurge),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradePolicy>.Write(ModelReaderWriterOptions options)

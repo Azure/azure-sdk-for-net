@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccessToken))
+            if (options.Format != "W" && AccessToken != null)
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiresIn))
+            if (options.Format != "W" && ExpiresIn.HasValue)
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpiresIn.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NotebookResourceId))
+            if (options.Format != "W" && NotebookResourceId != null)
             {
                 writer.WritePropertyName("notebookResourceId"u8);
                 writer.WriteStringValue(NotebookResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicDns))
+            if (options.Format != "W" && PublicDns != null)
             {
                 writer.WritePropertyName("publicDns"u8);
                 writer.WriteStringValue(PublicDns);
             }
-            if (options.Format != "W" && Optional.IsDefined(RefreshToken))
+            if (options.Format != "W" && RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (options.Format != "W" && Optional.IsDefined(Scope))
+            if (options.Format != "W" && Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && Optional.IsDefined(TokenType))
+            if (options.Format != "W" && TokenType != null)
             {
                 writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType);
@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(accessToken.Value, Optional.ToNullable(expiresIn), hostName.Value, notebookResourceId.Value, publicDns.Value, refreshToken.Value, scope.Value, tokenType.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(
+                accessToken.Value,
+                Optional.ToNullable(expiresIn),
+                hostName.Value,
+                notebookResourceId.Value,
+                publicDns.Value,
+                refreshToken.Value,
+                scope.Value,
+                tokenType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Write(ModelReaderWriterOptions options)

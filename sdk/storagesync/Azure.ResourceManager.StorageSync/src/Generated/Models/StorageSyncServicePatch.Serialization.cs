@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IncomingTrafficPolicy))
+            if (IncomingTrafficPolicy.HasValue)
             {
                 writer.WritePropertyName("incomingTrafficPolicy"u8);
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServicePatch(Optional.ToDictionary(tags), Optional.ToNullable(incomingTrafficPolicy), serializedAdditionalRawData);
+            return new StorageSyncServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(incomingTrafficPolicy), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServicePatch>.Write(ModelReaderWriterOptions options)

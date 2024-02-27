@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CosmosDBPercentileMetric> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBPercentileMetric>> value = default;
+            IReadOnlyList<CosmosDBPercentileMetric> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBPercentileMetric> array = new List<CosmosDBPercentileMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(item));
+                        array.Add(CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PercentileMetricListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PercentileMetricListResult(value ?? new ChangeTrackingList<CosmosDBPercentileMetric>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PercentileMetricListResult>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportName))
+            if (options.Format != "W" && ReportName != null)
             {
                 writer.WritePropertyName("reportName"u8);
                 writer.WriteStringValue(ReportName);
             }
-            if (Optional.IsDefined(OfferGuid))
+            if (OfferGuid != null)
             {
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStringValue(TimeZone);
             writer.WritePropertyName("triggerTime"u8);
             writer.WriteStringValue(TriggerOn, "O");
-            if (options.Format != "W" && Optional.IsDefined(NextTriggerOn))
+            if (options.Format != "W" && NextTriggerOn.HasValue)
             {
                 writer.WritePropertyName("nextTriggerTime"u8);
                 writer.WriteStringValue(NextTriggerOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastTriggerOn))
+            if (options.Format != "W" && LastTriggerOn.HasValue)
             {
                 writer.WritePropertyName("lastTriggerTime"u8);
                 writer.WriteStringValue(LastTriggerOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Subscriptions))
+            if (options.Format != "W" && !(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
+            if (options.Format != "W" && ComplianceStatus != null)
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteObjectValue(ComplianceStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             DateTimeOffset triggerTime = default;
             Optional<DateTimeOffset> nextTriggerTime = default;
             Optional<DateTimeOffset> lastTriggerTime = default;
-            Optional<IReadOnlyList<string>> subscriptions = default;
+            IReadOnlyList<string> subscriptions = default;
             IList<ResourceMetadata> resources = default;
             Optional<ReportComplianceStatus> complianceStatus = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ResourceMetadata> array = new List<ResourceMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item));
+                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item, options));
                     }
                     resources = array;
                     continue;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value);
+                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -256,7 +256,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportProperties(id.Value, Optional.ToNullable(status), Optional.ToNullable(tenantId), reportName.Value, offerGuid.Value, timeZone, triggerTime, Optional.ToNullable(nextTriggerTime), Optional.ToNullable(lastTriggerTime), Optional.ToList(subscriptions), resources, complianceStatus.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ReportProperties(
+                id.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(tenantId),
+                reportName.Value,
+                offerGuid.Value,
+                timeZone,
+                triggerTime,
+                Optional.ToNullable(nextTriggerTime),
+                Optional.ToNullable(lastTriggerTime),
+                subscriptions ?? new ChangeTrackingList<string>(),
+                resources,
+                complianceStatus.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportProperties>.Write(ModelReaderWriterOptions options)

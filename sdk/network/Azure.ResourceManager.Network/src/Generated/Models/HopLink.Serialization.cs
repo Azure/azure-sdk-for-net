@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NextHopId))
+            if (options.Format != "W" && NextHopId != null)
             {
                 writer.WritePropertyName("nextHopId"u8);
                 writer.WriteStringValue(NextHopId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkType))
+            if (options.Format != "W" && LinkType != null)
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            if (options.Format != "W" && !(Issues is ChangeTrackingList<ConnectivityIssueInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Context))
+            if (options.Format != "W" && !(Context is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartObject();
@@ -57,24 +57,24 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeMin))
+            if (options.Format != "W" && RoundTripTimeMin.HasValue)
             {
                 writer.WritePropertyName("roundTripTimeMin"u8);
                 writer.WriteNumberValue(RoundTripTimeMin.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeAvg))
+            if (options.Format != "W" && RoundTripTimeAvg.HasValue)
             {
                 writer.WritePropertyName("roundTripTimeAvg"u8);
                 writer.WriteNumberValue(RoundTripTimeAvg.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeMax))
+            if (options.Format != "W" && RoundTripTimeMax.HasValue)
             {
                 writer.WritePropertyName("roundTripTimeMax"u8);
                 writer.WriteNumberValue(RoundTripTimeMax.Value);
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> nextHopId = default;
             Optional<string> linkType = default;
-            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
-            Optional<IReadOnlyDictionary<string, string>> context = default;
+            IReadOnlyList<ConnectivityIssueInfo> issues = default;
+            IReadOnlyDictionary<string, string> context = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<long> roundTripTimeMin = default;
             Optional<long> roundTripTimeAvg = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
                     }
                     issues = array;
                     continue;
@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HopLink(nextHopId.Value, linkType.Value, Optional.ToList(issues), Optional.ToDictionary(context), resourceId.Value, Optional.ToNullable(roundTripTimeMin), Optional.ToNullable(roundTripTimeAvg), Optional.ToNullable(roundTripTimeMax), serializedAdditionalRawData);
+            return new HopLink(
+                nextHopId.Value,
+                linkType.Value,
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                context ?? new ChangeTrackingDictionary<string, string>(),
+                resourceId.Value,
+                Optional.ToNullable(roundTripTimeMin),
+                Optional.ToNullable(roundTripTimeAvg),
+                Optional.ToNullable(roundTripTimeMax),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HopLink>.Write(ModelReaderWriterOptions options)

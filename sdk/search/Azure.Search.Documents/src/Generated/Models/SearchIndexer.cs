@@ -21,9 +21,18 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="dataSourceName"/> or <paramref name="targetIndexName"/> is null. </exception>
         public SearchIndexer(string name, string dataSourceName, string targetIndexName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
-            Argument.AssertNotNull(targetIndexName, nameof(targetIndexName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (dataSourceName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceName));
+            }
+            if (targetIndexName == null)
+            {
+                throw new ArgumentNullException(nameof(targetIndexName));
+            }
 
             Name = name;
             DataSourceName = dataSourceName;

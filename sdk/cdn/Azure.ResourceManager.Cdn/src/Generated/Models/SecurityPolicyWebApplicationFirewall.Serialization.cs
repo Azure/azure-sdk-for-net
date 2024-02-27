@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WafPolicy))
+            if (WafPolicy != null)
             {
                 writer.WritePropertyName("wafPolicy"u8);
                 JsonSerializer.Serialize(writer, WafPolicy);
             }
-            if (Optional.IsCollectionDefined(Associations))
+            if (!(Associations is ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             Optional<WritableSubResource> wafPolicy = default;
-            Optional<IList<SecurityPolicyWebApplicationFirewallAssociation>> associations = default;
+            IList<SecurityPolicyWebApplicationFirewallAssociation> associations = default;
             SecurityPolicyType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<SecurityPolicyWebApplicationFirewallAssociation> array = new List<SecurityPolicyWebApplicationFirewallAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityPolicyWebApplicationFirewallAssociation.DeserializeSecurityPolicyWebApplicationFirewallAssociation(item));
+                        array.Add(SecurityPolicyWebApplicationFirewallAssociation.DeserializeSecurityPolicyWebApplicationFirewallAssociation(item, options));
                     }
                     associations = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityPolicyWebApplicationFirewall(type, serializedAdditionalRawData, wafPolicy, Optional.ToList(associations));
+            return new SecurityPolicyWebApplicationFirewall(type, serializedAdditionalRawData, wafPolicy, associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>());
         }
 
         BinaryData IPersistableModel<SecurityPolicyWebApplicationFirewall>.Write(ModelReaderWriterOptions options)

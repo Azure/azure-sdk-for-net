@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformGatewayRouteConfigResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformGatewayRouteConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformGatewayRouteConfigResource> Update(WaitUntil waitUntil, AppPlatformGatewayRouteConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigResource.Update");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelErrorOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(element);
-                    case "DatabaseLevelOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(element);
-                    case "MigrationLevelOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(element);
-                    case "TableLevelOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(element);
+                    case "DatabaseLevelErrorOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(element, options);
+                    case "DatabaseLevelOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(element, options);
+                    case "MigrationLevelOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(element, options);
+                    case "TableLevelOutput": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(element, options);
                 }
             }
-            return UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput.DeserializeUnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(element);
+            return UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput.DeserializeUnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)

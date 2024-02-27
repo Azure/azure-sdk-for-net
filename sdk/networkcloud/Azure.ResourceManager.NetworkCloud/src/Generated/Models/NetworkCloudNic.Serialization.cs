@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LldpNeighbor))
+            if (options.Format != "W" && LldpNeighbor != null)
             {
                 writer.WritePropertyName("lldpNeighbor"u8);
                 writer.WriteObjectValue(LldpNeighbor);
             }
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    lldpNeighbor = LldpNeighbor.DeserializeLldpNeighbor(property.Value);
+                    lldpNeighbor = LldpNeighbor.DeserializeLldpNeighbor(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("macAddress"u8))

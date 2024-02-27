@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(IntegrationServiceEnvironmentId))
+            if (IntegrationServiceEnvironmentId != null)
             {
                 writer.WritePropertyName("integrationServiceEnvironmentId"u8);
                 writer.WriteStringValue(IntegrationServiceEnvironmentId);
             }
-            if (Optional.IsDefined(EndpointsConfiguration))
+            if (EndpointsConfiguration != null)
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
                 writer.WriteObjectValue(EndpointsConfiguration);
             }
-            if (Optional.IsDefined(NetworkConfiguration))
+            if (NetworkConfiguration != null)
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (Optional.IsDefined(EncryptionConfiguration))
+            if (EncryptionConfiguration != null)
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
                 writer.WriteObjectValue(EncryptionConfiguration);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value);
+                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkConfiguration"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value);
+                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionConfiguration"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value);
+                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                integrationServiceEnvironmentId.Value,
+                endpointsConfiguration.Value,
+                networkConfiguration.Value,
+                encryptionConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentProperties>.Write(ModelReaderWriterOptions options)

@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<MarketplaceRegistrationDefinitionList>> ListAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -90,7 +93,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<MarketplaceRegistrationDefinitionList> List(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope, filter);
             _pipeline.Send(message, cancellationToken);
@@ -134,8 +140,18 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="marketplaceIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedServicesMarketplaceRegistrationData>> GetAsync(string scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (marketplaceIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceIdentifier));
+            }
+            if (marketplaceIdentifier.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceIdentifier));
+            }
 
             using var message = CreateGetRequest(scope, marketplaceIdentifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -163,8 +179,18 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentException"> <paramref name="marketplaceIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedServicesMarketplaceRegistrationData> Get(string scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (marketplaceIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceIdentifier));
+            }
+            if (marketplaceIdentifier.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceIdentifier));
+            }
 
             using var message = CreateGetRequest(scope, marketplaceIdentifier);
             _pipeline.Send(message, cancellationToken);
@@ -206,8 +232,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<MarketplaceRegistrationDefinitionList>> ListNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -233,8 +265,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<MarketplaceRegistrationDefinitionList> ListNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, scope, filter);
             _pipeline.Send(message, cancellationToken);

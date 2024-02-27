@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
+            if (options.Format != "W" && ExpiresOn.HasValue)
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(InvitationUri))
+            if (options.Format != "W" && InvitationUri != null)
             {
                 writer.WritePropertyName("invitationUrl"u8);
                 writer.WriteStringValue(InvitationUri.AbsoluteUri);
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteUserInvitationResult(id, name, type, systemData.Value, Optional.ToNullable(expiresOn), invitationUrl.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteUserInvitationResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(expiresOn),
+                invitationUrl.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteUserInvitationResult>.Write(ModelReaderWriterOptions options)

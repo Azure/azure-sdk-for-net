@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,29 +38,29 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentTargetId))
+            if (DeploymentTargetId != null)
             {
                 writer.WritePropertyName("deploymentTargetId"u8);
                 writer.WriteStringValue(DeploymentTargetId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreatorRoleAssignment))
+            if (CreatorRoleAssignment != null)
             {
                 writer.WritePropertyName("creatorRoleAssignment"u8);
                 writer.WriteObjectValue(CreatorRoleAssignment);
             }
-            if (Optional.IsCollectionDefined(UserRoleAssignments))
+            if (!(UserRoleAssignments is ChangeTrackingDictionary<string, DevCenterUserRoleAssignments> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userRoleAssignments"u8);
                 writer.WriteStartObject();
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceIdentifier> deploymentTargetId = default;
             Optional<EnvironmentTypeEnableStatus> status = default;
             Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
-            Optional<IDictionary<string, DevCenterUserRoleAssignments>> userRoleAssignments = default;
+            IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            creatorRoleAssignment = ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment.DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(property0.Value);
+                            creatorRoleAssignment = ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment.DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userRoleAssignments"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             Dictionary<string, DevCenterUserRoleAssignments> dictionary = new Dictionary<string, DevCenterUserRoleAssignments>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value));
+                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value, options));
                             }
                             userRoleAssignments = dictionary;
                             continue;
@@ -202,7 +202,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProjectEnvironmentPatch(Optional.ToDictionary(tags), identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), serializedAdditionalRawData);
+            return new DevCenterProjectEnvironmentPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                deploymentTargetId.Value,
+                Optional.ToNullable(status),
+                creatorRoleAssignment.Value,
+                userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProjectEnvironmentPatch>.Write(ModelReaderWriterOptions options)

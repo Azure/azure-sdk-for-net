@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MaxCount))
+            if (options.Format != "W" && MaxCount.HasValue)
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentCount))
+            if (options.Format != "W" && CurrentCount.HasValue)
             {
                 writer.WritePropertyName("currentCount"u8);
                 writer.WriteNumberValue(CurrentCount.Value);
@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSubscriptionQuota(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(maxCount), Optional.ToNullable(currentCount));
+            return new StreamAnalyticsSubscriptionQuota(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(maxCount),
+                Optional.ToNullable(currentCount));
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSubscriptionQuota>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ScheduleRunTimes))
+            if (!(ScheduleRunTimes is ChangeTrackingList<DateTimeOffset> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
+            IList<DateTimeOffset> scheduleRunTimes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupDailySchedule(Optional.ToList(scheduleRunTimes), serializedAdditionalRawData);
+            return new BackupDailySchedule(scheduleRunTimes ?? new ChangeTrackingList<DateTimeOffset>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupDailySchedule>.Write(ModelReaderWriterOptions options)

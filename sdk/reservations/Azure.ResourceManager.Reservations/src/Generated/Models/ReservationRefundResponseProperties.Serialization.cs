@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Optional.IsDefined(BillingRefundAmount))
+            if (BillingRefundAmount != null)
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
                 writer.WriteObjectValue(BillingRefundAmount);
             }
-            if (Optional.IsDefined(PricingRefundAmount))
+            if (PricingRefundAmount != null)
             {
                 writer.WritePropertyName("pricingRefundAmount"u8);
                 writer.WriteObjectValue(PricingRefundAmount);
             }
-            if (Optional.IsDefined(PolicyResult))
+            if (PolicyResult != null)
             {
                 writer.WritePropertyName("policyResult"u8);
                 writer.WriteObjectValue(PolicyResult);
             }
-            if (Optional.IsDefined(BillingInformation))
+            if (BillingInformation != null)
             {
                 writer.WritePropertyName("billingInformation"u8);
                 writer.WriteObjectValue(BillingInformation);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pricingRefundAmount"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    pricingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyResult"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    policyResult = RefundPolicyResult.DeserializeRefundPolicyResult(property.Value);
+                    policyResult = RefundPolicyResult.DeserializeRefundPolicyResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingInformation"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingInformation = ReservationRefundBillingInformation.DeserializeReservationRefundBillingInformation(property.Value);
+                    billingInformation = ReservationRefundBillingInformation.DeserializeReservationRefundBillingInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundResponseProperties(Optional.ToNullable(sessionId), Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value, serializedAdditionalRawData);
+            return new ReservationRefundResponseProperties(
+                Optional.ToNullable(sessionId),
+                Optional.ToNullable(quantity),
+                billingRefundAmount.Value,
+                pricingRefundAmount.Value,
+                policyResult.Value,
+                billingInformation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundResponseProperties>.Write(ModelReaderWriterOptions options)

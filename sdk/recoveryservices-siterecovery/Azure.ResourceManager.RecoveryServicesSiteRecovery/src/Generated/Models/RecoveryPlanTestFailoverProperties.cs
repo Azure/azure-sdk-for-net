@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkType"/> is null. </exception>
         public RecoveryPlanTestFailoverProperties(PossibleOperationsDirection failoverDirection, string networkType)
         {
-            Argument.AssertNotNull(networkType, nameof(networkType));
+            if (networkType == null)
+            {
+                throw new ArgumentNullException(nameof(networkType));
+            }
 
             FailoverDirection = failoverDirection;
             NetworkType = networkType;

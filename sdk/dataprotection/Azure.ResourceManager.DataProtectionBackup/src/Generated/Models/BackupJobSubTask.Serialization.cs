@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdditionalDetails))
+            if (!(AdditionalDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteNumberValue(TaskId);
             writer.WritePropertyName("taskName"u8);
             writer.WriteStringValue(TaskName);
-            if (options.Format != "W" && Optional.IsDefined(TaskProgress))
+            if (options.Format != "W" && TaskProgress != null)
             {
                 writer.WritePropertyName("taskProgress"u8);
                 writer.WriteStringValue(TaskProgress);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
+            IReadOnlyDictionary<string, string> additionalDetails = default;
             int taskId = default;
             string taskName = default;
             Optional<string> taskProgress = default;
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupJobSubTask(Optional.ToDictionary(additionalDetails), taskId, taskName, taskProgress.Value, taskStatus, serializedAdditionalRawData);
+            return new BackupJobSubTask(
+                additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
+                taskId,
+                taskName,
+                taskProgress.Value,
+                taskStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupJobSubTask>.Write(ModelReaderWriterOptions options)

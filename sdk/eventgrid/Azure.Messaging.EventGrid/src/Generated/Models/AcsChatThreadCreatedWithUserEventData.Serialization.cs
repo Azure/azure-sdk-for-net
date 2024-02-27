@@ -23,9 +23,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             Optional<CommunicationIdentifierModel> createdByCommunicationIdentifier = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
-            Optional<IReadOnlyList<AcsChatThreadParticipantProperties>> participants = default;
+            IReadOnlyDictionary<string, object> properties = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            IReadOnlyList<AcsChatThreadParticipantProperties> participants = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
             Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
@@ -129,7 +129,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), createdByCommunicationIdentifier.Value, Optional.ToDictionary(properties), Optional.ToDictionary(metadata), Optional.ToList(participants));
+            return new AcsChatThreadCreatedWithUserEventData(
+                recipientCommunicationIdentifier.Value,
+                transactionId.Value,
+                threadId.Value,
+                Optional.ToNullable(createTime),
+                Optional.ToNullable(version),
+                createdByCommunicationIdentifier.Value,
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                participants ?? new ChangeTrackingList<AcsChatThreadParticipantProperties>());
         }
 
         internal partial class AcsChatThreadCreatedWithUserEventDataConverter : JsonConverter<AcsChatThreadCreatedWithUserEventData>

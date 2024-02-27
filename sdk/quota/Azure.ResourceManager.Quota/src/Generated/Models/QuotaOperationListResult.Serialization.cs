@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<QuotaOperationResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuotaOperationResult>> value = default;
+            IReadOnlyList<QuotaOperationResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Quota.Models
                     List<QuotaOperationResult> array = new List<QuotaOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item));
+                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaOperationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new QuotaOperationListResult(value ?? new ChangeTrackingList<QuotaOperationResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaOperationListResult>.Write(ModelReaderWriterOptions options)

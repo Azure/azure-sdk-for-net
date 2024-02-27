@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (Optional.IsDefined(ErrorString))
+            if (ErrorString != null)
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (Optional.IsDefined(ErrorTitle))
+            if (ErrorTitle != null)
             {
                 writer.WritePropertyName("errorTitle"u8);
                 writer.WriteStringValue(ErrorTitle);
             }
-            if (Optional.IsCollectionDefined(Recommendations))
+            if (!(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AdditionalDetails))
+            if (AdditionalDetails != null)
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> errorCode = default;
             Optional<string> errorString = default;
             Optional<string> errorTitle = default;
-            Optional<IList<string>> recommendations = default;
+            IList<string> recommendations = default;
             Optional<string> additionalDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadErrorInfo(Optional.ToNullable(errorCode), errorString.Value, errorTitle.Value, Optional.ToList(recommendations), additionalDetails.Value, serializedAdditionalRawData);
+            return new WorkloadErrorInfo(
+                Optional.ToNullable(errorCode),
+                errorString.Value,
+                errorTitle.Value,
+                recommendations ?? new ChangeTrackingList<string>(),
+                additionalDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadErrorInfo>.Write(ModelReaderWriterOptions options)

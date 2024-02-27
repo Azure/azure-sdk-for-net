@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(StartedOn))
+            if (StartedOn != null)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);
             }
-            if (Optional.IsCollectionDefined(SelectedLogins))
+            if (!(SelectedLogins is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("selectedLogins"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SelectedAgentJobs))
+            if (!(SelectedAgentJobs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("selectedAgentJobs"u8);
                 writer.WriteStartArray();
@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BackupFileShare))
+            if (BackupFileShare != null)
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
             writer.WritePropertyName("backupBlobShare"u8);
             writer.WriteObjectValue(BackupBlobShare);
-            if (Optional.IsDefined(BackupMode))
+            if (BackupMode.HasValue)
             {
                 writer.WritePropertyName("backupMode"u8);
                 writer.WriteStringValue(BackupMode.Value.ToString());
             }
-            if (Optional.IsDefined(AadDomainName))
+            if (AadDomainName != null)
             {
                 writer.WritePropertyName("aadDomainName"u8);
                 writer.WriteStringValue(AadDomainName);
             }
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (EncryptedKeyForSecureFields != null)
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
             Optional<string> startedOn = default;
-            Optional<IList<string>> selectedLogins = default;
-            Optional<IList<string>> selectedAgentJobs = default;
+            IList<string> selectedLogins = default;
+            IList<string> selectedAgentJobs = default;
             Optional<FileShare> backupFileShare = default;
             BlobShare backupBlobShare = default;
             Optional<BackupMode> backupMode = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlMIDatabaseInput> array = new List<MigrateSqlServerSqlMIDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item));
+                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupBlobShare"u8))
                 {
-                    backupBlobShare = BlobShare.DeserializeBlobShare(property.Value);
+                    backupBlobShare = BlobShare.DeserializeBlobShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupMode"u8))
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -229,7 +229,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, selectedDatabases, startedOn.Value, Optional.ToList(selectedLogins), Optional.ToList(selectedAgentJobs), backupFileShare.Value, backupBlobShare, Optional.ToNullable(backupMode), aadDomainName.Value, encryptedKeyForSecureFields.Value);
+            return new MigrateSqlServerSqlMITaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                serializedAdditionalRawData,
+                selectedDatabases,
+                startedOn.Value,
+                selectedLogins ?? new ChangeTrackingList<string>(),
+                selectedAgentJobs ?? new ChangeTrackingList<string>(),
+                backupFileShare.Value,
+                backupBlobShare,
+                Optional.ToNullable(backupMode),
+                aadDomainName.Value,
+                encryptedKeyForSecureFields.Value);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskInput>.Write(ModelReaderWriterOptions options)

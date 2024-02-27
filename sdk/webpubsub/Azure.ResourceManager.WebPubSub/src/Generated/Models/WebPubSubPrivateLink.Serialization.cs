@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsCollectionDefined(RequiredMembers))
+            if (!(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (!(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ShareablePrivateLinkTypes))
+            if (!(ShareablePrivateLinkTypes is ChangeTrackingList<ShareablePrivateLinkType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("shareablePrivateLinkResourceTypes"u8);
                 writer.WriteStartArray();
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
-            Optional<IList<ShareablePrivateLinkType>> shareablePrivateLinkResourceTypes = default;
+            IList<string> requiredMembers = default;
+            IList<string> requiredZoneNames = default;
+            IList<ShareablePrivateLinkType> shareablePrivateLinkResourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                             List<ShareablePrivateLinkType> array = new List<ShareablePrivateLinkType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item));
+                                array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item, options));
                             }
                             shareablePrivateLinkResourceTypes = array;
                             continue;
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubPrivateLink(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToList(shareablePrivateLinkResourceTypes), serializedAdditionalRawData);
+            return new WebPubSubPrivateLink(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareablePrivateLinkType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubPrivateLink>.Write(ModelReaderWriterOptions options)

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ContentType))
+            if (options.Format != "W" && ContentType.HasValue)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CommunicationDirection))
+            if (options.Format != "W" && CommunicationDirection.HasValue)
             {
                 writer.WritePropertyName("communicationDirection"u8);
                 writer.WriteStringValue(CommunicationDirection.Value.ToString());
             }
-            if (Optional.IsDefined(Sender))
+            if (Sender != null)
             {
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
             writer.WritePropertyName("body"u8);
             writer.WriteStringValue(Body);
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatTranscriptMessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate), serializedAdditionalRawData);
+            return new ChatTranscriptMessageProperties(
+                Optional.ToNullable(contentType),
+                Optional.ToNullable(communicationDirection),
+                sender.Value,
+                body,
+                Optional.ToNullable(createdDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptMessageProperties>.Write(ModelReaderWriterOptions options)

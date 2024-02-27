@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -209,7 +209,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySolutionsReferenceData(id, name, type, systemData.Value, securityFamily, alertVendorName, packageInfoUrl, productName, publisher, publisherDisplayName, template, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecuritySolutionsReferenceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                securityFamily,
+                alertVendorName,
+                packageInfoUrl,
+                productName,
+                publisher,
+                publisherDisplayName,
+                template,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySolutionsReferenceData>.Write(ModelReaderWriterOptions options)

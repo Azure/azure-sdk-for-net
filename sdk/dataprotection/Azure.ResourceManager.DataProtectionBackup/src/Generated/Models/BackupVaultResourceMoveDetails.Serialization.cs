@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(CompleteOn))
+            if (CompleteOn.HasValue)
             {
                 writer.WritePropertyName("completionTimeUtc"u8);
                 writer.WriteStringValue(CompleteOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceResourcePath))
+            if (SourceResourcePath != null)
             {
                 writer.WritePropertyName("sourceResourcePath"u8);
                 writer.WriteStringValue(SourceResourcePath);
             }
-            if (Optional.IsDefined(TargetResourcePath))
+            if (TargetResourcePath != null)
             {
                 writer.WritePropertyName("targetResourcePath"u8);
                 writer.WriteStringValue(TargetResourcePath);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultResourceMoveDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(completionTimeUtc), sourceResourcePath.Value, targetResourcePath.Value, serializedAdditionalRawData);
+            return new BackupVaultResourceMoveDetails(
+                operationId.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(completionTimeUtc),
+                sourceResourcePath.Value,
+                targetResourcePath.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultResourceMoveDetails>.Write(ModelReaderWriterOptions options)

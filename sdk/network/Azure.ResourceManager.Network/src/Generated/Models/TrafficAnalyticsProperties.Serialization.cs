@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TrafficAnalyticsConfiguration))
+            if (TrafficAnalyticsConfiguration != null)
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(TrafficAnalyticsConfiguration);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value);
+                    networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StorageLocation);
             writer.WritePropertyName("skuName"u8);
             writer.WriteStringValue(SkuName.ToSerialString());
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataBoxScheduleAvailabilityContent.DeserializeDataBoxScheduleAvailabilityContent(element);
-                    case "DataBoxDisk": return DiskScheduleAvailabilityContent.DeserializeDiskScheduleAvailabilityContent(element);
-                    case "DataBoxHeavy": return HeavyScheduleAvailabilityContent.DeserializeHeavyScheduleAvailabilityContent(element);
+                    case "DataBox": return DataBoxScheduleAvailabilityContent.DeserializeDataBoxScheduleAvailabilityContent(element, options);
+                    case "DataBoxDisk": return DiskScheduleAvailabilityContent.DeserializeDiskScheduleAvailabilityContent(element, options);
+                    case "DataBoxHeavy": return HeavyScheduleAvailabilityContent.DeserializeHeavyScheduleAvailabilityContent(element, options);
                 }
             }
-            return UnknownScheduleAvailabilityRequest.DeserializeUnknownScheduleAvailabilityRequest(element);
+            return UnknownScheduleAvailabilityRequest.DeserializeUnknownScheduleAvailabilityRequest(element, options);
         }
 
         BinaryData IPersistableModel<ScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

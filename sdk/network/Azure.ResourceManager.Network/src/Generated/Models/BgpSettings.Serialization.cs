@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Asn))
+            if (Asn.HasValue)
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (Optional.IsDefined(BgpPeeringAddress))
+            if (BgpPeeringAddress != null)
             {
                 writer.WritePropertyName("bgpPeeringAddress"u8);
                 writer.WriteStringValue(BgpPeeringAddress);
             }
-            if (Optional.IsDefined(PeerWeight))
+            if (PeerWeight.HasValue)
             {
                 writer.WritePropertyName("peerWeight"u8);
                 writer.WriteNumberValue(PeerWeight.Value);
             }
-            if (Optional.IsCollectionDefined(BgpPeeringAddresses))
+            if (!(BgpPeeringAddresses is ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bgpPeeringAddresses"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> asn = default;
             Optional<string> bgpPeeringAddress = default;
             Optional<int> peerWeight = default;
-            Optional<IList<NetworkIPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
+            IList<NetworkIPConfigurationBgpPeeringAddress> bgpPeeringAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkIPConfigurationBgpPeeringAddress> array = new List<NetworkIPConfigurationBgpPeeringAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkIPConfigurationBgpPeeringAddress.DeserializeNetworkIPConfigurationBgpPeeringAddress(item));
+                        array.Add(NetworkIPConfigurationBgpPeeringAddress.DeserializeNetworkIPConfigurationBgpPeeringAddress(item, options));
                     }
                     bgpPeeringAddresses = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value, Optional.ToNullable(peerWeight), Optional.ToList(bgpPeeringAddresses), serializedAdditionalRawData);
+            return new BgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value, Optional.ToNullable(peerWeight), bgpPeeringAddresses ?? new ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpSettings>.Write(ModelReaderWriterOptions options)

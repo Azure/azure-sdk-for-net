@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> Returns a <see cref="DedicatedCapacityResource"/> object. </returns>
         public static DedicatedCapacityResource GetDedicatedCapacityResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePowerBIDedicatedArmClient(client).GetDedicatedCapacityResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> Returns a <see cref="AutoScaleVCoreResource"/> object. </returns>
         public static AutoScaleVCoreResource GetAutoScaleVCoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePowerBIDedicatedArmClient(client).GetAutoScaleVCoreResource(id);
         }
@@ -85,7 +91,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An object representing collection of DedicatedCapacityResources and their operations over a DedicatedCapacityResource. </returns>
         public static DedicatedCapacityCollection GetDedicatedCapacities(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockablePowerBIDedicatedResourceGroupResource(resourceGroupResource).GetDedicatedCapacities();
         }
@@ -123,7 +132,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         [ForwardsClientCalls]
         public static async Task<Response<DedicatedCapacityResource>> GetDedicatedCapacityAsync(this ResourceGroupResource resourceGroupResource, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockablePowerBIDedicatedResourceGroupResource(resourceGroupResource).GetDedicatedCapacityAsync(dedicatedCapacityName, cancellationToken).ConfigureAwait(false);
         }
@@ -161,7 +173,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         [ForwardsClientCalls]
         public static Response<DedicatedCapacityResource> GetDedicatedCapacity(this ResourceGroupResource resourceGroupResource, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockablePowerBIDedicatedResourceGroupResource(resourceGroupResource).GetDedicatedCapacity(dedicatedCapacityName, cancellationToken);
         }
@@ -178,7 +193,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An object representing collection of AutoScaleVCoreResources and their operations over a AutoScaleVCoreResource. </returns>
         public static AutoScaleVCoreCollection GetAutoScaleVCores(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockablePowerBIDedicatedResourceGroupResource(resourceGroupResource).GetAutoScaleVCores();
         }
@@ -216,7 +234,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         [ForwardsClientCalls]
         public static async Task<Response<AutoScaleVCoreResource>> GetAutoScaleVCoreAsync(this ResourceGroupResource resourceGroupResource, string vcoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockablePowerBIDedicatedResourceGroupResource(resourceGroupResource).GetAutoScaleVCoreAsync(vcoreName, cancellationToken).ConfigureAwait(false);
         }
@@ -254,7 +275,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         [ForwardsClientCalls]
         public static Response<AutoScaleVCoreResource> GetAutoScaleVCore(this ResourceGroupResource resourceGroupResource, string vcoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockablePowerBIDedicatedResourceGroupResource(resourceGroupResource).GetAutoScaleVCore(vcoreName, cancellationToken);
         }
@@ -290,7 +314,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An async collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DedicatedCapacityResource> GetDedicatedCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetDedicatedCapacitiesAsync(cancellationToken);
         }
@@ -326,7 +353,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> A collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DedicatedCapacityResource> GetDedicatedCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetDedicatedCapacities(cancellationToken);
         }
@@ -362,7 +392,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An async collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetSkusCapacitiesAsync(cancellationToken);
         }
@@ -398,7 +431,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> A collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CapacitySku> GetSkusCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetSkusCapacities(cancellationToken);
         }
@@ -435,7 +471,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).CheckNameAvailabilityCapacityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -472,7 +511,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).CheckNameAvailabilityCapacity(location, content, cancellationToken);
         }
@@ -508,7 +550,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An async collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetAutoScaleVCoresAsync(cancellationToken);
         }
@@ -544,7 +589,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> A collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePowerBIDedicatedSubscriptionResource(subscriptionResource).GetAutoScaleVCores(cancellationToken);
         }

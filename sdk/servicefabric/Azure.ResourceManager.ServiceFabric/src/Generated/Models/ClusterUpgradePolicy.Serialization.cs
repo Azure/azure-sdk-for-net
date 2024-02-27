@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceRestart))
+            if (ForceRestart.HasValue)
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WritePropertyName("healthPolicy"u8);
             writer.WriteObjectValue(HealthPolicy);
-            if (Optional.IsDefined(DeltaHealthPolicy))
+            if (DeltaHealthPolicy != null)
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
                 writer.WriteObjectValue(DeltaHealthPolicy);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("healthPolicy"u8))
                 {
-                    healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value);
+                    healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deltaHealthPolicy"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value);
+                    deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +160,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterUpgradePolicy(Optional.ToNullable(forceRestart), upgradeReplicaSetCheckTimeout, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, healthPolicy, deltaHealthPolicy.Value, serializedAdditionalRawData);
+            return new ClusterUpgradePolicy(
+                Optional.ToNullable(forceRestart),
+                upgradeReplicaSetCheckTimeout,
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
+                healthPolicy,
+                deltaHealthPolicy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterUpgradePolicy>.Write(ModelReaderWriterOptions options)

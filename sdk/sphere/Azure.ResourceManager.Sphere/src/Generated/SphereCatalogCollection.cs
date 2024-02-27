@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereCatalogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string catalogName, SphereCatalogData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereCatalogResource> CreateOrUpdate(WaitUntil waitUntil, string catalogName, SphereCatalogData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<Response<SphereCatalogResource>> GetAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual Response<SphereCatalogResource> Get(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual Response<bool> Exists(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<NullableResponse<SphereCatalogResource>> GetIfExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual NullableResponse<SphereCatalogResource> GetIfExists(string catalogName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.GetIfExists");
             scope.Start();

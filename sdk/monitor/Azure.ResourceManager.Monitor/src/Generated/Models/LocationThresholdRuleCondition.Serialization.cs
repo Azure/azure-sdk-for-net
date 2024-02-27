@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WindowSize))
+            if (WindowSize.HasValue)
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteNumberValue(FailedLocationCount);
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(DataSource))
+            if (DataSource != null)
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
+                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

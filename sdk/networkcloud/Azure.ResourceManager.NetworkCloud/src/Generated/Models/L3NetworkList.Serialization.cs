@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkCloudL3NetworkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudL3NetworkData>> value = default;
+            IReadOnlyList<NetworkCloudL3NetworkData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudL3NetworkData> array = new List<NetworkCloudL3NetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(item));
+                        array.Add(NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L3NetworkList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new L3NetworkList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudL3NetworkData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L3NetworkList>.Write(ModelReaderWriterOptions options)

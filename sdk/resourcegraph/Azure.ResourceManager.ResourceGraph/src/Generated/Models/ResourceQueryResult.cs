@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         internal ResourceQueryResult(long totalRecords, long count, ResultTruncated resultTruncated, BinaryData data)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             TotalRecords = totalRecords;
             Count = count;

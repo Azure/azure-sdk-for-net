@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AccessModes))
+            if (!(AccessModes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("accessModes"u8);
                 writer.WriteStartArray();
@@ -37,32 +37,32 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EndpointLocation))
+            if (options.Format != "W" && EndpointLocation != null)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
-            if (Optional.IsDefined(DestinationPort))
+            if (DestinationPort.HasValue)
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicPort))
+            if (options.Format != "W" && PublicPort.HasValue)
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (Optional.IsDefined(SubDomainSuffix))
+            if (SubDomainSuffix != null)
             {
                 writer.WritePropertyName("subDomainSuffix"u8);
                 writer.WriteStringValue(SubDomainSuffix);
             }
-            if (Optional.IsDefined(DisableGatewayAuth))
+            if (DisableGatewayAuth.HasValue)
             {
                 writer.WritePropertyName("disableGatewayAuth"u8);
                 writer.WriteBooleanValue(DisableGatewayAuth.Value);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<string>> accessModes = default;
+            IList<string> accessModes = default;
             Optional<string> location = default;
             Optional<int> destinationPort = default;
             Optional<int> publicPort = default;
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationHttpsEndpoint(Optional.ToList(accessModes), location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value, subDomainSuffix.Value, Optional.ToNullable(disableGatewayAuth), serializedAdditionalRawData);
+            return new HDInsightApplicationHttpsEndpoint(
+                accessModes ?? new ChangeTrackingList<string>(),
+                location.Value,
+                Optional.ToNullable(destinationPort),
+                Optional.ToNullable(publicPort),
+                privateIPAddress.Value,
+                subDomainSuffix.Value,
+                Optional.ToNullable(disableGatewayAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationHttpsEndpoint>.Write(ModelReaderWriterOptions options)

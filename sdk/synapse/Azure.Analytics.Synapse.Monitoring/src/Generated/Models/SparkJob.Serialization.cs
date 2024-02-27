@@ -26,9 +26,9 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             Optional<string> compute = default;
             Optional<string> sparkApplicationId = default;
             Optional<string> livyId = default;
-            Optional<IReadOnlyList<string>> timing = default;
+            IReadOnlyList<string> timing = default;
             Optional<string> sparkJobDefinition = default;
-            Optional<IReadOnlyList<SparkJob>> pipeline = default;
+            IReadOnlyList<SparkJob> pipeline = default;
             Optional<string> jobType = default;
             Optional<DateTimeOffset?> submitTime = default;
             Optional<DateTimeOffset?> endTime = default;
@@ -146,7 +146,22 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     continue;
                 }
             }
-            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Optional.ToList(timing), sparkJobDefinition.Value, Optional.ToList(pipeline), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value);
+            return new SparkJob(
+                state.Value,
+                name.Value,
+                submitter.Value,
+                compute.Value,
+                sparkApplicationId.Value,
+                livyId.Value,
+                timing ?? new ChangeTrackingList<string>(),
+                sparkJobDefinition.Value,
+                pipeline ?? new ChangeTrackingList<SparkJob>(),
+                jobType.Value,
+                Optional.ToNullable(submitTime),
+                Optional.ToNullable(endTime),
+                queuedDuration.Value,
+                runningDuration.Value,
+                totalDuration.Value);
         }
     }
 }

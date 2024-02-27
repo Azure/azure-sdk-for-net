@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataFlowName))
+            if (DataFlowName != null)
             {
                 writer.WritePropertyName("dataFlowName"u8);
                 writer.WriteStringValue(DataFlowName);
             }
-            if (Optional.IsDefined(ComputeType))
+            if (ComputeType != null)
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (Optional.IsDefined(CoreCount))
+            if (CoreCount.HasValue)
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(NodeCount))
+            if (NodeCount.HasValue)
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Optional.IsDefined(IntegrationRuntimeName))
+            if (IntegrationRuntimeName != null)
             {
                 writer.WritePropertyName("integrationRuntimeName"u8);
                 writer.WriteStringValue(IntegrationRuntimeName);
             }
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(TimeToLiveInMinutes))
+            if (TimeToLiveInMinutes.HasValue)
             {
                 writer.WritePropertyName("timeToLiveInMinutes"u8);
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (Optional.IsDefined(LastActivityOn))
+            if (LastActivityOn.HasValue)
             {
                 writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityOn.Value, "O");
@@ -191,7 +191,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(startTime), Optional.ToNullable(timeToLiveInMinutes), Optional.ToNullable(lastActivityTime), additionalProperties);
+            return new DataFlowDebugSessionInfo(
+                dataFlowName.Value,
+                computeType.Value,
+                Optional.ToNullable(coreCount),
+                Optional.ToNullable(nodeCount),
+                integrationRuntimeName.Value,
+                Optional.ToNullable(sessionId),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(timeToLiveInMinutes),
+                Optional.ToNullable(lastActivityTime),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFlowDebugSessionInfo>.Write(ModelReaderWriterOptions options)

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorWorkspaceResourceData> array = new List<MonitorWorkspaceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(item));
+                        array.Add(MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(item, options));
                     }
                     value = array;
                     continue;

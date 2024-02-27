@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
+            if (options.Format != "W" && ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && Optional.IsDefined(Subject))
+            if (options.Format != "W" && Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Optional.IsDefined(NotBefore))
+            if (options.Format != "W" && NotBefore.HasValue)
             {
                 writer.WritePropertyName("notBefore"u8);
                 writer.WriteStringValue(NotBefore.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(NotAfter))
+            if (options.Format != "W" && NotAfter.HasValue)
             {
                 writer.WritePropertyName("notAfter"u8);
                 writer.WriteStringValue(NotAfter.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SignatureAlgorithm))
+            if (options.Format != "W" && SignatureAlgorithm != null)
             {
                 writer.WritePropertyName("signatureAlgorithm"u8);
                 writer.WriteStringValue(SignatureAlgorithm);
             }
-            if (options.Format != "W" && Optional.IsDefined(Issuer))
+            if (options.Format != "W" && Issuer != null)
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (options.Format != "W" && Optional.IsDefined(RawData))
+            if (options.Format != "W" && RawData != null)
             {
                 writer.WritePropertyName("rawData"u8);
                 writer.WriteStringValue(RawData);
@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateDetails(Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Optional.ToNullable(notBefore), Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateDetails(
+                Optional.ToNullable(version),
+                serialNumber.Value,
+                thumbprint.Value,
+                subject.Value,
+                Optional.ToNullable(notBefore),
+                Optional.ToNullable(notAfter),
+                signatureAlgorithm.Value,
+                issuer.Value,
+                rawData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateDetails>.Write(ModelReaderWriterOptions options)

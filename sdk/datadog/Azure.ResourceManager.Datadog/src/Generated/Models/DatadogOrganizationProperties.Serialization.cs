@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(LinkingAuthCode))
+            if (LinkingAuthCode != null)
             {
                 writer.WritePropertyName("linkingAuthCode"u8);
                 writer.WriteStringValue(LinkingAuthCode);
             }
-            if (Optional.IsDefined(LinkingClientId))
+            if (LinkingClientId != null)
             {
                 writer.WritePropertyName("linkingClientId"u8);
                 writer.WriteStringValue(LinkingClientId);
             }
-            if (Optional.IsDefined(RedirectUri))
+            if (RedirectUri != null)
             {
                 writer.WritePropertyName("redirectUri"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (ApiKey != null)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(ApplicationKey))
+            if (ApplicationKey != null)
             {
                 writer.WritePropertyName("applicationKey"u8);
                 writer.WriteStringValue(ApplicationKey);
             }
-            if (Optional.IsDefined(EnterpriseAppId))
+            if (EnterpriseAppId != null)
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogOrganizationProperties(name.Value, id.Value, linkingAuthCode.Value, linkingClientId.Value, redirectUri.Value, apiKey.Value, applicationKey.Value, enterpriseAppId.Value, serializedAdditionalRawData);
+            return new DatadogOrganizationProperties(
+                name.Value,
+                id.Value,
+                linkingAuthCode.Value,
+                linkingClientId.Value,
+                redirectUri.Value,
+                apiKey.Value,
+                applicationKey.Value,
+                enterpriseAppId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogOrganizationProperties>.Write(ModelReaderWriterOptions options)

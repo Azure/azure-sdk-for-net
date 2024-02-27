@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="senderBusinessIdentity"/>, <paramref name="receiverBusinessIdentity"/> or <paramref name="protocolSettings"/> is null. </exception>
         public AS2OneWayAgreement(IntegrationAccountBusinessIdentity senderBusinessIdentity, IntegrationAccountBusinessIdentity receiverBusinessIdentity, AS2ProtocolSettings protocolSettings)
         {
-            Argument.AssertNotNull(senderBusinessIdentity, nameof(senderBusinessIdentity));
-            Argument.AssertNotNull(receiverBusinessIdentity, nameof(receiverBusinessIdentity));
-            Argument.AssertNotNull(protocolSettings, nameof(protocolSettings));
+            if (senderBusinessIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(senderBusinessIdentity));
+            }
+            if (receiverBusinessIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(receiverBusinessIdentity));
+            }
+            if (protocolSettings == null)
+            {
+                throw new ArgumentNullException(nameof(protocolSettings));
+            }
 
             SenderBusinessIdentity = senderBusinessIdentity;
             ReceiverBusinessIdentity = receiverBusinessIdentity;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<DiskPoolZoneInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiskPoolZoneInfo>> value = default;
+            IReadOnlyList<DiskPoolZoneInfo> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<DiskPoolZoneInfo> array = new List<DiskPoolZoneInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo(item));
+                        array.Add(DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolZoneListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DiskPoolZoneListResult(value ?? new ChangeTrackingList<DiskPoolZoneInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolZoneListResult>.Write(ModelReaderWriterOptions options)

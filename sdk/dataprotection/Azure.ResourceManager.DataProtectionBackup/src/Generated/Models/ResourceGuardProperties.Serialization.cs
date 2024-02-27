@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsAutoApprovalsAllowed))
+            if (options.Format != "W" && IsAutoApprovalsAllowed.HasValue)
             {
                 writer.WritePropertyName("allowAutoApprovals"u8);
                 writer.WriteBooleanValue(IsAutoApprovalsAllowed.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceGuardOperations))
+            if (options.Format != "W" && !(ResourceGuardOperations is ChangeTrackingList<ResourceGuardOperationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
+            if (!(VaultCriticalOperationExclusionList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vaultCriticalOperationExclusionList"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             Optional<DataProtectionBackupProvisioningState> provisioningState = default;
             Optional<bool> allowAutoApprovals = default;
-            Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;
-            Optional<IList<string>> vaultCriticalOperationExclusionList = default;
+            IReadOnlyList<ResourceGuardOperationDetails> resourceGuardOperations = default;
+            IList<string> vaultCriticalOperationExclusionList = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResourceGuardOperationDetails> array = new List<ResourceGuardOperationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardOperationDetails.DeserializeResourceGuardOperationDetails(item));
+                        array.Add(ResourceGuardOperationDetails.DeserializeResourceGuardOperationDetails(item, options));
                     }
                     resourceGuardOperations = array;
                     continue;
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(allowAutoApprovals), Optional.ToList(resourceGuardOperations), Optional.ToList(vaultCriticalOperationExclusionList), description.Value, serializedAdditionalRawData);
+            return new ResourceGuardProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(allowAutoApprovals),
+                resourceGuardOperations ?? new ChangeTrackingList<ResourceGuardOperationDetails>(),
+                vaultCriticalOperationExclusionList ?? new ChangeTrackingList<string>(),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardProperties>.Write(ModelReaderWriterOptions options)

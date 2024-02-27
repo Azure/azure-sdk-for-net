@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(IsPublic))
+            if (IsPublic.HasValue)
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IsHttpsOnly))
+            if (IsHttpsOnly.HasValue)
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (Optional.IsDefined(SsoProperties))
+            if (SsoProperties != null)
             {
                 writer.WritePropertyName("ssoProperties"u8);
                 writer.WriteObjectValue(SsoProperties);
             }
-            if (Optional.IsDefined(ApiMetadataProperties))
+            if (ApiMetadataProperties != null)
             {
                 writer.WritePropertyName("apiMetadataProperties"u8);
                 writer.WriteObjectValue(ApiMetadataProperties);
             }
-            if (Optional.IsDefined(CorsProperties))
+            if (CorsProperties != null)
             {
                 writer.WritePropertyName("corsProperties"u8);
                 writer.WriteObjectValue(CorsProperties);
             }
-            if (Optional.IsDefined(ResourceRequests))
+            if (ResourceRequests != null)
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
+            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformGatewayInstance> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(OperatorProperties))
+            if (options.Format != "W" && OperatorProperties != null)
             {
                 writer.WritePropertyName("operatorProperties"u8);
                 writer.WriteObjectValue(OperatorProperties);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformGatewayApiMetadataProperties> apiMetadataProperties = default;
             Optional<AppPlatformGatewayCorsProperties> corsProperties = default;
             Optional<AppPlatformGatewayResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformGatewayInstance>> instances = default;
+            IReadOnlyList<AppPlatformGatewayInstance> instances = default;
             Optional<AppPlatformGatewayOperatorProperties> operatorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value);
+                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apiMetadataProperties"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    apiMetadataProperties = AppPlatformGatewayApiMetadataProperties.DeserializeAppPlatformGatewayApiMetadataProperties(property.Value);
+                    apiMetadataProperties = AppPlatformGatewayApiMetadataProperties.DeserializeAppPlatformGatewayApiMetadataProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("corsProperties"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    corsProperties = AppPlatformGatewayCorsProperties.DeserializeAppPlatformGatewayCorsProperties(property.Value);
+                    corsProperties = AppPlatformGatewayCorsProperties.DeserializeAppPlatformGatewayCorsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformGatewayResourceRequirements.DeserializeAppPlatformGatewayResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformGatewayResourceRequirements.DeserializeAppPlatformGatewayResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayInstance> array = new List<AppPlatformGatewayInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayInstance.DeserializeAppPlatformGatewayInstance(item));
+                        array.Add(AppPlatformGatewayInstance.DeserializeAppPlatformGatewayInstance(item, options));
                     }
                     instances = array;
                     continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    operatorProperties = AppPlatformGatewayOperatorProperties.DeserializeAppPlatformGatewayOperatorProperties(property.Value);
+                    operatorProperties = AppPlatformGatewayOperatorProperties.DeserializeAppPlatformGatewayOperatorProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -234,7 +234,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), ssoProperties.Value, apiMetadataProperties.Value, corsProperties.Value, resourceRequests.Value, Optional.ToList(instances), operatorProperties.Value, serializedAdditionalRawData);
+            return new AppPlatformGatewayProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(@public),
+                uri.Value,
+                Optional.ToNullable(httpsOnly),
+                ssoProperties.Value,
+                apiMetadataProperties.Value,
+                corsProperties.Value,
+                resourceRequests.Value,
+                instances ?? new ChangeTrackingList<AppPlatformGatewayInstance>(),
+                operatorProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayProperties>.Write(ModelReaderWriterOptions options)

@@ -26,54 +26,54 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpdateConfiguration))
+            if (UpdateConfiguration != null)
             {
                 writer.WritePropertyName("updateConfiguration"u8);
                 writer.WriteObjectValue(UpdateConfiguration);
             }
-            if (Optional.IsDefined(Tasks))
+            if (Tasks != null)
             {
                 writer.WritePropertyName("tasks"u8);
                 writer.WriteObjectValue(Tasks);
             }
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(NextRunOn))
+            if (NextRunOn.HasValue)
             {
                 if (NextRunOn != null)
                 {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value);
+                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("tasks"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value);
+                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("frequency"u8))
@@ -239,7 +239,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationCollectionItem(name.Value, id.Value, updateConfiguration.Value, tasks.Value, Optional.ToNullable(frequency), Optional.ToNullable(startTime), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, Optional.ToNullable(nextRun), serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationCollectionItem(
+                name.Value,
+                id.Value,
+                updateConfiguration.Value,
+                tasks.Value,
+                Optional.ToNullable(frequency),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                provisioningState.Value,
+                Optional.ToNullable(nextRun),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationCollectionItem>.Write(ModelReaderWriterOptions options)

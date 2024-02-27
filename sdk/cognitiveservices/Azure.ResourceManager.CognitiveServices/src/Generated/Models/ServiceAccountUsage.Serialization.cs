@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Unit))
+            if (Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(QuotaPeriod))
+            if (QuotaPeriod != null)
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(CurrentValue))
+            if (CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Optional.IsDefined(NextResetTime))
+            if (NextResetTime != null)
             {
                 writer.WritePropertyName("nextResetTime"u8);
                 writer.WriteStringValue(NextResetTime);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    name = ServiceAccountUsageMetricName.DeserializeServiceAccountUsageMetricName(property.Value);
+                    name = ServiceAccountUsageMetricName.DeserializeServiceAccountUsageMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"u8))
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), nextResetTime.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ServiceAccountUsage(
+                Optional.ToNullable(unit),
+                name.Value,
+                quotaPeriod.Value,
+                Optional.ToNullable(limit),
+                Optional.ToNullable(currentValue),
+                nextResetTime.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountUsage>.Write(ModelReaderWriterOptions options)

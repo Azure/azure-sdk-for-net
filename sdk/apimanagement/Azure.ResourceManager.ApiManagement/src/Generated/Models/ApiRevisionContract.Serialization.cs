@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ApiId))
+            if (options.Format != "W" && ApiId != null)
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiRevision))
+            if (options.Format != "W" && ApiRevision != null)
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedDateTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateUriString))
+            if (options.Format != "W" && PrivateUriString != null)
             {
                 writer.WritePropertyName("privateUrl"u8);
                 writer.WriteStringValue(PrivateUriString);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsOnline))
+            if (options.Format != "W" && IsOnline.HasValue)
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCurrent))
+            if (options.Format != "W" && IsCurrent.HasValue)
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiRevisionContract(apiId.Value, apiRevision.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), description.Value, privateUri.Value, Optional.ToNullable(isOnline), Optional.ToNullable(isCurrent), serializedAdditionalRawData);
+            return new ApiRevisionContract(
+                apiId.Value,
+                apiRevision.Value,
+                Optional.ToNullable(createdDateTime),
+                Optional.ToNullable(updatedDateTime),
+                description.Value,
+                privateUri.Value,
+                Optional.ToNullable(isOnline),
+                Optional.ToNullable(isCurrent),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiRevisionContract>.Write(ModelReaderWriterOptions options)

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Address))
+            if (options.Format != "W" && Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceConnectionType))
+            if (options.Format != "W" && DeviceConnectionType.HasValue)
             {
                 writer.WritePropertyName("deviceConnectionType"u8);
                 writer.WriteStringValue(DeviceConnectionType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Model))
+            if (options.Format != "W" && Model != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && Optional.IsDefined(PhysicalSlot))
+            if (options.Format != "W" && PhysicalSlot.HasValue)
             {
                 writer.WritePropertyName("physicalSlot"u8);
                 writer.WriteNumberValue(PhysicalSlot.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PortCount))
+            if (options.Format != "W" && PortCount.HasValue)
             {
                 writer.WritePropertyName("portCount"u8);
                 writer.WriteNumberValue(PortCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PortSpeed))
+            if (options.Format != "W" && PortSpeed.HasValue)
             {
                 writer.WritePropertyName("portSpeed"u8);
                 writer.WriteNumberValue(PortSpeed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Vendor))
+            if (options.Format != "W" && Vendor != null)
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudNetworkInterface(address.Value, Optional.ToNullable(deviceConnectionType), model.Value, Optional.ToNullable(physicalSlot), Optional.ToNullable(portCount), Optional.ToNullable(portSpeed), vendor.Value, serializedAdditionalRawData);
+            return new NetworkCloudNetworkInterface(
+                address.Value,
+                Optional.ToNullable(deviceConnectionType),
+                model.Value,
+                Optional.ToNullable(physicalSlot),
+                Optional.ToNullable(portCount),
+                Optional.ToNullable(portSpeed),
+                vendor.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudNetworkInterface>.Write(ModelReaderWriterOptions options)

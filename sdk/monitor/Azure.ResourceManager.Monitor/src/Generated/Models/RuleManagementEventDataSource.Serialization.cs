@@ -26,69 +26,69 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventName))
+            if (EventName != null)
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
-            if (Optional.IsDefined(EventSource))
+            if (EventSource != null)
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource);
             }
-            if (Optional.IsDefined(Level))
+            if (Level != null)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (Optional.IsDefined(OperationName))
+            if (OperationName != null)
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(ResourceProviderName))
+            if (ResourceProviderName != null)
             {
                 writer.WritePropertyName("resourceProviderName"u8);
                 writer.WriteStringValue(ResourceProviderName);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SubStatus))
+            if (SubStatus != null)
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteStringValue(SubStatus);
             }
-            if (Optional.IsDefined(Claims))
+            if (Claims != null)
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteObjectValue(Claims);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LegacyResourceId))
+            if (LegacyResourceId != null)
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (Optional.IsDefined(ResourceLocation))
+            if (ResourceLocation != null)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (Optional.IsDefined(MetricNamespace))
+            if (MetricNamespace != null)
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value);
+                    claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("odata.type"u8))
@@ -237,7 +237,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleManagementEventDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData, eventName.Value, eventSource.Value, level.Value, operationName.Value, resourceGroupName.Value, resourceProviderName.Value, status.Value, subStatus.Value, claims.Value);
+            return new RuleManagementEventDataSource(
+                odataType,
+                resourceUri.Value,
+                legacyResourceId.Value,
+                resourceLocation.Value,
+                metricNamespace.Value,
+                serializedAdditionalRawData,
+                eventName.Value,
+                eventSource.Value,
+                level.Value,
+                operationName.Value,
+                resourceGroupName.Value,
+                resourceProviderName.Value,
+                status.Value,
+                subStatus.Value,
+                claims.Value);
         }
 
         BinaryData IPersistableModel<RuleManagementEventDataSource>.Write(ModelReaderWriterOptions options)

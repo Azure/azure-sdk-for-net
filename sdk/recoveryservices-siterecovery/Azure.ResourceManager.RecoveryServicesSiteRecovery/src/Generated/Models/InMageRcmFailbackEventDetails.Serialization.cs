@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProtectedItemName))
+            if (options.Format != "W" && ProtectedItemName != null)
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmName))
+            if (options.Format != "W" && VmName != null)
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplianceName))
+            if (options.Format != "W" && ApplianceName != null)
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStringValue(ApplianceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerType))
+            if (options.Format != "W" && ServerType != null)
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ComponentDisplayName))
+            if (options.Format != "W" && ComponentDisplayName != null)
             {
                 writer.WritePropertyName("componentDisplayName"u8);
                 writer.WriteStringValue(ComponentDisplayName);
@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackEventDetails(instanceType, serializedAdditionalRawData, protectedItemName.Value, vmName.Value, applianceName.Value, serverType.Value, componentDisplayName.Value);
+            return new InMageRcmFailbackEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                protectedItemName.Value,
+                vmName.Value,
+                applianceName.Value,
+                serverType.Value,
+                componentDisplayName.Value);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackEventDetails>.Write(ModelReaderWriterOptions options)

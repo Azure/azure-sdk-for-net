@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<SecurityAutomationTriggeringRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IList<SecurityAutomationTriggeringRule>> rules = default;
+            IList<SecurityAutomationTriggeringRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationTriggeringRule> array = new List<SecurityAutomationTriggeringRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationTriggeringRule.DeserializeSecurityAutomationTriggeringRule(item));
+                        array.Add(SecurityAutomationTriggeringRule.DeserializeSecurityAutomationTriggeringRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationRuleSet(Optional.ToList(rules), serializedAdditionalRawData);
+            return new SecurityAutomationRuleSet(rules ?? new ChangeTrackingList<SecurityAutomationTriggeringRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationRuleSet>.Write(ModelReaderWriterOptions options)

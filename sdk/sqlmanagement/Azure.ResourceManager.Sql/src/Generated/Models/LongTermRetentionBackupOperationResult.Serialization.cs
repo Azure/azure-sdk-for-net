@@ -42,44 +42,44 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RequestId))
+            if (options.Format != "W" && RequestId.HasValue)
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationType))
+            if (options.Format != "W" && OperationType != null)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType);
             }
-            if (options.Format != "W" && Optional.IsDefined(FromBackupResourceId))
+            if (options.Format != "W" && FromBackupResourceId != null)
             {
                 writer.WritePropertyName("fromBackupResourceId"u8);
                 writer.WriteStringValue(FromBackupResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ToBackupResourceId))
+            if (options.Format != "W" && ToBackupResourceId != null)
             {
                 writer.WritePropertyName("toBackupResourceId"u8);
                 writer.WriteStringValue(ToBackupResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetBackupStorageRedundancy))
+            if (options.Format != "W" && TargetBackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("targetBackupStorageRedundancy"u8);
                 writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -231,7 +231,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionBackupOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value, serializedAdditionalRawData);
+            return new LongTermRetentionBackupOperationResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(requestId),
+                operationType.Value,
+                fromBackupResourceId.Value,
+                toBackupResourceId.Value,
+                Optional.ToNullable(targetBackupStorageRedundancy),
+                status.Value,
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionBackupOperationResult>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuotaChangeRequestSubType))
+            if (QuotaChangeRequestSubType != null)
             {
                 writer.WritePropertyName("quotaChangeRequestSubType"u8);
                 writer.WriteStringValue(QuotaChangeRequestSubType);
             }
-            if (Optional.IsDefined(QuotaChangeRequestVersion))
+            if (QuotaChangeRequestVersion != null)
             {
                 writer.WritePropertyName("quotaChangeRequestVersion"u8);
                 writer.WriteStringValue(QuotaChangeRequestVersion);
             }
-            if (Optional.IsCollectionDefined(QuotaChangeRequests))
+            if (!(QuotaChangeRequests is ChangeTrackingList<SupportQuotaChangeContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("quotaChangeRequests"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Support.Models
             }
             Optional<string> quotaChangeRequestSubType = default;
             Optional<string> quotaChangeRequestVersion = default;
-            Optional<IList<SupportQuotaChangeContent>> quotaChangeRequests = default;
+            IList<SupportQuotaChangeContent> quotaChangeRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportQuotaChangeContent> array = new List<SupportQuotaChangeContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportQuotaChangeContent.DeserializeSupportQuotaChangeContent(item));
+                        array.Add(SupportQuotaChangeContent.DeserializeSupportQuotaChangeContent(item, options));
                     }
                     quotaChangeRequests = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaTicketDetails(quotaChangeRequestSubType.Value, quotaChangeRequestVersion.Value, Optional.ToList(quotaChangeRequests), serializedAdditionalRawData);
+            return new QuotaTicketDetails(quotaChangeRequestSubType.Value, quotaChangeRequestVersion.Value, quotaChangeRequests ?? new ChangeTrackingList<SupportQuotaChangeContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaTicketDetails>.Write(ModelReaderWriterOptions options)

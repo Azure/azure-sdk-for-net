@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AuthorizationPolicies))
+            if (!(AuthorizationPolicies is ChangeTrackingList<SharedAccessSignatureAuthorizationRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizationPolicies"u8);
                 writer.WriteStartArray();
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(DisableDeviceSas))
+            if (DisableDeviceSas.HasValue)
             {
                 writer.WritePropertyName("disableDeviceSAS"u8);
                 writer.WriteBooleanValue(DisableDeviceSas.Value);
             }
-            if (Optional.IsDefined(DisableModuleSas))
+            if (DisableModuleSas.HasValue)
             {
                 writer.WritePropertyName("disableModuleSAS"u8);
                 writer.WriteBooleanValue(DisableModuleSas.Value);
             }
-            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            if (RestrictOutboundNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteBooleanValue(RestrictOutboundNetworkAccess.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedFqdns))
+            if (!(AllowedFqdns is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPFilterRules))
+            if (!(IPFilterRules is ChangeTrackingList<IotHubIPFilterRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NetworkRuleSets))
+            if (NetworkRuleSets != null)
             {
                 writer.WritePropertyName("networkRuleSets"u8);
                 writer.WriteObjectValue(NetworkRuleSets);
             }
-            if (Optional.IsDefined(MinTlsVersion))
+            if (MinTlsVersion != null)
             {
                 writer.WritePropertyName("minTlsVersion"u8);
                 writer.WriteStringValue(MinTlsVersion);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<IotHubPrivateEndpointConnectionData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -102,22 +102,22 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsCollectionDefined(EventHubEndpoints))
+            if (!(EventHubEndpoints is ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("eventHubEndpoints"u8);
                 writer.WriteStartObject();
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Routing))
+            if (Routing != null)
             {
                 writer.WritePropertyName("routing"u8);
                 writer.WriteObjectValue(Routing);
             }
-            if (Optional.IsCollectionDefined(StorageEndpoints))
+            if (!(StorageEndpoints is ChangeTrackingDictionary<string, IotHubStorageEndpointProperties> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("storageEndpoints"u8);
                 writer.WriteStartObject();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(MessagingEndpoints))
+            if (!(MessagingEndpoints is ChangeTrackingDictionary<string, MessagingEndpointProperties> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("messagingEndpoints"u8);
                 writer.WriteStartObject();
@@ -155,27 +155,27 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(EnableFileUploadNotifications))
+            if (EnableFileUploadNotifications.HasValue)
             {
                 writer.WritePropertyName("enableFileUploadNotifications"u8);
                 writer.WriteBooleanValue(EnableFileUploadNotifications.Value);
             }
-            if (Optional.IsDefined(CloudToDevice))
+            if (CloudToDevice != null)
             {
                 writer.WritePropertyName("cloudToDevice"u8);
                 writer.WriteObjectValue(CloudToDevice);
             }
-            if (Optional.IsDefined(Comments))
+            if (Comments != null)
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsDefined(Features))
+            if (Features.HasValue)
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStringValue(Features.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<IotHubLocationDescription> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableDataResidency))
+            if (EnableDataResidency.HasValue)
             {
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(EnableDataResidency.Value);
@@ -228,29 +228,29 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IList<SharedAccessSignatureAuthorizationRule>> authorizationPolicies = default;
+            IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> disableDeviceSas = default;
             Optional<bool> disableModuleSas = default;
             Optional<bool> restrictOutboundNetworkAccess = default;
-            Optional<IList<string>> allowedFqdnList = default;
+            IList<string> allowedFqdnList = default;
             Optional<IotHubPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<IotHubIPFilterRule>> ipFilterRules = default;
+            IList<IotHubIPFilterRule> ipFilterRules = default;
             Optional<IotHubNetworkRuleSetProperties> networkRuleSets = default;
             Optional<string> minTlsVersion = default;
-            Optional<IList<IotHubPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<string> provisioningState = default;
             Optional<string> state = default;
             Optional<string> hostName = default;
-            Optional<IDictionary<string, EventHubCompatibleEndpointProperties>> eventHubEndpoints = default;
+            IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = default;
             Optional<IotHubRoutingProperties> routing = default;
-            Optional<IDictionary<string, IotHubStorageEndpointProperties>> storageEndpoints = default;
-            Optional<IDictionary<string, MessagingEndpointProperties>> messagingEndpoints = default;
+            IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = default;
+            IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default;
             Optional<bool> enableFileUploadNotifications = default;
             Optional<CloudToDeviceProperties> cloudToDevice = default;
             Optional<string> comments = default;
             Optional<IotHubCapability> features = default;
-            Optional<IReadOnlyList<IotHubLocationDescription>> locations = default;
+            IReadOnlyList<IotHubLocationDescription> locations = default;
             Optional<bool> enableDataResidency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<SharedAccessSignatureAuthorizationRule> array = new List<SharedAccessSignatureAuthorizationRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item));
+                        array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item, options));
                     }
                     authorizationPolicies = array;
                     continue;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubIPFilterRule> array = new List<IotHubIPFilterRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item));
+                        array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item, options));
                     }
                     ipFilterRules = array;
                     continue;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    networkRuleSets = IotHubNetworkRuleSetProperties.DeserializeIotHubNetworkRuleSetProperties(property.Value);
+                    networkRuleSets = IotHubNetworkRuleSetProperties.DeserializeIotHubNetworkRuleSetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("minTlsVersion"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubPrivateEndpointConnectionData> array = new List<IotHubPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(item));
+                        array.Add(IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, EventHubCompatibleEndpointProperties> dictionary = new Dictionary<string, EventHubCompatibleEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EventHubCompatibleEndpointProperties.DeserializeEventHubCompatibleEndpointProperties(property0.Value));
+                        dictionary.Add(property0.Name, EventHubCompatibleEndpointProperties.DeserializeEventHubCompatibleEndpointProperties(property0.Value, options));
                     }
                     eventHubEndpoints = dictionary;
                     continue;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    routing = IotHubRoutingProperties.DeserializeIotHubRoutingProperties(property.Value);
+                    routing = IotHubRoutingProperties.DeserializeIotHubRoutingProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageEndpoints"u8))
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, IotHubStorageEndpointProperties> dictionary = new Dictionary<string, IotHubStorageEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, IotHubStorageEndpointProperties.DeserializeIotHubStorageEndpointProperties(property0.Value));
+                        dictionary.Add(property0.Name, IotHubStorageEndpointProperties.DeserializeIotHubStorageEndpointProperties(property0.Value, options));
                     }
                     storageEndpoints = dictionary;
                     continue;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, MessagingEndpointProperties> dictionary = new Dictionary<string, MessagingEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MessagingEndpointProperties.DeserializeMessagingEndpointProperties(property0.Value));
+                        dictionary.Add(property0.Name, MessagingEndpointProperties.DeserializeMessagingEndpointProperties(property0.Value, options));
                     }
                     messagingEndpoints = dictionary;
                     continue;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    cloudToDevice = CloudToDeviceProperties.DeserializeCloudToDeviceProperties(property.Value);
+                    cloudToDevice = CloudToDeviceProperties.DeserializeCloudToDeviceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("comments"u8))
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubLocationDescription> array = new List<IotHubLocationDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubLocationDescription.DeserializeIotHubLocationDescription(item));
+                        array.Add(IotHubLocationDescription.DeserializeIotHubLocationDescription(item, options));
                     }
                     locations = array;
                     continue;
@@ -498,7 +498,32 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubProperties(Optional.ToList(authorizationPolicies), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableDeviceSas), Optional.ToNullable(disableModuleSas), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipFilterRules), networkRuleSets.Value, minTlsVersion.Value, Optional.ToList(privateEndpointConnections), provisioningState.Value, state.Value, hostName.Value, Optional.ToDictionary(eventHubEndpoints), routing.Value, Optional.ToDictionary(storageEndpoints), Optional.ToDictionary(messagingEndpoints), Optional.ToNullable(enableFileUploadNotifications), cloudToDevice.Value, comments.Value, Optional.ToNullable(features), Optional.ToList(locations), Optional.ToNullable(enableDataResidency), serializedAdditionalRawData);
+            return new IotHubProperties(
+                authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>(),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(disableDeviceSas),
+                Optional.ToNullable(disableModuleSas),
+                Optional.ToNullable(restrictOutboundNetworkAccess),
+                allowedFqdnList ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(publicNetworkAccess),
+                ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>(),
+                networkRuleSets.Value,
+                minTlsVersion.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>(),
+                provisioningState.Value,
+                state.Value,
+                hostName.Value,
+                eventHubEndpoints ?? new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>(),
+                routing.Value,
+                storageEndpoints ?? new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>(),
+                messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpointProperties>(),
+                Optional.ToNullable(enableFileUploadNotifications),
+                cloudToDevice.Value,
+                comments.Value,
+                Optional.ToNullable(features),
+                locations ?? new ChangeTrackingList<IotHubLocationDescription>(),
+                Optional.ToNullable(enableDataResidency),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubProperties>.Write(ModelReaderWriterOptions options)

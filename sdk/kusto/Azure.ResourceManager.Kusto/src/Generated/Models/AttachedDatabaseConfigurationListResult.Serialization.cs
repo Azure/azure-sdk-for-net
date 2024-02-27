@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoAttachedDatabaseConfigurationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoAttachedDatabaseConfigurationData>> value = default;
+            IReadOnlyList<KustoAttachedDatabaseConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoAttachedDatabaseConfigurationData> array = new List<KustoAttachedDatabaseConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(item));
+                        array.Add(KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttachedDatabaseConfigurationListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AttachedDatabaseConfigurationListResult(value ?? new ChangeTrackingList<KustoAttachedDatabaseConfigurationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttachedDatabaseConfigurationListResult>.Write(ModelReaderWriterOptions options)

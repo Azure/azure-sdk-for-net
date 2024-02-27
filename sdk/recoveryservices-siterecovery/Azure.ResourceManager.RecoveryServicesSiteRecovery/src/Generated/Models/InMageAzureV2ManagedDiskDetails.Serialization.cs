@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskId))
+            if (DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(SeedManagedDiskId))
+            if (SeedManagedDiskId != null)
             {
                 writer.WritePropertyName("seedManagedDiskId"u8);
                 writer.WriteStringValue(SeedManagedDiskId);
             }
-            if (Optional.IsDefined(ReplicaDiskType))
+            if (ReplicaDiskType != null)
             {
                 writer.WritePropertyName("replicaDiskType"u8);
                 writer.WriteStringValue(ReplicaDiskType);
             }
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsDefined(TargetDiskName))
+            if (TargetDiskName != null)
             {
                 writer.WritePropertyName("targetDiskName"u8);
                 writer.WriteStringValue(TargetDiskName);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ManagedDiskDetails(diskId.Value, seedManagedDiskId.Value, replicaDiskType.Value, diskEncryptionSetId.Value, targetDiskName.Value, serializedAdditionalRawData);
+            return new InMageAzureV2ManagedDiskDetails(
+                diskId.Value,
+                seedManagedDiskId.Value,
+                replicaDiskType.Value,
+                diskEncryptionSetId.Value,
+                targetDiskName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2ManagedDiskDetails>.Write(ModelReaderWriterOptions options)

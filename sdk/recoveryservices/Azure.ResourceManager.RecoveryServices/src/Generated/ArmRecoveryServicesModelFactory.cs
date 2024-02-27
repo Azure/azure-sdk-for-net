@@ -31,7 +31,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.VaultCertificateResult"/> instance for mocking. </returns>
         public static VaultCertificateResult VaultCertificateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceCertificateDetails properties = null)
         {
-            return new VaultCertificateResult(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new VaultCertificateResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateDetails"/>. </summary>
@@ -47,7 +53,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.ResourceCertificateDetails"/> instance for mocking. </returns>
         public static ResourceCertificateDetails ResourceCertificateDetails(string authType = null, byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null)
         {
-            return new UnknownResourceCertificateDetails(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, serializedAdditionalRawData: null);
+            return new UnknownResourceCertificateDetails(
+                authType,
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validStartOn,
+                validEndOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReplicationUsage"/>. </summary>
@@ -60,7 +76,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.ReplicationUsage"/> instance for mocking. </returns>
         public static ReplicationUsage ReplicationUsage(VaultMonitoringSummary monitoringSummary = null, ReplicationJobSummary jobsSummary = null, int? protectedItemCount = null, int? recoveryPlanCount = null, int? registeredServersCount = null, int? recoveryServicesProviderAuthType = null)
         {
-            return new ReplicationUsage(monitoringSummary, jobsSummary, protectedItemCount, recoveryPlanCount, registeredServersCount, recoveryServicesProviderAuthType, serializedAdditionalRawData: null);
+            return new ReplicationUsage(
+                monitoringSummary,
+                jobsSummary,
+                protectedItemCount,
+                recoveryPlanCount,
+                registeredServersCount,
+                recoveryServicesProviderAuthType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VaultMonitoringSummary"/>. </summary>
@@ -73,7 +96,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.VaultMonitoringSummary"/> instance for mocking. </returns>
         public static VaultMonitoringSummary VaultMonitoringSummary(int? unHealthyVmCount = null, int? unHealthyProviderCount = null, int? eventsCount = null, int? deprecatedProviderCount = null, int? supportedProviderCount = null, int? unsupportedProviderCount = null)
         {
-            return new VaultMonitoringSummary(unHealthyVmCount, unHealthyProviderCount, eventsCount, deprecatedProviderCount, supportedProviderCount, unsupportedProviderCount, serializedAdditionalRawData: null);
+            return new VaultMonitoringSummary(
+                unHealthyVmCount,
+                unHealthyProviderCount,
+                eventsCount,
+                deprecatedProviderCount,
+                supportedProviderCount,
+                unsupportedProviderCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReplicationJobSummary"/>. </summary>
@@ -100,7 +130,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new RecoveryServicesPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new RecoveryServicesPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesNameAvailabilityResult"/>. </summary>
@@ -129,7 +167,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new RecoveryServicesVaultData(id, name, resourceType, systemData, tags, location, identity, properties, sku, etag, serializedAdditionalRawData: null);
+            return new RecoveryServicesVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                properties,
+                sku,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesVaultProperties"/>. </summary>
@@ -153,7 +202,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
             privateEndpointConnections ??= new List<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
 
-            return new RecoveryServicesVaultProperties(provisioningState, upgradeDetails, privateEndpointConnections?.ToList(), privateEndpointStateForBackup, privateEndpointStateForSiteRecovery, encryption, moveDetails, moveState, backupStorageVersion, publicNetworkAccess, monitoringSettings, crossSubscriptionRestoreState != null ? new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, redundancySettings, securitySettings, secureScore, serializedAdditionalRawData: null);
+            return new RecoveryServicesVaultProperties(
+                provisioningState,
+                upgradeDetails,
+                privateEndpointConnections?.ToList(),
+                privateEndpointStateForBackup,
+                privateEndpointStateForSiteRecovery,
+                encryption,
+                moveDetails,
+                moveState,
+                backupStorageVersion,
+                publicNetworkAccess,
+                monitoringSettings,
+                crossSubscriptionRestoreState != null ? new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                redundancySettings,
+                securitySettings,
+                secureScore,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VaultUpgradeDetails"/>. </summary>
@@ -169,7 +234,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.VaultUpgradeDetails"/> instance for mocking. </returns>
         public static VaultUpgradeDetails VaultUpgradeDetails(string operationId = null, DateTimeOffset? startOn = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? endOn = null, VaultUpgradeState? status = null, string message = null, VaultUpgradeTriggerType? triggerType = null, ResourceIdentifier upgradedResourceId = null, ResourceIdentifier previousResourceId = null)
         {
-            return new VaultUpgradeDetails(operationId, startOn, lastUpdatedOn, endOn, status, message, triggerType, upgradedResourceId, previousResourceId, serializedAdditionalRawData: null);
+            return new VaultUpgradeDetails(
+                operationId,
+                startOn,
+                lastUpdatedOn,
+                endOn,
+                status,
+                message,
+                triggerType,
+                upgradedResourceId,
+                previousResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
@@ -182,7 +257,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.RecoveryServicesPrivateEndpointConnectionVaultProperties"/> instance for mocking. </returns>
         public static RecoveryServicesPrivateEndpointConnectionVaultProperties RecoveryServicesPrivateEndpointConnectionVaultProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryServicesPrivateEndpointConnection properties = null, AzureLocation? location = null)
         {
-            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(id, name, resourceType, systemData, properties, location, serializedAdditionalRawData: null);
+            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesPrivateEndpointConnection"/>. </summary>
@@ -217,7 +299,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.VaultPropertiesMoveDetails"/> instance for mocking. </returns>
         public static VaultPropertiesMoveDetails VaultPropertiesMoveDetails(string operationId = null, DateTimeOffset? startOn = null, DateTimeOffset? completedOn = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier targetResourceId = null)
         {
-            return new VaultPropertiesMoveDetails(operationId, startOn, completedOn, sourceResourceId, targetResourceId, serializedAdditionalRawData: null);
+            return new VaultPropertiesMoveDetails(
+                operationId,
+                startOn,
+                completedOn,
+                sourceResourceId,
+                targetResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VaultPropertiesRedundancySettings"/>. </summary>
@@ -255,7 +343,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new RecoveryServicesVaultPatch(id, name, resourceType, systemData, tags, location, properties, sku, identity, etag, serializedAdditionalRawData: null);
+            return new RecoveryServicesVaultPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                sku,
+                identity,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/>. </summary>
@@ -271,7 +370,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/> instance for mocking. </returns>
         public static RecoveryServicesVaultExtendedInfoData RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string integrityKey = null, string encryptionKey = null, string encryptionKeyThumbprint = null, string algorithm = null, ETag? etag = null)
         {
-            return new RecoveryServicesVaultExtendedInfoData(id, name, resourceType, systemData, integrityKey, encryptionKey, encryptionKeyThumbprint, algorithm, etag, serializedAdditionalRawData: null);
+            return new RecoveryServicesVaultExtendedInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                integrityKey,
+                encryptionKey,
+                encryptionKeyThumbprint,
+                algorithm,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VaultUsage"/>. </summary>
@@ -284,7 +393,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.VaultUsage"/> instance for mocking. </returns>
         public static VaultUsage VaultUsage(VaultUsageUnit? unit = null, string quotaPeriod = null, DateTimeOffset? nextResetOn = null, long? currentValue = null, long? limit = null, VaultUsageNameInfo name = null)
         {
-            return new VaultUsage(unit, quotaPeriod, nextResetOn, currentValue, limit, name, serializedAdditionalRawData: null);
+            return new VaultUsage(
+                unit,
+                quotaPeriod,
+                nextResetOn,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VaultUsageNameInfo"/>. </summary>
@@ -315,7 +431,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.ResourceCertificateAndAadDetails"/> instance for mocking. </returns>
         public static ResourceCertificateAndAadDetails ResourceCertificateAndAadDetails(byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null, string aadAuthority = null, Guid aadTenantId = default, string servicePrincipalClientId = null, string servicePrincipalObjectId = null, string azureManagementEndpointAudience = null, ResourceIdentifier serviceResourceId = null, string aadAudience = null)
         {
-            return new ResourceCertificateAndAadDetails("AzureActiveDirectory", certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, serializedAdditionalRawData: null, aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId, aadAudience);
+            return new ResourceCertificateAndAadDetails(
+                "AzureActiveDirectory",
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validStartOn,
+                validEndOn,
+                serializedAdditionalRawData: null,
+                aadAuthority,
+                aadTenantId,
+                servicePrincipalClientId,
+                servicePrincipalObjectId,
+                azureManagementEndpointAudience,
+                serviceResourceId,
+                aadAudience);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateAndAcsDetails"/>. </summary>
@@ -333,7 +466,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.ResourceCertificateAndAcsDetails"/> instance for mocking. </returns>
         public static ResourceCertificateAndAcsDetails ResourceCertificateAndAcsDetails(byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null, string globalAcsNamespace = null, string globalAcsHostName = null, string globalAcsRPRealm = null)
         {
-            return new ResourceCertificateAndAcsDetails("AccessControlService", certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, serializedAdditionalRawData: null, globalAcsNamespace, globalAcsHostName, globalAcsRPRealm);
+            return new ResourceCertificateAndAcsDetails(
+                "AccessControlService",
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validStartOn,
+                validEndOn,
+                serializedAdditionalRawData: null,
+                globalAcsNamespace,
+                globalAcsHostName,
+                globalAcsRPRealm);
         }
     }
 }

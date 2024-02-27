@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowNewSession))
+            if (AllowNewSession.HasValue)
             {
                 writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
-            if (Optional.IsDefined(AssignedUser))
+            if (AssignedUser != null)
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostPatch(id, name, type, systemData.Value, Optional.ToNullable(allowNewSession), assignedUser.Value, friendlyName.Value, serializedAdditionalRawData);
+            return new SessionHostPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(allowNewSession),
+                assignedUser.Value,
+                friendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostPatch>.Write(ModelReaderWriterOptions options)

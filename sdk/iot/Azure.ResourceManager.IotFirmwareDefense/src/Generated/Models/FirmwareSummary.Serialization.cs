@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtractedSize))
+            if (ExtractedSize.HasValue)
             {
                 if (ExtractedSize != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("extractedSize");
                 }
             }
-            if (Optional.IsDefined(FileSize))
+            if (FileSize.HasValue)
             {
                 if (FileSize != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("fileSize");
                 }
             }
-            if (Optional.IsDefined(ExtractedFileCount))
+            if (ExtractedFileCount.HasValue)
             {
                 if (ExtractedFileCount != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("extractedFileCount");
                 }
             }
-            if (Optional.IsDefined(ComponentCount))
+            if (ComponentCount.HasValue)
             {
                 if (ComponentCount != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("componentCount");
                 }
             }
-            if (Optional.IsDefined(BinaryCount))
+            if (BinaryCount.HasValue)
             {
                 if (BinaryCount != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("binaryCount");
                 }
             }
-            if (Optional.IsDefined(AnalysisTimeSeconds))
+            if (AnalysisTimeSeconds.HasValue)
             {
                 if (AnalysisTimeSeconds != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("analysisTimeSeconds");
                 }
             }
-            if (Optional.IsDefined(RootFileSystems))
+            if (RootFileSystems.HasValue)
             {
                 if (RootFileSystems != null)
                 {
@@ -235,7 +235,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareSummary(Optional.ToNullable(extractedSize), Optional.ToNullable(fileSize), Optional.ToNullable(extractedFileCount), Optional.ToNullable(componentCount), Optional.ToNullable(binaryCount), Optional.ToNullable(analysisTimeSeconds), Optional.ToNullable(rootFileSystems), serializedAdditionalRawData);
+            return new FirmwareSummary(
+                Optional.ToNullable(extractedSize),
+                Optional.ToNullable(fileSize),
+                Optional.ToNullable(extractedFileCount),
+                Optional.ToNullable(componentCount),
+                Optional.ToNullable(binaryCount),
+                Optional.ToNullable(analysisTimeSeconds),
+                Optional.ToNullable(rootFileSystems),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareSummary>.Write(ModelReaderWriterOptions options)

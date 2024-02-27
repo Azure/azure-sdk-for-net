@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArrayValueSeparator))
+            if (ArrayValueSeparator != null)
             {
                 writer.WritePropertyName("arrayValueSeparator"u8);
                 writer.WriteStringValue(ArrayValueSeparator);
             }
-            if (Optional.IsCollectionDefined(EnumValidValues))
+            if (!(EnumValidValues is ChangeTrackingList<ProfileEnumValidValuesFormat> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("enumValidValues"u8);
                 writer.WriteStartArray();
@@ -45,62 +45,62 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("fieldType"u8);
             writer.WriteStringValue(FieldType);
-            if (Optional.IsDefined(IsArray))
+            if (IsArray.HasValue)
             {
                 writer.WritePropertyName("isArray"u8);
                 writer.WriteBooleanValue(IsArray.Value);
             }
-            if (Optional.IsDefined(IsEnum))
+            if (IsEnum.HasValue)
             {
                 writer.WritePropertyName("isEnum"u8);
                 writer.WriteBooleanValue(IsEnum.Value);
             }
-            if (Optional.IsDefined(IsFlagEnum))
+            if (IsFlagEnum.HasValue)
             {
                 writer.WritePropertyName("isFlagEnum"u8);
                 writer.WriteBooleanValue(IsFlagEnum.Value);
             }
-            if (Optional.IsDefined(IsImage))
+            if (IsImage.HasValue)
             {
                 writer.WritePropertyName("isImage"u8);
                 writer.WriteBooleanValue(IsImage.Value);
             }
-            if (Optional.IsDefined(IsLocalizedString))
+            if (IsLocalizedString.HasValue)
             {
                 writer.WritePropertyName("isLocalizedString"u8);
                 writer.WriteBooleanValue(IsLocalizedString.Value);
             }
-            if (Optional.IsDefined(IsName))
+            if (IsName.HasValue)
             {
                 writer.WritePropertyName("isName"u8);
                 writer.WriteBooleanValue(IsName.Value);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (IsRequired.HasValue)
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsDefined(PropertyId))
+            if (PropertyId != null)
             {
                 writer.WritePropertyName("propertyId"u8);
                 writer.WriteStringValue(PropertyId);
             }
-            if (Optional.IsDefined(SchemaItemPropLink))
+            if (SchemaItemPropLink != null)
             {
                 writer.WritePropertyName("schemaItemPropLink"u8);
                 writer.WriteStringValue(SchemaItemPropLink);
             }
-            if (Optional.IsDefined(MaxLength))
+            if (MaxLength.HasValue)
             {
                 writer.WritePropertyName("maxLength"u8);
                 writer.WriteNumberValue(MaxLength.Value);
             }
-            if (Optional.IsDefined(IsAvailableInGraph))
+            if (IsAvailableInGraph.HasValue)
             {
                 writer.WritePropertyName("isAvailableInGraph"u8);
                 writer.WriteBooleanValue(IsAvailableInGraph.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataSourcePrecedenceRules))
+            if (options.Format != "W" && !(DataSourcePrecedenceRules is ChangeTrackingList<DataSourcePrecedence> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataSourcePrecedenceRules"u8);
                 writer.WriteStartArray();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             Optional<string> arrayValueSeparator = default;
-            Optional<IList<ProfileEnumValidValuesFormat>> enumValidValues = default;
+            IList<ProfileEnumValidValuesFormat> enumValidValues = default;
             string fieldName = default;
             string fieldType = default;
             Optional<bool> isArray = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> schemaItemPropLink = default;
             Optional<int> maxLength = default;
             Optional<bool> isAvailableInGraph = default;
-            Optional<IReadOnlyList<DataSourcePrecedence>> dataSourcePrecedenceRules = default;
+            IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ProfileEnumValidValuesFormat> array = new List<ProfileEnumValidValuesFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item));
+                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item, options));
                     }
                     enumValidValues = array;
                     continue;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<DataSourcePrecedence> array = new List<DataSourcePrecedence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item, options));
                     }
                     dataSourcePrecedenceRules = array;
                     continue;
@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyDefinition(arrayValueSeparator.Value, Optional.ToList(enumValidValues), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), Optional.ToList(dataSourcePrecedenceRules), serializedAdditionalRawData);
+            return new PropertyDefinition(
+                arrayValueSeparator.Value,
+                enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(),
+                fieldName,
+                fieldType,
+                Optional.ToNullable(isArray),
+                Optional.ToNullable(isEnum),
+                Optional.ToNullable(isFlagEnum),
+                Optional.ToNullable(isImage),
+                Optional.ToNullable(isLocalizedString),
+                Optional.ToNullable(isName),
+                Optional.ToNullable(isRequired),
+                propertyId.Value,
+                schemaItemPropLink.Value,
+                Optional.ToNullable(maxLength),
+                Optional.ToNullable(isAvailableInGraph),
+                dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyDefinition>.Write(ModelReaderWriterOptions options)

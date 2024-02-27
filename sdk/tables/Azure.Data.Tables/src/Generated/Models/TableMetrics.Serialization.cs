@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Metrics");
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WriteStartElement("Version");
                 writer.WriteValue(Version);
@@ -26,13 +26,13 @@ namespace Azure.Data.Tables.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IncludeApis))
+            if (IncludeApis.HasValue)
             {
                 writer.WriteStartElement("IncludeAPIs");
                 writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (RetentionPolicy != null)
             {
                 writer.WriteObjectValue(RetentionPolicy, "RetentionPolicy");
             }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GradeName))
+            if (GradeName != null)
             {
                 writer.WritePropertyName("gradeName"u8);
                 writer.WriteStringValue(GradeName);
             }
-            if (Optional.IsDefined(MinScoreThreshold))
+            if (MinScoreThreshold.HasValue)
             {
                 writer.WritePropertyName("minScoreThreshold"u8);
                 writer.WriteNumberValue(MinScoreThreshold.Value);
             }
-            if (Optional.IsDefined(MaxScoreThreshold))
+            if (MaxScoreThreshold.HasValue)
             {
                 writer.WritePropertyName("maxScoreThreshold"u8);
                 writer.WriteNumberValue(MaxScoreThreshold.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Videos))
+            if (!(Videos is ChangeTrackingList<VideoGroupVideo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("videos"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReplacementKey))
+            if (ReplacementKey != null)
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IList<VideoGroupVideo>> videos = default;
+            IList<VideoGroupVideo> videos = default;
             Optional<string> replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<VideoGroupVideo> array = new List<VideoGroupVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item));
+                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item, options));
                     }
                     videos = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoGroup(Optional.ToList(videos), replacementKey.Value, serializedAdditionalRawData);
+            return new VideoGroup(videos ?? new ChangeTrackingList<VideoGroupVideo>(), replacementKey.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VideoGroup>.Write(ModelReaderWriterOptions options)

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(Direction.ToString());
             writer.WritePropertyName("detailLevel"u8);
             writer.WriteStringValue(DetailLevel.ToString());
-            if (Optional.IsDefined(HiddenPropertyPaths))
+            if (HiddenPropertyPaths != null)
             {
                 writer.WritePropertyName("hiddenPropertyPaths"u8);
                 writer.WriteObjectValue(HiddenPropertyPaths);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(property.Value);
+                    hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

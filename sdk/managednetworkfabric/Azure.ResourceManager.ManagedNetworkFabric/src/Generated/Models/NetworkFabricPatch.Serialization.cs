@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,42 +39,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(RackCount))
+            if (RackCount.HasValue)
             {
                 writer.WritePropertyName("rackCount"u8);
                 writer.WriteNumberValue(RackCount.Value);
             }
-            if (Optional.IsDefined(ServerCountPerRack))
+            if (ServerCountPerRack.HasValue)
             {
                 writer.WritePropertyName("serverCountPerRack"u8);
                 writer.WriteNumberValue(ServerCountPerRack.Value);
             }
-            if (Optional.IsDefined(IPv4Prefix))
+            if (IPv4Prefix != null)
             {
                 writer.WritePropertyName("ipv4Prefix"u8);
                 writer.WriteStringValue(IPv4Prefix);
             }
-            if (Optional.IsDefined(IPv6Prefix))
+            if (IPv6Prefix != null)
             {
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
             }
-            if (Optional.IsDefined(FabricAsn))
+            if (FabricAsn.HasValue)
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsDefined(TerminalServerConfiguration))
+            if (TerminalServerConfiguration != null)
             {
                 writer.WritePropertyName("terminalServerConfiguration"u8);
                 writer.WriteObjectValue(TerminalServerConfiguration);
             }
-            if (Optional.IsDefined(ManagementNetworkConfiguration))
+            if (ManagementNetworkConfiguration != null)
             {
                 writer.WritePropertyName("managementNetworkConfiguration"u8);
                 writer.WriteObjectValue(ManagementNetworkConfiguration);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> annotation = default;
             Optional<int> rackCount = default;
             Optional<int> serverCountPerRack = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value);
+                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value);
+                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(rackCount), Optional.ToNullable(serverCountPerRack), ipv4Prefix.Value, ipv6Prefix.Value, Optional.ToNullable(fabricAsn), terminalServerConfiguration.Value, managementNetworkConfiguration.Value);
+            return new NetworkFabricPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                annotation.Value,
+                Optional.ToNullable(rackCount),
+                Optional.ToNullable(serverCountPerRack),
+                ipv4Prefix.Value,
+                ipv6Prefix.Value,
+                Optional.ToNullable(fabricAsn),
+                terminalServerConfiguration.Value,
+                managementNetworkConfiguration.Value);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatch>.Write(ModelReaderWriterOptions options)

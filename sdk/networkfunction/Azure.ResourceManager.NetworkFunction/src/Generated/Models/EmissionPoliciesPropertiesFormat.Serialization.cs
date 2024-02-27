@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EmissionType))
+            if (EmissionType.HasValue)
             {
                 writer.WritePropertyName("emissionType"u8);
                 writer.WriteStringValue(EmissionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(EmissionDestinations))
+            if (!(EmissionDestinations is ChangeTrackingList<EmissionPolicyDestination> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("emissionDestinations"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 return null;
             }
             Optional<EmissionType> emissionType = default;
-            Optional<IList<EmissionPolicyDestination>> emissionDestinations = default;
+            IList<EmissionPolicyDestination> emissionDestinations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<EmissionPolicyDestination> array = new List<EmissionPolicyDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmissionPolicyDestination.DeserializeEmissionPolicyDestination(item));
+                        array.Add(EmissionPolicyDestination.DeserializeEmissionPolicyDestination(item, options));
                     }
                     emissionDestinations = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmissionPoliciesPropertiesFormat(Optional.ToNullable(emissionType), Optional.ToList(emissionDestinations), serializedAdditionalRawData);
+            return new EmissionPoliciesPropertiesFormat(Optional.ToNullable(emissionType), emissionDestinations ?? new ChangeTrackingList<EmissionPolicyDestination>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmissionPoliciesPropertiesFormat>.Write(ModelReaderWriterOptions options)

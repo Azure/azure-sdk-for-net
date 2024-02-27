@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<int> rowSpan = default;
             Optional<int> columnSpan = default;
             string content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -96,7 +96,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentTableCell(Optional.ToNullable(kind), rowIndex, columnIndex, Optional.ToNullable(rowSpan), Optional.ToNullable(columnSpan), content, Optional.ToList(boundingRegions), spans);
+            return new DocumentTableCell(
+                Optional.ToNullable(kind),
+                rowIndex,
+                columnIndex,
+                Optional.ToNullable(rowSpan),
+                Optional.ToNullable(columnSpan),
+                content,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans);
         }
     }
 }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(ValuePath))
+            if (ValuePath != null)
             {
                 writer.WritePropertyName("valuePath"u8);
                 writer.WriteStringValue(ValuePath);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<string> operationId = default;
             Optional<string> valuePath = default;
-            Optional<IDictionary<string, SwaggerCustomDynamicProperties>> parameters = default;
+            IDictionary<string, SwaggerCustomDynamicProperties> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerCustomDynamicProperties> dictionary = new Dictionary<string, SwaggerCustomDynamicProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeSwaggerCustomDynamicProperties(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeSwaggerCustomDynamicProperties(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicProperties(operationId.Value, valuePath.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicProperties(operationId.Value, valuePath.Value, parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicProperties>.Write(ModelReaderWriterOptions options)

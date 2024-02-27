@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BucketName))
+            if (BucketName != null)
             {
                 writer.WritePropertyName("bucketName"u8);
                 JsonSerializer.Serialize(writer, BucketName);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 JsonSerializer.Serialize(writer, Version);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 JsonSerializer.Serialize(writer, FileName);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OracleCloudStorageLocation(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
+            return new OracleCloudStorageLocation(
+                type,
+                folderPath.Value,
+                fileName.Value,
+                additionalProperties,
+                bucketName.Value,
+                version.Value);
         }
 
         BinaryData IPersistableModel<OracleCloudStorageLocation>.Write(ModelReaderWriterOptions options)

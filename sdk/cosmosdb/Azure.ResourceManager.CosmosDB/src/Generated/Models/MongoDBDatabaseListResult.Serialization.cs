@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MongoDBDatabaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MongoDBDatabaseData>> value = default;
+            IReadOnlyList<MongoDBDatabaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoDBDatabaseData> array = new List<MongoDBDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBDatabaseData.DeserializeMongoDBDatabaseData(item));
+                        array.Add(MongoDBDatabaseData.DeserializeMongoDBDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MongoDBDatabaseListResult(value ?? new ChangeTrackingList<MongoDBDatabaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBDatabaseListResult>.Write(ModelReaderWriterOptions options)

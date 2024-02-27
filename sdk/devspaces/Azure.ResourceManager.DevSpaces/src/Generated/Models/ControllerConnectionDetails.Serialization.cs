@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OrchestratorSpecificConnectionDetails))
+            if (OrchestratorSpecificConnectionDetails != null)
             {
                 writer.WritePropertyName("orchestratorSpecificConnectionDetails"u8);
                 writer.WriteObjectValue(OrchestratorSpecificConnectionDetails);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     {
                         continue;
                     }
-                    orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value);
+                    orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

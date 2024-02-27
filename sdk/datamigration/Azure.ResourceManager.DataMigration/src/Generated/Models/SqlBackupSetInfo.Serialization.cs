@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BackupSetId))
+            if (options.Format != "W" && BackupSetId.HasValue)
             {
                 writer.WritePropertyName("backupSetId"u8);
                 writer.WriteStringValue(BackupSetId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstLSN))
+            if (options.Format != "W" && FirstLSN != null)
             {
                 writer.WritePropertyName("firstLSN"u8);
                 writer.WriteStringValue(FirstLSN);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastLSN))
+            if (options.Format != "W" && LastLSN != null)
             {
                 writer.WritePropertyName("lastLSN"u8);
                 writer.WriteStringValue(LastLSN);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupType))
+            if (options.Format != "W" && BackupType != null)
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ListOfBackupFiles))
+            if (options.Format != "W" && !(ListOfBackupFiles is ChangeTrackingList<SqlBackupFileInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("listOfBackupFiles"u8);
                 writer.WriteStartArray();
@@ -56,32 +56,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupStartOn))
+            if (options.Format != "W" && BackupStartOn.HasValue)
             {
                 writer.WritePropertyName("backupStartDate"u8);
                 writer.WriteStringValue(BackupStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupFinishOn))
+            if (options.Format != "W" && BackupFinishOn.HasValue)
             {
                 writer.WritePropertyName("backupFinishDate"u8);
                 writer.WriteStringValue(BackupFinishOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsBackupRestored))
+            if (options.Format != "W" && IsBackupRestored.HasValue)
             {
                 writer.WritePropertyName("isBackupRestored"u8);
                 writer.WriteBooleanValue(IsBackupRestored.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HasBackupChecksums))
+            if (options.Format != "W" && HasBackupChecksums.HasValue)
             {
                 writer.WritePropertyName("hasBackupChecksums"u8);
                 writer.WriteBooleanValue(HasBackupChecksums.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FamilyCount))
+            if (options.Format != "W" && FamilyCount.HasValue)
             {
                 writer.WritePropertyName("familyCount"u8);
                 writer.WriteNumberValue(FamilyCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IgnoreReasons))
+            if (options.Format != "W" && !(IgnoreReasons is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ignoreReasons"u8);
                 writer.WriteStartArray();
@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> firstLSN = default;
             Optional<string> lastLSN = default;
             Optional<string> backupType = default;
-            Optional<IReadOnlyList<SqlBackupFileInfo>> listOfBackupFiles = default;
+            IReadOnlyList<SqlBackupFileInfo> listOfBackupFiles = default;
             Optional<DateTimeOffset> backupStartDate = default;
             Optional<DateTimeOffset> backupFinishDate = default;
             Optional<bool> isBackupRestored = default;
             Optional<bool> hasBackupChecksums = default;
             Optional<int> familyCount = default;
-            Optional<IReadOnlyList<string>> ignoreReasons = default;
+            IReadOnlyList<string> ignoreReasons = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SqlBackupFileInfo> array = new List<SqlBackupFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlBackupFileInfo.DeserializeSqlBackupFileInfo(item));
+                        array.Add(SqlBackupFileInfo.DeserializeSqlBackupFileInfo(item, options));
                     }
                     listOfBackupFiles = array;
                     continue;
@@ -247,7 +247,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Optional.ToList(listOfBackupFiles), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), Optional.ToList(ignoreReasons), serializedAdditionalRawData);
+            return new SqlBackupSetInfo(
+                Optional.ToNullable(backupSetId),
+                firstLSN.Value,
+                lastLSN.Value,
+                backupType.Value,
+                listOfBackupFiles ?? new ChangeTrackingList<SqlBackupFileInfo>(),
+                Optional.ToNullable(backupStartDate),
+                Optional.ToNullable(backupFinishDate),
+                Optional.ToNullable(isBackupRestored),
+                Optional.ToNullable(hasBackupChecksums),
+                Optional.ToNullable(familyCount),
+                ignoreReasons ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlBackupSetInfo>.Write(ModelReaderWriterOptions options)

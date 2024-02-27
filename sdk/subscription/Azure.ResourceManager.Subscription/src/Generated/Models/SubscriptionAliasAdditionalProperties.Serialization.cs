@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagementGroupId))
+            if (ManagementGroupId != null)
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (Optional.IsDefined(SubscriptionTenantId))
+            if (SubscriptionTenantId.HasValue)
             {
                 writer.WritePropertyName("subscriptionTenantId"u8);
                 writer.WriteStringValue(SubscriptionTenantId.Value);
             }
-            if (Optional.IsDefined(SubscriptionOwnerId))
+            if (SubscriptionOwnerId != null)
             {
                 writer.WritePropertyName("subscriptionOwnerId"u8);
                 writer.WriteStringValue(SubscriptionOwnerId);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<string> managementGroupId = default;
             Optional<Guid> subscriptionTenantId = default;
             Optional<string> subscriptionOwnerId = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasAdditionalProperties(managementGroupId.Value, Optional.ToNullable(subscriptionTenantId), subscriptionOwnerId.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new SubscriptionAliasAdditionalProperties(managementGroupId.Value, Optional.ToNullable(subscriptionTenantId), subscriptionOwnerId.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasAdditionalProperties>.Write(ModelReaderWriterOptions options)

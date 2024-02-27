@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(Period))
+            if (Period != null)
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteStringValue(Period);
             }
-            if (Optional.IsDefined(Quota))
+            if (Quota.HasValue)
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteNumberValue(Quota.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(UnitPlural))
+            if (UnitPlural != null)
             {
                 writer.WritePropertyName("unitPlural"u8);
                 writer.WriteStringValue(UnitPlural);
@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaDimension(id.Value, scope.Value, period.Value, Optional.ToNullable(quota), name.Value, description.Value, unit.Value, unitPlural.Value, serializedAdditionalRawData);
+            return new QuotaDimension(
+                id.Value,
+                scope.Value,
+                period.Value,
+                Optional.ToNullable(quota),
+                name.Value,
+                description.Value,
+                unit.Value,
+                unitPlural.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaDimension>.Write(ModelReaderWriterOptions options)

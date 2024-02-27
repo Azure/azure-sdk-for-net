@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlanId))
+            if (PlanId != null)
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (Optional.IsCollectionDefined(SubscriptionIds))
+            if (!(SubscriptionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllSubscriptions))
+            if (AllSubscriptions.HasValue)
             {
                 writer.WritePropertyName("allSubscriptions"u8);
                 writer.WriteBooleanValue(AllSubscriptions.Value);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             Optional<string> planId = default;
-            Optional<IReadOnlyList<string>> subscriptionIds = default;
+            IReadOnlyList<string> subscriptionIds = default;
             Optional<bool> allSubscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovedPlansDetails(planId.Value, Optional.ToList(subscriptionIds), Optional.ToNullable(allSubscriptions), serializedAdditionalRawData);
+            return new QueryApprovedPlansDetails(planId.Value, subscriptionIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(allSubscriptions), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovedPlansDetails>.Write(ModelReaderWriterOptions options)

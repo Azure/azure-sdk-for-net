@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsDefault))
+            if (IsDefault.HasValue)
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(Container))
+            if (Container != null)
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (Optional.IsDefined(FileSystem))
+            if (FileSystem != null)
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteStringValue(FileSystem);
             }
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 if (ResourceId != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (Optional.IsDefined(MsiResourceId))
+            if (MsiResourceId != null)
             {
                 if (MsiResourceId != null)
                 {
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("msiResourceId");
                 }
             }
-            if (Optional.IsDefined(SasKey))
+            if (SasKey != null)
             {
                 writer.WritePropertyName("saskey"u8);
                 writer.WriteStringValue(SasKey);
             }
-            if (Optional.IsDefined(Fileshare))
+            if (Fileshare != null)
             {
                 writer.WritePropertyName("fileshare"u8);
                 writer.WriteStringValue(Fileshare);
             }
-            if (Optional.IsDefined(EnableSecureChannel))
+            if (EnableSecureChannel.HasValue)
             {
                 writer.WritePropertyName("enableSecureChannel"u8);
                 writer.WriteBooleanValue(EnableSecureChannel.Value);
@@ -216,7 +216,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Optional.ToNullable(enableSecureChannel), serializedAdditionalRawData);
+            return new HDInsightStorageAccountInfo(
+                name.Value,
+                Optional.ToNullable(isDefault),
+                container.Value,
+                fileSystem.Value,
+                key.Value,
+                resourceId.Value,
+                msiResourceId.Value,
+                saskey.Value,
+                fileshare.Value,
+                Optional.ToNullable(enableSecureChannel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightStorageAccountInfo>.Write(ModelReaderWriterOptions options)

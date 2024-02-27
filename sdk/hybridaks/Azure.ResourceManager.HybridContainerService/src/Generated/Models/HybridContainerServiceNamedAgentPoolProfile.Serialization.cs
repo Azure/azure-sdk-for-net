@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
+            if (options.Format != "W" && KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Optional.IsDefined(OSSku))
+            if (OSSku.HasValue)
             {
                 writer.WritePropertyName("osSKU"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NodeLabels))
+            if (!(NodeLabels is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NodeTaints))
+            if (!(NodeTaints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxCount))
+            if (MaxCount.HasValue)
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (Optional.IsDefined(MinCount))
+            if (MinCount.HasValue)
             {
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (Optional.IsDefined(EnableAutoScaling))
+            if (EnableAutoScaling.HasValue)
             {
                 writer.WritePropertyName("enableAutoScaling"u8);
                 writer.WriteBooleanValue(EnableAutoScaling.Value);
             }
-            if (Optional.IsDefined(MaxPods))
+            if (MaxPods.HasValue)
             {
                 writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> name = default;
             Optional<HybridContainerServiceOSType> osType = default;
             Optional<HybridContainerServiceOSSku> ossku = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
+            IDictionary<string, string> nodeLabels = default;
+            IList<string> nodeTaints = default;
             Optional<int> maxCount = default;
             Optional<int> minCount = default;
             Optional<bool> enableAutoScaling = default;
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceNamedAgentPoolProfile(Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), serializedAdditionalRawData, Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, name.Value);
+            return new HybridContainerServiceNamedAgentPoolProfile(
+                Optional.ToNullable(osType),
+                Optional.ToNullable(ossku),
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                nodeTaints ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(maxCount),
+                Optional.ToNullable(minCount),
+                Optional.ToNullable(enableAutoScaling),
+                Optional.ToNullable(maxPods),
+                serializedAdditionalRawData,
+                Optional.ToNullable(count),
+                vmSize.Value,
+                kubernetesVersion.Value,
+                name.Value);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TagInfo))
+            if (TagInfo != null)
             {
                 writer.WritePropertyName("tagInfo"u8);
                 writer.WriteObjectValue(TagInfo);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value);
+                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

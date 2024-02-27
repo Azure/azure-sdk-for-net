@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
-            if (Optional.IsDefined(Serialization))
+            if (Serialization != null)
             {
                 writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
-            if (options.Format != "W" && Optional.IsDefined(Diagnostics))
+            if (options.Format != "W" && Diagnostics != null)
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteObjectValue(Diagnostics);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Compression))
+            if (Compression != null)
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (PartitionKey != null)
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Optional.IsDefined(WatermarkSettings))
+            if (WatermarkSettings != null)
             {
                 writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInputProperties(document.RootElement, options);
+            return DeserializeStreamingJobInputProperties(document.RootElement, options);
         }
 
         internal static UnknownInputProperties DeserializeUnknownInputProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value);
+                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value);
+                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value);
+                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value);
+                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value, serializedAdditionalRawData);
+            return new UnknownInputProperties(
+                type,
+                serialization.Value,
+                diagnostics.Value,
+                Optional.ToNullable(etag),
+                compression.Value,
+                partitionKey.Value,
+                watermarkSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobInputProperties>.Write(ModelReaderWriterOptions options)
@@ -194,7 +202,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownInputProperties(document.RootElement, options);
+                        return DeserializeStreamingJobInputProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support '{options.Format}' format.");

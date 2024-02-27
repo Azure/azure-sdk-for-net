@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Cores))
+            if (Cores.HasValue)
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (Optional.IsDefined(DataDiskStorageTier))
+            if (DataDiskStorageTier != null)
             {
                 writer.WritePropertyName("dataDiskStorageTier"u8);
                 writer.WriteStringValue(DataDiskStorageTier);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(MaxDataDiskCount))
+            if (MaxDataDiskCount.HasValue)
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
             }
-            if (Optional.IsDefined(MemoryInMB))
+            if (MemoryInMB.HasValue)
             {
                 writer.WritePropertyName("memoryInMb"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (Optional.IsDefined(IsSupportedByVirtualMachines))
+            if (IsSupportedByVirtualMachines.HasValue)
             {
                 writer.WritePropertyName("supportedByVirtualMachines"u8);
                 writer.WriteBooleanValue(IsSupportedByVirtualMachines.Value);
             }
-            if (Optional.IsDefined(IsSupportedByWebWorkerRoles))
+            if (IsSupportedByWebWorkerRoles.HasValue)
             {
                 writer.WritePropertyName("supportedByWebWorkerRoles"u8);
                 writer.WriteBooleanValue(IsSupportedByWebWorkerRoles.Value);
             }
-            if (Optional.IsDefined(VirtualMachineResourceDiskSizeInMB))
+            if (VirtualMachineResourceDiskSizeInMB.HasValue)
             {
                 writer.WritePropertyName("virtualMachineResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(VirtualMachineResourceDiskSizeInMB.Value);
             }
-            if (Optional.IsDefined(WebWorkerResourceDiskSizeInMB))
+            if (WebWorkerResourceDiskSizeInMB.HasValue)
             {
                 writer.WritePropertyName("webWorkerResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(WebWorkerResourceDiskSizeInMB.Value);
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVmSizeProperty(name.Value, Optional.ToNullable(cores), dataDiskStorageTier.Value, label.Value, Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(memoryInMB), Optional.ToNullable(supportedByVirtualMachines), Optional.ToNullable(supportedByWebWorkerRoles), Optional.ToNullable(virtualMachineResourceDiskSizeInMB), Optional.ToNullable(webWorkerResourceDiskSizeInMB), serializedAdditionalRawData);
+            return new HDInsightVmSizeProperty(
+                name.Value,
+                Optional.ToNullable(cores),
+                dataDiskStorageTier.Value,
+                label.Value,
+                Optional.ToNullable(maxDataDiskCount),
+                Optional.ToNullable(memoryInMB),
+                Optional.ToNullable(supportedByVirtualMachines),
+                Optional.ToNullable(supportedByWebWorkerRoles),
+                Optional.ToNullable(virtualMachineResourceDiskSizeInMB),
+                Optional.ToNullable(webWorkerResourceDiskSizeInMB),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVmSizeProperty>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataCollectionFrequency))
+            if (DataCollectionFrequency != null)
             {
                 writer.WritePropertyName("dataCollectionFrequency"u8);
                 writer.WriteStringValue(DataCollectionFrequency);
             }
-            if (Optional.IsDefined(DataReportingFrequency))
+            if (DataReportingFrequency != null)
             {
                 writer.WritePropertyName("dataReportingFrequency"u8);
                 writer.WriteStringValue(DataReportingFrequency);
             }
-            if (Optional.IsDefined(MaxAllowedUnreportedUsageDuration))
+            if (MaxAllowedUnreportedUsageDuration.HasValue)
             {
                 writer.WritePropertyName("maxAllowedUnreportedUsageDuration"u8);
                 writer.WriteStringValue(MaxAllowedUnreportedUsageDuration.Value, "P");
             }
-            if (Optional.IsDefined(EventHubDetails))
+            if (EventHubDetails != null)
             {
                 writer.WritePropertyName("eventHubDetails"u8);
                 writer.WriteObjectValue(EventHubDetails);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value);
+                    eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

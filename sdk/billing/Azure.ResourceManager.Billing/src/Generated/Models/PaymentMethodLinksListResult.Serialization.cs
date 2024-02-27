@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BillingPaymentMethodLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BillingPaymentMethodLinkData>> value = default;
+            IReadOnlyList<BillingPaymentMethodLinkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Billing.Models
                     List<BillingPaymentMethodLinkData> array = new List<BillingPaymentMethodLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(item));
+                        array.Add(BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaymentMethodLinksListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PaymentMethodLinksListResult(value ?? new ChangeTrackingList<BillingPaymentMethodLinkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaymentMethodLinksListResult>.Write(ModelReaderWriterOptions options)

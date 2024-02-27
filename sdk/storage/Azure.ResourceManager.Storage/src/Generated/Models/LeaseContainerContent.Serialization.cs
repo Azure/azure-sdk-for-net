@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
-            if (Optional.IsDefined(LeaseId))
+            if (LeaseId != null)
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (Optional.IsDefined(BreakPeriod))
+            if (BreakPeriod.HasValue)
             {
                 writer.WritePropertyName("breakPeriod"u8);
                 writer.WriteNumberValue(BreakPeriod.Value);
             }
-            if (Optional.IsDefined(LeaseDuration))
+            if (LeaseDuration.HasValue)
             {
                 writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteNumberValue(LeaseDuration.Value);
             }
-            if (Optional.IsDefined(ProposedLeaseId))
+            if (ProposedLeaseId != null)
             {
                 writer.WritePropertyName("proposedLeaseId"u8);
                 writer.WriteStringValue(ProposedLeaseId);
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LeaseContainerContent(action, leaseId.Value, Optional.ToNullable(breakPeriod), Optional.ToNullable(leaseDuration), proposedLeaseId.Value, serializedAdditionalRawData);
+            return new LeaseContainerContent(
+                action,
+                leaseId.Value,
+                Optional.ToNullable(breakPeriod),
+                Optional.ToNullable(leaseDuration),
+                proposedLeaseId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LeaseContainerContent>.Write(ModelReaderWriterOptions options)

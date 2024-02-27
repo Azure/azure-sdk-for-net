@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(StoreLocation))
+            if (StoreLocation.HasValue)
             {
                 writer.WritePropertyName("storeLocation"u8);
                 writer.WriteStringValue(StoreLocation.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StoreName))
+            if (StoreName != null)
             {
                 writer.WritePropertyName("storeName"u8);
                 writer.WriteStringValue(StoreName);
             }
-            if (Optional.IsCollectionDefined(Visibility))
+            if (!(Visibility is ChangeTrackingList<BatchCertificateVisibility> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
             ResourceIdentifier id = default;
             Optional<BatchCertificateStoreLocation> storeLocation = default;
             Optional<string> storeName = default;
-            Optional<IList<BatchCertificateVisibility>> visibility = default;
+            IList<BatchCertificateVisibility> visibility = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchCertificateReference(id, Optional.ToNullable(storeLocation), storeName.Value, Optional.ToList(visibility), serializedAdditionalRawData);
+            return new BatchCertificateReference(id, Optional.ToNullable(storeLocation), storeName.Value, visibility ?? new ChangeTrackingList<BatchCertificateVisibility>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchCertificateReference>.Write(ModelReaderWriterOptions options)

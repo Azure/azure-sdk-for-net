@@ -27,12 +27,12 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocationName))
+            if (LocationName != null)
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName);
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
@@ -129,7 +129,14 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplateLocation(name, kind, serializedAdditionalRawData, locationName.Value, address.Value, latitude, longitude);
+            return new MessageTemplateLocation(
+                name,
+                kind,
+                serializedAdditionalRawData,
+                locationName.Value,
+                address.Value,
+                latitude,
+                longitude);
         }
 
         BinaryData IPersistableModel<MessageTemplateLocation>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,8 +18,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
         public AzureMLWebServiceFile(object filePath, LinkedServiceReference linkedServiceName)
         {
-            Argument.AssertNotNull(filePath, nameof(filePath));
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             FilePath = filePath;
             LinkedServiceName = linkedServiceName;

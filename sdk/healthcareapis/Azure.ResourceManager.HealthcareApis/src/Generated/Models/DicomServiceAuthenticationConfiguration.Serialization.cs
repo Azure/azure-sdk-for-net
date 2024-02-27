@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Authority))
+            if (options.Format != "W" && Authority != null)
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Audiences))
+            if (options.Format != "W" && !(Audiences is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("audiences"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             Optional<string> authority = default;
-            Optional<IReadOnlyList<string>> audiences = default;
+            IReadOnlyList<string> audiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DicomServiceAuthenticationConfiguration(authority.Value, Optional.ToList(audiences), serializedAdditionalRawData);
+            return new DicomServiceAuthenticationConfiguration(authority.Value, audiences ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DicomServiceAuthenticationConfiguration>.Write(ModelReaderWriterOptions options)

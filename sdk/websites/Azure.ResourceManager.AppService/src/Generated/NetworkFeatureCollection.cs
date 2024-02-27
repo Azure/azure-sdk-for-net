@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual async Task<Response<NetworkFeatureResource>> GetAsync(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(view, nameof(view));
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+            if (view.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
+            }
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.Get");
             scope.Start();
@@ -122,7 +129,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<NetworkFeatureResource> Get(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(view, nameof(view));
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+            if (view.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
+            }
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.Get");
             scope.Start();
@@ -167,7 +181,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(view, nameof(view));
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+            if (view.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
+            }
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.Exists");
             scope.Start();
@@ -210,7 +231,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<bool> Exists(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(view, nameof(view));
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+            if (view.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
+            }
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.Exists");
             scope.Start();
@@ -253,7 +281,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFeatureResource>> GetIfExistsAsync(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(view, nameof(view));
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+            if (view.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
+            }
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.GetIfExists");
             scope.Start();
@@ -298,7 +333,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual NullableResponse<NetworkFeatureResource> GetIfExists(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(view, nameof(view));
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+            if (view.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
+            }
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.GetIfExists");
             scope.Start();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TargetCollections))
+            if (!(TargetCollections is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetCollections"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Operation))
+            if (Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsCollectionDefined(OfferIdsList))
+            if (!(OfferIdsList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("offerIdsList"u8);
                 writer.WriteStartArray();
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IList<string>> targetCollections = default;
+            IList<string> targetCollections = default;
             Optional<string> operation = default;
-            Optional<IList<string>> offerIdsList = default;
+            IList<string> offerIdsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferOffersContent(Optional.ToList(targetCollections), operation.Value, Optional.ToList(offerIdsList), serializedAdditionalRawData);
+            return new TransferOffersContent(targetCollections ?? new ChangeTrackingList<string>(), operation.Value, offerIdsList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferOffersContent>.Write(ModelReaderWriterOptions options)

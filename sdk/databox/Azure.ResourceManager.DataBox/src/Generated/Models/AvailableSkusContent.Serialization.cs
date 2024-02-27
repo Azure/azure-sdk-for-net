@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(SkuNames))
+            if (!(SkuNames is ChangeTrackingList<DataBoxSkuName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skuNames"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxJobTransferType transferType = default;
             string country = default;
             AzureLocation location = default;
-            Optional<IList<DataBoxSkuName>> skuNames = default;
+            IList<DataBoxSkuName> skuNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableSkusContent(transferType, country, location, Optional.ToList(skuNames), serializedAdditionalRawData);
+            return new AvailableSkusContent(transferType, country, location, skuNames ?? new ChangeTrackingList<DataBoxSkuName>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableSkusContent>.Write(ModelReaderWriterOptions options)

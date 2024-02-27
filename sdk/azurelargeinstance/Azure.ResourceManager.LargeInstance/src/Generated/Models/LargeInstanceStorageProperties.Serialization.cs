@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(OfferingType))
+            if (OfferingType != null)
             {
                 writer.WritePropertyName("offeringType"u8);
                 writer.WriteStringValue(OfferingType);
             }
-            if (Optional.IsDefined(StorageType))
+            if (StorageType != null)
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType);
             }
-            if (Optional.IsDefined(Generation))
+            if (Generation != null)
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteStringValue(Generation);
             }
-            if (Optional.IsDefined(HardwareType))
+            if (HardwareType.HasValue)
             {
                 writer.WritePropertyName("hardwareType"u8);
                 writer.WriteStringValue(HardwareType.Value.ToString());
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType != null)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            if (Optional.IsDefined(StorageBillingProperties))
+            if (StorageBillingProperties != null)
             {
                 writer.WritePropertyName("storageBillingProperties"u8);
                 writer.WriteObjectValue(StorageBillingProperties);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         continue;
                     }
-                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value);
+                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageProperties(Optional.ToNullable(provisioningState), offeringType.Value, storageType.Value, generation.Value, Optional.ToNullable(hardwareType), workloadType.Value, storageBillingProperties.Value, serializedAdditionalRawData);
+            return new LargeInstanceStorageProperties(
+                Optional.ToNullable(provisioningState),
+                offeringType.Value,
+                storageType.Value,
+                generation.Value,
+                Optional.ToNullable(hardwareType),
+                workloadType.Value,
+                storageBillingProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageProperties>.Write(ModelReaderWriterOptions options)

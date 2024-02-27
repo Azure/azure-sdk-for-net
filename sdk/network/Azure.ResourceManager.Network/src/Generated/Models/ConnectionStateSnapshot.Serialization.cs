@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkConnectionState))
+            if (NetworkConnectionState.HasValue)
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(NetworkConnectionState.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(EvaluationState))
+            if (EvaluationState.HasValue)
             {
                 writer.WritePropertyName("evaluationState"u8);
                 writer.WriteStringValue(EvaluationState.Value.ToString());
             }
-            if (Optional.IsDefined(AvgLatencyInMs))
+            if (AvgLatencyInMs.HasValue)
             {
                 writer.WritePropertyName("avgLatencyInMs"u8);
                 writer.WriteNumberValue(AvgLatencyInMs.Value);
             }
-            if (Optional.IsDefined(MinLatencyInMs))
+            if (MinLatencyInMs.HasValue)
             {
                 writer.WritePropertyName("minLatencyInMs"u8);
                 writer.WriteNumberValue(MinLatencyInMs.Value);
             }
-            if (Optional.IsDefined(MaxLatencyInMs))
+            if (MaxLatencyInMs.HasValue)
             {
                 writer.WritePropertyName("maxLatencyInMs"u8);
                 writer.WriteNumberValue(MaxLatencyInMs.Value);
             }
-            if (Optional.IsDefined(ProbesSent))
+            if (ProbesSent.HasValue)
             {
                 writer.WritePropertyName("probesSent"u8);
                 writer.WriteNumberValue(ProbesSent.Value);
             }
-            if (Optional.IsDefined(ProbesFailed))
+            if (ProbesFailed.HasValue)
             {
                 writer.WritePropertyName("probesFailed"u8);
                 writer.WriteNumberValue(ProbesFailed.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Hops))
+            if (options.Format != "W" && !(Hops is ChangeTrackingList<ConnectivityHopInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hops"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> maxLatencyInMs = default;
             Optional<long> probesSent = default;
             Optional<long> probesFailed = default;
-            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
+            IReadOnlyList<ConnectivityHopInfo> hops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityHopInfo> array = new List<ConnectivityHopInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item));
+                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item, options));
                     }
                     hops = array;
                     continue;
@@ -234,7 +234,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), Optional.ToList(hops), serializedAdditionalRawData);
+            return new ConnectionStateSnapshot(
+                Optional.ToNullable(connectionState),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(evaluationState),
+                Optional.ToNullable(avgLatencyInMs),
+                Optional.ToNullable(minLatencyInMs),
+                Optional.ToNullable(maxLatencyInMs),
+                Optional.ToNullable(probesSent),
+                Optional.ToNullable(probesFailed),
+                hops ?? new ChangeTrackingList<ConnectivityHopInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionStateSnapshot>.Write(ModelReaderWriterOptions options)

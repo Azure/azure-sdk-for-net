@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogOptions))
+            if (CatalogOptions != null)
             {
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
-            if (Optional.IsDefined(Coordinator))
+            if (Coordinator != null)
             {
                 writer.WritePropertyName("coordinator"u8);
                 writer.WriteObjectValue(Coordinator);
             }
-            if (Optional.IsDefined(UserPluginsSpec))
+            if (UserPluginsSpec != null)
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);
             }
-            if (Optional.IsDefined(UserTelemetrySpec))
+            if (UserTelemetrySpec != null)
             {
                 writer.WritePropertyName("userTelemetrySpec"u8);
                 writer.WriteObjectValue(UserTelemetrySpec);
             }
-            if (Optional.IsDefined(Worker))
+            if (Worker != null)
             {
                 writer.WritePropertyName("worker"u8);
                 writer.WriteObjectValue(Worker);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    catalogOptions = CatalogOptions.DeserializeCatalogOptions(property.Value);
+                    catalogOptions = CatalogOptions.DeserializeCatalogOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("coordinator"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    coordinator = TrinoCoordinator.DeserializeTrinoCoordinator(property.Value);
+                    coordinator = TrinoCoordinator.DeserializeTrinoCoordinator(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userPluginsSpec"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userPluginsSpec = TrinoUserPluginListResult.DeserializeTrinoUserPluginListResult(property.Value);
+                    userPluginsSpec = TrinoUserPluginListResult.DeserializeTrinoUserPluginListResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userTelemetrySpec"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userTelemetrySpec = TrinoUserTelemetry.DeserializeTrinoUserTelemetry(property.Value);
+                    userTelemetrySpec = TrinoUserTelemetry.DeserializeTrinoUserTelemetry(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("worker"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    worker = TrinoWorker.DeserializeTrinoWorker(property.Value);
+                    worker = TrinoWorker.DeserializeTrinoWorker(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoProfile(catalogOptions.Value, coordinator.Value, userPluginsSpec.Value, userTelemetrySpec.Value, worker.Value, serializedAdditionalRawData);
+            return new TrinoProfile(
+                catalogOptions.Value,
+                coordinator.Value,
+                userPluginsSpec.Value,
+                userTelemetrySpec.Value,
+                worker.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoProfile>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(ProvisioningStatus))
+            if (ProvisioningStatus != null)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
             }
-            if (Optional.IsDefined(DownloadStatus))
+            if (DownloadStatus != null)
             {
                 writer.WritePropertyName("downloadStatus"u8);
                 writer.WriteObjectValue(DownloadStatus);
             }
-            if (Optional.IsDefined(ProgressPercentage))
+            if (ProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = MarketplaceGalleryImageStatusProvisioningStatus.DeserializeMarketplaceGalleryImageStatusProvisioningStatus(property.Value);
+                    provisioningStatus = MarketplaceGalleryImageStatusProvisioningStatus.DeserializeMarketplaceGalleryImageStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("downloadStatus"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    downloadStatus = MarketplaceGalleryImageStatusDownloadStatus.DeserializeMarketplaceGalleryImageStatusDownloadStatus(property.Value);
+                    downloadStatus = MarketplaceGalleryImageStatusDownloadStatus.DeserializeMarketplaceGalleryImageStatusDownloadStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progressPercentage"u8))
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceGalleryImageStatus(errorCode.Value, errorMessage.Value, provisioningStatus.Value, downloadStatus.Value, Optional.ToNullable(progressPercentage), serializedAdditionalRawData);
+            return new MarketplaceGalleryImageStatus(
+                errorCode.Value,
+                errorMessage.Value,
+                provisioningStatus.Value,
+                downloadStatus.Value,
+                Optional.ToNullable(progressPercentage),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceGalleryImageStatus>.Write(ModelReaderWriterOptions options)

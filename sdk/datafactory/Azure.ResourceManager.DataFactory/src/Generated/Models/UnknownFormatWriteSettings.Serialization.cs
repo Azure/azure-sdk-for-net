@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFormatWriteSettings(document.RootElement, options);
+            return DeserializeFormatWriteSettings(document.RootElement, options);
         }
 
         internal static UnknownFormatWriteSettings DeserializeUnknownFormatWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFormatWriteSettings(document.RootElement, options);
+                        return DeserializeFormatWriteSettings(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support '{options.Format}' format.");

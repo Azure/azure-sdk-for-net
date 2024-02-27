@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
             writer.WriteObjectValue(KeyVault);
-            if (Optional.IsDefined(SkipToken))
+            if (SkipToken != null)
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value);
+                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skipToken"u8))

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(NfviDetailsType))
+            if (NfviDetailsType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(NfviDetailsType);

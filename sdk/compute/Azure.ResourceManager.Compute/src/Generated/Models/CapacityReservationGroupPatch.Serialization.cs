@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
+            if (options.Format != "W" && !(CapacityReservations is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capacityReservations"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
+            if (options.Format != "W" && !(VirtualMachinesAssociated is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAssociated"u8);
                 writer.WriteStartArray();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (Optional.IsDefined(SharingProfile))
+            if (SharingProfile != null)
             {
                 writer.WritePropertyName("sharingProfile"u8);
                 writer.WriteObjectValue(SharingProfile);
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IReadOnlyList<SubResource>> capacityReservations = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
+            IDictionary<string, string> tags = default;
+            IReadOnlyList<SubResource> capacityReservations = default;
+            IReadOnlyList<SubResource> virtualMachinesAssociated = default;
             Optional<CapacityReservationGroupInstanceView> instanceView = default;
             Optional<ResourceSharingProfile> sharingProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = CapacityReservationGroupInstanceView.DeserializeCapacityReservationGroupInstanceView(property0.Value);
+                            instanceView = CapacityReservationGroupInstanceView.DeserializeCapacityReservationGroupInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sharingProfile"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value);
+                            sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value, options);
                             continue;
                         }
                     }
@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationGroupPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(capacityReservations), Optional.ToList(virtualMachinesAssociated), instanceView.Value, sharingProfile.Value);
+            return new CapacityReservationGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                capacityReservations ?? new ChangeTrackingList<SubResource>(),
+                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                instanceView.Value,
+                sharingProfile.Value);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupPatch>.Write(ModelReaderWriterOptions options)

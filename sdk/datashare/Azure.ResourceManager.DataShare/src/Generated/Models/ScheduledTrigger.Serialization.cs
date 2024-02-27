@@ -44,38 +44,38 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("recurrenceInterval"u8);
             writer.WriteStringValue(RecurrenceInterval.ToString());
-            if (Optional.IsDefined(SynchronizationMode))
+            if (SynchronizationMode.HasValue)
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
             }
             writer.WritePropertyName("synchronizationTime"u8);
             writer.WriteStringValue(SynchronizeOn, "O");
-            if (options.Format != "W" && Optional.IsDefined(TriggerStatus))
+            if (options.Format != "W" && TriggerStatus.HasValue)
             {
                 writer.WritePropertyName("triggerStatus"u8);
                 writer.WriteStringValue(TriggerStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -233,7 +233,20 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), recurrenceInterval, Optional.ToNullable(synchronizationMode), synchronizationTime, Optional.ToNullable(triggerStatus), userName.Value);
+            return new ScheduledTrigger(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(provisioningState),
+                recurrenceInterval,
+                Optional.ToNullable(synchronizationMode),
+                synchronizationTime,
+                Optional.ToNullable(triggerStatus),
+                userName.Value);
         }
 
         BinaryData IPersistableModel<ScheduledTrigger>.Write(ModelReaderWriterOptions options)

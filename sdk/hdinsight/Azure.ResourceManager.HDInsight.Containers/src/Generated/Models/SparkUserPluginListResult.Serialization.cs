@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Plugins))
+            if (!(Plugins is ChangeTrackingList<SparkUserPlugin> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plugins"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IList<SparkUserPlugin>> plugins = default;
+            IList<SparkUserPlugin> plugins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<SparkUserPlugin> array = new List<SparkUserPlugin>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkUserPlugin.DeserializeSparkUserPlugin(item));
+                        array.Add(SparkUserPlugin.DeserializeSparkUserPlugin(item, options));
                     }
                     plugins = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkUserPluginListResult(Optional.ToList(plugins), serializedAdditionalRawData);
+            return new SparkUserPluginListResult(plugins ?? new ChangeTrackingList<SparkUserPlugin>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkUserPluginListResult>.Write(ModelReaderWriterOptions options)

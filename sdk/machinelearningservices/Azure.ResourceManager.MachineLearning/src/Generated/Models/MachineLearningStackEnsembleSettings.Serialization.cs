@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StackMetaLearnerKWargs))
+            if (StackMetaLearnerKWargs != null)
             {
                 if (StackMetaLearnerKWargs != null)
                 {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stackMetaLearnerKWargs");
                 }
             }
-            if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
+            if (StackMetaLearnerTrainPercentage.HasValue)
             {
                 writer.WritePropertyName("stackMetaLearnerTrainPercentage"u8);
                 writer.WriteNumberValue(StackMetaLearnerTrainPercentage.Value);
             }
-            if (Optional.IsDefined(StackMetaLearnerType))
+            if (StackMetaLearnerType.HasValue)
             {
                 writer.WritePropertyName("stackMetaLearnerType"u8);
                 writer.WriteStringValue(StackMetaLearnerType.Value.ToString());

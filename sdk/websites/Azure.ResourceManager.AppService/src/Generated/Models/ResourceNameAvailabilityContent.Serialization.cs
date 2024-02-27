@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceType.ToString());
-            if (Optional.IsDefined(IsFqdn))
+            if (IsFqdn.HasValue)
             {
                 writer.WritePropertyName("isFqdn"u8);
                 writer.WriteBooleanValue(IsFqdn.Value);

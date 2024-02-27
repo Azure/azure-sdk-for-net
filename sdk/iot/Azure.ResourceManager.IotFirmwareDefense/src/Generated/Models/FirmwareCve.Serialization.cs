@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CveId))
+            if (CveId != null)
             {
                 if (CveId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cveId");
                 }
             }
-            if (Optional.IsDefined(Component))
+            if (Component != null)
             {
                 writer.WritePropertyName("component"u8);
 #if NET6_0_OR_GREATER
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity != null)
             {
                 if (Severity != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("severity");
                 }
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 if (Name != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("name");
                 }
             }
-            if (Optional.IsDefined(CvssScore))
+            if (CvssScore != null)
             {
                 if (CvssScore != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssScore");
                 }
             }
-            if (Optional.IsDefined(CvssVersion))
+            if (CvssVersion != null)
             {
                 if (CvssVersion != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssVersion");
                 }
             }
-            if (Optional.IsDefined(CvssV2Score))
+            if (CvssV2Score != null)
             {
                 if (CvssV2Score != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssV2Score");
                 }
             }
-            if (Optional.IsDefined(CvssV3Score))
+            if (CvssV3Score != null)
             {
                 if (CvssV3Score != null)
                 {
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssV3Score");
                 }
             }
-            if (Optional.IsDefined(PublishOn))
+            if (PublishOn.HasValue)
             {
                 writer.WritePropertyName("publishDate"u8);
                 writer.WriteStringValue(PublishOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
+            if (options.Format != "W" && !(Links is ChangeTrackingList<CveLink> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> cvssV3Score = default;
             Optional<DateTimeOffset> publishDate = default;
             Optional<DateTimeOffset> updatedDate = default;
-            Optional<IReadOnlyList<CveLink>> links = default;
+            IReadOnlyList<CveLink> links = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<CveLink> array = new List<CveLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CveLink.DeserializeCveLink(item));
+                        array.Add(CveLink.DeserializeCveLink(item, options));
                     }
                     links = array;
                     continue;
@@ -335,7 +335,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCve(cveId.Value, component.Value, severity.Value, name.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, Optional.ToNullable(publishDate), Optional.ToNullable(updatedDate), Optional.ToList(links), description.Value, serializedAdditionalRawData);
+            return new FirmwareCve(
+                cveId.Value,
+                component.Value,
+                severity.Value,
+                name.Value,
+                cvssScore.Value,
+                cvssVersion.Value,
+                cvssV2Score.Value,
+                cvssV3Score.Value,
+                Optional.ToNullable(publishDate),
+                Optional.ToNullable(updatedDate),
+                links ?? new ChangeTrackingList<CveLink>(),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCve>.Write(ModelReaderWriterOptions options)

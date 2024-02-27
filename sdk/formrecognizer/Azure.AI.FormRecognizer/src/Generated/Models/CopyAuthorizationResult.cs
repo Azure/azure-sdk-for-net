@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="accessToken"/> is null. </exception>
         public CopyAuthorizationResult(string modelId, string accessToken, long expirationDateTimeTicks)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
 
             ModelId = modelId;
             AccessToken = accessToken;

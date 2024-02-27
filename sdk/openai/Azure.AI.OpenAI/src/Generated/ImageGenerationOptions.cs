@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -51,7 +50,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
         public ImageGenerationOptions(string prompt)
         {
-            Argument.AssertNotNull(prompt, nameof(prompt));
+            if (prompt == null)
+            {
+                throw new ArgumentNullException(nameof(prompt));
+            }
 
             Prompt = prompt;
         }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<FileShareData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FileShareData>> value = default;
+            IReadOnlyList<FileShareData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<FileShareData> array = new List<FileShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileShareData.DeserializeFileShareData(item));
+                        array.Add(FileShareData.DeserializeFileShareData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareItems(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FileShareItems(value ?? new ChangeTrackingList<FileShareData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileShareItems>.Write(ModelReaderWriterOptions options)

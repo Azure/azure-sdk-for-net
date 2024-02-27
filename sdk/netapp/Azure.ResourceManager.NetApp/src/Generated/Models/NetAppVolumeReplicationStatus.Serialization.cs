@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsHealthy))
+            if (IsHealthy.HasValue)
             {
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (Optional.IsDefined(RelationshipStatus))
+            if (RelationshipStatus.HasValue)
             {
                 writer.WritePropertyName("relationshipStatus"u8);
                 writer.WriteStringValue(RelationshipStatus.Value.ToString());
             }
-            if (Optional.IsDefined(MirrorState))
+            if (MirrorState.HasValue)
             {
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());
             }
-            if (Optional.IsDefined(TotalProgress))
+            if (TotalProgress != null)
             {
                 writer.WritePropertyName("totalProgress"u8);
                 writer.WriteStringValue(TotalProgress);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeReplicationStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), totalProgress.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new NetAppVolumeReplicationStatus(
+                Optional.ToNullable(healthy),
+                Optional.ToNullable(relationshipStatus),
+                Optional.ToNullable(mirrorState),
+                totalProgress.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeReplicationStatus>.Write(ModelReaderWriterOptions options)

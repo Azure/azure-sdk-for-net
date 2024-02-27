@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPercentageCpu))
+            if (MaxPercentageCpu.HasValue)
             {
                 writer.WritePropertyName("maxPercentageCpu"u8);
                 writer.WriteNumberValue(MaxPercentageCpu.Value);
             }
-            if (Optional.IsDefined(MaxMemoryInMb))
+            if (MaxMemoryInMb.HasValue)
             {
                 writer.WritePropertyName("maxMemoryInMb"u8);
                 writer.WriteNumberValue(MaxMemoryInMb.Value);
             }
-            if (Optional.IsDefined(MaxDiskSizeInMb))
+            if (MaxDiskSizeInMb.HasValue)
             {
                 writer.WritePropertyName("maxDiskSizeInMb"u8);
                 writer.WriteNumberValue(MaxDiskSizeInMb.Value);

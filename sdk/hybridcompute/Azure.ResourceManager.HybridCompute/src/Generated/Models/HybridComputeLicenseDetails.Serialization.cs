@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Target))
+            if (Target.HasValue)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target.Value.ToString());
             }
-            if (Optional.IsDefined(Edition))
+            if (Edition.HasValue)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (Optional.IsDefined(LicenseCoreType))
+            if (LicenseCoreType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LicenseCoreType.Value.ToString());
             }
-            if (Optional.IsDefined(Processors))
+            if (Processors.HasValue)
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteNumberValue(Processors.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssignedLicenses))
+            if (options.Format != "W" && AssignedLicenses.HasValue)
             {
                 writer.WritePropertyName("assignedLicenses"u8);
                 writer.WriteNumberValue(AssignedLicenses.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ImmutableId))
+            if (options.Format != "W" && ImmutableId != null)
             {
                 writer.WritePropertyName("immutableId"u8);
                 writer.WriteStringValue(ImmutableId);
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLicenseDetails(Optional.ToNullable(state), Optional.ToNullable(target), Optional.ToNullable(edition), Optional.ToNullable(type), Optional.ToNullable(processors), Optional.ToNullable(assignedLicenses), immutableId.Value, serializedAdditionalRawData);
+            return new HybridComputeLicenseDetails(
+                Optional.ToNullable(state),
+                Optional.ToNullable(target),
+                Optional.ToNullable(edition),
+                Optional.ToNullable(type),
+                Optional.ToNullable(processors),
+                Optional.ToNullable(assignedLicenses),
+                immutableId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLicenseDetails>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CloudServiceSwapData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CloudServiceSwapData>> value = default;
+            IReadOnlyList<CloudServiceSwapData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<CloudServiceSwapData> array = new List<CloudServiceSwapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceSwapData.DeserializeCloudServiceSwapData(item));
+                        array.Add(CloudServiceSwapData.DeserializeCloudServiceSwapData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceSwapListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CloudServiceSwapListResult(value ?? new ChangeTrackingList<CloudServiceSwapData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceSwapListResult>.Write(ModelReaderWriterOptions options)

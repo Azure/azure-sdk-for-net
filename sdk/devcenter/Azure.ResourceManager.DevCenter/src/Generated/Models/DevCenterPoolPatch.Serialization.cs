@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,34 +37,34 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DevBoxDefinitionName))
+            if (DevBoxDefinitionName != null)
             {
                 writer.WritePropertyName("devBoxDefinitionName"u8);
                 writer.WriteStringValue(DevBoxDefinitionName);
             }
-            if (Optional.IsDefined(NetworkConnectionName))
+            if (NetworkConnectionName != null)
             {
                 writer.WritePropertyName("networkConnectionName"u8);
                 writer.WriteStringValue(NetworkConnectionName);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(LocalAdministrator))
+            if (LocalAdministrator.HasValue)
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministrator.Value.ToString());
             }
-            if (Optional.IsDefined(StopOnDisconnect))
+            if (StopOnDisconnect != null)
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
                 writer.WriteObjectValue(StopOnDisconnect);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<string> devBoxDefinitionName = default;
             Optional<string> networkConnectionName = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value);
+                            stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value, options);
                             continue;
                         }
                     }
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterPoolPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value);
+            return new DevCenterPoolPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                devBoxDefinitionName.Value,
+                networkConnectionName.Value,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(localAdministrator),
+                stopOnDisconnect.Value);
         }
 
         BinaryData IPersistableModel<DevCenterPoolPatch>.Write(ModelReaderWriterOptions options)

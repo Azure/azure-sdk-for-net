@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Workspace))
+            if (Workspace != null)
             {
                 writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
-            if (Optional.IsDefined(WorkspaceType))
+            if (WorkspaceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DataTypes))
+            if (!(DataTypes is ChangeTrackingList<AdditionalWorkspaceDataType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             Optional<string> workspace = default;
             Optional<AdditionalWorkspaceType> type = default;
-            Optional<IList<AdditionalWorkspaceDataType>> dataTypes = default;
+            IList<AdditionalWorkspaceDataType> dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalWorkspacesProperties(workspace.Value, Optional.ToNullable(type), Optional.ToList(dataTypes), serializedAdditionalRawData);
+            return new AdditionalWorkspacesProperties(workspace.Value, Optional.ToNullable(type), dataTypes ?? new ChangeTrackingList<AdditionalWorkspaceDataType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalWorkspacesProperties>.Write(ModelReaderWriterOptions options)

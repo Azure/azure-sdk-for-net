@@ -72,7 +72,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsEmailDeliveryReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(status), deliveryStatusDetails.Value, Optional.ToNullable(deliveryAttemptTimeStamp));
+            return new AcsEmailDeliveryReportReceivedEventData(
+                sender.Value,
+                recipient.Value,
+                messageId.Value,
+                Optional.ToNullable(status),
+                deliveryStatusDetails.Value,
+                Optional.ToNullable(deliveryAttemptTimeStamp));
         }
 
         internal partial class AcsEmailDeliveryReportReceivedEventDataConverter : JsonConverter<AcsEmailDeliveryReportReceivedEventData>

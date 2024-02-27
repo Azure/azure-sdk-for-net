@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Optional.IsDefined(VerificationToken))
+            if (VerificationToken != null)
             {
                 writer.WritePropertyName("verificationToken"u8);
                 writer.WriteStringValue(VerificationToken);
             }
-            if (Optional.IsDefined(Scopes))
+            if (Scopes != null)
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStringValue(Scopes);
             }
-            if (Optional.IsDefined(LandingPageUri))
+            if (LandingPageUri != null)
             {
                 writer.WritePropertyName("landingPageUrl"u8);
                 writer.WriteStringValue(LandingPageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(RedirectAction))
+            if (options.Format != "W" && RedirectAction != null)
             {
                 writer.WritePropertyName("redirectAction"u8);
                 writer.WriteStringValue(RedirectAction);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSubmissionId))
+            if (options.Format != "W" && LastSubmissionId != null)
             {
                 writer.WritePropertyName("lastSubmissionId"u8);
                 writer.WriteStringValue(LastSubmissionId);
             }
-            if (Optional.IsDefined(RegisterBeforeOAuthFlow))
+            if (RegisterBeforeOAuthFlow.HasValue)
             {
                 writer.WritePropertyName("registerBeforeOAuthFlow"u8);
                 writer.WriteBooleanValue(RegisterBeforeOAuthFlow.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsValidated))
+            if (options.Format != "W" && IsValidated.HasValue)
             {
                 writer.WritePropertyName("IsValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
             }
-            if (Optional.IsDefined(SigningSecret))
+            if (SigningSecret != null)
             {
                 writer.WritePropertyName("signingSecret"u8);
                 writer.WriteStringValue(SigningSecret);
@@ -204,7 +204,19 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlackChannelProperties(clientId.Value, clientSecret.Value, verificationToken.Value, scopes.Value, landingPageUrl.Value, redirectAction.Value, lastSubmissionId.Value, Optional.ToNullable(registerBeforeOAuthFlow), Optional.ToNullable(isValidated), signingSecret.Value, isEnabled, serializedAdditionalRawData);
+            return new SlackChannelProperties(
+                clientId.Value,
+                clientSecret.Value,
+                verificationToken.Value,
+                scopes.Value,
+                landingPageUrl.Value,
+                redirectAction.Value,
+                lastSubmissionId.Value,
+                Optional.ToNullable(registerBeforeOAuthFlow),
+                Optional.ToNullable(isValidated),
+                signingSecret.Value,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlackChannelProperties>.Write(ModelReaderWriterOptions options)

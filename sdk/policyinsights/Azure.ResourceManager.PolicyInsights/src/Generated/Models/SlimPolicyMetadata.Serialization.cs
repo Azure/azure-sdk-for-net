@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MetadataId))
+            if (options.Format != "W" && MetadataId != null)
             {
                 writer.WritePropertyName("metadataId"u8);
                 writer.WriteStringValue(MetadataId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsDefined(Title))
+            if (options.Format != "W" && Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Optional.IsDefined(Owner))
+            if (options.Format != "W" && Owner != null)
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdditionalContentUri))
+            if (options.Format != "W" && AdditionalContentUri != null)
             {
                 writer.WritePropertyName("additionalContentUrl"u8);
                 writer.WriteStringValue(AdditionalContentUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Metadata))
+            if (options.Format != "W" && Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlimPolicyMetadata(id, name, type, systemData.Value, metadataId.Value, category.Value, title.Value, owner.Value, additionalContentUrl.Value, metadata.Value, serializedAdditionalRawData);
+            return new SlimPolicyMetadata(
+                id,
+                name,
+                type,
+                systemData.Value,
+                metadataId.Value,
+                category.Value,
+                title.Value,
+                owner.Value,
+                additionalContentUrl.Value,
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlimPolicyMetadata>.Write(ModelReaderWriterOptions options)

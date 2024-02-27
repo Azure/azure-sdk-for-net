@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RelayHybridConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hybridConnectionName, RelayHybridConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (hybridConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridConnectionName));
+            }
+            if (hybridConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RelayHybridConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string hybridConnectionName, RelayHybridConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (hybridConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridConnectionName));
+            }
+            if (hybridConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         public virtual async Task<Response<RelayHybridConnectionResource>> GetAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
+            if (hybridConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridConnectionName));
+            }
+            if (hybridConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridConnectionName));
+            }
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         public virtual Response<RelayHybridConnectionResource> Get(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
+            if (hybridConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridConnectionName));
+            }
+            if (hybridConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridConnectionName));
+            }
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
+            if (hybridConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridConnectionName));
+            }
+            if (hybridConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridConnectionName));
+            }
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
+            if (hybridConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridConnectionName));
+            }
+            if (hybridConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridConnectionName));
+            }
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<RelayHybridConnectionResource>> GetIfExistsAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
+            if (hybridConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridConnectionName));
+            }
+            if (hybridConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridConnectionName));
+            }
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
         public virtual NullableResponse<RelayHybridConnectionResource> GetIfExists(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
+            if (hybridConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridConnectionName));
+            }
+            if (hybridConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridConnectionName));
+            }
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetIfExists");
             scope.Start();

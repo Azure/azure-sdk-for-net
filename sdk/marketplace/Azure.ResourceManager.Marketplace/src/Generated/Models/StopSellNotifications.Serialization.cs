@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferId))
+            if (OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(IsEntire))
+            if (IsEntire.HasValue)
             {
                 writer.WritePropertyName("isEntire"u8);
                 writer.WriteBooleanValue(IsEntire.Value);
             }
-            if (Optional.IsDefined(MessageCode))
+            if (MessageCode.HasValue)
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (Optional.IsDefined(IconUri))
+            if (IconUri != null)
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Plans))
+            if (!(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<bool> isEntire = default;
             Optional<long> messageCode = default;
             Optional<Uri> icon = default;
-            Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            IReadOnlyList<PlanNotificationDetails> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PlanNotificationDetails> array = new List<PlanNotificationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanNotificationDetails.DeserializePlanNotificationDetails(item));
+                        array.Add(PlanNotificationDetails.DeserializePlanNotificationDetails(item, options));
                     }
                     plans = array;
                     continue;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StopSellNotifications(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), serializedAdditionalRawData);
+            return new StopSellNotifications(
+                offerId.Value,
+                displayName.Value,
+                Optional.ToNullable(isEntire),
+                Optional.ToNullable(messageCode),
+                icon.Value,
+                plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StopSellNotifications>.Write(ModelReaderWriterOptions options)

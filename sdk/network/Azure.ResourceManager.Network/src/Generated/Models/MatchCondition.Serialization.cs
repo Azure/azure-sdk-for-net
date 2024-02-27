@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndArray();
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            if (Optional.IsDefined(NegationConditon))
+            if (NegationConditon.HasValue)
             {
                 writer.WritePropertyName("negationConditon"u8);
                 writer.WriteBooleanValue(NegationConditon.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (!(Transforms is ChangeTrackingList<WebApplicationFirewallTransform> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
             WebApplicationFirewallOperator @operator = default;
             Optional<bool> negationConditon = default;
             IList<string> matchValues = default;
-            Optional<IList<WebApplicationFirewallTransform>> transforms = default;
+            IList<WebApplicationFirewallTransform> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchVariable> array = new List<MatchVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchVariable.DeserializeMatchVariable(item));
+                        array.Add(MatchVariable.DeserializeMatchVariable(item, options));
                     }
                     matchVariables = array;
                     continue;
@@ -158,7 +158,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MatchCondition(matchVariables, @operator, Optional.ToNullable(negationConditon), matchValues, Optional.ToList(transforms), serializedAdditionalRawData);
+            return new MatchCondition(
+                matchVariables,
+                @operator,
+                Optional.ToNullable(negationConditon),
+                matchValues,
+                transforms ?? new ChangeTrackingList<WebApplicationFirewallTransform>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MatchCondition>.Write(ModelReaderWriterOptions options)

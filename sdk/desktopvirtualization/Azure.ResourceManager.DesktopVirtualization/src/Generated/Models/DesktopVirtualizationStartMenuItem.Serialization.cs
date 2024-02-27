@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppAlias))
+            if (AppAlias != null)
             {
                 writer.WritePropertyName("appAlias"u8);
                 writer.WriteStringValue(AppAlias);
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(CommandLineArguments))
+            if (CommandLineArguments != null)
             {
                 writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
-            if (Optional.IsDefined(IconPath))
+            if (IconPath != null)
             {
                 writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
-            if (Optional.IsDefined(IconIndex))
+            if (IconIndex.HasValue)
             {
                 writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DesktopVirtualizationStartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex), serializedAdditionalRawData);
+            return new DesktopVirtualizationStartMenuItem(
+                id,
+                name,
+                type,
+                systemData.Value,
+                appAlias.Value,
+                filePath.Value,
+                commandLineArguments.Value,
+                iconPath.Value,
+                Optional.ToNullable(iconIndex),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DesktopVirtualizationStartMenuItem>.Write(ModelReaderWriterOptions options)

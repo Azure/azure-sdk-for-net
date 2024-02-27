@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(InputSchemaMappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteObjectValue(Id);
             }
-            if (Optional.IsDefined(Topic))
+            if (Topic != null)
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteObjectValue(Topic);
             }
-            if (Optional.IsDefined(EventTime))
+            if (EventTime != null)
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteObjectValue(EventTime);
             }
-            if (Optional.IsDefined(EventType))
+            if (EventType != null)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteObjectValue(EventType);
             }
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteObjectValue(Subject);
             }
-            if (Optional.IsDefined(DataVersion))
+            if (DataVersion != null)
             {
                 writer.WritePropertyName("dataVersion"u8);
                 writer.WriteObjectValue(DataVersion);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            id = JsonField.DeserializeJsonField(property0.Value);
+                            id = JsonField.DeserializeJsonField(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("topic"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            topic = JsonField.DeserializeJsonField(property0.Value);
+                            topic = JsonField.DeserializeJsonField(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventTime"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            eventTime = JsonField.DeserializeJsonField(property0.Value);
+                            eventTime = JsonField.DeserializeJsonField(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventType"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            eventType = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value);
+                            eventType = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subject"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            subject = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value);
+                            subject = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataVersion"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            dataVersion = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value);
+                            dataVersion = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value, options);
                             continue;
                         }
                     }
@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridJsonInputSchemaMapping(inputSchemaMappingType, serializedAdditionalRawData, id.Value, topic.Value, eventTime.Value, eventType.Value, subject.Value, dataVersion.Value);
+            return new EventGridJsonInputSchemaMapping(
+                inputSchemaMappingType,
+                serializedAdditionalRawData,
+                id.Value,
+                topic.Value,
+                eventTime.Value,
+                eventType.Value,
+                subject.Value,
+                dataVersion.Value);
         }
 
         BinaryData IPersistableModel<EventGridJsonInputSchemaMapping>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceName))
+            if (ServiceName != null)
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> serviceName = default;
-            Optional<IReadOnlyList<string>> actions = default;
+            IReadOnlyList<string> actions = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableDelegation(id, name, type, systemData.Value, serviceName.Value, Optional.ToList(actions), serializedAdditionalRawData);
+            return new AvailableDelegation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serviceName.Value,
+                actions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableDelegation>.Write(ModelReaderWriterOptions options)

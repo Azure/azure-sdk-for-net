@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(CurrentValue))
+            if (CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(ThrottleStatus))
+            if (ThrottleStatus != null)
             {
                 writer.WritePropertyName("throttleStatus"u8);
                 writer.WriteStringValue(ThrottleStatus);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    name = AutomationUsageCounterName.DeserializeAutomationUsageCounterName(property.Value);
+                    name = AutomationUsageCounterName.DeserializeAutomationUsageCounterName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationUsage(id.Value, name.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), throttleStatus.Value, serializedAdditionalRawData);
+            return new AutomationUsage(
+                id.Value,
+                name.Value,
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                throttleStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationUsage>.Write(ModelReaderWriterOptions options)

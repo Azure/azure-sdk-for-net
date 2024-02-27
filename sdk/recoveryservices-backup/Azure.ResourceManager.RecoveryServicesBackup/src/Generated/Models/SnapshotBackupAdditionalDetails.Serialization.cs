@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstantRpRetentionRangeInDays))
+            if (InstantRpRetentionRangeInDays.HasValue)
             {
                 writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
                 writer.WriteNumberValue(InstantRpRetentionRangeInDays.Value);
             }
-            if (Optional.IsDefined(InstantRPDetails))
+            if (InstantRPDetails != null)
             {
                 writer.WritePropertyName("instantRPDetails"u8);
                 writer.WriteStringValue(InstantRPDetails);
             }
-            if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
+            if (UserAssignedManagedIdentityDetails != null)
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
                 writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value);
+                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

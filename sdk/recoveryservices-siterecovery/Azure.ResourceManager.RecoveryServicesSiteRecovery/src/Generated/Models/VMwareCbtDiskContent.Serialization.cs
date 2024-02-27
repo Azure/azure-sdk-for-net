@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (Optional.IsDefined(DiskType))
+            if (DiskType.HasValue)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(LogStorageAccountId);
             writer.WritePropertyName("logStorageAccountSasSecretName"u8);
             writer.WriteStringValue(LogStorageAccountSasSecretName);
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtDiskContent(diskId, Optional.ToNullable(diskType), isOSDisk, logStorageAccountId, logStorageAccountSasSecretName, diskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new VMwareCbtDiskContent(
+                diskId,
+                Optional.ToNullable(diskType),
+                isOSDisk,
+                logStorageAccountId,
+                logStorageAccountSasSecretName,
+                diskEncryptionSetId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtDiskContent>.Write(ModelReaderWriterOptions options)

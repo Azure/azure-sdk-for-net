@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,39 +47,39 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SnapshotTime))
+            if (SnapshotTime != null)
             {
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotTime);
             }
-            if (Optional.IsDefined(RecoverySource))
+            if (RecoverySource != null)
             {
                 writer.WritePropertyName("recoverySource"u8);
                 writer.WriteObjectValue(RecoverySource);
             }
-            if (Optional.IsDefined(CanOverwrite))
+            if (CanOverwrite.HasValue)
             {
                 writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
-            if (Optional.IsDefined(RecoverConfiguration))
+            if (RecoverConfiguration.HasValue)
             {
                 writer.WritePropertyName("recoverConfiguration"u8);
                 writer.WriteBooleanValue(RecoverConfiguration.Value);
             }
-            if (Optional.IsDefined(IgnoreConflictingHostNames))
+            if (IgnoreConflictingHostNames.HasValue)
             {
                 writer.WritePropertyName("ignoreConflictingHostNames"u8);
                 writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
-            if (Optional.IsDefined(UseDRSecondary))
+            if (UseDRSecondary.HasValue)
             {
                 writer.WritePropertyName("useDRSecondary"u8);
                 writer.WriteBooleanValue(UseDRSecondary.Value);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value);
+                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("overwrite"u8))
@@ -235,7 +235,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotRestoreRequest(id, name, type, systemData.Value, snapshotTime.Value, recoverySource.Value, Optional.ToNullable(overwrite), Optional.ToNullable(recoverConfiguration), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(useDRSecondary), kind.Value, serializedAdditionalRawData);
+            return new SnapshotRestoreRequest(
+                id,
+                name,
+                type,
+                systemData.Value,
+                snapshotTime.Value,
+                recoverySource.Value,
+                Optional.ToNullable(overwrite),
+                Optional.ToNullable(recoverConfiguration),
+                Optional.ToNullable(ignoreConflictingHostNames),
+                Optional.ToNullable(useDRSecondary),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotRestoreRequest>.Write(ModelReaderWriterOptions options)

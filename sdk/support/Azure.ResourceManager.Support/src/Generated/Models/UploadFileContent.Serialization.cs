@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(ChunkIndex))
+            if (ChunkIndex.HasValue)
             {
                 writer.WritePropertyName("chunkIndex"u8);
                 writer.WriteNumberValue(ChunkIndex.Value);

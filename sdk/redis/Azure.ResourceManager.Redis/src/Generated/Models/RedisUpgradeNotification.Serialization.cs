@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UpsellNotification))
+            if (options.Format != "W" && !(UpsellNotification is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("upsellNotification"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
             Optional<string> name = default;
             Optional<DateTimeOffset> timestamp = default;
-            Optional<IReadOnlyDictionary<string, string>> upsellNotification = default;
+            IReadOnlyDictionary<string, string> upsellNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisUpgradeNotification(name.Value, Optional.ToNullable(timestamp), Optional.ToDictionary(upsellNotification), serializedAdditionalRawData);
+            return new RedisUpgradeNotification(name.Value, Optional.ToNullable(timestamp), upsellNotification ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisUpgradeNotification>.Write(ModelReaderWriterOptions options)

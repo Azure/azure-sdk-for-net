@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CosmosDBSqlStoredProcedureData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBSqlStoredProcedureData>> value = default;
+            IReadOnlyList<CosmosDBSqlStoredProcedureData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlStoredProcedureData> array = new List<CosmosDBSqlStoredProcedureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(item));
+                        array.Add(CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlStoredProcedureListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBSqlStoredProcedureListResult(value ?? new ChangeTrackingList<CosmosDBSqlStoredProcedureData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlStoredProcedureListResult>.Write(ModelReaderWriterOptions options)

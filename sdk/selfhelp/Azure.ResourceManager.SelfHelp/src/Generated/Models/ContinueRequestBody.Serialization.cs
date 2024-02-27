@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StepId))
+            if (StepId != null)
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteStringValue(StepId);
             }
-            if (Optional.IsCollectionDefined(Responses))
+            if (!(Responses is ChangeTrackingList<TroubleshooterResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             Optional<string> stepId = default;
-            Optional<IList<TroubleshooterResult>> responses = default;
+            IList<TroubleshooterResult> responses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TroubleshooterResult> array = new List<TroubleshooterResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item));
+                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item, options));
                     }
                     responses = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinueRequestBody(stepId.Value, Optional.ToList(responses), serializedAdditionalRawData);
+            return new ContinueRequestBody(stepId.Value, responses ?? new ChangeTrackingList<TroubleshooterResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContinueRequestBody>.Write(ModelReaderWriterOptions options)

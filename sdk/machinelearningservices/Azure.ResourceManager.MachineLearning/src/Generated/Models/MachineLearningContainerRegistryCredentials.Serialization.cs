@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Passwords))
+            if (!(Passwords is ChangeTrackingList<MachineLearningPasswordDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Username))
+            if (options.Format != "W" && Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<MachineLearningPasswordDetail>> passwords = default;
+            IReadOnlyList<MachineLearningPasswordDetail> passwords = default;
             Optional<string> username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningPasswordDetail> array = new List<MachineLearningPasswordDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningPasswordDetail.DeserializeMachineLearningPasswordDetail(item));
+                        array.Add(MachineLearningPasswordDetail.DeserializeMachineLearningPasswordDetail(item, options));
                     }
                     passwords = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningContainerRegistryCredentials(Optional.ToNullable(location), Optional.ToList(passwords), username.Value, serializedAdditionalRawData);
+            return new MachineLearningContainerRegistryCredentials(Optional.ToNullable(location), passwords ?? new ChangeTrackingList<MachineLearningPasswordDetail>(), username.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)

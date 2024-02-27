@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActiveLocation))
+            if (options.Format != "W" && ActiveLocation.HasValue)
             {
                 writer.WritePropertyName("activeLocation"u8);
                 writer.WriteStringValue(ActiveLocation.Value.ToString());
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(TargetHciClusterId);
             writer.WritePropertyName("targetArcClusterCustomLocationId"u8);
             writer.WriteStringValue(TargetArcClusterCustomLocationId);
-            if (options.Format != "W" && Optional.IsDefined(TargetAzStackHciClusterName))
+            if (options.Format != "W" && TargetAzStackHciClusterName != null)
             {
                 writer.WritePropertyName("targetAzStackHciClusterName"u8);
                 writer.WriteStringValue(TargetAzStackHciClusterName);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(StorageContainerId);
             writer.WritePropertyName("targetResourceGroupId"u8);
             writer.WriteStringValue(TargetResourceGroupId);
-            if (options.Format != "W" && Optional.IsDefined(TargetLocation))
+            if (options.Format != "W" && TargetLocation != null)
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteStringValue(TargetLocation);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedDisks))
+            if (options.Format != "W" && !(ProtectedDisks is ChangeTrackingList<VMwareToAzStackHciProtectedDiskProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedNics))
+            if (options.Format != "W" && !(ProtectedNics is ChangeTrackingList<VMwareToAzStackHciProtectedNicProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedNics"u8);
                 writer.WriteStartArray();
@@ -85,76 +85,76 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetVmBiosId))
+            if (options.Format != "W" && TargetVmBiosId != null)
             {
                 writer.WritePropertyName("targetVmBiosId"u8);
                 writer.WriteStringValue(TargetVmBiosId);
             }
-            if (Optional.IsDefined(TargetVmName))
+            if (TargetVmName != null)
             {
                 writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
             writer.WritePropertyName("hyperVGeneration"u8);
             writer.WriteStringValue(HyperVGeneration);
-            if (Optional.IsDefined(TargetNetworkId))
+            if (TargetNetworkId != null)
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (Optional.IsDefined(TestNetworkId))
+            if (TestNetworkId != null)
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (Optional.IsDefined(TargetCpuCores))
+            if (TargetCpuCores.HasValue)
             {
                 writer.WritePropertyName("targetCpuCores"u8);
                 writer.WriteNumberValue(TargetCpuCores.Value);
             }
-            if (Optional.IsDefined(IsDynamicRam))
+            if (IsDynamicRam.HasValue)
             {
                 writer.WritePropertyName("isDynamicRam"u8);
                 writer.WriteBooleanValue(IsDynamicRam.Value);
             }
-            if (Optional.IsDefined(DynamicMemoryConfig))
+            if (DynamicMemoryConfig != null)
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
                 writer.WriteObjectValue(DynamicMemoryConfig);
             }
-            if (Optional.IsDefined(TargetMemoryInMegaBytes))
+            if (TargetMemoryInMegaBytes.HasValue)
             {
                 writer.WritePropertyName("targetMemoryInMegaBytes"u8);
                 writer.WriteNumberValue(TargetMemoryInMegaBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirmwareType))
+            if (options.Format != "W" && FirmwareType != null)
             {
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType);
             }
             writer.WritePropertyName("fabricDiscoveryMachineId"u8);
             writer.WriteStringValue(FabricDiscoveryMachineId);
-            if (options.Format != "W" && Optional.IsDefined(SourceVmName))
+            if (options.Format != "W" && SourceVmName != null)
             {
                 writer.WritePropertyName("sourceVmName"u8);
                 writer.WriteStringValue(SourceVmName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceCpuCores))
+            if (options.Format != "W" && SourceCpuCores.HasValue)
             {
                 writer.WritePropertyName("sourceCpuCores"u8);
                 writer.WriteNumberValue(SourceCpuCores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceMemoryInMegaBytes))
+            if (options.Format != "W" && SourceMemoryInMegaBytes.HasValue)
             {
                 writer.WritePropertyName("sourceMemoryInMegaBytes"u8);
                 writer.WriteNumberValue(SourceMemoryInMegaBytes.Value);
@@ -165,77 +165,77 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(SourceDraName);
             writer.WritePropertyName("targetDraName"u8);
             writer.WriteStringValue(TargetDraName);
-            if (options.Format != "W" && Optional.IsDefined(SourceApplianceName))
+            if (options.Format != "W" && SourceApplianceName != null)
             {
                 writer.WritePropertyName("sourceApplianceName"u8);
                 writer.WriteStringValue(SourceApplianceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetApplianceName))
+            if (options.Format != "W" && TargetApplianceName != null)
             {
                 writer.WritePropertyName("targetApplianceName"u8);
                 writer.WriteStringValue(TargetApplianceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailoverRecoveryPointId))
+            if (options.Format != "W" && FailoverRecoveryPointId != null)
             {
                 writer.WritePropertyName("failoverRecoveryPointId"u8);
                 writer.WriteStringValue(FailoverRecoveryPointId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
+            if (options.Format != "W" && LastRecoveryPointReceived.HasValue)
             {
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
                 writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointId))
+            if (options.Format != "W" && LastRecoveryPointId != null)
             {
                 writer.WritePropertyName("lastRecoveryPointId"u8);
                 writer.WriteStringValue(LastRecoveryPointId);
             }
-            if (options.Format != "W" && Optional.IsDefined(InitialReplicationProgressPercentage))
+            if (options.Format != "W" && InitialReplicationProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("initialReplicationProgressPercentage"u8);
                 writer.WriteNumberValue(InitialReplicationProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationProgressPercentage))
+            if (options.Format != "W" && MigrationProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("migrationProgressPercentage"u8);
                 writer.WriteNumberValue(MigrationProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResumeProgressPercentage))
+            if (options.Format != "W" && ResumeProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("resumeProgressPercentage"u8);
                 writer.WriteNumberValue(ResumeProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResyncProgressPercentage))
+            if (options.Format != "W" && ResyncProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("resyncProgressPercentage"u8);
                 writer.WriteNumberValue(ResyncProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResyncRetryCount))
+            if (options.Format != "W" && ResyncRetryCount.HasValue)
             {
                 writer.WritePropertyName("resyncRetryCount"u8);
                 writer.WriteNumberValue(ResyncRetryCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResyncRequired))
+            if (options.Format != "W" && ResyncRequired.HasValue)
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(ResyncRequired.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResyncState))
+            if (options.Format != "W" && ResyncState.HasValue)
             {
                 writer.WritePropertyName("resyncState"u8);
                 writer.WriteStringValue(ResyncState.Value.ToString());
             }
-            if (Optional.IsDefined(PerformAutoResync))
+            if (PerformAutoResync.HasValue)
             {
                 writer.WritePropertyName("performAutoResync"u8);
                 writer.WriteBooleanValue(PerformAutoResync.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResumeRetryCount))
+            if (options.Format != "W" && ResumeRetryCount.HasValue)
             {
                 writer.WritePropertyName("resumeRetryCount"u8);
                 writer.WriteNumberValue(ResumeRetryCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastReplicationUpdateOn))
+            if (options.Format != "W" && LastReplicationUpdateOn.HasValue)
             {
                 writer.WritePropertyName("lastReplicationUpdateTime"u8);
                 writer.WriteStringValue(LastReplicationUpdateOn.Value, "O");
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string customLocationRegion = default;
             IList<VMwareToAzStackHciDiskInput> disksToInclude = default;
             IList<VMwareToAzStackHciNicInput> nicsToInclude = default;
-            Optional<IReadOnlyList<VMwareToAzStackHciProtectedDiskProperties>> protectedDisks = default;
-            Optional<IReadOnlyList<VMwareToAzStackHciProtectedNicProperties>> protectedNics = default;
+            IReadOnlyList<VMwareToAzStackHciProtectedDiskProperties> protectedDisks = default;
+            IReadOnlyList<VMwareToAzStackHciProtectedNicProperties> protectedNics = default;
             Optional<string> targetVmBiosId = default;
             Optional<string> targetVmName = default;
             string hyperVGeneration = default;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<VMwareToAzStackHciDiskInput> array = new List<VMwareToAzStackHciDiskInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareToAzStackHciDiskInput.DeserializeVMwareToAzStackHciDiskInput(item));
+                        array.Add(VMwareToAzStackHciDiskInput.DeserializeVMwareToAzStackHciDiskInput(item, options));
                     }
                     disksToInclude = array;
                     continue;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<VMwareToAzStackHciNicInput> array = new List<VMwareToAzStackHciNicInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareToAzStackHciNicInput.DeserializeVMwareToAzStackHciNicInput(item));
+                        array.Add(VMwareToAzStackHciNicInput.DeserializeVMwareToAzStackHciNicInput(item, options));
                     }
                     nicsToInclude = array;
                     continue;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<VMwareToAzStackHciProtectedDiskProperties> array = new List<VMwareToAzStackHciProtectedDiskProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareToAzStackHciProtectedDiskProperties.DeserializeVMwareToAzStackHciProtectedDiskProperties(item));
+                        array.Add(VMwareToAzStackHciProtectedDiskProperties.DeserializeVMwareToAzStackHciProtectedDiskProperties(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<VMwareToAzStackHciProtectedNicProperties> array = new List<VMwareToAzStackHciProtectedNicProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareToAzStackHciProtectedNicProperties.DeserializeVMwareToAzStackHciProtectedNicProperties(item));
+                        array.Add(VMwareToAzStackHciProtectedNicProperties.DeserializeVMwareToAzStackHciProtectedNicProperties(item, options));
                     }
                     protectedNics = array;
                     continue;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(property.Value);
+                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetMemoryInMegaBytes"u8))
@@ -672,7 +672,55 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciProtectedItemModelCustomProperties(instanceType, serializedAdditionalRawData, Optional.ToNullable(activeLocation), targetHciClusterId, targetArcClusterCustomLocationId, targetAzStackHciClusterName.Value, storageContainerId, targetResourceGroupId, targetLocation.Value, customLocationRegion, disksToInclude, nicsToInclude, Optional.ToList(protectedDisks), Optional.ToList(protectedNics), targetVmBiosId.Value, targetVmName.Value, hyperVGeneration, targetNetworkId.Value, testNetworkId.Value, Optional.ToNullable(targetCpuCores), Optional.ToNullable(isDynamicRam), dynamicMemoryConfig.Value, Optional.ToNullable(targetMemoryInMegaBytes), osType.Value, osName.Value, firmwareType.Value, fabricDiscoveryMachineId, sourceVmName.Value, Optional.ToNullable(sourceCpuCores), Optional.ToNullable(sourceMemoryInMegaBytes), runAsAccountId, sourceDraName, targetDraName, sourceApplianceName.Value, targetApplianceName.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(migrationProgressPercentage), Optional.ToNullable(resumeProgressPercentage), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncRetryCount), Optional.ToNullable(resyncRequired), Optional.ToNullable(resyncState), Optional.ToNullable(performAutoResync), Optional.ToNullable(resumeRetryCount), Optional.ToNullable(lastReplicationUpdateTime));
+            return new VMwareToAzStackHciProtectedItemModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(activeLocation),
+                targetHciClusterId,
+                targetArcClusterCustomLocationId,
+                targetAzStackHciClusterName.Value,
+                storageContainerId,
+                targetResourceGroupId,
+                targetLocation.Value,
+                customLocationRegion,
+                disksToInclude,
+                nicsToInclude,
+                protectedDisks ?? new ChangeTrackingList<VMwareToAzStackHciProtectedDiskProperties>(),
+                protectedNics ?? new ChangeTrackingList<VMwareToAzStackHciProtectedNicProperties>(),
+                targetVmBiosId.Value,
+                targetVmName.Value,
+                hyperVGeneration,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                Optional.ToNullable(targetCpuCores),
+                Optional.ToNullable(isDynamicRam),
+                dynamicMemoryConfig.Value,
+                Optional.ToNullable(targetMemoryInMegaBytes),
+                osType.Value,
+                osName.Value,
+                firmwareType.Value,
+                fabricDiscoveryMachineId,
+                sourceVmName.Value,
+                Optional.ToNullable(sourceCpuCores),
+                Optional.ToNullable(sourceMemoryInMegaBytes),
+                runAsAccountId,
+                sourceDraName,
+                targetDraName,
+                sourceApplianceName.Value,
+                targetApplianceName.Value,
+                failoverRecoveryPointId.Value,
+                Optional.ToNullable(lastRecoveryPointReceived),
+                lastRecoveryPointId.Value,
+                Optional.ToNullable(initialReplicationProgressPercentage),
+                Optional.ToNullable(migrationProgressPercentage),
+                Optional.ToNullable(resumeProgressPercentage),
+                Optional.ToNullable(resyncProgressPercentage),
+                Optional.ToNullable(resyncRetryCount),
+                Optional.ToNullable(resyncRequired),
+                Optional.ToNullable(resyncState),
+                Optional.ToNullable(performAutoResync),
+                Optional.ToNullable(resumeRetryCount),
+                Optional.ToNullable(lastReplicationUpdateTime));
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciProtectedItemModelCustomProperties>.Write(ModelReaderWriterOptions options)

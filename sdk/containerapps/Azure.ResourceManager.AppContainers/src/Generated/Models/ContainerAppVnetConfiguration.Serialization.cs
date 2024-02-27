@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsInternal))
+            if (IsInternal.HasValue)
             {
                 writer.WritePropertyName("internal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
             }
-            if (Optional.IsDefined(InfrastructureSubnetId))
+            if (InfrastructureSubnetId != null)
             {
                 writer.WritePropertyName("infrastructureSubnetId"u8);
                 writer.WriteStringValue(InfrastructureSubnetId);
             }
-            if (Optional.IsDefined(DockerBridgeCidr))
+            if (DockerBridgeCidr != null)
             {
                 writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
             }
-            if (Optional.IsDefined(PlatformReservedCidr))
+            if (PlatformReservedCidr != null)
             {
                 writer.WritePropertyName("platformReservedCidr"u8);
                 writer.WriteStringValue(PlatformReservedCidr);
             }
-            if (Optional.IsDefined(PlatformReservedDnsIP))
+            if (PlatformReservedDnsIP != null)
             {
                 writer.WritePropertyName("platformReservedDnsIP"u8);
                 writer.WriteStringValue(PlatformReservedDnsIP);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value, serializedAdditionalRawData);
+            return new ContainerAppVnetConfiguration(
+                Optional.ToNullable(@internal),
+                infrastructureSubnetId.Value,
+                dockerBridgeCidr.Value,
+                platformReservedCidr.Value,
+                platformReservedDnsIP.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVnetConfiguration>.Write(ModelReaderWriterOptions options)

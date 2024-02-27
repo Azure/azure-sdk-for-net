@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             writer.WriteStartObject();
             writer.WritePropertyName("relay"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamespaceName))
+            if (NamespaceName != null)
             {
                 writer.WritePropertyName("namespaceName"u8);
                 writer.WriteStringValue(NamespaceName);
             }
-            if (Optional.IsDefined(NamespaceNameSuffix))
+            if (NamespaceNameSuffix != null)
             {
                 writer.WritePropertyName("namespaceNameSuffix"u8);
                 writer.WriteStringValue(NamespaceNameSuffix);
             }
-            if (Optional.IsDefined(HybridConnectionName))
+            if (HybridConnectionName != null)
             {
                 writer.WritePropertyName("hybridConnectionName"u8);
                 writer.WriteStringValue(HybridConnectionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccessKey))
+            if (options.Format != "W" && AccessKey != null)
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (ExpiresOn.HasValue)
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteNumberValue(ExpiresOn.Value);
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetResourceEndpointAccess(namespaceName.Value, namespaceNameSuffix.Value, hybridConnectionName.Value, accessKey.Value, Optional.ToNullable(expiresOn), serializedAdditionalRawData);
+            return new TargetResourceEndpointAccess(
+                namespaceName.Value,
+                namespaceNameSuffix.Value,
+                hybridConnectionName.Value,
+                accessKey.Value,
+                Optional.ToNullable(expiresOn),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetResourceEndpointAccess>.Write(ModelReaderWriterOptions options)

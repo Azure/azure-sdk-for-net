@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2ARecoveryPointDetails.DeserializeA2ARecoveryPointDetails(element);
-                    case "InMageAzureV2": return InMageAzureV2RecoveryPointDetails.DeserializeInMageAzureV2RecoveryPointDetails(element);
-                    case "InMageRcm": return InMageRcmRecoveryPointDetails.DeserializeInMageRcmRecoveryPointDetails(element);
+                    case "A2A": return A2ARecoveryPointDetails.DeserializeA2ARecoveryPointDetails(element, options);
+                    case "InMageAzureV2": return InMageAzureV2RecoveryPointDetails.DeserializeInMageAzureV2RecoveryPointDetails(element, options);
+                    case "InMageRcm": return InMageRcmRecoveryPointDetails.DeserializeInMageRcmRecoveryPointDetails(element, options);
                 }
             }
-            return UnknownProviderSpecificRecoveryPointDetails.DeserializeUnknownProviderSpecificRecoveryPointDetails(element);
+            return UnknownProviderSpecificRecoveryPointDetails.DeserializeUnknownProviderSpecificRecoveryPointDetails(element, options);
         }
 
         BinaryData IPersistableModel<ProviderSpecificRecoveryPointDetails>.Write(ModelReaderWriterOptions options)

@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressPrefix))
+            if (AddressPrefix != null)
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsCollectionDefined(AddressPrefixes))
+            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IPAllocationMethod))
+            if (IPAllocationMethod.HasValue)
             {
                 writer.WritePropertyName("ipAllocationMethod"u8);
                 writer.WriteStringValue(IPAllocationMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPConfigurationReferences))
+            if (!(IPConfigurationReferences is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurationReferences"u8);
                 writer.WriteStartArray();
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RouteTable))
+            if (RouteTable != null)
             {
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
             }
-            if (Optional.IsCollectionDefined(IPPools))
+            if (!(IPPools is ChangeTrackingList<IPPool> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipPools"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Vlan))
+            if (Vlan.HasValue)
             {
                 writer.WritePropertyName("vlan"u8);
                 writer.WriteNumberValue(Vlan.Value);
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             Optional<string> name = default;
             Optional<string> addressPrefix = default;
-            Optional<IList<string>> addressPrefixes = default;
+            IList<string> addressPrefixes = default;
             Optional<IPAllocationMethodEnum> ipAllocationMethod = default;
-            Optional<IList<WritableSubResource>> ipConfigurationReferences = default;
+            IList<WritableSubResource> ipConfigurationReferences = default;
             Optional<RouteTable> routeTable = default;
-            Optional<IList<IPPool>> ipPools = default;
+            IList<IPPool> ipPools = default;
             Optional<int> vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Hci.Models
                             {
                                 continue;
                             }
-                            routeTable = RouteTable.DeserializeRouteTable(property0.Value);
+                            routeTable = RouteTable.DeserializeRouteTable(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipPools"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Hci.Models
                             List<IPPool> array = new List<IPPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPool.DeserializeIPPool(item));
+                                array.Add(IPPool.DeserializeIPPool(item, options));
                             }
                             ipPools = array;
                             continue;
@@ -232,7 +232,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Subnet(name.Value, addressPrefix.Value, Optional.ToList(addressPrefixes), Optional.ToNullable(ipAllocationMethod), Optional.ToList(ipConfigurationReferences), routeTable.Value, Optional.ToList(ipPools), Optional.ToNullable(vlan), serializedAdditionalRawData);
+            return new Subnet(
+                name.Value,
+                addressPrefix.Value,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(ipAllocationMethod),
+                ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(),
+                routeTable.Value,
+                ipPools ?? new ChangeTrackingList<IPPool>(),
+                Optional.ToNullable(vlan),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Subnet>.Write(ModelReaderWriterOptions options)

@@ -18,17 +18,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CrossMetricsOperator))
+            if (CrossMetricsOperator.HasValue)
             {
                 writer.WritePropertyName("crossMetricsOperator"u8);
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
+            if (!(DimensionsToSplitAlert is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("splitAlertByDimensions"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string name = default;
             Optional<string> description = default;
             Optional<MetricAlertConfigurationsOperator> crossMetricsOperator = default;
-            Optional<IList<string>> splitAlertByDimensions = default;
+            IList<string> splitAlertByDimensions = default;
             IList<string> hookIds = default;
             IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), Optional.ToList(splitAlertByDimensions), hookIds, metricAlertingConfigurations);
+            return new AnomalyAlertConfiguration(
+                anomalyAlertingConfigurationId.Value,
+                name,
+                description.Value,
+                Optional.ToNullable(crossMetricsOperator),
+                splitAlertByDimensions ?? new ChangeTrackingList<string>(),
+                hookIds,
+                metricAlertingConfigurations);
         }
     }
 }

@@ -71,7 +71,17 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 accessRightList = array;
             }
-            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, clientName, openTime, lastReconnectTime, accessRightList);
+            return new HandleItem(
+                handleId,
+                path,
+                fileId,
+                parentId,
+                sessionId,
+                clientIp,
+                clientName,
+                openTime,
+                lastReconnectTime,
+                accessRightList);
         }
     }
 }

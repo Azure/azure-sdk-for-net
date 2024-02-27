@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(LocationType))
+            if (options.Format != "W" && LocationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegionalDisplayName))
+            if (options.Format != "W" && RegionalDisplayName != null)
             {
                 writer.WritePropertyName("regionalDisplayName"u8);
                 writer.WriteStringValue(RegionalDisplayName);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
+            if (!(AvailabilityZoneMappings is ChangeTrackingList<AvailabilityZoneMappings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZoneMappings"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> displayName = default;
             Optional<string> regionalDisplayName = default;
             Optional<LocationMetadata> metadata = default;
-            Optional<IReadOnlyList<AvailabilityZoneMappings>> availabilityZoneMappings = default;
+            IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = LocationMetadata.DeserializeLocationMetadata(property.Value);
+                    metadata = LocationMetadata.DeserializeLocationMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZoneMappings"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<AvailabilityZoneMappings> array = new List<AvailabilityZoneMappings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AvailabilityZoneMappings.DeserializeAvailabilityZoneMappings(item));
+                        array.Add(Models.AvailabilityZoneMappings.DeserializeAvailabilityZoneMappings(item, options));
                     }
                     availabilityZoneMappings = array;
                     continue;
@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value, Optional.ToList(availabilityZoneMappings), serializedAdditionalRawData);
+            return new LocationExpanded(
+                id.Value,
+                subscriptionId.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                displayName.Value,
+                regionalDisplayName.Value,
+                metadata.Value,
+                availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMappings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocationExpanded>.Write(ModelReaderWriterOptions options)

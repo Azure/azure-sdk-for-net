@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("sourceId"u8);
             writer.WriteStringValue(SourceId);
-            if (options.Format != "W" && Optional.IsDefined(TargetId))
+            if (options.Format != "W" && TargetId != null)
             {
                 if (TargetId != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("targetId");
                 }
             }
-            if (Optional.IsDefined(ExistingTargetId))
+            if (ExistingTargetId != null)
             {
                 if (ExistingTargetId != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("existingTargetId");
                 }
             }
-            if (Optional.IsDefined(ResourceSettings))
+            if (ResourceSettings != null)
             {
                 if (ResourceSettings != null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("resourceSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceResourceSettings))
+            if (options.Format != "W" && SourceResourceSettings != null)
             {
                 if (SourceResourceSettings != null)
                 {
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("sourceResourceSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(MoveStatus))
+            if (options.Format != "W" && MoveStatus != null)
             {
                 writer.WritePropertyName("moveStatus"u8);
                 writer.WriteObjectValue(MoveStatus);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DependsOn))
+            if (options.Format != "W" && !(DependsOn is ChangeTrackingList<MoverResourceDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DependsOnOverrides))
+            if (!(DependsOnOverrides is ChangeTrackingList<MoverResourceDependencyOverride> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dependsOnOverrides"u8);
                 writer.WriteStartArray();
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsResolveRequired))
+            if (options.Format != "W" && IsResolveRequired.HasValue)
             {
                 writer.WritePropertyName("isResolveRequired"u8);
                 writer.WriteBooleanValue(IsResolveRequired.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
+            if (options.Format != "W" && Errors != null)
             {
                 if (Errors != null)
                 {
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<MoverResourceSettings> resourceSettings = default;
             Optional<MoverResourceSettings> sourceResourceSettings = default;
             Optional<MoverResourcePropertiesMoveStatus> moveStatus = default;
-            Optional<IReadOnlyList<MoverResourceDependency>> dependsOn = default;
-            Optional<IList<MoverResourceDependencyOverride>> dependsOnOverrides = default;
+            IReadOnlyList<MoverResourceDependency> dependsOn = default;
+            IList<MoverResourceDependencyOverride> dependsOnOverrides = default;
             Optional<bool> isResolveRequired = default;
             Optional<MoveResourcePropertiesErrors> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         resourceSettings = null;
                         continue;
                     }
-                    resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
+                    resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceResourceSettings"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         sourceResourceSettings = null;
                         continue;
                     }
-                    sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
+                    sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("moveStatus"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    moveStatus = MoverResourcePropertiesMoveStatus.DeserializeMoverResourcePropertiesMoveStatus(property.Value);
+                    moveStatus = MoverResourcePropertiesMoveStatus.DeserializeMoverResourcePropertiesMoveStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceDependency> array = new List<MoverResourceDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceDependency.DeserializeMoverResourceDependency(item));
+                        array.Add(MoverResourceDependency.DeserializeMoverResourceDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceDependencyOverride> array = new List<MoverResourceDependencyOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceDependencyOverride.DeserializeMoverResourceDependencyOverride(item));
+                        array.Add(MoverResourceDependencyOverride.DeserializeMoverResourceDependencyOverride(item, options));
                     }
                     dependsOnOverrides = array;
                     continue;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveResourcePropertiesErrors.DeserializeMoveResourcePropertiesErrors(property.Value);
+                    errors = MoveResourcePropertiesErrors.DeserializeMoveResourcePropertiesErrors(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -292,7 +292,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceProperties(Optional.ToNullable(provisioningState), sourceId, targetId.Value, existingTargetId.Value, resourceSettings.Value, sourceResourceSettings.Value, moveStatus.Value, Optional.ToList(dependsOn), Optional.ToList(dependsOnOverrides), Optional.ToNullable(isResolveRequired), errors.Value, serializedAdditionalRawData);
+            return new MoverResourceProperties(
+                Optional.ToNullable(provisioningState),
+                sourceId,
+                targetId.Value,
+                existingTargetId.Value,
+                resourceSettings.Value,
+                sourceResourceSettings.Value,
+                moveStatus.Value,
+                dependsOn ?? new ChangeTrackingList<MoverResourceDependency>(),
+                dependsOnOverrides ?? new ChangeTrackingList<MoverResourceDependencyOverride>(),
+                Optional.ToNullable(isResolveRequired),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceProperties>.Write(ModelReaderWriterOptions options)

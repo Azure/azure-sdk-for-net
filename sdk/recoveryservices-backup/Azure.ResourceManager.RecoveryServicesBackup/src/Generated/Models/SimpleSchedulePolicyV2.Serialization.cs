@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduleRunFrequency))
+            if (ScheduleRunFrequency.HasValue)
             {
                 writer.WritePropertyName("scheduleRunFrequency"u8);
                 writer.WriteStringValue(ScheduleRunFrequency.Value.ToString());
             }
-            if (Optional.IsDefined(HourlySchedule))
+            if (HourlySchedule != null)
             {
                 writer.WritePropertyName("hourlySchedule"u8);
                 writer.WriteObjectValue(HourlySchedule);
             }
-            if (Optional.IsDefined(DailySchedule))
+            if (DailySchedule != null)
             {
                 writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
-            if (Optional.IsDefined(WeeklySchedule))
+            if (WeeklySchedule != null)
             {
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value);
+                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dailySchedule"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    dailySchedule = BackupDailySchedule.DeserializeBackupDailySchedule(property.Value);
+                    dailySchedule = BackupDailySchedule.DeserializeBackupDailySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("weeklySchedule"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    weeklySchedule = BackupWeeklySchedule.DeserializeBackupWeeklySchedule(property.Value);
+                    weeklySchedule = BackupWeeklySchedule.DeserializeBackupWeeklySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedulePolicyType"u8))
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimpleSchedulePolicyV2(schedulePolicyType, serializedAdditionalRawData, Optional.ToNullable(scheduleRunFrequency), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value);
+            return new SimpleSchedulePolicyV2(
+                schedulePolicyType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(scheduleRunFrequency),
+                hourlySchedule.Value,
+                dailySchedule.Value,
+                weeklySchedule.Value);
         }
 
         BinaryData IPersistableModel<SimpleSchedulePolicyV2>.Write(ModelReaderWriterOptions options)

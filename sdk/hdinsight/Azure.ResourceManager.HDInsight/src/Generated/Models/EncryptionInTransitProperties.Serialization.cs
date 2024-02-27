@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEncryptionInTransitEnabled))
+            if (IsEncryptionInTransitEnabled.HasValue)
             {
                 writer.WritePropertyName("isEncryptionInTransitEnabled"u8);
                 writer.WriteBooleanValue(IsEncryptionInTransitEnabled.Value);

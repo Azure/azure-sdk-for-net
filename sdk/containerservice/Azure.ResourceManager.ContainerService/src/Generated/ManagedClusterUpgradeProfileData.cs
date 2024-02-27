@@ -58,8 +58,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
         internal ManagedClusterUpgradeProfileData(ManagedClusterPoolUpgradeProfile controlPlaneProfile, IEnumerable<ManagedClusterPoolUpgradeProfile> agentPoolProfiles)
         {
-            Argument.AssertNotNull(controlPlaneProfile, nameof(controlPlaneProfile));
-            Argument.AssertNotNull(agentPoolProfiles, nameof(agentPoolProfiles));
+            if (controlPlaneProfile == null)
+            {
+                throw new ArgumentNullException(nameof(controlPlaneProfile));
+            }
+            if (agentPoolProfiles == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolProfiles));
+            }
 
             ControlPlaneProfile = controlPlaneProfile;
             AgentPoolProfiles = agentPoolProfiles.ToList();

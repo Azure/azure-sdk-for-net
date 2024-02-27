@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedTimestamp"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletedOn))
+            if (options.Format != "W" && CompletedOn.HasValue)
             {
                 writer.WritePropertyName("completedTimestamp"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(NamespaceFilesCount))
+            if (options.Format != "W" && NamespaceFilesCount.HasValue)
             {
                 writer.WritePropertyName("namespaceFilesCount"u8);
                 writer.WriteNumberValue(NamespaceFilesCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NamespaceDirectoriesCount))
+            if (options.Format != "W" && NamespaceDirectoriesCount.HasValue)
             {
                 writer.WritePropertyName("namespaceDirectoriesCount"u8);
                 writer.WriteNumberValue(NamespaceDirectoriesCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NamespaceSizeInBytes))
+            if (options.Format != "W" && NamespaceSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("namespaceSizeBytes"u8);
                 writer.WriteNumberValue(NamespaceSizeInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextRunTimestamp))
+            if (options.Format != "W" && NextRunTimestamp.HasValue)
             {
                 writer.WritePropertyName("nextRunTimestamp"u8);
                 writer.WriteStringValue(NextRunTimestamp.Value, "O");
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointLastChangeEnumerationStatus(Optional.ToNullable(startedTimestamp), Optional.ToNullable(completedTimestamp), Optional.ToNullable(namespaceFilesCount), Optional.ToNullable(namespaceDirectoriesCount), Optional.ToNullable(namespaceSizeBytes), Optional.ToNullable(nextRunTimestamp), serializedAdditionalRawData);
+            return new CloudEndpointLastChangeEnumerationStatus(
+                Optional.ToNullable(startedTimestamp),
+                Optional.ToNullable(completedTimestamp),
+                Optional.ToNullable(namespaceFilesCount),
+                Optional.ToNullable(namespaceDirectoriesCount),
+                Optional.ToNullable(namespaceSizeBytes),
+                Optional.ToNullable(nextRunTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.Write(ModelReaderWriterOptions options)

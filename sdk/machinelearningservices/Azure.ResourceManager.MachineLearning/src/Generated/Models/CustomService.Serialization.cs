@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Image))
+            if (Image != null)
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteObjectValue(Image);
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, EnvironmentVariable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Docker))
+            if (Docker != null)
             {
                 if (Docker != null)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("docker");
                 }
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<ContainerEndpoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Volumes))
+            if (!(Volumes is ChangeTrackingList<VolumeDefinition> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<string> name = default;
             Optional<ImageSetting> image = default;
-            Optional<IDictionary<string, EnvironmentVariable>> environmentVariables = default;
+            IDictionary<string, EnvironmentVariable> environmentVariables = default;
             Optional<DockerSetting> docker = default;
-            Optional<IList<ContainerEndpoint>> endpoints = default;
-            Optional<IList<VolumeDefinition>> volumes = default;
+            IList<ContainerEndpoint> endpoints = default;
+            IList<VolumeDefinition> volumes = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    image = ImageSetting.DeserializeImageSetting(property.Value);
+                    image = ImageSetting.DeserializeImageSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, EnvironmentVariable> dictionary = new Dictionary<string, EnvironmentVariable>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EnvironmentVariable.DeserializeEnvironmentVariable(property0.Value));
+                        dictionary.Add(property0.Name, EnvironmentVariable.DeserializeEnvironmentVariable(property0.Value, options));
                     }
                     environmentVariables = dictionary;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         docker = null;
                         continue;
                     }
-                    docker = DockerSetting.DeserializeDockerSetting(property.Value);
+                    docker = DockerSetting.DeserializeDockerSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endpoints"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ContainerEndpoint> array = new List<ContainerEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item));
+                        array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<VolumeDefinition> array = new List<VolumeDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VolumeDefinition.DeserializeVolumeDefinition(item));
+                        array.Add(VolumeDefinition.DeserializeVolumeDefinition(item, options));
                     }
                     volumes = array;
                     continue;
@@ -193,7 +193,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomService(name.Value, image.Value, Optional.ToDictionary(environmentVariables), docker.Value, Optional.ToList(endpoints), Optional.ToList(volumes), additionalProperties);
+            return new CustomService(
+                name.Value,
+                image.Value,
+                environmentVariables ?? new ChangeTrackingDictionary<string, EnvironmentVariable>(),
+                docker.Value,
+                endpoints ?? new ChangeTrackingList<ContainerEndpoint>(),
+                volumes ?? new ChangeTrackingList<VolumeDefinition>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<CustomService>.Write(ModelReaderWriterOptions options)

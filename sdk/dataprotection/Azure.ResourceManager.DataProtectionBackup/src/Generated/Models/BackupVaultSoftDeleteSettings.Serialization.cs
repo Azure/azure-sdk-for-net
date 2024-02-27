@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionDurationInDays))
+            if (RetentionDurationInDays.HasValue)
             {
                 writer.WritePropertyName("retentionDurationInDays"u8);
                 writer.WriteNumberValue(RetentionDurationInDays.Value);

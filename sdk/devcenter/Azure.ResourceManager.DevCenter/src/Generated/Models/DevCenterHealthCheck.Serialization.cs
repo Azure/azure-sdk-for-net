@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorType))
+            if (options.Format != "W" && ErrorType != null)
             {
                 writer.WritePropertyName("errorType"u8);
                 writer.WriteStringValue(ErrorType);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedAction))
+            if (options.Format != "W" && RecommendedAction != null)
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdditionalDetails))
+            if (options.Format != "W" && AdditionalDetails != null)
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterHealthCheck(Optional.ToNullable(status), displayName.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), errorType.Value, recommendedAction.Value, additionalDetails.Value, serializedAdditionalRawData);
+            return new DevCenterHealthCheck(
+                Optional.ToNullable(status),
+                displayName.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(endDateTime),
+                errorType.Value,
+                recommendedAction.Value,
+                additionalDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterHealthCheck>.Write(ModelReaderWriterOptions options)

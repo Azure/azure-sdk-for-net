@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<WorkloadProtectableItemResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkloadProtectableItemResource>> value = default;
+            IReadOnlyList<WorkloadProtectableItemResource> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadProtectableItemResource> array = new List<WorkloadProtectableItemResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource(item));
+                        array.Add(WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadProtectableItemResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadProtectableItemResourceList(value ?? new ChangeTrackingList<WorkloadProtectableItemResource>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadProtectableItemResourceList>.Write(ModelReaderWriterOptions options)

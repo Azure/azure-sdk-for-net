@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AvailableGroundStationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableGroundStationData>> value = default;
+            IReadOnlyList<AvailableGroundStationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<AvailableGroundStationData> array = new List<AvailableGroundStationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableGroundStationData.DeserializeAvailableGroundStationData(item));
+                        array.Add(AvailableGroundStationData.DeserializeAvailableGroundStationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableGroundStationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableGroundStationListResult(value ?? new ChangeTrackingList<AvailableGroundStationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableGroundStationListResult>.Write(ModelReaderWriterOptions options)

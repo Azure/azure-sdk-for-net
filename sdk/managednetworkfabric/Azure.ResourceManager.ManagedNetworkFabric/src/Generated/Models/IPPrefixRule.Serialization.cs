@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("networkPrefix"u8);
             writer.WriteStringValue(NetworkPrefix);
-            if (Optional.IsDefined(Condition))
+            if (Condition.HasValue)
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition.Value.ToString());
             }
-            if (Optional.IsDefined(SubnetMaskLength))
+            if (SubnetMaskLength != null)
             {
                 writer.WritePropertyName("subnetMaskLength"u8);
                 writer.WriteStringValue(SubnetMaskLength);
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPrefixRule(action, sequenceNumber, networkPrefix, Optional.ToNullable(condition), subnetMaskLength.Value, serializedAdditionalRawData);
+            return new IPPrefixRule(
+                action,
+                sequenceNumber,
+                networkPrefix,
+                Optional.ToNullable(condition),
+                subnetMaskLength.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPrefixRule>.Write(ModelReaderWriterOptions options)

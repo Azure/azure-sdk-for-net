@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppZipUri))
+            if (AppZipUri != null)
             {
                 writer.WritePropertyName("appZipUrl"u8);
                 writer.WriteStringValue(AppZipUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ApiZipUri))
+            if (ApiZipUri != null)
             {
                 writer.WritePropertyName("apiZipUrl"u8);
                 writer.WriteStringValue(ApiZipUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DeploymentTitle))
+            if (DeploymentTitle != null)
             {
                 writer.WritePropertyName("deploymentTitle"u8);
                 writer.WriteStringValue(DeploymentTitle);
             }
-            if (Optional.IsDefined(Provider))
+            if (Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(FunctionLanguage))
+            if (FunctionLanguage != null)
             {
                 writer.WritePropertyName("functionLanguage"u8);
                 writer.WriteStringValue(FunctionLanguage);
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteZipDeployment(id, name, type, systemData.Value, appZipUrl.Value, apiZipUrl.Value, deploymentTitle.Value, provider.Value, functionLanguage.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteZipDeployment(
+                id,
+                name,
+                type,
+                systemData.Value,
+                appZipUrl.Value,
+                apiZipUrl.Value,
+                deploymentTitle.Value,
+                provider.Value,
+                functionLanguage.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteZipDeployment>.Write(ModelReaderWriterOptions options)

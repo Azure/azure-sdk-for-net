@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FrontendIPConfigurations))
+            if (!(FrontendIPConfigurations is ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<LoadBalancerVipSwapRequestFrontendIPConfiguration>> frontendIPConfigurations = default;
+            IList<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<LoadBalancerVipSwapRequestFrontendIPConfiguration> array = new List<LoadBalancerVipSwapRequestFrontendIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerVipSwapRequestFrontendIPConfiguration.DeserializeLoadBalancerVipSwapRequestFrontendIPConfiguration(item));
+                        array.Add(LoadBalancerVipSwapRequestFrontendIPConfiguration.DeserializeLoadBalancerVipSwapRequestFrontendIPConfiguration(item, options));
                     }
                     frontendIPConfigurations = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerVipSwapContent(Optional.ToList(frontendIPConfigurations), serializedAdditionalRawData);
+            return new LoadBalancerVipSwapContent(frontendIPConfigurations ?? new ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerVipSwapContent>.Write(ModelReaderWriterOptions options)

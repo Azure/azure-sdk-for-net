@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, AzureLocation location = default, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, string volumeName = null, bool? useExistingSnapshot = null)
         {
-            return new NetAppBackupData(id, name, resourceType, systemData, location, backupId, createdOn, provisioningState, size, label, backupType, failureReason, volumeName, useExistingSnapshot);
+            return new NetAppBackupData(id, name, resourceType, systemData, location, backupId, createdOn, provisioningState, size, label, backupType, failureReason, volumeName, useExistingSnapshot, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>

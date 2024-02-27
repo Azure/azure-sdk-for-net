@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StopSellNotifications))
+            if (!(StopSellNotifications is ChangeTrackingList<StopSellOffersPlansNotificationsResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stopSellNotifications"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StopSellOffersPlansNotificationsResult>> stopSellNotifications = default;
+            IReadOnlyList<StopSellOffersPlansNotificationsResult> stopSellNotifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<StopSellOffersPlansNotificationsResult> array = new List<StopSellOffersPlansNotificationsResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StopSellOffersPlansNotificationsResult.DeserializeStopSellOffersPlansNotificationsResult(item));
+                        array.Add(StopSellOffersPlansNotificationsResult.DeserializeStopSellOffersPlansNotificationsResult(item, options));
                     }
                     stopSellNotifications = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StopSellOffersPlansNotificationsList(Optional.ToList(stopSellNotifications), serializedAdditionalRawData);
+            return new StopSellOffersPlansNotificationsList(stopSellNotifications ?? new ChangeTrackingList<StopSellOffersPlansNotificationsResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StopSellOffersPlansNotificationsList>.Write(ModelReaderWriterOptions options)

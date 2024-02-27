@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primaryNetworkId"/> is null. </exception>
         public A2ACreateNetworkMappingContent(ResourceIdentifier primaryNetworkId)
         {
-            Argument.AssertNotNull(primaryNetworkId, nameof(primaryNetworkId));
+            if (primaryNetworkId == null)
+            {
+                throw new ArgumentNullException(nameof(primaryNetworkId));
+            }
 
             PrimaryNetworkId = primaryNetworkId;
             InstanceType = "AzureToAzure";

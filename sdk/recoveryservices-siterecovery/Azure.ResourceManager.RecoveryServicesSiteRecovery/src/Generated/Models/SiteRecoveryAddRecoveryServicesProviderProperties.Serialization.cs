@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
-            if (Optional.IsDefined(MachineId))
+            if (MachineId != null)
             {
                 writer.WritePropertyName("machineId"u8);
                 writer.WriteStringValue(MachineId);
             }
-            if (Optional.IsDefined(BiosId))
+            if (BiosId != null)
             {
                 writer.WritePropertyName("biosId"u8);
                 writer.WriteStringValue(BiosId);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteObjectValue(AuthenticationIdentityContent);
             writer.WritePropertyName("resourceAccessIdentityInput"u8);
             writer.WriteObjectValue(ResourceAccessIdentityContent);
-            if (Optional.IsDefined(DataPlaneAuthenticationIdentityContent))
+            if (DataPlaneAuthenticationIdentityContent != null)
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityInput"u8);
                 writer.WriteObjectValue(DataPlaneAuthenticationIdentityContent);
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("authenticationIdentityInput"u8))
                 {
-                    authenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value);
+                    authenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentityInput"u8))
                 {
-                    resourceAccessIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value);
+                    resourceAccessIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataPlaneAuthenticationIdentityInput"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    dataPlaneAuthenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value);
+                    dataPlaneAuthenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAddRecoveryServicesProviderProperties(machineName, machineId.Value, biosId.Value, authenticationIdentityContent, resourceAccessIdentityContent, dataPlaneAuthenticationIdentityContent.Value, serializedAdditionalRawData);
+            return new SiteRecoveryAddRecoveryServicesProviderProperties(
+                machineName,
+                machineId.Value,
+                biosId.Value,
+                authenticationIdentityContent,
+                resourceAccessIdentityContent,
+                dataPlaneAuthenticationIdentityContent.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAddRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)

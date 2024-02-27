@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Specification))
+            if (Specification != null)
             {
                 writer.WritePropertyName("specification"u8);
                 writer.WriteObjectValue(Specification);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    specification = DefaultRolloutSpecification.DeserializeDefaultRolloutSpecification(property.Value);
+                    specification = DefaultRolloutSpecification.DeserializeDefaultRolloutSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    status = DefaultRolloutStatus.DeserializeDefaultRolloutStatus(property.Value);
+                    status = DefaultRolloutStatus.DeserializeDefaultRolloutStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

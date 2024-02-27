@@ -42,44 +42,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Layer2Configuration))
+            if (Layer2Configuration != null)
             {
                 writer.WritePropertyName("layer2Configuration"u8);
                 writer.WriteObjectValue(Layer2Configuration);
             }
-            if (Optional.IsDefined(OptionBLayer3Configuration))
+            if (OptionBLayer3Configuration != null)
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
                 writer.WriteObjectValue(OptionBLayer3Configuration);
             }
-            if (Optional.IsDefined(NpbStaticRouteConfiguration))
+            if (NpbStaticRouteConfiguration != null)
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
                 writer.WriteObjectValue(NpbStaticRouteConfiguration);
             }
-            if (Optional.IsDefined(ImportRoutePolicy))
+            if (ImportRoutePolicy != null)
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (ExportRoutePolicy != null)
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (Optional.IsDefined(EgressAclId))
+            if (EgressAclId != null)
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (Optional.IsDefined(IngressAclId))
+            if (IngressAclId != null)
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value);
+                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("optionBLayer3Configuration"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(property0.Value);
+                            optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("npbStaticRouteConfiguration"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value);
+                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("importRoutePolicy"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value);
+                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("egressAclId"u8))
@@ -243,7 +243,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkToNetworkInterconnectPatch(id, name, type, systemData.Value, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, serializedAdditionalRawData);
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                layer2Configuration.Value,
+                optionBLayer3Configuration.Value,
+                npbStaticRouteConfiguration.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                egressAclId.Value,
+                ingressAclId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkToNetworkInterconnectPatch>.Write(ModelReaderWriterOptions options)

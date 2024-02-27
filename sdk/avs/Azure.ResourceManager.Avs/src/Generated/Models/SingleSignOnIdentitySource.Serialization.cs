@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Alias))
+            if (Alias != null)
             {
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
             }
-            if (Optional.IsDefined(Domain))
+            if (Domain != null)
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsDefined(BaseUserDN))
+            if (BaseUserDN != null)
             {
                 writer.WritePropertyName("baseUserDN"u8);
                 writer.WriteStringValue(BaseUserDN);
             }
-            if (Optional.IsDefined(BaseGroupDN))
+            if (BaseGroupDN != null)
             {
                 writer.WritePropertyName("baseGroupDN"u8);
                 writer.WriteStringValue(BaseGroupDN);
             }
-            if (Optional.IsDefined(PrimaryServer))
+            if (PrimaryServer != null)
             {
                 writer.WritePropertyName("primaryServer"u8);
                 writer.WriteStringValue(PrimaryServer.AbsoluteUri);
             }
-            if (Optional.IsDefined(SecondaryServer))
+            if (SecondaryServer != null)
             {
                 writer.WritePropertyName("secondaryServer"u8);
                 writer.WriteStringValue(SecondaryServer.AbsoluteUri);
             }
-            if (Optional.IsDefined(Ssl))
+            if (Ssl.HasValue)
             {
                 writer.WritePropertyName("ssl"u8);
                 writer.WriteStringValue(Ssl.Value.ToString());
             }
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -196,7 +196,18 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SingleSignOnIdentitySource(name.Value, @alias.Value, domain.Value, baseUserDN.Value, baseGroupDN.Value, primaryServer.Value, secondaryServer.Value, Optional.ToNullable(ssl), username.Value, password.Value, serializedAdditionalRawData);
+            return new SingleSignOnIdentitySource(
+                name.Value,
+                @alias.Value,
+                domain.Value,
+                baseUserDN.Value,
+                baseGroupDN.Value,
+                primaryServer.Value,
+                secondaryServer.Value,
+                Optional.ToNullable(ssl),
+                username.Value,
+                password.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SingleSignOnIdentitySource>.Write(ModelReaderWriterOptions options)

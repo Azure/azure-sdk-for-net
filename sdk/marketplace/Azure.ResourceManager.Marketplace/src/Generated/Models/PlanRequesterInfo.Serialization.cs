@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(User))
+            if (options.Format != "W" && User != null)
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (options.Format != "W" && Optional.IsDefined(Date))
+            if (options.Format != "W" && Date != null)
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date);
             }
-            if (options.Format != "W" && Optional.IsDefined(Justification))
+            if (options.Format != "W" && Justification != null)
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(SubscriptionName))
+            if (SubscriptionName != null)
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlanRequesterInfo(user.Value, date.Value, justification.Value, subscriptionId.Value, subscriptionName.Value, serializedAdditionalRawData);
+            return new PlanRequesterInfo(
+                user.Value,
+                date.Value,
+                justification.Value,
+                subscriptionId.Value,
+                subscriptionName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlanRequesterInfo>.Write(ModelReaderWriterOptions options)

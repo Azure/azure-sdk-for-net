@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetAppVolumeData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppVolumeData>> value = default;
+            IReadOnlyList<NetAppVolumeData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeData> array = new List<NetAppVolumeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeData.DeserializeNetAppVolumeData(item));
+                        array.Add(NetAppVolumeData.DeserializeNetAppVolumeData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPolicyVolumeList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SnapshotPolicyVolumeList(value ?? new ChangeTrackingList<NetAppVolumeData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPolicyVolumeList>.Write(ModelReaderWriterOptions options)

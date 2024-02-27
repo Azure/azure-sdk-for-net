@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Keys))
+            if (!(Keys is ChangeTrackingList<JsonWebKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<IList<JsonWebKey>> keys = default;
+            IList<JsonWebKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<JsonWebKey> array = new List<JsonWebKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonWebKey.DeserializeJsonWebKey(item));
+                        array.Add(JsonWebKey.DeserializeJsonWebKey(item, options));
                     }
                     keys = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonWebKeySet(Optional.ToList(keys), serializedAdditionalRawData);
+            return new JsonWebKeySet(keys ?? new ChangeTrackingList<JsonWebKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonWebKeySet>.Write(ModelReaderWriterOptions options)

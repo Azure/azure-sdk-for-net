@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("defaultToLanguageCode"u8);
             writer.WriteStringValue(DefaultToLanguageCode.ToString());
-            if (Optional.IsDefined(DefaultFromLanguageCode))
+            if (DefaultFromLanguageCode.HasValue)
             {
                 if (DefaultFromLanguageCode != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultFromLanguageCode");
                 }
             }
-            if (Optional.IsDefined(SuggestedFrom))
+            if (SuggestedFrom.HasValue)
             {
                 if (SuggestedFrom != null)
                 {
@@ -44,17 +44,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -159,7 +159,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new TextTranslationSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultToLanguageCode, Optional.ToNullable(defaultFromLanguageCode), Optional.ToNullable(suggestedFrom));
+            return new TextTranslationSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                defaultToLanguageCode,
+                Optional.ToNullable(defaultFromLanguageCode),
+                Optional.ToNullable(suggestedFrom));
         }
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionState))
+            if (ConnectionState != null)
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsCollectionDefined(Fqdns))
+            if (!(Fqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsReserved))
+            if (options.Format != "W" && IsReserved.HasValue)
             {
                 writer.WritePropertyName("isReserved"u8);
                 writer.WriteBooleanValue(IsReserved.Value);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (PrivateLinkResourceId != null)
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<ConnectionStateProperties> connectionState = default;
-            Optional<IList<string>> fqdns = default;
+            IList<string> fqdns = default;
             Optional<string> groupId = default;
             Optional<bool> isReserved = default;
             Optional<ResourceIdentifier> privateLinkResourceId = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectionState = ConnectionStateProperties.DeserializeConnectionStateProperties(property.Value);
+                    connectionState = ConnectionStateProperties.DeserializeConnectionStateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fqdns"u8))
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPrivateEndpointProperties(connectionState.Value, Optional.ToList(fqdns), groupId.Value, Optional.ToNullable(isReserved), privateLinkResourceId.Value, provisioningState.Value, additionalProperties);
+            return new DataFactoryPrivateEndpointProperties(
+                connectionState.Value,
+                fqdns ?? new ChangeTrackingList<string>(),
+                groupId.Value,
+                Optional.ToNullable(isReserved),
+                privateLinkResourceId.Value,
+                provisioningState.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateEndpointProperties>.Write(ModelReaderWriterOptions options)

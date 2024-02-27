@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryDatasetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datasetName, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (datasetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(datasetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryDatasetResource> CreateOrUpdate(WaitUntil waitUntil, string datasetName, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (datasetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(datasetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.CreateOrUpdate");
             scope.Start();
@@ -181,7 +201,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryDatasetResource>> GetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (datasetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(datasetName));
+            }
 
             using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Get");
             scope.Start();
@@ -227,7 +254,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public virtual Response<DataFactoryDatasetResource> Get(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (datasetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(datasetName));
+            }
 
             using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Get");
             scope.Start();
@@ -333,7 +367,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (datasetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(datasetName));
+            }
 
             using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public virtual Response<bool> Exists(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (datasetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(datasetName));
+            }
 
             using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Exists");
             scope.Start();
@@ -421,7 +469,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryDatasetResource>> GetIfExistsAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (datasetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(datasetName));
+            }
 
             using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryDatasetResource> GetIfExists(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (datasetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(datasetName));
+            }
 
             using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetIfExists");
             scope.Start();

@@ -17,22 +17,22 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConversionStatus))
+            if (ConversionStatus.HasValue)
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(ConversionStatus.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AssetFileTypeString))
+            if (AssetFileTypeString != null)
             {
                 writer.WritePropertyName("assetFileType"u8);
                 writer.WriteStringValue(AssetFileTypeString);
             }
-            if (Optional.IsDefined(InputAssetUriString))
+            if (InputAssetUriString != null)
             {
                 writer.WritePropertyName("inputAssetUri"u8);
                 writer.WriteStringValue(InputAssetUriString);
             }
-            if (Optional.IsDefined(ConversionConfiguration))
+            if (ConversionConfiguration != null)
             {
                 writer.WritePropertyName("ingestionConfiguration"u8);
                 writer.WriteObjectValue(ConversionConfiguration);
@@ -140,7 +140,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
+            return new AssetConversionProperties(
+                clientErrorDetails.Value,
+                serverErrorDetails.Value,
+                errorCode,
+                Optional.ToNullable(jobId),
+                outputModelUri.Value,
+                Optional.ToNullable(jobStatus),
+                assetFileType.Value,
+                inputAssetUri.Value,
+                Optional.ToNullable(accountId),
+                ingestionConfiguration.Value,
+                scaledAssetDimensions.Value);
         }
     }
 }

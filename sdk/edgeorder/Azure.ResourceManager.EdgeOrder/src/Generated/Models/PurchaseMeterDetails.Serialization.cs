@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProductId))
+            if (options.Format != "W" && ProductId != null)
             {
                 writer.WritePropertyName("productId"u8);
                 writer.WriteStringValue(ProductId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkuId))
+            if (options.Format != "W" && SkuId != null)
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TermId))
+            if (options.Format != "W" && TermId != null)
             {
                 writer.WritePropertyName("termId"u8);
                 writer.WriteStringValue(TermId);
             }
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Multiplier))
+            if (options.Format != "W" && Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargingType))
+            if (options.Format != "W" && ChargingType.HasValue)
             {
                 writer.WritePropertyName("chargingType"u8);
                 writer.WriteStringValue(ChargingType.Value.ToString());
@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurchaseMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), serializedAdditionalRawData, productId.Value, skuId.Value, termId.Value);
+            return new PurchaseMeterDetails(
+                billingType,
+                Optional.ToNullable(multiplier),
+                Optional.ToNullable(chargingType),
+                serializedAdditionalRawData,
+                productId.Value,
+                skuId.Value,
+                termId.Value);
         }
 
         BinaryData IPersistableModel<PurchaseMeterDetails>.Write(ModelReaderWriterOptions options)

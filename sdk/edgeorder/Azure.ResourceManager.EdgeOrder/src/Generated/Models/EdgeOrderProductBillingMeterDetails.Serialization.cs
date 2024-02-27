@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterDetails))
+            if (options.Format != "W" && MeterDetails != null)
             {
                 writer.WritePropertyName("meterDetails"u8);
                 writer.WriteObjectValue(MeterDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeteringType))
+            if (options.Format != "W" && MeteringType.HasValue)
             {
                 writer.WritePropertyName("meteringType"u8);
                 writer.WriteStringValue(MeteringType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Frequency))
+            if (options.Format != "W" && Frequency != null)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    meterDetails = EdgeOrderProductMeterDetails.DeserializeEdgeOrderProductMeterDetails(property.Value);
+                    meterDetails = EdgeOrderProductMeterDetails.DeserializeEdgeOrderProductMeterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("meteringType"u8))

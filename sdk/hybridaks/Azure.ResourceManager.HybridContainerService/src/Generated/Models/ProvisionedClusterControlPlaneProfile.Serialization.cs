@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(ControlPlaneEndpoint))
+            if (ControlPlaneEndpoint != null)
             {
                 writer.WritePropertyName("controlPlaneEndpoint"u8);
                 writer.WriteObjectValue(ControlPlaneEndpoint);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    controlPlaneEndpoint = ControlPlaneProfileControlPlaneEndpoint.DeserializeControlPlaneProfileControlPlaneEndpoint(property.Value);
+                    controlPlaneEndpoint = ControlPlaneProfileControlPlaneEndpoint.DeserializeControlPlaneProfileControlPlaneEndpoint(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="phone"/> or <paramref name="accountSID"/> is null. </exception>
         public SmsChannelProperties(string phone, string accountSID, bool isEnabled)
         {
-            Argument.AssertNotNull(phone, nameof(phone));
-            Argument.AssertNotNull(accountSID, nameof(accountSID));
+            if (phone == null)
+            {
+                throw new ArgumentNullException(nameof(phone));
+            }
+            if (accountSID == null)
+            {
+                throw new ArgumentNullException(nameof(accountSID));
+            }
 
             Phone = phone;
             AccountSID = accountSID;

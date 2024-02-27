@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RunningStatus))
+            if (options.Format != "W" && RunningStatus != null)
             {
                 writer.WritePropertyName("runningStatus"u8);
                 writer.WriteObjectValue(RunningStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(Progress))
+            if (options.Format != "W" && Progress != null)
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteObjectValue(Progress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedBy))
+            if (options.Format != "W" && StartedBy.HasValue)
             {
                 writer.WritePropertyName("startedBy"u8);
                 writer.WriteStringValue(StartedBy.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetImageReference))
+            if (options.Format != "W" && TargetImageReference != null)
             {
                 writer.WritePropertyName("targetImageReference"u8);
                 writer.WriteObjectValue(TargetImageReference);
             }
-            if (options.Format != "W" && Optional.IsDefined(RollbackInfo))
+            if (options.Format != "W" && RollbackInfo != null)
             {
                 writer.WritePropertyName("rollbackInfo"u8);
                 writer.WriteObjectValue(RollbackInfo);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value);
+                    runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progress"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value);
+                    progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startedBy"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    targetImageReference = ImageReference.DeserializeImageReference(property.Value);
+                    targetImageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rollbackInfo"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value);
+                    rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus.Value, progress.Value, error.Value, Optional.ToNullable(startedBy), targetImageReference.Value, rollbackInfo.Value, serializedAdditionalRawData);
+            return new UpgradeOperationHistoricalStatusInfoProperties(
+                runningStatus.Value,
+                progress.Value,
+                error.Value,
+                Optional.ToNullable(startedBy),
+                targetImageReference.Value,
+                rollbackInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>.Write(ModelReaderWriterOptions options)

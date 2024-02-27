@@ -18,12 +18,12 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
-            if (Optional.IsDefined(Interpolation))
+            if (Interpolation != null)
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteObjectValue(Interpolation);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<TimeSeriesAggregateCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteObjectValue(DefaultCategory);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             TimeSeriesExpression value = default;
             Optional<TimeSeriesInterpolation> interpolation = default;
-            Optional<IList<TimeSeriesAggregateCategory>> categories = default;
+            IList<TimeSeriesAggregateCategory> categories = default;
             TimeSeriesDefaultCategory defaultCategory = default;
             string kind = default;
             Optional<TimeSeriesExpression> filter = default;
@@ -107,7 +107,13 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new CategoricalVariable(kind, filter.Value, value, interpolation.Value, Optional.ToList(categories), defaultCategory);
+            return new CategoricalVariable(
+                kind,
+                filter.Value,
+                value,
+                interpolation.Value,
+                categories ?? new ChangeTrackingList<TimeSeriesAggregateCategory>(),
+                defaultCategory);
         }
     }
 }

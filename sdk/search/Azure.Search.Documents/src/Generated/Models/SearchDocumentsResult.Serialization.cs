@@ -22,8 +22,8 @@ namespace Azure.Search.Documents.Models
             }
             Optional<long> odataCount = default;
             Optional<double> searchCoverage = default;
-            Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
-            Optional<IReadOnlyList<QueryAnswerResult>> searchAnswers = default;
+            IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
+            IReadOnlyList<QueryAnswerResult> searchAnswers = default;
             Optional<SearchOptions> searchNextPageParameters = default;
             Optional<SemanticErrorReason> searchSemanticPartialResponseReason = default;
             Optional<SemanticSearchResultsType> searchSemanticPartialResponseType = default;
@@ -133,7 +133,16 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, Optional.ToNullable(searchSemanticPartialResponseReason), Optional.ToNullable(searchSemanticPartialResponseType), value, odataNextLink.Value);
+            return new SearchDocumentsResult(
+                Optional.ToNullable(odataCount),
+                Optional.ToNullable(searchCoverage),
+                searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
+                searchAnswers ?? new ChangeTrackingList<QueryAnswerResult>(),
+                searchNextPageParameters.Value,
+                Optional.ToNullable(searchSemanticPartialResponseReason),
+                Optional.ToNullable(searchSemanticPartialResponseType),
+                value,
+                odataNextLink.Value);
         }
     }
 }

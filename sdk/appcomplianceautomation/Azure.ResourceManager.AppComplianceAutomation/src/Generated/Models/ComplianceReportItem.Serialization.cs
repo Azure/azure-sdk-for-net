@@ -26,67 +26,67 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CategoryName))
+            if (options.Format != "W" && CategoryName != null)
             {
                 writer.WritePropertyName("categoryName"u8);
                 writer.WriteStringValue(CategoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlId))
+            if (options.Format != "W" && ControlId != null)
             {
                 writer.WritePropertyName("controlId"u8);
                 writer.WriteStringValue(ControlId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlName))
+            if (options.Format != "W" && ControlName != null)
             {
                 writer.WritePropertyName("controlName"u8);
                 writer.WriteStringValue(ControlName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlType))
+            if (options.Format != "W" && ControlType.HasValue)
             {
                 writer.WritePropertyName("controlType"u8);
                 writer.WriteStringValue(ControlType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
+            if (options.Format != "W" && ComplianceState.HasValue)
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyId))
+            if (options.Format != "W" && PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyDisplayName))
+            if (options.Format != "W" && PolicyDisplayName != null)
             {
                 writer.WritePropertyName("policyDisplayName"u8);
                 writer.WriteStringValue(PolicyDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyDescription))
+            if (options.Format != "W" && PolicyDescription != null)
             {
                 writer.WritePropertyName("policyDescription"u8);
                 writer.WriteStringValue(PolicyDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusChangeDate))
+            if (options.Format != "W" && StatusChangeDate != null)
             {
                 writer.WritePropertyName("statusChangeDate"u8);
                 writer.WriteStringValue(StatusChangeDate);
@@ -225,7 +225,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value, serializedAdditionalRawData);
+            return new ComplianceReportItem(
+                categoryName.Value,
+                controlId.Value,
+                controlName.Value,
+                Optional.ToNullable(controlType),
+                Optional.ToNullable(complianceState),
+                policyId.Value,
+                policyDisplayName.Value,
+                policyDescription.Value,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                resourceType.Value,
+                resourceId.Value,
+                statusChangeDate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceReportItem>.Write(ModelReaderWriterOptions options)

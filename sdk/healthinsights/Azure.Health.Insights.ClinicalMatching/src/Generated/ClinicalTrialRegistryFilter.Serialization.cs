@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Conditions))
+            if (!(Conditions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StudyTypes))
+            if (!(StudyTypes is ChangeTrackingList<ClinicalTrialStudyType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("studyTypes"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecruitmentStatuses))
+            if (!(RecruitmentStatuses is ChangeTrackingList<ClinicalTrialRecruitmentStatus> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("recruitmentStatuses"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sponsors))
+            if (!(Sponsors is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sponsors"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Phases))
+            if (!(Phases is ChangeTrackingList<ClinicalTrialPhase> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("phases"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Purposes))
+            if (!(Purposes is ChangeTrackingList<ClinicalTrialPurpose> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("purposes"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ids))
+            if (!(Ids is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<ClinicalTrialSource> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FacilityNames))
+            if (!(FacilityNames is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FacilityLocations))
+            if (!(FacilityLocations is ChangeTrackingList<GeographicLocation> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("facilityLocations"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FacilityAreas))
+            if (!(FacilityAreas is ChangeTrackingList<GeographicArea> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("facilityAreas"u8);
                 writer.WriteStartArray();
@@ -175,17 +175,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<IList<string>> conditions = default;
-            Optional<IList<ClinicalTrialStudyType>> studyTypes = default;
-            Optional<IList<ClinicalTrialRecruitmentStatus>> recruitmentStatuses = default;
-            Optional<IList<string>> sponsors = default;
-            Optional<IList<ClinicalTrialPhase>> phases = default;
-            Optional<IList<ClinicalTrialPurpose>> purposes = default;
-            Optional<IList<string>> ids = default;
-            Optional<IList<ClinicalTrialSource>> sources = default;
-            Optional<IList<string>> facilityNames = default;
-            Optional<IList<GeographicLocation>> facilityLocations = default;
-            Optional<IList<GeographicArea>> facilityAreas = default;
+            IList<string> conditions = default;
+            IList<ClinicalTrialStudyType> studyTypes = default;
+            IList<ClinicalTrialRecruitmentStatus> recruitmentStatuses = default;
+            IList<string> sponsors = default;
+            IList<ClinicalTrialPhase> phases = default;
+            IList<ClinicalTrialPurpose> purposes = default;
+            IList<string> ids = default;
+            IList<ClinicalTrialSource> sources = default;
+            IList<string> facilityNames = default;
+            IList<GeographicLocation> facilityLocations = default;
+            IList<GeographicArea> facilityAreas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +325,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<GeographicLocation> array = new List<GeographicLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeographicLocation.DeserializeGeographicLocation(item));
+                        array.Add(GeographicLocation.DeserializeGeographicLocation(item, options));
                     }
                     facilityLocations = array;
                     continue;
@@ -339,7 +339,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<GeographicArea> array = new List<GeographicArea>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeographicArea.DeserializeGeographicArea(item));
+                        array.Add(GeographicArea.DeserializeGeographicArea(item, options));
                     }
                     facilityAreas = array;
                     continue;
@@ -350,7 +350,19 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrialRegistryFilter(Optional.ToList(conditions), Optional.ToList(studyTypes), Optional.ToList(recruitmentStatuses), Optional.ToList(sponsors), Optional.ToList(phases), Optional.ToList(purposes), Optional.ToList(ids), Optional.ToList(sources), Optional.ToList(facilityNames), Optional.ToList(facilityLocations), Optional.ToList(facilityAreas), serializedAdditionalRawData);
+            return new ClinicalTrialRegistryFilter(
+                conditions ?? new ChangeTrackingList<string>(),
+                studyTypes ?? new ChangeTrackingList<ClinicalTrialStudyType>(),
+                recruitmentStatuses ?? new ChangeTrackingList<ClinicalTrialRecruitmentStatus>(),
+                sponsors ?? new ChangeTrackingList<string>(),
+                phases ?? new ChangeTrackingList<ClinicalTrialPhase>(),
+                purposes ?? new ChangeTrackingList<ClinicalTrialPurpose>(),
+                ids ?? new ChangeTrackingList<string>(),
+                sources ?? new ChangeTrackingList<ClinicalTrialSource>(),
+                facilityNames ?? new ChangeTrackingList<string>(),
+                facilityLocations ?? new ChangeTrackingList<GeographicLocation>(),
+                facilityAreas ?? new ChangeTrackingList<GeographicArea>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrialRegistryFilter>.Write(ModelReaderWriterOptions options)

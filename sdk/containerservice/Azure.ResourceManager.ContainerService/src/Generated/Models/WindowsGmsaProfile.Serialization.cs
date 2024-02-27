@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(DnsServer))
+            if (DnsServer != null)
             {
                 writer.WritePropertyName("dnsServer"u8);
                 writer.WriteStringValue(DnsServer);
             }
-            if (Optional.IsDefined(RootDomainName))
+            if (RootDomainName != null)
             {
                 writer.WritePropertyName("rootDomainName"u8);
                 writer.WriteStringValue(RootDomainName);

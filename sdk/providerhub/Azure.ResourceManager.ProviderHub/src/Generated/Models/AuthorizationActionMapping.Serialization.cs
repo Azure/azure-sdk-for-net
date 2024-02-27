@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Original))
+            if (Original != null)
             {
                 writer.WritePropertyName("original"u8);
                 writer.WriteStringValue(Original);
             }
-            if (Optional.IsDefined(Desired))
+            if (Desired != null)
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStringValue(Desired);

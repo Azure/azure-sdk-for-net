@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartObject();
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 if (Name != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("name");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Instructions))
+            if (Instructions != null)
             {
                 if (Instructions != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("instructions");
                 }
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (!(Tools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FileIds))
+            if (!(FileIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Metadata != null)
                 {
@@ -145,9 +145,9 @@ namespace Azure.AI.OpenAI.Assistants
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<string> instructions = default;
-            Optional<IList<ToolDefinition>> tools = default;
-            Optional<IList<string>> fileIds = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IList<ToolDefinition> tools = default;
+            IList<string> fileIds = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolDefinition> array = new List<ToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        array.Add(ToolDefinition.DeserializeToolDefinition(item, options));
                     }
                     tools = array;
                     continue;
@@ -235,7 +235,15 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssistantCreationOptions(model, name.Value, description.Value, instructions.Value, Optional.ToList(tools), Optional.ToList(fileIds), Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new AssistantCreationOptions(
+                model,
+                name.Value,
+                description.Value,
+                instructions.Value,
+                tools ?? new ChangeTrackingList<ToolDefinition>(),
+                fileIds ?? new ChangeTrackingList<string>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssistantCreationOptions>.Write(ModelReaderWriterOptions options)

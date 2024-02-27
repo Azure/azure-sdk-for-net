@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceProviderConnection))
+            if (ResourceProviderConnection.HasValue)
             {
                 writer.WritePropertyName("resourceProviderConnection"u8);
                 writer.WriteStringValue(ResourceProviderConnection.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLink))
+            if (PrivateLink.HasValue)
             {
                 writer.WritePropertyName("privateLink"u8);
                 writer.WriteStringValue(PrivateLink.Value.ToString());

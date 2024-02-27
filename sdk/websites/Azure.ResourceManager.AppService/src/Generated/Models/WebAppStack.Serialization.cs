@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -52,24 +52,24 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayText))
+            if (options.Format != "W" && DisplayText != null)
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteStringValue(DisplayText);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MajorVersions))
+            if (options.Format != "W" && !(MajorVersions is ChangeTrackingList<WebAppMajorVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PreferredOS))
+            if (options.Format != "W" && PreferredOS.HasValue)
             {
                 writer.WritePropertyName("preferredOs"u8);
                 writer.WriteStringValue(PreferredOS.Value.ToSerialString());
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<string> displayText = default;
             Optional<string> value = default;
-            Optional<IReadOnlyList<WebAppMajorVersion>> majorVersions = default;
+            IReadOnlyList<WebAppMajorVersion> majorVersions = default;
             Optional<StackPreferredOS> preferredOS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<WebAppMajorVersion> array = new List<WebAppMajorVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppMajorVersion.DeserializeWebAppMajorVersion(item));
+                                array.Add(WebAppMajorVersion.DeserializeWebAppMajorVersion(item, options));
                             }
                             majorVersions = array;
                             continue;
@@ -226,7 +226,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOS), kind.Value, serializedAdditionalRawData);
+            return new WebAppStack(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                displayText.Value,
+                value.Value,
+                majorVersions ?? new ChangeTrackingList<WebAppMajorVersion>(),
+                Optional.ToNullable(preferredOS),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppStack>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartLine))
+            if (options.Format != "W" && StartLine.HasValue)
             {
                 writer.WritePropertyName("startLine"u8);
                 writer.WriteNumberValue(StartLine.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartColumn))
+            if (options.Format != "W" && StartColumn.HasValue)
             {
                 writer.WritePropertyName("startColumn"u8);
                 writer.WriteNumberValue(StartColumn.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndLine))
+            if (options.Format != "W" && EndLine.HasValue)
             {
                 writer.WritePropertyName("endLine"u8);
                 writer.WriteNumberValue(EndLine.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndColumn))
+            if (options.Format != "W" && EndColumn.HasValue)
             {
                 writer.WritePropertyName("endColumn"u8);
                 writer.WriteNumberValue(EndColumn.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsGlobal))
+            if (options.Format != "W" && IsGlobal.HasValue)
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal), serializedAdditionalRawData);
+            return new StreamAnalyticsQueryCompilationError(
+                message.Value,
+                Optional.ToNullable(startLine),
+                Optional.ToNullable(startColumn),
+                Optional.ToNullable(endLine),
+                Optional.ToNullable(endColumn),
+                Optional.ToNullable(isGlobal),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryCompilationError>.Write(ModelReaderWriterOptions options)

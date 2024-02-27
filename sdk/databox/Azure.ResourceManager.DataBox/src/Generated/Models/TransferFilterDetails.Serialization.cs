@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Optional.IsDefined(BlobFilterDetails))
+            if (BlobFilterDetails != null)
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
                 writer.WriteObjectValue(BlobFilterDetails);
             }
-            if (Optional.IsDefined(AzureFileFilterDetails))
+            if (AzureFileFilterDetails != null)
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
                 writer.WriteObjectValue(AzureFileFilterDetails);
             }
-            if (Optional.IsCollectionDefined(FilterFileDetails))
+            if (!(FilterFileDetails is ChangeTrackingList<FilterFileDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filterFileDetails"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataAccountType dataAccountType = default;
             Optional<BlobFilterDetails> blobFilterDetails = default;
             Optional<AzureFileFilterDetails> azureFileFilterDetails = default;
-            Optional<IList<FilterFileDetails>> filterFileDetails = default;
+            IList<FilterFileDetails> filterFileDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    blobFilterDetails = BlobFilterDetails.DeserializeBlobFilterDetails(property.Value);
+                    blobFilterDetails = BlobFilterDetails.DeserializeBlobFilterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureFileFilterDetails"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    azureFileFilterDetails = AzureFileFilterDetails.DeserializeAzureFileFilterDetails(property.Value);
+                    azureFileFilterDetails = AzureFileFilterDetails.DeserializeAzureFileFilterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("filterFileDetails"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<FilterFileDetails> array = new List<FilterFileDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.FilterFileDetails.DeserializeFilterFileDetails(item));
+                        array.Add(Models.FilterFileDetails.DeserializeFilterFileDetails(item, options));
                     }
                     filterFileDetails = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferFilterDetails(dataAccountType, blobFilterDetails.Value, azureFileFilterDetails.Value, Optional.ToList(filterFileDetails), serializedAdditionalRawData);
+            return new TransferFilterDetails(dataAccountType, blobFilterDetails.Value, azureFileFilterDetails.Value, filterFileDetails ?? new ChangeTrackingList<FilterFileDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferFilterDetails>.Write(ModelReaderWriterOptions options)

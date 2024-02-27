@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<bool> autoRegenerateKey = default;
             Optional<string> regenerationPeriod = default;
             Optional<StorageAccountAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryId"u8))
@@ -108,7 +108,17 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedStorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedStorageBundle(
+                id.Value,
+                resourceId.Value,
+                activeKeyName.Value,
+                Optional.ToNullable(autoRegenerateKey),
+                regenerationPeriod.Value,
+                attributes.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                recoveryId.Value,
+                Optional.ToNullable(scheduledPurgeDate),
+                Optional.ToNullable(deletedDate));
         }
     }
 }

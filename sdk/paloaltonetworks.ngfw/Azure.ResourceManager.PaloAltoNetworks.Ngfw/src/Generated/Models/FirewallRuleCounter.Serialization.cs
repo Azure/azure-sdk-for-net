@@ -28,44 +28,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartObject();
             writer.WritePropertyName("priority"u8);
             writer.WriteStringValue(Priority);
-            if (Optional.IsDefined(RuleStackName))
+            if (RuleStackName != null)
             {
                 writer.WritePropertyName("ruleStackName"u8);
                 writer.WriteStringValue(RuleStackName);
             }
-            if (Optional.IsDefined(RuleListName))
+            if (RuleListName != null)
             {
                 writer.WritePropertyName("ruleListName"u8);
                 writer.WriteStringValue(RuleListName);
             }
-            if (Optional.IsDefined(FirewallName))
+            if (FirewallName != null)
             {
                 writer.WritePropertyName("firewallName"u8);
                 writer.WriteStringValue(FirewallName);
             }
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
-            if (Optional.IsDefined(HitCount))
+            if (HitCount.HasValue)
             {
                 writer.WritePropertyName("hitCount"u8);
                 writer.WriteNumberValue(HitCount.Value);
             }
-            if (Optional.IsDefined(AppSeen))
+            if (AppSeen != null)
             {
                 writer.WritePropertyName("appSeen"u8);
                 writer.WriteObjectValue(AppSeen);
             }
-            if (Optional.IsDefined(ResponseOn))
+            if (ResponseOn.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(ResponseOn.Value, "O");
             }
-            if (Optional.IsDefined(RequestOn))
+            if (RequestOn.HasValue)
             {
                 writer.WritePropertyName("requestTimestamp"u8);
                 writer.WriteStringValue(RequestOn.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    appSeen = AppSeenInfoList.DeserializeAppSeenInfoList(property.Value);
+                    appSeen = AppSeenInfoList.DeserializeAppSeenInfoList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timestamp"u8))
@@ -198,7 +198,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallRuleCounter(priority, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName, Optional.ToNullable(hitCount), appSeen.Value, Optional.ToNullable(timestamp), Optional.ToNullable(requestTimestamp), Optional.ToNullable(lastUpdatedTimestamp), serializedAdditionalRawData);
+            return new FirewallRuleCounter(
+                priority,
+                ruleStackName.Value,
+                ruleListName.Value,
+                firewallName.Value,
+                ruleName,
+                Optional.ToNullable(hitCount),
+                appSeen.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(requestTimestamp),
+                Optional.ToNullable(lastUpdatedTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallRuleCounter>.Write(ModelReaderWriterOptions options)

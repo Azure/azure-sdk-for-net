@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DscNodeCount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TotalCount))
+            if (TotalCount.HasValue)
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DscNodeCount>> value = default;
+            IReadOnlyList<DscNodeCount> value = default;
             Optional<int> totalCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscNodeCount> array = new List<DscNodeCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscNodeCount.DeserializeDscNodeCount(item));
+                        array.Add(DscNodeCount.DeserializeDscNodeCount(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeCountListResult(Optional.ToList(value), Optional.ToNullable(totalCount), serializedAdditionalRawData);
+            return new DscNodeCountListResult(value ?? new ChangeTrackingList<DscNodeCount>(), Optional.ToNullable(totalCount), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeCountListResult>.Write(ModelReaderWriterOptions options)

@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<IReadOnlyList<AcsRecordingChunkInfoProperties>> recordingChunks = default;
+            IReadOnlyList<AcsRecordingChunkInfoProperties> recordingChunks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingChunks"u8))
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRecordingStorageInfoProperties(Optional.ToList(recordingChunks));
+            return new AcsRecordingStorageInfoProperties(recordingChunks ?? new ChangeTrackingList<AcsRecordingChunkInfoProperties>());
         }
     }
 }

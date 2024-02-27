@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AgentPoolSnapshotData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AgentPoolSnapshotData>> value = default;
+            IReadOnlyList<AgentPoolSnapshotData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<AgentPoolSnapshotData> array = new List<AgentPoolSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item));
+                        array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolSnapshotListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AgentPoolSnapshotListResult(value ?? new ChangeTrackingList<AgentPoolSnapshotData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolSnapshotListResult>.Write(ModelReaderWriterOptions options)

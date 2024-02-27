@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkType))
+            if (LinkType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayText))
+            if (DisplayText != null)
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteObjectValue(DisplayText);
             }
-            if (Optional.IsDefined(ExtensionName))
+            if (ExtensionName != null)
             {
                 writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
-            if (Optional.IsDefined(BladeName))
+            if (BladeName != null)
             {
                 writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value);
+                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensionName"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventLink(Optional.ToNullable(type), displayText.Value, extensionName.Value, bladeName.Value, parameters.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventLink(
+                Optional.ToNullable(type),
+                displayText.Value,
+                extensionName.Value,
+                bladeName.Value,
+                parameters.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventLink>.Write(ModelReaderWriterOptions options)

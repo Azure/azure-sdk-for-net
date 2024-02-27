@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddressType))
+            if (options.Format != "W" && IPAddressType != null)
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Gpu))
+            if (options.Format != "W" && Gpu != null)
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteStringValue(Gpu);
             }
-            if (options.Format != "W" && Optional.IsDefined(Capabilities))
+            if (options.Format != "W" && Capabilities != null)
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value);
+                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCapabilities(resourceType.Value, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value, serializedAdditionalRawData);
+            return new ContainerCapabilities(
+                resourceType.Value,
+                osType.Value,
+                Optional.ToNullable(location),
+                ipAddressType.Value,
+                gpu.Value,
+                capabilities.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCapabilities>.Write(ModelReaderWriterOptions options)

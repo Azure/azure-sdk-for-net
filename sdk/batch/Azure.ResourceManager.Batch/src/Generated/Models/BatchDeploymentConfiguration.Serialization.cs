@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CloudServiceConfiguration))
+            if (CloudServiceConfiguration != null)
             {
                 writer.WritePropertyName("cloudServiceConfiguration"u8);
                 writer.WriteObjectValue(CloudServiceConfiguration);
             }
-            if (Optional.IsDefined(VmConfiguration))
+            if (VmConfiguration != null)
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VmConfiguration);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    cloudServiceConfiguration = BatchCloudServiceConfiguration.DeserializeBatchCloudServiceConfiguration(property.Value);
+                    cloudServiceConfiguration = BatchCloudServiceConfiguration.DeserializeBatchCloudServiceConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    virtualMachineConfiguration = BatchVmConfiguration.DeserializeBatchVmConfiguration(property.Value);
+                    virtualMachineConfiguration = BatchVmConfiguration.DeserializeBatchVmConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

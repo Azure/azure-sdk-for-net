@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CloudServiceName))
+            if (CloudServiceName != null)
             {
                 writer.WritePropertyName("cloudServiceName"u8);
                 writer.WriteStringValue(CloudServiceName);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(RunbookId))
+            if (RunbookId != null)
             {
                 writer.WritePropertyName("runbookId"u8);
                 writer.WriteStringValue(RunbookId);
             }
-            if (Optional.IsDefined(RunbookName))
+            if (RunbookName != null)
             {
                 writer.WritePropertyName("runbookName"u8);
                 writer.WriteStringValue(RunbookName);
             }
-            if (Optional.IsDefined(JobId))
+            if (JobId != null)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(JobOutput))
+            if (JobOutput != null)
             {
                 writer.WritePropertyName("jobOutput"u8);
                 writer.WriteStringValue(JobOutput);
             }
-            if (Optional.IsDefined(IsPrimarySideScript))
+            if (IsPrimarySideScript.HasValue)
             {
                 writer.WritePropertyName("isPrimarySideScript"u8);
                 writer.WriteBooleanValue(IsPrimarySideScript.Value);
@@ -189,7 +189,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookTaskDetails(instanceType, serializedAdditionalRawData, name.Value, cloudServiceName.Value, subscriptionId.Value, accountName.Value, runbookId.Value, runbookName.Value, jobId.Value, jobOutput.Value, Optional.ToNullable(isPrimarySideScript));
+            return new AutomationRunbookTaskDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                name.Value,
+                cloudServiceName.Value,
+                subscriptionId.Value,
+                accountName.Value,
+                runbookId.Value,
+                runbookName.Value,
+                jobId.Value,
+                jobOutput.Value,
+                Optional.ToNullable(isPrimarySideScript));
         }
 
         BinaryData IPersistableModel<AutomationRunbookTaskDetails>.Write(ModelReaderWriterOptions options)

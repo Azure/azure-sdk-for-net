@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("fileName"u8);
             writer.WriteStringValue(FileName);
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Encoding))
+            if (Encoding.HasValue)
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> content = default;
             Optional<HDInsightContentEncoding> encoding = default;
             Optional<string> path = default;
-            Optional<IDictionary<string, string>> values = default;
+            IDictionary<string, string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterConfigFile(fileName, content.Value, Optional.ToNullable(encoding), path.Value, Optional.ToDictionary(values), serializedAdditionalRawData);
+            return new ClusterConfigFile(
+                fileName,
+                content.Value,
+                Optional.ToNullable(encoding),
+                path.Value,
+                values ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterConfigFile>.Write(ModelReaderWriterOptions options)

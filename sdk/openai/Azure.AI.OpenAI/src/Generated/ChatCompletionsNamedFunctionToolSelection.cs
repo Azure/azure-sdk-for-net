@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -15,23 +14,26 @@ namespace Azure.AI.OpenAI
     internal partial class ChatCompletionsNamedFunctionToolSelection : ChatCompletionsNamedToolSelection
     {
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedFunctionToolSelection"/>. </summary>
-        /// <param name="name"> The name of the function that should be called. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ChatCompletionsNamedFunctionToolSelection(string name)
+        /// <param name="function"> The function that should be called. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="function"/> is null. </exception>
+        public ChatCompletionsNamedFunctionToolSelection(ChatCompletionsFunctionToolSelection function)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (function == null)
+            {
+                throw new ArgumentNullException(nameof(function));
+            }
 
             Type = "function";
-            Name = name;
+            Function = function;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedFunctionToolSelection"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> The name of the function that should be called. </param>
-        internal ChatCompletionsNamedFunctionToolSelection(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(type, serializedAdditionalRawData)
+        /// <param name="function"> The function that should be called. </param>
+        internal ChatCompletionsNamedFunctionToolSelection(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ChatCompletionsFunctionToolSelection function) : base(type, serializedAdditionalRawData)
         {
-            Name = name;
+            Function = function;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedFunctionToolSelection"/> for deserialization. </summary>
@@ -39,7 +41,7 @@ namespace Azure.AI.OpenAI
         {
         }
 
-        /// <summary> The name of the function that should be called. </summary>
-        public string Name { get; }
+        /// <summary> The function that should be called. </summary>
+        public ChatCompletionsFunctionToolSelection Function { get; }
     }
 }

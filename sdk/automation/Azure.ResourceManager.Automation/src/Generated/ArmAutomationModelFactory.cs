@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.Automation.Models
         {
             groupIds ??= new List<string>();
 
-            return new AutomationPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, serializedAdditionalRawData: null);
+            return new AutomationPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                groupIds?.ToList(),
+                connectionState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationPrivateLinkServiceConnectionStateProperty"/>. </summary>
@@ -56,7 +64,14 @@ namespace Azure.ResourceManager.Automation.Models
         {
             requiredMembers ??= new List<string>();
 
-            return new AutomationPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), serializedAdditionalRawData: null);
+            return new AutomationPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationModuleData"/>. </summary>
@@ -83,7 +98,26 @@ namespace Azure.ResourceManager.Automation.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AutomationModuleData(id, name, resourceType, systemData, tags, location, etag, isGlobal, version, sizeInBytes, activityCount, provisioningState, contentLink, error, createdOn, lastModifiedOn, description, isComposite, serializedAdditionalRawData: null);
+            return new AutomationModuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                isGlobal,
+                version,
+                sizeInBytes,
+                activityCount,
+                provisioningState,
+                contentLink,
+                error,
+                createdOn,
+                lastModifiedOn,
+                description,
+                isComposite,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
@@ -137,7 +171,22 @@ namespace Azure.ResourceManager.Automation.Models
         {
             extensionHandler ??= new List<DscNodeExtensionHandlerAssociationProperty>();
 
-            return new DscNodeData(id, name, resourceType, systemData, lastSeenOn, registrationOn, ip, accountId, status, nodeId, etag, totalCount, extensionHandler?.ToList(), namePropertiesNodeConfigurationName, serializedAdditionalRawData: null);
+            return new DscNodeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastSeenOn,
+                registrationOn,
+                ip,
+                accountId,
+                status,
+                nodeId,
+                etag,
+                totalCount,
+                extensionHandler?.ToList(),
+                namePropertiesNodeConfigurationName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DscNodeReport"/>. </summary>
@@ -168,7 +217,27 @@ namespace Azure.ResourceManager.Automation.Models
             ipV4Addresses ??= new List<string>();
             ipV6Addresses ??= new List<string>();
 
-            return new DscNodeReport(endOn, lastModifiedOn, startOn, dscNodeReportType, reportId, status, refreshMode, rebootRequested, reportFormatVersion, configurationVersion, id, errors?.ToList(), resources?.ToList(), metaConfiguration, hostName, ipV4Addresses?.ToList(), ipV6Addresses?.ToList(), numberOfResources, rawErrors, serializedAdditionalRawData: null);
+            return new DscNodeReport(
+                endOn,
+                lastModifiedOn,
+                startOn,
+                dscNodeReportType,
+                reportId,
+                status,
+                refreshMode,
+                rebootRequested,
+                reportFormatVersion,
+                configurationVersion,
+                id,
+                errors?.ToList(),
+                resources?.ToList(),
+                metaConfiguration,
+                hostName,
+                ipV4Addresses?.ToList(),
+                ipV6Addresses?.ToList(),
+                numberOfResources,
+                rawErrors,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DscReportError"/>. </summary>
@@ -181,7 +250,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.DscReportError"/> instance for mocking. </returns>
         public static DscReportError DscReportError(string errorSource = null, string resourceId = null, string errorCode = null, string errorMessage = null, string locale = null, string errorDetails = null)
         {
-            return new DscReportError(errorSource, resourceId, errorCode, errorMessage, locale, errorDetails, serializedAdditionalRawData: null);
+            return new DscReportError(
+                errorSource,
+                resourceId,
+                errorCode,
+                errorMessage,
+                locale,
+                errorDetails,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DscReportResource"/>. </summary>
@@ -200,7 +276,18 @@ namespace Azure.ResourceManager.Automation.Models
         {
             dependsOn ??= new List<DscReportResourceNavigation>();
 
-            return new DscReportResource(resourceId, sourceInfo, dependsOn?.ToList(), moduleName, moduleVersion, resourceName, error, status, durationInSeconds, startOn, serializedAdditionalRawData: null);
+            return new DscReportResource(
+                resourceId,
+                sourceInfo,
+                dependsOn?.ToList(),
+                moduleName,
+                moduleVersion,
+                resourceName,
+                error,
+                status,
+                durationInSeconds,
+                startOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DscReportResourceNavigation"/>. </summary>
@@ -222,7 +309,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.DscMetaConfiguration"/> instance for mocking. </returns>
         public static DscMetaConfiguration DscMetaConfiguration(int? configurationModeFrequencyMins = null, bool? rebootNodeIfNeeded = null, string configurationMode = null, string actionAfterReboot = null, string certificateId = null, int? refreshFrequencyMins = null, bool? allowModuleOverwrite = null)
         {
-            return new DscMetaConfiguration(configurationModeFrequencyMins, rebootNodeIfNeeded, configurationMode, actionAfterReboot, certificateId, refreshFrequencyMins, allowModuleOverwrite, serializedAdditionalRawData: null);
+            return new DscMetaConfiguration(
+                configurationModeFrequencyMins,
+                rebootNodeIfNeeded,
+                configurationMode,
+                actionAfterReboot,
+                certificateId,
+                refreshFrequencyMins,
+                allowModuleOverwrite,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.DscNodeConfigurationData"/>. </summary>
@@ -239,7 +334,18 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.DscNodeConfigurationData"/> instance for mocking. </returns>
         public static DscNodeConfigurationData DscNodeConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, string configurationName = null, string source = null, long? nodeCount = null, bool? isIncrementNodeConfigurationBuildRequired = null)
         {
-            return new DscNodeConfigurationData(id, name, resourceType, systemData, lastModifiedOn, createdOn, configurationName != null ? new DscConfigurationAssociationProperty(configurationName, serializedAdditionalRawData: null) : null, source, nodeCount, isIncrementNodeConfigurationBuildRequired, serializedAdditionalRawData: null);
+            return new DscNodeConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastModifiedOn,
+                createdOn,
+                configurationName != null ? new DscConfigurationAssociationProperty(configurationName, serializedAdditionalRawData: null) : null,
+                source,
+                nodeCount,
+                isIncrementNodeConfigurationBuildRequired,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DscCompilationJobCreateOrUpdateContent"/>. </summary>
@@ -255,7 +361,14 @@ namespace Azure.ResourceManager.Automation.Models
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, string>();
 
-            return new DscCompilationJobCreateOrUpdateContent(name, location, tags, configurationName != null ? new DscConfigurationAssociationProperty(configurationName, serializedAdditionalRawData: null) : null, parameters, isIncrementNodeConfigurationBuildRequired, serializedAdditionalRawData: null);
+            return new DscCompilationJobCreateOrUpdateContent(
+                name,
+                location,
+                tags,
+                configurationName != null ? new DscConfigurationAssociationProperty(configurationName, serializedAdditionalRawData: null) : null,
+                parameters,
+                isIncrementNodeConfigurationBuildRequired,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.DscCompilationJobData"/>. </summary>
@@ -282,7 +395,26 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new DscCompilationJobData(id, name, resourceType, systemData, configurationName != null ? new DscConfigurationAssociationProperty(configurationName, serializedAdditionalRawData: null) : null, startedBy, jobId, createdOn, provisioningState, runOn, status, statusDetails, startOn, endOn, exception, lastModifiedOn, lastStatusModifiedOn, parameters, serializedAdditionalRawData: null);
+            return new DscCompilationJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                configurationName != null ? new DscConfigurationAssociationProperty(configurationName, serializedAdditionalRawData: null) : null,
+                startedBy,
+                jobId,
+                createdOn,
+                provisioningState,
+                runOn,
+                status,
+                statusDetails,
+                startOn,
+                endOn,
+                exception,
+                lastModifiedOn,
+                lastStatusModifiedOn,
+                parameters,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationJobStream"/>. </summary>
@@ -298,7 +430,15 @@ namespace Azure.ResourceManager.Automation.Models
         {
             value ??= new Dictionary<string, BinaryData>();
 
-            return new AutomationJobStream(id, jobStreamId, time, streamType, streamText, summary, value, serializedAdditionalRawData: null);
+            return new AutomationJobStream(
+                id,
+                jobStreamId,
+                time,
+                streamType,
+                streamText,
+                summary,
+                value,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DscNodeCount"/>. </summary>
@@ -327,7 +467,21 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.AutomationSourceControlData"/> instance for mocking. </returns>
         public static AutomationSourceControlData AutomationSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri repoUri = null, string branch = null, string folderPath = null, bool? isAutoSyncEnabled = null, bool? isAutoPublishRunbookEnabled = null, SourceControlSourceType? sourceType = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new AutomationSourceControlData(id, name, resourceType, systemData, repoUri, branch, folderPath, isAutoSyncEnabled, isAutoPublishRunbookEnabled, sourceType, description, createdOn, lastModifiedOn, serializedAdditionalRawData: null);
+            return new AutomationSourceControlData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                repoUri,
+                branch,
+                folderPath,
+                isAutoSyncEnabled,
+                isAutoPublishRunbookEnabled,
+                sourceType,
+                description,
+                createdOn,
+                lastModifiedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SourceControlSyncJob"/>. </summary>
@@ -344,7 +498,18 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SourceControlSyncJob"/> instance for mocking. </returns>
         public static SourceControlSyncJob SourceControlSyncJob(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sourceControlSyncJobId = null, DateTimeOffset? createdOn = null, SourceControlProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, SourceControlSyncType? syncType = null)
         {
-            return new SourceControlSyncJob(id, name, resourceType, systemData, sourceControlSyncJobId, createdOn, provisioningState, startOn, endOn, syncType, serializedAdditionalRawData: null);
+            return new SourceControlSyncJob(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sourceControlSyncJobId,
+                createdOn,
+                provisioningState,
+                startOn,
+                endOn,
+                syncType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SourceControlSyncJobResult"/>. </summary>
@@ -359,7 +524,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SourceControlSyncJobResult"/> instance for mocking. </returns>
         public static SourceControlSyncJobResult SourceControlSyncJobResult(ResourceIdentifier id = null, string sourceControlSyncJobId = null, DateTimeOffset? createdOn = null, SourceControlProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, SourceControlSyncType? syncType = null, string exception = null)
         {
-            return new SourceControlSyncJobResult(id, sourceControlSyncJobId, createdOn, provisioningState, startOn, endOn, syncType, exception, serializedAdditionalRawData: null);
+            return new SourceControlSyncJobResult(
+                id,
+                sourceControlSyncJobId,
+                createdOn,
+                provisioningState,
+                startOn,
+                endOn,
+                syncType,
+                exception,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SourceControlSyncJobStream"/>. </summary>
@@ -371,7 +545,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SourceControlSyncJobStream"/> instance for mocking. </returns>
         public static SourceControlSyncJobStream SourceControlSyncJobStream(ResourceIdentifier id = null, string sourceControlSyncJobStreamId = null, string summary = null, DateTimeOffset? time = null, SourceControlStreamType? streamType = null)
         {
-            return new SourceControlSyncJobStream(id, sourceControlSyncJobStreamId, summary, time, streamType, serializedAdditionalRawData: null);
+            return new SourceControlSyncJobStream(
+                id,
+                sourceControlSyncJobStreamId,
+                summary,
+                time,
+                streamType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SourceControlSyncJobStreamResult"/>. </summary>
@@ -387,7 +567,15 @@ namespace Azure.ResourceManager.Automation.Models
         {
             value ??= new Dictionary<string, BinaryData>();
 
-            return new SourceControlSyncJobStreamResult(id, sourceControlSyncJobStreamId, summary, time, streamType, streamText, value, serializedAdditionalRawData: null);
+            return new SourceControlSyncJobStreamResult(
+                id,
+                sourceControlSyncJobStreamId,
+                summary,
+                time,
+                streamType,
+                streamText,
+                value,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationAccountData"/>. </summary>
@@ -416,7 +604,27 @@ namespace Azure.ResourceManager.Automation.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<AutomationPrivateEndpointConnectionData>();
 
-            return new AutomationAccountData(id, name, resourceType, systemData, tags, location, etag, identity, sku, lastModifiedBy, state, createdOn, lastModifiedOn, description, encryption, privateEndpointConnections?.ToList(), isPublicNetworkAccessAllowed, isLocalAuthDisabled, automationHybridServiceUri, serializedAdditionalRawData: null);
+            return new AutomationAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                identity,
+                sku,
+                lastModifiedBy,
+                state,
+                createdOn,
+                lastModifiedOn,
+                description,
+                encryption,
+                privateEndpointConnections?.ToList(),
+                isPublicNetworkAccessAllowed,
+                isLocalAuthDisabled,
+                automationHybridServiceUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationAccountStatistics"/>. </summary>
@@ -428,7 +636,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationAccountStatistics"/> instance for mocking. </returns>
         public static AutomationAccountStatistics AutomationAccountStatistics(string counterProperty = null, long? counterValue = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string id = null)
         {
-            return new AutomationAccountStatistics(counterProperty, counterValue, startOn, endOn, id, serializedAdditionalRawData: null);
+            return new AutomationAccountStatistics(
+                counterProperty,
+                counterValue,
+                startOn,
+                endOn,
+                id,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationUsage"/>. </summary>
@@ -441,7 +655,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationUsage"/> instance for mocking. </returns>
         public static AutomationUsage AutomationUsage(string id = null, AutomationUsageCounterName name = null, string unit = null, double? currentValue = null, long? limit = null, string throttleStatus = null)
         {
-            return new AutomationUsage(id, name, unit, currentValue, limit, throttleStatus, serializedAdditionalRawData: null);
+            return new AutomationUsage(
+                id,
+                name,
+                unit,
+                currentValue,
+                limit,
+                throttleStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationUsageCounterName"/>. </summary>
@@ -477,7 +698,18 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.AutomationCertificateData"/> instance for mocking. </returns>
         public static AutomationCertificateData AutomationCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintString = null, DateTimeOffset? expireOn = null, bool? isExportable = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
-            return new AutomationCertificateData(id, name, resourceType, systemData, thumbprintString, expireOn, isExportable, createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new AutomationCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                thumbprintString,
+                expireOn,
+                isExportable,
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationCertificateCreateOrUpdateContent"/>. </summary>
@@ -489,7 +721,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
         public static AutomationCertificateCreateOrUpdateContent AutomationCertificateCreateOrUpdateContent(string name = null, string base64Value = null, string description = null, string thumbprintString = null, bool? isExportable = null)
         {
-            return new AutomationCertificateCreateOrUpdateContent(name, base64Value, description, thumbprintString, isExportable, serializedAdditionalRawData: null);
+            return new AutomationCertificateCreateOrUpdateContent(
+                name,
+                base64Value,
+                description,
+                thumbprintString,
+                isExportable,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationConnectionData"/>. </summary>
@@ -507,7 +745,17 @@ namespace Azure.ResourceManager.Automation.Models
         {
             fieldDefinitionValues ??= new Dictionary<string, string>();
 
-            return new AutomationConnectionData(id, name, resourceType, systemData, connectionTypeName != null ? new ConnectionTypeAssociationProperty(connectionTypeName, serializedAdditionalRawData: null) : null, fieldDefinitionValues, createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new AutomationConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                connectionTypeName != null ? new ConnectionTypeAssociationProperty(connectionTypeName, serializedAdditionalRawData: null) : null,
+                fieldDefinitionValues,
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationConnectionCreateOrUpdateContent"/>. </summary>
@@ -538,7 +786,17 @@ namespace Azure.ResourceManager.Automation.Models
         {
             fieldDefinitions ??= new Dictionary<string, AutomationConnectionFieldDefinition>();
 
-            return new AutomationConnectionTypeData(id, name, resourceType, systemData, isGlobal, fieldDefinitions, createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new AutomationConnectionTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isGlobal,
+                fieldDefinitions,
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationConnectionTypeCreateOrUpdateContent"/>. </summary>
@@ -565,7 +823,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.AutomationCredentialData"/> instance for mocking. </returns>
         public static AutomationCredentialData AutomationCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string userName = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
-            return new AutomationCredentialData(id, name, resourceType, systemData, userName, createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new AutomationCredentialData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                userName,
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationCredentialCreateOrUpdateContent"/>. </summary>
@@ -594,7 +861,17 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new AutomationJobScheduleData(id, name, resourceType, systemData, jobScheduleId, scheduleName != null ? new ScheduleAssociationProperty(scheduleName, serializedAdditionalRawData: null) : null, runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null, runOn, parameters, serializedAdditionalRawData: null);
+            return new AutomationJobScheduleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                jobScheduleId,
+                scheduleName != null ? new ScheduleAssociationProperty(scheduleName, serializedAdditionalRawData: null) : null,
+                runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null,
+                runOn,
+                parameters,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationJobScheduleCreateOrUpdateContent"/>. </summary>
@@ -633,7 +910,16 @@ namespace Azure.ResourceManager.Automation.Models
             parameterSets ??= new List<AutomationActivityParameterSet>();
             outputTypes ??= new List<AutomationActivityOutputType>();
 
-            return new AutomationActivity(id, name, definition, parameterSets?.ToList(), outputTypes?.ToList(), createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new AutomationActivity(
+                id,
+                name,
+                definition,
+                parameterSets?.ToList(),
+                outputTypes?.ToList(),
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationActivityParameterSet"/>. </summary>
@@ -663,7 +949,18 @@ namespace Azure.ResourceManager.Automation.Models
         {
             validationSet ??= new List<AutomationActivityParameterValidationSet>();
 
-            return new AutomationActivityParameterDefinition(name, activityParameterType, isMandatory, isDynamic, position, canTakeValueFromPipeline, canTakeValueFromPipelineByPropertyName, canTakeValueValueFromRemainingArguments, description, validationSet?.ToList(), serializedAdditionalRawData: null);
+            return new AutomationActivityParameterDefinition(
+                name,
+                activityParameterType,
+                isMandatory,
+                isDynamic,
+                position,
+                canTakeValueFromPipeline,
+                canTakeValueFromPipelineByPropertyName,
+                canTakeValueValueFromRemainingArguments,
+                description,
+                validationSet?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationActivityParameterValidationSet"/>. </summary>
@@ -717,7 +1014,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationScheduleCreateOrUpdateContent"/> instance for mocking. </returns>
         public static AutomationScheduleCreateOrUpdateContent AutomationScheduleCreateOrUpdateContent(string name = null, string description = null, DateTimeOffset startOn = default, DateTimeOffset? expireOn = null, BinaryData interval = null, AutomationScheduleFrequency frequency = default, string timeZone = null, AutomationAdvancedSchedule advancedSchedule = null)
         {
-            return new AutomationScheduleCreateOrUpdateContent(name, description, startOn, expireOn, interval, frequency, timeZone, advancedSchedule, serializedAdditionalRawData: null);
+            return new AutomationScheduleCreateOrUpdateContent(
+                name,
+                description,
+                startOn,
+                expireOn,
+                interval,
+                frequency,
+                timeZone,
+                advancedSchedule,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationScheduleData"/>. </summary>
@@ -742,7 +1048,26 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.AutomationScheduleData"/> instance for mocking. </returns>
         public static AutomationScheduleData AutomationScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, double? startInMinutes = null, DateTimeOffset? expireOn = null, double? expireInMinutes = null, bool? isEnabled = null, DateTimeOffset? nextRunOn = null, double? nextRunInMinutes = null, BinaryData interval = null, AutomationScheduleFrequency? frequency = null, string timeZone = null, AutomationAdvancedSchedule advancedSchedule = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
-            return new AutomationScheduleData(id, name, resourceType, systemData, startOn, startInMinutes, expireOn, expireInMinutes, isEnabled, nextRunOn, nextRunInMinutes, interval, frequency, timeZone, advancedSchedule, createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new AutomationScheduleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                startInMinutes,
+                expireOn,
+                expireInMinutes,
+                isEnabled,
+                nextRunOn,
+                nextRunInMinutes,
+                interval,
+                frequency,
+                timeZone,
+                advancedSchedule,
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationVariableCreateOrUpdateContent"/>. </summary>
@@ -769,7 +1094,17 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.AutomationVariableData"/> instance for mocking. </returns>
         public static AutomationVariableData AutomationVariableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, bool? isEncrypted = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
-            return new AutomationVariableData(id, name, resourceType, systemData, value, isEncrypted, createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new AutomationVariableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value,
+                isEncrypted,
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationWatcherData"/>. </summary>
@@ -795,7 +1130,24 @@ namespace Azure.ResourceManager.Automation.Models
             tags ??= new Dictionary<string, string>();
             scriptParameters ??= new Dictionary<string, string>();
 
-            return new AutomationWatcherData(id, name, resourceType, systemData, tags, location, etag, executionFrequencyInSeconds, scriptName, scriptParameters, scriptRunOn, status, createdOn, lastModifiedOn, lastModifiedBy, description, serializedAdditionalRawData: null);
+            return new AutomationWatcherData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                executionFrequencyInSeconds,
+                scriptName,
+                scriptParameters,
+                scriptRunOn,
+                status,
+                createdOn,
+                lastModifiedOn,
+                lastModifiedBy,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.DscConfigurationData"/>. </summary>
@@ -822,7 +1174,25 @@ namespace Azure.ResourceManager.Automation.Models
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, DscConfigurationParameterDefinition>();
 
-            return new DscConfigurationData(id, name, resourceType, systemData, tags, location, etag, provisioningState, jobCount, parameters, source, state, isLogVerboseEnabled, createdOn, lastModifiedOn, nodeConfigurationCount, description, serializedAdditionalRawData: null);
+            return new DscConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                provisioningState,
+                jobCount,
+                parameters,
+                source,
+                state,
+                isLogVerboseEnabled,
+                createdOn,
+                lastModifiedOn,
+                nodeConfigurationCount,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DscConfigurationCreateOrUpdateContent"/>. </summary>
@@ -840,7 +1210,16 @@ namespace Azure.ResourceManager.Automation.Models
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, DscConfigurationParameterDefinition>();
 
-            return new DscConfigurationCreateOrUpdateContent(name, location, tags, isLogVerboseEnabled, isLogProgressEnabled, source, parameters, description, serializedAdditionalRawData: null);
+            return new DscConfigurationCreateOrUpdateContent(
+                name,
+                location,
+                tags,
+                isLogVerboseEnabled,
+                isLogProgressEnabled,
+                source,
+                parameters,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationJobData"/>. </summary>
@@ -867,7 +1246,26 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new AutomationJobData(id, name, resourceType, systemData, runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null, startedBy, runOn, jobId, createdOn, status, statusDetails, startOn, endOn, exception, lastModifiedOn, lastStatusModifiedOn, parameters, provisioningState, serializedAdditionalRawData: null);
+            return new AutomationJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null,
+                startedBy,
+                runOn,
+                jobId,
+                createdOn,
+                status,
+                statusDetails,
+                startOn,
+                endOn,
+                exception,
+                lastModifiedOn,
+                lastStatusModifiedOn,
+                parameters,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationJobCollectionItemData"/>. </summary>
@@ -887,7 +1285,21 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationJobCollectionItemData"/> instance for mocking. </returns>
         public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string runbookName = null, Guid? jobId = null, DateTimeOffset? createdOn = null, AutomationJobStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? lastModifiedOn = null, string provisioningState = null, string runOn = null)
         {
-            return new AutomationJobCollectionItemData(id, name, resourceType, systemData, runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null, jobId, createdOn, status, startOn, endOn, lastModifiedOn, provisioningState, runOn, serializedAdditionalRawData: null);
+            return new AutomationJobCollectionItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null,
+                jobId,
+                createdOn,
+                status,
+                startOn,
+                endOn,
+                lastModifiedOn,
+                provisioningState,
+                runOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.SoftwareUpdateConfigurationData"/>. </summary>
@@ -907,7 +1319,21 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.SoftwareUpdateConfigurationData"/> instance for mocking. </returns>
         public static SoftwareUpdateConfigurationData SoftwareUpdateConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SoftwareUpdateConfigurationSpecificProperties updateConfiguration = null, SoftwareUpdateConfigurationScheduleProperties scheduleInfo = null, string provisioningState = null, AutomationResponseError error = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, SoftwareUpdateConfigurationTasks tasks = null)
         {
-            return new SoftwareUpdateConfigurationData(id, name, resourceType, systemData, updateConfiguration, scheduleInfo, provisioningState, error, createdOn, createdBy, lastModifiedOn, lastModifiedBy, tasks, serializedAdditionalRawData: null);
+            return new SoftwareUpdateConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                updateConfiguration,
+                scheduleInfo,
+                provisioningState,
+                error,
+                createdOn,
+                createdBy,
+                lastModifiedOn,
+                lastModifiedBy,
+                tasks,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SoftwareUpdateConfigurationScheduleProperties"/>. </summary>
@@ -928,7 +1354,22 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationScheduleProperties"/> instance for mocking. </returns>
         public static SoftwareUpdateConfigurationScheduleProperties SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn = null, double? startInMinutes = null, DateTimeOffset? expireOn = null, double? expireInMinutes = null, bool? isEnabled = null, DateTimeOffset? nextRunOn = null, double? nextRunInMinutes = null, long? interval = null, AutomationScheduleFrequency? frequency = null, string timeZone = null, AutomationAdvancedSchedule advancedSchedule = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
-            return new SoftwareUpdateConfigurationScheduleProperties(startOn, startInMinutes, expireOn, expireInMinutes, isEnabled, nextRunOn, nextRunInMinutes, interval, frequency, timeZone, advancedSchedule, createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new SoftwareUpdateConfigurationScheduleProperties(
+                startOn,
+                startInMinutes,
+                expireOn,
+                expireInMinutes,
+                isEnabled,
+                nextRunOn,
+                nextRunInMinutes,
+                interval,
+                frequency,
+                timeZone,
+                advancedSchedule,
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SoftwareUpdateConfigurationCollectionItem"/>. </summary>
@@ -945,7 +1386,18 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationCollectionItem"/> instance for mocking. </returns>
         public static SoftwareUpdateConfigurationCollectionItem SoftwareUpdateConfigurationCollectionItem(string name = null, ResourceIdentifier id = null, SoftwareUpdateConfigurationSpecificProperties updateConfiguration = null, SoftwareUpdateConfigurationTasks tasks = null, AutomationScheduleFrequency? frequency = null, DateTimeOffset? startOn = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string provisioningState = null, DateTimeOffset? nextRunOn = null)
         {
-            return new SoftwareUpdateConfigurationCollectionItem(name, id, updateConfiguration, tasks, frequency, startOn, createdOn, lastModifiedOn, provisioningState, nextRunOn, serializedAdditionalRawData: null);
+            return new SoftwareUpdateConfigurationCollectionItem(
+                name,
+                id,
+                updateConfiguration,
+                tasks,
+                frequency,
+                startOn,
+                createdOn,
+                lastModifiedOn,
+                provisioningState,
+                nextRunOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SoftwareUpdateConfigurationRun"/>. </summary>
@@ -967,7 +1419,23 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationRun"/> instance for mocking. </returns>
         public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = null, ResourceIdentifier id = null, string softwareUpdateName = null, string status = null, TimeSpan? configuredDuration = null, string osType = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, int? computerCount = null, int? failedCount = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, SoftwareUpdateConfigurationRunTasks tasks = null)
         {
-            return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName != null ? new SoftwareUpdateConfigurationNavigation(softwareUpdateName, serializedAdditionalRawData: null) : null, status, configuredDuration, osType, startOn, endOn, computerCount, failedCount, createdOn, createdBy, lastModifiedOn, lastModifiedBy, tasks, serializedAdditionalRawData: null);
+            return new SoftwareUpdateConfigurationRun(
+                name,
+                id,
+                softwareUpdateName != null ? new SoftwareUpdateConfigurationNavigation(softwareUpdateName, serializedAdditionalRawData: null) : null,
+                status,
+                configuredDuration,
+                osType,
+                startOn,
+                endOn,
+                computerCount,
+                failedCount,
+                createdOn,
+                createdBy,
+                lastModifiedOn,
+                lastModifiedBy,
+                tasks,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SoftwareUpdateConfigurationRunTasks"/>. </summary>
@@ -1011,7 +1479,26 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationMachineRun"/> instance for mocking. </returns>
         public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = null, ResourceIdentifier id = null, ResourceIdentifier targetComputerId = null, string targetComputerType = null, string softwareUpdateName = null, string status = null, string osType = null, Guid? correlationId = null, Guid? sourceComputerId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, TimeSpan? configuredDuration = null, Guid? jobId = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, AutomationResponseError error = null)
         {
-            return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId, targetComputerType, softwareUpdateName != null ? new SoftwareUpdateConfigurationNavigation(softwareUpdateName, serializedAdditionalRawData: null) : null, status, osType, correlationId, sourceComputerId, startOn, endOn, configuredDuration, jobId != null ? new JobNavigation(jobId, serializedAdditionalRawData: null) : null, createdOn, createdBy, lastModifiedOn, lastModifiedBy, error, serializedAdditionalRawData: null);
+            return new SoftwareUpdateConfigurationMachineRun(
+                name,
+                id,
+                targetComputerId,
+                targetComputerType,
+                softwareUpdateName != null ? new SoftwareUpdateConfigurationNavigation(softwareUpdateName, serializedAdditionalRawData: null) : null,
+                status,
+                osType,
+                correlationId,
+                sourceComputerId,
+                startOn,
+                endOn,
+                configuredDuration,
+                jobId != null ? new JobNavigation(jobId, serializedAdditionalRawData: null) : null,
+                createdOn,
+                createdBy,
+                lastModifiedOn,
+                lastModifiedBy,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunbookDraftUndoEditResult"/>. </summary>
@@ -1053,7 +1540,30 @@ namespace Azure.ResourceManager.Automation.Models
             parameters ??= new Dictionary<string, RunbookParameterDefinition>();
             outputTypes ??= new List<string>();
 
-            return new AutomationRunbookData(id, name, resourceType, systemData, tags, location, etag, runbookType, publishContentLink, state, isLogVerboseEnabled, isLogProgressEnabled, logActivityTrace, jobCount, parameters, outputTypes?.ToList(), draft, provisioningState, lastModifiedBy, createdOn, lastModifiedOn, description, serializedAdditionalRawData: null);
+            return new AutomationRunbookData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                runbookType,
+                publishContentLink,
+                state,
+                isLogVerboseEnabled,
+                isLogProgressEnabled,
+                logActivityTrace,
+                jobCount,
+                parameters,
+                outputTypes?.ToList(),
+                draft,
+                provisioningState,
+                lastModifiedBy,
+                createdOn,
+                lastModifiedOn,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationRunbookCreateOrUpdateContent"/>. </summary>
@@ -1072,7 +1582,18 @@ namespace Azure.ResourceManager.Automation.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AutomationRunbookCreateOrUpdateContent(name, location, tags, isLogVerboseEnabled, isLogProgressEnabled, runbookType, draft, publishContentLink, description, logActivityTrace, serializedAdditionalRawData: null);
+            return new AutomationRunbookCreateOrUpdateContent(
+                name,
+                location,
+                tags,
+                isLogVerboseEnabled,
+                isLogProgressEnabled,
+                runbookType,
+                draft,
+                publishContentLink,
+                description,
+                logActivityTrace,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunbookTestJob"/>. </summary>
@@ -1092,7 +1613,19 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new RunbookTestJob(createdOn, status, statusDetails, runOn, startOn, endOn, exception, lastModifiedOn, lastStatusModifiedOn, parameters, logActivityTrace, serializedAdditionalRawData: null);
+            return new RunbookTestJob(
+                createdOn,
+                status,
+                statusDetails,
+                runOn,
+                startOn,
+                endOn,
+                exception,
+                lastModifiedOn,
+                lastStatusModifiedOn,
+                parameters,
+                logActivityTrace,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationWebhookData"/>. </summary>
@@ -1116,7 +1649,23 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new AutomationWebhookData(id, name, resourceType, systemData, isEnabled, uri, expireOn, lastInvokedOn, parameters, runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null, runOn, createdOn, lastModifiedOn, lastModifiedBy, description, serializedAdditionalRawData: null);
+            return new AutomationWebhookData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isEnabled,
+                uri,
+                expireOn,
+                lastInvokedOn,
+                parameters,
+                runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null,
+                runOn,
+                createdOn,
+                lastModifiedOn,
+                lastModifiedBy,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationWebhookCreateOrUpdateContent"/>. </summary>
@@ -1132,7 +1681,15 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new AutomationWebhookCreateOrUpdateContent(name, isEnabled, uri, expireOn, parameters, runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null, runOn, serializedAdditionalRawData: null);
+            return new AutomationWebhookCreateOrUpdateContent(
+                name,
+                isEnabled,
+                uri,
+                expireOn,
+                parameters,
+                runbookName != null ? new RunbookAssociationProperty(runbookName, serializedAdditionalRawData: null) : null,
+                runOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.HybridRunbookWorkerData"/>. </summary>
@@ -1149,7 +1706,18 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.HybridRunbookWorkerData"/> instance for mocking. </returns>
         public static HybridRunbookWorkerData HybridRunbookWorkerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string ip = null, DateTimeOffset? registeredOn = null, DateTimeOffset? lastSeenOn = null, ResourceIdentifier vmResourceId = null, HybridWorkerType? workerType = null, string workerName = null)
         {
-            return new HybridRunbookWorkerData(id, name, resourceType, systemData, ip, registeredOn, lastSeenOn, vmResourceId, workerType, workerName, serializedAdditionalRawData: null);
+            return new HybridRunbookWorkerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ip,
+                registeredOn,
+                lastSeenOn,
+                vmResourceId,
+                workerType,
+                workerName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeletedAutomationAccount"/>. </summary>
@@ -1165,7 +1733,17 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.DeletedAutomationAccount"/> instance for mocking. </returns>
         public static DeletedAutomationAccount DeletedAutomationAccount(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier automationAccountResourceId = null, string automationAccountId = null, string locationPropertiesLocation = null, DateTimeOffset? deletedOn = null)
         {
-            return new DeletedAutomationAccount(id, name, resourceType, systemData, location, automationAccountResourceId, automationAccountId, locationPropertiesLocation, deletedOn, serializedAdditionalRawData: null);
+            return new DeletedAutomationAccount(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                automationAccountResourceId,
+                automationAccountId,
+                locationPropertiesLocation,
+                deletedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.HybridRunbookWorkerGroupData"/>. </summary>
@@ -1178,7 +1756,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.HybridRunbookWorkerGroupData"/> instance for mocking. </returns>
         public static HybridRunbookWorkerGroupData HybridRunbookWorkerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridWorkerGroup? groupType = null, string credentialName = null)
         {
-            return new HybridRunbookWorkerGroupData(id, name, resourceType, systemData, groupType, credentialName != null ? new RunAsCredentialAssociationProperty(credentialName, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new HybridRunbookWorkerGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupType,
+                credentialName != null ? new RunAsCredentialAssociationProperty(credentialName, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
     }
 }

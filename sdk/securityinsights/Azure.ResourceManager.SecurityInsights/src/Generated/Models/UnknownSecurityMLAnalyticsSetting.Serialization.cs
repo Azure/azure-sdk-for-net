@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecurityMLAnalyticsSetting(document.RootElement, options);
+            return DeserializeSecurityMLAnalyticsSettingData(document.RootElement, options);
         }
 
         internal static UnknownSecurityMLAnalyticsSetting DeserializeUnknownSecurityMLAnalyticsSetting(JsonElement element, ModelReaderWriterOptions options = null)
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownSecurityMLAnalyticsSetting(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new UnknownSecurityMLAnalyticsSetting(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingData>.Write(ModelReaderWriterOptions options)
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSecurityMLAnalyticsSetting(document.RootElement, options);
+                        return DeserializeSecurityMLAnalyticsSettingData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingData)} does not support '{options.Format}' format.");

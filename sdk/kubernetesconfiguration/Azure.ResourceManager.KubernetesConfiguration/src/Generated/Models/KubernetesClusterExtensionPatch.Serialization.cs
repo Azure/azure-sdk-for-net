@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (AutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(ReleaseTrain))
+            if (ReleaseTrain != null)
             {
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 if (Version != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("version");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationSettings))
+            if (!(ConfigurationSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<bool> autoUpgradeMinorVersion = default;
             Optional<string> releaseTrain = default;
             Optional<string> version = default;
-            Optional<IDictionary<string, string>> configurationSettings = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            IDictionary<string, string> configurationSettings = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionPatch(Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), serializedAdditionalRawData);
+            return new KubernetesClusterExtensionPatch(
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                releaseTrain.Value,
+                version.Value,
+                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionPatch>.Write(ModelReaderWriterOptions options)

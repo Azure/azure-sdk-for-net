@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WebSocketUri))
+            if (WebSocketUri != null)
             {
                 writer.WritePropertyName("webSocketUri"u8);
                 writer.WriteStringValue(WebSocketUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);

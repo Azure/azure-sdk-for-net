@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Request))
+            if (Request != null)
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Optional.IsDefined(Response))
+            if (Response != null)
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
+                    request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
+                    response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

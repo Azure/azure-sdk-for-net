@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
+            if (PrimaryStagingStorageAccountCustomContent != null)
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
             }
-            if (Optional.IsDefined(RecoveryResourceGroupCustomContent))
+            if (RecoveryResourceGroupCustomContent != null)
             {
                 writer.WritePropertyName("recoveryResourceGroupCustomInput"u8);
                 writer.WriteObjectValue(RecoveryResourceGroupCustomContent);
             }
-            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
+            if (RecoveryReplicaDiskAccountType != null)
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
-            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
+            if (RecoveryTargetDiskAccountType != null)
             {
                 writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
-            if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
+            if (RecoveryDiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("recoveryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(RecoveryDiskEncryptionSetId);
             }
-            if (Optional.IsDefined(DiskEncryptionInfo))
+            if (DiskEncryptionInfo != null)
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
+                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryResourceGroupCustomInput"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryResourceGroupCustomContent = RecoveryResourceGroupCustomDetails.DeserializeRecoveryResourceGroupCustomDetails(property.Value);
+                    recoveryResourceGroupCustomContent = RecoveryResourceGroupCustomDetails.DeserializeRecoveryResourceGroupCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryReplicaDiskAccountType"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AProtectionIntentManagedDiskDetails(diskId, primaryStagingStorageAccountCustomContent.Value, recoveryResourceGroupCustomContent.Value, recoveryReplicaDiskAccountType.Value, recoveryTargetDiskAccountType.Value, recoveryDiskEncryptionSetId.Value, diskEncryptionInfo.Value, serializedAdditionalRawData);
+            return new A2AProtectionIntentManagedDiskDetails(
+                diskId,
+                primaryStagingStorageAccountCustomContent.Value,
+                recoveryResourceGroupCustomContent.Value,
+                recoveryReplicaDiskAccountType.Value,
+                recoveryTargetDiskAccountType.Value,
+                recoveryDiskEncryptionSetId.Value,
+                diskEncryptionInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AProtectionIntentManagedDiskDetails>.Write(ModelReaderWriterOptions options)

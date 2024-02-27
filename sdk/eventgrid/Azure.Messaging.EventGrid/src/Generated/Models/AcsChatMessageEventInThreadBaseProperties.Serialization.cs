@@ -82,7 +82,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatMessageEventInThreadBaseProperties(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version));
+            return new AcsChatMessageEventInThreadBaseProperties(
+                transactionId.Value,
+                threadId.Value,
+                messageId.Value,
+                senderCommunicationIdentifier.Value,
+                senderDisplayName.Value,
+                Optional.ToNullable(composeTime),
+                type.Value,
+                Optional.ToNullable(version));
         }
     }
 }

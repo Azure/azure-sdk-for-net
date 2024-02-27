@@ -15,7 +15,7 @@ namespace Azure.Maps.Routing.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BatchItems))
+            if (!(BatchItems is ChangeTrackingList<BatchRequestItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("batchItems"u8);
                 writer.WriteStartArray();

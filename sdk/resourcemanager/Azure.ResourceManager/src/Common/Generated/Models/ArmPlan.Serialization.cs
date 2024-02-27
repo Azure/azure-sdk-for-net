@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("product"u8);
             writer.WriteStringValue(Product);
-            if (Optional.IsDefined(PromotionCode))
+            if (PromotionCode != null)
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

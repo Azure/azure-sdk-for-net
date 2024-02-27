@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DesiredVersion))
+            if (DesiredVersion != null)
             {
                 writer.WritePropertyName("desiredVersion"u8);
                 writer.WriteStringValue(DesiredVersion);
             }
-            if (Optional.IsDefined(CorrelationId))
+            if (CorrelationId.HasValue)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
+            if (IsAutomaticUpgradeEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAttemptDesiredVersion))
+            if (options.Format != "W" && LastAttemptDesiredVersion != null)
             {
                 writer.WritePropertyName("lastAttemptDesiredVersion"u8);
                 writer.WriteStringValue(LastAttemptDesiredVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAttemptedOn))
+            if (options.Format != "W" && LastAttemptedOn.HasValue)
             {
                 writer.WritePropertyName("lastAttemptTimestamp"u8);
                 writer.WriteStringValue(LastAttemptedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAttemptStatus))
+            if (options.Format != "W" && LastAttemptStatus.HasValue)
             {
                 writer.WritePropertyName("lastAttemptStatus"u8);
                 writer.WriteStringValue(LastAttemptStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAttemptMessage))
+            if (options.Format != "W" && LastAttemptMessage != null)
             {
                 writer.WritePropertyName("lastAttemptMessage"u8);
                 writer.WriteStringValue(LastAttemptMessage);
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentUpgrade(desiredVersion.Value, Optional.ToNullable(correlationId), Optional.ToNullable(enableAutomaticUpgrade), lastAttemptDesiredVersion.Value, Optional.ToNullable(lastAttemptTimestamp), Optional.ToNullable(lastAttemptStatus), lastAttemptMessage.Value, serializedAdditionalRawData);
+            return new AgentUpgrade(
+                desiredVersion.Value,
+                Optional.ToNullable(correlationId),
+                Optional.ToNullable(enableAutomaticUpgrade),
+                lastAttemptDesiredVersion.Value,
+                Optional.ToNullable(lastAttemptTimestamp),
+                Optional.ToNullable(lastAttemptStatus),
+                lastAttemptMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentUpgrade>.Write(ModelReaderWriterOptions options)

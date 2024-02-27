@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AuthorizationClassicAdministrator> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AuthorizationClassicAdministrator>> value = default;
+            IReadOnlyList<AuthorizationClassicAdministrator> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<AuthorizationClassicAdministrator> array = new List<AuthorizationClassicAdministrator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(item));
+                        array.Add(AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationClassicAdministratorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AuthorizationClassicAdministratorListResult(value ?? new ChangeTrackingList<AuthorizationClassicAdministrator>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationClassicAdministratorListResult>.Write(ModelReaderWriterOptions options)

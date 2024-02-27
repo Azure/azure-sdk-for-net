@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Path))
+            if (options.Format != "W" && Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (options.Format != "W" && Optional.IsDefined(Contents))
+            if (options.Format != "W" && Contents != null)
             {
                 writer.WritePropertyName("contents"u8);
                 writer.WriteStringValue(Contents);
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSitesWorkflowPreview(id, name, type, systemData.Value, path.Value, contents.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSitesWorkflowPreview(
+                id,
+                name,
+                type,
+                systemData.Value,
+                path.Value,
+                contents.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSitesWorkflowPreview>.Write(ModelReaderWriterOptions options)

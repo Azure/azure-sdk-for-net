@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreUri"/> is null. </exception>
         public AzureDataLakeStoreLinkedService(object dataLakeStoreUri)
         {
-            Argument.AssertNotNull(dataLakeStoreUri, nameof(dataLakeStoreUri));
+            if (dataLakeStoreUri == null)
+            {
+                throw new ArgumentNullException(nameof(dataLakeStoreUri));
+            }
 
             DataLakeStoreUri = dataLakeStoreUri;
             Type = "AzureDataLakeStore";

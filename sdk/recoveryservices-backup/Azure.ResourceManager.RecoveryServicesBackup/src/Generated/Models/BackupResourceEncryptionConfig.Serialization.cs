@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionAtRestType))
+            if (EncryptionAtRestType.HasValue)
             {
                 writer.WritePropertyName("encryptionAtRestType"u8);
                 writer.WriteStringValue(EncryptionAtRestType.Value.ToString());
             }
-            if (Optional.IsDefined(KeyUri))
+            if (KeyUri != null)
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(LastUpdateStatus))
+            if (LastUpdateStatus.HasValue)
             {
                 writer.WritePropertyName("lastUpdateStatus"u8);
                 writer.WriteStringValue(LastUpdateStatus.Value.ToString());
             }
-            if (Optional.IsDefined(InfrastructureEncryptionState))
+            if (InfrastructureEncryptionState.HasValue)
             {
                 writer.WritePropertyName("infrastructureEncryptionState"u8);
                 writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceEncryptionConfig(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), serializedAdditionalRawData);
+            return new BackupResourceEncryptionConfig(
+                Optional.ToNullable(encryptionAtRestType),
+                keyUri.Value,
+                subscriptionId.Value,
+                Optional.ToNullable(lastUpdateStatus),
+                Optional.ToNullable(infrastructureEncryptionState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceEncryptionConfig>.Write(ModelReaderWriterOptions options)

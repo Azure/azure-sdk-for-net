@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
             writer.WriteObjectValue(DatasourceInfo);
-            if (Optional.IsDefined(DatasourceSetInfo))
+            if (DatasourceSetInfo != null)
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
                 writer.WriteObjectValue(DatasourceSetInfo);
             }
-            if (Optional.IsDefined(DatasourceAuthCredentials))
+            if (DatasourceAuthCredentials != null)
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
                 writer.WriteObjectValue(DatasourceAuthCredentials);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
-            if (Optional.IsDefined(RestoreLocation))
+            if (RestoreLocation.HasValue)
             {
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ItemLevelRestoreCriteria> array = new List<ItemLevelRestoreCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ItemLevelRestoreCriteria.DeserializeItemLevelRestoreCriteria(item));
+                        array.Add(ItemLevelRestoreCriteria.DeserializeItemLevelRestoreCriteria(item, options));
                     }
                     restoreCriteria = array;
                     continue;
                 }
                 if (property.NameEquals("datasourceInfo"u8))
                 {
-                    datasourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value);
+                    datasourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datasourceSetInfo"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
+                    datasourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datasourceAuthCredentials"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value);
+                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -161,7 +161,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ItemLevelRestoreTargetInfo(objectType, recoveryOption, Optional.ToNullable(restoreLocation), serializedAdditionalRawData, restoreCriteria, datasourceInfo, datasourceSetInfo.Value, datasourceAuthCredentials.Value);
+            return new ItemLevelRestoreTargetInfo(
+                objectType,
+                recoveryOption,
+                Optional.ToNullable(restoreLocation),
+                serializedAdditionalRawData,
+                restoreCriteria,
+                datasourceInfo,
+                datasourceSetInfo.Value,
+                datasourceAuthCredentials.Value);
         }
 
         BinaryData IPersistableModel<ItemLevelRestoreTargetInfo>.Write(ModelReaderWriterOptions options)

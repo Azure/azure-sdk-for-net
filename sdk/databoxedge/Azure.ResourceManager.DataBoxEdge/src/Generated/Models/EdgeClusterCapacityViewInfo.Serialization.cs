@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Fqdn))
+            if (Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(GpuCapacity))
+            if (GpuCapacity != null)
             {
                 writer.WritePropertyName("gpuCapacity"u8);
                 writer.WriteObjectValue(GpuCapacity);
             }
-            if (Optional.IsDefined(MemoryCapacity))
+            if (MemoryCapacity != null)
             {
                 writer.WritePropertyName("memoryCapacity"u8);
                 writer.WriteObjectValue(MemoryCapacity);
             }
-            if (Optional.IsDefined(LastRefreshedOn))
+            if (LastRefreshedOn.HasValue)
             {
                 writer.WritePropertyName("lastRefreshedTime"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(TotalProvisionedNonHpnCores))
+            if (TotalProvisionedNonHpnCores.HasValue)
             {
                 writer.WritePropertyName("totalProvisionedNonHpnCores"u8);
                 writer.WriteNumberValue(TotalProvisionedNonHpnCores.Value);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    gpuCapacity = EdgeClusterGpuCapacity.DeserializeEdgeClusterGpuCapacity(property.Value);
+                    gpuCapacity = EdgeClusterGpuCapacity.DeserializeEdgeClusterGpuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryCapacity"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    memoryCapacity = EdgeClusterMemoryCapacity.DeserializeEdgeClusterMemoryCapacity(property.Value);
+                    memoryCapacity = EdgeClusterMemoryCapacity.DeserializeEdgeClusterMemoryCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastRefreshedTime"u8))
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeClusterCapacityViewInfo(fqdn.Value, gpuCapacity.Value, memoryCapacity.Value, Optional.ToNullable(lastRefreshedTime), Optional.ToNullable(totalProvisionedNonHpnCores), serializedAdditionalRawData);
+            return new EdgeClusterCapacityViewInfo(
+                fqdn.Value,
+                gpuCapacity.Value,
+                memoryCapacity.Value,
+                Optional.ToNullable(lastRefreshedTime),
+                Optional.ToNullable(totalProvisionedNonHpnCores),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeClusterCapacityViewInfo>.Write(ModelReaderWriterOptions options)

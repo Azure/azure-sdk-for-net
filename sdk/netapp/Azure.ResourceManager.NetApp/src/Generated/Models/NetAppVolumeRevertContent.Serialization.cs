@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SnapshotId))
+            if (SnapshotId != null)
             {
                 writer.WritePropertyName("snapshotId"u8);
                 writer.WriteStringValue(SnapshotId);

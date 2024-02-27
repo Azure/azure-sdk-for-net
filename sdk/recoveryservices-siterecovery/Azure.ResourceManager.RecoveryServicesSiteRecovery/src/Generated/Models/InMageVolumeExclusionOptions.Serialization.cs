@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VolumeLabel))
+            if (VolumeLabel != null)
             {
                 writer.WritePropertyName("volumeLabel"u8);
                 writer.WriteStringValue(VolumeLabel);
             }
-            if (Optional.IsDefined(OnlyExcludeIfSingleVolume))
+            if (OnlyExcludeIfSingleVolume != null)
             {
                 writer.WritePropertyName("onlyExcludeIfSingleVolume"u8);
                 writer.WriteStringValue(OnlyExcludeIfSingleVolume);
