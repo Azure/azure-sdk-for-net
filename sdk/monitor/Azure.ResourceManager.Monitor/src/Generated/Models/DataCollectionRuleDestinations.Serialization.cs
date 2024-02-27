@@ -264,7 +264,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleDestinations(logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(), monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(), azureMonitorMetrics.Value, eventHubs ?? new ChangeTrackingList<DataCollectionRuleEventHubDestination>(), eventHubsDirect ?? new ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>(), storageBlobsDirect ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(), storageTablesDirect ?? new ChangeTrackingList<DataCollectionRuleStorageTableDestination>(), storageAccounts ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(), serializedAdditionalRawData);
+            return new DataCollectionRuleDestinations(
+                logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(),
+                monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(),
+                azureMonitorMetrics.Value,
+                eventHubs ?? new ChangeTrackingList<DataCollectionRuleEventHubDestination>(),
+                eventHubsDirect ?? new ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>(),
+                storageBlobsDirect ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(),
+                storageTablesDirect ?? new ChangeTrackingList<DataCollectionRuleStorageTableDestination>(),
+                storageAccounts ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleDestinations>.Write(ModelReaderWriterOptions options)

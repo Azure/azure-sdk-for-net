@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentExportRequest(recordTypes.Value, destinationType.Value, destinationAddress.Value, isEnabled.Value, notificationQueueEnabled.Value, notificationQueueUri.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentExportRequest(
+                recordTypes.Value,
+                destinationType.Value,
+                destinationAddress.Value,
+                isEnabled.Value,
+                notificationQueueEnabled.Value,
+                notificationQueueUri.Value,
+                destinationStorageSubscriptionId.Value,
+                destinationStorageLocationId.Value,
+                destinationAccountId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentExportRequest>.Write(ModelReaderWriterOptions options)

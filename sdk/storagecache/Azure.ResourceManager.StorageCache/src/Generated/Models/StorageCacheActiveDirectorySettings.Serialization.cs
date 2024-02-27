@@ -152,7 +152,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress.Value, domainName, domainNetBiosName, cacheNetBiosName, Optional.ToNullable(domainJoined), credentials.Value, serializedAdditionalRawData);
+            return new StorageCacheActiveDirectorySettings(
+                primaryDnsIPAddress,
+                secondaryDnsIPAddress.Value,
+                domainName,
+                domainNetBiosName,
+                cacheNetBiosName,
+                Optional.ToNullable(domainJoined),
+                credentials.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheActiveDirectorySettings>.Write(ModelReaderWriterOptions options)

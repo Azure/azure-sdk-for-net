@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendServiceFabricClusterProperties(clientCertificateId.Value, clientCertificatethumbprint.Value, Optional.ToNullable(maxPartitionResolutionRetries), managementEndpoints, serverCertificateThumbprints ?? new ChangeTrackingList<string>(), serverX509Names ?? new ChangeTrackingList<X509CertificateName>(), serializedAdditionalRawData);
+            return new BackendServiceFabricClusterProperties(
+                clientCertificateId.Value,
+                clientCertificatethumbprint.Value,
+                Optional.ToNullable(maxPartitionResolutionRetries),
+                managementEndpoints,
+                serverCertificateThumbprints ?? new ChangeTrackingList<string>(),
+                serverX509Names ?? new ChangeTrackingList<X509CertificateName>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendServiceFabricClusterProperties>.Write(ModelReaderWriterOptions options)

@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value, serializedAdditionalRawData);
+            return new NginxDeploymentProperties(
+                Optional.ToNullable(provisioningState),
+                nginxVersion.Value,
+                managedResourceGroup.Value,
+                networkProfile.Value,
+                ipAddress.Value,
+                Optional.ToNullable(enableDiagnosticsSupport),
+                logging.Value,
+                scalingProperties.Value,
+                userProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentProperties>.Write(ModelReaderWriterOptions options)

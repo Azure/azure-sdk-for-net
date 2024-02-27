@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountProperties(Optional.ToNullable(uniqueId), Optional.ToNullable(disableLocalAuth), provisioningState.Value, linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(), cors.Value, serializedAdditionalRawData);
+            return new MapsAccountProperties(
+                Optional.ToNullable(uniqueId),
+                Optional.ToNullable(disableLocalAuth),
+                provisioningState.Value,
+                linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
+                cors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountProperties>.Write(ModelReaderWriterOptions options)

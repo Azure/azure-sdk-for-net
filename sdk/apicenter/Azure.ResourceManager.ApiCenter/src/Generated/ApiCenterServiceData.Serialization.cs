@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.ApiCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCenterServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ApiCenterServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiCenterServiceData>.Write(ModelReaderWriterOptions options)

@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupInstanceData(id, name, type, systemData.Value, properties.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DataProtectionBackupInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupInstanceData>.Write(ModelReaderWriterOptions options)

@@ -759,7 +759,51 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDiskData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, managedBy.Value, managedByExtended ?? new ChangeTrackingList<ResourceIdentifier>(), sku.Value, zones ?? new ChangeTrackingList<string>(), extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), shareInfo ?? new ChangeTrackingList<ShareInfoElement>(), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(burstingEnabledTime), tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach), Optional.ToNullable(lastOwnershipUpdateTime), serializedAdditionalRawData);
+            return new ManagedDiskData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy.Value,
+                managedByExtended ?? new ChangeTrackingList<ResourceIdentifier>(),
+                sku.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                extendedLocation,
+                Optional.ToNullable(timeCreated),
+                Optional.ToNullable(osType),
+                Optional.ToNullable(hyperVGeneration),
+                purchasePlan.Value,
+                supportedCapabilities.Value,
+                creationData.Value,
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(diskSizeBytes),
+                uniqueId.Value,
+                encryptionSettingsGroup.Value,
+                provisioningState.Value,
+                Optional.ToNullable(diskIOPSReadWrite),
+                Optional.ToNullable(diskMBpsReadWrite),
+                Optional.ToNullable(diskIOPSReadOnly),
+                Optional.ToNullable(diskMBpsReadOnly),
+                Optional.ToNullable(diskState),
+                encryption.Value,
+                Optional.ToNullable(maxShares),
+                shareInfo ?? new ChangeTrackingList<ShareInfoElement>(),
+                Optional.ToNullable(networkAccessPolicy),
+                diskAccessId.Value,
+                Optional.ToNullable(burstingEnabledTime),
+                tier.Value,
+                Optional.ToNullable(burstingEnabled),
+                propertyUpdatesInProgress.Value,
+                Optional.ToNullable(supportsHibernation),
+                securityProfile.Value,
+                Optional.ToNullable(completionPercent),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(dataAccessAuthMode),
+                Optional.ToNullable(optimizedForFrequentAttach),
+                Optional.ToNullable(lastOwnershipUpdateTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDiskData>.Write(ModelReaderWriterOptions options)

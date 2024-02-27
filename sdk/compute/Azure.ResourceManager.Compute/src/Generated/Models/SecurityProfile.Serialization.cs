@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityProfile(uefiSettings.Value, Optional.ToNullable(encryptionAtHost), Optional.ToNullable(securityType), encryptionIdentity.Value, proxyAgentSettings.Value, serializedAdditionalRawData);
+            return new SecurityProfile(
+                uefiSettings.Value,
+                Optional.ToNullable(encryptionAtHost),
+                Optional.ToNullable(securityType),
+                encryptionIdentity.Value,
+                proxyAgentSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityProfile>.Write(ModelReaderWriterOptions options)

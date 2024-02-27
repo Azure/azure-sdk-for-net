@@ -191,7 +191,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, protectionReadinessErrors ?? new ChangeTrackingList<string>(), supportedReplicationProviders ?? new ChangeTrackingList<string>(), customDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectableItemProperties(
+                friendlyName.Value,
+                protectionStatus.Value,
+                replicationProtectedItemId.Value,
+                recoveryServicesProviderId.Value,
+                protectionReadinessErrors ?? new ChangeTrackingList<string>(),
+                supportedReplicationProviders ?? new ChangeTrackingList<string>(),
+                customDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectableItemProperties>.Write(ModelReaderWriterOptions options)

@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, vmNics ?? new ChangeTrackingList<InMageRcmNicContent>(), Optional.ToNullable(licenseType));
+            return new InMageRcmUpdateReplicationProtectedItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                targetVmName.Value,
+                targetVmSize.Value,
+                targetResourceGroupId.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                targetBootDiagnosticsStorageAccountId.Value,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                vmNics ?? new ChangeTrackingList<InMageRcmNicContent>(),
+                Optional.ToNullable(licenseType));
         }
 
         BinaryData IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadClassifierData(id, name, type, systemData.Value, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value, serializedAdditionalRawData);
+            return new WorkloadClassifierData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                memberName.Value,
+                label.Value,
+                context.Value,
+                startTime.Value,
+                endTime.Value,
+                importance.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadClassifierData>.Write(ModelReaderWriterOptions options)

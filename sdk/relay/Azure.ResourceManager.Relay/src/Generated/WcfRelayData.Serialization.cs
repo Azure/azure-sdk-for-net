@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WcfRelayData(id, name, type, systemData.Value, Optional.ToNullable(isDynamic), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(relayType), Optional.ToNullable(requiresClientAuthorization), Optional.ToNullable(requiresTransportSecurity), userMetadata.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new WcfRelayData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isDynamic),
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                Optional.ToNullable(listenerCount),
+                Optional.ToNullable(relayType),
+                Optional.ToNullable(requiresClientAuthorization),
+                Optional.ToNullable(requiresTransportSecurity),
+                userMetadata.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WcfRelayData>.Write(ModelReaderWriterOptions options)

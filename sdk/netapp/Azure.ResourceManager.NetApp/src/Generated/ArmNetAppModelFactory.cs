@@ -40,7 +40,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppSubscriptionQuotaItem"/> instance for mocking. </returns>
         public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? current = null, int? @default = null)
         {
-            return new NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, serializedAdditionalRawData: null);
+            return new NetAppSubscriptionQuotaItem(
+                id,
+                name,
+                resourceType,
+                systemData,
+                current,
+                @default,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppRegionInfo"/>. </summary>
@@ -75,7 +82,14 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             nicInfoList ??= new List<NicInfo>();
 
-            return new NetworkSiblingSet(networkSiblingSetId, subnetId, networkSiblingSetStateId, networkFeatures, provisioningState, nicInfoList?.ToList(), serializedAdditionalRawData: null);
+            return new NetworkSiblingSet(
+                networkSiblingSetId,
+                subnetId,
+                networkSiblingSetStateId,
+                networkFeatures,
+                provisioningState,
+                nicInfoList?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NicInfo"/>. </summary>
@@ -108,7 +122,20 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
             activeDirectories ??= new List<NetAppAccountActiveDirectory>();
 
-            return new NetAppAccountData(id, name, resourceType, systemData, tags, location, etag, identity, provisioningState, activeDirectories?.ToList(), encryption, disableShowmount, serializedAdditionalRawData: null);
+            return new NetAppAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                identity,
+                provisioningState,
+                activeDirectories?.ToList(),
+                encryption,
+                disableShowmount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppAccountActiveDirectory"/>. </summary>
@@ -142,7 +169,31 @@ namespace Azure.ResourceManager.NetApp.Models
             administrators ??= new List<string>();
             securityOperators ??= new List<string>();
 
-            return new NetAppAccountActiveDirectory(activeDirectoryId, username, password, domain, dns, status, statusDetails, smbServerName, organizationalUnit, site, backupOperators?.ToList(), administrators?.ToList(), kdcIP, adName, serverRootCACertificate, isAesEncryptionEnabled, isLdapSigningEnabled, securityOperators?.ToList(), isLdapOverTlsEnabled, allowLocalNfsUsersWithLdap, encryptDCConnections, ldapSearchScope, preferredServersForLdapClient, serializedAdditionalRawData: null);
+            return new NetAppAccountActiveDirectory(
+                activeDirectoryId,
+                username,
+                password,
+                domain,
+                dns,
+                status,
+                statusDetails,
+                smbServerName,
+                organizationalUnit,
+                site,
+                backupOperators?.ToList(),
+                administrators?.ToList(),
+                kdcIP,
+                adName,
+                serverRootCACertificate,
+                isAesEncryptionEnabled,
+                isLdapSigningEnabled,
+                securityOperators?.ToList(),
+                isLdapOverTlsEnabled,
+                allowLocalNfsUsersWithLdap,
+                encryptDCConnections,
+                ldapSearchScope,
+                preferredServersForLdapClient,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppKeyVaultProperties"/>. </summary>
@@ -154,7 +205,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppKeyVaultProperties"/> instance for mocking. </returns>
         public static NetAppKeyVaultProperties NetAppKeyVaultProperties(string keyVaultId = null, Uri keyVaultUri = null, string keyName = null, string keyVaultResourceId = null, NetAppKeyVaultStatus? status = null)
         {
-            return new NetAppKeyVaultProperties(keyVaultId, keyVaultUri, keyName, keyVaultResourceId, status, serializedAdditionalRawData: null);
+            return new NetAppKeyVaultProperties(
+                keyVaultId,
+                keyVaultUri,
+                keyName,
+                keyVaultResourceId,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppEncryptionIdentity"/>. </summary>
@@ -184,7 +241,19 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
             activeDirectories ??= new List<NetAppAccountActiveDirectory>();
 
-            return new NetAppAccountPatch(id, name, resourceType, systemData, tags, location, identity, provisioningState, activeDirectories?.ToList(), encryption, disableShowmount, serializedAdditionalRawData: null);
+            return new NetAppAccountPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                activeDirectories?.ToList(),
+                encryption,
+                disableShowmount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.CapacityPoolData"/>. </summary>
@@ -209,7 +278,24 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CapacityPoolData(id, name, resourceType, systemData, tags, location, etag, poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, qosType, isCoolAccessEnabled, encryptionType, serializedAdditionalRawData: null);
+            return new CapacityPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                poolId,
+                size,
+                serviceLevel,
+                provisioningState,
+                totalThroughputMibps,
+                utilizedThroughputMibps,
+                qosType,
+                isCoolAccessEnabled,
+                encryptionType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>
@@ -227,7 +313,17 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CapacityPoolPatch(id, name, resourceType, systemData, tags, location, size, qosType, isCoolAccessEnabled, serializedAdditionalRawData: null);
+            return new CapacityPoolPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                size,
+                qosType,
+                isCoolAccessEnabled,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeData"/>. </summary>
@@ -309,7 +405,70 @@ namespace Azure.ResourceManager.NetApp.Models
             dataStoreResourceId ??= new List<ResourceIdentifier>();
             placementRules ??= new List<NetAppVolumePlacementRule>();
 
-            return new NetAppVolumeData(id, name, resourceType, systemData, tags, location, etag, zones?.ToList(), fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules != null ? new VolumePropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null, protocolTypes?.ToList(), provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, networkSiblingSetId, storageToNetworkProximity, mountTargets?.ToList(), volumeType, dataProtection, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId?.ToList(), isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules?.ToList(), enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId, serializedAdditionalRawData: null);
+            return new NetAppVolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                zones?.ToList(),
+                fileSystemId,
+                creationToken,
+                serviceLevel,
+                usageThreshold,
+                exportRules != null ? new VolumePropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
+                protocolTypes?.ToList(),
+                provisioningState,
+                snapshotId,
+                deleteBaseSnapshot,
+                backupId,
+                baremetalTenantId,
+                subnetId,
+                networkFeatures,
+                networkSiblingSetId,
+                storageToNetworkProximity,
+                mountTargets?.ToList(),
+                volumeType,
+                dataProtection,
+                isRestoring,
+                isSnapshotDirectoryVisible,
+                isKerberosEnabled,
+                securityStyle,
+                isSmbEncryptionEnabled,
+                smbAccessBasedEnumeration,
+                smbNonBrowsable,
+                isSmbContinuouslyAvailable,
+                throughputMibps,
+                actualThroughputMibps,
+                encryptionKeySource,
+                keyVaultPrivateEndpointResourceId,
+                isLdapEnabled,
+                isCoolAccessEnabled,
+                coolnessPeriod,
+                coolAccessRetrievalPolicy,
+                unixPermissions,
+                cloneProgress,
+                fileAccessLogs,
+                avsDataStore,
+                dataStoreResourceId?.ToList(),
+                isDefaultQuotaEnabled,
+                defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs,
+                maximumNumberOfFiles,
+                volumeGroupName,
+                capacityPoolResourceId,
+                proximityPlacementGroupId,
+                t2Network,
+                volumeSpecName,
+                isEncrypted,
+                placementRules?.ToList(),
+                enableSubvolumes,
+                provisionedAvailabilityZone,
+                isLargeVolume,
+                originatingResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeMountTarget"/>. </summary>
@@ -332,7 +491,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppReplicationObject"/> instance for mocking. </returns>
         public static NetAppReplicationObject NetAppReplicationObject(string replicationId = null, NetAppEndpointType? endpointType = null, NetAppReplicationSchedule? replicationSchedule = null, ResourceIdentifier remoteVolumeResourceId = null, string remoteVolumeRegion = null)
         {
-            return new NetAppReplicationObject(replicationId, endpointType, replicationSchedule, remoteVolumeResourceId, remoteVolumeRegion, serializedAdditionalRawData: null);
+            return new NetAppReplicationObject(
+                replicationId,
+                endpointType,
+                replicationSchedule,
+                remoteVolumeResourceId,
+                remoteVolumeRegion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeRelocationProperties"/>. </summary>
@@ -377,7 +542,29 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
             exportRules ??= new List<NetAppVolumeExportPolicyRule>();
 
-            return new NetAppVolumePatch(id, name, resourceType, systemData, tags, location, serviceLevel, usageThreshold, exportRules != null ? new VolumePatchPropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null, throughputMibps, snapshotPolicyId != null ? new NetAppVolumePatchDataProtection(new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, unixPermissions, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, isSnapshotDirectoryVisible, smbAccessBasedEnumeration, smbNonBrowsable, serializedAdditionalRawData: null);
+            return new NetAppVolumePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                serviceLevel,
+                usageThreshold,
+                exportRules != null ? new VolumePatchPropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
+                throughputMibps,
+                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection(new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                isDefaultQuotaEnabled,
+                defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs,
+                unixPermissions,
+                isCoolAccessEnabled,
+                coolnessPeriod,
+                coolAccessRetrievalPolicy,
+                isSnapshotDirectoryVisible,
+                smbAccessBasedEnumeration,
+                smbNonBrowsable,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetGroupIdListForLdapUserResult"/>. </summary>
@@ -399,7 +586,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppVolumeReplicationStatus"/> instance for mocking. </returns>
         public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
         {
-            return new NetAppVolumeReplicationStatus(isHealthy, relationshipStatus, mirrorState, totalProgress, errorMessage, serializedAdditionalRawData: null);
+            return new NetAppVolumeReplicationStatus(
+                isHealthy,
+                relationshipStatus,
+                mirrorState,
+                totalProgress,
+                errorMessage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplication"/>. </summary>
@@ -425,7 +618,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="NetApp.NetAppVolumeSnapshotData"/> instance for mocking. </returns>
         public static NetAppVolumeSnapshotData NetAppVolumeSnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, string snapshotId = null, DateTimeOffset? created = null, string provisioningState = null)
         {
-            return new NetAppVolumeSnapshotData(id, name, resourceType, systemData, location, snapshotId, created, provisioningState, serializedAdditionalRawData: null);
+            return new NetAppVolumeSnapshotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                snapshotId,
+                created,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.SnapshotPolicyData"/>. </summary>
@@ -447,7 +649,21 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SnapshotPolicyData(id, name, resourceType, systemData, tags, location, etag, hourlySchedule, dailySchedule, weeklySchedule, monthlySchedule, isEnabled, provisioningState, serializedAdditionalRawData: null);
+            return new SnapshotPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                hourlySchedule,
+                dailySchedule,
+                weeklySchedule,
+                monthlySchedule,
+                isEnabled,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SnapshotPolicyPatch"/>. </summary>
@@ -468,7 +684,20 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SnapshotPolicyPatch(id, name, resourceType, systemData, tags, location, hourlySchedule, dailySchedule, weeklySchedule, monthlySchedule, isEnabled, provisioningState, serializedAdditionalRawData: null);
+            return new SnapshotPolicyPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                hourlySchedule,
+                dailySchedule,
+                weeklySchedule,
+                monthlySchedule,
+                isEnabled,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppRestoreStatus"/>. </summary>
@@ -481,7 +710,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
         public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
         {
-            return new NetAppRestoreStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, totalTransferBytes, serializedAdditionalRawData: null);
+            return new NetAppRestoreStatus(
+                isHealthy,
+                relationshipStatus,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                totalTransferBytes,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupPolicyData"/>. </summary>
@@ -506,7 +742,23 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
             volumeBackups ??= new List<NetAppVolumeBackupDetail>();
 
-            return new NetAppBackupPolicyData(id, name, resourceType, systemData, tags, location, etag, backupPolicyId, provisioningState, dailyBackupsToKeep, weeklyBackupsToKeep, monthlyBackupsToKeep, volumesAssigned, isEnabled, volumeBackups?.ToList(), serializedAdditionalRawData: null);
+            return new NetAppBackupPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                backupPolicyId,
+                provisioningState,
+                dailyBackupsToKeep,
+                weeklyBackupsToKeep,
+                monthlyBackupsToKeep,
+                volumesAssigned,
+                isEnabled,
+                volumeBackups?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeBackupDetail"/>. </summary>
@@ -540,7 +792,22 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
             volumeBackups ??= new List<NetAppVolumeBackupDetail>();
 
-            return new NetAppBackupPolicyPatch(id, name, resourceType, systemData, tags, location, backupPolicyId, provisioningState, dailyBackupsToKeep, weeklyBackupsToKeep, monthlyBackupsToKeep, volumesAssigned, isEnabled, volumeBackups?.ToList(), serializedAdditionalRawData: null);
+            return new NetAppBackupPolicyPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                backupPolicyId,
+                provisioningState,
+                dailyBackupsToKeep,
+                weeklyBackupsToKeep,
+                monthlyBackupsToKeep,
+                volumesAssigned,
+                isEnabled,
+                volumeBackups?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeQuotaRuleData"/>. </summary>
@@ -559,7 +826,18 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetAppVolumeQuotaRuleData(id, name, resourceType, systemData, tags, location, provisioningState, quotaSizeInKiBs, quotaType, quotaTarget, serializedAdditionalRawData: null);
+            return new NetAppVolumeQuotaRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                quotaSizeInKiBs,
+                quotaType,
+                quotaTarget,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaRulePatch"/>. </summary>
@@ -573,7 +851,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetAppVolumeQuotaRulePatch(tags, provisioningState, quotaSizeInKiBs, quotaType, quotaTarget, serializedAdditionalRawData: null);
+            return new NetAppVolumeQuotaRulePatch(
+                tags,
+                provisioningState,
+                quotaSizeInKiBs,
+                quotaType,
+                quotaTarget,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupResult"/>. </summary>
@@ -587,7 +871,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppVolumeGroupResult"/> instance for mocking. </returns>
         public static NetAppVolumeGroupResult NetAppVolumeGroupResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string provisioningState = null, NetAppVolumeGroupMetadata groupMetaData = null)
         {
-            return new NetAppVolumeGroupResult(id, name, resourceType, systemData, location, provisioningState, groupMetaData, serializedAdditionalRawData: null);
+            return new NetAppVolumeGroupResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                provisioningState,
+                groupMetaData,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupMetadata"/>. </summary>
@@ -602,7 +894,14 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             globalPlacementRules ??= new List<NetAppVolumePlacementRule>();
 
-            return new NetAppVolumeGroupMetadata(groupDescription, applicationType, applicationIdentifier, globalPlacementRules?.ToList(), deploymentSpecId, volumesCount, serializedAdditionalRawData: null);
+            return new NetAppVolumeGroupMetadata(
+                groupDescription,
+                applicationType,
+                applicationIdentifier,
+                globalPlacementRules?.ToList(),
+                deploymentSpecId,
+                volumesCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeGroupData"/>. </summary>
@@ -619,7 +918,16 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             volumes ??= new List<NetAppVolumeGroupVolume>();
 
-            return new NetAppVolumeGroupData(id, name, resourceType, systemData, location, provisioningState, groupMetaData, volumes?.ToList(), serializedAdditionalRawData: null);
+            return new NetAppVolumeGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                provisioningState,
+                groupMetaData,
+                volumes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupVolume"/>. </summary>
@@ -698,7 +1006,67 @@ namespace Azure.ResourceManager.NetApp.Models
             dataStoreResourceId ??= new List<ResourceIdentifier>();
             placementRules ??= new List<NetAppVolumePlacementRule>();
 
-            return new NetAppVolumeGroupVolume(id, name, resourceType, tags, zones?.ToList(), fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules != null ? new VolumePropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null, protocolTypes?.ToList(), provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, networkSiblingSetId, storageToNetworkProximity, mountTargets?.ToList(), volumeType, dataProtection, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId?.ToList(), isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules?.ToList(), enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId, serializedAdditionalRawData: null);
+            return new NetAppVolumeGroupVolume(
+                id,
+                name,
+                resourceType,
+                tags,
+                zones?.ToList(),
+                fileSystemId,
+                creationToken,
+                serviceLevel,
+                usageThreshold,
+                exportRules != null ? new VolumePropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
+                protocolTypes?.ToList(),
+                provisioningState,
+                snapshotId,
+                deleteBaseSnapshot,
+                backupId,
+                baremetalTenantId,
+                subnetId,
+                networkFeatures,
+                networkSiblingSetId,
+                storageToNetworkProximity,
+                mountTargets?.ToList(),
+                volumeType,
+                dataProtection,
+                isRestoring,
+                isSnapshotDirectoryVisible,
+                isKerberosEnabled,
+                securityStyle,
+                isSmbEncryptionEnabled,
+                smbAccessBasedEnumeration,
+                smbNonBrowsable,
+                isSmbContinuouslyAvailable,
+                throughputMibps,
+                actualThroughputMibps,
+                encryptionKeySource,
+                keyVaultPrivateEndpointResourceId,
+                isLdapEnabled,
+                isCoolAccessEnabled,
+                coolnessPeriod,
+                coolAccessRetrievalPolicy,
+                unixPermissions,
+                cloneProgress,
+                fileAccessLogs,
+                avsDataStore,
+                dataStoreResourceId?.ToList(),
+                isDefaultQuotaEnabled,
+                defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs,
+                maximumNumberOfFiles,
+                volumeGroupName,
+                capacityPoolResourceId,
+                proximityPlacementGroupId,
+                t2Network,
+                volumeSpecName,
+                isEncrypted,
+                placementRules?.ToList(),
+                enableSubvolumes,
+                provisionedAvailabilityZone,
+                isLargeVolume,
+                originatingResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppSubvolumeInfoData"/>. </summary>
@@ -713,7 +1081,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="NetApp.NetAppSubvolumeInfoData"/> instance for mocking. </returns>
         public static NetAppSubvolumeInfoData NetAppSubvolumeInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, long? size = null, string parentPath = null, string provisioningState = null)
         {
-            return new NetAppSubvolumeInfoData(id, name, resourceType, systemData, path, size, parentPath, provisioningState, serializedAdditionalRawData: null);
+            return new NetAppSubvolumeInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                path,
+                size,
+                parentPath,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppSubvolumeMetadata"/>. </summary>
@@ -734,7 +1111,22 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppSubvolumeMetadata"/> instance for mocking. </returns>
         public static NetAppSubvolumeMetadata NetAppSubvolumeMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, string parentPath = null, long? size = null, long? bytesUsed = null, string permissions = null, DateTimeOffset? createdOn = null, DateTimeOffset? accessedOn = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
         {
-            return new NetAppSubvolumeMetadata(id, name, resourceType, systemData, path, parentPath, size, bytesUsed, permissions, createdOn, accessedOn, modifiedOn, changedOn, provisioningState, serializedAdditionalRawData: null);
+            return new NetAppSubvolumeMetadata(
+                id,
+                name,
+                resourceType,
+                systemData,
+                path,
+                parentPath,
+                size,
+                bytesUsed,
+                permissions,
+                createdOn,
+                accessedOn,
+                modifiedOn,
+                changedOn,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

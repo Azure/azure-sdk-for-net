@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DesktopVirtualizationPrivateEndpointConnectionDataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseColumnData(id, name, type, systemData.Value, Optional.ToNullable(columnType), Optional.ToNullable(temporalType), Optional.ToNullable(memoryOptimized), Optional.ToNullable(isComputed), serializedAdditionalRawData);
+            return new DatabaseColumnData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(columnType),
+                Optional.ToNullable(temporalType),
+                Optional.ToNullable(memoryOptimized),
+                Optional.ToNullable(isComputed),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseColumnData>.Write(ModelReaderWriterOptions options)

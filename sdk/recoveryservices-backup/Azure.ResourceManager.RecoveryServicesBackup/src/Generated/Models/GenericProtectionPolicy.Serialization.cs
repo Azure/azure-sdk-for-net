@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(), timeZone.Value, fabricName.Value);
+            return new GenericProtectionPolicy(
+                Optional.ToNullable(protectedItemsCount),
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
+                timeZone.Value,
+                fabricName.Value);
         }
 
         BinaryData IPersistableModel<GenericProtectionPolicy>.Write(ModelReaderWriterOptions options)

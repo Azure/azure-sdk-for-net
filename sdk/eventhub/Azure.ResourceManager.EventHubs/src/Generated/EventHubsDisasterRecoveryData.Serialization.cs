@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsDisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsDisasterRecoveryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                partnerNamespace.Value,
+                alternateName.Value,
+                Optional.ToNullable(role),
+                Optional.ToNullable(pendingReplicationOperationsCount),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsDisasterRecoveryData>.Write(ModelReaderWriterOptions options)

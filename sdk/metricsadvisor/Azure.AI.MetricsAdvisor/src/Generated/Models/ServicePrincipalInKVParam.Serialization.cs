@@ -78,7 +78,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ServicePrincipalInKVParam(keyVaultEndpoint, keyVaultClientId, keyVaultClientSecret.Value, servicePrincipalIdNameInKV, servicePrincipalSecretNameInKV, tenantId);
+            return new ServicePrincipalInKVParam(
+                keyVaultEndpoint,
+                keyVaultClientId,
+                keyVaultClientSecret.Value,
+                servicePrincipalIdNameInKV,
+                servicePrincipalSecretNameInKV,
+                tenantId);
         }
     }
 }

@@ -151,7 +151,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(), serializedAdditionalRawData);
+            return new UnknownPartnerDestinationInfo(
+                azureSubscriptionId.Value,
+                resourceGroupName.Value,
+                name.Value,
+                endpointType,
+                endpointServiceContext.Value,
+                resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerDestinationInfo>.Write(ModelReaderWriterOptions options)

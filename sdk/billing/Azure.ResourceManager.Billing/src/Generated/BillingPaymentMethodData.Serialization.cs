@@ -249,7 +249,20 @@ namespace Azure.ResourceManager.Billing
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPaymentMethodData(id, name, type, systemData.Value, Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, logos ?? new ChangeTrackingList<PaymentMethodLogo>(), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new BillingPaymentMethodData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(family),
+                type0.Value,
+                accountHolderName.Value,
+                expiration.Value,
+                lastFourDigits.Value,
+                displayName.Value,
+                logos ?? new ChangeTrackingList<PaymentMethodLogo>(),
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPaymentMethodData>.Write(ModelReaderWriterOptions options)

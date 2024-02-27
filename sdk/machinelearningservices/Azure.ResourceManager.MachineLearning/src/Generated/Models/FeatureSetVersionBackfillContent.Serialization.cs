@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureSetVersionBackfillContent(description.Value, displayName.Value, featureWindow.Value, resource.Value, sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new FeatureSetVersionBackfillContent(
+                description.Value,
+                displayName.Value,
+                featureWindow.Value,
+                resource.Value,
+                sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureSetVersionBackfillContent>.Write(ModelReaderWriterOptions options)

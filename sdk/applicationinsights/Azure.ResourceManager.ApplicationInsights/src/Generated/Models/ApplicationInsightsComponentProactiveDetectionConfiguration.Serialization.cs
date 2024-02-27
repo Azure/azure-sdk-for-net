@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentProactiveDetectionConfiguration(name.Value, Optional.ToNullable(enabled), Optional.ToNullable(sendEmailsToSubscriptionOwners), customEmails ?? new ChangeTrackingList<string>(), lastUpdatedTime.Value, ruleDefinitions.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentProactiveDetectionConfiguration(
+                name.Value,
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(sendEmailsToSubscriptionOwners),
+                customEmails ?? new ChangeTrackingList<string>(),
+                lastUpdatedTime.Value,
+                ruleDefinitions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(ModelReaderWriterOptions options)

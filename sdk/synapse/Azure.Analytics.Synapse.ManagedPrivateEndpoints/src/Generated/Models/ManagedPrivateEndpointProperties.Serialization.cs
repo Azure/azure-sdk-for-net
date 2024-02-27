@@ -132,7 +132,15 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), fqdns ?? new ChangeTrackingList<string>(), Optional.ToNullable(isCompliant));
+            return new ManagedPrivateEndpointProperties(
+                name.Value,
+                privateLinkResourceId.Value,
+                groupId.Value,
+                provisioningState.Value,
+                connectionState.Value,
+                Optional.ToNullable(isReserved),
+                fqdns ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isCompliant));
         }
     }
 }

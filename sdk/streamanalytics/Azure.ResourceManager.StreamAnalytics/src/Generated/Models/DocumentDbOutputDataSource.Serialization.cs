@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentDbOutputDataSource(type, serializedAdditionalRawData, accountId.Value, accountKey.Value, database.Value, collectionNamePattern.Value, partitionKey.Value, documentId.Value, Optional.ToNullable(authenticationMode));
+            return new DocumentDbOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                accountId.Value,
+                accountKey.Value,
+                database.Value,
+                collectionNamePattern.Value,
+                partitionKey.Value,
+                documentId.Value,
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<DocumentDbOutputDataSource>.Write(ModelReaderWriterOptions options)

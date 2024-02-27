@@ -322,7 +322,25 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(interval), Optional.ToNullable(lastSyncTime), Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Optional.ToNullable(syncState), schema.Value, Optional.ToNullable(enableConflictLogging), Optional.ToNullable(conflictLoggingRetentionInDays), Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serializedAdditionalRawData);
+            return new SyncGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                Optional.ToNullable(interval),
+                Optional.ToNullable(lastSyncTime),
+                Optional.ToNullable(conflictResolutionPolicy),
+                syncDatabaseId.Value,
+                hubDatabaseUserName.Value,
+                hubDatabasePassword.Value,
+                Optional.ToNullable(syncState),
+                schema.Value,
+                Optional.ToNullable(enableConflictLogging),
+                Optional.ToNullable(conflictLoggingRetentionInDays),
+                Optional.ToNullable(usePrivateLinkConnection),
+                privateEndpointName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupData>.Write(ModelReaderWriterOptions options)

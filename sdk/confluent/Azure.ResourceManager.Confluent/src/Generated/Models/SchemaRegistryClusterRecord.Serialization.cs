@@ -156,7 +156,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaRegistryClusterRecord(kind.Value, id.Value, metadata.Value, spec.Value, status.Value, serializedAdditionalRawData);
+            return new SchemaRegistryClusterRecord(
+                kind.Value,
+                id.Value,
+                metadata.Value,
+                spec.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaRegistryClusterRecord>.Write(ModelReaderWriterOptions options)

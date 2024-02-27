@@ -138,7 +138,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CosmosDbSqlApiSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, writeBehavior.Value);
+            return new CosmosDbSqlApiSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                writeBehavior.Value);
         }
 
         internal partial class CosmosDbSqlApiSinkConverter : JsonConverter<CosmosDbSqlApiSink>

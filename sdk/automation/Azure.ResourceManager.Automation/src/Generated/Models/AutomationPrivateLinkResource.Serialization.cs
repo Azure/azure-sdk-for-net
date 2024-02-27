@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AutomationPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationPrivateLinkResource>.Write(ModelReaderWriterOptions options)

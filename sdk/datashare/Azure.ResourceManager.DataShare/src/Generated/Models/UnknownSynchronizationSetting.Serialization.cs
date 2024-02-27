@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownSynchronizationSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownSynchronizationSetting(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareSynchronizationSettingData>.Write(ModelReaderWriterOptions options)

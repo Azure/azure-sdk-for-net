@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CSharpFunctionBinding(type, serializedAdditionalRawData, dllPath.Value, @class.Value, method.Value, Optional.ToNullable(updateMode));
+            return new CSharpFunctionBinding(
+                type,
+                serializedAdditionalRawData,
+                dllPath.Value,
+                @class.Value,
+                method.Value,
+                Optional.ToNullable(updateMode));
         }
 
         BinaryData IPersistableModel<CSharpFunctionBinding>.Write(ModelReaderWriterOptions options)

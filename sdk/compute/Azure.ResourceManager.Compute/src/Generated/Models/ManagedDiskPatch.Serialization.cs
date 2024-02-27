@@ -426,7 +426,30 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDiskPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, Optional.ToNullable(osType), Optional.ToNullable(diskSizeGB), encryptionSettingsGroup.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(maxShares), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, tier.Value, Optional.ToNullable(burstingEnabled), purchasePlan.Value, supportedCapabilities.Value, propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach), serializedAdditionalRawData);
+            return new ManagedDiskPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(diskSizeGB),
+                encryptionSettingsGroup.Value,
+                Optional.ToNullable(diskIOPSReadWrite),
+                Optional.ToNullable(diskMBpsReadWrite),
+                Optional.ToNullable(diskIOPSReadOnly),
+                Optional.ToNullable(diskMBpsReadOnly),
+                Optional.ToNullable(maxShares),
+                encryption.Value,
+                Optional.ToNullable(networkAccessPolicy),
+                diskAccessId.Value,
+                tier.Value,
+                Optional.ToNullable(burstingEnabled),
+                purchasePlan.Value,
+                supportedCapabilities.Value,
+                propertyUpdatesInProgress.Value,
+                Optional.ToNullable(supportsHibernation),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(dataAccessAuthMode),
+                Optional.ToNullable(optimizedForFrequentAttach),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDiskPatch>.Write(ModelReaderWriterOptions options)

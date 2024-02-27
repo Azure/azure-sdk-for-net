@@ -352,7 +352,24 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionAggregatedCostResult(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(azureCharges), Optional.ToNullable(marketplaceCharges), Optional.ToNullable(chargesBilledSeparately), currency.Value, children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>(), includedSubscriptions ?? new ChangeTrackingList<string>(), excludedSubscriptions ?? new ChangeTrackingList<string>(), Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ConsumptionAggregatedCostResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                billingPeriodId.Value,
+                Optional.ToNullable(usageStart),
+                Optional.ToNullable(usageEnd),
+                Optional.ToNullable(azureCharges),
+                Optional.ToNullable(marketplaceCharges),
+                Optional.ToNullable(chargesBilledSeparately),
+                currency.Value,
+                children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>(),
+                includedSubscriptions ?? new ChangeTrackingList<string>(),
+                excludedSubscriptions ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionAggregatedCostResult>.Write(ModelReaderWriterOptions options)

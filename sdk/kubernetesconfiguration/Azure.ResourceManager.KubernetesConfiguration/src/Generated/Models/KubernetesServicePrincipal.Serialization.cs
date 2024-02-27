@@ -204,7 +204,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesServicePrincipal(Optional.ToNullable(clientId), Optional.ToNullable(tenantId), clientSecret.Value, clientCertificate.Value, clientCertificatePassword.Value, Optional.ToNullable(clientCertificateSendChain), serializedAdditionalRawData);
+            return new KubernetesServicePrincipal(
+                Optional.ToNullable(clientId),
+                Optional.ToNullable(tenantId),
+                clientSecret.Value,
+                clientCertificate.Value,
+                clientCertificatePassword.Value,
+                Optional.ToNullable(clientCertificateSendChain),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesServicePrincipal>.Write(ModelReaderWriterOptions options)

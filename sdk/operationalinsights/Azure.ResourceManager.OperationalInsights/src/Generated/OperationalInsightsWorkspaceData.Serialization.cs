@@ -417,7 +417,29 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(), features.Value, defaultDataCollectionRuleResourceId.Value, serializedAdditionalRawData);
+            return new OperationalInsightsWorkspaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(customerId),
+                sku.Value,
+                Optional.ToNullable(retentionInDays),
+                workspaceCapping.Value,
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(modifiedDate),
+                Optional.ToNullable(publicNetworkAccessForIngestion),
+                Optional.ToNullable(publicNetworkAccessForQuery),
+                Optional.ToNullable(forceCmkForQuery),
+                privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(),
+                features.Value,
+                defaultDataCollectionRuleResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspaceData>.Write(ModelReaderWriterOptions options)

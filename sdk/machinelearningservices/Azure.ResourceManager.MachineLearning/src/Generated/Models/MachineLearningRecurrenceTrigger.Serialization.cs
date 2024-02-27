@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningRecurrenceTrigger(endTime.Value, startTime.Value, timeZone.Value, triggerType, serializedAdditionalRawData, frequency, interval, schedule.Value);
+            return new MachineLearningRecurrenceTrigger(
+                endTime.Value,
+                startTime.Value,
+                timeZone.Value,
+                triggerType,
+                serializedAdditionalRawData,
+                frequency,
+                interval,
+                schedule.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningRecurrenceTrigger>.Write(ModelReaderWriterOptions options)

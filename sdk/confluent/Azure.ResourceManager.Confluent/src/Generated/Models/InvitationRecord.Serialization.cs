@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InvitationRecord(kind.Value, id.Value, metadata.Value, email.Value, authType.Value, status.Value, acceptedAt.Value, expiresAt.Value, serializedAdditionalRawData);
+            return new InvitationRecord(
+                kind.Value,
+                id.Value,
+                metadata.Value,
+                email.Value,
+                authType.Value,
+                status.Value,
+                acceptedAt.Value,
+                expiresAt.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InvitationRecord>.Write(ModelReaderWriterOptions options)

@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetResult(id, name, type, systemData.Value, pricesheets ?? new ChangeTrackingList<PriceSheetProperties>(), nextLink.Value, download.Value, Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new PriceSheetResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                pricesheets ?? new ChangeTrackingList<PriceSheetProperties>(),
+                nextLink.Value,
+                download.Value,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetResult>.Write(ModelReaderWriterOptions options)

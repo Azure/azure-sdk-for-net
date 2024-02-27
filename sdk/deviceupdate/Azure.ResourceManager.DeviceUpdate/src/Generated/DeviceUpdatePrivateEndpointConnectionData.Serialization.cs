@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, groupIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                groupIds ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

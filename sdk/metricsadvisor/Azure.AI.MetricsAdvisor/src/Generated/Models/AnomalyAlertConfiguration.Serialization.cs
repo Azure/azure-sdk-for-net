@@ -129,7 +129,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), splitAlertByDimensions ?? new ChangeTrackingList<string>(), hookIds, metricAlertingConfigurations);
+            return new AnomalyAlertConfiguration(
+                anomalyAlertingConfigurationId.Value,
+                name,
+                description.Value,
+                Optional.ToNullable(crossMetricsOperator),
+                splitAlertByDimensions ?? new ChangeTrackingList<string>(),
+                hookIds,
+                metricAlertingConfigurations);
         }
     }
 }

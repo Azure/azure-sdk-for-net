@@ -340,7 +340,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatabricksSparkJarActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, mainClassName, parameters ?? new ChangeTrackingList<BinaryData>(), libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>());
+            return new DatabricksSparkJarActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                mainClassName,
+                parameters ?? new ChangeTrackingList<BinaryData>(),
+                libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>());
         }
 
         BinaryData IPersistableModel<DatabricksSparkJarActivity>.Write(ModelReaderWriterOptions options)

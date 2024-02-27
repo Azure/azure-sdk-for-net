@@ -196,7 +196,18 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SingleSignOnIdentitySource(name.Value, @alias.Value, domain.Value, baseUserDN.Value, baseGroupDN.Value, primaryServer.Value, secondaryServer.Value, Optional.ToNullable(ssl), username.Value, password.Value, serializedAdditionalRawData);
+            return new SingleSignOnIdentitySource(
+                name.Value,
+                @alias.Value,
+                domain.Value,
+                baseUserDN.Value,
+                baseGroupDN.Value,
+                primaryServer.Value,
+                secondaryServer.Value,
+                Optional.ToNullable(ssl),
+                username.Value,
+                password.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SingleSignOnIdentitySource>.Write(ModelReaderWriterOptions options)

@@ -167,7 +167,14 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SCClusterRecord(kind.Value, id.Value, name.Value, metadata.Value, spec.Value, status.Value, serializedAdditionalRawData);
+            return new SCClusterRecord(
+                kind.Value,
+                id.Value,
+                name.Value,
+                metadata.Value,
+                spec.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SCClusterRecord>.Write(ModelReaderWriterOptions options)

@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateAccessData(id, name, type, systemData.Value, Optional.ToNullable(enabled), virtualNetworks ?? new ChangeTrackingList<PrivateAccessVirtualNetwork>(), kind.Value, serializedAdditionalRawData);
+            return new PrivateAccessData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(enabled),
+                virtualNetworks ?? new ChangeTrackingList<PrivateAccessVirtualNetwork>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateAccessData>.Write(ModelReaderWriterOptions options)

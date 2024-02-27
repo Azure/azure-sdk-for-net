@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesHistoryRequestOptions(interval.Value, Optional.ToNullable(top), Optional.ToNullable(skip), skipToken.Value, Optional.ToNullable(resultFormat), serializedAdditionalRawData);
+            return new ResourcesHistoryRequestOptions(
+                interval.Value,
+                Optional.ToNullable(top),
+                Optional.ToNullable(skip),
+                skipToken.Value,
+                Optional.ToNullable(resultFormat),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesHistoryRequestOptions>.Write(ModelReaderWriterOptions options)

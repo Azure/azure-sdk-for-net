@@ -106,7 +106,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatMessageReceivedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, metadata ?? new ChangeTrackingDictionary<string, string>());
+            return new AcsChatMessageReceivedInThreadEventData(
+                transactionId.Value,
+                threadId.Value,
+                messageId.Value,
+                senderCommunicationIdentifier.Value,
+                senderDisplayName.Value,
+                Optional.ToNullable(composeTime),
+                type.Value,
+                Optional.ToNullable(version),
+                messageBody.Value,
+                metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsChatMessageReceivedInThreadEventDataConverter : JsonConverter<AcsChatMessageReceivedInThreadEventData>

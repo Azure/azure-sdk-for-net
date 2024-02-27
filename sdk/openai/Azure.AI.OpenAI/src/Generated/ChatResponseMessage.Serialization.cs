@@ -158,7 +158,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatResponseMessage(role, content, toolCalls ?? new ChangeTrackingList<ChatCompletionsToolCall>(), functionCall.Value, context.Value, serializedAdditionalRawData);
+            return new ChatResponseMessage(
+                role,
+                content,
+                toolCalls ?? new ChangeTrackingList<ChatCompletionsToolCall>(),
+                functionCall.Value,
+                context.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatResponseMessage>.Write(ModelReaderWriterOptions options)

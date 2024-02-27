@@ -226,7 +226,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlotDifference(id, name, type, systemData.Value, level.Value, settingType.Value, diffRule.Value, settingName.Value, valueInCurrentSlot.Value, valueInTargetSlot.Value, description.Value, kind.Value, serializedAdditionalRawData);
+            return new SlotDifference(
+                id,
+                name,
+                type,
+                systemData.Value,
+                level.Value,
+                settingType.Value,
+                diffRule.Value,
+                settingName.Value,
+                valueInCurrentSlot.Value,
+                valueInTargetSlot.Value,
+                description.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlotDifference>.Write(ModelReaderWriterOptions options)

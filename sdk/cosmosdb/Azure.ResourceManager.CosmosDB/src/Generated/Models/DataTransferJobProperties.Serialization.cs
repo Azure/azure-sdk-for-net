@@ -187,7 +187,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobProperties(jobName.Value, source, destination, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, serializedAdditionalRawData);
+            return new DataTransferJobProperties(
+                jobName.Value,
+                source,
+                destination,
+                status.Value,
+                Optional.ToNullable(processedCount),
+                Optional.ToNullable(totalCount),
+                Optional.ToNullable(lastUpdatedUtcTime),
+                Optional.ToNullable(workerCount),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobProperties>.Write(ModelReaderWriterOptions options)

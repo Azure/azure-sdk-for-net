@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaLiveOutputData(id, name, type, systemData.Value, description.Value, assetName.Value, Optional.ToNullable(archiveWindowLength), Optional.ToNullable(rewindWindowLength), manifestName.Value, hls.Value, Optional.ToNullable(outputSnapTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), provisioningState.Value, Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new MediaLiveOutputData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                assetName.Value,
+                Optional.ToNullable(archiveWindowLength),
+                Optional.ToNullable(rewindWindowLength),
+                manifestName.Value,
+                hls.Value,
+                Optional.ToNullable(outputSnapTime),
+                Optional.ToNullable(created),
+                Optional.ToNullable(lastModified),
+                provisioningState.Value,
+                Optional.ToNullable(resourceState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaLiveOutputData>.Write(ModelReaderWriterOptions options)

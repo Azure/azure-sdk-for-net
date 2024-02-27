@@ -344,7 +344,23 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsAccountCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), defaultDataLakeStoreAccount, dataLakeStoreAccounts, storageAccounts ?? new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(), computePolicies ?? new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(), firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), serializedAdditionalRawData);
+            return new DataLakeAnalyticsAccountCreateOrUpdateContent(
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                defaultDataLakeStoreAccount,
+                dataLakeStoreAccounts,
+                storageAccounts ?? new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                computePolicies ?? new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                Optional.ToNullable(firewallState),
+                Optional.ToNullable(firewallAllowAzureIPs),
+                Optional.ToNullable(newTier),
+                Optional.ToNullable(maxJobCount),
+                Optional.ToNullable(maxDegreeOfParallelism),
+                Optional.ToNullable(maxDegreeOfParallelismPerJob),
+                Optional.ToNullable(minPriorityPerJob),
+                Optional.ToNullable(queryStoreRetention),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

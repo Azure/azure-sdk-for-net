@@ -170,7 +170,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutStatus(completedRegions ?? new ChangeTrackingList<AzureLocation>(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), serializedAdditionalRawData, Optional.ToNullable(nextTrafficRegion), Optional.ToNullable(nextTrafficRegionScheduledTime), Optional.ToNullable(subscriptionReregistrationResult));
+            return new DefaultRolloutStatus(
+                completedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(nextTrafficRegion),
+                Optional.ToNullable(nextTrafficRegionScheduledTime),
+                Optional.ToNullable(subscriptionReregistrationResult));
         }
 
         BinaryData IPersistableModel<DefaultRolloutStatus>.Write(ModelReaderWriterOptions options)

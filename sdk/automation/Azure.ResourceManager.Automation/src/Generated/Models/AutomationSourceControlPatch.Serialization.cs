@@ -167,7 +167,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationSourceControlPatch(branch.Value, folderPath.Value, Optional.ToNullable(autoSync), Optional.ToNullable(publishRunbook), securityToken.Value, description.Value, serializedAdditionalRawData);
+            return new AutomationSourceControlPatch(
+                branch.Value,
+                folderPath.Value,
+                Optional.ToNullable(autoSync),
+                Optional.ToNullable(publishRunbook),
+                securityToken.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationSourceControlPatch>.Write(ModelReaderWriterOptions options)

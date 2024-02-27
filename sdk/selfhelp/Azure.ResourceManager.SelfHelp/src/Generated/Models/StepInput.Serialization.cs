@@ -195,7 +195,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StepInput(questionId.Value, questionType.Value, questionContent.Value, Optional.ToNullable(questionContentType), responseHint.Value, recommendedOption.Value, selectedOptionValue.Value, responseValidationProperties.Value, responseOptions ?? new ChangeTrackingList<ResponseConfig>(), serializedAdditionalRawData);
+            return new StepInput(
+                questionId.Value,
+                questionType.Value,
+                questionContent.Value,
+                Optional.ToNullable(questionContentType),
+                responseHint.Value,
+                recommendedOption.Value,
+                selectedOptionValue.Value,
+                responseValidationProperties.Value,
+                responseOptions ?? new ChangeTrackingList<ResponseConfig>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StepInput>.Write(ModelReaderWriterOptions options)

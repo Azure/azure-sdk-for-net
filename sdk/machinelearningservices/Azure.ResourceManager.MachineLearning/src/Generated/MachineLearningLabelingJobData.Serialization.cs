@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningLabelingJobData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new MachineLearningLabelingJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningLabelingJobData>.Write(ModelReaderWriterOptions options)

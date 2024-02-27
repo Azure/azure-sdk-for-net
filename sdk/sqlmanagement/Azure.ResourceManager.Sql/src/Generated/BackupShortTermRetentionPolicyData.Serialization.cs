@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupShortTermRetentionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(diffBackupIntervalInHours), serializedAdditionalRawData);
+            return new BackupShortTermRetentionPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(retentionDays),
+                Optional.ToNullable(diffBackupIntervalInHours),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupShortTermRetentionPolicyData>.Write(ModelReaderWriterOptions options)

@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivityParameterDefinition(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, validationSet ?? new ChangeTrackingList<AutomationActivityParameterValidationSet>(), serializedAdditionalRawData);
+            return new AutomationActivityParameterDefinition(
+                name.Value,
+                type.Value,
+                Optional.ToNullable(isMandatory),
+                Optional.ToNullable(isDynamic),
+                Optional.ToNullable(position),
+                Optional.ToNullable(valueFromPipeline),
+                Optional.ToNullable(valueFromPipelineByPropertyName),
+                Optional.ToNullable(valueFromRemainingArguments),
+                description.Value,
+                validationSet ?? new ChangeTrackingList<AutomationActivityParameterValidationSet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivityParameterDefinition>.Write(ModelReaderWriterOptions options)

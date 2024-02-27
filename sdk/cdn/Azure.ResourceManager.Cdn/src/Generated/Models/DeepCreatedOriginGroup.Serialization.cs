@@ -192,7 +192,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeepCreatedOriginGroup(name, healthProbeSettings.Value, origins ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, serializedAdditionalRawData);
+            return new DeepCreatedOriginGroup(
+                name,
+                healthProbeSettings.Value,
+                origins ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes),
+                responseBasedOriginErrorDetectionSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeepCreatedOriginGroup>.Write(ModelReaderWriterOptions options)

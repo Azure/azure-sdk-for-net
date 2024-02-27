@@ -255,7 +255,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpStep(id.Value, title.Value, description.Value, guidance.Value, Optional.ToNullable(executionStatus), executionStatusDescription.Value, Optional.ToNullable(type), Optional.ToNullable(isLastStep), inputs ?? new ChangeTrackingList<StepInput>(), automatedCheckResults.Value, insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(), error.Value, serializedAdditionalRawData);
+            return new SelfHelpStep(
+                id.Value,
+                title.Value,
+                description.Value,
+                guidance.Value,
+                Optional.ToNullable(executionStatus),
+                executionStatusDescription.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(isLastStep),
+                inputs ?? new ChangeTrackingList<StepInput>(),
+                automatedCheckResults.Value,
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpStep>.Write(ModelReaderWriterOptions options)

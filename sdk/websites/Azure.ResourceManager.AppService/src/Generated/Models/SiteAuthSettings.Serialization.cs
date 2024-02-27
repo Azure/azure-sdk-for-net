@@ -689,7 +689,51 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), allowedAudiences ?? new ChangeTrackingList<string>(), additionalLoginParams ?? new ChangeTrackingList<string>(), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, googleOAuthScopes ?? new ChangeTrackingList<string>(), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, facebookOAuthScopes ?? new ChangeTrackingList<string>(), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, gitHubOAuthScopes ?? new ChangeTrackingList<string>(), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, microsoftAccountOAuthScopes ?? new ChangeTrackingList<string>(), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteAuthSettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(enabled),
+                runtimeVersion.Value,
+                Optional.ToNullable(unauthenticatedClientAction),
+                Optional.ToNullable(tokenStoreEnabled),
+                allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(defaultProvider),
+                Optional.ToNullable(tokenRefreshExtensionHours),
+                clientId.Value,
+                clientSecret.Value,
+                clientSecretSettingName.Value,
+                clientSecretCertificateThumbprint.Value,
+                issuer.Value,
+                Optional.ToNullable(validateIssuer),
+                allowedAudiences ?? new ChangeTrackingList<string>(),
+                additionalLoginParams ?? new ChangeTrackingList<string>(),
+                aadClaimsAuthorization.Value,
+                googleClientId.Value,
+                googleClientSecret.Value,
+                googleClientSecretSettingName.Value,
+                googleOAuthScopes ?? new ChangeTrackingList<string>(),
+                facebookAppId.Value,
+                facebookAppSecret.Value,
+                facebookAppSecretSettingName.Value,
+                facebookOAuthScopes ?? new ChangeTrackingList<string>(),
+                gitHubClientId.Value,
+                gitHubClientSecret.Value,
+                gitHubClientSecretSettingName.Value,
+                gitHubOAuthScopes ?? new ChangeTrackingList<string>(),
+                twitterConsumerKey.Value,
+                twitterConsumerSecret.Value,
+                twitterConsumerSecretSettingName.Value,
+                microsoftAccountClientId.Value,
+                microsoftAccountClientSecret.Value,
+                microsoftAccountClientSecretSettingName.Value,
+                microsoftAccountOAuthScopes ?? new ChangeTrackingList<string>(),
+                isAuthFromFile.Value,
+                authFilePath.Value,
+                configVersion.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteAuthSettings>.Write(ModelReaderWriterOptions options)

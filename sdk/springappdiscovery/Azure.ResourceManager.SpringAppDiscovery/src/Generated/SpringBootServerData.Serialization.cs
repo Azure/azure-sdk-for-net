@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootServerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), properties.Value, serializedAdditionalRawData);
+            return new SpringBootServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootServerData>.Write(ModelReaderWriterOptions options)

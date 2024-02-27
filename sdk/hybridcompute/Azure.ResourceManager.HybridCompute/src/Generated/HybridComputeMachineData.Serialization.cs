@@ -669,7 +669,48 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachineData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>(), identity, Optional.ToNullable(kind), locationData.Value, agentConfiguration.Value, serviceStatuses.Value, cloudMetadata.Value, agentUpgrade.Value, osProfile.Value, licenseProfile.Value, provisioningState.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), errorDetails ?? new ChangeTrackingList<ResponseError>(), agentVersion.Value, Optional.ToNullable(vmId), displayName.Value, machineFqdn.Value, clientPublicKey.Value, osName.Value, osVersion.Value, osType.Value, Optional.ToNullable(vmUuid), extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>(), osSku.Value, osEdition.Value, domainName.Value, adFqdn.Value, dnsFqdn.Value, privateLinkScopeResourceId.Value, parentClusterResourceId.Value, mssqlDiscovered.Value, detectedProperties ?? new ChangeTrackingDictionary<string, string>(), networkProfile.Value, serializedAdditionalRawData);
+            return new HybridComputeMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>(),
+                identity,
+                Optional.ToNullable(kind),
+                locationData.Value,
+                agentConfiguration.Value,
+                serviceStatuses.Value,
+                cloudMetadata.Value,
+                agentUpgrade.Value,
+                osProfile.Value,
+                licenseProfile.Value,
+                provisioningState.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(lastStatusChange),
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                agentVersion.Value,
+                Optional.ToNullable(vmId),
+                displayName.Value,
+                machineFqdn.Value,
+                clientPublicKey.Value,
+                osName.Value,
+                osVersion.Value,
+                osType.Value,
+                Optional.ToNullable(vmUuid),
+                extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>(),
+                osSku.Value,
+                osEdition.Value,
+                domainName.Value,
+                adFqdn.Value,
+                dnsFqdn.Value,
+                privateLinkScopeResourceId.Value,
+                parentClusterResourceId.Value,
+                mssqlDiscovered.Value,
+                detectedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                networkProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeMachineData>.Write(ModelReaderWriterOptions options)

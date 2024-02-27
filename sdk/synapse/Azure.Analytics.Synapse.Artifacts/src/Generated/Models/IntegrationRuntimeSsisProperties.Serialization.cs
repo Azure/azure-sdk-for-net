@@ -140,7 +140,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(), additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo.Value,
+                Optional.ToNullable(licenseType),
+                customSetupScriptProperties.Value,
+                dataProxyProperties.Value,
+                Optional.ToNullable(edition),
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                additionalProperties);
         }
 
         internal partial class IntegrationRuntimeSsisPropertiesConverter : JsonConverter<IntegrationRuntimeSsisProperties>

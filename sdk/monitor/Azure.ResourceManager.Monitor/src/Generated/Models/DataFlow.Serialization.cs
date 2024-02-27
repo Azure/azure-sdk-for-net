@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlow(streams ?? new ChangeTrackingList<DataFlowStream>(), destinations ?? new ChangeTrackingList<string>(), transformKql.Value, outputStream.Value, builtInTransform.Value, serializedAdditionalRawData);
+            return new DataFlow(
+                streams ?? new ChangeTrackingList<DataFlowStream>(),
+                destinations ?? new ChangeTrackingList<string>(),
+                transformKql.Value,
+                outputStream.Value,
+                builtInTransform.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlow>.Write(ModelReaderWriterOptions options)

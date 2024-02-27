@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupSetInfo(backupSetId.Value, firstLsn.Value, lastLsn.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(backupType), listOfBackupFiles ?? new ChangeTrackingList<BackupFileInfo>(), databaseName.Value, Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishedDate), Optional.ToNullable(isBackupRestored), serializedAdditionalRawData);
+            return new BackupSetInfo(
+                backupSetId.Value,
+                firstLsn.Value,
+                lastLsn.Value,
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(backupType),
+                listOfBackupFiles ?? new ChangeTrackingList<BackupFileInfo>(),
+                databaseName.Value,
+                Optional.ToNullable(backupStartDate),
+                Optional.ToNullable(backupFinishedDate),
+                Optional.ToNullable(isBackupRestored),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupSetInfo>.Write(ModelReaderWriterOptions options)

@@ -264,7 +264,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationHealthErrorInfo(affectedResourceType.Value, affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(), childErrors ?? new ChangeTrackingList<DataReplicationInnerHealthErrorInfo>(), code.Value, healthCategory.Value, category.Value, severity.Value, source.Value, Optional.ToNullable(creationTime), Optional.ToNullable(isCustomerResolvable), summary.Value, message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
+            return new DataReplicationHealthErrorInfo(
+                affectedResourceType.Value,
+                affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(),
+                childErrors ?? new ChangeTrackingList<DataReplicationInnerHealthErrorInfo>(),
+                code.Value,
+                healthCategory.Value,
+                category.Value,
+                severity.Value,
+                source.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(isCustomerResolvable),
+                summary.Value,
+                message.Value,
+                causes.Value,
+                recommendation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationHealthErrorInfo>.Write(ModelReaderWriterOptions options)

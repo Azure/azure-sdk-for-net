@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountRecord(kind.Value, id.Value, metadata.Value, displayName.Value, description.Value, serializedAdditionalRawData);
+            return new ServiceAccountRecord(
+                kind.Value,
+                id.Value,
+                metadata.Value,
+                displayName.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountRecord>.Write(ModelReaderWriterOptions options)

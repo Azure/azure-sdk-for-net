@@ -165,7 +165,15 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), serializedAdditionalRawData);
+            return new AudioOverlay(
+                odataType,
+                inputLabel,
+                Optional.ToNullable(start),
+                Optional.ToNullable(end),
+                Optional.ToNullable(fadeInDuration),
+                Optional.ToNullable(fadeOutDuration),
+                Optional.ToNullable(audioGainLevel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioOverlay>.Write(ModelReaderWriterOptions options)

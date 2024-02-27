@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDimensions(Optional.ToNullable(length), Optional.ToNullable(height), Optional.ToNullable(width), Optional.ToNullable(lengthHeightUnit), Optional.ToNullable(weight), Optional.ToNullable(depth), Optional.ToNullable(weightUnit), serializedAdditionalRawData);
+            return new ProductDimensions(
+                Optional.ToNullable(length),
+                Optional.ToNullable(height),
+                Optional.ToNullable(width),
+                Optional.ToNullable(lengthHeightUnit),
+                Optional.ToNullable(weight),
+                Optional.ToNullable(depth),
+                Optional.ToNullable(weightUnit),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDimensions>.Write(ModelReaderWriterOptions options)

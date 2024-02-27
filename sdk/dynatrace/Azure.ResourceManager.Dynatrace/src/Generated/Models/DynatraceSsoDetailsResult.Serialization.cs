@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceSsoDetailsResult(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, aadDomains ?? new ChangeTrackingList<string>(), adminUsers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DynatraceSsoDetailsResult(
+                Optional.ToNullable(isSsoEnabled),
+                metadataUrl.Value,
+                singleSignOnUrl.Value,
+                aadDomains ?? new ChangeTrackingList<string>(),
+                adminUsers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceSsoDetailsResult>.Write(ModelReaderWriterOptions options)

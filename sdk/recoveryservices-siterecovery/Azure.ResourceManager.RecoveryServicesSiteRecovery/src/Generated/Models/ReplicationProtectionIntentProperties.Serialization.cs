@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationProtectionIntentProperties(friendlyName.Value, jobId.Value, jobState.Value, Optional.ToNullable(isActive), creationTimeUTC.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new ReplicationProtectionIntentProperties(
+                friendlyName.Value,
+                jobId.Value,
+                jobState.Value,
+                Optional.ToNullable(isActive),
+                creationTimeUTC.Value,
+                providerSpecificDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationProtectionIntentProperties>.Write(ModelReaderWriterOptions options)

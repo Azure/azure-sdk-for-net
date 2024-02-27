@@ -181,7 +181,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MultiplePipelineTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, pipelines ?? new ChangeTrackingList<TriggerPipelineReference>());
+            return new MultiplePipelineTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>());
         }
 
         BinaryData IPersistableModel<MultiplePipelineTrigger>.Write(ModelReaderWriterOptions options)

@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ForEachActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, Optional.ToNullable(isSequential), Optional.ToNullable(batchCount), items, activities);
+            return new ForEachActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                Optional.ToNullable(isSequential),
+                Optional.ToNullable(batchCount),
+                items,
+                activities);
         }
 
         BinaryData IPersistableModel<ForEachActivity>.Write(ModelReaderWriterOptions options)

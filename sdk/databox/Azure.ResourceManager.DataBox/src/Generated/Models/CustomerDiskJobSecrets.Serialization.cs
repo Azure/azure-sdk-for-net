@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(), carrierAccountNumber.Value);
+            return new CustomerDiskJobSecrets(
+                jobSecretsType,
+                dcAccessSecurityCode.Value,
+                error.Value,
+                serializedAdditionalRawData,
+                diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(),
+                carrierAccountNumber.Value);
         }
 
         BinaryData IPersistableModel<CustomerDiskJobSecrets>.Write(ModelReaderWriterOptions options)

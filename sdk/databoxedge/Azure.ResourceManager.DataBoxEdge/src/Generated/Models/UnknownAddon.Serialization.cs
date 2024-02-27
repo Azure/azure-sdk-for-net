@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAddon(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownAddon(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeRoleAddonData>.Write(ModelReaderWriterOptions options)

@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CronTrigger(endTime.Value, startTime.Value, timeZone.Value, triggerType, serializedAdditionalRawData, expression);
+            return new CronTrigger(
+                endTime.Value,
+                startTime.Value,
+                timeZone.Value,
+                triggerType,
+                serializedAdditionalRawData,
+                expression);
         }
 
         BinaryData IPersistableModel<CronTrigger>.Write(ModelReaderWriterOptions options)

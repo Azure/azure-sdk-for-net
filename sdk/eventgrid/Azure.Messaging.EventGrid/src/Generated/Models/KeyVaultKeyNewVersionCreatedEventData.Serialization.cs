@@ -74,7 +74,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new KeyVaultKeyNewVersionCreatedEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+            return new KeyVaultKeyNewVersionCreatedEventData(
+                id.Value,
+                vaultName.Value,
+                objectType.Value,
+                objectName.Value,
+                version.Value,
+                Optional.ToNullable(nbf),
+                Optional.ToNullable(exp));
         }
 
         internal partial class KeyVaultKeyNewVersionCreatedEventDataConverter : JsonConverter<KeyVaultKeyNewVersionCreatedEventData>

@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGatewayData(id, name, type, systemData.Value, locationData.Value, description.Value, serializedAdditionalRawData);
+            return new ApiManagementGatewayData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                locationData.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGatewayData>.Write(ModelReaderWriterOptions options)

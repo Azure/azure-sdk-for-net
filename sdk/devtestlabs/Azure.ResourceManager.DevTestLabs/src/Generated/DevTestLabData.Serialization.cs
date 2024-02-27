@@ -464,7 +464,34 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>(), mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>(), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, extendedProperties ?? new ChangeTrackingDictionary<string, string>(), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                defaultStorageAccount.Value,
+                defaultPremiumStorageAccount.Value,
+                artifactsStorageAccount.Value,
+                premiumDataDiskStorageAccount.Value,
+                vaultName.Value,
+                Optional.ToNullable(labStorageType),
+                mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>(),
+                mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(premiumDataDisks),
+                Optional.ToNullable(environmentPermission),
+                announcement.Value,
+                support.Value,
+                vmCreationResourceGroup.Value,
+                publicIPId.Value,
+                loadBalancerId.Value,
+                networkSecurityGroupId.Value,
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState.Value,
+                Optional.ToNullable(uniqueIdentifier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabData>.Write(ModelReaderWriterOptions options)

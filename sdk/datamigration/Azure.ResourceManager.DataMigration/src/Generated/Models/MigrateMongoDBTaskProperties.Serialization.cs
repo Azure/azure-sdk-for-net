@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMongoDBTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MongoDBProgress>());
+            return new MigrateMongoDBTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input.Value,
+                output ?? new ChangeTrackingList<MongoDBProgress>());
         }
 
         BinaryData IPersistableModel<MigrateMongoDBTaskProperties>.Write(ModelReaderWriterOptions options)

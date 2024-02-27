@@ -187,7 +187,14 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingIntentData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), routingPolicies ?? new ChangeTrackingList<RoutingPolicy>(), Optional.ToNullable(provisioningState));
+            return new RoutingIntentData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                routingPolicies ?? new ChangeTrackingList<RoutingPolicy>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<RoutingIntentData>.Write(ModelReaderWriterOptions options)

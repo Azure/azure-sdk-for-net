@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ManagedInstanceAdministratorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(administratorType),
+                login.Value,
+                Optional.ToNullable(sid),
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceAdministratorData>.Write(ModelReaderWriterOptions options)

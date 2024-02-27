@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountLocation(id.Value, Optional.ToNullable(locationName), documentEndpoint.Value, provisioningState.Value, Optional.ToNullable(failoverPriority), Optional.ToNullable(isZoneRedundant), serializedAdditionalRawData);
+            return new CosmosDBAccountLocation(
+                id.Value,
+                Optional.ToNullable(locationName),
+                documentEndpoint.Value,
+                provisioningState.Value,
+                Optional.ToNullable(failoverPriority),
+                Optional.ToNullable(isZoneRedundant),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountLocation>.Write(ModelReaderWriterOptions options)

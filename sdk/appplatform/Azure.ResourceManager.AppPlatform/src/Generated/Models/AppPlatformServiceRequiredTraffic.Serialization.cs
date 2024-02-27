@@ -178,7 +178,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceRequiredTraffic(protocol.Value, Optional.ToNullable(port), ips ?? new ChangeTrackingList<IPAddress>(), fqdns ?? new ChangeTrackingList<string>(), Optional.ToNullable(direction), serializedAdditionalRawData);
+            return new AppPlatformServiceRequiredTraffic(
+                protocol.Value,
+                Optional.ToNullable(port),
+                ips ?? new ChangeTrackingList<IPAddress>(),
+                fqdns ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(direction),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceRequiredTraffic>.Write(ModelReaderWriterOptions options)

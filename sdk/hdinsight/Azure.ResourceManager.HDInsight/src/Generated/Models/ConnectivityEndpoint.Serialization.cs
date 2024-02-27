@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityEndpoint(name.Value, protocol.Value, location.Value, Optional.ToNullable(port), privateIPAddress.Value, serializedAdditionalRawData);
+            return new ConnectivityEndpoint(
+                name.Value,
+                protocol.Value,
+                location.Value,
+                Optional.ToNullable(port),
+                privateIPAddress.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityEndpoint>.Write(ModelReaderWriterOptions options)

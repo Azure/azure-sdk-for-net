@@ -221,7 +221,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapBWLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, server, systemNumber, clientId, userName.Value, password.Value, encryptedCredential.Value);
+            return new SapBWLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                userName.Value,
+                password.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class SapBWLinkedServiceConverter : JsonConverter<SapBWLinkedService>

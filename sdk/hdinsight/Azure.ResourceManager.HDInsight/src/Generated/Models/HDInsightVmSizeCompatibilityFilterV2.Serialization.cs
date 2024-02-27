@@ -261,7 +261,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVmSizeCompatibilityFilterV2(Optional.ToNullable(filterMode), regions ?? new ChangeTrackingList<string>(), clusterFlavors ?? new ChangeTrackingList<string>(), nodeTypes ?? new ChangeTrackingList<string>(), clusterVersions ?? new ChangeTrackingList<string>(), osType ?? new ChangeTrackingList<HDInsightOSType>(), vmSizes ?? new ChangeTrackingList<string>(), espApplied.Value, computeIsolationSupported.Value, serializedAdditionalRawData);
+            return new HDInsightVmSizeCompatibilityFilterV2(
+                Optional.ToNullable(filterMode),
+                regions ?? new ChangeTrackingList<string>(),
+                clusterFlavors ?? new ChangeTrackingList<string>(),
+                nodeTypes ?? new ChangeTrackingList<string>(),
+                clusterVersions ?? new ChangeTrackingList<string>(),
+                osType ?? new ChangeTrackingList<HDInsightOSType>(),
+                vmSizes ?? new ChangeTrackingList<string>(),
+                espApplied.Value,
+                computeIsolationSupported.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.Write(ModelReaderWriterOptions options)

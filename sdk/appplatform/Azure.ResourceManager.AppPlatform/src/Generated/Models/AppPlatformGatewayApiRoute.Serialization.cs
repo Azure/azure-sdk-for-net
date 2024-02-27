@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Optional.ToNullable(ssoEnabled), Optional.ToNullable(tokenRelay), predicates ?? new ChangeTrackingList<string>(), filters ?? new ChangeTrackingList<string>(), Optional.ToNullable(order), tags ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AppPlatformGatewayApiRoute(
+                title.Value,
+                description.Value,
+                uri.Value,
+                Optional.ToNullable(ssoEnabled),
+                Optional.ToNullable(tokenRelay),
+                predicates ?? new ChangeTrackingList<string>(),
+                filters ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(order),
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayApiRoute>.Write(ModelReaderWriterOptions options)

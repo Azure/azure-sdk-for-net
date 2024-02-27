@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ScheduleTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value, additionalProperties);
+            return new ScheduleTriggerRecurrence(
+                Optional.ToNullable(frequency),
+                Optional.ToNullable(interval),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeZone.Value,
+                schedule.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ScheduleTriggerRecurrence>.Write(ModelReaderWriterOptions options)

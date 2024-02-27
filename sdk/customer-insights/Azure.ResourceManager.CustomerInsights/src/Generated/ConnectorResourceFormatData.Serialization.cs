@@ -322,7 +322,23 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(connectorId), connectorName.Value, Optional.ToNullable(connectorType), displayName.Value, description.Value, connectorProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), Optional.ToNullable(created), Optional.ToNullable(lastModified), Optional.ToNullable(state), Optional.ToNullable(tenantId), Optional.ToNullable(isInternal), serializedAdditionalRawData);
+            return new ConnectorResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(connectorId),
+                connectorName.Value,
+                Optional.ToNullable(connectorType),
+                displayName.Value,
+                description.Value,
+                connectorProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                Optional.ToNullable(created),
+                Optional.ToNullable(lastModified),
+                Optional.ToNullable(state),
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(isInternal),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorResourceFormatData>.Write(ModelReaderWriterOptions options)

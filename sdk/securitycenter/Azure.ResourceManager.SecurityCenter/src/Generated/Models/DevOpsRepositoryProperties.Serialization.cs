@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevOpsRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), parentOrgName.Value, parentProjectName.Value, repoId.Value, repoUrl.Value, visibility.Value, Optional.ToNullable(onboardingState), actionableRemediation.Value, serializedAdditionalRawData);
+            return new DevOpsRepositoryProperties(
+                provisioningStatusMessage.Value,
+                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
+                Optional.ToNullable(provisioningState),
+                parentOrgName.Value,
+                parentProjectName.Value,
+                repoId.Value,
+                repoUrl.Value,
+                visibility.Value,
+                Optional.ToNullable(onboardingState),
+                actionableRemediation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsRepositoryProperties>.Write(ModelReaderWriterOptions options)

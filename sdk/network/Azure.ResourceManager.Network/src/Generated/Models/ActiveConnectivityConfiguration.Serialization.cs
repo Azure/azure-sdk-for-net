@@ -291,7 +291,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveConnectivityConfiguration(id.Value, configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(), description.Value, Optional.ToNullable(connectivityTopology), hubs ?? new ChangeTrackingList<ConnectivityHub>(), Optional.ToNullable(isGlobal), appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), serializedAdditionalRawData, Optional.ToNullable(commitTime), Optional.ToNullable(region));
+            return new ActiveConnectivityConfiguration(
+                id.Value,
+                configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                description.Value,
+                Optional.ToNullable(connectivityTopology),
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
+                Optional.ToNullable(isGlobal),
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deleteExistingPeering),
+                Optional.ToNullable(resourceGuid),
+                serializedAdditionalRawData,
+                Optional.ToNullable(commitTime),
+                Optional.ToNullable(region));
         }
 
         BinaryData IPersistableModel<ActiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)

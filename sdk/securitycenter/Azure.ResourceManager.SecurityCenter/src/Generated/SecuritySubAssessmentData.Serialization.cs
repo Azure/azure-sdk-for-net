@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySubAssessmentData(id, name, type, systemData.Value, id0.Value, displayName.Value, status.Value, remediation.Value, impact.Value, category.Value, description.Value, Optional.ToNullable(timeGenerated), resourceDetails.Value, additionalData.Value, serializedAdditionalRawData);
+            return new SecuritySubAssessmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                id0.Value,
+                displayName.Value,
+                status.Value,
+                remediation.Value,
+                impact.Value,
+                category.Value,
+                description.Value,
+                Optional.ToNullable(timeGenerated),
+                resourceDetails.Value,
+                additionalData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySubAssessmentData>.Write(ModelReaderWriterOptions options)

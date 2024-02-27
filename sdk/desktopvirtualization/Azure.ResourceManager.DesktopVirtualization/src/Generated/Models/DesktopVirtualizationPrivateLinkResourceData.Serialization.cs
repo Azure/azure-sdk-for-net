@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DesktopVirtualizationPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DesktopVirtualizationPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DesktopVirtualizationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

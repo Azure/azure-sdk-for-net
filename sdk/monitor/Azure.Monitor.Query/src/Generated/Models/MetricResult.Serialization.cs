@@ -75,7 +75,15 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricResult(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries);
+            return new MetricResult(
+                id,
+                type,
+                name,
+                displayDescription.Value,
+                errorCode.Value,
+                errorMessage.Value,
+                unit,
+                timeseries);
         }
     }
 }

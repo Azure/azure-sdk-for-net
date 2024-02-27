@@ -350,7 +350,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CommonDataServiceForAppsLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential, encryptedCredential.Value);
+            return new CommonDataServiceForAppsLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                deploymentType,
+                hostName.Value,
+                port.Value,
+                serviceUri.Value,
+                organizationName.Value,
+                authenticationType,
+                username.Value,
+                password,
+                servicePrincipalId.Value,
+                servicePrincipalCredentialType.Value,
+                servicePrincipalCredential,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<CommonDataServiceForAppsLinkedService>.Write(ModelReaderWriterOptions options)

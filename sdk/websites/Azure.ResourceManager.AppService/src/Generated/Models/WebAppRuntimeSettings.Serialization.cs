@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppRuntimeSettings(runtimeVersion.Value, Optional.ToNullable(remoteDebuggingSupported), appInsightsSettings.Value, gitHubActionSettings.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), serializedAdditionalRawData);
+            return new WebAppRuntimeSettings(
+                runtimeVersion.Value,
+                Optional.ToNullable(remoteDebuggingSupported),
+                appInsightsSettings.Value,
+                gitHubActionSettings.Value,
+                Optional.ToNullable(isPreview),
+                Optional.ToNullable(isDeprecated),
+                Optional.ToNullable(isHidden),
+                Optional.ToNullable(endOfLifeDate),
+                Optional.ToNullable(isAutoUpdate),
+                Optional.ToNullable(isEarlyAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppRuntimeSettings>.Write(ModelReaderWriterOptions options)

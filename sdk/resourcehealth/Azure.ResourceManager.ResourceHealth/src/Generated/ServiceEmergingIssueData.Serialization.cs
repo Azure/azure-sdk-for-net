@@ -204,7 +204,15 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEmergingIssueData(id, name, type, systemData.Value, Optional.ToNullable(refreshTimestamp), statusBanners ?? new ChangeTrackingList<EmergingIssueBannerType>(), statusActiveEvents ?? new ChangeTrackingList<EmergingIssueActiveEventType>(), serializedAdditionalRawData);
+            return new ServiceEmergingIssueData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(refreshTimestamp),
+                statusBanners ?? new ChangeTrackingList<EmergingIssueBannerType>(),
+                statusActiveEvents ?? new ChangeTrackingList<EmergingIssueActiveEventType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceEmergingIssueData>.Write(ModelReaderWriterOptions options)

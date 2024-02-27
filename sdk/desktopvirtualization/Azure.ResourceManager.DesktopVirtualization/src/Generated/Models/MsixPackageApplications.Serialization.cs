@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackageApplications(appId.Value, description.Value, appUserModelId.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value, serializedAdditionalRawData);
+            return new MsixPackageApplications(
+                appId.Value,
+                description.Value,
+                appUserModelId.Value,
+                friendlyName.Value,
+                iconImageName.Value,
+                rawIcon.Value,
+                rawPng.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackageApplications>.Write(ModelReaderWriterOptions options)

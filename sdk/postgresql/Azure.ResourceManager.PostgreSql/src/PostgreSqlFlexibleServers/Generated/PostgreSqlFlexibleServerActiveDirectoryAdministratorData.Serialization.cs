@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(principalType), principalName.Value, Optional.ToNullable(objectId), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(principalType),
+                principalName.Value,
+                Optional.ToNullable(objectId),
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Write(ModelReaderWriterOptions options)

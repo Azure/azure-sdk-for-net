@@ -373,7 +373,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, host, port, Optional.ToNullable(serverType), Optional.ToNullable(thriftTransportProtocol), authenticationType, username.Value, password, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new SparkLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                port,
+                Optional.ToNullable(serverType),
+                Optional.ToNullable(thriftTransportProtocol),
+                authenticationType,
+                username.Value,
+                password,
+                httpPath.Value,
+                enableSsl.Value,
+                trustedCertPath.Value,
+                useSystemTrustStore.Value,
+                allowHostNameCNMismatch.Value,
+                allowSelfSignedServerCert.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SparkLinkedService>.Write(ModelReaderWriterOptions options)

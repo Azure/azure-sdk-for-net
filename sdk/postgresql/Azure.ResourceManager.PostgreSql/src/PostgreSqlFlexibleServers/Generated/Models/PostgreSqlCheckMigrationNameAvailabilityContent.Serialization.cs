@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlCheckMigrationNameAvailabilityContent(name, type, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value, serializedAdditionalRawData);
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(
+                name,
+                type,
+                Optional.ToNullable(nameAvailable),
+                Optional.ToNullable(reason),
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

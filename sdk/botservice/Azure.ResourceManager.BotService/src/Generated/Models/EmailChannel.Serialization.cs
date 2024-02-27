@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            return new EmailChannel(
+                channelName,
+                Optional.ToNullable(etag),
+                provisioningState.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                properties.Value);
         }
 
         BinaryData IPersistableModel<EmailChannel>.Write(ModelReaderWriterOptions options)

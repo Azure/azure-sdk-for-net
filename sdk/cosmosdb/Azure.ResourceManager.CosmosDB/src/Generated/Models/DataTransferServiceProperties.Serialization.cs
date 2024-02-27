@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataTransferServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, locations ?? new ChangeTrackingList<DataTransferRegionalService>());
+            return new DataTransferServiceProperties(
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(instanceSize),
+                Optional.ToNullable(instanceCount),
+                serviceType,
+                Optional.ToNullable(status),
+                additionalProperties,
+                locations ?? new ChangeTrackingList<DataTransferRegionalService>());
         }
 
         BinaryData IPersistableModel<DataTransferServiceProperties>.Write(ModelReaderWriterOptions options)

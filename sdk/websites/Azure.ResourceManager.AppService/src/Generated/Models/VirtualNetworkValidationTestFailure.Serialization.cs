@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkValidationTestFailure(id, name, type, systemData.Value, testName.Value, details.Value, kind.Value, serializedAdditionalRawData);
+            return new VirtualNetworkValidationTestFailure(
+                id,
+                name,
+                type,
+                systemData.Value,
+                testName.Value,
+                details.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkValidationTestFailure>.Write(ModelReaderWriterOptions options)

@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentAnalyticsItem(id.Value, name.Value, content.Value, version.Value, Optional.ToNullable(scope), Optional.ToNullable(type), timeCreated.Value, timeModified.Value, properties.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentAnalyticsItem(
+                id.Value,
+                name.Value,
+                content.Value,
+                version.Value,
+                Optional.ToNullable(scope),
+                Optional.ToNullable(type),
+                timeCreated.Value,
+                timeModified.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.Write(ModelReaderWriterOptions options)

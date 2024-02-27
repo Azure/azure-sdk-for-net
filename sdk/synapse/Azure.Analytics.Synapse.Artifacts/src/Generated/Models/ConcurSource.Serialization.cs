@@ -138,7 +138,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ConcurSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
+            return new ConcurSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                query.Value);
         }
 
         internal partial class ConcurSourceConverter : JsonConverter<ConcurSource>

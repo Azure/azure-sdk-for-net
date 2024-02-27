@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionMeterDetailsInfo(meterName.Value, meterCategory.Value, meterSubCategory.Value, unitOfMeasure.Value, serviceFamily.Value, serializedAdditionalRawData);
+            return new ConsumptionMeterDetailsInfo(
+                meterName.Value,
+                meterCategory.Value,
+                meterSubCategory.Value,
+                unitOfMeasure.Value,
+                serviceFamily.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionMeterDetailsInfo>.Write(ModelReaderWriterOptions options)

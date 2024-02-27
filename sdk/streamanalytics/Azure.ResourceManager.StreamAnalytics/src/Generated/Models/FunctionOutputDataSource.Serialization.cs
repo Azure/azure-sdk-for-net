@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionOutputDataSource(type, serializedAdditionalRawData, functionAppName.Value, functionName.Value, apiKey.Value, Optional.ToNullable(maxBatchSize), Optional.ToNullable(maxBatchCount));
+            return new FunctionOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                functionAppName.Value,
+                functionName.Value,
+                apiKey.Value,
+                Optional.ToNullable(maxBatchSize),
+                Optional.ToNullable(maxBatchCount));
         }
 
         BinaryData IPersistableModel<FunctionOutputDataSource>.Write(ModelReaderWriterOptions options)

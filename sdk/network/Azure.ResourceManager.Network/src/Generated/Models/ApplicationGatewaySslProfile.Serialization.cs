@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslProfile(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), trustedClientCertificates ?? new ChangeTrackingList<WritableSubResource>(), sslPolicy.Value, clientAuthConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewaySslProfile(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                trustedClientCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                sslPolicy.Value,
+                clientAuthConfiguration.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslProfile>.Write(ModelReaderWriterOptions options)

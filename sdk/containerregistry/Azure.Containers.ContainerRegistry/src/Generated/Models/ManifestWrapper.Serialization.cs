@@ -152,7 +152,19 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestWrapper(Optional.ToNullable(schemaVersion), mediaType.Value, manifests ?? new ChangeTrackingList<ManifestListAttributes>(), config.Value, layers ?? new ChangeTrackingList<OciDescriptor>(), annotations.Value, architecture.Value, name.Value, tag.Value, fsLayers ?? new ChangeTrackingList<FsLayer>(), history ?? new ChangeTrackingList<History>(), signatures ?? new ChangeTrackingList<ImageSignature>());
+            return new ManifestWrapper(
+                Optional.ToNullable(schemaVersion),
+                mediaType.Value,
+                manifests ?? new ChangeTrackingList<ManifestListAttributes>(),
+                config.Value,
+                layers ?? new ChangeTrackingList<OciDescriptor>(),
+                annotations.Value,
+                architecture.Value,
+                name.Value,
+                tag.Value,
+                fsLayers ?? new ChangeTrackingList<FsLayer>(),
+                history ?? new ChangeTrackingList<History>(),
+                signatures ?? new ChangeTrackingList<ImageSignature>());
         }
     }
 }

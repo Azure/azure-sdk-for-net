@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubCertificateWithNonceDescription(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new IotHubCertificateWithNonceDescription(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubCertificateWithNonceDescription>.Write(ModelReaderWriterOptions options)

@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartitionMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(), serializedAdditionalRawData, Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
+            return new PartitionMetric(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeGrain.Value,
+                Optional.ToNullable(unit),
+                name.Value,
+                metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(partitionId),
+                partitionKeyRangeId.Value);
         }
 
         BinaryData IPersistableModel<PartitionMetric>.Write(ModelReaderWriterOptions options)

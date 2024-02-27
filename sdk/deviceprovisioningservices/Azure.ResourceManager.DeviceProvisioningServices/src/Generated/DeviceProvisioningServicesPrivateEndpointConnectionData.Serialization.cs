@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServicesPrivateEndpointConnectionData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new DeviceProvisioningServicesPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

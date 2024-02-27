@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubJobInfo(jobId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(type), Optional.ToNullable(status), failureReason.Value, statusMessage.Value, parentJobId.Value, serializedAdditionalRawData);
+            return new IotHubJobInfo(
+                jobId.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(endTimeUtc),
+                Optional.ToNullable(type),
+                Optional.ToNullable(status),
+                failureReason.Value,
+                statusMessage.Value,
+                parentJobId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubJobInfo>.Write(ModelReaderWriterOptions options)

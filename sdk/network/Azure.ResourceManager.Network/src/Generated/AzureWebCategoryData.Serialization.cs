@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureWebCategoryData(id, name, type, systemData.Value, Optional.ToNullable(etag), group.Value, serializedAdditionalRawData);
+            return new AzureWebCategoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                group.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureWebCategoryData>.Write(ModelReaderWriterOptions options)

@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTrack(odataType, serializedAdditionalRawData, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
+            return new AudioTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName.Value,
+                displayName.Value,
+                languageCode.Value,
+                hlsSettings.Value,
+                dashSettings.Value,
+                Optional.ToNullable(mpeg4TrackId),
+                Optional.ToNullable(bitRate));
         }
 
         BinaryData IPersistableModel<AudioTrack>.Write(ModelReaderWriterOptions options)

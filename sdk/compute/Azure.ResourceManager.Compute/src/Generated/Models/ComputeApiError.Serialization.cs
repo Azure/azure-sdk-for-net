@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeApiError(details ?? new ChangeTrackingList<ComputeApiErrorBase>(), innererror.Value, code.Value, target.Value, message.Value, serializedAdditionalRawData);
+            return new ComputeApiError(
+                details ?? new ChangeTrackingList<ComputeApiErrorBase>(),
+                innererror.Value,
+                code.Value,
+                target.Value,
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeApiError>.Write(ModelReaderWriterOptions options)

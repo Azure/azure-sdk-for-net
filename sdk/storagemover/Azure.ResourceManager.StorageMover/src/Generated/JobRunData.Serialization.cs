@@ -568,7 +568,40 @@ namespace Azure.ResourceManager.StorageMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobRunData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(executionStartTime), Optional.ToNullable(executionEndTime), Optional.ToNullable(lastStatusUpdate), Optional.ToNullable(itemsScanned), Optional.ToNullable(itemsExcluded), Optional.ToNullable(itemsUnsupported), Optional.ToNullable(itemsNoTransferNeeded), Optional.ToNullable(itemsFailed), Optional.ToNullable(itemsTransferred), Optional.ToNullable(bytesScanned), Optional.ToNullable(bytesExcluded), Optional.ToNullable(bytesUnsupported), Optional.ToNullable(bytesNoTransferNeeded), Optional.ToNullable(bytesFailed), Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new JobRunData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(scanStatus),
+                agentName.Value,
+                agentResourceId.Value,
+                Optional.ToNullable(executionStartTime),
+                Optional.ToNullable(executionEndTime),
+                Optional.ToNullable(lastStatusUpdate),
+                Optional.ToNullable(itemsScanned),
+                Optional.ToNullable(itemsExcluded),
+                Optional.ToNullable(itemsUnsupported),
+                Optional.ToNullable(itemsNoTransferNeeded),
+                Optional.ToNullable(itemsFailed),
+                Optional.ToNullable(itemsTransferred),
+                Optional.ToNullable(bytesScanned),
+                Optional.ToNullable(bytesExcluded),
+                Optional.ToNullable(bytesUnsupported),
+                Optional.ToNullable(bytesNoTransferNeeded),
+                Optional.ToNullable(bytesFailed),
+                Optional.ToNullable(bytesTransferred),
+                sourceName.Value,
+                sourceResourceId.Value,
+                sourceProperties.Value,
+                targetName.Value,
+                targetResourceId.Value,
+                targetProperties.Value,
+                jobDefinitionProperties.Value,
+                error.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options)

@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration), serializedAdditionalRawData);
+            return new SubscriptionRenewalTermDetails(
+                billingFrequency.Value,
+                productTypeId.Value,
+                Optional.ToNullable(quantity),
+                skuId.Value,
+                Optional.ToNullable(termDuration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionRenewalTermDetails>.Write(ModelReaderWriterOptions options)

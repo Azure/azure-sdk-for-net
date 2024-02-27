@@ -213,7 +213,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostnameConfiguration(type, hostName, keyVaultId.Value, identityClientId.Value, encodedCertificate.Value, certificatePassword.Value, Optional.ToNullable(defaultSslBinding), Optional.ToNullable(negotiateClientCertificate), certificate.Value, Optional.ToNullable(certificateSource), Optional.ToNullable(certificateStatus), serializedAdditionalRawData);
+            return new HostnameConfiguration(
+                type,
+                hostName,
+                keyVaultId.Value,
+                identityClientId.Value,
+                encodedCertificate.Value,
+                certificatePassword.Value,
+                Optional.ToNullable(defaultSslBinding),
+                Optional.ToNullable(negotiateClientCertificate),
+                certificate.Value,
+                Optional.ToNullable(certificateSource),
+                Optional.ToNullable(certificateStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostnameConfiguration>.Write(ModelReaderWriterOptions options)

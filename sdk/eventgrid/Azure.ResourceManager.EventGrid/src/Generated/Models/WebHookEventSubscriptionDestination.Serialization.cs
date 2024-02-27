@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebHookEventSubscriptionDestination(endpointType, serializedAdditionalRawData, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(), Optional.ToNullable(minimumTlsVersionAllowed));
+            return new WebHookEventSubscriptionDestination(
+                endpointType,
+                serializedAdditionalRawData,
+                endpointUri.Value,
+                endpointBaseUri.Value,
+                Optional.ToNullable(maxEventsPerBatch),
+                Optional.ToNullable(preferredBatchSizeInKilobytes),
+                Optional.ToNullable(azureActiveDirectoryTenantId),
+                azureActiveDirectoryApplicationIdOrUri.Value,
+                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(),
+                Optional.ToNullable(minimumTlsVersionAllowed));
         }
 
         BinaryData IPersistableModel<WebHookEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

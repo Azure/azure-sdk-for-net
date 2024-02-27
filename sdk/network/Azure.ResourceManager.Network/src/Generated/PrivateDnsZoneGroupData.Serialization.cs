@@ -187,7 +187,14 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsZoneGroupData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), privateDnsZoneConfigs ?? new ChangeTrackingList<PrivateDnsZoneConfig>());
+            return new PrivateDnsZoneGroupData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                privateDnsZoneConfigs ?? new ChangeTrackingList<PrivateDnsZoneConfig>());
         }
 
         BinaryData IPersistableModel<PrivateDnsZoneGroupData>.Write(ModelReaderWriterOptions options)

@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureAttributionDriftMonitoringSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, metricThreshold, productionData, referenceData);
+            return new FeatureAttributionDriftMonitoringSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThreshold,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<FeatureAttributionDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)

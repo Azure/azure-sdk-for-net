@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopeConnectionData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), resourceId.Value, Optional.ToNullable(connectionState), description.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ScopeConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(tenantId),
+                resourceId.Value,
+                Optional.ToNullable(connectionState),
+                description.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopeConnectionData>.Write(ModelReaderWriterOptions options)

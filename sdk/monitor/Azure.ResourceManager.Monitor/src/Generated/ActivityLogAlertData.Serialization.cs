@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, scopes ?? new ChangeTrackingList<string>(), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value, serializedAdditionalRawData);
+            return new ActivityLogAlertData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                scopes ?? new ChangeTrackingList<string>(),
+                condition.Value,
+                actions.Value,
+                Optional.ToNullable(enabled),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options)

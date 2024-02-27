@@ -135,7 +135,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJobAssignment(assignmentId, workerId.Value, assignedAt, Optional.ToNullable(completedAt), Optional.ToNullable(closedAt), serializedAdditionalRawData);
+            return new RouterJobAssignment(
+                assignmentId,
+                workerId.Value,
+                assignedAt,
+                Optional.ToNullable(completedAt),
+                Optional.ToNullable(closedAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJobAssignment>.Write(ModelReaderWriterOptions options)

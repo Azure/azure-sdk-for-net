@@ -400,7 +400,29 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), features ?? new ChangeTrackingList<GalleryImageFeature>(), Optional.ToNullable(architecture), serializedAdditionalRawData);
+            return new GalleryImageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description.Value,
+                eula.Value,
+                privacyStatementUri.Value,
+                releaseNoteUri.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(osState),
+                Optional.ToNullable(hyperVGeneration),
+                Optional.ToNullable(endOfLifeDate),
+                identifier.Value,
+                recommended.Value,
+                disallowed.Value,
+                purchasePlan.Value,
+                Optional.ToNullable(provisioningState),
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                Optional.ToNullable(architecture),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageData>.Write(ModelReaderWriterOptions options)

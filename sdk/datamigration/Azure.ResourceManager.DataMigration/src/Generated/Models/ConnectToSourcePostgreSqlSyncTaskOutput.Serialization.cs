@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourcePostgreSqlSyncTaskOutput(id.Value, sourceServerVersion.Value, databases ?? new ChangeTrackingList<string>(), sourceServerBrandVersion.Value, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
+            return new ConnectToSourcePostgreSqlSyncTaskOutput(
+                id.Value,
+                sourceServerVersion.Value,
+                databases ?? new ChangeTrackingList<string>(),
+                sourceServerBrandVersion.Value,
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourcePostgreSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)

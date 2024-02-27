@@ -138,7 +138,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BinarySink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value);
+            return new BinarySink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                storeSettings.Value);
         }
 
         internal partial class BinarySinkConverter : JsonConverter<BinarySink>

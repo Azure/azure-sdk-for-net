@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedManagedHsmData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DeletedManagedHsmData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedManagedHsmData>.Write(ModelReaderWriterOptions options)

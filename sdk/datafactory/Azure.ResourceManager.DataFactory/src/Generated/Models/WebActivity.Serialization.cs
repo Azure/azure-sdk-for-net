@@ -415,7 +415,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, method, url, headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(), body.Value, authentication.Value, Optional.ToNullable(disableCertValidation), httpRequestTimeout.Value, Optional.ToNullable(turnOffAsync), datasets ?? new ChangeTrackingList<DatasetReference>(), linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), connectVia.Value);
+            return new WebActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                method,
+                url,
+                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                body.Value,
+                authentication.Value,
+                Optional.ToNullable(disableCertValidation),
+                httpRequestTimeout.Value,
+                Optional.ToNullable(turnOffAsync),
+                datasets ?? new ChangeTrackingList<DatasetReference>(),
+                linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                connectVia.Value);
         }
 
         BinaryData IPersistableModel<WebActivity>.Write(ModelReaderWriterOptions options)

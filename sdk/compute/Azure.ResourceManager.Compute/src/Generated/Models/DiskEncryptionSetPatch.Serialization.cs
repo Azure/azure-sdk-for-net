@@ -187,7 +187,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskEncryptionSetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), federatedClientId.Value, serializedAdditionalRawData);
+            return new DiskEncryptionSetPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                Optional.ToNullable(encryptionType),
+                activeKey.Value,
+                Optional.ToNullable(rotationToLatestKeyVersionEnabled),
+                federatedClientId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionSetPatch>.Write(ModelReaderWriterOptions options)

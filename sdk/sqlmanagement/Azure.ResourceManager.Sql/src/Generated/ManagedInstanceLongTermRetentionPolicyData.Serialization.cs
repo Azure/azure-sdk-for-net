@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceLongTermRetentionPolicyData(id, name, type, systemData.Value, weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Optional.ToNullable(weekOfYear), serializedAdditionalRawData);
+            return new ManagedInstanceLongTermRetentionPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                weeklyRetention.Value,
+                monthlyRetention.Value,
+                yearlyRetention.Value,
+                Optional.ToNullable(weekOfYear),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceLongTermRetentionPolicyData>.Write(ModelReaderWriterOptions options)

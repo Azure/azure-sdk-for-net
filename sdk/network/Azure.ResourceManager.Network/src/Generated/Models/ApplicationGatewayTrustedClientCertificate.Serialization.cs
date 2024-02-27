@@ -216,7 +216,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayTrustedClientCertificate(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), data.Value, validatedCertData.Value, clientCertIssuerDN.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayTrustedClientCertificate(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                data.Value,
+                validatedCertData.Value,
+                clientCertIssuerDN.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayTrustedClientCertificate>.Write(ModelReaderWriterOptions options)

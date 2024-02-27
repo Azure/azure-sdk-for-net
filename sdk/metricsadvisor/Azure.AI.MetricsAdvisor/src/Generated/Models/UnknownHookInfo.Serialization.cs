@@ -97,7 +97,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UnknownHookInfo(hookType, hookId.Value, hookName, description.Value, externalLink.Value, admins ?? new ChangeTrackingList<string>());
+            return new UnknownHookInfo(
+                hookType,
+                hookId.Value,
+                hookName,
+                description.Value,
+                externalLink.Value,
+                admins ?? new ChangeTrackingList<string>());
         }
     }
 }

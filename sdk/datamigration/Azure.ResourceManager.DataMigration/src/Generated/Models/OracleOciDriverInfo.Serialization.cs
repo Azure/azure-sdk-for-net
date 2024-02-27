@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OracleOciDriverInfo(driverName.Value, driverSize.Value, archiveChecksum.Value, oracleChecksum.Value, assemblyVersion.Value, supportedOracleVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new OracleOciDriverInfo(
+                driverName.Value,
+                driverSize.Value,
+                archiveChecksum.Value,
+                oracleChecksum.Value,
+                assemblyVersion.Value,
+                supportedOracleVersions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OracleOciDriverInfo>.Write(ModelReaderWriterOptions options)

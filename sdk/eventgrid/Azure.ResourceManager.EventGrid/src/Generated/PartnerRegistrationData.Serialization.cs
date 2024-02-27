@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerRegistrationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), Optional.ToNullable(partnerRegistrationImmutableId), serializedAdditionalRawData);
+            return new PartnerRegistrationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(partnerRegistrationImmutableId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerRegistrationData>.Write(ModelReaderWriterOptions options)

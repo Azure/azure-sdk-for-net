@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseKeyData(id, name, type, systemData.Value, Optional.ToNullable(isActiveCMK), keyVaultUrl.Value, serializedAdditionalRawData);
+            return new SynapseKeyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isActiveCMK),
+                keyVaultUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseKeyData>.Write(ModelReaderWriterOptions options)

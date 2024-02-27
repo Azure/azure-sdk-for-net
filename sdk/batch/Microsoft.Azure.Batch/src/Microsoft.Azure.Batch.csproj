@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
-    <Version>16.2.0-beta.1</Version>
-    <ApiCompatVersion>16.1.0</ApiCompatVersion>
+    <Version>16.2.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

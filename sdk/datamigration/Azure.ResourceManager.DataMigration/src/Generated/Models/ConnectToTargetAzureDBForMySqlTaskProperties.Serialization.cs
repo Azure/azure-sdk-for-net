@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetAzureDBForMySqlTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<ConnectToTargetAzureDBForMySqlTaskOutput>());
+            return new ConnectToTargetAzureDBForMySqlTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input.Value,
+                output ?? new ChangeTrackingList<ConnectToTargetAzureDBForMySqlTaskOutput>());
         }
 
         BinaryData IPersistableModel<ConnectToTargetAzureDBForMySqlTaskProperties>.Write(ModelReaderWriterOptions options)

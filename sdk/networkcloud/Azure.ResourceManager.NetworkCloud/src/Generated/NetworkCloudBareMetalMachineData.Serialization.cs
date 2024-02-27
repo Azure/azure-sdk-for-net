@@ -550,7 +550,43 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBareMetalMachineData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, clusterId.Value, Optional.ToNullable(cordonStatus), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hardwareInventory.Value, hardwareValidationStatus.Value, hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>(), kubernetesNodeName.Value, kubernetesVersion.Value, machineDetails, machineName, machineSkuId, oamIPv4Address.Value, oamIPv6Address.Value, osImage.Value, Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(readyState), serialNumber, serviceTag.Value, virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                bmcConnectionString,
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                clusterId.Value,
+                Optional.ToNullable(cordonStatus),
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                hardwareInventory.Value,
+                hardwareValidationStatus.Value,
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>(),
+                kubernetesNodeName.Value,
+                kubernetesVersion.Value,
+                machineDetails,
+                machineName,
+                machineSkuId,
+                oamIPv4Address.Value,
+                oamIPv6Address.Value,
+                osImage.Value,
+                Optional.ToNullable(powerState),
+                Optional.ToNullable(provisioningState),
+                rackId,
+                rackSlot,
+                Optional.ToNullable(readyState),
+                serialNumber,
+                serviceTag.Value,
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineData>.Write(ModelReaderWriterOptions options)

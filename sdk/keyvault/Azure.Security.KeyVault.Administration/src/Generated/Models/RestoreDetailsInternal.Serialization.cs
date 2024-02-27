@@ -72,7 +72,13 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new RestoreDetailsInternal(status.Value, statusDetails.Value, error.Value, jobId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new RestoreDetailsInternal(
+                status.Value,
+                statusDetails.Value,
+                error.Value,
+                jobId.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime));
         }
     }
 }

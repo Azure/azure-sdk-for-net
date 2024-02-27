@@ -415,7 +415,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(etag), sku.Value, ipConfigurations ?? new ChangeTrackingList<BastionHostIPConfiguration>(), dnsName.Value, virtualNetwork, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
+            return new BastionHostData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(etag),
+                sku.Value,
+                ipConfigurations ?? new ChangeTrackingList<BastionHostIPConfiguration>(),
+                dnsName.Value,
+                virtualNetwork,
+                networkAcls.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(scaleUnits),
+                Optional.ToNullable(disableCopyPaste),
+                Optional.ToNullable(enableFileCopy),
+                Optional.ToNullable(enableIPConnect),
+                Optional.ToNullable(enableShareableLink),
+                Optional.ToNullable(enableTunneling),
+                Optional.ToNullable(enableKerberos));
         }
 
         BinaryData IPersistableModel<BastionHostData>.Write(ModelReaderWriterOptions options)

@@ -265,7 +265,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password.Value, embeddedCertData.Value, certThumbprint.Value, encryptedCredential.Value, enableServerCertificateValidation.Value);
+            return new HttpLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                url,
+                Optional.ToNullable(authenticationType),
+                userName.Value,
+                password.Value,
+                embeddedCertData.Value,
+                certThumbprint.Value,
+                encryptedCredential.Value,
+                enableServerCertificateValidation.Value);
         }
 
         internal partial class HttpLinkedServiceConverter : JsonConverter<HttpLinkedService>

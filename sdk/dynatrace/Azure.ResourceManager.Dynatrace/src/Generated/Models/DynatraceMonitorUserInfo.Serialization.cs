@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitorUserInfo(firstName.Value, lastName.Value, emailAddress.Value, phoneNumber.Value, country.Value, serializedAdditionalRawData);
+            return new DynatraceMonitorUserInfo(
+                firstName.Value,
+                lastName.Value,
+                emailAddress.Value,
+                phoneNumber.Value,
+                country.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorUserInfo>.Write(ModelReaderWriterOptions options)

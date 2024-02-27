@@ -189,7 +189,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerTrustGroupData(id, name, type, systemData.Value, groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(), trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(), serializedAdditionalRawData);
+            return new SqlServerTrustGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(),
+                trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerTrustGroupData>.Write(ModelReaderWriterOptions options)

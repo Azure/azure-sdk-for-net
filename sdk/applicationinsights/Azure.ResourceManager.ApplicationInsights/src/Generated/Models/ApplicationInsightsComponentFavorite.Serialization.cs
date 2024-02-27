@@ -217,7 +217,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFavorite(name.Value, config.Value, version.Value, favoriteId.Value, Optional.ToNullable(favoriteType), sourceType.Value, timeModified.Value, tags ?? new ChangeTrackingList<string>(), category.Value, Optional.ToNullable(isGeneratedFromTemplate), userId.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFavorite(
+                name.Value,
+                config.Value,
+                version.Value,
+                favoriteId.Value,
+                Optional.ToNullable(favoriteType),
+                sourceType.Value,
+                timeModified.Value,
+                tags ?? new ChangeTrackingList<string>(),
+                category.Value,
+                Optional.ToNullable(isGeneratedFromTemplate),
+                userId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFavorite>.Write(ModelReaderWriterOptions options)

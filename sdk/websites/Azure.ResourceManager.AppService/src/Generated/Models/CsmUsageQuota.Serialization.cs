@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsmUsageQuota(unit.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new CsmUsageQuota(
+                unit.Value,
+                Optional.ToNullable(nextResetTime),
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CsmUsageQuota>.Write(ModelReaderWriterOptions options)

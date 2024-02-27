@@ -279,7 +279,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiEntityBaseContract(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, serializedAdditionalRawData);
+            return new ApiEntityBaseContract(
+                description.Value,
+                authenticationSettings.Value,
+                subscriptionKeyParameterNames.Value,
+                Optional.ToNullable(type),
+                apiRevision.Value,
+                apiVersion.Value,
+                Optional.ToNullable(isCurrent),
+                Optional.ToNullable(isOnline),
+                apiRevisionDescription.Value,
+                apiVersionDescription.Value,
+                apiVersionSetId.Value,
+                Optional.ToNullable(subscriptionRequired),
+                termsOfServiceUri.Value,
+                contact.Value,
+                license.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiEntityBaseContract>.Write(ModelReaderWriterOptions options)

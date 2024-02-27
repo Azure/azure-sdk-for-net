@@ -237,7 +237,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageContent(baseEnvironmentSource.Value, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), inferencingServer, inputs ?? new ChangeTrackingList<ModelPackageInput>(), modelConfiguration.Value, tags ?? new ChangeTrackingDictionary<string, string>(), targetEnvironmentId, serializedAdditionalRawData);
+            return new ModelPackageContent(
+                baseEnvironmentSource.Value,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                inferencingServer,
+                inputs ?? new ChangeTrackingList<ModelPackageInput>(),
+                modelConfiguration.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                targetEnvironmentId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageContent>.Write(ModelReaderWriterOptions options)

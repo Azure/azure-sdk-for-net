@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestAgentData(id, name, type, systemData.Value, credentials.Value, Optional.ToNullable(provisioningAction), status.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new GuestAgentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                credentials.Value,
+                Optional.ToNullable(provisioningAction),
+                status.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestAgentData>.Write(ModelReaderWriterOptions options)

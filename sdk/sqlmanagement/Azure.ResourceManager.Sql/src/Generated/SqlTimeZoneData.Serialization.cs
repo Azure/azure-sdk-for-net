@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlTimeZoneData(id, name, type, systemData.Value, timeZoneId.Value, displayName.Value, serializedAdditionalRawData);
+            return new SqlTimeZoneData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                timeZoneId.Value,
+                displayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlTimeZoneData>.Write(ModelReaderWriterOptions options)

@@ -200,7 +200,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskOutputLoginLevel(id.Value, resultType, serializedAdditionalRawData, loginName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
+            return new MigrateSqlServerSqlMITaskOutputLoginLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                loginName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(stage),
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                message.Value,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputLoginLevel>.Write(ModelReaderWriterOptions options)

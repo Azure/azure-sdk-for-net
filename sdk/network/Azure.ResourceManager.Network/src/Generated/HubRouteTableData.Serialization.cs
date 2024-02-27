@@ -262,7 +262,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubRouteTableData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), routes ?? new ChangeTrackingList<HubRoute>(), labels ?? new ChangeTrackingList<string>(), associatedConnections ?? new ChangeTrackingList<string>(), propagatingConnections ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState));
+            return new HubRouteTableData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                routes ?? new ChangeTrackingList<HubRoute>(),
+                labels ?? new ChangeTrackingList<string>(),
+                associatedConnections ?? new ChangeTrackingList<string>(),
+                propagatingConnections ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<HubRouteTableData>.Write(ModelReaderWriterOptions options)

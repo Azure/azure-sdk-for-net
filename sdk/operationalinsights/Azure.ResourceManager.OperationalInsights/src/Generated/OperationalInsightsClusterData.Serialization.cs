@@ -363,7 +363,26 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, sku.Value, Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(isDoubleEncryptionEnabled), Optional.ToNullable(isAvailabilityZonesEnabled), Optional.ToNullable(billingType), keyVaultProperties.Value, Optional.ToNullable(lastModifiedDate), Optional.ToNullable(createdDate), associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>(), capacityReservationProperties.Value, serializedAdditionalRawData);
+            return new OperationalInsightsClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku.Value,
+                Optional.ToNullable(clusterId),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(isDoubleEncryptionEnabled),
+                Optional.ToNullable(isAvailabilityZonesEnabled),
+                Optional.ToNullable(billingType),
+                keyVaultProperties.Value,
+                Optional.ToNullable(lastModifiedDate),
+                Optional.ToNullable(createdDate),
+                associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>(),
+                capacityReservationProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterData>.Write(ModelReaderWriterOptions options)

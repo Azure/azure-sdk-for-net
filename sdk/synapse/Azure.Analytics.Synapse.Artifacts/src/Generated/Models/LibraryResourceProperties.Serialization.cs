@@ -72,7 +72,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LibraryResourceProperties(name.Value, path.Value, containerName.Value, uploadedTimestamp.Value, type.Value, provisioningStatus.Value, creatorId.Value);
+            return new LibraryResourceProperties(
+                name.Value,
+                path.Value,
+                containerName.Value,
+                uploadedTimestamp.Value,
+                type.Value,
+                provisioningStatus.Value,
+                creatorId.Value);
         }
 
         internal partial class LibraryResourcePropertiesConverter : JsonConverter<LibraryResourceProperties>

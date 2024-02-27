@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentListMetadata(first.Value, last.Value, prev.Value, next.Value, Optional.ToNullable(totalSize), serializedAdditionalRawData);
+            return new ConfluentListMetadata(
+                first.Value,
+                last.Value,
+                prev.Value,
+                next.Value,
+                Optional.ToNullable(totalSize),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentListMetadata>.Write(ModelReaderWriterOptions options)

@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraConnectionError(Optional.ToNullable(connectionState), ipFrom.Value, ipTo.Value, Optional.ToNullable(port), exception.Value, serializedAdditionalRawData);
+            return new CassandraConnectionError(
+                Optional.ToNullable(connectionState),
+                ipFrom.Value,
+                ipTo.Value,
+                Optional.ToNullable(port),
+                exception.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraConnectionError>.Write(ModelReaderWriterOptions options)

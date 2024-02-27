@@ -175,7 +175,13 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetailedInformation(apiName.Value, customParameters ?? new ChangeTrackingList<string>(), platformParameters ?? new ChangeTrackingList<string>(), unitsSupported.Value, apiInputParameters ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DetailedInformation(
+                apiName.Value,
+                customParameters ?? new ChangeTrackingList<string>(),
+                platformParameters ?? new ChangeTrackingList<string>(),
+                unitsSupported.Value,
+                apiInputParameters ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetailedInformation>.Write(ModelReaderWriterOptions options)

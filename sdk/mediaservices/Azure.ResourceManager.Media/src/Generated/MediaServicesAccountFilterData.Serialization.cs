@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesAccountFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, tracks ?? new ChangeTrackingList<FilterTrackSelection>(), serializedAdditionalRawData);
+            return new MediaServicesAccountFilterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                presentationTimeRange.Value,
+                firstQuality.Value,
+                tracks ?? new ChangeTrackingList<FilterTrackSelection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesAccountFilterData>.Write(ModelReaderWriterOptions options)

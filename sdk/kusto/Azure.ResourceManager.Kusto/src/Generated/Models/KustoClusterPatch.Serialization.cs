@@ -645,7 +645,42 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoClusterPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, zones ?? new ChangeTrackingList<string>(), identity, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>(), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), allowedIPRangeList ?? new ChangeTrackingList<string>(), Optional.ToNullable(engineType), acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>(), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), allowedFqdnList ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>(), migrationCluster.Value, serializedAdditionalRawData);
+            return new KustoClusterPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                Optional.ToNullable(state),
+                Optional.ToNullable(provisioningState),
+                uri.Value,
+                dataIngestionUri.Value,
+                stateReason.Value,
+                trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>(),
+                optimizedAutoscale.Value,
+                Optional.ToNullable(enableDiskEncryption),
+                Optional.ToNullable(enableStreamingIngest),
+                virtualNetworkConfiguration.Value,
+                keyVaultProperties.Value,
+                Optional.ToNullable(enablePurge),
+                languageExtensions.Value,
+                Optional.ToNullable(enableDoubleEncryption),
+                Optional.ToNullable(publicNetworkAccess),
+                allowedIPRangeList ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(engineType),
+                acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>(),
+                Optional.ToNullable(enableAutoStop),
+                Optional.ToNullable(restrictOutboundNetworkAccess),
+                allowedFqdnList ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(publicIPType),
+                virtualClusterGraduationProperties.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>(),
+                migrationCluster.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoClusterPatch>.Write(ModelReaderWriterOptions options)

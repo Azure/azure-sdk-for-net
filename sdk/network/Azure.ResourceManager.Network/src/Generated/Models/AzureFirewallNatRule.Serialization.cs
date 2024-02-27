@@ -254,7 +254,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNatRule(name.Value, description.Value, sourceAddresses ?? new ChangeTrackingList<string>(), destinationAddresses ?? new ChangeTrackingList<string>(), destinationPorts ?? new ChangeTrackingList<string>(), protocols ?? new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(), translatedAddress.Value, translatedPort.Value, translatedFqdn.Value, sourceIPGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AzureFirewallNatRule(
+                name.Value,
+                description.Value,
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(),
+                translatedAddress.Value,
+                translatedPort.Value,
+                translatedFqdn.Value,
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallNatRule>.Write(ModelReaderWriterOptions options)

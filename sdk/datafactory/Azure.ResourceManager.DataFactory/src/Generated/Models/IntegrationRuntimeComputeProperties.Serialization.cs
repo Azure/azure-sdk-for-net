@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vnetProperties.Value, copyComputeScaleProperties.Value, pipelineExternalComputeScaleProperties.Value, additionalProperties);
+            return new IntegrationRuntimeComputeProperties(
+                Optional.ToNullable(location),
+                nodeSize.Value,
+                Optional.ToNullable(numberOfNodes),
+                Optional.ToNullable(maxParallelExecutionsPerNode),
+                dataFlowProperties.Value,
+                vnetProperties.Value,
+                copyComputeScaleProperties.Value,
+                pipelineExternalComputeScaleProperties.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeComputeProperties>.Write(ModelReaderWriterOptions options)

@@ -173,7 +173,14 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDhcpRelay(dhcpType, displayName.Value, segments ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData, serverAddresses ?? new ChangeTrackingList<string>());
+            return new WorkloadNetworkDhcpRelay(
+                dhcpType,
+                displayName.Value,
+                segments ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData,
+                serverAddresses ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpRelay>.Write(ModelReaderWriterOptions options)

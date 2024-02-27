@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRuleCondition(query.Value, Optional.ToNullable(timeAggregation), metricMeasureColumn.Value, resourceIdColumn.Value, dimensions ?? new ChangeTrackingList<MonitorDimension>(), Optional.ToNullable(@operator), Optional.ToNullable(threshold), failingPeriods.Value, metricName.Value, serializedAdditionalRawData);
+            return new ScheduledQueryRuleCondition(
+                query.Value,
+                Optional.ToNullable(timeAggregation),
+                metricMeasureColumn.Value,
+                resourceIdColumn.Value,
+                dimensions ?? new ChangeTrackingList<MonitorDimension>(),
+                Optional.ToNullable(@operator),
+                Optional.ToNullable(threshold),
+                failingPeriods.Value,
+                metricName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleCondition>.Write(ModelReaderWriterOptions options)

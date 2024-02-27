@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteAuthSettingsV2(id, name, type, systemData.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteAuthSettingsV2(
+                id,
+                name,
+                type,
+                systemData.Value,
+                platform.Value,
+                globalValidation.Value,
+                identityProviders.Value,
+                login.Value,
+                httpSettings.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteAuthSettingsV2>.Write(ModelReaderWriterOptions options)

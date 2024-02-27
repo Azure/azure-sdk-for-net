@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareSecurityModulesPrivateLinkData(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareSecurityModulesPrivateLinkData>.Write(ModelReaderWriterOptions options)

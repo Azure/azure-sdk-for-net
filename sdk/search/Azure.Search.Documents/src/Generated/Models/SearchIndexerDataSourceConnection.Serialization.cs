@@ -173,7 +173,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerDataSourceConnection(name, description.Value, type, credentials, container, identity.Value, dataChangeDetectionPolicy.Value, dataDeletionDetectionPolicy.Value, odataEtag.Value, encryptionKey.Value);
+            return new SearchIndexerDataSourceConnection(
+                name,
+                description.Value,
+                type,
+                credentials,
+                container,
+                identity.Value,
+                dataChangeDetectionPolicy.Value,
+                dataDeletionDetectionPolicy.Value,
+                odataEtag.Value,
+                encryptionKey.Value);
         }
     }
 }

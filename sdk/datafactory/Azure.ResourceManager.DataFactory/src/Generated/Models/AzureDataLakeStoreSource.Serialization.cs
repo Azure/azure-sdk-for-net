@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeStoreSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value);
+            return new AzureDataLakeStoreSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                recursive.Value);
         }
 
         BinaryData IPersistableModel<AzureDataLakeStoreSource>.Write(ModelReaderWriterOptions options)

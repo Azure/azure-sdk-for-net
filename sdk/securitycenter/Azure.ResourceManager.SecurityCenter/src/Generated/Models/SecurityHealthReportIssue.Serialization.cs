@@ -177,7 +177,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityHealthReportIssue(issueKey, issueName.Value, securityValues ?? new ChangeTrackingList<string>(), issueDescription.Value, remediationSteps.Value, remediationScript.Value, issueAdditionalData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new SecurityHealthReportIssue(
+                issueKey,
+                issueName.Value,
+                securityValues ?? new ChangeTrackingList<string>(),
+                issueDescription.Value,
+                remediationSteps.Value,
+                remediationScript.Value,
+                issueAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityHealthReportIssue>.Write(ModelReaderWriterOptions options)

@@ -192,7 +192,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaterializationSettings(notification.Value, resource.Value, schedule.Value, sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(storeType), serializedAdditionalRawData);
+            return new MaterializationSettings(
+                notification.Value,
+                resource.Value,
+                schedule.Value,
+                sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(storeType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaterializationSettings>.Write(ModelReaderWriterOptions options)

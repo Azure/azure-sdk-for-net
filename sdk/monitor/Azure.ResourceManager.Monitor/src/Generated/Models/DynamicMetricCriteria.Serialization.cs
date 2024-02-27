@@ -190,7 +190,19 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicMetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, dimensions ?? new ChangeTrackingList<MetricDimension>(), Optional.ToNullable(skipMetricValidation), additionalProperties, @operator, alertSensitivity, failingPeriods, Optional.ToNullable(ignoreDataBefore));
+            return new DynamicMetricCriteria(
+                criterionType,
+                name,
+                metricName,
+                metricNamespace.Value,
+                timeAggregation,
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                Optional.ToNullable(skipMetricValidation),
+                additionalProperties,
+                @operator,
+                alertSensitivity,
+                failingPeriods,
+                Optional.ToNullable(ignoreDataBefore));
         }
 
         BinaryData IPersistableModel<DynamicMetricCriteria>.Write(ModelReaderWriterOptions options)

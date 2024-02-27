@@ -220,7 +220,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RayDistributionConfiguration(distributionType, serializedAdditionalRawData, address.Value, Optional.ToNullable(dashboardPort), headNodeAdditionalArgs.Value, Optional.ToNullable(includeDashboard), Optional.ToNullable(port), workerNodeAdditionalArgs.Value);
+            return new RayDistributionConfiguration(
+                distributionType,
+                serializedAdditionalRawData,
+                address.Value,
+                Optional.ToNullable(dashboardPort),
+                headNodeAdditionalArgs.Value,
+                Optional.ToNullable(includeDashboard),
+                Optional.ToNullable(port),
+                workerNodeAdditionalArgs.Value);
         }
 
         BinaryData IPersistableModel<RayDistributionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -197,7 +197,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCorsPolicy(allowedOrigins, allowedMethods ?? new ChangeTrackingList<string>(), allowedHeaders ?? new ChangeTrackingList<string>(), exposeHeaders ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+            return new ContainerAppCorsPolicy(
+                allowedOrigins,
+                allowedMethods ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
+                exposeHeaders ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(maxAge),
+                Optional.ToNullable(allowCredentials),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCorsPolicy>.Write(ModelReaderWriterOptions options)

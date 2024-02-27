@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineRule(name, priority, action, matchConditions ?? new ChangeTrackingList<RulesEngineMatchCondition>(), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new RulesEngineRule(
+                name,
+                priority,
+                action,
+                matchConditions ?? new ChangeTrackingList<RulesEngineMatchCondition>(),
+                Optional.ToNullable(matchProcessingBehavior),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineRule>.Write(ModelReaderWriterOptions options)

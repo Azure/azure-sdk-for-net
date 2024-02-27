@@ -496,7 +496,34 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, managedBy.Value, sku.Value, serializedAdditionalRawData, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, artifacts ?? new ChangeTrackingList<ArmApplicationArtifact>(), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy.Value,
+                sku.Value,
+                serializedAdditionalRawData,
+                plan,
+                kind,
+                identity.Value,
+                managedResourceGroupId.Value,
+                applicationDefinitionId.Value,
+                parameters.Value,
+                outputs.Value,
+                Optional.ToNullable(provisioningState),
+                billingDetails.Value,
+                jitAccessPolicy.Value,
+                Optional.ToNullable(publisherTenantId),
+                authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(),
+                Optional.ToNullable(managementMode),
+                customerSupport.Value,
+                supportUris.Value,
+                artifacts ?? new ChangeTrackingList<ArmApplicationArtifact>(),
+                createdBy.Value,
+                updatedBy.Value);
         }
 
         BinaryData IPersistableModel<ArmApplicationData>.Write(ModelReaderWriterOptions options)

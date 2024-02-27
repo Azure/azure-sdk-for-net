@@ -562,7 +562,40 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, plan.Value, identity, zones ?? new ChangeTrackingList<string>(), extendedLocation, etag.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, priorityMixPolicy.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(constrainedMaximumCapacity), resiliencyPolicy.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                plan.Value,
+                identity,
+                zones ?? new ChangeTrackingList<string>(),
+                extendedLocation,
+                etag.Value,
+                upgradePolicy.Value,
+                automaticRepairsPolicy.Value,
+                virtualMachineProfile.Value,
+                provisioningState.Value,
+                Optional.ToNullable(overprovision),
+                Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms),
+                uniqueId.Value,
+                Optional.ToNullable(singlePlacementGroup),
+                Optional.ToNullable(zoneBalance),
+                Optional.ToNullable(platformFaultDomainCount),
+                proximityPlacementGroup,
+                hostGroup,
+                additionalCapabilities.Value,
+                scaleInPolicy.Value,
+                Optional.ToNullable(orchestrationMode),
+                spotRestorePolicy.Value,
+                priorityMixPolicy.Value,
+                Optional.ToNullable(timeCreated),
+                Optional.ToNullable(constrainedMaximumCapacity),
+                resiliencyPolicy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetData>.Write(ModelReaderWriterOptions options)

@@ -241,7 +241,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsCrmEntityDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, entityName.Value);
+            return new DynamicsCrmEntityDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder.Value,
+                additionalProperties,
+                entityName.Value);
         }
 
         BinaryData IPersistableModel<DynamicsCrmEntityDataset>.Write(ModelReaderWriterOptions options)

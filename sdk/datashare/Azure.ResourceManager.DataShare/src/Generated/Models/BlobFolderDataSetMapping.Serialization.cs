@@ -224,7 +224,21 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobFolderDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), prefix, Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new BlobFolderDataSetMapping(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                containerName,
+                dataSetId,
+                Optional.ToNullable(dataSetMappingStatus),
+                prefix,
+                Optional.ToNullable(provisioningState),
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<BlobFolderDataSetMapping>.Write(ModelReaderWriterOptions options)

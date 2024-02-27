@@ -299,7 +299,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatelessServiceProperties(placementConstraints.Value, correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(), serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(), servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(), Optional.ToNullable(defaultMoveCost), scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(), serializedAdditionalRawData, provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, instanceCount, Optional.ToNullable(minInstanceCount), Optional.ToNullable(minInstancePercentage));
+            return new StatelessServiceProperties(
+                placementConstraints.Value,
+                correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
+                serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
+                servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
+                Optional.ToNullable(defaultMoveCost),
+                scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
+                serializedAdditionalRawData,
+                provisioningState.Value,
+                serviceKind,
+                serviceTypeName,
+                partitionDescription,
+                Optional.ToNullable(servicePackageActivationMode),
+                serviceDnsName.Value,
+                instanceCount,
+                Optional.ToNullable(minInstanceCount),
+                Optional.ToNullable(minInstancePercentage));
         }
 
         BinaryData IPersistableModel<StatelessServiceProperties>.Write(ModelReaderWriterOptions options)

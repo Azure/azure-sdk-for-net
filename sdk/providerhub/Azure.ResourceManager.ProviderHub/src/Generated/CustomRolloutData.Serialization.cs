@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.ProviderHub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRolloutData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new CustomRolloutData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRolloutData>.Write(ModelReaderWriterOptions options)

@@ -264,7 +264,18 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficControllerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, configurationEndpoints ?? new ChangeTrackingList<string>(), frontends ?? new ChangeTrackingList<SubResource>(), associations ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new TrafficControllerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                configurationEndpoints ?? new ChangeTrackingList<string>(),
+                frontends ?? new ChangeTrackingList<SubResource>(),
+                associations ?? new ChangeTrackingList<SubResource>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficControllerData>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterSkuDetails(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData, Optional.ToNullable(resourceType), locations ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<DevCenterCapability>());
+            return new DevCenterSkuDetails(
+                name,
+                Optional.ToNullable(tier),
+                size.Value,
+                family.Value,
+                Optional.ToNullable(capacity),
+                serializedAdditionalRawData,
+                Optional.ToNullable(resourceType),
+                locations ?? new ChangeTrackingList<string>(),
+                capabilities ?? new ChangeTrackingList<DevCenterCapability>());
         }
 
         BinaryData IPersistableModel<DevCenterSkuDetails>.Write(ModelReaderWriterOptions options)

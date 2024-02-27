@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobTransformationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(streamingUnits), validStreamingUnits ?? new ChangeTrackingList<int>(), query.Value, Optional.ToNullable(etag));
+            return new StreamingJobTransformationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(streamingUnits),
+                validStreamingUnits ?? new ChangeTrackingList<int>(),
+                query.Value,
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<StreamingJobTransformationData>.Write(ModelReaderWriterOptions options)

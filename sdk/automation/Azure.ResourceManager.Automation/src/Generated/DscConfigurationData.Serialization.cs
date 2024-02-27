@@ -346,7 +346,25 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscConfigurationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(jobCount), parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(), source.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(nodeConfigurationCount), description.Value, serializedAdditionalRawData);
+            return new DscConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(jobCount),
+                parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(),
+                source.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(logVerbose),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(nodeConfigurationCount),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscConfigurationData>.Write(ModelReaderWriterOptions options)

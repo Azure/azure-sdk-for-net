@@ -304,7 +304,22 @@ namespace Azure.ResourceManager.Orbital
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(minimumViableContactDuration), Optional.ToNullable(minimumElevationDegrees), Optional.ToNullable(autoTrackingConfiguration), eventHubUri.Value, networkConfiguration.Value, links ?? new ChangeTrackingList<OrbitalContactProfileLink>(), serializedAdditionalRawData);
+            return new OrbitalContactProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(minimumViableContactDuration),
+                Optional.ToNullable(minimumElevationDegrees),
+                Optional.ToNullable(autoTrackingConfiguration),
+                eventHubUri.Value,
+                networkConfiguration.Value,
+                links ?? new ChangeTrackingList<OrbitalContactProfileLink>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileData>.Write(ModelReaderWriterOptions options)

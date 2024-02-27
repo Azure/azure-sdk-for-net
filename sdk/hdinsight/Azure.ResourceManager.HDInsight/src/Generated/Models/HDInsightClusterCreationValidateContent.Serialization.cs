@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreationValidateContent(Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), zones ?? new ChangeTrackingList<string>(), properties.Value, identity, serializedAdditionalRawData, name.Value, type.Value, Optional.ToNullable(tenantId), Optional.ToNullable(fetchAaddsResource));
+            return new HDInsightClusterCreationValidateContent(
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                zones ?? new ChangeTrackingList<string>(),
+                properties.Value,
+                identity,
+                serializedAdditionalRawData,
+                name.Value,
+                type.Value,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(fetchAaddsResource));
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreationValidateContent>.Write(ModelReaderWriterOptions options)

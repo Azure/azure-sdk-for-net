@@ -247,7 +247,20 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncWorkflowData(id, name, type, systemData.Value, lastStepName.Value, Optional.ToNullable(status), Optional.ToNullable(operation), steps.Value, Optional.ToNullable(lastOperationId), commandName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(lastStatusTimestamp), serializedAdditionalRawData);
+            return new StorageSyncWorkflowData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                lastStepName.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(operation),
+                steps.Value,
+                Optional.ToNullable(lastOperationId),
+                commandName.Value,
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(lastStatusTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncWorkflowData>.Write(ModelReaderWriterOptions options)

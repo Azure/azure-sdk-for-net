@@ -204,7 +204,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PhysicalPartitionThroughputInfoResult(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resource.Value, identity, serializedAdditionalRawData);
+            return new PhysicalPartitionThroughputInfoResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PhysicalPartitionThroughputInfoResult>.Write(ModelReaderWriterOptions options)

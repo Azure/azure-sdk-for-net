@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionDataSource(streams ?? new ChangeTrackingList<ExtensionDataSourceStream>(), extensionName, extensionSettings.Value, inputDataSources ?? new ChangeTrackingList<string>(), name.Value, serializedAdditionalRawData);
+            return new ExtensionDataSource(
+                streams ?? new ChangeTrackingList<ExtensionDataSourceStream>(),
+                extensionName,
+                extensionSettings.Value,
+                inputDataSources ?? new ChangeTrackingList<string>(),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionDataSource>.Write(ModelReaderWriterOptions options)

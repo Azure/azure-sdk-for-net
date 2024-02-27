@@ -280,7 +280,21 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterMetricsConfigurationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, collectionInterval, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, disabledMetrics ?? new ChangeTrackingList<string>(), enabledMetrics ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkCloudClusterMetricsConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                collectionInterval,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                disabledMetrics ?? new ChangeTrackingList<string>(),
+                enabledMetrics ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.Write(ModelReaderWriterOptions options)

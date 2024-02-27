@@ -235,7 +235,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PasswordHash(passwordHashId.Value, filePath.Value, salt.Value, hash.Value, context.Value, username.Value, algorithm.Value, serializedAdditionalRawData);
+            return new PasswordHash(
+                passwordHashId.Value,
+                filePath.Value,
+                salt.Value,
+                hash.Value,
+                context.Value,
+                username.Value,
+                algorithm.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PasswordHash>.Write(ModelReaderWriterOptions options)

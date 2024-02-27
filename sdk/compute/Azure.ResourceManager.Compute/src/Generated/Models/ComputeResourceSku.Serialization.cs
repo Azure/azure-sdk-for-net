@@ -305,7 +305,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, locations ?? new ChangeTrackingList<AzureLocation>(), locationInfo ?? new ChangeTrackingList<ComputeResourceSkuLocationInfo>(), apiVersions ?? new ChangeTrackingList<string>(), costs ?? new ChangeTrackingList<ResourceSkuCosts>(), capabilities ?? new ChangeTrackingList<ComputeResourceSkuCapabilities>(), restrictions ?? new ChangeTrackingList<ComputeResourceSkuRestrictions>(), serializedAdditionalRawData);
+            return new ComputeResourceSku(
+                resourceType.Value,
+                name.Value,
+                tier.Value,
+                size.Value,
+                family.Value,
+                kind.Value,
+                capacity.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<ComputeResourceSkuLocationInfo>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ResourceSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ComputeResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ComputeResourceSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSku>.Write(ModelReaderWriterOptions options)

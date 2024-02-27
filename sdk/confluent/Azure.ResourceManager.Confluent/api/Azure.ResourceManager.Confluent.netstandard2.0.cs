@@ -1,6 +1,5 @@
 namespace Azure.ResourceManager.Confluent
 {
-    // cspell:ignore Acces, byok,Byok
     public static partial class ConfluentExtensions
     {
         public static Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> CreateMarketplaceAgreement(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Confluent.Models.ConfluentAgreement body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -338,6 +337,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static Azure.ResourceManager.Confluent.Models.ClusterStatusEntity ClusterStatusEntity(string phase = null, int? cku = default(int?)) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentAgreement ConfluentAgreement(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string publisher = null, string product = null, string plan = null, string licenseTextLink = null, string privacyPolicyLink = null, System.DateTimeOffset? retrieveOn = default(System.DateTimeOffset?), string signature = null, bool? isAccepted = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConfluentListMetadata ConfluentListMetadata(string first = null, string last = null, string prev = null, string next = null, int? totalSize = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, Azure.ResourceManager.Confluent.Models.ConfluentSaaSOfferStatus? status) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Confluent.ConfluentOrganizationData ConfluentOrganizationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.DateTimeOffset? createdOn, Azure.ResourceManager.Confluent.Models.ConfluentProvisionState? provisioningState, System.Guid? organizationId, System.Uri ssoUri, Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail offerDetail, Azure.ResourceManager.Confluent.Models.ConfluentUserDetail userDetail) { throw null; }
         public static Azure.ResourceManager.Confluent.ConfluentOrganizationData ConfluentOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Confluent.Models.ConfluentProvisionState? provisioningState = default(Azure.ResourceManager.Confluent.Models.ConfluentProvisionState?), System.Guid? organizationId = default(System.Guid?), System.Uri ssoUri = null, Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail offerDetail = null, Azure.ResourceManager.Confluent.Models.ConfluentUserDetail userDetail = null, string linkOrganizationToken = null) { throw null; }
@@ -480,6 +480,8 @@ namespace Azure.ResourceManager.Confluent.Models
     public partial class ConfluentOfferDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail>
     {
         public ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, Azure.ResourceManager.Confluent.Models.ConfluentSaaSOfferStatus? status) { }
         public string Id { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
         public string PlanName { get { throw null; } set { } }

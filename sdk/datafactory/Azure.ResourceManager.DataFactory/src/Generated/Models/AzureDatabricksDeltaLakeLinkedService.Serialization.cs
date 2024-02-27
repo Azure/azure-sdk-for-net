@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, domain, accessToken, clusterId.Value, encryptedCredential.Value, credential.Value, workspaceResourceId.Value);
+            return new AzureDatabricksDeltaLakeLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                domain,
+                accessToken,
+                clusterId.Value,
+                encryptedCredential.Value,
+                credential.Value,
+                workspaceResourceId.Value);
         }
 
         BinaryData IPersistableModel<AzureDatabricksDeltaLakeLinkedService>.Write(ModelReaderWriterOptions options)

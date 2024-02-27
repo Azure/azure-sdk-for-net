@@ -216,7 +216,18 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationConfigurationData(id, name, type, systemData.Value, provisioningState.Value, Optional.ToNullable(pendingReplicationOperationsCount), targetNamespace.Value, postMigrationName.Value, migrationState.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new MigrationConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provisioningState.Value,
+                Optional.ToNullable(pendingReplicationOperationsCount),
+                targetNamespace.Value,
+                postMigrationName.Value,
+                migrationState.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationConfigurationData>.Write(ModelReaderWriterOptions options)

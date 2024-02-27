@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubeEnvironmentData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIP.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceId.Value, kind.Value, serializedAdditionalRawData);
+            return new KubeEnvironmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                Optional.ToNullable(provisioningState),
+                deploymentErrors.Value,
+                Optional.ToNullable(internalLoadBalancerEnabled),
+                defaultDomain.Value,
+                staticIP.Value,
+                arcConfiguration.Value,
+                appLogsConfiguration.Value,
+                aksResourceId.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubeEnvironmentData>.Write(ModelReaderWriterOptions options)

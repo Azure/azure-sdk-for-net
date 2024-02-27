@@ -236,7 +236,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, Optional.ToNullable(kind), locationData.Value, osProfile.Value, cloudMetadata.Value, agentUpgrade.Value, parentClusterResourceId.Value, privateLinkScopeResourceId.Value);
+            return new HybridComputeMachinePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                identity,
+                Optional.ToNullable(kind),
+                locationData.Value,
+                osProfile.Value,
+                cloudMetadata.Value,
+                agentUpgrade.Value,
+                parentClusterResourceId.Value,
+                privateLinkScopeResourceId.Value);
         }
 
         BinaryData IPersistableModel<HybridComputeMachinePatch>.Write(ModelReaderWriterOptions options)

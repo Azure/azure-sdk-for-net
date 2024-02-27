@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRUpstreamTemplate(hubPattern.Value, eventPattern.Value, categoryPattern.Value, urlTemplate, auth.Value, serializedAdditionalRawData);
+            return new SignalRUpstreamTemplate(
+                hubPattern.Value,
+                eventPattern.Value,
+                categoryPattern.Value,
+                urlTemplate,
+                auth.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRUpstreamTemplate>.Write(ModelReaderWriterOptions options)

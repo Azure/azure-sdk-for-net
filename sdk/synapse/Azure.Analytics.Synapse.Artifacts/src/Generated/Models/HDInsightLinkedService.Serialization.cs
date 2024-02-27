@@ -265,7 +265,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, clusterUri, userName.Value, password.Value, linkedServiceName.Value, hcatalogLinkedServiceName.Value, encryptedCredential.Value, isEspEnabled.Value, fileSystem.Value);
+            return new HDInsightLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                clusterUri,
+                userName.Value,
+                password.Value,
+                linkedServiceName.Value,
+                hcatalogLinkedServiceName.Value,
+                encryptedCredential.Value,
+                isEspEnabled.Value,
+                fileSystem.Value);
         }
 
         internal partial class HDInsightLinkedServiceConverter : JsonConverter<HDInsightLinkedService>

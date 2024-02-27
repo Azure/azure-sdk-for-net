@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(recoveryPlanCount), Optional.ToNullable(registeredServersCount), Optional.ToNullable(recoveryServicesProviderAuthType), serializedAdditionalRawData);
+            return new ReplicationUsage(
+                monitoringSummary.Value,
+                jobsSummary.Value,
+                Optional.ToNullable(protectedItemCount),
+                Optional.ToNullable(recoveryPlanCount),
+                Optional.ToNullable(registeredServersCount),
+                Optional.ToNullable(recoveryServicesProviderAuthType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationUsage>.Write(ModelReaderWriterOptions options)

@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlContainerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resource.Value, options0.Value, identity, serializedAdditionalRawData);
+            return new CosmosDBSqlContainerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource.Value,
+                options0.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlContainerData>.Write(ModelReaderWriterOptions options)

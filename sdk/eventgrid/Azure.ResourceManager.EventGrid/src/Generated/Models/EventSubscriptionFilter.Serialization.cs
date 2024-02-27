@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventSubscriptionFilter(subjectBeginsWith.Value, subjectEndsWith.Value, includedEventTypes ?? new ChangeTrackingList<string>(), Optional.ToNullable(isSubjectCaseSensitive), Optional.ToNullable(enableAdvancedFilteringOnArrays), advancedFilters ?? new ChangeTrackingList<AdvancedFilter>(), serializedAdditionalRawData);
+            return new EventSubscriptionFilter(
+                subjectBeginsWith.Value,
+                subjectEndsWith.Value,
+                includedEventTypes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isSubjectCaseSensitive),
+                Optional.ToNullable(enableAdvancedFilteringOnArrays),
+                advancedFilters ?? new ChangeTrackingList<AdvancedFilter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventSubscriptionFilter>.Write(ModelReaderWriterOptions options)

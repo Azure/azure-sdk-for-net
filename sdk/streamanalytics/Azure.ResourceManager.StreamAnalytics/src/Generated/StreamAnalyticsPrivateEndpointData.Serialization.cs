@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsPrivateEndpointData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new StreamAnalyticsPrivateEndpointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Write(ModelReaderWriterOptions options)

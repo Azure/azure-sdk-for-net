@@ -290,7 +290,23 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthMonitorData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, parentMonitorName.Value, Optional.ToNullable(previousMonitorState), Optional.ToNullable(currentMonitorState), evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, lastReportedTimestamp.Value, evidence.Value, monitorConfiguration.Value, serializedAdditionalRawData);
+            return new HealthMonitorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                monitorName.Value,
+                monitorType.Value,
+                monitoredObject.Value,
+                parentMonitorName.Value,
+                Optional.ToNullable(previousMonitorState),
+                Optional.ToNullable(currentMonitorState),
+                evaluationTimestamp.Value,
+                currentStateFirstObservedTimestamp.Value,
+                lastReportedTimestamp.Value,
+                evidence.Value,
+                monitorConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthMonitorData>.Write(ModelReaderWriterOptions options)

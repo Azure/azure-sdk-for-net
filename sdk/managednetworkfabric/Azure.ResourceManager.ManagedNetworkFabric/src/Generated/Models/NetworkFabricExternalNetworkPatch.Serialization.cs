@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricExternalNetworkPatch(annotation.Value, importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, Optional.ToNullable(peeringOption), optionBProperties.Value, optionAProperties.Value, serializedAdditionalRawData);
+            return new NetworkFabricExternalNetworkPatch(
+                annotation.Value,
+                importRoutePolicyId.Value,
+                exportRoutePolicyId.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                Optional.ToNullable(peeringOption),
+                optionBProperties.Value,
+                optionAProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricExternalNetworkPatch>.Write(ModelReaderWriterOptions options)

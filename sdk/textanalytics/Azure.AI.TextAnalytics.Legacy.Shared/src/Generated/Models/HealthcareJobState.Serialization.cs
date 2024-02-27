@@ -89,7 +89,15 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, results.Value, errors ?? new ChangeTrackingList<TextAnalyticsError>(), nextLink.Value);
+            return new HealthcareJobState(
+                createdDateTime,
+                Optional.ToNullable(expirationDateTime),
+                jobId,
+                lastUpdateDateTime,
+                status,
+                results.Value,
+                errors ?? new ChangeTrackingList<TextAnalyticsError>(),
+                nextLink.Value);
         }
     }
 }

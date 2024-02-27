@@ -156,7 +156,16 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new GridInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode), inputIds, rows, columns);
+            return new GridInputGroup(
+                kind,
+                position.Value,
+                width.Value,
+                height.Value,
+                layer.Value,
+                Optional.ToNullable(scalingMode),
+                inputIds,
+                rows,
+                columns);
         }
     }
 }

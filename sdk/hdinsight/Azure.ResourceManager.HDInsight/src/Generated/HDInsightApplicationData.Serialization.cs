@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.HDInsight
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationData(id, name, type, systemData.Value, Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), properties.Value, serializedAdditionalRawData);
+            return new HDInsightApplicationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationData>.Write(ModelReaderWriterOptions options)

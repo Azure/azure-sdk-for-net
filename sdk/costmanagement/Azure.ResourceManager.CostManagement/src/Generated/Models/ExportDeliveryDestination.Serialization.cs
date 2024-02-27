@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDeliveryDestination(resourceId.Value, container, rootFolderPath.Value, sasToken.Value, storageAccount.Value, serializedAdditionalRawData);
+            return new ExportDeliveryDestination(
+                resourceId.Value,
+                container,
+                rootFolderPath.Value,
+                sasToken.Value,
+                storageAccount.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDeliveryDestination>.Write(ModelReaderWriterOptions options)

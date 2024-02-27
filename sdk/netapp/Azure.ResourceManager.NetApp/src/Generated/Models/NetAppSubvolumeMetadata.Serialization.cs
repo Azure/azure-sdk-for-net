@@ -272,7 +272,22 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppSubvolumeMetadata(id, name, type, systemData.Value, path.Value, parentPath.Value, Optional.ToNullable(size), Optional.ToNullable(bytesUsed), permissions.Value, Optional.ToNullable(creationTimeStamp), Optional.ToNullable(accessedTimeStamp), Optional.ToNullable(modifiedTimeStamp), Optional.ToNullable(changedTimeStamp), provisioningState.Value, serializedAdditionalRawData);
+            return new NetAppSubvolumeMetadata(
+                id,
+                name,
+                type,
+                systemData.Value,
+                path.Value,
+                parentPath.Value,
+                Optional.ToNullable(size),
+                Optional.ToNullable(bytesUsed),
+                permissions.Value,
+                Optional.ToNullable(creationTimeStamp),
+                Optional.ToNullable(accessedTimeStamp),
+                Optional.ToNullable(modifiedTimeStamp),
+                Optional.ToNullable(changedTimeStamp),
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppSubvolumeMetadata>.Write(ModelReaderWriterOptions options)

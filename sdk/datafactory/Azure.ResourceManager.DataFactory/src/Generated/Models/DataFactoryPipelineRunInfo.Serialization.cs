@@ -269,7 +269,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunInfo(Optional.ToNullable(runId), runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), runDimensions ?? new ChangeTrackingDictionary<string, string>(), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new DataFactoryPipelineRunInfo(
+                Optional.ToNullable(runId),
+                runGroupId.Value,
+                Optional.ToNullable(isLatest),
+                pipelineName.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                runDimensions ?? new ChangeTrackingDictionary<string, string>(),
+                invokedBy.Value,
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(runStart),
+                Optional.ToNullable(runEnd),
+                Optional.ToNullable(durationInMs),
+                status.Value,
+                message.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineRunInfo>.Write(ModelReaderWriterOptions options)

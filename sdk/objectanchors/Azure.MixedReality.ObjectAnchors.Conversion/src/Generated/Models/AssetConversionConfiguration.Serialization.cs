@@ -231,7 +231,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, keyFrameIndexes ?? new ChangeTrackingList<int>(), gtTrajectory ?? new ChangeTrackingList<TrajectoryPose>(), principalAxis.Value, scale, disableDetectScaleUnits, supportingPlane.Value, testTrajectory ?? new ChangeTrackingList<TrajectoryPose>());
+            return new AssetConversionConfiguration(
+                dimensions.Value,
+                boundingBoxCenter.Value,
+                gravity,
+                keyFrameIndexes ?? new ChangeTrackingList<int>(),
+                gtTrajectory ?? new ChangeTrackingList<TrajectoryPose>(),
+                principalAxis.Value,
+                scale,
+                disableDetectScaleUnits,
+                supportingPlane.Value,
+                testTrajectory ?? new ChangeTrackingList<TrajectoryPose>());
         }
     }
 }

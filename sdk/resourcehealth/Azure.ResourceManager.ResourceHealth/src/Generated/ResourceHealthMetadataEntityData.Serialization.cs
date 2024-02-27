@@ -225,7 +225,16 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthMetadataEntityData(id, name, type, systemData.Value, displayName.Value, dependsOn ?? new ChangeTrackingList<string>(), applicableScenarios ?? new ChangeTrackingList<MetadataEntityScenario>(), supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>(), serializedAdditionalRawData);
+            return new ResourceHealthMetadataEntityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                applicableScenarios ?? new ChangeTrackingList<MetadataEntityScenario>(),
+                supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthMetadataEntityData>.Write(ModelReaderWriterOptions options)

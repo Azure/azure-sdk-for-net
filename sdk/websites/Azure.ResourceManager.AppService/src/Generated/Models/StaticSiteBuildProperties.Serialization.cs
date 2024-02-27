@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteBuildProperties(appLocation.Value, apiLocation.Value, appArtifactLocation.Value, outputLocation.Value, appBuildCommand.Value, apiBuildCommand.Value, Optional.ToNullable(skipGithubActionWorkflowGeneration), githubActionSecretNameOverride.Value, serializedAdditionalRawData);
+            return new StaticSiteBuildProperties(
+                appLocation.Value,
+                apiLocation.Value,
+                appArtifactLocation.Value,
+                outputLocation.Value,
+                appBuildCommand.Value,
+                apiBuildCommand.Value,
+                Optional.ToNullable(skipGithubActionWorkflowGeneration),
+                githubActionSecretNameOverride.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteBuildProperties>.Write(ModelReaderWriterOptions options)

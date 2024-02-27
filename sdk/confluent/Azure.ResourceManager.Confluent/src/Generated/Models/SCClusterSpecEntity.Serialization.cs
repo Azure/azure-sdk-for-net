@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SCClusterSpecEntity(name.Value, availability.Value, cloud.Value, zone.Value, region.Value, kafkaBootstrapEndpoint.Value, httpEndpoint.Value, apiEndpoint.Value, config.Value, environment.Value, network.Value, byok.Value, serializedAdditionalRawData);
+            return new SCClusterSpecEntity(
+                name.Value,
+                availability.Value,
+                cloud.Value,
+                zone.Value,
+                region.Value,
+                kafkaBootstrapEndpoint.Value,
+                httpEndpoint.Value,
+                apiEndpoint.Value,
+                config.Value,
+                environment.Value,
+                network.Value,
+                byok.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SCClusterSpecEntity>.Write(ModelReaderWriterOptions options)

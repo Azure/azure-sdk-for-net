@@ -193,7 +193,18 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DB2ProviderInstanceProperties(providerType, serializedAdditionalRawData, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new DB2ProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                hostname.Value,
+                dbName.Value,
+                dbPort.Value,
+                dbUsername.Value,
+                dbPassword.Value,
+                dbPasswordUri.Value,
+                sapSid.Value,
+                Optional.ToNullable(sslPreference),
+                sslCertificateUri.Value);
         }
 
         BinaryData IPersistableModel<DB2ProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

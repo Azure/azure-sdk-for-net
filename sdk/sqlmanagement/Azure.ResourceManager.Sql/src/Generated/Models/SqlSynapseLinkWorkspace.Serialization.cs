@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlSynapseLinkWorkspace(id, name, type, systemData.Value, workspaces ?? new ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>(), serializedAdditionalRawData);
+            return new SqlSynapseLinkWorkspace(
+                id,
+                name,
+                type,
+                systemData.Value,
+                workspaces ?? new ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlSynapseLinkWorkspace>.Write(ModelReaderWriterOptions options)

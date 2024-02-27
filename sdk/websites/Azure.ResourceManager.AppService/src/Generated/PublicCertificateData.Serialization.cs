@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicCertificateData(id, name, type, systemData.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value, kind.Value, serializedAdditionalRawData);
+            return new PublicCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                blob.Value,
+                Optional.ToNullable(publicCertificateLocation),
+                thumbprint.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublicCertificateData>.Write(ModelReaderWriterOptions options)

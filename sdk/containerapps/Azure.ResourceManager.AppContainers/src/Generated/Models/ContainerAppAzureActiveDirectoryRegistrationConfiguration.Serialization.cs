@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(openIdIssuer.Value, clientId.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, clientSecretCertificateSubjectAlternativeName.Value, clientSecretCertificateIssuer.Value, serializedAdditionalRawData);
+            return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(
+                openIdIssuer.Value,
+                clientId.Value,
+                clientSecretSettingName.Value,
+                clientSecretCertificateThumbprint.Value,
+                clientSecretCertificateSubjectAlternativeName.Value,
+                clientSecretCertificateIssuer.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryRegistrationConfiguration>.Write(ModelReaderWriterOptions options)

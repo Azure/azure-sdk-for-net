@@ -170,7 +170,15 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(etag), properties.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                Optional.ToNullable(etag),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentData>.Write(ModelReaderWriterOptions options)

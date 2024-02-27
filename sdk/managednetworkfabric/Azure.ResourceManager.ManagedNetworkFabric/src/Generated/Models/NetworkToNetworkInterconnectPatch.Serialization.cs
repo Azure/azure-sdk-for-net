@@ -243,7 +243,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkToNetworkInterconnectPatch(id, name, type, systemData.Value, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, serializedAdditionalRawData);
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                layer2Configuration.Value,
+                optionBLayer3Configuration.Value,
+                npbStaticRouteConfiguration.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                egressAclId.Value,
+                ingressAclId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkToNetworkInterconnectPatch>.Write(ModelReaderWriterOptions options)

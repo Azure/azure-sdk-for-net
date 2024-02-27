@@ -164,7 +164,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OracleConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, dataSource, serverName.Value, serverVersion.Value, Optional.ToNullable(port), Optional.ToNullable(authentication));
+            return new OracleConnectionInfo(
+                type,
+                userName.Value,
+                password.Value,
+                serializedAdditionalRawData,
+                dataSource,
+                serverName.Value,
+                serverVersion.Value,
+                Optional.ToNullable(port),
+                Optional.ToNullable(authentication));
         }
 
         BinaryData IPersistableModel<OracleConnectionInfo>.Write(ModelReaderWriterOptions options)

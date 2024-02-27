@@ -237,7 +237,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleManagementEventDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData, eventName.Value, eventSource.Value, level.Value, operationName.Value, resourceGroupName.Value, resourceProviderName.Value, status.Value, subStatus.Value, claims.Value);
+            return new RuleManagementEventDataSource(
+                odataType,
+                resourceUri.Value,
+                legacyResourceId.Value,
+                resourceLocation.Value,
+                metricNamespace.Value,
+                serializedAdditionalRawData,
+                eventName.Value,
+                eventSource.Value,
+                level.Value,
+                operationName.Value,
+                resourceGroupName.Value,
+                resourceProviderName.Value,
+                status.Value,
+                subStatus.Value,
+                claims.Value);
         }
 
         BinaryData IPersistableModel<RuleManagementEventDataSource>.Write(ModelReaderWriterOptions options)

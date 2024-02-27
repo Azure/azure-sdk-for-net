@@ -327,7 +327,25 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultProperties(tenantId, sku, accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>(), vaultUri.Value, hsmPoolResourceId.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToNullable(provisioningState), privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>(), publicNetworkAccess.Value, serializedAdditionalRawData);
+            return new KeyVaultProperties(
+                tenantId,
+                sku,
+                accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>(),
+                vaultUri.Value,
+                hsmPoolResourceId.Value,
+                Optional.ToNullable(enabledForDeployment),
+                Optional.ToNullable(enabledForDiskEncryption),
+                Optional.ToNullable(enabledForTemplateDeployment),
+                Optional.ToNullable(enableSoftDelete),
+                Optional.ToNullable(softDeleteRetentionInDays),
+                Optional.ToNullable(enableRbacAuthorization),
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(enablePurgeProtection),
+                networkAcls.Value,
+                Optional.ToNullable(provisioningState),
+                privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>(),
+                publicNetworkAccess.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultProperties>.Write(ModelReaderWriterOptions options)

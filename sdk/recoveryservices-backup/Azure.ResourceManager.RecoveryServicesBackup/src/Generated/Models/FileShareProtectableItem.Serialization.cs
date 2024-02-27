@@ -167,7 +167,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, parentContainerFabricId.Value, parentContainerFriendlyName.Value, Optional.ToNullable(azureFileShareType));
+            return new FileShareProtectableItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                protectableItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData,
+                parentContainerFabricId.Value,
+                parentContainerFriendlyName.Value,
+                Optional.ToNullable(azureFileShareType));
         }
 
         BinaryData IPersistableModel<FileShareProtectableItem>.Write(ModelReaderWriterOptions options)

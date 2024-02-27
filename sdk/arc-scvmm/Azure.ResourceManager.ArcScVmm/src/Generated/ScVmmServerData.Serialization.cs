@@ -275,7 +275,23 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmServerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, credentials.Value, fqdn, Optional.ToNullable(port), connectionStatus.Value, errorMessage.Value, uuid.Value, version.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                credentials.Value,
+                fqdn,
+                Optional.ToNullable(port),
+                connectionStatus.Value,
+                errorMessage.Value,
+                uuid.Value,
+                version.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmServerData>.Write(ModelReaderWriterOptions options)

@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), backupStorageRedundancies ?? new ChangeTrackingList<CosmosDBBackupStorageRedundancy>(), Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new CosmosDBLocationProperties(
+                Optional.ToNullable(supportsAvailabilityZone),
+                Optional.ToNullable(isResidencyRestricted),
+                backupStorageRedundancies ?? new ChangeTrackingList<CosmosDBBackupStorageRedundancy>(),
+                Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular),
+                Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz),
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBLocationProperties>.Write(ModelReaderWriterOptions options)

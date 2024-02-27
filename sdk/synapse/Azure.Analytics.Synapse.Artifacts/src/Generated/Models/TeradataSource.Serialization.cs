@@ -168,7 +168,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TeradataSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, Optional.ToNullable(partitionOption), partitionSettings.Value);
+            return new TeradataSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                query.Value,
+                Optional.ToNullable(partitionOption),
+                partitionSettings.Value);
         }
 
         internal partial class TeradataSourceConverter : JsonConverter<TeradataSource>

@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt), serializedAdditionalRawData);
+            return new SystemData(
+                createdBy.Value,
+                Optional.ToNullable(createdByType),
+                Optional.ToNullable(createdAt),
+                lastModifiedBy.Value,
+                Optional.ToNullable(lastModifiedByType),
+                Optional.ToNullable(lastModifiedAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)

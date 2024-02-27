@@ -282,7 +282,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerInboundNatPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, Optional.ToNullable(protocol), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
+            return new LoadBalancerInboundNatPool(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                frontendIPConfiguration,
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(frontendPortRangeStart),
+                Optional.ToNullable(frontendPortRangeEnd),
+                Optional.ToNullable(backendPort),
+                Optional.ToNullable(idleTimeoutInMinutes),
+                Optional.ToNullable(enableFloatingIP),
+                Optional.ToNullable(enableTcpReset),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<LoadBalancerInboundNatPool>.Write(ModelReaderWriterOptions options)

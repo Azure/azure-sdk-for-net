@@ -176,7 +176,17 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, termId.Value, privateOfferId.Value, privateOfferIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ConfluentOfferDetail(
+                publisherId,
+                id,
+                planId,
+                planName,
+                termUnit,
+                termId.Value,
+                privateOfferId.Value,
+                privateOfferIds ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOfferDetail>.Write(ModelReaderWriterOptions options)

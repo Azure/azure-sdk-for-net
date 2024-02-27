@@ -157,7 +157,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetricValue(timeStamp, Optional.ToNullable(average), Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(total), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new MonitorMetricValue(
+                timeStamp,
+                Optional.ToNullable(average),
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(total),
+                Optional.ToNullable(count),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetricValue>.Write(ModelReaderWriterOptions options)

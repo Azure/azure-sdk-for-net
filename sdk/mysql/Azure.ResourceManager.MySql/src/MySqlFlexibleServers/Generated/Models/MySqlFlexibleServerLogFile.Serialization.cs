@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), type0.Value, Optional.ToNullable(lastModifiedTime), url.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerLogFile(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(sizeInKB),
+                Optional.ToNullable(createdTime),
+                type0.Value,
+                Optional.ToNullable(lastModifiedTime),
+                url.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerLogFile>.Write(ModelReaderWriterOptions options)

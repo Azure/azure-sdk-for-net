@@ -403,7 +403,30 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNamespaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToNullable(zoneRedundant), encryption.Value, privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(), Optional.ToNullable(disableLocalAuth), alternateName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(premiumMessagingPartitions), serializedAdditionalRawData);
+            return new ServiceBusNamespaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                Optional.ToNullable(minimumTlsVersion),
+                provisioningState.Value,
+                status.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                serviceBusEndpoint.Value,
+                metricId.Value,
+                Optional.ToNullable(zoneRedundant),
+                encryption.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(),
+                Optional.ToNullable(disableLocalAuth),
+                alternateName.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(premiumMessagingPartitions),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNamespaceData>.Write(ModelReaderWriterOptions options)

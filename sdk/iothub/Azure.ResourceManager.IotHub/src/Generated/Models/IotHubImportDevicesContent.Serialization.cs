@@ -168,7 +168,16 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubImportDevicesContent(inputBlobContainerUri, outputBlobContainerUri, inputBlobName.Value, outputBlobName.Value, Optional.ToNullable(authenticationType), identity.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value, serializedAdditionalRawData);
+            return new IotHubImportDevicesContent(
+                inputBlobContainerUri,
+                outputBlobContainerUri,
+                inputBlobName.Value,
+                outputBlobName.Value,
+                Optional.ToNullable(authenticationType),
+                identity.Value,
+                Optional.ToNullable(includeConfigurations),
+                configurationsBlobName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubImportDevicesContent>.Write(ModelReaderWriterOptions options)

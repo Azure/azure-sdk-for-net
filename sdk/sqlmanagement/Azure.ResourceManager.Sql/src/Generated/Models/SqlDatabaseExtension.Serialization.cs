@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseExtension(id, name, type, systemData.Value, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value, serializedAdditionalRawData);
+            return new SqlDatabaseExtension(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(operationMode),
+                Optional.ToNullable(storageKeyType),
+                storageKey.Value,
+                storageUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseExtension>.Write(ModelReaderWriterOptions options)

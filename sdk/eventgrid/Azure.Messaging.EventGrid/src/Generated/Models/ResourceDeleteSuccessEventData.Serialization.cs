@@ -90,7 +90,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceDeleteSuccessEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization, claims, correlationId.Value, httpRequest);
+            return new ResourceDeleteSuccessEventData(
+                tenantId.Value,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                resourceProvider.Value,
+                resourceUri.Value,
+                operationName.Value,
+                status.Value,
+                authorization,
+                claims,
+                correlationId.Value,
+                httpRequest);
         }
 
         internal partial class ResourceDeleteSuccessEventDataConverter : JsonConverter<ResourceDeleteSuccessEventData>

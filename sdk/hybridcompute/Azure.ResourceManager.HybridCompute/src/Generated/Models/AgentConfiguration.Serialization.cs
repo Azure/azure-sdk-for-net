@@ -226,7 +226,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentConfiguration(proxyUrl.Value, incomingConnectionsPorts ?? new ChangeTrackingList<string>(), extensionsAllowList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(), extensionsBlockList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(), proxyBypass ?? new ChangeTrackingList<string>(), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode), serializedAdditionalRawData);
+            return new AgentConfiguration(
+                proxyUrl.Value,
+                incomingConnectionsPorts ?? new ChangeTrackingList<string>(),
+                extensionsAllowList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
+                extensionsBlockList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
+                proxyBypass ?? new ChangeTrackingList<string>(),
+                extensionsEnabled.Value,
+                guestConfigurationEnabled.Value,
+                Optional.ToNullable(configMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentConfiguration>.Write(ModelReaderWriterOptions options)

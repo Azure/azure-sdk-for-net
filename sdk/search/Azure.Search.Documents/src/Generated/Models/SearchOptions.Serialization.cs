@@ -472,7 +472,38 @@ namespace Azure.Search.Documents
                     continue;
                 }
             }
-            return new SearchOptions(Optional.ToNullable(count), facets ?? new ChangeTrackingList<string>(), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, scoringParameters ?? new ChangeTrackingList<string>(), scoringProfile.Value, semanticQuery.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, vectorQueries ?? new ChangeTrackingList<VectorQuery>(), Optional.ToNullable(vectorFilterMode));
+            return new SearchOptions(
+                Optional.ToNullable(count),
+                facets ?? new ChangeTrackingList<string>(),
+                filter.Value,
+                highlight.Value,
+                highlightPostTag.Value,
+                highlightPreTag.Value,
+                Optional.ToNullable(minimumCoverage),
+                orderby.Value,
+                Optional.ToNullable(queryType),
+                Optional.ToNullable(scoringStatistics),
+                sessionId.Value,
+                scoringParameters ?? new ChangeTrackingList<string>(),
+                scoringProfile.Value,
+                semanticQuery.Value,
+                semanticConfiguration.Value,
+                Optional.ToNullable(semanticErrorHandling),
+                Optional.ToNullable(semanticMaxWaitInMilliseconds),
+                Optional.ToNullable(debug),
+                search.Value,
+                searchFields.Value,
+                Optional.ToNullable(searchMode),
+                Optional.ToNullable(queryLanguage),
+                Optional.ToNullable(speller),
+                answers.Value,
+                select.Value,
+                Optional.ToNullable(skip),
+                Optional.ToNullable(top),
+                captions.Value,
+                semanticFields.Value,
+                vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
+                Optional.ToNullable(vectorFilterMode));
         }
     }
 }

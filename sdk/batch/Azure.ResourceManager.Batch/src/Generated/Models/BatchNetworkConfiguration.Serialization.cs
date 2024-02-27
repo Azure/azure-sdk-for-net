@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking), serializedAdditionalRawData);
+            return new BatchNetworkConfiguration(
+                subnetId.Value,
+                Optional.ToNullable(dynamicVnetAssignmentScope),
+                endpointConfiguration.Value,
+                publicIPAddressConfiguration.Value,
+                Optional.ToNullable(enableAcceleratedNetworking),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchNetworkConfiguration>.Write(ModelReaderWriterOptions options)

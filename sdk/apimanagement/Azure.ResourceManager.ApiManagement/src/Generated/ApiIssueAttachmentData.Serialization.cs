@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiIssueAttachmentData(id, name, type, systemData.Value, title.Value, contentFormat.Value, content.Value, serializedAdditionalRawData);
+            return new ApiIssueAttachmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                title.Value,
+                contentFormat.Value,
+                content.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiIssueAttachmentData>.Write(ModelReaderWriterOptions options)

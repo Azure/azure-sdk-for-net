@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Optional.ToNullable(controlStatus), assessments ?? new ChangeTrackingList<Assessment>(), serializedAdditionalRawData);
+            return new Control(
+                controlId.Value,
+                controlShortName.Value,
+                controlFullName.Value,
+                Optional.ToNullable(controlType),
+                controlDescription.Value,
+                controlDescriptionHyperLink.Value,
+                Optional.ToNullable(controlStatus),
+                assessments ?? new ChangeTrackingList<Assessment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Control>.Write(ModelReaderWriterOptions options)

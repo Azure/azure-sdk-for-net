@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeNode(id, name, type, systemData.Value, ipAddressGroups ?? new ChangeTrackingList<IPAddressGroup>(), serializedAdditionalRawData);
+            return new EdgeNode(
+                id,
+                name,
+                type,
+                systemData.Value,
+                ipAddressGroups ?? new ChangeTrackingList<IPAddressGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeNode>.Write(ModelReaderWriterOptions options)
