@@ -188,7 +188,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VCenterInfrastructureProfile(templateId.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), customResourceName.Value, serializedAdditionalRawData);
+            return new VCenterInfrastructureProfile(
+                templateId.Value,
+                vCenterId.Value,
+                moRefId.Value,
+                inventoryItemId.Value,
+                moName.Value,
+                folderPath.Value,
+                instanceUuid.Value,
+                smbiosUuid.Value,
+                Optional.ToNullable(firmwareType),
+                customResourceName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VCenterInfrastructureProfile>.Write(ModelReaderWriterOptions options)

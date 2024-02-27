@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownNetworkFunctionPropertiesFormat(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), configurationType, roleOverrideValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new UnknownNetworkFunctionPropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                publisherName.Value,
+                Optional.ToNullable(publisherScope),
+                networkFunctionDefinitionGroupName.Value,
+                networkFunctionDefinitionVersion.Value,
+                networkFunctionDefinitionOfferingLocation.Value,
+                networkFunctionDefinitionVersionResourceReference.Value,
+                Optional.ToNullable(nfviType),
+                nfviId.Value,
+                Optional.ToNullable(allowSoftwareUpdate),
+                configurationType,
+                roleOverrideValues ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionPropertiesFormat>.Write(ModelReaderWriterOptions options)

@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAvailableUpgradeVersion(Optional.ToNullable(controlImpact), expectedDuration.Value, impactDescription.Value, Optional.ToNullable(supportExpiryDate), targetClusterVersion.Value, Optional.ToNullable(workloadImpact), serializedAdditionalRawData);
+            return new ClusterAvailableUpgradeVersion(
+                Optional.ToNullable(controlImpact),
+                expectedDuration.Value,
+                impactDescription.Value,
+                Optional.ToNullable(supportExpiryDate),
+                targetClusterVersion.Value,
+                Optional.ToNullable(workloadImpact),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAvailableUpgradeVersion>.Write(ModelReaderWriterOptions options)

@@ -117,7 +117,18 @@ namespace Azure.MixedReality.RemoteRendering
                     continue;
                 }
             }
-            return new RenderingSession(id, Optional.ToNullable(arrInspectorPort), Optional.ToNullable(handshakePort), Optional.ToNullable(elapsedTimeMinutes), hostname.Value, Optional.ToNullable(maxLeaseTimeMinutes), size, status, Optional.ToNullable(teraflops), error.Value, Optional.ToNullable(creationTime));
+            return new RenderingSession(
+                id,
+                Optional.ToNullable(arrInspectorPort),
+                Optional.ToNullable(handshakePort),
+                Optional.ToNullable(elapsedTimeMinutes),
+                hostname.Value,
+                Optional.ToNullable(maxLeaseTimeMinutes),
+                size,
+                status,
+                Optional.ToNullable(teraflops),
+                error.Value,
+                Optional.ToNullable(creationTime));
         }
     }
 }

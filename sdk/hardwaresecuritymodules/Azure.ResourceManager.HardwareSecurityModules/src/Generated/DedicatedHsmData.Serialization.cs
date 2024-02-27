@@ -280,7 +280,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHsmData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, networkProfile.Value, managementNetworkProfile.Value, stampId.Value, statusMessage.Value, Optional.ToNullable(provisioningState), sku.Value, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DedicatedHsmData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                networkProfile.Value,
+                managementNetworkProfile.Value,
+                stampId.Value,
+                statusMessage.Value,
+                Optional.ToNullable(provisioningState),
+                sku.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHsmData>.Write(ModelReaderWriterOptions options)

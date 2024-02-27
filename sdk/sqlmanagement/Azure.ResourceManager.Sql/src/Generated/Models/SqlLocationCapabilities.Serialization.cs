@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlLocationCapabilities(name.Value, supportedServerVersions ?? new ChangeTrackingList<SqlServerVersionCapability>(), supportedManagedInstanceVersions ?? new ChangeTrackingList<ManagedInstanceVersionCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new SqlLocationCapabilities(
+                name.Value,
+                supportedServerVersions ?? new ChangeTrackingList<SqlServerVersionCapability>(),
+                supportedManagedInstanceVersions ?? new ChangeTrackingList<ManagedInstanceVersionCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlLocationCapabilities>.Write(ModelReaderWriterOptions options)

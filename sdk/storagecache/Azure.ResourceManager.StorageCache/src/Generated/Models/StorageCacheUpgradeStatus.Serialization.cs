@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUpgradeStatus(currentFirmwareVersion.Value, Optional.ToNullable(firmwareUpdateStatus), Optional.ToNullable(firmwareUpdateDeadline), Optional.ToNullable(lastFirmwareUpdate), pendingFirmwareVersion.Value, serializedAdditionalRawData);
+            return new StorageCacheUpgradeStatus(
+                currentFirmwareVersion.Value,
+                Optional.ToNullable(firmwareUpdateStatus),
+                Optional.ToNullable(firmwareUpdateDeadline),
+                Optional.ToNullable(lastFirmwareUpdate),
+                pendingFirmwareVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUpgradeStatus>.Write(ModelReaderWriterOptions options)

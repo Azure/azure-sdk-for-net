@@ -282,7 +282,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmAutoBackupSettings(Optional.ToNullable(enable), Optional.ToNullable(enableEncryption), Optional.ToNullable(retentionPeriod), storageAccountUrl.Value, storageContainerName.Value, storageAccessKey.Value, password.Value, Optional.ToNullable(backupSystemDbs), Optional.ToNullable(backupScheduleType), Optional.ToNullable(fullBackupFrequency), daysOfWeek ?? new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>(), Optional.ToNullable(fullBackupStartTime), Optional.ToNullable(fullBackupWindowHours), Optional.ToNullable(logBackupFrequency), serializedAdditionalRawData);
+            return new SqlVmAutoBackupSettings(
+                Optional.ToNullable(enable),
+                Optional.ToNullable(enableEncryption),
+                Optional.ToNullable(retentionPeriod),
+                storageAccountUrl.Value,
+                storageContainerName.Value,
+                storageAccessKey.Value,
+                password.Value,
+                Optional.ToNullable(backupSystemDbs),
+                Optional.ToNullable(backupScheduleType),
+                Optional.ToNullable(fullBackupFrequency),
+                daysOfWeek ?? new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>(),
+                Optional.ToNullable(fullBackupStartTime),
+                Optional.ToNullable(fullBackupWindowHours),
+                Optional.ToNullable(logBackupFrequency),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmAutoBackupSettings>.Write(ModelReaderWriterOptions options)

@@ -262,7 +262,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NatRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>(), sourceAddresses ?? new ChangeTrackingList<string>(), destinationAddresses ?? new ChangeTrackingList<string>(), destinationPorts ?? new ChangeTrackingList<string>(), translatedAddress.Value, translatedPort.Value, sourceIPGroups ?? new ChangeTrackingList<string>(), translatedFqdn.Value);
+            return new NatRule(
+                name.Value,
+                description.Value,
+                ruleType,
+                serializedAdditionalRawData,
+                ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>(),
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                translatedAddress.Value,
+                translatedPort.Value,
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                translatedFqdn.Value);
         }
 
         BinaryData IPersistableModel<NatRule>.Write(ModelReaderWriterOptions options)

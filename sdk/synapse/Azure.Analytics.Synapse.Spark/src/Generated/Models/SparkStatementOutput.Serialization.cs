@@ -81,7 +81,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkStatementOutput(status.Value, executionCount, data.Value, ename.Value, evalue.Value, traceback ?? new ChangeTrackingList<string>());
+            return new SparkStatementOutput(
+                status.Value,
+                executionCount,
+                data.Value,
+                ename.Value,
+                evalue.Value,
+                traceback ?? new ChangeTrackingList<string>());
         }
     }
 }

@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AppConfigurationPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

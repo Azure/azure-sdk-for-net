@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceHardwareProfile(Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(cpuHotAddEnabled), Optional.ToNullable(cpuHotRemoveEnabled), Optional.ToNullable(memoryHotAddEnabled), serializedAdditionalRawData);
+            return new VmInstanceHardwareProfile(
+                Optional.ToNullable(memorySizeMB),
+                Optional.ToNullable(numCpus),
+                Optional.ToNullable(numCoresPerSocket),
+                Optional.ToNullable(cpuHotAddEnabled),
+                Optional.ToNullable(cpuHotRemoveEnabled),
+                Optional.ToNullable(memoryHotAddEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceHardwareProfile>.Write(ModelReaderWriterOptions options)

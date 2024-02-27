@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableAppPlatformSku(Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, locations ?? new ChangeTrackingList<AzureLocation>(), locationInfo ?? new ChangeTrackingList<AppPlatformSkuLocationInfo>(), restrictions ?? new ChangeTrackingList<AppPlatformSkuRestrictions>(), serializedAdditionalRawData);
+            return new AvailableAppPlatformSku(
+                Optional.ToNullable(resourceType),
+                name.Value,
+                tier.Value,
+                capacity.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<AppPlatformSkuLocationInfo>(),
+                restrictions ?? new ChangeTrackingList<AppPlatformSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableAppPlatformSku>.Write(ModelReaderWriterOptions options)

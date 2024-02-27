@@ -303,7 +303,19 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, Optional.ToNullable(mediaServiceId), storageAccounts ?? new ChangeTrackingList<MediaServicesStorageAccount>(), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(), Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData);
+            return new MediaServicesAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                Optional.ToNullable(mediaServiceId),
+                storageAccounts ?? new ChangeTrackingList<MediaServicesStorageAccount>(),
+                Optional.ToNullable(storageAuthentication),
+                encryption.Value,
+                keyDelivery.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(provisioningState),
+                privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(),
+                Optional.ToNullable(minimumTlsVersion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesAccountPatch>.Write(ModelReaderWriterOptions options)

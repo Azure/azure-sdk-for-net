@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentOwnerInfo(email.Value, assignedTo.Value, Optional.ToNullable(objectId), userPrincipalName.Value, Optional.ToNullable(ownerType), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentOwnerInfo(
+                email.Value,
+                assignedTo.Value,
+                Optional.ToNullable(objectId),
+                userPrincipalName.Value,
+                Optional.ToNullable(ownerType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentOwnerInfo>.Write(ModelReaderWriterOptions options)

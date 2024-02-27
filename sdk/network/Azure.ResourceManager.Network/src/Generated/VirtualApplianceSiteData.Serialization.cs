@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplianceSiteData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, o365Policy.Value, Optional.ToNullable(provisioningState));
+            return new VirtualApplianceSiteData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                addressPrefix.Value,
+                o365Policy.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VirtualApplianceSiteData>.Write(ModelReaderWriterOptions options)

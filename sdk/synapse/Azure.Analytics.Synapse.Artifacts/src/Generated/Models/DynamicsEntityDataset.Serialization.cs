@@ -205,7 +205,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsEntityDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, entityName.Value);
+            return new DynamicsEntityDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                additionalProperties,
+                entityName.Value);
         }
 
         internal partial class DynamicsEntityDatasetConverter : JsonConverter<DynamicsEntityDataset>

@@ -140,7 +140,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpParentOrganizationalInfo(organizationMembershipType, serializedAdditionalRawData, excludedProjectNumbers ?? new ChangeTrackingList<string>(), serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value, organizationName.Value);
+            return new GcpParentOrganizationalInfo(
+                organizationMembershipType,
+                serializedAdditionalRawData,
+                excludedProjectNumbers ?? new ChangeTrackingList<string>(),
+                serviceAccountEmailAddress.Value,
+                workloadIdentityProviderId.Value,
+                organizationName.Value);
         }
 
         BinaryData IPersistableModel<GcpParentOrganizationalInfo>.Write(ModelReaderWriterOptions options)

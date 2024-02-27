@@ -242,7 +242,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, connectionString, dataSource.Value, Optional.ToNullable(encryptConnection), serverBrandVersion.Value, serverVersion.Value, serverName.Value, Optional.ToNullable(trustServerCertificate), Optional.ToNullable(enforceSSL), Optional.ToNullable(port), additionalSettings.Value, Optional.ToNullable(authentication));
+            return new MongoDBConnectionInfo(
+                type,
+                userName.Value,
+                password.Value,
+                serializedAdditionalRawData,
+                connectionString,
+                dataSource.Value,
+                Optional.ToNullable(encryptConnection),
+                serverBrandVersion.Value,
+                serverVersion.Value,
+                serverName.Value,
+                Optional.ToNullable(trustServerCertificate),
+                Optional.ToNullable(enforceSSL),
+                Optional.ToNullable(port),
+                additionalSettings.Value,
+                Optional.ToNullable(authentication));
         }
 
         BinaryData IPersistableModel<MongoDBConnectionInfo>.Write(ModelReaderWriterOptions options)

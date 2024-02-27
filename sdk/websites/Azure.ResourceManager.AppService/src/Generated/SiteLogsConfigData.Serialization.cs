@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteLogsConfigData(id, name, type, systemData.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteLogsConfigData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                applicationLogs.Value,
+                httpLogs.Value,
+                failedRequestsTracing.Value,
+                detailedErrorMessages.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteLogsConfigData>.Write(ModelReaderWriterOptions options)

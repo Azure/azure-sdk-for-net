@@ -478,7 +478,33 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountPatch(sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), identity, Optional.ToNullable(kind), customDomain.Value, encryption.Value, sasPolicy.Value, keyPolicy.Value, Optional.ToNullable(accessTier), azureFilesIdentityBasedAuthentication.Value, Optional.ToNullable(supportsHttpsTrafficOnly), Optional.ToNullable(isSftpEnabled), Optional.ToNullable(isLocalUserEnabled), networkAcls.Value, Optional.ToNullable(largeFileSharesState), routingPreference.Value, Optional.ToNullable(allowBlobPublicAccess), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(allowSharedKeyAccess), Optional.ToNullable(allowCrossTenantReplication), Optional.ToNullable(defaultToOAuthAuthentication), Optional.ToNullable(publicNetworkAccess), immutableStorageWithVersioning.Value, Optional.ToNullable(allowedCopyScope), Optional.ToNullable(dnsEndpointType), serializedAdditionalRawData);
+            return new StorageAccountPatch(
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                Optional.ToNullable(kind),
+                customDomain.Value,
+                encryption.Value,
+                sasPolicy.Value,
+                keyPolicy.Value,
+                Optional.ToNullable(accessTier),
+                azureFilesIdentityBasedAuthentication.Value,
+                Optional.ToNullable(supportsHttpsTrafficOnly),
+                Optional.ToNullable(isSftpEnabled),
+                Optional.ToNullable(isLocalUserEnabled),
+                networkAcls.Value,
+                Optional.ToNullable(largeFileSharesState),
+                routingPreference.Value,
+                Optional.ToNullable(allowBlobPublicAccess),
+                Optional.ToNullable(minimumTlsVersion),
+                Optional.ToNullable(allowSharedKeyAccess),
+                Optional.ToNullable(allowCrossTenantReplication),
+                Optional.ToNullable(defaultToOAuthAuthentication),
+                Optional.ToNullable(publicNetworkAccess),
+                immutableStorageWithVersioning.Value,
+                Optional.ToNullable(allowedCopyScope),
+                Optional.ToNullable(dnsEndpointType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountPatch>.Write(ModelReaderWriterOptions options)

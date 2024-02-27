@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionMeterDetails(meterName.Value, meterCategory.Value, meterSubCategory.Value, unit.Value, meterLocation.Value, Optional.ToNullable(totalIncludedQuantity), Optional.ToNullable(pretaxStandardRate), serviceName.Value, serviceTier.Value, serializedAdditionalRawData);
+            return new ConsumptionMeterDetails(
+                meterName.Value,
+                meterCategory.Value,
+                meterSubCategory.Value,
+                unit.Value,
+                meterLocation.Value,
+                Optional.ToNullable(totalIncludedQuantity),
+                Optional.ToNullable(pretaxStandardRate),
+                serviceName.Value,
+                serviceTier.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionMeterDetails>.Write(ModelReaderWriterOptions options)

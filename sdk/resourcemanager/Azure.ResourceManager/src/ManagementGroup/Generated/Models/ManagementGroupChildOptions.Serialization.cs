@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupChildOptions(Optional.ToNullable(type), id.Value, name.Value, displayName.Value, children ?? new ChangeTrackingList<ManagementGroupChildOptions>(), serializedAdditionalRawData);
+            return new ManagementGroupChildOptions(
+                Optional.ToNullable(type),
+                id.Value,
+                name.Value,
+                displayName.Value,
+                children ?? new ChangeTrackingList<ManagementGroupChildOptions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupChildOptions>.Write(ModelReaderWriterOptions options)

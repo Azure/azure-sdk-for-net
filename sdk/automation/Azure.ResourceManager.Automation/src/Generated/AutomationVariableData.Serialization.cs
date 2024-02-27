@@ -213,7 +213,17 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationVariableData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(isEncrypted), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationVariableData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                value.Value,
+                Optional.ToNullable(isEncrypted),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationVariableData>.Write(ModelReaderWriterOptions options)

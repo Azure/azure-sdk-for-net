@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAccountData(id, name, type, systemData.Value, storageAccountResourceId.Value, Optional.ToNullable(location), restoreReference.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime), serializedAdditionalRawData);
+            return new DeletedAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                storageAccountResourceId.Value,
+                Optional.ToNullable(location),
+                restoreReference.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(deletionTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAccountData>.Write(ModelReaderWriterOptions options)

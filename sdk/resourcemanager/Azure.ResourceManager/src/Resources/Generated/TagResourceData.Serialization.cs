@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagResourceData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new TagResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagResourceData>.Write(ModelReaderWriterOptions options)

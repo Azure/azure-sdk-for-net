@@ -168,7 +168,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalarFunctionProperties(type, Optional.ToNullable(etag), inputs ?? new ChangeTrackingList<StreamingJobFunctionInput>(), output.Value, binding.Value, serializedAdditionalRawData);
+            return new ScalarFunctionProperties(
+                type,
+                Optional.ToNullable(etag),
+                inputs ?? new ChangeTrackingList<StreamingJobFunctionInput>(),
+                output.Value,
+                binding.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalarFunctionProperties>.Write(ModelReaderWriterOptions options)

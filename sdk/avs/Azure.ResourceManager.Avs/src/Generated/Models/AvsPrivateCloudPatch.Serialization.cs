@@ -241,7 +241,16 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, managementCluster.Value, Optional.ToNullable(internet), identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(), availability.Value, encryption.Value, extendedNetworkBlocks ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AvsPrivateCloudPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                managementCluster.Value,
+                Optional.ToNullable(internet),
+                identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
+                availability.Value,
+                encryption.Value,
+                extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudPatch>.Write(ModelReaderWriterOptions options)

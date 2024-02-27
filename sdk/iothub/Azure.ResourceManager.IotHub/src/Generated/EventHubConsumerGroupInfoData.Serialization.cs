@@ -192,7 +192,14 @@ namespace Azure.ResourceManager.IotHub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubConsumerGroupInfoData(id, name, type, systemData.Value, properties ?? new ChangeTrackingDictionary<string, BinaryData>(), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new EventHubConsumerGroupInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubConsumerGroupInfoData>.Write(ModelReaderWriterOptions options)

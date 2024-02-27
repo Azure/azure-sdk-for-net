@@ -136,7 +136,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpC2DRejectedMessagesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold, timeWindowSize);
+            return new HttpC2DRejectedMessagesNotInAllowedRange(
+                displayName.Value,
+                description.Value,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
         }
 
         BinaryData IPersistableModel<HttpC2DRejectedMessagesNotInAllowedRange>.Write(ModelReaderWriterOptions options)

@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.Grafana
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrafanaPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, groupIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new GrafanaPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

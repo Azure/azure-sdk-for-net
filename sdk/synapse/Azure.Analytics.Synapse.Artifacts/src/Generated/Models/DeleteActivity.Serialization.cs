@@ -275,7 +275,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DeleteActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, recursive.Value, Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset, storeSettings.Value);
+            return new DeleteActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                recursive.Value,
+                Optional.ToNullable(maxConcurrentConnections),
+                enableLogging.Value,
+                logStorageSettings.Value,
+                dataset,
+                storeSettings.Value);
         }
 
         internal partial class DeleteActivityConverter : JsonConverter<DeleteActivity>

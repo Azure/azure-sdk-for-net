@@ -89,7 +89,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkServicePlugin(Optional.ToNullable(preparationStartedAt), Optional.ToNullable(resourceAcquisitionStartedAt), Optional.ToNullable(submissionStartedAt), Optional.ToNullable(monitoringStartedAt), Optional.ToNullable(cleanupStartedAt), Optional.ToNullable(currentState));
+            return new SparkServicePlugin(
+                Optional.ToNullable(preparationStartedAt),
+                Optional.ToNullable(resourceAcquisitionStartedAt),
+                Optional.ToNullable(submissionStartedAt),
+                Optional.ToNullable(monitoringStartedAt),
+                Optional.ToNullable(cleanupStartedAt),
+                Optional.ToNullable(currentState));
         }
 
         internal partial class SparkServicePluginConverter : JsonConverter<SparkServicePlugin>

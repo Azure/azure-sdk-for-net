@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalizationClusterCredentials(storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, serviceAuthConfiguration.Value, sslConfiguration.Value, serializedAdditionalRawData);
+            return new OperationalizationClusterCredentials(
+                storageAccount.Value,
+                containerRegistry.Value,
+                containerService.Value,
+                appInsights.Value,
+                serviceAuthConfiguration.Value,
+                sslConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalizationClusterCredentials>.Write(ModelReaderWriterOptions options)

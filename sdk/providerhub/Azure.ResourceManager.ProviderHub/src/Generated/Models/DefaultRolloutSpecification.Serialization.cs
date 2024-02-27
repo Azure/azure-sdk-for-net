@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutSpecification(canary.Value, lowTraffic.Value, mediumTraffic.Value, highTraffic.Value, restOfTheWorldGroupOne.Value, restOfTheWorldGroupTwo.Value, providerRegistration.Value, resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(), serializedAdditionalRawData);
+            return new DefaultRolloutSpecification(
+                canary.Value,
+                lowTraffic.Value,
+                mediumTraffic.Value,
+                highTraffic.Value,
+                restOfTheWorldGroupOne.Value,
+                restOfTheWorldGroupTwo.Value,
+                providerRegistration.Value,
+                resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultRolloutSpecification>.Write(ModelReaderWriterOptions options)

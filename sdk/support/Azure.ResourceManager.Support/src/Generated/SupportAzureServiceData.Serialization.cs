@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportAzureServiceData(id, name, type, systemData.Value, displayName.Value, resourceTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SupportAzureServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                resourceTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportAzureServiceData>.Write(ModelReaderWriterOptions options)

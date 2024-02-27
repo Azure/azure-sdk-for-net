@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryVaultSettingData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SiteRecoveryVaultSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryVaultSettingData>.Write(ModelReaderWriterOptions options)

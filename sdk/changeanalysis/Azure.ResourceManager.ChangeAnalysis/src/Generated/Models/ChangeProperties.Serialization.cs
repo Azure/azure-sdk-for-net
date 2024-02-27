@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeProperties(resourceId.Value, Optional.ToNullable(timeStamp), initiatedByList ?? new ChangeTrackingList<string>(), Optional.ToNullable(changeType), propertyChanges ?? new ChangeTrackingList<PropertyChange>(), serializedAdditionalRawData);
+            return new ChangeProperties(
+                resourceId.Value,
+                Optional.ToNullable(timeStamp),
+                initiatedByList ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(changeType),
+                propertyChanges ?? new ChangeTrackingList<PropertyChange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeProperties>.Write(ModelReaderWriterOptions options)

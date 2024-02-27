@@ -183,7 +183,13 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatsAppMessageTemplateBindings(kind, serializedAdditionalRawData, header ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), body ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), footer ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), buttons ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>());
+            return new WhatsAppMessageTemplateBindings(
+                kind,
+                serializedAdditionalRawData,
+                header ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(),
+                body ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(),
+                footer ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(),
+                buttons ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>());
         }
 
         BinaryData IPersistableModel<WhatsAppMessageTemplateBindings>.Write(ModelReaderWriterOptions options)

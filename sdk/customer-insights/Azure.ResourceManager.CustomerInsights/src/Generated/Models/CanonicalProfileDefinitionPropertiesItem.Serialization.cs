@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CanonicalProfileDefinitionPropertiesItem(profileName.Value, profilePropertyName.Value, Optional.ToNullable(rank), Optional.ToNullable(type), value.Value, serializedAdditionalRawData);
+            return new CanonicalProfileDefinitionPropertiesItem(
+                profileName.Value,
+                profilePropertyName.Value,
+                Optional.ToNullable(rank),
+                Optional.ToNullable(type),
+                value.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CanonicalProfileDefinitionPropertiesItem>.Write(ModelReaderWriterOptions options)

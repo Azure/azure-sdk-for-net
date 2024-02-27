@@ -305,7 +305,23 @@ namespace Azure.ResourceManager.PrivateDns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsZoneData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(privateDnsProvisioningState), internalId.Value, serializedAdditionalRawData);
+            return new PrivateDnsZoneData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(maxNumberOfRecordSets),
+                Optional.ToNullable(numberOfRecordSets),
+                Optional.ToNullable(maxNumberOfVirtualNetworkLinks),
+                Optional.ToNullable(numberOfVirtualNetworkLinks),
+                Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration),
+                Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration),
+                Optional.ToNullable(privateDnsProvisioningState),
+                internalId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsZoneData>.Write(ModelReaderWriterOptions options)

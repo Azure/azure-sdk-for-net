@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerExternalAdministrator(Optional.ToNullable(administratorType), Optional.ToNullable(principalType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), Optional.ToNullable(azureADOnlyAuthentication), serializedAdditionalRawData);
+            return new ServerExternalAdministrator(
+                Optional.ToNullable(administratorType),
+                Optional.ToNullable(principalType),
+                login.Value,
+                Optional.ToNullable(sid),
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(azureADOnlyAuthentication),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerExternalAdministrator>.Write(ModelReaderWriterOptions options)

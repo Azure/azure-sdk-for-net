@@ -158,7 +158,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MatchCondition(matchVariables, @operator, Optional.ToNullable(negationConditon), matchValues, transforms ?? new ChangeTrackingList<WebApplicationFirewallTransform>(), serializedAdditionalRawData);
+            return new MatchCondition(
+                matchVariables,
+                @operator,
+                Optional.ToNullable(negationConditon),
+                matchValues,
+                transforms ?? new ChangeTrackingList<WebApplicationFirewallTransform>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MatchCondition>.Write(ModelReaderWriterOptions options)

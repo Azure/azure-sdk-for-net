@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, Optional.ToNullable(creationDate), serializedAdditionalRawData);
+            return new PostgreSqlServerKeyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(serverKeyType),
+                uri.Value,
+                Optional.ToNullable(creationDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerKeyData>.Write(ModelReaderWriterOptions options)

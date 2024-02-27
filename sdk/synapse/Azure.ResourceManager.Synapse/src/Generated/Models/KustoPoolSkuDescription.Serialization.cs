@@ -201,7 +201,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoPoolSkuDescription(resourceType.Value, name.Value, size.Value, locations ?? new ChangeTrackingList<AzureLocation>(), locationInfo ?? new ChangeTrackingList<KustoPoolSkuLocationInfoItem>(), restrictions ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
+            return new KustoPoolSkuDescription(
+                resourceType.Value,
+                name.Value,
+                size.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<KustoPoolSkuLocationInfoItem>(),
+                restrictions ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoPoolSkuDescription>.Write(ModelReaderWriterOptions options)

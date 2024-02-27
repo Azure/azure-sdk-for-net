@@ -485,7 +485,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningForecasting(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, forecastingSettings.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, cvSplitColumnNames ?? new ChangeTrackingList<string>(), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, nCrossValidations.Value, searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(), sweepSettings.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new MachineLearningForecasting(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                forecastingSettings.Value,
+                Optional.ToNullable(primaryMetric),
+                trainingSettings.Value,
+                cvSplitColumnNames ?? new ChangeTrackingList<string>(),
+                featurizationSettings.Value,
+                fixedParameters.Value,
+                limitSettings.Value,
+                nCrossValidations.Value,
+                searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
+                sweepSettings.Value,
+                testData.Value,
+                Optional.ToNullable(testDataSize),
+                validationData.Value,
+                Optional.ToNullable(validationDataSize),
+                weightColumnName.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningForecasting>.Write(ModelReaderWriterOptions options)

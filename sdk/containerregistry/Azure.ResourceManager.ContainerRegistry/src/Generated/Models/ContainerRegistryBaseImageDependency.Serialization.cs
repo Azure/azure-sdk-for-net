@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryBaseImageDependency(Optional.ToNullable(type), registry.Value, repository.Value, tag.Value, digest.Value, serializedAdditionalRawData);
+            return new ContainerRegistryBaseImageDependency(
+                Optional.ToNullable(type),
+                registry.Value,
+                repository.Value,
+                tag.Value,
+                digest.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryBaseImageDependency>.Write(ModelReaderWriterOptions options)

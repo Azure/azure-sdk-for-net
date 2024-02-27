@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(caseManipulation.Value, name.Value, schemaName.Value, tableMap ?? new ChangeTrackingDictionary<string, string>(), targetDatabaseName.Value, migrationSetting ?? new ChangeTrackingDictionary<string, string>(), sourceSetting ?? new ChangeTrackingDictionary<string, string>(), targetSetting ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(
+                caseManipulation.Value,
+                name.Value,
+                schemaName.Value,
+                tableMap ?? new ChangeTrackingDictionary<string, string>(),
+                targetDatabaseName.Value,
+                migrationSetting ?? new ChangeTrackingDictionary<string, string>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>.Write(ModelReaderWriterOptions options)

@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RefreshExternalGovernanceStatusOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, serverName.Value, status.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new RefreshExternalGovernanceStatusOperationResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(requestId),
+                requestType.Value,
+                queuedTime.Value,
+                serverName.Value,
+                status.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RefreshExternalGovernanceStatusOperationResult>.Write(ModelReaderWriterOptions options)

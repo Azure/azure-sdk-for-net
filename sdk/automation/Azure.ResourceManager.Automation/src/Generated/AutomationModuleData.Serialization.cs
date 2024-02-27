@@ -346,7 +346,26 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationModuleData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(isGlobal), version.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(activityCount), Optional.ToNullable(provisioningState), contentLink.Value, error.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, Optional.ToNullable(isComposite), serializedAdditionalRawData);
+            return new AutomationModuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(isGlobal),
+                version.Value,
+                Optional.ToNullable(sizeInBytes),
+                Optional.ToNullable(activityCount),
+                Optional.ToNullable(provisioningState),
+                contentLink.Value,
+                error.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                Optional.ToNullable(isComposite),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationModuleData>.Write(ModelReaderWriterOptions options)

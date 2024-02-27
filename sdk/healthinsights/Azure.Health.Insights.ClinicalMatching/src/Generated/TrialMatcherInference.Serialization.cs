@@ -183,7 +183,16 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherInference(type, value, description.Value, Optional.ToNullable(confidenceScore), evidence ?? new ChangeTrackingList<TrialMatcherInferenceEvidence>(), id.Value, Optional.ToNullable(source), metadata.Value, serializedAdditionalRawData);
+            return new TrialMatcherInference(
+                type,
+                value,
+                description.Value,
+                Optional.ToNullable(confidenceScore),
+                evidence ?? new ChangeTrackingList<TrialMatcherInferenceEvidence>(),
+                id.Value,
+                Optional.ToNullable(source),
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherInference>.Write(ModelReaderWriterOptions options)

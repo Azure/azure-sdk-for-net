@@ -249,7 +249,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, additionalHeaders.Value, httpRequestTimeout.Value, requestInterval.Value, httpCompressionType.Value);
+            return new RestSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                requestMethod.Value,
+                additionalHeaders.Value,
+                httpRequestTimeout.Value,
+                requestInterval.Value,
+                httpCompressionType.Value);
         }
 
         BinaryData IPersistableModel<RestSink>.Write(ModelReaderWriterOptions options)

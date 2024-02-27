@@ -234,7 +234,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeArcAddon(id, name, type, systemData.Value, kind, serializedAdditionalRawData, subscriptionId, resourceGroupName, resourceName, resourceLocation, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            return new EdgeArcAddon(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                subscriptionId,
+                resourceGroupName,
+                resourceName,
+                resourceLocation,
+                version.Value,
+                Optional.ToNullable(hostPlatform),
+                Optional.ToNullable(hostPlatformType),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<EdgeArcAddon>.Write(ModelReaderWriterOptions options)

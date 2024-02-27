@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsTableSearchResults(query.Value, description.Value, Optional.ToNullable(limit), Optional.ToNullable(startSearchTime), Optional.ToNullable(endSearchTime), sourceTable.Value, Optional.ToNullable(azureAsyncOperationId), serializedAdditionalRawData);
+            return new OperationalInsightsTableSearchResults(
+                query.Value,
+                description.Value,
+                Optional.ToNullable(limit),
+                Optional.ToNullable(startSearchTime),
+                Optional.ToNullable(endSearchTime),
+                sourceTable.Value,
+                Optional.ToNullable(azureAsyncOperationId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsTableSearchResults>.Write(ModelReaderWriterOptions options)

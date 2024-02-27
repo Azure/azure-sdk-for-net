@@ -308,7 +308,23 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceGalleryImageData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, containerId.Value, Optional.ToNullable(osType), Optional.ToNullable(cloudInitDataSource), Optional.ToNullable(hyperVGeneration), identifier.Value, version.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new MarketplaceGalleryImageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                containerId.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(cloudInitDataSource),
+                Optional.ToNullable(hyperVGeneration),
+                identifier.Value,
+                version.Value,
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceGalleryImageData>.Write(ModelReaderWriterOptions options)

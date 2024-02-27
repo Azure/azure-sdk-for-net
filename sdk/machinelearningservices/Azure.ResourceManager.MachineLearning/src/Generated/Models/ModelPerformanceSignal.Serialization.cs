@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPerformanceSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, dataSegment.Value, metricThreshold, productionData, referenceData);
+            return new ModelPerformanceSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                dataSegment.Value,
+                metricThreshold,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<ModelPerformanceSignal>.Write(ModelReaderWriterOptions options)

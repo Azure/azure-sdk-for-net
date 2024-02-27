@@ -314,7 +314,24 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotChannelGetWithKeysResult(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resource.Value, setting.Value, provisioningState.Value, entityTag.Value, changedTime.Value, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new BotChannelGetWithKeysResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource.Value,
+                setting.Value,
+                provisioningState.Value,
+                entityTag.Value,
+                changedTime.Value,
+                properties.Value,
+                sku.Value,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotChannelGetWithKeysResult>.Write(ModelReaderWriterOptions options)

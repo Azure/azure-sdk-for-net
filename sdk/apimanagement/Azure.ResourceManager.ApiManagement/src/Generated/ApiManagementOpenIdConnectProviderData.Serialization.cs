@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementOpenIdConnectProviderData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementOpenIdConnectProviderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                metadataEndpoint.Value,
+                clientId.Value,
+                clientSecret.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementOpenIdConnectProviderData>.Write(ModelReaderWriterOptions options)

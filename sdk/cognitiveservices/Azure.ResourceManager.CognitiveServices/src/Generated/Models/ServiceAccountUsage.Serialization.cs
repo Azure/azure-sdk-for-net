@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), nextResetTime.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ServiceAccountUsage(
+                Optional.ToNullable(unit),
+                name.Value,
+                quotaPeriod.Value,
+                Optional.ToNullable(limit),
+                Optional.ToNullable(currentValue),
+                nextResetTime.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountUsage>.Write(ModelReaderWriterOptions options)

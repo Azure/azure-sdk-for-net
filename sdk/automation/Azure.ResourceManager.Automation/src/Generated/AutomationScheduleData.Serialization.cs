@@ -364,7 +364,26 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationScheduleData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(startTimeOffsetMinutes), Optional.ToNullable(expiryTime), Optional.ToNullable(expiryTimeOffsetMinutes), Optional.ToNullable(isEnabled), Optional.ToNullable(nextRun), Optional.ToNullable(nextRunOffsetMinutes), interval.Value, Optional.ToNullable(frequency), timeZone.Value, advancedSchedule.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationScheduleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(startTimeOffsetMinutes),
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(expiryTimeOffsetMinutes),
+                Optional.ToNullable(isEnabled),
+                Optional.ToNullable(nextRun),
+                Optional.ToNullable(nextRunOffsetMinutes),
+                interval.Value,
+                Optional.ToNullable(frequency),
+                timeZone.Value,
+                advancedSchedule.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationScheduleData>.Write(ModelReaderWriterOptions options)

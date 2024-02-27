@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPrefixRule(action, sequenceNumber, networkPrefix, Optional.ToNullable(condition), subnetMaskLength.Value, serializedAdditionalRawData);
+            return new IPPrefixRule(
+                action,
+                sequenceNumber,
+                networkPrefix,
+                Optional.ToNullable(condition),
+                subnetMaskLength.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPrefixRule>.Write(ModelReaderWriterOptions options)

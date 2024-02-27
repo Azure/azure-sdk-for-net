@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
 using System.Net.Http;
 
@@ -33,30 +32,17 @@ namespace Azure.Core.Pipeline
             /// <inheritdoc />
             protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
             {
-                if (message is not HttpMessage httpMessage)
-                {
-                    throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
-                }
-
+                HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
                 HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
-
                 httpMessage.ClearResponse();
             }
 
             /// <inheritdoc />
             protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
             {
-                if (message is not HttpMessage httpMessage)
-                {
-                    throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
-                }
-
-                if (message.Response is not PipelineResponse pipelineResponse)
-                {
-                    throw new InvalidOperationException($"Unsupported response type: '{message?.GetType()}'.");
-                }
-
+                HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
                 string clientRequestId = httpMessage.Request.ClientRequestId;
+                PipelineResponse pipelineResponse = message.Response!;
                 httpMessage.Response = new HttpClientTransportResponse(clientRequestId, pipelineResponse);
             }
         }

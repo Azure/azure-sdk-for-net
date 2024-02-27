@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociationContract(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AssociationContract(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociationContract>.Write(ModelReaderWriterOptions options)

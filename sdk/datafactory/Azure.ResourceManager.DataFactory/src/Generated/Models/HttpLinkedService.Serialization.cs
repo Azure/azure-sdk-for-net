@@ -312,7 +312,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password, authHeaders.Value, embeddedCertData.Value, certThumbprint.Value, encryptedCredential.Value, enableServerCertificateValidation.Value);
+            return new HttpLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                url,
+                Optional.ToNullable(authenticationType),
+                userName.Value,
+                password,
+                authHeaders.Value,
+                embeddedCertData.Value,
+                certThumbprint.Value,
+                encryptedCredential.Value,
+                enableServerCertificateValidation.Value);
         }
 
         BinaryData IPersistableModel<HttpLinkedService>.Write(ModelReaderWriterOptions options)

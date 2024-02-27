@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppHttpRequestInfo(host.Value, httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>(), path.Value, port, Optional.ToNullable(scheme), serializedAdditionalRawData);
+            return new ContainerAppHttpRequestInfo(
+                host.Value,
+                httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>(),
+                path.Value,
+                port,
+                Optional.ToNullable(scheme),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppHttpRequestInfo>.Write(ModelReaderWriterOptions options)

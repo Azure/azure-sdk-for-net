@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterfaceStatistics(Optional.ToNullable(rxBytes), Optional.ToNullable(rxPackets), Optional.ToNullable(rxErrors), Optional.ToNullable(rxDropped), Optional.ToNullable(txBytes), Optional.ToNullable(txPackets), Optional.ToNullable(txErrors), Optional.ToNullable(txDropped), serializedAdditionalRawData);
+            return new ContainerNetworkInterfaceStatistics(
+                Optional.ToNullable(rxBytes),
+                Optional.ToNullable(rxPackets),
+                Optional.ToNullable(rxErrors),
+                Optional.ToNullable(rxDropped),
+                Optional.ToNullable(txBytes),
+                Optional.ToNullable(txPackets),
+                Optional.ToNullable(txErrors),
+                Optional.ToNullable(txDropped),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterfaceStatistics>.Write(ModelReaderWriterOptions options)

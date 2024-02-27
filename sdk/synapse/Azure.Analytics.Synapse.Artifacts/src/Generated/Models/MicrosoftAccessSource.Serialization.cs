@@ -123,7 +123,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MicrosoftAccessSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, additionalColumns.Value);
+            return new MicrosoftAccessSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                query.Value,
+                additionalColumns.Value);
         }
 
         internal partial class MicrosoftAccessSourceConverter : JsonConverter<MicrosoftAccessSource>

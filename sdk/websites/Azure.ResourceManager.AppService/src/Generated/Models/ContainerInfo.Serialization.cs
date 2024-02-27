@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInfo(Optional.ToNullable(currentTimeStamp), Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value, serializedAdditionalRawData);
+            return new ContainerInfo(
+                Optional.ToNullable(currentTimeStamp),
+                Optional.ToNullable(previousTimeStamp),
+                currentCpuStats.Value,
+                previousCpuStats.Value,
+                memoryStats.Value,
+                name.Value,
+                id.Value,
+                eth0.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInfo>.Write(ModelReaderWriterOptions options)

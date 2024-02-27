@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionGroup(name, displayName.Value, category.Value, description.Value, additionalMetadataId.Value, serializedAdditionalRawData);
+            return new PolicyDefinitionGroup(
+                name,
+                displayName.Value,
+                category.Value,
+                description.Value,
+                additionalMetadataId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionGroup>.Write(ModelReaderWriterOptions options)

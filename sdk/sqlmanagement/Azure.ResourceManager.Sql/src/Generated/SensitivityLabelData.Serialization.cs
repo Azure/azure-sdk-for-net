@@ -257,7 +257,22 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, labelId.Value, informationType.Value, informationTypeId.Value, Optional.ToNullable(isDisabled), Optional.ToNullable(rank), serializedAdditionalRawData);
+            return new SensitivityLabelData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                managedBy.Value,
+                schemaName.Value,
+                tableName.Value,
+                columnName.Value,
+                labelName.Value,
+                labelId.Value,
+                informationType.Value,
+                informationTypeId.Value,
+                Optional.ToNullable(isDisabled),
+                Optional.ToNullable(rank),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabelData>.Write(ModelReaderWriterOptions options)

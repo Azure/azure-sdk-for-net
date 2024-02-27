@@ -252,7 +252,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HdfsLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, url, authenticationType.Value, encryptedCredential.Value, userName.Value, password);
+            return new HdfsLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                url,
+                authenticationType.Value,
+                encryptedCredential.Value,
+                userName.Value,
+                password);
         }
 
         BinaryData IPersistableModel<HdfsLinkedService>.Write(ModelReaderWriterOptions options)

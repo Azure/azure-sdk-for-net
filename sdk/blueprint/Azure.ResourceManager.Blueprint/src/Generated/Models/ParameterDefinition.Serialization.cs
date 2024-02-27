@@ -196,7 +196,14 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterDefinition(type, defaultValue.Value, allowedValues ?? new ChangeTrackingList<BinaryData>(), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
+            return new ParameterDefinition(
+                type,
+                defaultValue.Value,
+                allowedValues ?? new ChangeTrackingList<BinaryData>(),
+                displayName.Value,
+                description.Value,
+                strongType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterDefinition>.Write(ModelReaderWriterOptions options)

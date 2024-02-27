@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeExtensionValueData(id, name, type, systemData.Value, version.Value, extensionType.Value, publisher.Value, serializedAdditionalRawData);
+            return new HybridComputeExtensionValueData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                version.Value,
+                extensionType.Value,
+                publisher.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeExtensionValueData>.Write(ModelReaderWriterOptions options)

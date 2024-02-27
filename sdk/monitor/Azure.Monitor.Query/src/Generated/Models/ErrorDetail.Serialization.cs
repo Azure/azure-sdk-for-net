@@ -71,7 +71,13 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new ErrorDetail(code, message, target.Value, value.Value, resources ?? new ChangeTrackingList<string>(), additionalProperties.Value);
+            return new ErrorDetail(
+                code,
+                message,
+                target.Value,
+                value.Value,
+                resources ?? new ChangeTrackingList<string>(),
+                additionalProperties.Value);
         }
     }
 }

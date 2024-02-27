@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyAuthenticationContextRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(isEnabled), claimValue.Value);
+            return new RoleManagementPolicyAuthenticationContextRule(
+                id.Value,
+                ruleType,
+                target.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(isEnabled),
+                claimValue.Value);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyAuthenticationContextRule>.Write(ModelReaderWriterOptions options)

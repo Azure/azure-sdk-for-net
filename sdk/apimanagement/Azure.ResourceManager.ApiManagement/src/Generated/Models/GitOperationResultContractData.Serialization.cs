@@ -245,7 +245,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitOperationResultContractData(id, name, type, systemData.Value, id0.Value, Optional.ToNullable(status), Optional.ToNullable(started), Optional.ToNullable(updated), resultInfo.Value, error.Value, actionLog ?? new ChangeTrackingList<OperationResultLogItemContract>(), serializedAdditionalRawData);
+            return new GitOperationResultContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                id0.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(started),
+                Optional.ToNullable(updated),
+                resultInfo.Value,
+                error.Value,
+                actionLog ?? new ChangeTrackingList<OperationResultLogItemContract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitOperationResultContractData>.Write(ModelReaderWriterOptions options)

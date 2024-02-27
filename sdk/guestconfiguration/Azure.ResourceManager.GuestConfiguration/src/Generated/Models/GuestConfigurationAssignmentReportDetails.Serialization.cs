@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentReportDetails(Optional.ToNullable(complianceStatus), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(jobId), Optional.ToNullable(operationType), resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>(), serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentReportDetails(
+                Optional.ToNullable(complianceStatus),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(jobId),
+                Optional.ToNullable(operationType),
+                resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentReportDetails>.Write(ModelReaderWriterOptions options)

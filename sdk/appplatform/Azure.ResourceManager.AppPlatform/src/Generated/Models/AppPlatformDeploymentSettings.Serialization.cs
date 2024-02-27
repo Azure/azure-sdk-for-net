@@ -258,7 +258,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentSettings(resourceRequests.Value, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value, serializedAdditionalRawData);
+            return new AppPlatformDeploymentSettings(
+                resourceRequests.Value,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                livenessProbe.Value,
+                readinessProbe.Value,
+                startupProbe.Value,
+                Optional.ToNullable(terminationGracePeriodSeconds),
+                containerProbeSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentSettings>.Write(ModelReaderWriterOptions options)

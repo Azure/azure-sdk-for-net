@@ -216,7 +216,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Optional.ToNullable(enableSecureChannel), serializedAdditionalRawData);
+            return new HDInsightStorageAccountInfo(
+                name.Value,
+                Optional.ToNullable(isDefault),
+                container.Value,
+                fileSystem.Value,
+                key.Value,
+                resourceId.Value,
+                msiResourceId.Value,
+                saskey.Value,
+                fileshare.Value,
+                Optional.ToNullable(enableSecureChannel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightStorageAccountInfo>.Write(ModelReaderWriterOptions options)

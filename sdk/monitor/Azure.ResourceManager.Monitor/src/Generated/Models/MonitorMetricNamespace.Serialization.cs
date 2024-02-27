@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetricNamespace(id, name, type, systemData.Value, Optional.ToNullable(classification), properties.Value, serializedAdditionalRawData);
+            return new MonitorMetricNamespace(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(classification),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetricNamespace>.Write(ModelReaderWriterOptions options)

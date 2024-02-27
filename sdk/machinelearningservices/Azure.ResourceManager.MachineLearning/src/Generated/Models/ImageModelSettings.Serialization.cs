@@ -794,7 +794,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageModelSettings(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay), serializedAdditionalRawData);
+            return new ImageModelSettings(
+                advancedSettings.Value,
+                Optional.ToNullable(amsGradient),
+                augmentations.Value,
+                Optional.ToNullable(beta1),
+                Optional.ToNullable(beta2),
+                Optional.ToNullable(checkpointFrequency),
+                checkpointModel.Value,
+                checkpointRunId.Value,
+                Optional.ToNullable(distributed),
+                Optional.ToNullable(earlyStopping),
+                Optional.ToNullable(earlyStoppingDelay),
+                Optional.ToNullable(earlyStoppingPatience),
+                Optional.ToNullable(enableOnnxNormalization),
+                Optional.ToNullable(evaluationFrequency),
+                Optional.ToNullable(gradientAccumulationStep),
+                Optional.ToNullable(layersToFreeze),
+                Optional.ToNullable(learningRate),
+                Optional.ToNullable(learningRateScheduler),
+                modelName.Value,
+                Optional.ToNullable(momentum),
+                Optional.ToNullable(nesterov),
+                Optional.ToNullable(numberOfEpochs),
+                Optional.ToNullable(numberOfWorkers),
+                Optional.ToNullable(optimizer),
+                Optional.ToNullable(randomSeed),
+                Optional.ToNullable(stepLRGamma),
+                Optional.ToNullable(stepLRStepSize),
+                Optional.ToNullable(trainingBatchSize),
+                Optional.ToNullable(validationBatchSize),
+                Optional.ToNullable(warmupCosineLRCycles),
+                Optional.ToNullable(warmupCosineLRWarmupEpochs),
+                Optional.ToNullable(weightDecay),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageModelSettings>.Write(ModelReaderWriterOptions options)

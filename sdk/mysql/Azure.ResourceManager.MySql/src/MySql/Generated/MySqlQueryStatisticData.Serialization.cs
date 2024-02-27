@@ -278,7 +278,22 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlQueryStatisticData(id, name, type, systemData.Value, queryId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), aggregationFunction.Value, databaseNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(queryExecutionCount), metricName.Value, metricDisplayName.Value, Optional.ToNullable(metricValue), metricValueUnit.Value, serializedAdditionalRawData);
+            return new MySqlQueryStatisticData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                queryId.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                aggregationFunction.Value,
+                databaseNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(queryExecutionCount),
+                metricName.Value,
+                metricDisplayName.Value,
+                Optional.ToNullable(metricValue),
+                metricValueUnit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlQueryStatisticData>.Write(ModelReaderWriterOptions options)

@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkIPConfigurationProfile(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), subnet.Value, Optional.ToNullable(provisioningState));
+            return new NetworkIPConfigurationProfile(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                subnet.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<NetworkIPConfigurationProfile>.Write(ModelReaderWriterOptions options)

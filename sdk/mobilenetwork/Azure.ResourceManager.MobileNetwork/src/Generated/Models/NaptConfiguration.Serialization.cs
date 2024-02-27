@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NaptConfiguration(Optional.ToNullable(enabled), portRange.Value, portReuseHoldTime.Value, Optional.ToNullable(pinholeLimits), pinholeTimeouts.Value, serializedAdditionalRawData);
+            return new NaptConfiguration(
+                Optional.ToNullable(enabled),
+                portRange.Value,
+                portReuseHoldTime.Value,
+                Optional.ToNullable(pinholeLimits),
+                pinholeTimeouts.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NaptConfiguration>.Write(ModelReaderWriterOptions options)

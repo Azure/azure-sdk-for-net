@@ -233,7 +233,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayFrontendIPConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                privateIPAddress.Value,
+                Optional.ToNullable(privateIPAllocationMethod),
+                subnet,
+                publicIPAddress,
+                privateLinkConfiguration,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFrontendIPConfiguration>.Write(ModelReaderWriterOptions options)

@@ -168,7 +168,14 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterQueue(etag, id, name.Value, distributionPolicyId.Value, labels ?? new ChangeTrackingDictionary<string, object>(), exceptionPolicyId.Value, serializedAdditionalRawData);
+            return new RouterQueue(
+                etag,
+                id,
+                name.Value,
+                distributionPolicyId.Value,
+                labels ?? new ChangeTrackingDictionary<string, object>(),
+                exceptionPolicyId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterQueue>.Write(ModelReaderWriterOptions options)

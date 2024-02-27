@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskCopyProgress(serialNumber.Value, Optional.ToNullable(bytesCopied), Optional.ToNullable(percentComplete), Optional.ToNullable(status), error.Value, actions ?? new ChangeTrackingList<CustomerResolutionCode>(), serializedAdditionalRawData);
+            return new DataBoxDiskCopyProgress(
+                serialNumber.Value,
+                Optional.ToNullable(bytesCopied),
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(status),
+                error.Value,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxDiskCopyProgress>.Write(ModelReaderWriterOptions options)

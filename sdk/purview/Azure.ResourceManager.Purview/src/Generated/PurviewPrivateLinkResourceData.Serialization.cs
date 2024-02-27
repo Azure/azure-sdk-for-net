@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Purview
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewPrivateLinkResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new PurviewPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

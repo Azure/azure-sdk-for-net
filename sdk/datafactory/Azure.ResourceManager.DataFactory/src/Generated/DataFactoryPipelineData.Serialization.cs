@@ -371,7 +371,22 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineData(id, name, type, systemData.Value, description.Value, activities ?? new ChangeTrackingList<PipelineActivity>(), parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), variables ?? new ChangeTrackingDictionary<string, PipelineVariableSpecification>(), Optional.ToNullable(concurrency), annotations ?? new ChangeTrackingList<BinaryData>(), runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(), folder.Value, policy.Value, Optional.ToNullable(etag), additionalProperties);
+            return new DataFactoryPipelineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                activities ?? new ChangeTrackingList<PipelineActivity>(),
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                variables ?? new ChangeTrackingDictionary<string, PipelineVariableSpecification>(),
+                Optional.ToNullable(concurrency),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                folder.Value,
+                policy.Value,
+                Optional.ToNullable(etag),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineData>.Write(ModelReaderWriterOptions options)

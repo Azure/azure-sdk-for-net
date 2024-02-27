@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCloudConnectorData(id, name, type, systemData.Value, hybridComputeSettings.Value, authenticationDetails.Value, serializedAdditionalRawData);
+            return new SecurityCloudConnectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                hybridComputeSettings.Value,
+                authenticationDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCloudConnectorData>.Write(ModelReaderWriterOptions options)

@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, publicIPPrefix, Optional.ToNullable(deleteOption), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(
+                name.Value,
+                Optional.ToNullable(idleTimeoutInMinutes),
+                dnsSettings.Value,
+                publicIPPrefix,
+                Optional.ToNullable(deleteOption),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdatePublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)

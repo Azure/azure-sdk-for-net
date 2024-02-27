@@ -358,7 +358,26 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkPeeringData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, remoteVirtualNetworkEncryption.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), Optional.ToNullable(resourceGuid));
+            return new VirtualNetworkPeeringData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(allowVirtualNetworkAccess),
+                Optional.ToNullable(allowForwardedTraffic),
+                Optional.ToNullable(allowGatewayTransit),
+                Optional.ToNullable(useRemoteGateways),
+                remoteVirtualNetwork,
+                remoteAddressSpace.Value,
+                remoteVirtualNetworkAddressSpace.Value,
+                remoteBgpCommunities.Value,
+                remoteVirtualNetworkEncryption.Value,
+                Optional.ToNullable(peeringState),
+                Optional.ToNullable(peeringSyncLevel),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(doNotVerifyRemoteGateways),
+                Optional.ToNullable(resourceGuid));
         }
 
         BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options)

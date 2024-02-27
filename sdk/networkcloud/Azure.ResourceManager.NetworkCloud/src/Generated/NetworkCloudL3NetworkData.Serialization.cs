@@ -442,7 +442,30 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudL3NetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(hybridAksIpamEnabled), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, Optional.ToNullable(ipAllocationType), ipv4ConnectedPrefix.Value, ipv6ConnectedPrefix.Value, l3IsolationDomainId, Optional.ToNullable(provisioningState), virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), vlan, serializedAdditionalRawData);
+            return new NetworkCloudL3NetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                clusterId.Value,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(hybridAksIpamEnabled),
+                Optional.ToNullable(hybridAksPluginType),
+                interfaceName.Value,
+                Optional.ToNullable(ipAllocationType),
+                ipv4ConnectedPrefix.Value,
+                ipv6ConnectedPrefix.Value,
+                l3IsolationDomainId,
+                Optional.ToNullable(provisioningState),
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                vlan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudL3NetworkData>.Write(ModelReaderWriterOptions options)

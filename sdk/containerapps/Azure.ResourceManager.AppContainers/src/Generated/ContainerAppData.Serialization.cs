@@ -399,7 +399,29 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, identity, managedBy.Value, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileName.Value, latestRevisionName.Value, latestReadyRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(), eventStreamEndpoint.Value, serializedAdditionalRawData);
+            return new ContainerAppData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                identity,
+                managedBy.Value,
+                Optional.ToNullable(provisioningState),
+                managedEnvironmentId.Value,
+                environmentId.Value,
+                workloadProfileName.Value,
+                latestRevisionName.Value,
+                latestReadyRevisionName.Value,
+                latestRevisionFqdn.Value,
+                customDomainVerificationId.Value,
+                configuration.Value,
+                template.Value,
+                outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                eventStreamEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppData>.Write(ModelReaderWriterOptions options)

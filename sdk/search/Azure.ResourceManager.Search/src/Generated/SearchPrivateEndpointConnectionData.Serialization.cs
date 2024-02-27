@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Search
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchPrivateEndpointConnectionData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SearchPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

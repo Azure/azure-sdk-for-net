@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentDataVolumeCap(Optional.ToNullable(cap), Optional.ToNullable(resetTime), Optional.ToNullable(warningThreshold), Optional.ToNullable(stopSendNotificationWhenHitThreshold), Optional.ToNullable(stopSendNotificationWhenHitCap), Optional.ToNullable(maxHistoryCap), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentDataVolumeCap(
+                Optional.ToNullable(cap),
+                Optional.ToNullable(resetTime),
+                Optional.ToNullable(warningThreshold),
+                Optional.ToNullable(stopSendNotificationWhenHitThreshold),
+                Optional.ToNullable(stopSendNotificationWhenHitCap),
+                Optional.ToNullable(maxHistoryCap),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentDataVolumeCap>.Write(ModelReaderWriterOptions options)

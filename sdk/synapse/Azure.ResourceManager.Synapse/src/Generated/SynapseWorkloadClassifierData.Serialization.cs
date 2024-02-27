@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkloadClassifierData(id, name, type, systemData.Value, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value, serializedAdditionalRawData);
+            return new SynapseWorkloadClassifierData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                memberName.Value,
+                label.Value,
+                context.Value,
+                startTime.Value,
+                endTime.Value,
+                importance.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkloadClassifierData>.Write(ModelReaderWriterOptions options)

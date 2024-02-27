@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubEndpointHealthInfo(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime), serializedAdditionalRawData);
+            return new IotHubEndpointHealthInfo(
+                endpointId.Value,
+                Optional.ToNullable(healthStatus),
+                lastKnownError.Value,
+                Optional.ToNullable(lastKnownErrorTime),
+                Optional.ToNullable(lastSuccessfulSendAttemptTime),
+                Optional.ToNullable(lastSendAttemptTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubEndpointHealthInfo>.Write(ModelReaderWriterOptions options)

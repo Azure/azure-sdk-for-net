@@ -455,7 +455,39 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolicyEvent(odataId.Value, odataContext.Value, Optional.ToNullable(timestamp), resourceId.Value, policyAssignmentId.Value, policyDefinitionId.Value, effectiveParameters.Value, Optional.ToNullable(isCompliant), subscriptionId.Value, resourceType.Value, Optional.ToNullable(resourceLocation), resourceGroup.Value, resourceTags.Value, policyAssignmentName.Value, policyAssignmentOwner.Value, policyAssignmentParameters.Value, policyAssignmentScope.Value, policyDefinitionName.Value, policyDefinitionAction.Value, policyDefinitionCategory.Value, policySetDefinitionId.Value, policySetDefinitionName.Value, policySetDefinitionOwner.Value, policySetDefinitionCategory.Value, policySetDefinitionParameters.Value, managementGroupIds.Value, policyDefinitionReferenceId.Value, complianceState.Value, Optional.ToNullable(tenantId), principalOid.Value, components ?? new ChangeTrackingList<ComponentEventDetails>(), additionalProperties);
+            return new PolicyEvent(
+                odataId.Value,
+                odataContext.Value,
+                Optional.ToNullable(timestamp),
+                resourceId.Value,
+                policyAssignmentId.Value,
+                policyDefinitionId.Value,
+                effectiveParameters.Value,
+                Optional.ToNullable(isCompliant),
+                subscriptionId.Value,
+                resourceType.Value,
+                Optional.ToNullable(resourceLocation),
+                resourceGroup.Value,
+                resourceTags.Value,
+                policyAssignmentName.Value,
+                policyAssignmentOwner.Value,
+                policyAssignmentParameters.Value,
+                policyAssignmentScope.Value,
+                policyDefinitionName.Value,
+                policyDefinitionAction.Value,
+                policyDefinitionCategory.Value,
+                policySetDefinitionId.Value,
+                policySetDefinitionName.Value,
+                policySetDefinitionOwner.Value,
+                policySetDefinitionCategory.Value,
+                policySetDefinitionParameters.Value,
+                managementGroupIds.Value,
+                policyDefinitionReferenceId.Value,
+                complianceState.Value,
+                Optional.ToNullable(tenantId),
+                principalOid.Value,
+                components ?? new ChangeTrackingList<ComponentEventDetails>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<PolicyEvent>.Write(ModelReaderWriterOptions options)

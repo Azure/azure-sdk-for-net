@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), expressCustomSetupProperties ?? new ChangeTrackingList<SynapseCustomSetupBase>(), additionalProperties);
+            return new SynapseIntegrationRuntimeSsisProperties(
+                catalogInfo.Value,
+                Optional.ToNullable(licenseType),
+                customSetupScriptProperties.Value,
+                dataProxyProperties.Value,
+                Optional.ToNullable(edition),
+                expressCustomSetupProperties ?? new ChangeTrackingList<SynapseCustomSetupBase>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)

@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceSourceControlData(id, name, type, systemData.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime), kind.Value, serializedAdditionalRawData);
+            return new AppServiceSourceControlData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                token.Value,
+                tokenSecret.Value,
+                refreshToken.Value,
+                Optional.ToNullable(expirationTime),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceSourceControlData>.Write(ModelReaderWriterOptions options)

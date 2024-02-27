@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value, serializedAdditionalRawData);
+            return new DevTestLabResourceCost(
+                resourcename.Value,
+                resourceUId.Value,
+                Optional.ToNullable(resourceCost),
+                resourceType.Value,
+                resourceOwner.Value,
+                resourcePricingTier.Value,
+                resourceStatus.Value,
+                resourceId.Value,
+                externalResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabResourceCost>.Write(ModelReaderWriterOptions options)

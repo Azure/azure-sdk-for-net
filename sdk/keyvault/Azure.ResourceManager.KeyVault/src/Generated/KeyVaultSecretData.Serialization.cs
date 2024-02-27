@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultSecretData(id, name, type, systemData.Value, properties, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new KeyVaultSecretData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options)

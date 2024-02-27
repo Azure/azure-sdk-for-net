@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableOutputDataSource(type, serializedAdditionalRawData, accountName.Value, accountKey.Value, table.Value, partitionKey.Value, rowKey.Value, columnsToRemove ?? new ChangeTrackingList<string>(), Optional.ToNullable(batchSize));
+            return new TableOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                accountName.Value,
+                accountKey.Value,
+                table.Value,
+                partitionKey.Value,
+                rowKey.Value,
+                columnsToRemove ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(batchSize));
         }
 
         BinaryData IPersistableModel<TableOutputDataSource>.Write(ModelReaderWriterOptions options)

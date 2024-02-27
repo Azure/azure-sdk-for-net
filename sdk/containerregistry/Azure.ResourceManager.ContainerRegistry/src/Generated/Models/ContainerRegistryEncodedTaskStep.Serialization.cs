@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryEncodedTaskStep(type, baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, encodedTaskContent, encodedValuesContent.Value, values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
+            return new ContainerRegistryEncodedTaskStep(
+                type,
+                baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(),
+                contextPath.Value,
+                contextAccessToken.Value,
+                serializedAdditionalRawData,
+                encodedTaskContent,
+                encodedValuesContent.Value,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 
         BinaryData IPersistableModel<ContainerRegistryEncodedTaskStep>.Write(ModelReaderWriterOptions options)

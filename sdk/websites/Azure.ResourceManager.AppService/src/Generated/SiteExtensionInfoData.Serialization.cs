@@ -424,7 +424,33 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteExtensionInfoData(id, name, type, systemData.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, authors ?? new ChangeTrackingList<string>(), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteExtensionInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                extensionId.Value,
+                title.Value,
+                Optional.ToNullable(extensionType),
+                summary.Value,
+                description.Value,
+                version.Value,
+                extensionUrl.Value,
+                projectUrl.Value,
+                iconUrl.Value,
+                licenseUrl.Value,
+                feedUrl.Value,
+                authors ?? new ChangeTrackingList<string>(),
+                installerCommandLineParams.Value,
+                Optional.ToNullable(publishedDateTime),
+                Optional.ToNullable(downloadCount),
+                Optional.ToNullable(localIsLatestVersion),
+                localPath.Value,
+                Optional.ToNullable(installedDateTime),
+                provisioningState.Value,
+                comment.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteExtensionInfoData>.Write(ModelReaderWriterOptions options)

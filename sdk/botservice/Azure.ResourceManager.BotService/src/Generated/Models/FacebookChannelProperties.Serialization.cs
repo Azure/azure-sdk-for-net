@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FacebookChannelProperties(verifyToken.Value, pages ?? new ChangeTrackingList<FacebookPage>(), appId, appSecret.Value, callbackUrl.Value, isEnabled, serializedAdditionalRawData);
+            return new FacebookChannelProperties(
+                verifyToken.Value,
+                pages ?? new ChangeTrackingList<FacebookPage>(),
+                appId,
+                appSecret.Value,
+                callbackUrl.Value,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FacebookChannelProperties>.Write(ModelReaderWriterOptions options)

@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Smtp(Optional.ToNullable(enabled), host.Value, user.Value, password.Value, fromAddress.Value, fromName.Value, Optional.ToNullable(startTLSPolicy), Optional.ToNullable(skipVerify), serializedAdditionalRawData);
+            return new Smtp(
+                Optional.ToNullable(enabled),
+                host.Value,
+                user.Value,
+                password.Value,
+                fromAddress.Value,
+                fromName.Value,
+                Optional.ToNullable(startTLSPolicy),
+                Optional.ToNullable(skipVerify),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Smtp>.Write(ModelReaderWriterOptions options)

@@ -235,7 +235,17 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisServerPatch(sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), serializedAdditionalRawData);
+            return new AnalysisServerPatch(
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                asAdministrators.Value,
+                backupBlobContainerUri.Value,
+                gatewayDetails.Value,
+                ipV4FirewallSettings.Value,
+                Optional.ToNullable(querypoolConnectionMode),
+                Optional.ToNullable(managedMode),
+                Optional.ToNullable(serverMonitorMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisServerPatch>.Write(ModelReaderWriterOptions options)

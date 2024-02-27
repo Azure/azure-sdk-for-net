@@ -334,7 +334,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspacePatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), applicationInsights.Value, containerRegistry.Value, description.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, featureStoreSettings.Value, friendlyName.Value, imageBuildCompute.Value, managedNetwork.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(v1LegacyMode), serializedAdditionalRawData);
+            return new MachineLearningWorkspacePatch(
+                identity,
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                applicationInsights.Value,
+                containerRegistry.Value,
+                description.Value,
+                Optional.ToNullable(enableDataIsolation),
+                encryption.Value,
+                featureStoreSettings.Value,
+                friendlyName.Value,
+                imageBuildCompute.Value,
+                managedNetwork.Value,
+                primaryUserAssignedIdentity.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                serviceManagedResourcesSettings.Value,
+                Optional.ToNullable(softDeleteRetentionInDays),
+                Optional.ToNullable(v1LegacyMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspacePatch>.Write(ModelReaderWriterOptions options)

@@ -153,7 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value, importSettings.Value);
+            return new AzureDatabricksDeltaLakeSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                preCopyScript.Value,
+                importSettings.Value);
         }
 
         internal partial class AzureDatabricksDeltaLakeSinkConverter : JsonConverter<AzureDatabricksDeltaLakeSink>

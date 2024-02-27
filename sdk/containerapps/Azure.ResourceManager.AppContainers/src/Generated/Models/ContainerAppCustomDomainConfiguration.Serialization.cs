@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomDomainConfiguration(customDomainVerificationId.Value, dnsSuffix.Value, certificateValue.Value, certificatePassword.Value, Optional.ToNullable(expirationDate), thumbprint.Value, subjectName.Value, serializedAdditionalRawData);
+            return new ContainerAppCustomDomainConfiguration(
+                customDomainVerificationId.Value,
+                dnsSuffix.Value,
+                certificateValue.Value,
+                certificatePassword.Value,
+                Optional.ToNullable(expirationDate),
+                thumbprint.Value,
+                subjectName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomDomainConfiguration>.Write(ModelReaderWriterOptions options)

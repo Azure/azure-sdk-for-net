@@ -271,7 +271,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSqlDWTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, tableName.Value, schema0.Value, table.Value);
+            return new AzureSqlDWTableDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder.Value,
+                additionalProperties,
+                tableName.Value,
+                schema0.Value,
+                table.Value);
         }
 
         BinaryData IPersistableModel<AzureSqlDWTableDataset>.Write(ModelReaderWriterOptions options)

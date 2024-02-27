@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEditionCapabilityV2(name.Value, defaultSku.Value, Optional.ToNullable(defaultStorageSize), supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>(), supportedSkus ?? new ChangeTrackingList<SkuCapabilityV2>(), serializedAdditionalRawData);
+            return new ServerEditionCapabilityV2(
+                name.Value,
+                defaultSku.Value,
+                Optional.ToNullable(defaultStorageSize),
+                supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>(),
+                supportedSkus ?? new ChangeTrackingList<SkuCapabilityV2>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEditionCapabilityV2>.Write(ModelReaderWriterOptions options)

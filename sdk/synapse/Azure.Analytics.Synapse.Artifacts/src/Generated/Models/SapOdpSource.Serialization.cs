@@ -183,7 +183,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, extractionMode.Value, subscriberProcess.Value, selection.Value, projection.Value);
+            return new SapOdpSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                extractionMode.Value,
+                subscriberProcess.Value,
+                selection.Value,
+                projection.Value);
         }
 
         internal partial class SapOdpSourceConverter : JsonConverter<SapOdpSource>

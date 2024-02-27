@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDWTableDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(dataSetId), dataWarehouseName.Value, schemaName.Value, sqlServerResourceId.Value, tableName.Value);
+            return new SqlDWTableDataSet(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(dataSetId),
+                dataWarehouseName.Value,
+                schemaName.Value,
+                sqlServerResourceId.Value,
+                tableName.Value);
         }
 
         BinaryData IPersistableModel<SqlDWTableDataSet>.Write(ModelReaderWriterOptions options)

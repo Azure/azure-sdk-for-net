@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorEventHubReceiver(name, eventHubNameSpace, eventHubName, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(tenantId), subscriptionId, serializedAdditionalRawData);
+            return new MonitorEventHubReceiver(
+                name,
+                eventHubNameSpace,
+                eventHubName,
+                Optional.ToNullable(useCommonAlertSchema),
+                Optional.ToNullable(tenantId),
+                subscriptionId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorEventHubReceiver>.Write(ModelReaderWriterOptions options)

@@ -67,7 +67,14 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new RecognizeFailed(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new RecognizeFailed(
+                operationContext.Value,
+                resultInformation.Value,
+                version.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value,
+                publicEventType.Value);
         }
     }
 }

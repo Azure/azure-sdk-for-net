@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);
+            return new Office365Source(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                allowedGroups.Value,
+                userScopeFilterUri.Value,
+                dateFilterColumn.Value,
+                startTime.Value,
+                endTime.Value,
+                outputColumns.Value);
         }
 
         BinaryData IPersistableModel<Office365Source>.Write(ModelReaderWriterOptions options)

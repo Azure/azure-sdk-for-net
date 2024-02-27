@@ -360,7 +360,29 @@ namespace Azure.ResourceManager.Kubernetes
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectedClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Optional.ToNullable(totalNodeCount), Optional.ToNullable(totalCoreCount), agentVersion.Value, Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), Optional.ToNullable(connectivityStatus), Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value, serializedAdditionalRawData);
+            return new ConnectedClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                agentPublicKeyCertificate,
+                kubernetesVersion.Value,
+                Optional.ToNullable(totalNodeCount),
+                Optional.ToNullable(totalCoreCount),
+                agentVersion.Value,
+                Optional.ToNullable(provisioningState),
+                distribution.Value,
+                infrastructure.Value,
+                offering.Value,
+                Optional.ToNullable(managedIdentityCertificateExpirationTime),
+                Optional.ToNullable(lastConnectivityTime),
+                Optional.ToNullable(connectivityStatus),
+                Optional.ToNullable(privateLinkState),
+                privateLinkScopeResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options)

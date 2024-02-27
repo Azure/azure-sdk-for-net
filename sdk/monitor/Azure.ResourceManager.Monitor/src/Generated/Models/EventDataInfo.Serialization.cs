@@ -424,7 +424,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataInfo(authorization.Value, claims ?? new ChangeTrackingDictionary<string, string>(), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, properties ?? new ChangeTrackingDictionary<string, string>(), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new EventDataInfo(
+                authorization.Value,
+                claims ?? new ChangeTrackingDictionary<string, string>(),
+                caller.Value,
+                description.Value,
+                id.Value,
+                eventDataId.Value,
+                correlationId.Value,
+                eventName.Value,
+                category.Value,
+                httpRequest.Value,
+                Optional.ToNullable(level),
+                resourceGroupName.Value,
+                resourceProviderName.Value,
+                resourceId.Value,
+                resourceType.Value,
+                operationId.Value,
+                operationName.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                status.Value,
+                subStatus.Value,
+                Optional.ToNullable(eventTimestamp),
+                Optional.ToNullable(submissionTimestamp),
+                subscriptionId.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataInfo>.Write(ModelReaderWriterOptions options)

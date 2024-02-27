@@ -68,7 +68,18 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 directoryId = (string)directoryIdElement;
             }
-            return new ListFilesAndDirectoriesSegmentResponse(serviceEndpoint, shareName, shareSnapshot, encoded, directoryPath, prefix, marker, maxResults, segment, nextMarker, directoryId);
+            return new ListFilesAndDirectoriesSegmentResponse(
+                serviceEndpoint,
+                shareName,
+                shareSnapshot,
+                encoded,
+                directoryPath,
+                prefix,
+                marker,
+                maxResults,
+                segment,
+                nextMarker,
+                directoryId);
         }
     }
 }

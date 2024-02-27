@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationCertificateCreateOrUpdateContent(name, base64Value, description.Value, thumbprint.Value, Optional.ToNullable(isExportable), serializedAdditionalRawData);
+            return new AutomationCertificateCreateOrUpdateContent(
+                name,
+                base64Value,
+                description.Value,
+                thumbprint.Value,
+                Optional.ToNullable(isExportable),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationCertificateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

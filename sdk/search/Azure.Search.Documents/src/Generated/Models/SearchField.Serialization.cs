@@ -322,7 +322,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(normalizer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, synonymMaps ?? new ChangeTrackingList<string>(), fields ?? new ChangeTrackingList<SearchField>());
+            return new SearchField(
+                name,
+                type,
+                Optional.ToNullable(key),
+                Optional.ToNullable(retrievable),
+                Optional.ToNullable(searchable),
+                Optional.ToNullable(filterable),
+                Optional.ToNullable(sortable),
+                Optional.ToNullable(facetable),
+                Optional.ToNullable(analyzer),
+                Optional.ToNullable(searchAnalyzer),
+                Optional.ToNullable(indexAnalyzer),
+                Optional.ToNullable(normalizer),
+                Optional.ToNullable(dimensions),
+                vectorSearchProfile.Value,
+                synonymMaps ?? new ChangeTrackingList<string>(),
+                fields ?? new ChangeTrackingList<SearchField>());
         }
     }
 }

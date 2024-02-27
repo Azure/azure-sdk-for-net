@@ -212,7 +212,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraViewGetResultCreateOrUpdateContent(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resource, options0.Value, identity, serializedAdditionalRawData);
+            return new CassandraViewGetResultCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource,
+                options0.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraViewGetResultCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationClassicAdministrator(id, name, type, systemData.Value, emailAddress.Value, role.Value, serializedAdditionalRawData);
+            return new AuthorizationClassicAdministrator(
+                id,
+                name,
+                type,
+                systemData.Value,
+                emailAddress.Value,
+                role.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationClassicAdministrator>.Write(ModelReaderWriterOptions options)

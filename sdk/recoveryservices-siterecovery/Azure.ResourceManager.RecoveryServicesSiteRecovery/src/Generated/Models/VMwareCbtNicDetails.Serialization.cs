@@ -261,7 +261,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtNicDetails(nicId.Value, isPrimaryNic.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testNetworkId.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), targetNicName.Value, isSelectedForMigration.Value, serializedAdditionalRawData);
+            return new VMwareCbtNicDetails(
+                nicId.Value,
+                isPrimaryNic.Value,
+                sourceIPAddress.Value,
+                Optional.ToNullable(sourceIPAddressType),
+                sourceNetworkId.Value,
+                targetIPAddress.Value,
+                Optional.ToNullable(targetIPAddressType),
+                targetSubnetName.Value,
+                testNetworkId.Value,
+                testSubnetName.Value,
+                testIPAddress.Value,
+                Optional.ToNullable(testIPAddressType),
+                targetNicName.Value,
+                isSelectedForMigration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtNicDetails>.Write(ModelReaderWriterOptions options)

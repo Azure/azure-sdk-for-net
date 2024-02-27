@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudOperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), operations ?? new ChangeTrackingList<NetworkCloudOperationStatusResult>(), error.Value, serializedAdditionalRawData);
+            return new NetworkCloudOperationStatusResult(
+                id.Value,
+                resourceId.Value,
+                name.Value,
+                status,
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                operations ?? new ChangeTrackingList<NetworkCloudOperationStatusResult>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudOperationStatusResult>.Write(ModelReaderWriterOptions options)

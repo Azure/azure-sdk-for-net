@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, Optional.ToNullable(dataFactoryLocation), Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new LinkedIntegrationRuntime(
+                name.Value,
+                subscriptionId.Value,
+                dataFactoryName.Value,
+                Optional.ToNullable(dataFactoryLocation),
+                Optional.ToNullable(createTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

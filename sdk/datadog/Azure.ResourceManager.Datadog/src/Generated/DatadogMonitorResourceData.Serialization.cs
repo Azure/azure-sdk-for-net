@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Datadog
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogMonitorResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, properties.Value, identity, serializedAdditionalRawData);
+            return new DatadogMonitorResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                properties.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogMonitorResourceData>.Write(ModelReaderWriterOptions options)

@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Optional.ToNullable(serverDatabaseCount), serializedAdditionalRawData);
+            return new ServerProperties(
+                serverPlatform.Value,
+                serverName.Value,
+                serverVersion.Value,
+                serverEdition.Value,
+                serverOperatingSystemVersion.Value,
+                Optional.ToNullable(serverDatabaseCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerProperties>.Write(ModelReaderWriterOptions options)

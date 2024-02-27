@@ -295,7 +295,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FileShareDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, folderPath.Value, fileName.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, fileFilter.Value, compression.Value);
+            return new FileShareDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                additionalProperties,
+                folderPath.Value,
+                fileName.Value,
+                modifiedDatetimeStart.Value,
+                modifiedDatetimeEnd.Value,
+                format.Value,
+                fileFilter.Value,
+                compression.Value);
         }
 
         internal partial class FileShareDatasetConverter : JsonConverter<FileShareDataset>

@@ -189,7 +189,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoCertificateEntity(commonName.Value, organization.Value, organizationalUnit.Value, state.Value, country.Value, serializedAdditionalRawData);
+            return new FirmwareCryptoCertificateEntity(
+                commonName.Value,
+                organization.Value,
+                organizationalUnit.Value,
+                state.Value,
+                country.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoCertificateEntity>.Write(ModelReaderWriterOptions options)

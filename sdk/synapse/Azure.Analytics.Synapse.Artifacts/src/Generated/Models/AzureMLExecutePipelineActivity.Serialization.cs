@@ -260,7 +260,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLExecutePipelineActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, mlPipelineId, experimentName.Value, mlPipelineParameters.Value, mlParentRunId.Value, continueOnStepFailure.Value);
+            return new AzureMLExecutePipelineActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                mlPipelineId,
+                experimentName.Value,
+                mlPipelineParameters.Value,
+                mlParentRunId.Value,
+                continueOnStepFailure.Value);
         }
 
         internal partial class AzureMLExecutePipelineActivityConverter : JsonConverter<AzureMLExecutePipelineActivity>

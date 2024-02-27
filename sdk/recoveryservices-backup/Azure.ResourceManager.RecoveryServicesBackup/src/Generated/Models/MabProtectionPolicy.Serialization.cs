@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, schedulePolicy.Value, retentionPolicy.Value);
+            return new MabProtectionPolicy(
+                Optional.ToNullable(protectedItemsCount),
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                schedulePolicy.Value,
+                retentionPolicy.Value);
         }
 
         BinaryData IPersistableModel<MabProtectionPolicy>.Write(ModelReaderWriterOptions options)

@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxOrderPreferences(preferredDataCenterRegion ?? new ChangeTrackingList<string>(), transportPreferences.Value, reverseTransportPreferences.Value, encryptionPreferences.Value, storageAccountAccessTierPreferences ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DataBoxOrderPreferences(
+                preferredDataCenterRegion ?? new ChangeTrackingList<string>(),
+                transportPreferences.Value,
+                reverseTransportPreferences.Value,
+                encryptionPreferences.Value,
+                storageAccountAccessTierPreferences ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxOrderPreferences>.Write(ModelReaderWriterOptions options)

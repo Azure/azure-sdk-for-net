@@ -153,7 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapEccSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, httpRequestTimeout.Value);
+            return new SapEccSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                query.Value,
+                httpRequestTimeout.Value);
         }
 
         internal partial class SapEccSourceConverter : JsonConverter<SapEccSource>

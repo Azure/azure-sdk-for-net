@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ContainerGroupPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupPatch>.Write(ModelReaderWriterOptions options)

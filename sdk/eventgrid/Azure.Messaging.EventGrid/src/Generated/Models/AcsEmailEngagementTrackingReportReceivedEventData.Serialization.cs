@@ -74,7 +74,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsEmailEngagementTrackingReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(userActionTimeStamp), engagementContext.Value, userAgent.Value, Optional.ToNullable(engagementType));
+            return new AcsEmailEngagementTrackingReportReceivedEventData(
+                sender.Value,
+                recipient.Value,
+                messageId.Value,
+                Optional.ToNullable(userActionTimeStamp),
+                engagementContext.Value,
+                userAgent.Value,
+                Optional.ToNullable(engagementType));
         }
 
         internal partial class AcsEmailEngagementTrackingReportReceivedEventDataConverter : JsonConverter<AcsEmailEngagementTrackingReportReceivedEventData>

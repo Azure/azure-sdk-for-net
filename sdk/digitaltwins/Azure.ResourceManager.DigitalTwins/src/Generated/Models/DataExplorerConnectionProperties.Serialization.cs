@@ -283,7 +283,22 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, serializedAdditionalRawData, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, adxTwinLifecycleEventsTableName.Value, adxRelationshipLifecycleEventsTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value, Optional.ToNullable(recordPropertyAndItemRemovals));
+            return new DataExplorerConnectionProperties(
+                connectionType,
+                Optional.ToNullable(provisioningState),
+                identity.Value,
+                serializedAdditionalRawData,
+                adxResourceId,
+                adxEndpointUri,
+                adxDatabaseName,
+                adxTableName.Value,
+                adxTwinLifecycleEventsTableName.Value,
+                adxRelationshipLifecycleEventsTableName.Value,
+                eventHubEndpointUri,
+                eventHubEntityPath,
+                eventHubNamespaceResourceId,
+                eventHubConsumerGroup.Value,
+                Optional.ToNullable(recordPropertyAndItemRemovals));
         }
 
         BinaryData IPersistableModel<DataExplorerConnectionProperties>.Write(ModelReaderWriterOptions options)

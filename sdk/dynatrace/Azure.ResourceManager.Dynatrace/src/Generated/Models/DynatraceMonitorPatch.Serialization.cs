@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), dynatraceEnvironmentProperties.Value, userInfo.Value, planData.Value, serializedAdditionalRawData);
+            return new DynatraceMonitorPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(monitoringStatus),
+                Optional.ToNullable(marketplaceSubscriptionStatus),
+                dynatraceEnvironmentProperties.Value,
+                userInfo.Value,
+                planData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorPatch>.Write(ModelReaderWriterOptions options)

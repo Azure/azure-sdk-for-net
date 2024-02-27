@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppLogin(routes.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(), cookieExpiration.Value, nonce.Value, serializedAdditionalRawData);
+            return new ContainerAppLogin(
+                routes.Value,
+                Optional.ToNullable(preserveUrlFragmentsForLogins),
+                allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
+                cookieExpiration.Value,
+                nonce.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppLogin>.Write(ModelReaderWriterOptions options)

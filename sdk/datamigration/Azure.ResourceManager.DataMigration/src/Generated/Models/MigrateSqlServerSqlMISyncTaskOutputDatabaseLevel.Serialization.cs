@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, sourceDatabaseName.Value, Optional.ToNullable(migrationState), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, activeBackupSets ?? new ChangeTrackingList<BackupSetInfo>(), containerName.Value, errorPrefix.Value, Optional.ToNullable(isFullBackupRestored), exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
+            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                sourceDatabaseName.Value,
+                Optional.ToNullable(migrationState),
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                fullBackupSetInfo.Value,
+                lastRestoredBackupSetInfo.Value,
+                activeBackupSets ?? new ChangeTrackingList<BackupSetInfo>(),
+                containerName.Value,
+                errorPrefix.Value,
+                Optional.ToNullable(isFullBackupRestored),
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

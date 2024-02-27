@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalRulestackCertificateObjectData(id, name, type, systemData.Value, certificateSignerResourceId.Value, certificateSelfSigned, auditComment.Value, description.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new GlobalRulestackCertificateObjectData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                certificateSignerResourceId.Value,
+                certificateSelfSigned,
+                auditComment.Value,
+                description.Value,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalRulestackCertificateObjectData>.Write(ModelReaderWriterOptions options)

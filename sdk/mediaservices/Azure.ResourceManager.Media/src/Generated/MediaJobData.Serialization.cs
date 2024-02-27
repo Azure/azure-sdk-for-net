@@ -322,7 +322,22 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobData(id, name, type, systemData.Value, Optional.ToNullable(created), Optional.ToNullable(state), description.Value, input.Value, Optional.ToNullable(lastModified), outputs ?? new ChangeTrackingList<MediaJobOutput>(), Optional.ToNullable(priority), correlationData ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
+            return new MediaJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(created),
+                Optional.ToNullable(state),
+                description.Value,
+                input.Value,
+                Optional.ToNullable(lastModified),
+                outputs ?? new ChangeTrackingList<MediaJobOutput>(),
+                Optional.ToNullable(priority),
+                correlationData ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobData>.Write(ModelReaderWriterOptions options)

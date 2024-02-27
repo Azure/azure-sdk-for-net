@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRSharedPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new SignalRSharedPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                privateLinkResourceId.Value,
+                Optional.ToNullable(provisioningState),
+                requestMessage.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

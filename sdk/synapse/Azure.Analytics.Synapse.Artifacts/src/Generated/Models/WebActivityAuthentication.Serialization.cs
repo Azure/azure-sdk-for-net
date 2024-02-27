@@ -128,7 +128,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value);
+            return new WebActivityAuthentication(
+                type,
+                pfx.Value,
+                username.Value,
+                password.Value,
+                resource.Value,
+                userTenant.Value,
+                credential.Value);
         }
 
         internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>

@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionPatch(id, name, type, systemData.Value, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, safetyProfile.Value, replicationStatus.Value, securityProfile.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new GalleryImageVersionPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                publishingProfile.Value,
+                Optional.ToNullable(provisioningState),
+                storageProfile.Value,
+                safetyProfile.Value,
+                replicationStatus.Value,
+                securityProfile.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionPatch>.Write(ModelReaderWriterOptions options)

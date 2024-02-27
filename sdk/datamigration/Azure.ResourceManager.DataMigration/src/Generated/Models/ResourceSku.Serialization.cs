@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, locations ?? new ChangeTrackingList<string>(), apiVersions ?? new ChangeTrackingList<string>(), costs ?? new ChangeTrackingList<ResourceSkuCosts>(), capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(), restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(), serializedAdditionalRawData);
+            return new ResourceSku(
+                resourceType.Value,
+                name.Value,
+                tier.Value,
+                size.Value,
+                family.Value,
+                kind.Value,
+                capacity.Value,
+                locations ?? new ChangeTrackingList<string>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ResourceSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSku>.Write(ModelReaderWriterOptions options)

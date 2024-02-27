@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkValidationContent(id, name, type, systemData.Value, vnetResourceGroup.Value, vnetName.Value, vnetSubnetName.Value, subnetResourceId.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkValidationContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                vnetResourceGroup.Value,
+                vnetName.Value,
+                vnetSubnetName.Value,
+                subnetResourceId.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkValidationContent>.Write(ModelReaderWriterOptions options)

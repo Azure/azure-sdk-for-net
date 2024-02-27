@@ -209,7 +209,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BlobEventsTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<object>(), additionalProperties, pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(), blobPathBeginsWith.Value, blobPathEndsWith.Value, Optional.ToNullable(ignoreEmptyBlobs), events, scope);
+            return new BlobEventsTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                blobPathBeginsWith.Value,
+                blobPathEndsWith.Value,
+                Optional.ToNullable(ignoreEmptyBlobs),
+                events,
+                scope);
         }
 
         internal partial class BlobEventsTriggerConverter : JsonConverter<BlobEventsTrigger>

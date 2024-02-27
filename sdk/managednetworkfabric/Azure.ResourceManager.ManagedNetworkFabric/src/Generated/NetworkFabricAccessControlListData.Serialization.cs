@@ -339,7 +339,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricAccessControlListData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, annotation.Value, Optional.ToNullable(configurationType), aclsUrl.Value, Optional.ToNullable(defaultAction), matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(), dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricAccessControlListData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation.Value,
+                Optional.ToNullable(configurationType),
+                aclsUrl.Value,
+                Optional.ToNullable(defaultAction),
+                matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
+                Optional.ToNullable(lastSyncedTime),
+                Optional.ToNullable(configurationState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(administrativeState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricAccessControlListData>.Write(ModelReaderWriterOptions options)

@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppTemplate(manifestId.Value, manifestVersion.Value, name.Value, title.Value, Optional.ToNullable(order), description.Value, industry.Value, locations ?? new ChangeTrackingList<IotCentralAppTemplateLocation>(), serializedAdditionalRawData);
+            return new IotCentralAppTemplate(
+                manifestId.Value,
+                manifestVersion.Value,
+                name.Value,
+                title.Value,
+                Optional.ToNullable(order),
+                description.Value,
+                industry.Value,
+                locations ?? new ChangeTrackingList<IotCentralAppTemplateLocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppTemplate>.Write(ModelReaderWriterOptions options)

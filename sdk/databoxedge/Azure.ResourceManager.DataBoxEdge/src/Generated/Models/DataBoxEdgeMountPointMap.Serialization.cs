@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeMountPointMap(shareId, roleId.Value, mountPoint.Value, Optional.ToNullable(mountType), Optional.ToNullable(roleType), serializedAdditionalRawData);
+            return new DataBoxEdgeMountPointMap(
+                shareId,
+                roleId.Value,
+                mountPoint.Value,
+                Optional.ToNullable(mountType),
+                Optional.ToNullable(roleType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeMountPointMap>.Write(ModelReaderWriterOptions options)

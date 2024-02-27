@@ -290,7 +290,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), reason.Value, Optional.ToNullable(captureStartTime), networkInterfaces ?? new ChangeTrackingList<string>(), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), outputFiles ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MobileNetworkPacketCaptureData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                reason.Value,
+                Optional.ToNullable(captureStartTime),
+                networkInterfaces ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(bytesToCapturePerPacket),
+                Optional.ToNullable(totalBytesPerSession),
+                Optional.ToNullable(timeLimitInSeconds),
+                outputFiles ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPacketCaptureData>.Write(ModelReaderWriterOptions options)

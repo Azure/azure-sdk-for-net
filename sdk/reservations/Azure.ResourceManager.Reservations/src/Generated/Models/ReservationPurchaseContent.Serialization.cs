@@ -313,7 +313,22 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationPurchaseContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), appliedScopes ?? new ChangeTrackingList<string>(), appliedScopeProperties.Value, Optional.ToNullable(renew), reservedResourceProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationPurchaseContent(
+                sku.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(reservedResourceType),
+                billingScopeId.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(quantity),
+                displayName.Value,
+                Optional.ToNullable(appliedScopeType),
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeProperties.Value,
+                Optional.ToNullable(renew),
+                reservedResourceProperties.Value,
+                Optional.ToNullable(reviewDateTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationPurchaseContent>.Write(ModelReaderWriterOptions options)

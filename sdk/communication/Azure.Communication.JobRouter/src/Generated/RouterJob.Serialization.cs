@@ -418,7 +418,26 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJob(etag, id, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, requestedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(), attachedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(), labels ?? new ChangeTrackingDictionary<string, BinaryData>(), assignments ?? new ChangeTrackingDictionary<string, RouterJobAssignment>(), tags ?? new ChangeTrackingDictionary<string, BinaryData>(), notes ?? new ChangeTrackingList<RouterJobNote>(), Optional.ToNullable(scheduledAt), matchingMode.Value, serializedAdditionalRawData);
+            return new RouterJob(
+                etag,
+                id,
+                channelReference.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(enqueuedAt),
+                channelId.Value,
+                classificationPolicyId.Value,
+                queueId.Value,
+                Optional.ToNullable(priority),
+                dispositionCode.Value,
+                requestedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(),
+                attachedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(),
+                labels ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                assignments ?? new ChangeTrackingDictionary<string, RouterJobAssignment>(),
+                tags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                notes ?? new ChangeTrackingList<RouterJobNote>(),
+                Optional.ToNullable(scheduledAt),
+                matchingMode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJob>.Write(ModelReaderWriterOptions options)

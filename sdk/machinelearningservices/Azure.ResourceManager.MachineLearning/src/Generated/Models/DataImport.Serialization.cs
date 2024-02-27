@@ -326,7 +326,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataImport(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), dataType, dataUri, intellectualProperty.Value, stage.Value, assetName.Value, source.Value);
+            return new DataImport(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                autoDeleteSetting.Value,
+                Optional.ToNullable(isAnonymous),
+                Optional.ToNullable(isArchived),
+                dataType,
+                dataUri,
+                intellectualProperty.Value,
+                stage.Value,
+                assetName.Value,
+                source.Value);
         }
 
         BinaryData IPersistableModel<DataImport>.Write(ModelReaderWriterOptions options)

@@ -261,7 +261,22 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointData(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), partnershipId.Value, friendlyName.Value, backupEnabled.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, changeEnumerationStatus.Value, serializedAdditionalRawData);
+            return new CloudEndpointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                storageAccountResourceId.Value,
+                azureFileShareName.Value,
+                Optional.ToNullable(storageAccountTenantId),
+                partnershipId.Value,
+                friendlyName.Value,
+                backupEnabled.Value,
+                provisioningState.Value,
+                lastWorkflowId.Value,
+                lastOperationName.Value,
+                changeEnumerationStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointData>.Write(ModelReaderWriterOptions options)

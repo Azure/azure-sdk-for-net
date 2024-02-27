@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceTopicEventSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deliveryConfiguration.Value, Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value, serializedAdditionalRawData);
+            return new NamespaceTopicEventSubscriptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                deliveryConfiguration.Value,
+                Optional.ToNullable(eventDeliverySchema),
+                filtersConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionData>.Write(ModelReaderWriterOptions options)

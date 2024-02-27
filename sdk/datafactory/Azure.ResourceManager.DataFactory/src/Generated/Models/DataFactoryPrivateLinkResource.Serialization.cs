@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPrivateLinkResource(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DataFactoryPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateLinkResource>.Write(ModelReaderWriterOptions options)

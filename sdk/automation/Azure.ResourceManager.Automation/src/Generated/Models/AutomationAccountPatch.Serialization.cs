@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountPatch(name.Value, Optional.ToNullable(location), identity, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new AutomationAccountPatch(
+                name.Value,
+                Optional.ToNullable(location),
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                encryption.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(disableLocalAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountPatch>.Write(ModelReaderWriterOptions options)

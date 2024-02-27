@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, datastores ?? new ChangeTrackingList<string>(), ipAddresses ?? new ChangeTrackingList<IPAddress>(), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc), serializedAdditionalRawData);
+            return new InMageRcmFailbackDiscoveredProtectedVmDetails(
+                vCenterId.Value,
+                vCenterFqdn.Value,
+                datastores ?? new ChangeTrackingList<string>(),
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                vmwareToolsStatus.Value,
+                powerStatus.Value,
+                vmFqdn.Value,
+                osName.Value,
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                Optional.ToNullable(isDeleted),
+                Optional.ToNullable(lastDiscoveryTimeInUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options)

@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(username.Value, password.Value, serialNumber.Value, serializedAdditionalRawData, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(
+                username.Value,
+                password.Value,
+                serialNumber.Value,
+                serializedAdditionalRawData,
+                primaryIPv4Prefix.Value,
+                primaryIPv6Prefix.Value,
+                secondaryIPv4Prefix.Value,
+                secondaryIPv6Prefix.Value);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(ModelReaderWriterOptions options)

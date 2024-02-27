@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkDiagnosticsPackageData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new MobileNetworkDiagnosticsPackageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkDiagnosticsPackageData>.Write(ModelReaderWriterOptions options)

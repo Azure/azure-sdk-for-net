@@ -353,7 +353,27 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsReservationOrderAliasData(id, name, type, systemData.Value, sku, Optional.ToNullable(location), displayName.Value, reservationOrderId.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, Optional.ToNullable(quantity), Optional.ToNullable(renew), Optional.ToNullable(reservedResourceType), Optional.ToNullable(reviewDateTime), reservedResourceProperties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsReservationOrderAliasData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku,
+                Optional.ToNullable(location),
+                displayName.Value,
+                reservationOrderId.Value,
+                Optional.ToNullable(provisioningState),
+                billingScopeId.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(appliedScopeType),
+                appliedScopeProperties.Value,
+                Optional.ToNullable(quantity),
+                Optional.ToNullable(renew),
+                Optional.ToNullable(reservedResourceType),
+                Optional.ToNullable(reviewDateTime),
+                reservedResourceProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Write(ModelReaderWriterOptions options)

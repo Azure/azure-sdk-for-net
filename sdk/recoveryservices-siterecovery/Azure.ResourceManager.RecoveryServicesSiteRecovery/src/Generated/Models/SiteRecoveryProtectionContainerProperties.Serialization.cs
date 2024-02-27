@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectionContainerProperties(fabricFriendlyName.Value, friendlyName.Value, fabricType.Value, Optional.ToNullable(protectedItemCount), pairingStatus.Value, role.Value, fabricSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectionContainerProperties(
+                fabricFriendlyName.Value,
+                friendlyName.Value,
+                fabricType.Value,
+                Optional.ToNullable(protectedItemCount),
+                pairingStatus.Value,
+                role.Value,
+                fabricSpecificDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectionContainerProperties>.Write(ModelReaderWriterOptions options)

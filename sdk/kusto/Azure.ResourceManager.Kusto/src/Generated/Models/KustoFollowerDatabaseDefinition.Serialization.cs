@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName.Value, tableLevelSharingProperties.Value, Optional.ToNullable(databaseShareOrigin), serializedAdditionalRawData);
+            return new KustoFollowerDatabaseDefinition(
+                clusterResourceId,
+                attachedDatabaseConfigurationName,
+                databaseName.Value,
+                tableLevelSharingProperties.Value,
+                Optional.ToNullable(databaseShareOrigin),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoFollowerDatabaseDefinition>.Write(ModelReaderWriterOptions options)

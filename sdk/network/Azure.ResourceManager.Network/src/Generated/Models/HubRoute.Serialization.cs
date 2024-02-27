@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubRoute(name, destinationType, destinations, nextHopType, nextHop, serializedAdditionalRawData);
+            return new HubRoute(
+                name,
+                destinationType,
+                destinations,
+                nextHopType,
+                nextHop,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubRoute>.Write(ModelReaderWriterOptions options)

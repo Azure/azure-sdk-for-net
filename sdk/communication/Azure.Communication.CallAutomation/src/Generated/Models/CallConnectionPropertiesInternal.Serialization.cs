@@ -130,7 +130,20 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, dataSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, source.Value, correlationId.Value, answeredBy.Value, originalPstnTarget.Value);
+            return new CallConnectionPropertiesInternal(
+                callConnectionId.Value,
+                serverCallId.Value,
+                targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                Optional.ToNullable(callConnectionState),
+                callbackUri.Value,
+                mediaSubscriptionId.Value,
+                dataSubscriptionId.Value,
+                sourceCallerIdNumber.Value,
+                sourceDisplayName.Value,
+                source.Value,
+                correlationId.Value,
+                answeredBy.Value,
+                originalPstnTarget.Value);
         }
     }
 }

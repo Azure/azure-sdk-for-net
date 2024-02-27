@@ -205,7 +205,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsCrmSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, writeBehavior, ignoreNullValues.Value, alternateKeyName.Value);
+            return new DynamicsCrmSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                writeBehavior,
+                ignoreNullValues.Value,
+                alternateKeyName.Value);
         }
 
         BinaryData IPersistableModel<DynamicsCrmSink>.Write(ModelReaderWriterOptions options)

@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportFileDetailData(id, name, type, systemData.Value, Optional.ToNullable(createdOn), Optional.ToNullable(chunkSize), Optional.ToNullable(fileSize), Optional.ToNullable(numberOfChunks), serializedAdditionalRawData);
+            return new SupportFileDetailData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(chunkSize),
+                Optional.ToNullable(fileSize),
+                Optional.ToNullable(numberOfChunks),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportFileDetailData>.Write(ModelReaderWriterOptions options)

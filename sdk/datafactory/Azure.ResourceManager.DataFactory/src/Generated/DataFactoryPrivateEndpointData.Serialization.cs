@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.DataFactory
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPrivateEndpointData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DataFactoryPrivateEndpointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateEndpointData>.Write(ModelReaderWriterOptions options)

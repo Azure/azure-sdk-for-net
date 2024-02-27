@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeConnectionInfo(serviceToken.Value, identityCertThumbprint.Value, hostServiceUri.Value, version.Value, publicKey.Value, Optional.ToNullable(isIdentityCertExprired), additionalProperties);
+            return new SynapseIntegrationRuntimeConnectionInfo(
+                serviceToken.Value,
+                identityCertThumbprint.Value,
+                hostServiceUri.Value,
+                version.Value,
+                publicKey.Value,
+                Optional.ToNullable(isIdentityCertExprired),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeConnectionInfo>.Write(ModelReaderWriterOptions options)

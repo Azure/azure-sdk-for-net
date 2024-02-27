@@ -86,7 +86,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadWithUserDeletedEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), deletedByCommunicationIdentifier.Value, Optional.ToNullable(deleteTime));
+            return new AcsChatThreadWithUserDeletedEventData(
+                recipientCommunicationIdentifier.Value,
+                transactionId.Value,
+                threadId.Value,
+                Optional.ToNullable(createTime),
+                Optional.ToNullable(version),
+                deletedByCommunicationIdentifier.Value,
+                Optional.ToNullable(deleteTime));
         }
 
         internal partial class AcsChatThreadWithUserDeletedEventDataConverter : JsonConverter<AcsChatThreadWithUserDeletedEventData>

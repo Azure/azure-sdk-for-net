@@ -368,7 +368,26 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscCompilationJobData(id, name, type, systemData.Value, configuration.Value, startedBy.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), runOn.Value, Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), parameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DscCompilationJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                configuration.Value,
+                startedBy.Value,
+                Optional.ToNullable(jobId),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(provisioningState),
+                runOn.Value,
+                Optional.ToNullable(status),
+                statusDetails.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                exception.Value,
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(lastStatusModifiedTime),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscCompilationJobData>.Write(ModelReaderWriterOptions options)

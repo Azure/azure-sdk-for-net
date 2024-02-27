@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>());
+            return new ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input.Value,
+                output ?? new ChangeTrackingList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>());
         }
 
         BinaryData IPersistableModel<ValidateOracleAzureDBForPostgreSqlSyncTaskProperties>.Write(ModelReaderWriterOptions options)

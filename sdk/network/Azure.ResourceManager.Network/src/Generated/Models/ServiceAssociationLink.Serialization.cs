@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAssociationLink(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(linkedResourceType), link.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(allowDelete), locations ?? new ChangeTrackingList<AzureLocation>());
+            return new ServiceAssociationLink(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(linkedResourceType),
+                link.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(allowDelete),
+                locations ?? new ChangeTrackingList<AzureLocation>());
         }
 
         BinaryData IPersistableModel<ServiceAssociationLink>.Write(ModelReaderWriterOptions options)

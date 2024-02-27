@@ -170,7 +170,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryDataset(Optional.ToNullable(granularity), configuration.Value, aggregation ?? new ChangeTrackingDictionary<string, QueryAggregation>(), grouping ?? new ChangeTrackingList<QueryGrouping>(), filter.Value, serializedAdditionalRawData);
+            return new QueryDataset(
+                Optional.ToNullable(granularity),
+                configuration.Value,
+                aggregation ?? new ChangeTrackingDictionary<string, QueryAggregation>(),
+                grouping ?? new ChangeTrackingList<QueryGrouping>(),
+                filter.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryDataset>.Write(ModelReaderWriterOptions options)

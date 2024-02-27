@@ -200,7 +200,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlSyncDatabaseInput(name.Value, targetDatabaseName.Value, migrationSetting ?? new ChangeTrackingDictionary<string, string>(), sourceSetting ?? new ChangeTrackingDictionary<string, string>(), targetSetting ?? new ChangeTrackingDictionary<string, string>(), tableMap ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MigrateMySqlAzureDBForMySqlSyncDatabaseInput(
+                name.Value,
+                targetDatabaseName.Value,
+                migrationSetting ?? new ChangeTrackingDictionary<string, string>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                tableMap ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>.Write(ModelReaderWriterOptions options)

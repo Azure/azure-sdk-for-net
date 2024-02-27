@@ -132,7 +132,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciDiskInput(diskId, storageContainerId.Value, Optional.ToNullable(isDynamic), diskSizeGB, diskFileFormat, isOSDisk, serializedAdditionalRawData);
+            return new VMwareToAzStackHciDiskInput(
+                diskId,
+                storageContainerId.Value,
+                Optional.ToNullable(isDynamic),
+                diskSizeGB,
+                diskFileFormat,
+                isOSDisk,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciDiskInput>.Write(ModelReaderWriterOptions options)

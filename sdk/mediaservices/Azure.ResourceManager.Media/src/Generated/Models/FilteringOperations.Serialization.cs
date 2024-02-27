@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, overlays ?? new ChangeTrackingList<MediaOverlayBase>(), serializedAdditionalRawData);
+            return new FilteringOperations(
+                deinterlace.Value,
+                Optional.ToNullable(rotation),
+                crop.Value,
+                fadeIn.Value,
+                fadeOut.Value,
+                overlays ?? new ChangeTrackingList<MediaOverlayBase>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilteringOperations>.Write(ModelReaderWriterOptions options)

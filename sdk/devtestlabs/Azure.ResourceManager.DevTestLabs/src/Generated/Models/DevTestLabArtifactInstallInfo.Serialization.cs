@@ -169,7 +169,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactInstallInfo(artifactId.Value, artifactTitle.Value, parameters ?? new ChangeTrackingList<DevTestLabArtifactParameter>(), status.Value, deploymentStatusMessage.Value, vmExtensionStatusMessage.Value, Optional.ToNullable(installTime), serializedAdditionalRawData);
+            return new DevTestLabArtifactInstallInfo(
+                artifactId.Value,
+                artifactTitle.Value,
+                parameters ?? new ChangeTrackingList<DevTestLabArtifactParameter>(),
+                status.Value,
+                deploymentStatusMessage.Value,
+                vmExtensionStatusMessage.Value,
+                Optional.ToNullable(installTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactInstallInfo>.Write(ModelReaderWriterOptions options)

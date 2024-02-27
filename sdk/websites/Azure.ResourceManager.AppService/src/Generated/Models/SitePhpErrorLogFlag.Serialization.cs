@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SitePhpErrorLogFlag(id, name, type, systemData.Value, localLogErrors.Value, masterLogErrors.Value, localLogErrorsMaxLength.Value, masterLogErrorsMaxLength.Value, kind.Value, serializedAdditionalRawData);
+            return new SitePhpErrorLogFlag(
+                id,
+                name,
+                type,
+                systemData.Value,
+                localLogErrors.Value,
+                masterLogErrors.Value,
+                localLogErrorsMaxLength.Value,
+                masterLogErrorsMaxLength.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SitePhpErrorLogFlag>.Write(ModelReaderWriterOptions options)

@@ -125,7 +125,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalOpenAIPageableListOfThreadRun(@object, data, firstId, lastId, hasMore, serializedAdditionalRawData);
+            return new InternalOpenAIPageableListOfThreadRun(
+                @object,
+                data,
+                firstId,
+                lastId,
+                hasMore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternalOpenAIPageableListOfThreadRun>.Write(ModelReaderWriterOptions options)

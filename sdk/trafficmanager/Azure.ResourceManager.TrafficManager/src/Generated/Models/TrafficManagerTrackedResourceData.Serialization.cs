@@ -156,7 +156,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerTrackedResourceData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location));
+            return new TrafficManagerTrackedResourceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location));
         }
 
         BinaryData IPersistableModel<TrafficManagerTrackedResourceData>.Write(ModelReaderWriterOptions options)

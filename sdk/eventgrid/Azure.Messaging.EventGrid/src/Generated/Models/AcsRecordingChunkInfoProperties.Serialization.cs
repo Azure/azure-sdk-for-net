@@ -61,7 +61,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRecordingChunkInfoProperties(documentId.Value, Optional.ToNullable(index), endReason.Value, metadataLocation.Value, contentLocation.Value, deleteLocation.Value);
+            return new AcsRecordingChunkInfoProperties(
+                documentId.Value,
+                Optional.ToNullable(index),
+                endReason.Value,
+                metadataLocation.Value,
+                contentLocation.Value,
+                deleteLocation.Value);
         }
     }
 }

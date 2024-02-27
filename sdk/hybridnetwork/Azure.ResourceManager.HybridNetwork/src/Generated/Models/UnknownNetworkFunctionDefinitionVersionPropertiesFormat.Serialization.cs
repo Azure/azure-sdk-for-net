@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, serializedAdditionalRawData);
+            return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(versionState),
+                description.Value,
+                deployParameters.Value,
+                networkFunctionType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)

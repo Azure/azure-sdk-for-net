@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, reservationsToPurchase ?? new ChangeTrackingList<ReservationToPurchaseCalculateExchange>(), savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>(), reservationsToExchange ?? new ChangeTrackingList<ReservationToExchange>(), policyResult.Value, serializedAdditionalRawData);
+            return new CalculateExchangeResultProperties(
+                Optional.ToNullable(sessionId),
+                netPayable.Value,
+                refundsTotal.Value,
+                purchasesTotal.Value,
+                reservationsToPurchase ?? new ChangeTrackingList<ReservationToPurchaseCalculateExchange>(),
+                savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>(),
+                reservationsToExchange ?? new ChangeTrackingList<ReservationToExchange>(),
+                policyResult.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeResultProperties>.Write(ModelReaderWriterOptions options)

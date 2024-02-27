@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new SystemData(
+                createdBy.Value,
+                Optional.ToNullable(createdByType),
+                Optional.ToNullable(createdAt),
+                lastModifiedBy.Value,
+                Optional.ToNullable(lastModifiedByType),
+                Optional.ToNullable(lastModifiedAt));
         }
 
         BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)

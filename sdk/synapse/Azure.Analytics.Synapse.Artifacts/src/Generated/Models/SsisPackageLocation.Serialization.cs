@@ -198,7 +198,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword.Value, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, childPackages ?? new ChangeTrackingList<SsisChildPackage>());
+            return new SsisPackageLocation(
+                packagePath.Value,
+                Optional.ToNullable(type),
+                packagePassword.Value,
+                accessCredential.Value,
+                configurationPath.Value,
+                configurationAccessCredential.Value,
+                packageName.Value,
+                packageContent.Value,
+                packageLastModifiedDate.Value,
+                childPackages ?? new ChangeTrackingList<SsisChildPackage>());
         }
 
         internal partial class SsisPackageLocationConverter : JsonConverter<SsisPackageLocation>

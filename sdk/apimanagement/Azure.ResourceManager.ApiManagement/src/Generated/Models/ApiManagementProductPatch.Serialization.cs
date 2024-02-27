@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementProductPatch(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state), displayName.Value, serializedAdditionalRawData);
+            return new ApiManagementProductPatch(
+                description.Value,
+                terms.Value,
+                Optional.ToNullable(subscriptionRequired),
+                Optional.ToNullable(approvalRequired),
+                Optional.ToNullable(subscriptionsLimit),
+                Optional.ToNullable(state),
+                displayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementProductPatch>.Write(ModelReaderWriterOptions options)

@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiResourceMetadata(source.Value, brandColor.Value, hideKey.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(apiType), wsdlService.Value, Optional.ToNullable(wsdlImportMethod), connectionType.Value, Optional.ToNullable(provisioningState), deploymentParameters.Value, serializedAdditionalRawData);
+            return new LogicApiResourceMetadata(
+                source.Value,
+                brandColor.Value,
+                hideKey.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(apiType),
+                wsdlService.Value,
+                Optional.ToNullable(wsdlImportMethod),
+                connectionType.Value,
+                Optional.ToNullable(provisioningState),
+                deploymentParameters.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiResourceMetadata>.Write(ModelReaderWriterOptions options)

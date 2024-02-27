@@ -271,7 +271,20 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSqlPoolSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), disabledAlerts ?? new ChangeTrackingList<string>(), emailAddresses ?? new ChangeTrackingList<string>(), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new SynapseSqlPoolSecurityAlertPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                disabledAlerts ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(emailAccountAdmins),
+                storageEndpoint.Value,
+                storageAccountAccessKey.Value,
+                Optional.ToNullable(retentionDays),
+                Optional.ToNullable(creationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSqlPoolSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)

@@ -70,7 +70,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageBlobInventoryPolicyCompletedEventData(Optional.ToNullable(scheduleDateTime), accountName.Value, ruleName.Value, policyRunStatus.Value, policyRunStatusMessage.Value, policyRunId.Value, manifestBlobUrl.Value);
+            return new StorageBlobInventoryPolicyCompletedEventData(
+                Optional.ToNullable(scheduleDateTime),
+                accountName.Value,
+                ruleName.Value,
+                policyRunStatus.Value,
+                policyRunStatusMessage.Value,
+                policyRunId.Value,
+                manifestBlobUrl.Value);
         }
 
         internal partial class StorageBlobInventoryPolicyCompletedEventDataConverter : JsonConverter<StorageBlobInventoryPolicyCompletedEventData>

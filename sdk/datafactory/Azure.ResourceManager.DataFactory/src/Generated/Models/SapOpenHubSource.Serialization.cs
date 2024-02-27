@@ -234,7 +234,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, excludeLastRequest.Value, baseRequestId.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value);
+            return new SapOpenHubSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                excludeLastRequest.Value,
+                baseRequestId.Value,
+                customRfcReadTableFunctionModule.Value,
+                sapDataColumnDelimiter.Value);
         }
 
         BinaryData IPersistableModel<SapOpenHubSource>.Write(ModelReaderWriterOptions options)

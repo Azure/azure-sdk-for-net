@@ -169,7 +169,15 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterWorkerSelector(key, labelOperator, value.Value, Optional.ToNullable(expiresAfterSeconds), Optional.ToNullable(expedite), Optional.ToNullable(status), Optional.ToNullable(expiresAt), serializedAdditionalRawData);
+            return new RouterWorkerSelector(
+                key,
+                labelOperator,
+                value.Value,
+                Optional.ToNullable(expiresAfterSeconds),
+                Optional.ToNullable(expedite),
+                Optional.ToNullable(status),
+                Optional.ToNullable(expiresAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterWorkerSelector>.Write(ModelReaderWriterOptions options)

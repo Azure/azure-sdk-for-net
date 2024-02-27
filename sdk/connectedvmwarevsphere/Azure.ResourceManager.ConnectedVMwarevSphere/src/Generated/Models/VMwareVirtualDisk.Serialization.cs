@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVirtualDisk(name.Value, label.Value, diskObjectId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(deviceKey), Optional.ToNullable(diskMode), Optional.ToNullable(controllerKey), Optional.ToNullable(unitNumber), deviceName.Value, Optional.ToNullable(diskType), serializedAdditionalRawData);
+            return new VMwareVirtualDisk(
+                name.Value,
+                label.Value,
+                diskObjectId.Value,
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(deviceKey),
+                Optional.ToNullable(diskMode),
+                Optional.ToNullable(controllerKey),
+                Optional.ToNullable(unitNumber),
+                deviceName.Value,
+                Optional.ToNullable(diskType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVirtualDisk>.Write(ModelReaderWriterOptions options)

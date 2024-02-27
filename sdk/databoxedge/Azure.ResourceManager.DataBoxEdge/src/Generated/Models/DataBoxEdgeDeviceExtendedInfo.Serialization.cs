@@ -334,7 +334,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceExtendedInfo(id, name, type, systemData.Value, encryptionKeyThumbprint.Value, encryptionKey.Value, resourceKey.Value, clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(keyVaultSyncStatus), deviceSecrets ?? new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>(), Optional.ToNullable(clusterWitnessType), fileShareWitnessLocation.Value, fileShareWitnessUsername.Value, cloudWitnessStorageAccountName.Value, cloudWitnessContainerName.Value, cloudWitnessStorageEndpoint.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceExtendedInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                encryptionKeyThumbprint.Value,
+                encryptionKey.Value,
+                resourceKey.Value,
+                clientSecretStoreId.Value,
+                clientSecretStoreUrl.Value,
+                channelIntegrityKeyName.Value,
+                channelIntegrityKeyVersion.Value,
+                Optional.ToNullable(keyVaultSyncStatus),
+                deviceSecrets ?? new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>(),
+                Optional.ToNullable(clusterWitnessType),
+                fileShareWitnessLocation.Value,
+                fileShareWitnessUsername.Value,
+                cloudWitnessStorageAccountName.Value,
+                cloudWitnessContainerName.Value,
+                cloudWitnessStorageEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfo>.Write(ModelReaderWriterOptions options)

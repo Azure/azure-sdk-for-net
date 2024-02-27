@@ -31,7 +31,17 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ElasticMonitorResourceData(id, name, resourceType, systemData, tags, location, skuName != null ? new ResourceSku(skuName, serializedAdditionalRawData: null) : null, properties, identity, serializedAdditionalRawData: null);
+            return new ElasticMonitorResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName != null ? new ResourceSku(skuName, serializedAdditionalRawData: null) : null,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorProperties"/>. </summary>
@@ -44,7 +54,14 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
         public static MonitorProperties MonitorProperties(ProvisioningState? provisioningState = null, MonitoringStatus? monitoringStatus = null, ElasticProperties elasticProperties = null, UserInfo userInfo = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null)
         {
-            return new MonitorProperties(provisioningState, monitoringStatus, elasticProperties, userInfo, liftrResourceCategory, liftrResourcePreference, serializedAdditionalRawData: null);
+            return new MonitorProperties(
+                provisioningState,
+                monitoringStatus,
+                elasticProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticCloudUser"/>. </summary>
@@ -68,7 +85,15 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticCloudDeployment"/> instance for mocking. </returns>
         public static ElasticCloudDeployment ElasticCloudDeployment(string name = null, string deploymentId = null, string azureSubscriptionId = null, string elasticsearchRegion = null, Uri elasticsearchServiceUri = null, Uri kibanaServiceUri = null, Uri kibanaSsoUri = null)
         {
-            return new ElasticCloudDeployment(name, deploymentId, azureSubscriptionId, elasticsearchRegion, elasticsearchServiceUri, kibanaServiceUri, kibanaSsoUri, serializedAdditionalRawData: null);
+            return new ElasticCloudDeployment(
+                name,
+                deploymentId,
+                azureSubscriptionId,
+                elasticsearchRegion,
+                elasticsearchServiceUri,
+                kibanaServiceUri,
+                kibanaSsoUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoredResourceContent"/>. </summary>
@@ -101,7 +126,13 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Elastic.MonitoringTagRuleData"/> instance for mocking. </returns>
         public static MonitoringTagRuleData MonitoringTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoringTagRulesProperties properties = null)
         {
-            return new MonitoringTagRuleData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new MonitoringTagRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmResources"/>. </summary>

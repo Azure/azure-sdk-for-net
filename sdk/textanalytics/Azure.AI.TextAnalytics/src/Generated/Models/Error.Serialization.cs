@@ -104,7 +104,13 @@ namespace Azure.AI.TextAnalytics.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Error(code, message, target.Value, details ?? new ChangeTrackingList<Error>(), innererror.Value, additionalProperties);
+            return new Error(
+                code,
+                message,
+                target.Value,
+                details ?? new ChangeTrackingList<Error>(),
+                innererror.Value,
+                additionalProperties);
         }
     }
 }

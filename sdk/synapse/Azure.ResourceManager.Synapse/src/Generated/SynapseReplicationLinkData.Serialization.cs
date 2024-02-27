@@ -292,7 +292,23 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseReplicationLinkData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(isTerminationAllowed), replicationMode.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), serializedAdditionalRawData);
+            return new SynapseReplicationLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(isTerminationAllowed),
+                replicationMode.Value,
+                partnerServer.Value,
+                partnerDatabase.Value,
+                Optional.ToNullable(partnerLocation),
+                Optional.ToNullable(role),
+                Optional.ToNullable(partnerRole),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(replicationState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseReplicationLinkData>.Write(ModelReaderWriterOptions options)

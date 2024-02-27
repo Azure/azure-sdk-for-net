@@ -153,7 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonFormat(type, serializer.Value, deserializer.Value, additionalProperties, filePattern.Value, nestingSeparator.Value, encodingName.Value, jsonNodeReference.Value, jsonPathDefinition.Value);
+            return new JsonFormat(
+                type,
+                serializer.Value,
+                deserializer.Value,
+                additionalProperties,
+                filePattern.Value,
+                nestingSeparator.Value,
+                encodingName.Value,
+                jsonNodeReference.Value,
+                jsonPathDefinition.Value);
         }
 
         internal partial class JsonFormatConverter : JsonConverter<JsonFormat>

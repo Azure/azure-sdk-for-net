@@ -342,7 +342,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), runtimeVersion.Value, compilationMode.Value);
+            return new DataLakeAnalyticsUsqlActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                scriptPath,
+                scriptLinkedService,
+                degreeOfParallelism.Value,
+                priority.Value,
+                parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                runtimeVersion.Value,
+                compilationMode.Value);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsUsqlActivity>.Write(ModelReaderWriterOptions options)

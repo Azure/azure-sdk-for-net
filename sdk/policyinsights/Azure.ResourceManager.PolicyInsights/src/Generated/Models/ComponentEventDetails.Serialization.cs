@@ -169,7 +169,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ComponentEventDetails(id, name, type, systemData.Value, Optional.ToNullable(timestamp), Optional.ToNullable(tenantId), principalOid.Value, policyDefinitionAction.Value, additionalProperties);
+            return new ComponentEventDetails(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(tenantId),
+                principalOid.Value,
+                policyDefinitionAction.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ComponentEventDetails>.Write(ModelReaderWriterOptions options)

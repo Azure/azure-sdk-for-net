@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerDevOpsAuditingSettingData(id, name, type, systemData.Value, Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId), serializedAdditionalRawData);
+            return new SqlServerDevOpsAuditingSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isAzureMonitorTargetEnabled),
+                Optional.ToNullable(isManagedIdentityInUse),
+                Optional.ToNullable(state),
+                storageEndpoint.Value,
+                storageAccountAccessKey.Value,
+                Optional.ToNullable(storageAccountSubscriptionId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerDevOpsAuditingSettingData>.Write(ModelReaderWriterOptions options)

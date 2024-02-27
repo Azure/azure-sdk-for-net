@@ -177,7 +177,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description.Value, bigDataPool.Value, targetSparkConfiguration.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
+            return new Notebook(
+                description.Value,
+                bigDataPool.Value,
+                targetSparkConfiguration.Value,
+                sessionProperties.Value,
+                metadata,
+                nbformat,
+                nbformatMinor,
+                cells,
+                folder.Value,
+                additionalProperties);
         }
 
         internal partial class NotebookConverter : JsonConverter<Notebook>

@@ -27,7 +27,13 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <returns> A new <see cref="Automanage.AutomanageBestPracticeData"/> instance for mocking. </returns>
         public static AutomanageBestPracticeData AutomanageBestPracticeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData configuration = null)
         {
-            return new AutomanageBestPracticeData(id, name, resourceType, systemData, configuration, serializedAdditionalRawData: null);
+            return new AutomanageBestPracticeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                configuration,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automanage.AutomanageConfigurationProfileData"/>. </summary>
@@ -43,7 +49,15 @@ namespace Azure.ResourceManager.Automanage.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AutomanageConfigurationProfileData(id, name, resourceType, systemData, tags, location, configuration != null ? new ConfigurationProfileProperties(configuration, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new AutomanageConfigurationProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                configuration != null ? new ConfigurationProfileProperties(configuration, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automanage.AutomanageConfigurationProfileAssignmentData"/>. </summary>
@@ -56,7 +70,14 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <returns> A new <see cref="Automanage.AutomanageConfigurationProfileAssignmentData"/> instance for mocking. </returns>
         public static AutomanageConfigurationProfileAssignmentData AutomanageConfigurationProfileAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AutomanageConfigurationProfileAssignmentProperties properties = null, string managedBy = null)
         {
-            return new AutomanageConfigurationProfileAssignmentData(id, name, resourceType, systemData, properties, managedBy, serializedAdditionalRawData: null);
+            return new AutomanageConfigurationProfileAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                managedBy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomanageConfigurationProfileAssignmentProperties"/>. </summary>
@@ -89,7 +110,22 @@ namespace Azure.ResourceManager.Automanage.Models
         {
             resources ??= new List<ConfigurationProfileAssignmentReportResourceDetails>();
 
-            return new AutomanageConfigurationProfileAssignmentReportData(id, name, resourceType, systemData, startOn, endOn, lastModifiedOn, duration, configurationProfileAssignmentProcessingType, status, configurationProfile, resources?.ToList(), error, reportFormatVersion, serializedAdditionalRawData: null);
+            return new AutomanageConfigurationProfileAssignmentReportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                lastModifiedOn,
+                duration,
+                configurationProfileAssignmentProcessingType,
+                status,
+                configurationProfile,
+                resources?.ToList(),
+                error,
+                reportFormatVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationProfileAssignmentReportResourceDetails"/>. </summary>
@@ -102,7 +138,14 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <returns> A new <see cref="Models.ConfigurationProfileAssignmentReportResourceDetails"/> instance for mocking. </returns>
         public static ConfigurationProfileAssignmentReportResourceDetails ConfigurationProfileAssignmentReportResourceDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, ResponseError error = null)
         {
-            return new ConfigurationProfileAssignmentReportResourceDetails(id, name, resourceType, systemData, status, error, serializedAdditionalRawData: null);
+            return new ConfigurationProfileAssignmentReportResourceDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomanageServicePrincipalData"/>. </summary>
@@ -115,7 +158,14 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <returns> A new <see cref="Models.AutomanageServicePrincipalData"/> instance for mocking. </returns>
         public static AutomanageServicePrincipalData AutomanageServicePrincipalData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string servicePrincipalId = null, bool? isAuthorizationSet = null)
         {
-            return new AutomanageServicePrincipalData(id, name, resourceType, systemData, servicePrincipalId, isAuthorizationSet, serializedAdditionalRawData: null);
+            return new AutomanageServicePrincipalData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                servicePrincipalId,
+                isAuthorizationSet,
+                serializedAdditionalRawData: null);
         }
     }
 }

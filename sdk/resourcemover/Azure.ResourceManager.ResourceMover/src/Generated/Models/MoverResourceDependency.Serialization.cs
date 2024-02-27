@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, isOptional.Value, serializedAdditionalRawData);
+            return new MoverResourceDependency(
+                id.Value,
+                resolutionStatus.Value,
+                Optional.ToNullable(resolutionType),
+                Optional.ToNullable(dependencyType),
+                manualResolution.Value,
+                automaticResolution.Value,
+                isOptional.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceDependency>.Write(ModelReaderWriterOptions options)

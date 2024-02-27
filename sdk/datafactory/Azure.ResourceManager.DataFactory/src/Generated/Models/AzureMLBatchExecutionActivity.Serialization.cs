@@ -318,7 +318,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLBatchExecutionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, globalParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), webServiceOutputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>(), webServiceInputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>());
+            return new AzureMLBatchExecutionActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                globalParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                webServiceOutputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>(),
+                webServiceInputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>());
         }
 
         BinaryData IPersistableModel<AzureMLBatchExecutionActivity>.Write(ModelReaderWriterOptions options)

@@ -246,7 +246,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, nodes.Value, Optional.ToNullable(port), properties ?? new ChangeTrackingDictionary<string, string>(), status.Value, serializedAdditionalRawData);
+            return new MachineLearningJobService(
+                endpoint.Value,
+                errorMessage.Value,
+                jobServiceType.Value,
+                nodes.Value,
+                Optional.ToNullable(port),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningJobService>.Write(ModelReaderWriterOptions options)

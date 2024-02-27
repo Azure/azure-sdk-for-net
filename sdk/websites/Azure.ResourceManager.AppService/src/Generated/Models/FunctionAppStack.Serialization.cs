@@ -226,7 +226,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, majorVersions ?? new ChangeTrackingList<FunctionAppMajorVersion>(), Optional.ToNullable(preferredOS), kind.Value, serializedAdditionalRawData);
+            return new FunctionAppStack(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                displayText.Value,
+                value.Value,
+                majorVersions ?? new ChangeTrackingList<FunctionAppMajorVersion>(),
+                Optional.ToNullable(preferredOS),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppStack>.Write(ModelReaderWriterOptions options)

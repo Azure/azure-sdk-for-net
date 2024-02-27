@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabServiceFabricData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, externalServiceFabricId.Value, environmentId.Value, applicableSchedule.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabServiceFabricData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                externalServiceFabricId.Value,
+                environmentId.Value,
+                applicableSchedule.Value,
+                provisioningState.Value,
+                Optional.ToNullable(uniqueIdentifier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabServiceFabricData>.Write(ModelReaderWriterOptions options)

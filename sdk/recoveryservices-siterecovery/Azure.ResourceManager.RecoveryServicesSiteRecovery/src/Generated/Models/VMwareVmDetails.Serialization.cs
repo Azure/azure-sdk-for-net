@@ -225,7 +225,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmDetails(instanceType, serializedAdditionalRawData, agentGeneratedId.Value, agentInstalled.Value, osType.Value, agentVersion.Value, ipAddress.Value, poweredOn.Value, vCenterInfrastructureId.Value, discoveryType.Value, diskDetails ?? new ChangeTrackingList<InMageDiskDetails>(), validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>());
+            return new VMwareVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                agentGeneratedId.Value,
+                agentInstalled.Value,
+                osType.Value,
+                agentVersion.Value,
+                ipAddress.Value,
+                poweredOn.Value,
+                vCenterInfrastructureId.Value,
+                discoveryType.Value,
+                diskDetails ?? new ChangeTrackingList<InMageDiskDetails>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>());
         }
 
         BinaryData IPersistableModel<VMwareVmDetails>.Write(ModelReaderWriterOptions options)

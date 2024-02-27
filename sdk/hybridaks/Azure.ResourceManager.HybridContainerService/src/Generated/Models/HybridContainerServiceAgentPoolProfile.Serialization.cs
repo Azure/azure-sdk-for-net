@@ -215,7 +215,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceAgentPoolProfile(Optional.ToNullable(osType), Optional.ToNullable(ossku), nodeLabels ?? new ChangeTrackingDictionary<string, string>(), nodeTaints ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), serializedAdditionalRawData);
+            return new HybridContainerServiceAgentPoolProfile(
+                Optional.ToNullable(osType),
+                Optional.ToNullable(ossku),
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                nodeTaints ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(maxCount),
+                Optional.ToNullable(minCount),
+                Optional.ToNullable(enableAutoScaling),
+                Optional.ToNullable(maxPods),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceAgentPoolProfile>.Write(ModelReaderWriterOptions options)

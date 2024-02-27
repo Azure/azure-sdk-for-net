@@ -365,7 +365,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential, encryptedCredential.Value, credential.Value);
+            return new DynamicsLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                deploymentType,
+                hostName.Value,
+                port.Value,
+                serviceUri.Value,
+                organizationName.Value,
+                authenticationType,
+                username.Value,
+                password,
+                servicePrincipalId.Value,
+                servicePrincipalCredentialType.Value,
+                servicePrincipalCredential,
+                encryptedCredential.Value,
+                credential.Value);
         }
 
         BinaryData IPersistableModel<DynamicsLinkedService>.Write(ModelReaderWriterOptions options)

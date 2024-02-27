@@ -238,7 +238,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, sku.Value, reservationId.Value, Optional.ToNullable(platformFaultDomainCount), virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
+            return new CapacityReservationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku.Value,
+                reservationId.Value,
+                Optional.ToNullable(platformFaultDomainCount),
+                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                Optional.ToNullable(provisioningTime),
+                provisioningState.Value,
+                instanceView.Value,
+                Optional.ToNullable(timeCreated));
         }
 
         BinaryData IPersistableModel<CapacityReservationPatch>.Write(ModelReaderWriterOptions options)

@@ -289,7 +289,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, dnsServers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DataBoxEdgeNetworkAdapter(
+                adapterId.Value,
+                adapterPosition.Value,
+                Optional.ToNullable(index),
+                Optional.ToNullable(nodeId),
+                networkAdapterName.Value,
+                label.Value,
+                macAddress.Value,
+                Optional.ToNullable(linkSpeed),
+                Optional.ToNullable(status),
+                Optional.ToNullable(rdmaStatus),
+                Optional.ToNullable(dhcpStatus),
+                ipv4Configuration.Value,
+                ipv6Configuration.Value,
+                ipv6LinkLocalAddress.Value,
+                dnsServers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNetworkAdapter>.Write(ModelReaderWriterOptions options)

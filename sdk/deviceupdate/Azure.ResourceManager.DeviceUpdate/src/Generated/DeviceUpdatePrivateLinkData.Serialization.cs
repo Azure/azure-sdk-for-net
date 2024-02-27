@@ -215,7 +215,16 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateLinkData(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DeviceUpdatePrivateLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateLinkData>.Write(ModelReaderWriterOptions options)

@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Optional.ToNullable(state), instanceView.Value, serializedAdditionalRawData);
+            return new PerNodeExtensionState(
+                name.Value,
+                extension.Value,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(state),
+                instanceView.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerNodeExtensionState>.Write(ModelReaderWriterOptions options)

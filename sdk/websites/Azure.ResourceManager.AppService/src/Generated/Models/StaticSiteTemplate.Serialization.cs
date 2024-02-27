@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteTemplate(templateRepositoryUrl.Value, owner.Value, repositoryName.Value, description.Value, Optional.ToNullable(isPrivate), serializedAdditionalRawData);
+            return new StaticSiteTemplate(
+                templateRepositoryUrl.Value,
+                owner.Value,
+                repositoryName.Value,
+                description.Value,
+                Optional.ToNullable(isPrivate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteTemplate>.Write(ModelReaderWriterOptions options)
