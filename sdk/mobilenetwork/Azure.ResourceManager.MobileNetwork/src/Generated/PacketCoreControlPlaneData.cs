@@ -113,8 +113,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="eventHub"> Configuration for sending packet core events to an Azure Event Hub. </param>
         /// <param name="signaling"> Signaling configuration for the packet core. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
+        /// <param name="homeNetworkPrivateKeysProvisioning"> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings, HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
@@ -134,6 +135,7 @@ namespace Azure.ResourceManager.MobileNetwork
             EventHub = eventHub;
             Signaling = signaling;
             InteropSettings = interopSettings;
+            HomeNetworkPrivateKeysProvisioning = homeNetworkPrivateKeysProvisioning;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -233,5 +235,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </para>
         /// </summary>
         public BinaryData InteropSettings { get; set; }
+        /// <summary> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </summary>
+        internal HomeNetworkPrivateKeysProvisioning HomeNetworkPrivateKeysProvisioning { get; }
+        /// <summary> The provisioning state of the private keys for SUPI concealment. </summary>
+        public HomeNetworkPrivateKeysProvisioningState? HomeNetworkPrivateKeysProvisioningState
+        {
+            get => HomeNetworkPrivateKeysProvisioning?.State;
+        }
     }
 }

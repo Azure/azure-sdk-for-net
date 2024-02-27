@@ -215,5 +215,17 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
             MobileNetworkSliceResource.ValidateResourceId(id);
             return new MobileNetworkSliceResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedUeInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedUeInfoResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedUeInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExtendedUeInfoResource"/> object. </returns>
+        public virtual ExtendedUeInfoResource GetExtendedUeInfoResource(ResourceIdentifier id)
+        {
+            ExtendedUeInfoResource.ValidateResourceId(id);
+            return new ExtendedUeInfoResource(Client, id);
+        }
     }
 }

@@ -156,6 +156,11 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
 #endif
             }
+            if (options.Format != "W" && HomeNetworkPrivateKeysProvisioning != null)
+            {
+                writer.WritePropertyName("homeNetworkPrivateKeysProvisioning"u8);
+                writer.WriteObjectValue(HomeNetworkPrivateKeysProvisioning);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -219,6 +224,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<MobileNetworkEventHubConfiguration> eventHub = default;
             Optional<SignalingConfiguration> signaling = default;
             Optional<BinaryData> interopSettings = default;
+            Optional<HomeNetworkPrivateKeysProvisioning> homeNetworkPrivateKeysProvisioning = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,6 +421,15 @@ namespace Azure.ResourceManager.MobileNetwork
                             interopSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("homeNetworkPrivateKeysProvisioning"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            homeNetworkPrivateKeysProvisioning = HomeNetworkPrivateKeysProvisioning.DeserializeHomeNetworkPrivateKeysProvisioning(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -449,6 +464,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 eventHub.Value,
                 signaling.Value,
                 interopSettings.Value,
+                homeNetworkPrivateKeysProvisioning.Value,
                 serializedAdditionalRawData);
         }
 
