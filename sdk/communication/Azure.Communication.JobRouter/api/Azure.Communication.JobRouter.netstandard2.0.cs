@@ -186,6 +186,7 @@ namespace Azure.Communication.JobRouter
         public int Capacity { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.RouterChannel> Channels { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.RouterValue> Labels { get { throw null; } }
+        public int MaxConcurrentOffers { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Queues { get { throw null; } }
         public Azure.RequestConditions RequestConditions { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.RouterValue> Tags { get { throw null; } }
@@ -564,10 +565,11 @@ namespace Azure.Communication.JobRouter
     }
     public partial class JobRouterClientOptions : Azure.Core.ClientOptions
     {
-        public JobRouterClientOptions(Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion version = Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion.V2023_11_01) { }
+        public JobRouterClientOptions(Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion version = Azure.Communication.JobRouter.JobRouterClientOptions.ServiceVersion.V2024_01_18_Preview) { }
         public enum ServiceVersion
         {
             V2023_11_01 = 1,
+            V2024_01_18_Preview = 2,
         }
     }
     public static partial class JobRouterModelFactory
@@ -1012,6 +1014,7 @@ namespace Azure.Communication.JobRouter
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.RouterValue> Labels { get { throw null; } }
         public double? LoadRatio { get { throw null; } }
+        public int? MaxConcurrentOffers { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.JobRouter.RouterJobOffer> Offers { get { throw null; } }
         public System.Collections.Generic.IList<string> Queues { get { throw null; } }
         public Azure.Communication.JobRouter.RouterWorkerState? State { get { throw null; } }

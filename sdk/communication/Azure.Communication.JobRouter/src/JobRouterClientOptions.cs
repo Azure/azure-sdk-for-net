@@ -14,14 +14,12 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The latest version of the Router service.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_18_Preview;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JobRouterClientOptions"/>.
         /// </summary>
-#pragma warning disable AZC0010 // Temporary suppression before deployment is rolled out
         public JobRouterClientOptions(ServiceVersion version = LatestVersion)
-#pragma warning restore AZC0010 // Temporary suppression before deployment is rolled out
         {
             Version = version switch
             {
