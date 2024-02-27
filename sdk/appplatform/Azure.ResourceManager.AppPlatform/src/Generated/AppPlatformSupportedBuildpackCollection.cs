@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformSupportedBuildpackResource>> GetAsync(string buildpackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackName, nameof(buildpackName));
+            if (buildpackName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackName));
+            }
+            if (buildpackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackName));
+            }
 
             using var scope = _appPlatformSupportedBuildpackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedBuildpackCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
         public virtual Response<AppPlatformSupportedBuildpackResource> Get(string buildpackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackName, nameof(buildpackName));
+            if (buildpackName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackName));
+            }
+            if (buildpackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackName));
+            }
 
             using var scope = _appPlatformSupportedBuildpackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedBuildpackCollection.Get");
             scope.Start();
@@ -228,7 +242,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string buildpackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackName, nameof(buildpackName));
+            if (buildpackName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackName));
+            }
+            if (buildpackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackName));
+            }
 
             using var scope = _appPlatformSupportedBuildpackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedBuildpackCollection.Exists");
             scope.Start();
@@ -271,7 +292,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
         public virtual Response<bool> Exists(string buildpackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackName, nameof(buildpackName));
+            if (buildpackName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackName));
+            }
+            if (buildpackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackName));
+            }
 
             using var scope = _appPlatformSupportedBuildpackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedBuildpackCollection.Exists");
             scope.Start();
@@ -314,7 +342,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformSupportedBuildpackResource>> GetIfExistsAsync(string buildpackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackName, nameof(buildpackName));
+            if (buildpackName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackName));
+            }
+            if (buildpackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackName));
+            }
 
             using var scope = _appPlatformSupportedBuildpackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedBuildpackCollection.GetIfExists");
             scope.Start();
@@ -359,7 +394,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformSupportedBuildpackResource> GetIfExists(string buildpackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(buildpackName, nameof(buildpackName));
+            if (buildpackName == null)
+            {
+                throw new ArgumentNullException(nameof(buildpackName));
+            }
+            if (buildpackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(buildpackName));
+            }
 
             using var scope = _appPlatformSupportedBuildpackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedBuildpackCollection.GetIfExists");
             scope.Start();

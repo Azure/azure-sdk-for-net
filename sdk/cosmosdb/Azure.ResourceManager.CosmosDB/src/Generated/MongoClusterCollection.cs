@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MongoClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mongoClusterName, MongoClusterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MongoClusterResource> CreateOrUpdate(WaitUntil waitUntil, string mongoClusterName, MongoClusterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         public virtual async Task<Response<MongoClusterResource>> GetAsync(string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         public virtual Response<MongoClusterResource> Get(string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<MongoClusterResource>> GetIfExistsAsync(string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         public virtual NullableResponse<MongoClusterResource> GetIfExists(string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterCollection.GetIfExists");
             scope.Start();

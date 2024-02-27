@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommitmentPlanId))
+            if (CommitmentPlanId != null)
             {
                 writer.WritePropertyName("commitmentPlanId"u8);
                 writer.WriteStringValue(CommitmentPlanId);
             }
-            if (Optional.IsDefined(CommitmentPlanLocation))
+            if (CommitmentPlanLocation != null)
             {
                 writer.WritePropertyName("commitmentPlanLocation"u8);
                 writer.WriteStringValue(CommitmentPlanLocation);

@@ -6,33 +6,42 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeSsisCatalogInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeSsisCatalogInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseIntegrationRuntimeSsisCatalogInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisCatalogInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogServerEndpoint))
+            if (CatalogServerEndpoint != null)
             {
                 writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(CatalogAdminUserName))
+            if (CatalogAdminUserName != null)
             {
                 writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
-            if (Optional.IsDefined(CatalogAdminPassword))
+            if (CatalogAdminPassword != null)
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
                 writer.WriteObjectValue(CatalogAdminPassword);
             }
-            if (Optional.IsDefined(CatalogPricingTier))
+            if (CatalogPricingTier.HasValue)
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());
@@ -52,8 +61,22 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseIntegrationRuntimeSsisCatalogInfo DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(JsonElement element)
+        SynapseIntegrationRuntimeSsisCatalogInfo IJsonModel<SynapseIntegrationRuntimeSsisCatalogInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisCatalogInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeSsisCatalogInfo DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,7 +109,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
+                    catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))
@@ -103,5 +126,36 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword.Value, Optional.ToNullable(catalogPricingTier), additionalProperties);
         }
+
+        BinaryData IPersistableModel<SynapseIntegrationRuntimeSsisCatalogInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisCatalogInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SynapseIntegrationRuntimeSsisCatalogInfo IPersistableModel<SynapseIntegrationRuntimeSsisCatalogInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisCatalogInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseIntegrationRuntimeSsisCatalogInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ResourceSelectors))
+            if (!(ResourceSelectors is ChangeTrackingList<ResourceSelector> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Overrides))
+            if (!(Overrides is ChangeTrackingList<PolicyOverride> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<AzureLocation> location = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IList<ResourceSelector>> resourceSelectors = default;
-            Optional<IList<PolicyOverride>> overrides = default;
+            IList<ResourceSelector> resourceSelectors = default;
+            IList<PolicyOverride> overrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ResourceSelector> array = new List<ResourceSelector>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceSelector.DeserializeResourceSelector(item));
+                                array.Add(ResourceSelector.DeserializeResourceSelector(item, options));
                             }
                             resourceSelectors = array;
                             continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<PolicyOverride> array = new List<PolicyOverride>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyOverride.DeserializePolicyOverride(item));
+                                array.Add(PolicyOverride.DeserializePolicyOverride(item, options));
                             }
                             overrides = array;
                             continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentPatch(Optional.ToNullable(location), identity, Optional.ToList(resourceSelectors), Optional.ToList(overrides), serializedAdditionalRawData);
+            return new PolicyAssignmentPatch(Optional.ToNullable(location), identity, resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(), overrides ?? new ChangeTrackingList<PolicyOverride>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentPatch>.Write(ModelReaderWriterOptions options)

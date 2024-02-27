@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceUri))
+            if (ServiceUri != null)
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(CustomHeaders))
+            if (!(CustomHeaders is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartObject();
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<ContainerRegistryWebhookAction> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<Uri> serviceUri = default;
-            Optional<IDictionary<string, string>> customHeaders = default;
+            IDictionary<string, string> customHeaders = default;
             Optional<ContainerRegistryWebhookStatus> status = default;
             Optional<string> scope = default;
-            Optional<IList<ContainerRegistryWebhookAction>> actions = default;
+            IList<ContainerRegistryWebhookAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookPatch(Optional.ToDictionary(tags), serviceUri.Value, Optional.ToDictionary(customHeaders), Optional.ToNullable(status), scope.Value, Optional.ToList(actions), serializedAdditionalRawData);
+            return new ContainerRegistryWebhookPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serviceUri.Value,
+                customHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(status),
+                scope.Value,
+                actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookPatch>.Write(ModelReaderWriterOptions options)

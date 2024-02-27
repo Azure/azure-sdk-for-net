@@ -16,12 +16,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentCategory))
+            if (ContentCategory.HasValue)
             {
                 writer.WritePropertyName("contentCategory"u8);
                 writer.WriteStringValue(ContentCategory.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Examples))
+            if (!(Examples is ChangeTrackingList<MessageExampleSequence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Communication.ShortCodes.Models
                 return null;
             }
             Optional<MessageContentCategory> contentCategory = default;
-            Optional<IList<MessageExampleSequence>> examples = default;
+            IList<MessageExampleSequence> examples = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentCategory"u8))
@@ -68,7 +68,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new UseCase(Optional.ToNullable(contentCategory), Optional.ToList(examples));
+            return new UseCase(Optional.ToNullable(contentCategory), examples ?? new ChangeTrackingList<MessageExampleSequence>());
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Disable))
+            if (Disable.HasValue)
             {
                 writer.WritePropertyName("disable"u8);
                 writer.WriteBooleanValue(Disable.Value);
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestGroup(name, Optional.ToNullable(disable), testConfigurations, sources, destinations, serializedAdditionalRawData);
+            return new ConnectionMonitorTestGroup(
+                name,
+                Optional.ToNullable(disable),
+                testConfigurations,
+                sources,
+                destinations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestGroup>.Write(ModelReaderWriterOptions options)

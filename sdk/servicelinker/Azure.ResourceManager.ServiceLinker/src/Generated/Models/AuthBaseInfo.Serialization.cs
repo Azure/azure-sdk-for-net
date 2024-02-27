@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AuthBaseInfo : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAuthInfoBase))]
+    public partial class AuthBaseInfo : IUtf8JsonSerializable, IJsonModel<AuthBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthBaseInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AuthBaseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AuthBaseInfo DeserializeAuthBaseInfo(JsonElement element)
+        AuthBaseInfo IJsonModel<AuthBaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthBaseInfo(document.RootElement, options);
+        }
+
+        internal static AuthBaseInfo DeserializeAuthBaseInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,14 +70,45 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "secret": return SecretAuthInfo.DeserializeSecretAuthInfo(element);
-                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element);
-                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element);
-                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element);
-                    case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element);
+                    case "secret": return SecretAuthInfo.DeserializeSecretAuthInfo(element, options);
+                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element, options);
+                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element, options);
+                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element, options);
+                    case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element, options);
                 }
             }
-            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element);
+            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element, options);
         }
+
+        BinaryData IPersistableModel<AuthBaseInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AuthBaseInfo IPersistableModel<AuthBaseInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAuthBaseInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AuthBaseInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

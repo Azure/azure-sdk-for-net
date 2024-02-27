@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Granularity))
+            if (Granularity.HasValue)
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsCollectionDefined(Aggregation))
+            if (!(Aggregation is ChangeTrackingDictionary<string, ReportConfigAggregation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Grouping))
+            if (!(Grouping is ChangeTrackingList<ReportConfigGrouping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sorting))
+            if (!(Sorting is ChangeTrackingList<ReportConfigSorting> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sorting"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             Optional<ReportGranularityType> granularity = default;
             Optional<ReportConfigDatasetConfiguration> configuration = default;
-            Optional<IDictionary<string, ReportConfigAggregation>> aggregation = default;
-            Optional<IList<ReportConfigGrouping>> grouping = default;
-            Optional<IList<ReportConfigSorting>> sorting = default;
+            IDictionary<string, ReportConfigAggregation> aggregation = default;
+            IList<ReportConfigGrouping> grouping = default;
+            IList<ReportConfigSorting> sorting = default;
             Optional<ReportConfigFilter> filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ReportConfigDatasetConfiguration.DeserializeReportConfigDatasetConfiguration(property.Value);
+                    configuration = ReportConfigDatasetConfiguration.DeserializeReportConfigDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, ReportConfigAggregation> dictionary = new Dictionary<string, ReportConfigAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ReportConfigAggregation.DeserializeReportConfigAggregation(property0.Value));
+                        dictionary.Add(property0.Name, ReportConfigAggregation.DeserializeReportConfigAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigGrouping> array = new List<ReportConfigGrouping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportConfigGrouping.DeserializeReportConfigGrouping(item));
+                        array.Add(ReportConfigGrouping.DeserializeReportConfigGrouping(item, options));
                     }
                     grouping = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigSorting> array = new List<ReportConfigSorting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportConfigSorting.DeserializeReportConfigSorting(item));
+                        array.Add(ReportConfigSorting.DeserializeReportConfigSorting(item, options));
                     }
                     sorting = array;
                     continue;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = ReportConfigFilter.DeserializeReportConfigFilter(property.Value);
+                    filter = ReportConfigFilter.DeserializeReportConfigFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,7 +195,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportConfigDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), Optional.ToList(sorting), filter.Value, serializedAdditionalRawData);
+            return new ReportConfigDataset(
+                Optional.ToNullable(granularity),
+                configuration.Value,
+                aggregation ?? new ChangeTrackingDictionary<string, ReportConfigAggregation>(),
+                grouping ?? new ChangeTrackingList<ReportConfigGrouping>(),
+                sorting ?? new ChangeTrackingList<ReportConfigSorting>(),
+                filter.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportConfigDataset>.Write(ModelReaderWriterOptions options)

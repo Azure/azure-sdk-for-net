@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ClipTime : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownClipTime))]
+    public partial class ClipTime : IUtf8JsonSerializable, IJsonModel<ClipTime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClipTime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ClipTime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClipTime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClipTime)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClipTime DeserializeClipTime(JsonElement element)
+        ClipTime IJsonModel<ClipTime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClipTime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClipTime)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClipTime(document.RootElement, options);
+        }
+
+        internal static ClipTime DeserializeClipTime(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,11 +70,42 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AbsoluteClipTime": return AbsoluteClipTime.DeserializeAbsoluteClipTime(element);
-                    case "#Microsoft.Media.UtcClipTime": return UtcClipTime.DeserializeUtcClipTime(element);
+                    case "#Microsoft.Media.AbsoluteClipTime": return AbsoluteClipTime.DeserializeAbsoluteClipTime(element, options);
+                    case "#Microsoft.Media.UtcClipTime": return UtcClipTime.DeserializeUtcClipTime(element, options);
                 }
             }
-            return UnknownClipTime.DeserializeUnknownClipTime(element);
+            return UnknownClipTime.DeserializeUnknownClipTime(element, options);
         }
+
+        BinaryData IPersistableModel<ClipTime>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClipTime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ClipTime)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ClipTime IPersistableModel<ClipTime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClipTime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeClipTime(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClipTime)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClipTime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

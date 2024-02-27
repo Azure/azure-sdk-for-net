@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         public virtual AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CapacitySku.DeserializeCapacitySku(e), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         public virtual Pageable<CapacitySku> GetSkusCapacities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CapacitySku.DeserializeCapacitySku(e), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
             scope.Start();
@@ -235,7 +238,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
             scope.Start();

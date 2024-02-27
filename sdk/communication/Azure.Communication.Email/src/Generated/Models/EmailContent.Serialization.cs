@@ -17,12 +17,12 @@ namespace Azure.Communication.Email
             writer.WriteStartObject();
             writer.WritePropertyName("subject"u8);
             writer.WriteStringValue(Subject);
-            if (Optional.IsDefined(PlainText))
+            if (PlainText != null)
             {
                 writer.WritePropertyName("plainText"u8);
                 writer.WriteStringValue(PlainText);
             }
-            if (Optional.IsDefined(Html))
+            if (Html != null)
             {
                 writer.WritePropertyName("html"u8);
                 writer.WriteStringValue(Html);

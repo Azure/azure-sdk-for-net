@@ -5,16 +5,121 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVmSize
+    public partial class MachineLearningVmSize : IUtf8JsonSerializable, IJsonModel<MachineLearningVmSize>
     {
-        internal static MachineLearningVmSize DeserializeMachineLearningVmSize(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVmSize>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Name != null)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Family != null)
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family);
+            }
+            if (options.Format != "W" && VCpus.HasValue)
+            {
+                writer.WritePropertyName("vCPUs"u8);
+                writer.WriteNumberValue(VCpus.Value);
+            }
+            if (options.Format != "W" && Gpus.HasValue)
+            {
+                writer.WritePropertyName("gpus"u8);
+                writer.WriteNumberValue(Gpus.Value);
+            }
+            if (options.Format != "W" && OSVhdSizeMB.HasValue)
+            {
+                writer.WritePropertyName("osVhdSizeMB"u8);
+                writer.WriteNumberValue(OSVhdSizeMB.Value);
+            }
+            if (options.Format != "W" && MaxResourceVolumeMB.HasValue)
+            {
+                writer.WritePropertyName("maxResourceVolumeMB"u8);
+                writer.WriteNumberValue(MaxResourceVolumeMB.Value);
+            }
+            if (options.Format != "W" && MemoryGB.HasValue)
+            {
+                writer.WritePropertyName("memoryGB"u8);
+                writer.WriteNumberValue(MemoryGB.Value);
+            }
+            if (options.Format != "W" && LowPriorityCapable.HasValue)
+            {
+                writer.WritePropertyName("lowPriorityCapable"u8);
+                writer.WriteBooleanValue(LowPriorityCapable.Value);
+            }
+            if (options.Format != "W" && IsPremiumIOSupported.HasValue)
+            {
+                writer.WritePropertyName("premiumIO"u8);
+                writer.WriteBooleanValue(IsPremiumIOSupported.Value);
+            }
+            if (EstimatedVmPrices != null)
+            {
+                writer.WritePropertyName("estimatedVMPrices"u8);
+                writer.WriteObjectValue(EstimatedVmPrices);
+            }
+            if (!(SupportedComputeTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("supportedComputeTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedComputeTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningVmSize IJsonModel<MachineLearningVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningVmSize(document.RootElement, options);
+        }
+
+        internal static MachineLearningVmSize DeserializeMachineLearningVmSize(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,7 +134,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> lowPriorityCapable = default;
             Optional<bool> premiumIO = default;
             Optional<MachineLearningEstimatedVmPrices> estimatedVmPrices = default;
-            Optional<IReadOnlyList<string>> supportedComputeTypes = default;
+            IReadOnlyList<string> supportedComputeTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -111,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value);
+                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedComputeTypes"u8))
@@ -128,8 +235,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     supportedComputeTypes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vCpus), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Optional.ToList(supportedComputeTypes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningVmSize(
+                name.Value,
+                family.Value,
+                Optional.ToNullable(vCpus),
+                Optional.ToNullable(gpus),
+                Optional.ToNullable(osVhdSizeMB),
+                Optional.ToNullable(maxResourceVolumeMB),
+                Optional.ToNullable(memoryGB),
+                Optional.ToNullable(lowPriorityCapable),
+                Optional.ToNullable(premiumIO),
+                estimatedVmPrices.Value,
+                supportedComputeTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningVmSize>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningVmSize IPersistableModel<MachineLearningVmSize>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningVmSize(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

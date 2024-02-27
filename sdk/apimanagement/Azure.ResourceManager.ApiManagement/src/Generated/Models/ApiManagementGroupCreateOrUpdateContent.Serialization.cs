@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ApiManagementGroupType))
+            if (ApiManagementGroupType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiManagementGroupType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ExternalId))
+            if (ExternalId != null)
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);

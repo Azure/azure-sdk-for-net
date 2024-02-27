@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainNameLabel))
+            if (DomainNameLabel != null)
             {
                 writer.WritePropertyName("domainNameLabel"u8);
                 writer.WriteStringValue(DomainNameLabel);
             }
-            if (Optional.IsDefined(DomainNameLabelScope))
+            if (DomainNameLabelScope.HasValue)
             {
                 writer.WritePropertyName("domainNameLabelScope"u8);
                 writer.WriteStringValue(DomainNameLabelScope.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Fqdn))
+            if (Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(ReverseFqdn))
+            if (ReverseFqdn != null)
             {
                 writer.WritePropertyName("reverseFqdn"u8);
                 writer.WriteStringValue(ReverseFqdn);

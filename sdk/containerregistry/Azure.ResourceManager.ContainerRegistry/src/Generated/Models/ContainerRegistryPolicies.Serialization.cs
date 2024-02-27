@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuarantinePolicy))
+            if (QuarantinePolicy != null)
             {
                 writer.WritePropertyName("quarantinePolicy"u8);
                 writer.WriteObjectValue(QuarantinePolicy);
             }
-            if (Optional.IsDefined(TrustPolicy))
+            if (TrustPolicy != null)
             {
                 writer.WritePropertyName("trustPolicy"u8);
                 writer.WriteObjectValue(TrustPolicy);
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (RetentionPolicy != null)
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Optional.IsDefined(ExportPolicy))
+            if (ExportPolicy != null)
             {
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    quarantinePolicy = ContainerRegistryQuarantinePolicy.DeserializeContainerRegistryQuarantinePolicy(property.Value);
+                    quarantinePolicy = ContainerRegistryQuarantinePolicy.DeserializeContainerRegistryQuarantinePolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trustPolicy"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    trustPolicy = ContainerRegistryTrustPolicy.DeserializeContainerRegistryTrustPolicy(property.Value);
+                    trustPolicy = ContainerRegistryTrustPolicy.DeserializeContainerRegistryTrustPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    retentionPolicy = ContainerRegistryRetentionPolicy.DeserializeContainerRegistryRetentionPolicy(property.Value);
+                    retentionPolicy = ContainerRegistryRetentionPolicy.DeserializeContainerRegistryRetentionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("exportPolicy"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    exportPolicy = ContainerRegistryExportPolicy.DeserializeContainerRegistryExportPolicy(property.Value);
+                    exportPolicy = ContainerRegistryExportPolicy.DeserializeContainerRegistryExportPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

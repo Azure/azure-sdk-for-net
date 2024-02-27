@@ -5,17 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class NlpParameterSubspace : IUtf8JsonSerializable
+    public partial class NlpParameterSubspace : IUtf8JsonSerializable, IJsonModel<NlpParameterSubspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NlpParameterSubspace>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NlpParameterSubspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NlpParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(GradientAccumulationSteps))
+            if (GradientAccumulationSteps != null)
             {
                 if (GradientAccumulationSteps != null)
                 {
@@ -27,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gradientAccumulationSteps");
                 }
             }
-            if (Optional.IsDefined(LearningRate))
+            if (LearningRate != null)
             {
                 if (LearningRate != null)
                 {
@@ -39,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRate");
                 }
             }
-            if (Optional.IsDefined(LearningRateScheduler))
+            if (LearningRateScheduler != null)
             {
                 if (LearningRateScheduler != null)
                 {
@@ -51,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRateScheduler");
                 }
             }
-            if (Optional.IsDefined(ModelName))
+            if (ModelName != null)
             {
                 if (ModelName != null)
                 {
@@ -63,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelName");
                 }
             }
-            if (Optional.IsDefined(NumberOfEpochs))
+            if (NumberOfEpochs != null)
             {
                 if (NumberOfEpochs != null)
                 {
@@ -75,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numberOfEpochs");
                 }
             }
-            if (Optional.IsDefined(TrainingBatchSize))
+            if (TrainingBatchSize != null)
             {
                 if (TrainingBatchSize != null)
                 {
@@ -87,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingBatchSize");
                 }
             }
-            if (Optional.IsDefined(ValidationBatchSize))
+            if (ValidationBatchSize != null)
             {
                 if (ValidationBatchSize != null)
                 {
@@ -99,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationBatchSize");
                 }
             }
-            if (Optional.IsDefined(WarmupRatio))
+            if (WarmupRatio != null)
             {
                 if (WarmupRatio != null)
                 {
@@ -111,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("warmupRatio");
                 }
             }
-            if (Optional.IsDefined(WeightDecay))
+            if (WeightDecay != null)
             {
                 if (WeightDecay != null)
                 {
@@ -123,11 +134,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightDecay");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NlpParameterSubspace DeserializeNlpParameterSubspace(JsonElement element)
+        NlpParameterSubspace IJsonModel<NlpParameterSubspace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NlpParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNlpParameterSubspace(document.RootElement, options);
+        }
+
+        internal static NlpParameterSubspace DeserializeNlpParameterSubspace(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -141,6 +181,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> validationBatchSize = default;
             Optional<string> warmupRatio = default;
             Optional<string> weightDecay = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gradientAccumulationSteps"u8))
@@ -233,8 +275,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weightDecay = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NlpParameterSubspace(gradientAccumulationSteps.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, numberOfEpochs.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupRatio.Value, weightDecay.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NlpParameterSubspace(
+                gradientAccumulationSteps.Value,
+                learningRate.Value,
+                learningRateScheduler.Value,
+                modelName.Value,
+                numberOfEpochs.Value,
+                trainingBatchSize.Value,
+                validationBatchSize.Value,
+                warmupRatio.Value,
+                weightDecay.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NlpParameterSubspace>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NlpParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NlpParameterSubspace IPersistableModel<NlpParameterSubspace>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NlpParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNlpParameterSubspace(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NlpParameterSubspace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

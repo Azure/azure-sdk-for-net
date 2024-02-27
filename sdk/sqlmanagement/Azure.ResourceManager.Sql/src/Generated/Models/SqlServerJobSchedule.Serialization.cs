@@ -6,46 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlServerJobSchedule : IUtf8JsonSerializable
+    public partial class SqlServerJobSchedule : IUtf8JsonSerializable, IJsonModel<SqlServerJobSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerJobSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlServerJobSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(ScheduleType))
+            if (ScheduleType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScheduleType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlServerJobSchedule DeserializeSqlServerJobSchedule(JsonElement element)
+        SqlServerJobSchedule IJsonModel<SqlServerJobSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerJobSchedule(document.RootElement, options);
+        }
+
+        internal static SqlServerJobSchedule DeserializeSqlServerJobSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +94,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<SqlServerJobScheduleType> type = default;
             Optional<bool> enabled = default;
             Optional<TimeSpan> interval = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -102,8 +143,50 @@ namespace Azure.ResourceManager.Sql.Models
                     interval = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlServerJobSchedule(Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(type), Optional.ToNullable(enabled), Optional.ToNullable(interval));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlServerJobSchedule(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(type),
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(interval),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlServerJobSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlServerJobSchedule IPersistableModel<SqlServerJobSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlServerJobSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlServerJobSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

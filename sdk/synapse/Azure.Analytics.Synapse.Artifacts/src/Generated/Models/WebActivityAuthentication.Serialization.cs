@@ -20,32 +20,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Pfx))
+            if (Pfx != null)
             {
                 writer.WritePropertyName("pfx"u8);
                 writer.WriteObjectValue(Pfx);
             }
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(Resource))
+            if (Resource != null)
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (Optional.IsDefined(UserTenant))
+            if (UserTenant != null)
             {
                 writer.WritePropertyName("userTenant"u8);
                 writer.WriteObjectValue(UserTenant);
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -128,7 +128,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value);
+            return new WebActivityAuthentication(
+                type,
+                pfx.Value,
+                username.Value,
+                password.Value,
+                resource.Value,
+                userTenant.Value,
+                credential.Value);
         }
 
         internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>

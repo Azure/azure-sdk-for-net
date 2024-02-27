@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -18,7 +18,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="managedIdentityResourceId"/> is null. </exception>
         public OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId)
         {
-            Argument.AssertNotNull(managedIdentityResourceId, nameof(managedIdentityResourceId));
+            if (managedIdentityResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(managedIdentityResourceId));
+            }
 
             Type = OnYourDataAuthenticationType.UserAssignedManagedIdentity;
             ManagedIdentityResourceId = managedIdentityResourceId;
@@ -26,10 +29,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
         /// <param name="type"> The authentication type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedIdentityResourceId"> The resource ID of the user-assigned managed identity to use for authentication. </param>
-        internal OnYourDataUserAssignedManagedIdentityAuthenticationOptions(OnYourDataAuthenticationType type, string managedIdentityResourceId) : base(type)
+        internal OnYourDataUserAssignedManagedIdentityAuthenticationOptions(OnYourDataAuthenticationType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string managedIdentityResourceId) : base(type, serializedAdditionalRawData)
         {
             ManagedIdentityResourceId = managedIdentityResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/> for deserialization. </summary>
+        internal OnYourDataUserAssignedManagedIdentityAuthenticationOptions()
+        {
         }
 
         /// <summary> The resource ID of the user-assigned managed identity to use for authentication. </summary>

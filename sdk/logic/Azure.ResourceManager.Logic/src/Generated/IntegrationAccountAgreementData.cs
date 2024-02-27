@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationAccountAgreementData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="agreementType"> The agreement type. </param>
@@ -30,11 +62,26 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="hostPartner"/>, <paramref name="guestPartner"/>, <paramref name="hostIdentity"/>, <paramref name="guestIdentity"/> or <paramref name="content"/> is null. </exception>
         public IntegrationAccountAgreementData(AzureLocation location, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(location)
         {
-            Argument.AssertNotNull(hostPartner, nameof(hostPartner));
-            Argument.AssertNotNull(guestPartner, nameof(guestPartner));
-            Argument.AssertNotNull(hostIdentity, nameof(hostIdentity));
-            Argument.AssertNotNull(guestIdentity, nameof(guestIdentity));
-            Argument.AssertNotNull(content, nameof(content));
+            if (hostPartner == null)
+            {
+                throw new ArgumentNullException(nameof(hostPartner));
+            }
+            if (guestPartner == null)
+            {
+                throw new ArgumentNullException(nameof(guestPartner));
+            }
+            if (hostIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(hostIdentity));
+            }
+            if (guestIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(guestIdentity));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             AgreementType = agreementType;
             HostPartner = hostPartner;
@@ -60,7 +107,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="hostIdentity"> The business identity of the host partner. </param>
         /// <param name="guestIdentity"> The business identity of the guest partner. </param>
         /// <param name="content"> The agreement content. </param>
-        internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
@@ -71,6 +119,12 @@ namespace Azure.ResourceManager.Logic
             HostIdentity = hostIdentity;
             GuestIdentity = guestIdentity;
             Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementData"/> for deserialization. </summary>
+        internal IntegrationAccountAgreementData()
+        {
         }
 
         /// <summary> The created time. </summary>

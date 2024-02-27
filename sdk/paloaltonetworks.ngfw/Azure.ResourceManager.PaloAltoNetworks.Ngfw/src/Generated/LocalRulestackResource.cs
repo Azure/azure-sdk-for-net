@@ -559,7 +559,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<LocalRulestackResource>> UpdateAsync(LocalRulestackPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackResource.Update");
             scope.Start();
@@ -601,7 +604,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<LocalRulestackResource> Update(LocalRulestackPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackResource.Update");
             scope.Start();
@@ -1031,7 +1037,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<RulestackCountry> GetCountriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListCountriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RulestackCountry.DeserializeRulestackCountry(e), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1062,7 +1068,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<RulestackCountry> GetCountries(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListCountriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RulestackCountry.DeserializeRulestackCountry(e), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1151,7 +1157,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<PredefinedUrlCategory> GetPredefinedUrlCategoriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PredefinedUrlCategory.DeserializePredefinedUrlCategory(e), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1182,7 +1188,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<PredefinedUrlCategory> GetPredefinedUrlCategories(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PredefinedUrlCategory.DeserializePredefinedUrlCategory(e), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1370,8 +1376,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<LocalRulestackResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackResource.AddTag");
             scope.Start();
@@ -1432,8 +1444,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<LocalRulestackResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackResource.AddTag");
             scope.Start();
@@ -1493,7 +1511,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<LocalRulestackResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackResource.SetTags");
             scope.Start();
@@ -1550,7 +1571,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<LocalRulestackResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackResource.SetTags");
             scope.Start();
@@ -1607,7 +1631,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<LocalRulestackResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackResource.RemoveTag");
             scope.Start();
@@ -1667,7 +1694,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<LocalRulestackResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackResource.RemoveTag");
             scope.Start();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxSurge))
+            if (MaxSurge != null)
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
             }
-            if (Optional.IsDefined(DrainTimeoutInMinutes))
+            if (DrainTimeoutInMinutes.HasValue)
             {
                 writer.WritePropertyName("drainTimeoutInMinutes"u8);
                 writer.WriteNumberValue(DrainTimeoutInMinutes.Value);

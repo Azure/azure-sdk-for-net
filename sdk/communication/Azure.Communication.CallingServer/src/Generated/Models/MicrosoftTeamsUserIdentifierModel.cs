@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public MicrosoftTeamsUserIdentifierModel(string userId)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
             UserId = userId;
         }

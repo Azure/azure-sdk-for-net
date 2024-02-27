@@ -5,57 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class EventHubV2OutputDataSource : IUtf8JsonSerializable
+    public partial class EventHubV2OutputDataSource : IUtf8JsonSerializable, IJsonModel<EventHubV2OutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubV2OutputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventHubV2OutputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubV2OutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubV2OutputDataSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceBusNamespace))
+            if (ServiceBusNamespace != null)
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (Optional.IsDefined(SharedAccessPolicyName))
+            if (SharedAccessPolicyName != null)
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
-            if (Optional.IsDefined(SharedAccessPolicyKey))
+            if (SharedAccessPolicyKey != null)
             {
                 writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (Optional.IsDefined(EventHubName))
+            if (EventHubName != null)
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (Optional.IsDefined(PartitionCount))
+            if (PartitionCount.HasValue)
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (PartitionKey != null)
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Optional.IsCollectionDefined(PropertyColumns))
+            if (!(PropertyColumns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyColumns"u8);
                 writer.WriteStartArray();
@@ -66,11 +76,40 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubV2OutputDataSource DeserializeEventHubV2OutputDataSource(JsonElement element)
+        EventHubV2OutputDataSource IJsonModel<EventHubV2OutputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubV2OutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubV2OutputDataSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubV2OutputDataSource(document.RootElement, options);
+        }
+
+        internal static EventHubV2OutputDataSource DeserializeEventHubV2OutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,7 +122,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> eventHubName = default;
             Optional<int> partitionCount = default;
             Optional<string> partitionKey = default;
-            Optional<IList<string>> propertyColumns = default;
+            IList<string> propertyColumns = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -160,8 +201,54 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubV2OutputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), eventHubName.Value, Optional.ToNullable(partitionCount), partitionKey.Value, Optional.ToList(propertyColumns));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubV2OutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                serviceBusNamespace.Value,
+                sharedAccessPolicyName.Value,
+                sharedAccessPolicyKey.Value,
+                Optional.ToNullable(authenticationMode),
+                eventHubName.Value,
+                Optional.ToNullable(partitionCount),
+                partitionKey.Value,
+                propertyColumns ?? new ChangeTrackingList<string>());
         }
+
+        BinaryData IPersistableModel<EventHubV2OutputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubV2OutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventHubV2OutputDataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventHubV2OutputDataSource IPersistableModel<EventHubV2OutputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubV2OutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventHubV2OutputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventHubV2OutputDataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventHubV2OutputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
         public virtual AsyncPageable<KustoSkuDescription> GetKustoEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoSkuDescription.DeserializeKustoSkuDescription, KustoClusterClustersClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetKustoEligibleSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoSkuDescription.DeserializeKustoSkuDescription(e), KustoClusterClustersClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetKustoEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
         public virtual Pageable<KustoSkuDescription> GetKustoEligibleSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoSkuDescription.DeserializeKustoSkuDescription, KustoClusterClustersClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetKustoEligibleSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoSkuDescription.DeserializeKustoSkuDescription(e), KustoClusterClustersClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetKustoEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,10 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoClusterNameAvailabilityAsync(AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = KustoClusterClustersClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.CheckKustoClusterNameAvailability");
             scope.Start();
@@ -235,7 +238,10 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoClusterNameAvailability(AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = KustoClusterClustersClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.CheckKustoClusterNameAvailability");
             scope.Start();
@@ -274,7 +280,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
         public virtual AsyncPageable<KustoSkuDescription> GetSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoSkuDescription.DeserializeKustoSkuDescription, SkusClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoSkuDescription.DeserializeKustoSkuDescription(e), SkusClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +306,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
         public virtual Pageable<KustoSkuDescription> GetSkus(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoSkuDescription.DeserializeKustoSkuDescription, SkusClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoSkuDescription.DeserializeKustoSkuDescription(e), SkusClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetSkus", "value", null, cancellationToken);
         }
     }
 }

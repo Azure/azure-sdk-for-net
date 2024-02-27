@@ -5,43 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class FilteringOperations : IUtf8JsonSerializable
+    public partial class FilteringOperations : IUtf8JsonSerializable, IJsonModel<FilteringOperations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilteringOperations>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FilteringOperations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Deinterlace))
+            if (Deinterlace != null)
             {
                 writer.WritePropertyName("deinterlace"u8);
                 writer.WriteObjectValue(Deinterlace);
             }
-            if (Optional.IsDefined(Rotation))
+            if (Rotation.HasValue)
             {
                 writer.WritePropertyName("rotation"u8);
                 writer.WriteStringValue(Rotation.Value.ToString());
             }
-            if (Optional.IsDefined(Crop))
+            if (Crop != null)
             {
                 writer.WritePropertyName("crop"u8);
                 writer.WriteObjectValue(Crop);
             }
-            if (Optional.IsDefined(FadeIn))
+            if (FadeIn != null)
             {
                 writer.WritePropertyName("fadeIn"u8);
                 writer.WriteObjectValue(FadeIn);
             }
-            if (Optional.IsDefined(FadeOut))
+            if (FadeOut != null)
             {
                 writer.WritePropertyName("fadeOut"u8);
                 writer.WriteObjectValue(FadeOut);
             }
-            if (Optional.IsCollectionDefined(Overlays))
+            if (!(Overlays is ChangeTrackingList<MediaOverlayBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("overlays"u8);
                 writer.WriteStartArray();
@@ -51,11 +61,40 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FilteringOperations DeserializeFilteringOperations(JsonElement element)
+        FilteringOperations IJsonModel<FilteringOperations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFilteringOperations(document.RootElement, options);
+        }
+
+        internal static FilteringOperations DeserializeFilteringOperations(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,7 +104,9 @@ namespace Azure.ResourceManager.Media.Models
             Optional<RectangularWindow> crop = default;
             Optional<FadeOptions> fadeIn = default;
             Optional<FadeOptions> fadeOut = default;
-            Optional<IList<MediaOverlayBase>> overlays = default;
+            IList<MediaOverlayBase> overlays = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deinterlace"u8))
@@ -74,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value);
+                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rotation"u8))
@@ -92,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fadeIn"u8))
@@ -101,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value);
+                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fadeOut"u8))
@@ -110,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value);
+                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("overlays"u8))
@@ -122,13 +163,56 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOverlayBase> array = new List<MediaOverlayBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item));
+                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item, options));
                     }
                     overlays = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, Optional.ToList(overlays));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FilteringOperations(
+                deinterlace.Value,
+                Optional.ToNullable(rotation),
+                crop.Value,
+                fadeIn.Value,
+                fadeOut.Value,
+                overlays ?? new ChangeTrackingList<MediaOverlayBase>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FilteringOperations>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FilteringOperations IPersistableModel<FilteringOperations>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFilteringOperations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FilteringOperations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

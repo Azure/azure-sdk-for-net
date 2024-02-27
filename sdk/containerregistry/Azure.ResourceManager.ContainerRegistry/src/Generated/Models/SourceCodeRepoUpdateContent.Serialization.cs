@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceControlType))
+            if (SourceControlType.HasValue)
             {
                 writer.WritePropertyName("sourceControlType"u8);
                 writer.WriteStringValue(SourceControlType.Value.ToString());
             }
-            if (Optional.IsDefined(RepositoryUri))
+            if (RepositoryUri != null)
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(SourceControlAuthProperties))
+            if (SourceControlAuthProperties != null)
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceControlAuthProperties = SourceCodeRepoAuthInfoUpdateContent.DeserializeSourceCodeRepoAuthInfoUpdateContent(property.Value);
+                    sourceControlAuthProperties = SourceCodeRepoAuthInfoUpdateContent.DeserializeSourceCodeRepoAuthInfoUpdateContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

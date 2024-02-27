@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,21 +14,201 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIotDeviceEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsIotDeviceEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIotDeviceEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIotDeviceEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInsightsIotDeviceEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("additionalData"u8);
+                writer.WriteStartObject();
+                foreach (var item in AdditionalData)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && FriendlyName != null)
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (options.Format != "W" && DeviceId != null)
+            {
+                writer.WritePropertyName("deviceId"u8);
+                writer.WriteStringValue(DeviceId);
+            }
+            if (options.Format != "W" && DeviceName != null)
+            {
+                writer.WritePropertyName("deviceName"u8);
+                writer.WriteStringValue(DeviceName);
+            }
+            if (options.Format != "W" && Source != null)
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
+            if (options.Format != "W" && IotSecurityAgentId.HasValue)
+            {
+                writer.WritePropertyName("iotSecurityAgentId"u8);
+                writer.WriteStringValue(IotSecurityAgentId.Value);
+            }
+            if (options.Format != "W" && DeviceType != null)
+            {
+                writer.WritePropertyName("deviceType"u8);
+                writer.WriteStringValue(DeviceType);
+            }
+            if (options.Format != "W" && Vendor != null)
+            {
+                writer.WritePropertyName("vendor"u8);
+                writer.WriteStringValue(Vendor);
+            }
+            if (options.Format != "W" && EdgeId != null)
+            {
+                writer.WritePropertyName("edgeId"u8);
+                writer.WriteStringValue(EdgeId);
+            }
+            if (options.Format != "W" && MacAddress != null)
+            {
+                writer.WritePropertyName("macAddress"u8);
+                writer.WriteStringValue(MacAddress);
+            }
+            if (options.Format != "W" && Model != null)
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
+            if (options.Format != "W" && SerialNumber != null)
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (options.Format != "W" && FirmwareVersion != null)
+            {
+                writer.WritePropertyName("firmwareVersion"u8);
+                writer.WriteStringValue(FirmwareVersion);
+            }
+            if (options.Format != "W" && OperatingSystem != null)
+            {
+                writer.WritePropertyName("operatingSystem"u8);
+                writer.WriteStringValue(OperatingSystem);
+            }
+            if (options.Format != "W" && IotHubEntityId != null)
+            {
+                writer.WritePropertyName("iotHubEntityId"u8);
+                writer.WriteStringValue(IotHubEntityId);
+            }
+            if (options.Format != "W" && HostEntityId != null)
+            {
+                writer.WritePropertyName("hostEntityId"u8);
+                writer.WriteStringValue(HostEntityId);
+            }
+            if (options.Format != "W" && IPAddressEntityId != null)
+            {
+                writer.WritePropertyName("ipAddressEntityId"u8);
+                writer.WriteStringValue(IPAddressEntityId);
+            }
+            if (options.Format != "W" && !(ThreatIntelligence is ChangeTrackingList<SecurityInsightsThreatIntelligence> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("threatIntelligence"u8);
+                writer.WriteStartArray();
+                foreach (var item in ThreatIntelligence)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(Protocols is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("protocols"u8);
+                writer.WriteStartArray();
+                foreach (var item in Protocols)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsIotDeviceEntity DeserializeSecurityInsightsIotDeviceEntity(JsonElement element)
+        SecurityInsightsIotDeviceEntity IJsonModel<SecurityInsightsIotDeviceEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsIotDeviceEntity(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsIotDeviceEntity DeserializeSecurityInsightsIotDeviceEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,7 +218,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> deviceId = default;
             Optional<string> deviceName = default;
@@ -54,8 +235,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> iotHubEntityId = default;
             Optional<string> hostEntityId = default;
             Optional<string> ipAddressEntityId = default;
-            Optional<IReadOnlyList<SecurityInsightsThreatIntelligence>> threatIntelligence = default;
-            Optional<IReadOnlyList<string>> protocols = default;
+            IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence = default;
+            IReadOnlyList<string> protocols = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -210,7 +393,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsThreatIntelligence> array = new List<SecurityInsightsThreatIntelligence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item));
+                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item, options));
                             }
                             threatIntelligence = array;
                             continue;
@@ -232,8 +415,69 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsIotDeviceEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, deviceId.Value, deviceName.Value, source.Value, Optional.ToNullable(iotSecurityAgentId), deviceType.Value, vendor.Value, edgeId.Value, macAddress.Value, model.Value, serialNumber.Value, firmwareVersion.Value, operatingSystem.Value, iotHubEntityId.Value, hostEntityId.Value, ipAddressEntityId.Value, Optional.ToList(threatIntelligence), Optional.ToList(protocols));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityInsightsIotDeviceEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                deviceId.Value,
+                deviceName.Value,
+                source.Value,
+                Optional.ToNullable(iotSecurityAgentId),
+                deviceType.Value,
+                vendor.Value,
+                edgeId.Value,
+                macAddress.Value,
+                model.Value,
+                serialNumber.Value,
+                firmwareVersion.Value,
+                operatingSystem.Value,
+                iotHubEntityId.Value,
+                hostEntityId.Value,
+                ipAddressEntityId.Value,
+                threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>(),
+                protocols ?? new ChangeTrackingList<string>());
         }
+
+        BinaryData IPersistableModel<SecurityInsightsIotDeviceEntity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsIotDeviceEntity IPersistableModel<SecurityInsightsIotDeviceEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsIotDeviceEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsIotDeviceEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

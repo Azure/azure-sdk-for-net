@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(element);
-                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputError(element);
-                    case "MigrationLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(element);
-                    case "TableLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputTableLevel(element);
+                    case "DatabaseLevelErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(element, options);
+                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputError(element, options);
+                    case "MigrationLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(element, options);
+                    case "TableLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputTableLevel(element, options);
                 }
             }
-            return UnknownMigrateSqlServerSqlDBSyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(element);
+            return UnknownMigrateSqlServerSqlDBSyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutput>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BoostRUs))
+            if (BoostRUs.HasValue)
             {
                 writer.WritePropertyName("boostRUs"u8);
                 writer.WriteNumberValue(BoostRUs.Value);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(Replication))
+            if (Replication.HasValue)
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteStringValue(Replication.Value.ToString());
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
-            if (Optional.IsDefined(Throttling))
+            if (Throttling != null)
             {
                 writer.WritePropertyName("throttling"u8);
                 writer.WriteObjectValue(Throttling);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBDatabaseSettings> dictionary = new Dictionary<string, MongoDBDatabaseSettings>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBDatabaseSettings.DeserializeMongoDBDatabaseSettings(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBDatabaseSettings.DeserializeMongoDBDatabaseSettings(property0.Value, options));
                     }
                     databases = dictionary;
                     continue;
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(property.Value);
+                    source = MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("target"u8))
                 {
-                    target = MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(property.Value);
+                    target = MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("throttling"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    throttling = MongoDBThrottlingSettings.DeserializeMongoDBThrottlingSettings(property.Value);
+                    throttling = MongoDBThrottlingSettings.DeserializeMongoDBThrottlingSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBMigrationSettings(Optional.ToNullable(boostRUs), databases, Optional.ToNullable(replication), source, target, throttling.Value, serializedAdditionalRawData);
+            return new MongoDBMigrationSettings(
+                Optional.ToNullable(boostRUs),
+                databases,
+                Optional.ToNullable(replication),
+                source,
+                target,
+                throttling.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBMigrationSettings>.Write(ModelReaderWriterOptions options)

@@ -5,18 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ClassificationTask : IUtf8JsonSerializable
+    public partial class ClassificationTask : IUtf8JsonSerializable, IJsonModel<ClassificationTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ClassificationTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationTask>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClassificationTask)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(PositiveLabel))
+            if (PositiveLabel != null)
             {
                 if (PositiveLabel != null)
                 {
@@ -28,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("positiveLabel");
                 }
             }
-            if (Optional.IsDefined(PrimaryMetric))
+            if (PrimaryMetric.HasValue)
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(TrainingSettings))
+            if (TrainingSettings != null)
             {
                 if (TrainingSettings != null)
                 {
@@ -45,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(CvSplitColumnNames))
+            if (!(CvSplitColumnNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (CvSplitColumnNames != null)
                 {
@@ -62,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cvSplitColumnNames");
                 }
             }
-            if (Optional.IsDefined(FeaturizationSettings))
+            if (FeaturizationSettings != null)
             {
                 if (FeaturizationSettings != null)
                 {
@@ -74,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (Optional.IsDefined(FixedParameters))
+            if (FixedParameters != null)
             {
                 if (FixedParameters != null)
                 {
@@ -86,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fixedParameters");
                 }
             }
-            if (Optional.IsDefined(LimitSettings))
+            if (LimitSettings != null)
             {
                 if (LimitSettings != null)
                 {
@@ -98,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (Optional.IsDefined(NCrossValidations))
+            if (NCrossValidations != null)
             {
                 if (NCrossValidations != null)
                 {
@@ -110,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nCrossValidations");
                 }
             }
-            if (Optional.IsCollectionDefined(SearchSpace))
+            if (!(SearchSpace is ChangeTrackingList<TableParameterSubspace> collection0 && collection0.IsUndefined))
             {
                 if (SearchSpace != null)
                 {
@@ -127,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("searchSpace");
                 }
             }
-            if (Optional.IsDefined(SweepSettings))
+            if (SweepSettings != null)
             {
                 if (SweepSettings != null)
                 {
@@ -139,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (Optional.IsDefined(TestData))
+            if (TestData != null)
             {
                 if (TestData != null)
                 {
@@ -151,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("testData");
                 }
             }
-            if (Optional.IsDefined(TestDataSize))
+            if (TestDataSize.HasValue)
             {
                 if (TestDataSize != null)
                 {
@@ -163,7 +173,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("testDataSize");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (ValidationData != null)
             {
                 if (ValidationData != null)
                 {
@@ -175,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Optional.IsDefined(ValidationDataSize))
+            if (ValidationDataSize.HasValue)
             {
                 if (ValidationDataSize != null)
                 {
@@ -187,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
-            if (Optional.IsDefined(WeightColumnName))
+            if (WeightColumnName != null)
             {
                 if (WeightColumnName != null)
                 {
@@ -199,12 +209,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightColumnName");
                 }
             }
-            if (Optional.IsDefined(LogVerbosity))
+            if (LogVerbosity.HasValue)
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (TargetColumnName != null)
             {
                 if (TargetColumnName != null)
                 {
@@ -220,11 +230,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
             writer.WriteObjectValue(TrainingData);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClassificationTask DeserializeClassificationTask(JsonElement element)
+        ClassificationTask IJsonModel<ClassificationTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationTask>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClassificationTask)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClassificationTask(document.RootElement, options);
+        }
+
+        internal static ClassificationTask DeserializeClassificationTask(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -232,12 +271,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> positiveLabel = default;
             Optional<ClassificationPrimaryMetric> primaryMetric = default;
             Optional<ClassificationTrainingSettings> trainingSettings = default;
-            Optional<IList<string>> cvSplitColumnNames = default;
+            IList<string> cvSplitColumnNames = default;
             Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<TableFixedParameters> fixedParameters = default;
             Optional<TableVerticalLimitSettings> limitSettings = default;
             Optional<NCrossValidations> nCrossValidations = default;
-            Optional<IList<TableParameterSubspace>> searchSpace = default;
+            IList<TableParameterSubspace> searchSpace = default;
             Optional<TableSweepSettings> sweepSettings = default;
             Optional<MachineLearningTableJobInput> testData = default;
             Optional<double?> testDataSize = default;
@@ -248,6 +287,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("positiveLabel"u8))
@@ -276,7 +317,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         trainingSettings = null;
                         continue;
                     }
-                    trainingSettings = ClassificationTrainingSettings.DeserializeClassificationTrainingSettings(property.Value);
+                    trainingSettings = ClassificationTrainingSettings.DeserializeClassificationTrainingSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cvSplitColumnNames"u8))
@@ -301,7 +342,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value);
+                    featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fixedParameters"u8))
@@ -311,7 +352,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         fixedParameters = null;
                         continue;
                     }
-                    fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value);
+                    fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"u8))
@@ -321,7 +362,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limitSettings = null;
                         continue;
                     }
-                    limitSettings = TableVerticalLimitSettings.DeserializeTableVerticalLimitSettings(property.Value);
+                    limitSettings = TableVerticalLimitSettings.DeserializeTableVerticalLimitSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nCrossValidations"u8))
@@ -331,7 +372,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nCrossValidations = null;
                         continue;
                     }
-                    nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value);
+                    nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchSpace"u8))
@@ -344,7 +385,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<TableParameterSubspace> array = new List<TableParameterSubspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item));
+                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item, options));
                     }
                     searchSpace = array;
                     continue;
@@ -356,7 +397,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sweepSettings = null;
                         continue;
                     }
-                    sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value);
+                    sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("testData"u8))
@@ -366,7 +407,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         testData = null;
                         continue;
                     }
-                    testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("testDataSize"u8))
@@ -386,7 +427,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationDataSize"u8))
@@ -435,11 +476,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClassificationTask(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, positiveLabel.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, nCrossValidations.Value, Optional.ToList(searchSpace), sweepSettings.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClassificationTask(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                positiveLabel.Value,
+                Optional.ToNullable(primaryMetric),
+                trainingSettings.Value,
+                cvSplitColumnNames ?? new ChangeTrackingList<string>(),
+                featurizationSettings.Value,
+                fixedParameters.Value,
+                limitSettings.Value,
+                nCrossValidations.Value,
+                searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
+                sweepSettings.Value,
+                testData.Value,
+                Optional.ToNullable(testDataSize),
+                validationData.Value,
+                Optional.ToNullable(validationDataSize),
+                weightColumnName.Value);
         }
+
+        BinaryData IPersistableModel<ClassificationTask>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationTask>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ClassificationTask)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ClassificationTask IPersistableModel<ClassificationTask>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationTask>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeClassificationTask(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClassificationTask)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClassificationTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

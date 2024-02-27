@@ -6,64 +6,103 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubApnsCredential : IUtf8JsonSerializable
+    public partial class NotificationHubApnsCredential : IUtf8JsonSerializable, IJsonModel<NotificationHubApnsCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubApnsCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NotificationHubApnsCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubApnsCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NotificationHubApnsCredential)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApnsCertificate))
+            if (ApnsCertificate != null)
             {
                 writer.WritePropertyName("apnsCertificate"u8);
                 writer.WriteStringValue(ApnsCertificate);
             }
-            if (Optional.IsDefined(CertificateKey))
+            if (CertificateKey != null)
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Optional.IsDefined(KeyId))
+            if (KeyId != null)
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (Optional.IsDefined(AppName))
+            if (AppName != null)
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (Optional.IsDefined(AppId))
+            if (AppId != null)
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(Token))
+            if (Token != null)
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubApnsCredential DeserializeNotificationHubApnsCredential(JsonElement element)
+        NotificationHubApnsCredential IJsonModel<NotificationHubApnsCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubApnsCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NotificationHubApnsCredential)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubApnsCredential(document.RootElement, options);
+        }
+
+        internal static NotificationHubApnsCredential DeserializeNotificationHubApnsCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +115,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<string> appName = default;
             Optional<string> appId = default;
             Optional<string> token = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -134,8 +175,53 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NotificationHubApnsCredential(apnsCertificate.Value, certificateKey.Value, endpoint.Value, thumbprint.Value, keyId.Value, appName.Value, appId.Value, token.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NotificationHubApnsCredential(
+                apnsCertificate.Value,
+                certificateKey.Value,
+                endpoint.Value,
+                thumbprint.Value,
+                keyId.Value,
+                appName.Value,
+                appId.Value,
+                token.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotificationHubApnsCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubApnsCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubApnsCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NotificationHubApnsCredential IPersistableModel<NotificationHubApnsCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubApnsCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNotificationHubApnsCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubApnsCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NotificationHubApnsCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

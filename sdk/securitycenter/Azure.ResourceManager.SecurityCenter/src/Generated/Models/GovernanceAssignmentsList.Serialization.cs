@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<GovernanceAssignmentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GovernanceAssignmentData>> value = default;
+            IReadOnlyList<GovernanceAssignmentData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<GovernanceAssignmentData> array = new List<GovernanceAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GovernanceAssignmentData.DeserializeGovernanceAssignmentData(item));
+                        array.Add(GovernanceAssignmentData.DeserializeGovernanceAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceAssignmentsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GovernanceAssignmentsList(value ?? new ChangeTrackingList<GovernanceAssignmentData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceAssignmentsList>.Write(ModelReaderWriterOptions options)

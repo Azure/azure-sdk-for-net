@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,17 +15,25 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,14 +44,49 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && ETag.HasValue)
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && CustomerId.HasValue)
+            {
+                writer.WritePropertyName("customerId"u8);
+                writer.WriteStringValue(CustomerId.Value);
+            }
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(RetentionInDays))
+            if (RetentionInDays.HasValue)
             {
                 if (RetentionInDays != null)
                 {
@@ -54,48 +98,97 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("retentionInDays");
                 }
             }
-            if (Optional.IsDefined(WorkspaceCapping))
+            if (WorkspaceCapping != null)
             {
                 writer.WritePropertyName("workspaceCapping"u8);
                 writer.WriteObjectValue(WorkspaceCapping);
             }
-            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
+            if (options.Format != "W" && CreatedOn.HasValue)
+            {
+                writer.WritePropertyName("createdDate"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && ModifiedOn.HasValue)
+            {
+                writer.WritePropertyName("modifiedDate"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
+            }
+            if (PublicNetworkAccessForIngestion.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
                 writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccessForQuery))
+            if (PublicNetworkAccessForQuery.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
                 writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
             }
-            if (Optional.IsDefined(ForceCmkForQuery))
+            if (ForceCmkForQuery.HasValue)
             {
                 writer.WritePropertyName("forceCmkForQuery"u8);
                 writer.WriteBooleanValue(ForceCmkForQuery.Value);
             }
-            if (Optional.IsDefined(Features))
+            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("privateLinkScopedResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateLinkScopedResources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Features != null)
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteObjectValue(Features);
             }
-            if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
+            if (DefaultDataCollectionRuleResourceId != null)
             {
                 writer.WritePropertyName("defaultDataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DefaultDataCollectionRuleResourceId);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsWorkspacePatch DeserializeOperationalInsightsWorkspacePatch(JsonElement element)
+        OperationalInsightsWorkspacePatch IJsonModel<OperationalInsightsWorkspacePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsWorkspacePatch DeserializeOperationalInsightsWorkspacePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -111,9 +204,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
             Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
             Optional<bool> forceCmkForQuery = default;
-            Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
+            IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
             Optional<OperationalInsightsWorkspaceFeatures> features = default;
             Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -205,7 +300,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value);
+                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("retentionInDays"u8))
@@ -224,7 +319,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value);
+                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -281,7 +376,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             List<OperationalInsightsPrivateLinkScopedResourceInfo> array = new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item));
+                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;
@@ -292,7 +387,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value);
+                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultDataCollectionRuleResourceId"u8))
@@ -307,8 +402,65 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsWorkspacePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(customerId),
+                sku.Value,
+                Optional.ToNullable(retentionInDays),
+                workspaceCapping.Value,
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(modifiedDate),
+                Optional.ToNullable(publicNetworkAccessForIngestion),
+                Optional.ToNullable(publicNetworkAccessForQuery),
+                Optional.ToNullable(forceCmkForQuery),
+                privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(),
+                features.Value,
+                defaultDataCollectionRuleResourceId.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsWorkspacePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsWorkspacePatch IPersistableModel<OperationalInsightsWorkspacePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsWorkspacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

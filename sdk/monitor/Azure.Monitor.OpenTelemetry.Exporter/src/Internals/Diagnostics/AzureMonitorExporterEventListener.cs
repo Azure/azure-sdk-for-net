@@ -36,8 +36,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
-            string message = EventSourceEventFormatting.Format(eventData);
-            TelemetryDebugWriter.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
+            if (eventData.EventSource.Name == AzureMonitorExporterEventSource.EventSourceName)
+            {
+                string message = EventSourceEventFormatting.Format(eventData);
+                TelemetryDebugWriter.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
+            }
         }
     }
 }

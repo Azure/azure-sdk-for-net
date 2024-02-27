@@ -353,7 +353,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SyncGroupResource>> UpdateAsync(WaitUntil waitUntil, SyncGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.Update");
             scope.Start();
@@ -399,7 +402,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SyncGroupResource> Update(WaitUntil waitUntil, SyncGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.Update");
             scope.Start();
@@ -529,7 +535,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListHubSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncGroupRestClient.CreateListHubSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetHubSchemas", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(e), _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetHubSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -559,7 +565,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListHubSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncGroupRestClient.CreateListHubSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetHubSchemas", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(e), _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetHubSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -592,12 +598,18 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SyncGroupLogProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncGroupLogProperties> GetLogsAsync(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(startTime, nameof(startTime));
-            Argument.AssertNotNull(endTime, nameof(endTime));
+            if (startTime == null)
+            {
+                throw new ArgumentNullException(nameof(startTime));
+            }
+            if (endTime == null)
+            {
+                throw new ArgumentNullException(nameof(endTime));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncGroupRestClient.CreateListLogsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncGroupLogProperties.DeserializeSyncGroupLogProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SyncGroupLogProperties.DeserializeSyncGroupLogProperties(e), _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -630,12 +642,18 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SyncGroupLogProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncGroupLogProperties> GetLogs(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(startTime, nameof(startTime));
-            Argument.AssertNotNull(endTime, nameof(endTime));
+            if (startTime == null)
+            {
+                throw new ArgumentNullException(nameof(startTime));
+            }
+            if (endTime == null)
+            {
+                throw new ArgumentNullException(nameof(endTime));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncGroupRestClient.CreateListLogsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncGroupLogProperties.DeserializeSyncGroupLogProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SyncGroupLogProperties.DeserializeSyncGroupLogProperties(e), _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,22 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOnlineDeploymentProperties : IUtf8JsonSerializable
+    public partial class MachineLearningOnlineDeploymentProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningOnlineDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOnlineDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningOnlineDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppInsightsEnabled))
+            if (AppInsightsEnabled.HasValue)
             {
                 writer.WritePropertyName("appInsightsEnabled"u8);
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
-            if (Optional.IsDefined(DataCollector))
+            if (DataCollector != null)
             {
                 if (DataCollector != null)
                 {
@@ -32,14 +42,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataCollector");
                 }
             }
-            if (Optional.IsDefined(EgressPublicNetworkAccess))
+            if (EgressPublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("egressPublicNetworkAccess"u8);
                 writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
             }
             writer.WritePropertyName("endpointComputeType"u8);
             writer.WriteStringValue(EndpointComputeType.ToString());
-            if (Optional.IsDefined(InstanceType))
+            if (InstanceType != null)
             {
                 if (InstanceType != null)
                 {
@@ -51,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
-            if (Optional.IsDefined(LivenessProbe))
+            if (LivenessProbe != null)
             {
                 if (LivenessProbe != null)
                 {
@@ -63,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("livenessProbe");
                 }
             }
-            if (Optional.IsDefined(Model))
+            if (Model != null)
             {
                 if (Model != null)
                 {
@@ -75,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("model");
                 }
             }
-            if (Optional.IsDefined(ModelMountPath))
+            if (ModelMountPath != null)
             {
                 if (ModelMountPath != null)
                 {
@@ -87,7 +97,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelMountPath");
                 }
             }
-            if (Optional.IsDefined(ReadinessProbe))
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (ReadinessProbe != null)
             {
                 if (ReadinessProbe != null)
                 {
@@ -99,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readinessProbe");
                 }
             }
-            if (Optional.IsDefined(RequestSettings))
+            if (RequestSettings != null)
             {
                 if (RequestSettings != null)
                 {
@@ -111,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("requestSettings");
                 }
             }
-            if (Optional.IsDefined(ScaleSettings))
+            if (ScaleSettings != null)
             {
                 if (ScaleSettings != null)
                 {
@@ -123,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scaleSettings");
                 }
             }
-            if (Optional.IsDefined(CodeConfiguration))
+            if (CodeConfiguration != null)
             {
                 if (CodeConfiguration != null)
                 {
@@ -135,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("codeConfiguration");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -147,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 if (EnvironmentId != null)
                 {
@@ -159,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentId");
                 }
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -177,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -195,11 +210,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningOnlineDeploymentProperties DeserializeMachineLearningOnlineDeploymentProperties(JsonElement element)
+        MachineLearningOnlineDeploymentProperties IJsonModel<MachineLearningOnlineDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningOnlineDeploymentProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningOnlineDeploymentProperties DeserializeMachineLearningOnlineDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -208,11 +252,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Kubernetes": return MachineLearningKubernetesOnlineDeployment.DeserializeMachineLearningKubernetesOnlineDeployment(element);
-                    case "Managed": return MachineLearningManagedOnlineDeployment.DeserializeMachineLearningManagedOnlineDeployment(element);
+                    case "Kubernetes": return MachineLearningKubernetesOnlineDeployment.DeserializeMachineLearningKubernetesOnlineDeployment(element, options);
+                    case "Managed": return MachineLearningManagedOnlineDeployment.DeserializeMachineLearningManagedOnlineDeployment(element, options);
                 }
             }
-            return UnknownOnlineDeployment.DeserializeUnknownOnlineDeployment(element);
+            return UnknownOnlineDeployment.DeserializeUnknownOnlineDeployment(element, options);
         }
+
+        BinaryData IPersistableModel<MachineLearningOnlineDeploymentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningOnlineDeploymentProperties IPersistableModel<MachineLearningOnlineDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningOnlineDeploymentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningOnlineDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BuildpackId))
+            if (BuildpackId != null)
             {
                 writer.WritePropertyName("buildpackId"u8);
                 writer.WriteStringValue(BuildpackId);

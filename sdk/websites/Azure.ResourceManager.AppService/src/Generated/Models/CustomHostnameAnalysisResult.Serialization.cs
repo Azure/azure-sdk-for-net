@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,19 +15,77 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CustomHostnameAnalysisResult : IUtf8JsonSerializable
+    public partial class CustomHostnameAnalysisResult : IUtf8JsonSerializable, IJsonModel<CustomHostnameAnalysisResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomHostnameAnalysisResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomHostnameAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomHostnameAnalysisResult)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CNameRecords))
+            if (options.Format != "W" && IsHostnameAlreadyVerified.HasValue)
+            {
+                writer.WritePropertyName("isHostnameAlreadyVerified"u8);
+                writer.WriteBooleanValue(IsHostnameAlreadyVerified.Value);
+            }
+            if (options.Format != "W" && CustomDomainVerificationTest.HasValue)
+            {
+                writer.WritePropertyName("customDomainVerificationTest"u8);
+                writer.WriteStringValue(CustomDomainVerificationTest.Value.ToSerialString());
+            }
+            if (options.Format != "W" && CustomDomainVerificationFailureInfo != null)
+            {
+                writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
+                JsonSerializer.Serialize(writer, CustomDomainVerificationFailureInfo);
+            }
+            if (options.Format != "W" && HasConflictOnScaleUnit.HasValue)
+            {
+                writer.WritePropertyName("hasConflictOnScaleUnit"u8);
+                writer.WriteBooleanValue(HasConflictOnScaleUnit.Value);
+            }
+            if (options.Format != "W" && HasConflictAcrossSubscription.HasValue)
+            {
+                writer.WritePropertyName("hasConflictAcrossSubscription"u8);
+                writer.WriteBooleanValue(HasConflictAcrossSubscription.Value);
+            }
+            if (options.Format != "W" && ConflictingAppResourceId != null)
+            {
+                writer.WritePropertyName("conflictingAppResourceId"u8);
+                writer.WriteStringValue(ConflictingAppResourceId);
+            }
+            if (!(CNameRecords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("cNameRecords"u8);
                 writer.WriteStartArray();
@@ -35,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TxtRecords))
+            if (!(TxtRecords is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("txtRecords"u8);
                 writer.WriteStartArray();
@@ -45,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ARecords))
+            if (!(ARecords is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("aRecords"u8);
                 writer.WriteStartArray();
@@ -55,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlternateCNameRecords))
+            if (!(AlternateCNameRecords is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("alternateCNameRecords"u8);
                 writer.WriteStartArray();
@@ -65,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlternateTxtRecords))
+            if (!(AlternateTxtRecords is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("alternateTxtRecords"u8);
                 writer.WriteStartArray();
@@ -76,11 +136,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomHostnameAnalysisResult DeserializeCustomHostnameAnalysisResult(JsonElement element)
+        CustomHostnameAnalysisResult IJsonModel<CustomHostnameAnalysisResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomHostnameAnalysisResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomHostnameAnalysisResult(document.RootElement, options);
+        }
+
+        internal static CustomHostnameAnalysisResult DeserializeCustomHostnameAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,11 +185,13 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> hasConflictOnScaleUnit = default;
             Optional<bool> hasConflictAcrossSubscription = default;
             Optional<string> conflictingAppResourceId = default;
-            Optional<IList<string>> cNameRecords = default;
-            Optional<IList<string>> txtRecords = default;
-            Optional<IList<string>> aRecords = default;
-            Optional<IList<string>> alternateCNameRecords = default;
-            Optional<IList<string>> alternateTxtRecords = default;
+            IList<string> cNameRecords = default;
+            IList<string> txtRecords = default;
+            IList<string> aRecords = default;
+            IList<string> alternateCNameRecords = default;
+            IList<string> alternateTxtRecords = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -264,8 +355,61 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomHostnameAnalysisResult(id, name, type, systemData.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnScaleUnit), Optional.ToNullable(hasConflictAcrossSubscription), conflictingAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomHostnameAnalysisResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isHostnameAlreadyVerified),
+                Optional.ToNullable(customDomainVerificationTest),
+                customDomainVerificationFailureInfo.Value,
+                Optional.ToNullable(hasConflictOnScaleUnit),
+                Optional.ToNullable(hasConflictAcrossSubscription),
+                conflictingAppResourceId.Value,
+                cNameRecords ?? new ChangeTrackingList<string>(),
+                txtRecords ?? new ChangeTrackingList<string>(),
+                aRecords ?? new ChangeTrackingList<string>(),
+                alternateCNameRecords ?? new ChangeTrackingList<string>(),
+                alternateTxtRecords ?? new ChangeTrackingList<string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomHostnameAnalysisResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomHostnameAnalysisResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomHostnameAnalysisResult IPersistableModel<CustomHostnameAnalysisResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomHostnameAnalysisResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomHostnameAnalysisResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomHostnameAnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

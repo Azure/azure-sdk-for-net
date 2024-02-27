@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -18,7 +17,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal InnerError(string code)
         {
-            Argument.AssertNotNull(code, nameof(code));
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
 
             Code = code;
         }

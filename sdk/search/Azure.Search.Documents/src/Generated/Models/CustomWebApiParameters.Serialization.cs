@@ -17,12 +17,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(HttpHeaders))
+            if (!(HttpHeaders is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(HttpMethod))
+            if (HttpMethod != null)
             {
                 writer.WritePropertyName("httpMethod"u8);
                 writer.WriteStringValue(HttpMethod);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (Optional.IsDefined(AuthResourceId))
+            if (AuthResourceId != null)
             {
                 if (AuthResourceId != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("authResourceId");
                 }
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (AuthIdentity != null)
             {
                 if (AuthIdentity != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             Optional<Uri> uri = default;
-            Optional<IDictionary<string, string>> httpHeaders = default;
+            IDictionary<string, string> httpHeaders = default;
             Optional<string> httpMethod = default;
             Optional<TimeSpan> timeout = default;
             Optional<string> authResourceId = default;
@@ -142,7 +142,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomWebApiParameters(uri.Value, Optional.ToDictionary(httpHeaders), httpMethod.Value, Optional.ToNullable(timeout), authResourceId.Value, authIdentity.Value);
+            return new CustomWebApiParameters(
+                uri.Value,
+                httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                httpMethod.Value,
+                Optional.ToNullable(timeout),
+                authResourceId.Value,
+                authIdentity.Value);
         }
     }
 }

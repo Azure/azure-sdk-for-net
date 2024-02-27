@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,82 +14,90 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmRestoreContent : IUtf8JsonSerializable
+    public partial class IaasVmRestoreContent : IUtf8JsonSerializable, IJsonModel<IaasVmRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IaasVmRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmRestoreContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointId))
+            if (RecoveryPointId != null)
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (Optional.IsDefined(RecoveryType))
+            if (RecoveryType.HasValue)
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(TargetVirtualMachineId))
+            if (TargetVirtualMachineId != null)
             {
                 writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
             }
-            if (Optional.IsDefined(TargetResourceGroupId))
+            if (TargetResourceGroupId != null)
             {
                 writer.WritePropertyName("targetResourceGroupId"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
             }
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(VirtualNetworkId))
+            if (VirtualNetworkId != null)
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(TargetDomainNameId))
+            if (TargetDomainNameId != null)
             {
                 writer.WritePropertyName("targetDomainNameId"u8);
                 writer.WriteStringValue(TargetDomainNameId);
             }
-            if (Optional.IsDefined(Region))
+            if (Region.HasValue)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (Optional.IsDefined(AffinityGroup))
+            if (AffinityGroup != null)
             {
                 writer.WritePropertyName("affinityGroup"u8);
                 writer.WriteStringValue(AffinityGroup);
             }
-            if (Optional.IsDefined(DoesCreateNewCloudService))
+            if (DoesCreateNewCloudService.HasValue)
             {
                 writer.WritePropertyName("createNewCloudService"u8);
                 writer.WriteBooleanValue(DoesCreateNewCloudService.Value);
             }
-            if (Optional.IsDefined(OriginalStorageAccountOption))
+            if (OriginalStorageAccountOption.HasValue)
             {
                 writer.WritePropertyName("originalStorageAccountOption"u8);
                 writer.WriteBooleanValue(OriginalStorageAccountOption.Value);
             }
-            if (Optional.IsDefined(EncryptionDetails))
+            if (EncryptionDetails != null)
             {
                 writer.WritePropertyName("encryptionDetails"u8);
                 writer.WriteObjectValue(EncryptionDetails);
             }
-            if (Optional.IsCollectionDefined(RestoreDiskLunList))
+            if (!(RestoreDiskLunList is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreDiskLunList"u8);
                 writer.WriteStartArray();
@@ -97,17 +107,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DoesRestoreWithManagedDisks))
+            if (DoesRestoreWithManagedDisks.HasValue)
             {
                 writer.WritePropertyName("restoreWithManagedDisks"u8);
                 writer.WriteBooleanValue(DoesRestoreWithManagedDisks.Value);
             }
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -117,38 +127,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IdentityInfo))
+            if (IdentityInfo != null)
             {
                 writer.WritePropertyName("identityInfo"u8);
                 writer.WriteObjectValue(IdentityInfo);
             }
-            if (Optional.IsDefined(IdentityBasedRestoreDetails))
+            if (IdentityBasedRestoreDetails != null)
             {
                 writer.WritePropertyName("identityBasedRestoreDetails"u8);
                 writer.WriteObjectValue(IdentityBasedRestoreDetails);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(SecuredVmDetails))
+            if (SecuredVmDetails != null)
             {
                 writer.WritePropertyName("securedVMDetails"u8);
                 writer.WriteObjectValue(SecuredVmDetails);
             }
-            if (Optional.IsDefined(TargetDiskNetworkAccessSettings))
+            if (TargetDiskNetworkAccessSettings != null)
             {
                 writer.WritePropertyName("targetDiskNetworkAccessSettings"u8);
                 writer.WriteObjectValue(TargetDiskNetworkAccessSettings);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmRestoreContent DeserializeIaasVmRestoreContent(JsonElement element)
+        IaasVmRestoreContent IJsonModel<IaasVmRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmRestoreContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmRestoreContent(document.RootElement, options);
+        }
+
+        internal static IaasVmRestoreContent DeserializeIaasVmRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element);
+                    case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element, options);
                 }
             }
             Optional<string> recoveryPointId = default;
@@ -174,16 +213,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> createNewCloudService = default;
             Optional<bool> originalStorageAccountOption = default;
             Optional<VmEncryptionDetails> encryptionDetails = default;
-            Optional<IList<int>> restoreDiskLunList = default;
+            IList<int> restoreDiskLunList = default;
             Optional<bool> restoreWithManagedDisks = default;
             Optional<string> diskEncryptionSetId = default;
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<BackupIdentityInfo> identityInfo = default;
             Optional<IdentityBasedRestoreDetails> identityBasedRestoreDetails = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<SecuredVmDetails> securedVmDetails = default;
             Optional<BackupTargetDiskNetworkAccessSettings> targetDiskNetworkAccessSettings = default;
             string objectType = "IaasVMRestoreRequest";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointId"u8))
@@ -301,7 +342,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    encryptionDetails = VmEncryptionDetails.DeserializeVmEncryptionDetails(property.Value);
+                    encryptionDetails = VmEncryptionDetails.DeserializeVmEncryptionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restoreDiskLunList"u8))
@@ -352,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    identityInfo = BackupIdentityInfo.DeserializeBackupIdentityInfo(property.Value);
+                    identityInfo = BackupIdentityInfo.DeserializeBackupIdentityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identityBasedRestoreDetails"u8))
@@ -361,7 +402,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    identityBasedRestoreDetails = IdentityBasedRestoreDetails.DeserializeIdentityBasedRestoreDetails(property.Value);
+                    identityBasedRestoreDetails = IdentityBasedRestoreDetails.DeserializeIdentityBasedRestoreDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -379,7 +420,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    securedVmDetails = SecuredVmDetails.DeserializeSecuredVmDetails(property.Value);
+                    securedVmDetails = SecuredVmDetails.DeserializeSecuredVmDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDiskNetworkAccessSettings"u8))
@@ -388,7 +429,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetDiskNetworkAccessSettings = BackupTargetDiskNetworkAccessSettings.DeserializeBackupTargetDiskNetworkAccessSettings(property.Value);
+                    targetDiskNetworkAccessSettings = BackupTargetDiskNetworkAccessSettings.DeserializeBackupTargetDiskNetworkAccessSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -396,8 +437,69 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IaasVmRestoreContent(objectType, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, Optional.ToList(restoreDiskLunList), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, Optional.ToList(zones), identityInfo.Value, identityBasedRestoreDetails.Value, extendedLocation, securedVmDetails.Value, targetDiskNetworkAccessSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IaasVmRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointId.Value,
+                Optional.ToNullable(recoveryType),
+                sourceResourceId.Value,
+                targetVirtualMachineId.Value,
+                targetResourceGroupId.Value,
+                storageAccountId.Value,
+                virtualNetworkId.Value,
+                subnetId.Value,
+                targetDomainNameId.Value,
+                Optional.ToNullable(region),
+                affinityGroup.Value,
+                Optional.ToNullable(createNewCloudService),
+                Optional.ToNullable(originalStorageAccountOption),
+                encryptionDetails.Value,
+                restoreDiskLunList ?? new ChangeTrackingList<int>(),
+                Optional.ToNullable(restoreWithManagedDisks),
+                diskEncryptionSetId.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                identityInfo.Value,
+                identityBasedRestoreDetails.Value,
+                extendedLocation,
+                securedVmDetails.Value,
+                targetDiskNetworkAccessSettings.Value);
         }
+
+        BinaryData IPersistableModel<IaasVmRestoreContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmRestoreContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IaasVmRestoreContent IPersistableModel<IaasVmRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIaasVmRestoreContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmRestoreContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IaasVmRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

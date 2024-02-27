@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -20,9 +21,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="RawReferenceInputDataSource"/>. </summary>
         /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="payload"> The JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </param>
         /// <param name="payloadUri"> The SAS URL to a blob containing the JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </param>
-        internal RawReferenceInputDataSource(string referenceInputDataSourceType, BinaryData payload, Uri payloadUri) : base(referenceInputDataSourceType)
+        internal RawReferenceInputDataSource(string referenceInputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData payload, Uri payloadUri) : base(referenceInputDataSourceType, serializedAdditionalRawData)
         {
             Payload = payload;
             PayloadUri = payloadUri;

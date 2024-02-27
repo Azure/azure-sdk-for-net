@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceProviderName))
+            if (options.Format != "W" && ServiceProviderName != null)
             {
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DevPortalUri))
+            if (options.Format != "W" && DevPortalUri != null)
             {
                 writer.WritePropertyName("devPortalUrl"u8);
                 writer.WriteStringValue(DevPortalUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IconUri))
+            if (IconUri != null)
             {
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<BotServiceProviderParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> serviceProviderName = default;
             Optional<Uri> devPortalUrl = default;
             Optional<Uri> iconUrl = default;
-            Optional<IReadOnlyList<BotServiceProviderParameter>> parameters = default;
+            IReadOnlyList<BotServiceProviderParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotServiceProviderParameter> array = new List<BotServiceProviderParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServiceProviderParameter.DeserializeBotServiceProviderParameter(item));
+                        array.Add(BotServiceProviderParameter.DeserializeBotServiceProviderParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceProviderProperties(id.Value, displayName.Value, serviceProviderName.Value, devPortalUrl.Value, iconUrl.Value, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new BotServiceProviderProperties(
+                id.Value,
+                displayName.Value,
+                serviceProviderName.Value,
+                devPortalUrl.Value,
+                iconUrl.Value,
+                parameters ?? new ChangeTrackingList<BotServiceProviderParameter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceProviderProperties>.Write(ModelReaderWriterOptions options)

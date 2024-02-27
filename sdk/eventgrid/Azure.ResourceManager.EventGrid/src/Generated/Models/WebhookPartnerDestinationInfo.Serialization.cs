@@ -6,40 +6,49 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class WebhookPartnerDestinationInfo : IUtf8JsonSerializable
+    public partial class WebhookPartnerDestinationInfo : IUtf8JsonSerializable, IJsonModel<WebhookPartnerDestinationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebhookPartnerDestinationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebhookPartnerDestinationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebhookPartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebhookPartnerDestinationInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSubscriptionId))
+            if (AzureSubscriptionId != null)
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(EndpointServiceContext))
+            if (EndpointServiceContext != null)
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
+            if (!(ResourceMoveChangeHistory is ChangeTrackingList<ResourceMoveChangeHistory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceMoveChangeHistory"u8);
                 writer.WriteStartArray();
@@ -51,27 +60,56 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointUri))
+            if (EndpointUri != null)
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(EndpointBaseUri))
+            if (EndpointBaseUri != null)
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ClientAuthentication))
+            if (ClientAuthentication != null)
             {
                 writer.WritePropertyName("clientAuthentication"u8);
                 writer.WriteObjectValue(ClientAuthentication);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebhookPartnerDestinationInfo DeserializeWebhookPartnerDestinationInfo(JsonElement element)
+        WebhookPartnerDestinationInfo IJsonModel<WebhookPartnerDestinationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebhookPartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebhookPartnerDestinationInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebhookPartnerDestinationInfo(document.RootElement, options);
+        }
+
+        internal static WebhookPartnerDestinationInfo DeserializeWebhookPartnerDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -81,10 +119,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> name = default;
             PartnerEndpointType endpointType = default;
             Optional<string> endpointServiceContext = default;
-            Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
+            IList<ResourceMoveChangeHistory> resourceMoveChangeHistory = default;
             Optional<Uri> endpointUri = default;
             Optional<Uri> endpointBaseUri = default;
             Optional<PartnerClientAuthentication> clientAuthentication = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureSubscriptionId"u8))
@@ -121,7 +161,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<ResourceMoveChangeHistory> array = new List<ResourceMoveChangeHistory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item));
+                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item, options));
                     }
                     resourceMoveChangeHistory = array;
                     continue;
@@ -159,14 +199,60 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value);
+                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebhookPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Optional.ToList(resourceMoveChangeHistory), endpointUri.Value, endpointBaseUri.Value, clientAuthentication.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebhookPartnerDestinationInfo(
+                azureSubscriptionId.Value,
+                resourceGroupName.Value,
+                name.Value,
+                endpointType,
+                endpointServiceContext.Value,
+                resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(),
+                serializedAdditionalRawData,
+                endpointUri.Value,
+                endpointBaseUri.Value,
+                clientAuthentication.Value);
         }
+
+        BinaryData IPersistableModel<WebhookPartnerDestinationInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebhookPartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebhookPartnerDestinationInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebhookPartnerDestinationInfo IPersistableModel<WebhookPartnerDestinationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebhookPartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebhookPartnerDestinationInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebhookPartnerDestinationInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebhookPartnerDestinationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

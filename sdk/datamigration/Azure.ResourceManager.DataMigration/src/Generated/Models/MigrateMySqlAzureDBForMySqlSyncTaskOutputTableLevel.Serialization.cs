@@ -26,72 +26,72 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TableName))
+            if (options.Format != "W" && TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CdcInsertCounter))
+            if (options.Format != "W" && CdcInsertCounter != null)
             {
                 writer.WritePropertyName("cdcInsertCounter"u8);
                 writer.WriteStringValue(CdcInsertCounter);
             }
-            if (options.Format != "W" && Optional.IsDefined(CdcUpdateCounter))
+            if (options.Format != "W" && CdcUpdateCounter != null)
             {
                 writer.WritePropertyName("cdcUpdateCounter"u8);
                 writer.WriteStringValue(CdcUpdateCounter);
             }
-            if (options.Format != "W" && Optional.IsDefined(CdcDeleteCounter))
+            if (options.Format != "W" && CdcDeleteCounter != null)
             {
                 writer.WritePropertyName("cdcDeleteCounter"u8);
                 writer.WriteStringValue(CdcDeleteCounter);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadEstFinishOn))
+            if (options.Format != "W" && FullLoadEstFinishOn.HasValue)
             {
                 writer.WritePropertyName("fullLoadEstFinishTime"u8);
                 writer.WriteStringValue(FullLoadEstFinishOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadStartedOn))
+            if (options.Format != "W" && FullLoadStartedOn.HasValue)
             {
                 writer.WritePropertyName("fullLoadStartedOn"u8);
                 writer.WriteStringValue(FullLoadStartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadEndedOn))
+            if (options.Format != "W" && FullLoadEndedOn.HasValue)
             {
                 writer.WritePropertyName("fullLoadEndedOn"u8);
                 writer.WriteStringValue(FullLoadEndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadTotalRows))
+            if (options.Format != "W" && FullLoadTotalRows.HasValue)
             {
                 writer.WritePropertyName("fullLoadTotalRows"u8);
                 writer.WriteNumberValue(FullLoadTotalRows.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalChangesApplied))
+            if (options.Format != "W" && TotalChangesApplied.HasValue)
             {
                 writer.WritePropertyName("totalChangesApplied"u8);
                 writer.WriteNumberValue(TotalChangesApplied.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataErrorsCounter))
+            if (options.Format != "W" && DataErrorsCounter.HasValue)
             {
                 writer.WritePropertyName("dataErrorsCounter"u8);
                 writer.WriteNumberValue(DataErrorsCounter.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, tableName.Value, databaseName.Value, cdcInsertCounter.Value, cdcUpdateCounter.Value, cdcDeleteCounter.Value, Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
+            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                tableName.Value,
+                databaseName.Value,
+                cdcInsertCounter.Value,
+                cdcUpdateCounter.Value,
+                cdcDeleteCounter.Value,
+                Optional.ToNullable(fullLoadEstFinishTime),
+                Optional.ToNullable(fullLoadStartedOn),
+                Optional.ToNullable(fullLoadEndedOn),
+                Optional.ToNullable(fullLoadTotalRows),
+                Optional.ToNullable(state),
+                Optional.ToNullable(totalChangesApplied),
+                Optional.ToNullable(dataErrorsCounter),
+                Optional.ToNullable(lastModifiedTime));
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

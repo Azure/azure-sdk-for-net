@@ -6,18 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceProviderManagement : IUtf8JsonSerializable
+    public partial class ResourceProviderManagement : IUtf8JsonSerializable, IJsonModel<ResourceProviderManagement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderManagement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceProviderManagement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderManagement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceProviderManagement)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SchemaOwners))
+            if (!(SchemaOwners is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("schemaOwners"u8);
                 writer.WriteStartArray();
@@ -27,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManifestOwners))
+            if (!(ManifestOwners is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("manifestOwners"u8);
                 writer.WriteStartArray();
@@ -37,22 +46,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IncidentRoutingService))
+            if (IncidentRoutingService != null)
             {
                 writer.WritePropertyName("incidentRoutingService"u8);
                 writer.WriteStringValue(IncidentRoutingService);
             }
-            if (Optional.IsDefined(IncidentRoutingTeam))
+            if (IncidentRoutingTeam != null)
             {
                 writer.WritePropertyName("incidentRoutingTeam"u8);
                 writer.WriteStringValue(IncidentRoutingTeam);
             }
-            if (Optional.IsDefined(IncidentContactEmail))
+            if (IncidentContactEmail != null)
             {
                 writer.WritePropertyName("incidentContactEmail"u8);
                 writer.WriteStringValue(IncidentContactEmail);
             }
-            if (Optional.IsCollectionDefined(ServiceTreeInfos))
+            if (!(ServiceTreeInfos is ChangeTrackingList<ServiceTreeInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
@@ -62,12 +71,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResourceAccessPolicy))
+            if (ResourceAccessPolicy.HasValue)
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
                 writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(ResourceAccessRoles))
+            if (!(ResourceAccessRoles is ChangeTrackingList<BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("resourceAccessRoles"u8);
                 writer.WriteStartArray();
@@ -89,23 +98,54 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceProviderManagement DeserializeResourceProviderManagement(JsonElement element)
+        ResourceProviderManagement IJsonModel<ResourceProviderManagement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderManagement>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceProviderManagement)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceProviderManagement(document.RootElement, options);
+        }
+
+        internal static ResourceProviderManagement DeserializeResourceProviderManagement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> schemaOwners = default;
-            Optional<IList<string>> manifestOwners = default;
+            IList<string> schemaOwners = default;
+            IList<string> manifestOwners = default;
             Optional<string> incidentRoutingService = default;
             Optional<string> incidentRoutingTeam = default;
             Optional<string> incidentContactEmail = default;
-            Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
+            IList<ServiceTreeInfo> serviceTreeInfos = default;
             Optional<ResourceAccessPolicy> resourceAccessPolicy = default;
-            Optional<IList<BinaryData>> resourceAccessRoles = default;
+            IList<BinaryData> resourceAccessRoles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaOwners"u8))
@@ -160,7 +200,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item));
+                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
                     }
                     serviceTreeInfos = array;
                     continue;
@@ -195,8 +235,53 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceAccessRoles = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceProviderManagement(Optional.ToList(schemaOwners), Optional.ToList(manifestOwners), incidentRoutingService.Value, incidentRoutingTeam.Value, incidentContactEmail.Value, Optional.ToList(serviceTreeInfos), Optional.ToNullable(resourceAccessPolicy), Optional.ToList(resourceAccessRoles));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceProviderManagement(
+                schemaOwners ?? new ChangeTrackingList<string>(),
+                manifestOwners ?? new ChangeTrackingList<string>(),
+                incidentRoutingService.Value,
+                incidentRoutingTeam.Value,
+                incidentContactEmail.Value,
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                Optional.ToNullable(resourceAccessPolicy),
+                resourceAccessRoles ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceProviderManagement>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderManagement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceProviderManagement)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ResourceProviderManagement IPersistableModel<ResourceProviderManagement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderManagement>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceProviderManagement(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceProviderManagement)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceProviderManagement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

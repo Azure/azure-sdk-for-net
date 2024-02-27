@@ -5,71 +5,111 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class NetworkSecurityGroupSecurityRule : IUtf8JsonSerializable
+    public partial class NetworkSecurityGroupSecurityRule : IUtf8JsonSerializable, IJsonModel<NetworkSecurityGroupSecurityRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityGroupSecurityRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkSecurityGroupSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Access))
+            if (Access != null)
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DestinationAddressPrefix))
+            if (DestinationAddressPrefix != null)
             {
                 writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
-            if (Optional.IsDefined(DestinationPortRange))
+            if (DestinationPortRange != null)
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
-            if (Optional.IsDefined(Direction))
+            if (Direction != null)
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol != null)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (Optional.IsDefined(SourceAddressPrefix))
+            if (SourceAddressPrefix != null)
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (Optional.IsDefined(SourcePortRange))
+            if (SourcePortRange != null)
             {
                 writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkSecurityGroupSecurityRule DeserializeNetworkSecurityGroupSecurityRule(JsonElement element)
+        NetworkSecurityGroupSecurityRule IJsonModel<NetworkSecurityGroupSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkSecurityGroupSecurityRule(document.RootElement, options);
+        }
+
+        internal static NetworkSecurityGroupSecurityRule DeserializeNetworkSecurityGroupSecurityRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +124,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<string> protocol = default;
             Optional<string> sourceAddressPrefix = default;
             Optional<string> sourcePortRange = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -140,8 +182,55 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     sourcePortRange = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkSecurityGroupSecurityRule(name.Value, access.Value, description.Value, destinationAddressPrefix.Value, destinationPortRange.Value, direction.Value, Optional.ToNullable(priority), protocol.Value, sourceAddressPrefix.Value, sourcePortRange.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkSecurityGroupSecurityRule(
+                name.Value,
+                access.Value,
+                description.Value,
+                destinationAddressPrefix.Value,
+                destinationPortRange.Value,
+                direction.Value,
+                Optional.ToNullable(priority),
+                protocol.Value,
+                sourceAddressPrefix.Value,
+                sourcePortRange.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkSecurityGroupSecurityRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkSecurityGroupSecurityRule IPersistableModel<NetworkSecurityGroupSecurityRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkSecurityGroupSecurityRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkSecurityGroupSecurityRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

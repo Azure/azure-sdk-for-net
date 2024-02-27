@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -56,11 +55,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="destinationType"/>, <paramref name="destinations"/>, <paramref name="nextHopType"/> or <paramref name="nextHop"/> is null. </exception>
         public HubRoute(string name, string destinationType, IEnumerable<string> destinations, string nextHopType, string nextHop)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(destinationType, nameof(destinationType));
-            Argument.AssertNotNull(destinations, nameof(destinations));
-            Argument.AssertNotNull(nextHopType, nameof(nextHopType));
-            Argument.AssertNotNull(nextHop, nameof(nextHop));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (destinationType == null)
+            {
+                throw new ArgumentNullException(nameof(destinationType));
+            }
+            if (destinations == null)
+            {
+                throw new ArgumentNullException(nameof(destinations));
+            }
+            if (nextHopType == null)
+            {
+                throw new ArgumentNullException(nameof(nextHopType));
+            }
+            if (nextHop == null)
+            {
+                throw new ArgumentNullException(nameof(nextHop));
+            }
 
             Name = name;
             DestinationType = destinationType;

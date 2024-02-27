@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ExtensionType);
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (TypeHandlerVersion != null)
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (AutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (EnableAutomaticUpgrade.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ProtectedSettings))
+            if (ProtectedSettings != null)
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
+            if (!(ProvisionAfterExtensions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("provisionAfterExtensions"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<bool> enableAutomaticUpgrade = default;
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
-            Optional<IList<string>> provisionAfterExtensions = default;
+            IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,17 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmExtension(name, publisher, type, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToList(provisionAfterExtensions), serializedAdditionalRawData);
+            return new BatchVmExtension(
+                name,
+                publisher,
+                type,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                Optional.ToNullable(enableAutomaticUpgrade),
+                settings.Value,
+                protectedSettings.Value,
+                provisionAfterExtensions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmExtension>.Write(ModelReaderWriterOptions options)

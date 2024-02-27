@@ -6,59 +6,98 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubDestination : IUtf8JsonSerializable
+    public partial class EventHubDestination : IUtf8JsonSerializable, IJsonModel<EventHubDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventHubDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (StorageAccountResourceId != null)
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(BlobContainer))
+            if (BlobContainer != null)
             {
                 writer.WritePropertyName("blobContainer"u8);
                 writer.WriteStringValue(BlobContainer);
             }
-            if (Optional.IsDefined(ArchiveNameFormat))
+            if (ArchiveNameFormat != null)
             {
                 writer.WritePropertyName("archiveNameFormat"u8);
                 writer.WriteStringValue(ArchiveNameFormat);
             }
-            if (Optional.IsDefined(DataLakeSubscriptionId))
+            if (DataLakeSubscriptionId.HasValue)
             {
                 writer.WritePropertyName("dataLakeSubscriptionId"u8);
                 writer.WriteStringValue(DataLakeSubscriptionId.Value);
             }
-            if (Optional.IsDefined(DataLakeAccountName))
+            if (DataLakeAccountName != null)
             {
                 writer.WritePropertyName("dataLakeAccountName"u8);
                 writer.WriteStringValue(DataLakeAccountName);
             }
-            if (Optional.IsDefined(DataLakeFolderPath))
+            if (DataLakeFolderPath != null)
             {
                 writer.WritePropertyName("dataLakeFolderPath"u8);
                 writer.WriteStringValue(DataLakeFolderPath);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubDestination DeserializeEventHubDestination(JsonElement element)
+        EventHubDestination IJsonModel<EventHubDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubDestination(document.RootElement, options);
+        }
+
+        internal static EventHubDestination DeserializeEventHubDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +109,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<Guid> dataLakeSubscriptionId = default;
             Optional<string> dataLakeAccountName = default;
             Optional<string> dataLakeFolderPath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -127,8 +168,52 @@ namespace Azure.ResourceManager.EventHubs.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubDestination(
+                name.Value,
+                storageAccountResourceId.Value,
+                blobContainer.Value,
+                archiveNameFormat.Value,
+                Optional.ToNullable(dataLakeSubscriptionId),
+                dataLakeAccountName.Value,
+                dataLakeFolderPath.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventHubDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventHubDestination IPersistableModel<EventHubDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventHubDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventHubDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

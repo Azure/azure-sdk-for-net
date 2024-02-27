@@ -5,16 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class LongestIdleMode
+    public partial class LongestIdleMode : IUtf8JsonSerializable, IJsonModel<LongestIdleMode>
     {
-        internal static LongestIdleMode DeserializeLongestIdleMode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongestIdleMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LongestIdleMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LongestIdleMode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LongestIdleMode)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("minConcurrentOffers"u8);
+            writer.WriteNumberValue(MinConcurrentOffers);
+            writer.WritePropertyName("maxConcurrentOffers"u8);
+            writer.WriteNumberValue(MaxConcurrentOffers);
+            if (BypassSelectors.HasValue)
+            {
+                writer.WritePropertyName("bypassSelectors"u8);
+                writer.WriteBooleanValue(BypassSelectors.Value);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LongestIdleMode IJsonModel<LongestIdleMode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LongestIdleMode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LongestIdleMode)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLongestIdleMode(document.RootElement, options);
+        }
+
+        internal static LongestIdleMode DeserializeLongestIdleMode(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +80,8 @@ namespace Azure.Communication.JobRouter
             Optional<int> maxConcurrentOffers = default;
             Optional<bool> bypassSelectors = default;
             DistributionModeKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minConcurrentOffers"u8))
@@ -57,9 +116,45 @@ namespace Azure.Communication.JobRouter
                     kind = new DistributionModeKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LongestIdleMode(minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), kind);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LongestIdleMode(minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), kind, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LongestIdleMode>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LongestIdleMode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LongestIdleMode)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LongestIdleMode IPersistableModel<LongestIdleMode>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LongestIdleMode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLongestIdleMode(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LongestIdleMode)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LongestIdleMode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -67,6 +162,14 @@ namespace Azure.Communication.JobRouter
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeLongestIdleMode(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

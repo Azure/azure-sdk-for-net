@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,44 +40,44 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoStorage))
+            if (AutoStorage != null)
             {
                 writer.WritePropertyName("autoStorage"u8);
                 writer.WriteObjectValue(AutoStorage);
             }
-            if (Optional.IsDefined(PoolAllocationMode))
+            if (PoolAllocationMode.HasValue)
             {
                 writer.WritePropertyName("poolAllocationMode"u8);
                 writer.WriteStringValue(PoolAllocationMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(KeyVaultReference))
+            if (KeyVaultReference != null)
             {
                 writer.WritePropertyName("keyVaultReference"u8);
                 writer.WriteObjectValue(KeyVaultReference);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
+            if (!(AllowedAuthenticationModes is ChangeTrackingList<BatchAuthenticationMode> collection0 && collection0.IsUndefined))
             {
                 if (AllowedAuthenticationModes != null)
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<BatchAccountAutoStorageBaseConfiguration> autoStorage = default;
             Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchPublicNetworkAccess> publicNetworkAccess = default;
             Optional<BatchNetworkProfile> networkProfile = default;
             Optional<BatchAccountEncryptionConfiguration> encryption = default;
-            Optional<IList<BatchAuthenticationMode>> allowedAuthenticationModes = default;
+            IList<BatchAuthenticationMode> allowedAuthenticationModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            autoStorage = BatchAccountAutoStorageBaseConfiguration.DeserializeBatchAccountAutoStorageBaseConfiguration(property0.Value);
+                            autoStorage = BatchAccountAutoStorageBaseConfiguration.DeserializeBatchAccountAutoStorageBaseConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("poolAllocationMode"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            keyVaultReference = BatchKeyVaultReference.DeserializeBatchKeyVaultReference(property0.Value);
+                            keyVaultReference = BatchKeyVaultReference.DeserializeBatchKeyVaultReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value);
+                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value);
+                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowedAuthenticationModes"u8))
@@ -262,7 +262,18 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountCreateOrUpdateContent(location, Optional.ToDictionary(tags), identity, autoStorage.Value, Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, encryption.Value, Optional.ToList(allowedAuthenticationModes), serializedAdditionalRawData);
+            return new BatchAccountCreateOrUpdateContent(
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                autoStorage.Value,
+                Optional.ToNullable(poolAllocationMode),
+                keyVaultReference.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                networkProfile.Value,
+                encryption.Value,
+                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

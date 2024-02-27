@@ -5,18 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusCorrelationFilter : IUtf8JsonSerializable
+    public partial class ServiceBusCorrelationFilter : IUtf8JsonSerializable, IJsonModel<ServiceBusCorrelationFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusCorrelationFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceBusCorrelationFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApplicationProperties))
+            if (!(ApplicationProperties is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -32,61 +42,90 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(CorrelationId))
+            if (CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Optional.IsDefined(MessageId))
+            if (MessageId != null)
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(SendTo))
+            if (SendTo != null)
             {
                 writer.WritePropertyName("to"u8);
                 writer.WriteStringValue(SendTo);
             }
-            if (Optional.IsDefined(ReplyTo))
+            if (ReplyTo != null)
             {
                 writer.WritePropertyName("replyTo"u8);
                 writer.WriteStringValue(ReplyTo);
             }
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsDefined(SessionId))
+            if (SessionId != null)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(ReplyToSessionId))
+            if (ReplyToSessionId != null)
             {
                 writer.WritePropertyName("replyToSessionId"u8);
                 writer.WriteStringValue(ReplyToSessionId);
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(RequiresPreprocessing))
+            if (RequiresPreprocessing.HasValue)
             {
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusCorrelationFilter DeserializeServiceBusCorrelationFilter(JsonElement element)
+        ServiceBusCorrelationFilter IJsonModel<ServiceBusCorrelationFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceBusCorrelationFilter(document.RootElement, options);
+        }
+
+        internal static ServiceBusCorrelationFilter DeserializeServiceBusCorrelationFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, object>> properties = default;
+            IDictionary<string, object> properties = default;
             Optional<string> correlationId = default;
             Optional<string> messageId = default;
             Optional<string> to = default;
@@ -96,6 +135,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<string> replyToSessionId = default;
             Optional<string> contentType = default;
             Optional<bool> requiresPreprocessing = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -168,8 +209,55 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     requiresPreprocessing = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceBusCorrelationFilter(Optional.ToDictionary(properties), correlationId.Value, messageId.Value, to.Value, replyTo.Value, label.Value, sessionId.Value, replyToSessionId.Value, contentType.Value, Optional.ToNullable(requiresPreprocessing));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceBusCorrelationFilter(
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                correlationId.Value,
+                messageId.Value,
+                to.Value,
+                replyTo.Value,
+                label.Value,
+                sessionId.Value,
+                replyToSessionId.Value,
+                contentType.Value,
+                Optional.ToNullable(requiresPreprocessing),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceBusCorrelationFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServiceBusCorrelationFilter IPersistableModel<ServiceBusCorrelationFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceBusCorrelationFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceBusCorrelationFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

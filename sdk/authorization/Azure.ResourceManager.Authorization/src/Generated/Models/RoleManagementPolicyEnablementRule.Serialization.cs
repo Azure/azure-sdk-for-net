@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EnablementRules))
+            if (!(EnablementRules is ChangeTrackingList<RoleAssignmentEnablementRuleType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("enabledRules"u8);
                 writer.WriteStartArray();
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
+            IList<RoleAssignmentEnablementRuleType> enabledRules = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyEnablementRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToList(enabledRules));
+            return new RoleManagementPolicyEnablementRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, enabledRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>());
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyEnablementRule>.Write(ModelReaderWriterOptions options)

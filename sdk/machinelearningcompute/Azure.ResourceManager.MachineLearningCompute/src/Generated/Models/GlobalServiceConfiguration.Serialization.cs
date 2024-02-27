@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,27 +14,35 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class GlobalServiceConfiguration : IUtf8JsonSerializable
+    public partial class GlobalServiceConfiguration : IUtf8JsonSerializable, IJsonModel<GlobalServiceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalServiceConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GlobalServiceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GlobalServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Ssl))
+            if (Ssl != null)
             {
                 writer.WritePropertyName("ssl"u8);
                 writer.WriteObjectValue(Ssl);
             }
-            if (Optional.IsDefined(ServiceAuth))
+            if (ServiceAuth != null)
             {
                 writer.WritePropertyName("serviceAuth"u8);
                 writer.WriteObjectValue(ServiceAuth);
             }
-            if (Optional.IsDefined(AutoScale))
+            if (AutoScale != null)
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
@@ -53,8 +62,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteEndObject();
         }
 
-        internal static GlobalServiceConfiguration DeserializeGlobalServiceConfiguration(JsonElement element)
+        GlobalServiceConfiguration IJsonModel<GlobalServiceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GlobalServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGlobalServiceConfiguration(document.RootElement, options);
+        }
+
+        internal static GlobalServiceConfiguration DeserializeGlobalServiceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    ssl = SslConfiguration.DeserializeSslConfiguration(property.Value);
+                    ssl = SslConfiguration.DeserializeSslConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceAuth"u8))
@@ -91,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value);
+                    serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoScale"u8))
@@ -100,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    autoScale = AutoScaleConfiguration.DeserializeAutoScaleConfiguration(property.Value);
+                    autoScale = AutoScaleConfiguration.DeserializeAutoScaleConfiguration(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -108,5 +131,36 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             additionalProperties = additionalPropertiesDictionary;
             return new GlobalServiceConfiguration(Optional.ToNullable(etag), ssl.Value, serviceAuth.Value, autoScale.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<GlobalServiceConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GlobalServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GlobalServiceConfiguration IPersistableModel<GlobalServiceConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GlobalServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGlobalServiceConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GlobalServiceConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GlobalServiceConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

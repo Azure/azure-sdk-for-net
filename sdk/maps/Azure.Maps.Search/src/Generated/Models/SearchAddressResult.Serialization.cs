@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
                 return null;
             }
             Optional<SearchSummary> summary = default;
-            Optional<IReadOnlyList<SearchAddressResultItem>> results = default;
+            IReadOnlyList<SearchAddressResultItem> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchAddressResult(summary.Value, Optional.ToList(results));
+            return new SearchAddressResult(summary.Value, results ?? new ChangeTrackingList<SearchAddressResultItem>());
         }
     }
 }

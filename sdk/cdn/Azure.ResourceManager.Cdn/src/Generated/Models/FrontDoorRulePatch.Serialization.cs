@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RuleSetName))
+            if (options.Format != "W" && RuleSetName != null)
             {
                 writer.WritePropertyName("ruleSetName"u8);
                 writer.WriteStringValue(RuleSetName);
             }
-            if (Optional.IsDefined(Order))
+            if (Order.HasValue)
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsCollectionDefined(Conditions))
+            if (!(Conditions is ChangeTrackingList<DeliveryRuleCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<DeliveryRuleAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MatchProcessingBehavior))
+            if (MatchProcessingBehavior.HasValue)
             {
                 writer.WritePropertyName("matchProcessingBehavior"u8);
                 writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             Optional<string> ruleSetName = default;
             Optional<int> order = default;
-            Optional<IList<DeliveryRuleCondition>> conditions = default;
-            Optional<IList<DeliveryRuleAction>> actions = default;
+            IList<DeliveryRuleCondition> conditions = default;
+            IList<DeliveryRuleAction> actions = default;
             Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<DeliveryRuleCondition> array = new List<DeliveryRuleCondition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item));
+                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item, options));
                             }
                             conditions = array;
                             continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<DeliveryRuleAction> array = new List<DeliveryRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item));
+                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item, options));
                             }
                             actions = array;
                             continue;
@@ -180,7 +180,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRulePatch(ruleSetName.Value, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new FrontDoorRulePatch(
+                ruleSetName.Value,
+                Optional.ToNullable(order),
+                conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
+                actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
+                Optional.ToNullable(matchProcessingBehavior),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRulePatch>.Write(ModelReaderWriterOptions options)

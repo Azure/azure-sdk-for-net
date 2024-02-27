@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public BatchNameAvailabilityContent(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             ResourceType = "Microsoft.Batch/batchAccounts";

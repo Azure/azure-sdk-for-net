@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleManagementPolicyAssignmentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicyAssignment";
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicyAssignments";
 
         /// <summary> Initializes a new instance of the <see cref="RoleManagementPolicyAssignmentResource"/> class for mocking. </summary>
         protected RoleManagementPolicyAssignmentResource()
@@ -195,7 +195,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RoleManagementPolicyAssignmentResource>> UpdateAsync(WaitUntil waitUntil, RoleManagementPolicyAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _roleManagementPolicyAssignmentClientDiagnostics.CreateScope("RoleManagementPolicyAssignmentResource.Update");
             scope.Start();
@@ -241,7 +244,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RoleManagementPolicyAssignmentResource> Update(WaitUntil waitUntil, RoleManagementPolicyAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _roleManagementPolicyAssignmentClientDiagnostics.CreateScope("RoleManagementPolicyAssignmentResource.Update");
             scope.Start();

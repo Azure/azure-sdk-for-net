@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<string> ename = default;
             Optional<string> evalue = default;
-            Optional<IReadOnlyList<string>> traceback = default;
+            IReadOnlyList<string> traceback = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ename"u8))
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookError(ename.Value, evalue.Value, Optional.ToList(traceback));
+            return new RunNotebookError(ename.Value, evalue.Value, traceback ?? new ChangeTrackingList<string>());
         }
 
         internal partial class RunNotebookErrorConverter : JsonConverter<RunNotebookError>

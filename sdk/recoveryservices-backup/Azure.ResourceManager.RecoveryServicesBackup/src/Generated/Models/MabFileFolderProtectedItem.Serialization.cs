@@ -6,110 +6,129 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabFileFolderProtectedItem : IUtf8JsonSerializable
+    public partial class MabFileFolderProtectedItem : IUtf8JsonSerializable, IJsonModel<MabFileFolderProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MabFileFolderProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MabFileFolderProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MabFileFolderProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ComputerName))
+            if (ComputerName != null)
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (Optional.IsDefined(LastBackupStatus))
+            if (LastBackupStatus != null)
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
-            if (Optional.IsDefined(LastBackupOn))
+            if (LastBackupOn.HasValue)
             {
                 writer.WritePropertyName("lastBackupTime"u8);
                 writer.WriteStringValue(LastBackupOn.Value, "O");
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState != null)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState);
             }
-            if (Optional.IsDefined(DeferredDeleteSyncTimeInUTC))
+            if (DeferredDeleteSyncTimeInUTC.HasValue)
             {
                 writer.WritePropertyName("deferredDeleteSyncTimeInUTC"u8);
                 writer.WriteNumberValue(DeferredDeleteSyncTimeInUTC.Value);
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
-            if (Optional.IsDefined(ContainerName))
+            if (options.Format != "W" && BackupManagementType.HasValue)
+            {
+                writer.WritePropertyName("backupManagementType"u8);
+                writer.WriteStringValue(BackupManagementType.Value.ToString());
+            }
+            if (options.Format != "W" && WorkloadType.HasValue)
+            {
+                writer.WritePropertyName("workloadType"u8);
+                writer.WriteStringValue(WorkloadType.Value.ToString());
+            }
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(LastRecoverOn))
+            if (LastRecoverOn.HasValue)
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
                 writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupSetName))
+            if (BackupSetName != null)
             {
                 writer.WritePropertyName("backupSetName"u8);
                 writer.WriteStringValue(BackupSetName);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(DeferredDeletedOn))
+            if (DeferredDeletedOn.HasValue)
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
                 writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
-            if (Optional.IsDefined(IsScheduledForDeferredDelete))
+            if (IsScheduledForDeferredDelete.HasValue)
             {
                 writer.WritePropertyName("isScheduledForDeferredDelete"u8);
                 writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
             }
-            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
+            if (DeferredDeleteTimeRemaining != null)
             {
                 writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
                 writer.WriteStringValue(DeferredDeleteTimeRemaining);
             }
-            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
+            if (IsDeferredDeleteScheduleUpcoming.HasValue)
             {
                 writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
                 writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
             }
-            if (Optional.IsDefined(IsRehydrate))
+            if (IsRehydrate.HasValue)
             {
                 writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -119,26 +138,60 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (IsArchiveEnabled.HasValue)
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(PolicyName))
+            if (PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
+            if (SoftDeleteRetentionPeriodInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
+            if (options.Format != "W" && VaultId != null)
+            {
+                writer.WritePropertyName("vaultId"u8);
+                writer.WriteStringValue(VaultId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MabFileFolderProtectedItem DeserializeMabFileFolderProtectedItem(JsonElement element)
+        MabFileFolderProtectedItem IJsonModel<MabFileFolderProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MabFileFolderProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMabFileFolderProtectedItem(document.RootElement, options);
+        }
+
+        internal static MabFileFolderProtectedItem DeserializeMabFileFolderProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -164,11 +217,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> deferredDeleteTimeRemaining = default;
             Optional<bool> isDeferredDeleteScheduleUpcoming = default;
             Optional<bool> isRehydrate = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> policyName = default;
             Optional<int> softDeleteRetentionPeriodInDays = default;
             Optional<string> vaultId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -215,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = MabFileFolderProtectedItemExtendedInfo.DeserializeMabFileFolderProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = MabFileFolderProtectedItemExtendedInfo.DeserializeMabFileFolderProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))
@@ -370,8 +425,71 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     vaultId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MabFileFolderProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, friendlyName.Value, computerName.Value, lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), protectionState.Value, Optional.ToNullable(deferredDeleteSyncTimeInUTC), extendedInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MabFileFolderProtectedItem(
+                protectedItemType,
+                Optional.ToNullable(backupManagementType),
+                Optional.ToNullable(workloadType),
+                containerName.Value,
+                sourceResourceId.Value,
+                policyId.Value,
+                Optional.ToNullable(lastRecoveryPoint),
+                backupSetName.Value,
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(deferredDeleteTimeInUTC),
+                Optional.ToNullable(isScheduledForDeferredDelete),
+                deferredDeleteTimeRemaining.Value,
+                Optional.ToNullable(isDeferredDeleteScheduleUpcoming),
+                Optional.ToNullable(isRehydrate),
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isArchiveEnabled),
+                policyName.Value,
+                Optional.ToNullable(softDeleteRetentionPeriodInDays),
+                vaultId.Value,
+                serializedAdditionalRawData,
+                friendlyName.Value,
+                computerName.Value,
+                lastBackupStatus.Value,
+                Optional.ToNullable(lastBackupTime),
+                protectionState.Value,
+                Optional.ToNullable(deferredDeleteSyncTimeInUTC),
+                extendedInfo.Value);
         }
+
+        BinaryData IPersistableModel<MabFileFolderProtectedItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabFileFolderProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MabFileFolderProtectedItem IPersistableModel<MabFileFolderProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabFileFolderProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMabFileFolderProtectedItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MabFileFolderProtectedItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MabFileFolderProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

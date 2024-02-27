@@ -28,8 +28,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset> triggerRunTimestamp = default;
             Optional<TriggerRunStatus> status = default;
             Optional<string> message = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
+            IReadOnlyDictionary<string, string> properties = default;
+            IReadOnlyDictionary<string, string> triggeredPipelines = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(triggeredPipelines), additionalProperties);
+            return new TriggerRun(
+                triggerRunId.Value,
+                triggerName.Value,
+                triggerType.Value,
+                Optional.ToNullable(triggerRunTimestamp),
+                Optional.ToNullable(status),
+                message.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
+                additionalProperties);
         }
 
         internal partial class TriggerRunConverter : JsonConverter<TriggerRun>

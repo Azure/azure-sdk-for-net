@@ -17,7 +17,7 @@ namespace Azure.Communication.Sms
             writer.WriteStartObject();
             writer.WritePropertyName("enableDeliveryReport"u8);
             writer.WriteBooleanValue(EnableDeliveryReport);
-            if (Optional.IsDefined(Tag))
+            if (Tag != null)
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);

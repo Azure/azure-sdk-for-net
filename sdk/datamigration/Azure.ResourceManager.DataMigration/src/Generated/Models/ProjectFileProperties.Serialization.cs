@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Extension))
+            if (Extension != null)
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension);
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            if (options.Format != "W" && LastModified.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (Optional.IsDefined(MediaType))
+            if (MediaType != null)
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Size))
+            if (options.Format != "W" && Size.HasValue)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectFileProperties(extension.Value, filePath.Value, Optional.ToNullable(lastModified), mediaType.Value, Optional.ToNullable(size), serializedAdditionalRawData);
+            return new ProjectFileProperties(
+                extension.Value,
+                filePath.Value,
+                Optional.ToNullable(lastModified),
+                mediaType.Value,
+                Optional.ToNullable(size),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectFileProperties>.Write(ModelReaderWriterOptions options)

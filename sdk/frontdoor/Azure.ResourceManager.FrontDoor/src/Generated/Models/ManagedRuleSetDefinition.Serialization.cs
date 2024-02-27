@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,12 +14,20 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class ManagedRuleSetDefinition : IUtf8JsonSerializable
+    public partial class ManagedRuleSetDefinition : IUtf8JsonSerializable, IJsonModel<ManagedRuleSetDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleSetDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedRuleSetDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -30,19 +40,98 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && ProvisioningState != null)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && RuleSetId != null)
+            {
+                writer.WritePropertyName("ruleSetId"u8);
+                writer.WriteStringValue(RuleSetId);
+            }
+            if (options.Format != "W" && RuleSetType != null)
+            {
+                writer.WritePropertyName("ruleSetType"u8);
+                writer.WriteStringValue(RuleSetType);
+            }
+            if (options.Format != "W" && RuleSetVersion != null)
+            {
+                writer.WritePropertyName("ruleSetVersion"u8);
+                writer.WriteStringValue(RuleSetVersion);
+            }
+            if (options.Format != "W" && !(RuleGroups is ChangeTrackingList<ManagedRuleGroupDefinition> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("ruleGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuleGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element)
+        ManagedRuleSetDefinition IJsonModel<ManagedRuleSetDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedRuleSetDefinition(document.RootElement, options);
+        }
+
+        internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -52,7 +141,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> ruleSetId = default;
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
-            Optional<IReadOnlyList<ManagedRuleGroupDefinition>> ruleGroups = default;
+            IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -136,7 +227,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<ManagedRuleGroupDefinition> array = new List<ManagedRuleGroupDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item));
+                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item, options));
                             }
                             ruleGroups = array;
                             continue;
@@ -144,8 +235,56 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, ruleSetId.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                ruleSetId.Value,
+                ruleSetType.Value,
+                ruleSetVersion.Value,
+                ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedRuleSetDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedRuleSetDefinition IPersistableModel<ManagedRuleSetDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedRuleSetDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedRuleSetDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(HttpPort))
+            if (HttpPort.HasValue)
             {
                 if (HttpPort != null)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("httpPort");
                 }
             }
-            if (Optional.IsDefined(HttpsPort))
+            if (HttpsPort.HasValue)
             {
                 if (HttpsPort != null)
                 {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("httpsPort");
                 }
             }
-            if (Optional.IsDefined(OriginHostHeader))
+            if (OriginHostHeader != null)
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 if (Priority != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("priority");
                 }
             }
-            if (Optional.IsDefined(Weight))
+            if (Weight.HasValue)
             {
                 if (Weight != null)
                 {
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("weight");
                 }
             }
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(PrivateLinkAlias))
+            if (PrivateLinkAlias != null)
             {
                 writer.WritePropertyName("privateLinkAlias"u8);
                 writer.WriteStringValue(PrivateLinkAlias);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (PrivateLinkResourceId != null)
             {
                 if (PrivateLinkResourceId != null)
                 {
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("privateLinkResourceId");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkLocation))
+            if (PrivateLinkLocation != null)
             {
                 writer.WritePropertyName("privateLinkLocation"u8);
                 writer.WriteStringValue(PrivateLinkLocation);
             }
-            if (Optional.IsDefined(PrivateLinkApprovalMessage))
+            if (PrivateLinkApprovalMessage != null)
             {
                 writer.WritePropertyName("privateLinkApprovalMessage"u8);
                 writer.WriteStringValue(PrivateLinkApprovalMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStatus))
+            if (options.Format != "W" && PrivateEndpointStatus.HasValue)
             {
                 if (PrivateEndpointStatus != null)
                 {
@@ -305,7 +305,21 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeepCreatedOrigin(name, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(privateEndpointStatus), serializedAdditionalRawData);
+            return new DeepCreatedOrigin(
+                name,
+                hostName.Value,
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                originHostHeader.Value,
+                Optional.ToNullable(priority),
+                Optional.ToNullable(weight),
+                Optional.ToNullable(enabled),
+                privateLinkAlias.Value,
+                privateLinkResourceId.Value,
+                privateLinkLocation.Value,
+                privateLinkApprovalMessage.Value,
+                Optional.ToNullable(privateEndpointStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeepCreatedOrigin>.Write(ModelReaderWriterOptions options)

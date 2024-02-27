@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,14 +14,52 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> SKU properties. </summary>
     public partial class IotHubSkuDescription
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotHubSkuDescription"/>. </summary>
         /// <param name="sku"> The type of the resource. </param>
         /// <param name="capacity"> IotHub capacity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="capacity"/> is null. </exception>
         internal IotHubSkuDescription(IotHubSkuInfo sku, IotHubCapacity capacity)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
-            Argument.AssertNotNull(capacity, nameof(capacity));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (capacity == null)
+            {
+                throw new ArgumentNullException(nameof(capacity));
+            }
 
             Sku = sku;
             Capacity = capacity;
@@ -30,11 +69,18 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="sku"> The type of the resource. </param>
         /// <param name="capacity"> IotHub capacity. </param>
-        internal IotHubSkuDescription(ResourceType? resourceType, IotHubSkuInfo sku, IotHubCapacity capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubSkuDescription(ResourceType? resourceType, IotHubSkuInfo sku, IotHubCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubSkuDescription"/> for deserialization. </summary>
+        internal IotHubSkuDescription()
+        {
         }
 
         /// <summary> The type of the resource. </summary>

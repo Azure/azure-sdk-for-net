@@ -5,18 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobInputClip : IUtf8JsonSerializable
+    public partial class MediaJobInputClip : IUtf8JsonSerializable, IJsonModel<MediaJobInputClip>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputClip>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaJobInputClip>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputClip>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaJobInputClip)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -26,22 +36,22 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Start))
+            if (Start != null)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteObjectValue(Start);
             }
-            if (Optional.IsDefined(End))
+            if (End != null)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteObjectValue(End);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsCollectionDefined(InputDefinitions))
+            if (!(InputDefinitions is ChangeTrackingList<MediaJobInputDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputDefinitions"u8);
                 writer.WriteStartArray();
@@ -53,11 +63,40 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaJobInputClip DeserializeMediaJobInputClip(JsonElement element)
+        MediaJobInputClip IJsonModel<MediaJobInputClip>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputClip>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaJobInputClip)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaJobInputClip(document.RootElement, options);
+        }
+
+        internal static MediaJobInputClip DeserializeMediaJobInputClip(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,16 +105,18 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.JobInputAsset": return MediaJobInputAsset.DeserializeMediaJobInputAsset(element);
-                    case "#Microsoft.Media.JobInputHttp": return MediaJobInputHttp.DeserializeMediaJobInputHttp(element);
+                    case "#Microsoft.Media.JobInputAsset": return MediaJobInputAsset.DeserializeMediaJobInputAsset(element, options);
+                    case "#Microsoft.Media.JobInputHttp": return MediaJobInputHttp.DeserializeMediaJobInputHttp(element, options);
                 }
             }
-            Optional<IList<string>> files = default;
+            IList<string> files = default;
             Optional<ClipTime> start = default;
             Optional<ClipTime> end = default;
             Optional<string> label = default;
-            Optional<IList<MediaJobInputDefinition>> inputDefinitions = default;
+            IList<MediaJobInputDefinition> inputDefinitions = default;
             string odataType = "#Microsoft.Media.JobInputClip";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("files"u8))
@@ -98,7 +139,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    start = ClipTime.DeserializeClipTime(property.Value);
+                    start = ClipTime.DeserializeClipTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("end"u8))
@@ -107,7 +148,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    end = ClipTime.DeserializeClipTime(property.Value);
+                    end = ClipTime.DeserializeClipTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("label"u8))
@@ -124,7 +165,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobInputDefinition> array = new List<MediaJobInputDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobInputDefinition.DeserializeMediaJobInputDefinition(item));
+                        array.Add(MediaJobInputDefinition.DeserializeMediaJobInputDefinition(item, options));
                     }
                     inputDefinitions = array;
                     continue;
@@ -134,8 +175,51 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaJobInputClip(odataType, Optional.ToList(files), start.Value, end.Value, label.Value, Optional.ToList(inputDefinitions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaJobInputClip(
+                odataType,
+                serializedAdditionalRawData,
+                files ?? new ChangeTrackingList<string>(),
+                start.Value,
+                end.Value,
+                label.Value,
+                inputDefinitions ?? new ChangeTrackingList<MediaJobInputDefinition>());
         }
+
+        BinaryData IPersistableModel<MediaJobInputClip>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputClip>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MediaJobInputClip)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MediaJobInputClip IPersistableModel<MediaJobInputClip>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputClip>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMediaJobInputClip(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MediaJobInputClip)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaJobInputClip>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,105 +6,199 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServicePlanPatch : IUtf8JsonSerializable
+    public partial class AppServicePlanPatch : IUtf8JsonSerializable, IJsonModel<AppServicePlanPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServicePlanPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServicePlanPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkerTierName))
+            if (WorkerTierName != null)
             {
                 writer.WritePropertyName("workerTierName"u8);
                 writer.WriteStringValue(WorkerTierName);
             }
-            if (Optional.IsDefined(HostingEnvironmentProfile))
+            if (options.Format != "W" && Status.HasValue)
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Subscription != null)
+            {
+                writer.WritePropertyName("subscription"u8);
+                writer.WriteStringValue(Subscription);
+            }
+            if (HostingEnvironmentProfile != null)
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
                 writer.WriteObjectValue(HostingEnvironmentProfile);
             }
-            if (Optional.IsDefined(IsPerSiteScaling))
+            if (options.Format != "W" && MaximumNumberOfWorkers.HasValue)
+            {
+                writer.WritePropertyName("maximumNumberOfWorkers"u8);
+                writer.WriteNumberValue(MaximumNumberOfWorkers.Value);
+            }
+            if (options.Format != "W" && GeoRegion != null)
+            {
+                writer.WritePropertyName("geoRegion"u8);
+                writer.WriteStringValue(GeoRegion);
+            }
+            if (IsPerSiteScaling.HasValue)
             {
                 writer.WritePropertyName("perSiteScaling"u8);
                 writer.WriteBooleanValue(IsPerSiteScaling.Value);
             }
-            if (Optional.IsDefined(IsElasticScaleEnabled))
+            if (IsElasticScaleEnabled.HasValue)
             {
                 writer.WritePropertyName("elasticScaleEnabled"u8);
                 writer.WriteBooleanValue(IsElasticScaleEnabled.Value);
             }
-            if (Optional.IsDefined(MaximumElasticWorkerCount))
+            if (MaximumElasticWorkerCount.HasValue)
             {
                 writer.WritePropertyName("maximumElasticWorkerCount"u8);
                 writer.WriteNumberValue(MaximumElasticWorkerCount.Value);
             }
-            if (Optional.IsDefined(IsSpot))
+            if (options.Format != "W" && NumberOfSites.HasValue)
+            {
+                writer.WritePropertyName("numberOfSites"u8);
+                writer.WriteNumberValue(NumberOfSites.Value);
+            }
+            if (IsSpot.HasValue)
             {
                 writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Optional.IsDefined(SpotExpirationOn))
+            if (SpotExpirationOn.HasValue)
             {
                 writer.WritePropertyName("spotExpirationTime"u8);
                 writer.WriteStringValue(SpotExpirationOn.Value, "O");
             }
-            if (Optional.IsDefined(FreeOfferExpirationOn))
+            if (FreeOfferExpirationOn.HasValue)
             {
                 writer.WritePropertyName("freeOfferExpirationTime"u8);
                 writer.WriteStringValue(FreeOfferExpirationOn.Value, "O");
             }
-            if (Optional.IsDefined(IsReserved))
+            if (options.Format != "W" && ResourceGroup != null)
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
+            if (IsReserved.HasValue)
             {
                 writer.WritePropertyName("reserved"u8);
                 writer.WriteBooleanValue(IsReserved.Value);
             }
-            if (Optional.IsDefined(IsXenon))
+            if (IsXenon.HasValue)
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(IsHyperV))
+            if (IsHyperV.HasValue)
             {
                 writer.WritePropertyName("hyperV"u8);
                 writer.WriteBooleanValue(IsHyperV.Value);
             }
-            if (Optional.IsDefined(TargetWorkerCount))
+            if (TargetWorkerCount.HasValue)
             {
                 writer.WritePropertyName("targetWorkerCount"u8);
                 writer.WriteNumberValue(TargetWorkerCount.Value);
             }
-            if (Optional.IsDefined(TargetWorkerSizeId))
+            if (TargetWorkerSizeId.HasValue)
             {
                 writer.WritePropertyName("targetWorkerSizeId"u8);
                 writer.WriteNumberValue(TargetWorkerSizeId.Value);
             }
-            if (Optional.IsDefined(KubeEnvironmentProfile))
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+            }
+            if (KubeEnvironmentProfile != null)
             {
                 writer.WritePropertyName("kubeEnvironmentProfile"u8);
                 writer.WriteObjectValue(KubeEnvironmentProfile);
             }
-            if (Optional.IsDefined(IsZoneRedundant))
+            if (IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServicePlanPatch DeserializeAppServicePlanPatch(JsonElement element)
+        AppServicePlanPatch IJsonModel<AppServicePlanPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServicePlanPatch(document.RootElement, options);
+        }
+
+        internal static AppServicePlanPatch DeserializeAppServicePlanPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,6 +230,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<KubeEnvironmentProfile> kubeEnvironmentProfile = default;
             Optional<bool> zoneRedundant = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -201,7 +297,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
+                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maximumNumberOfWorkers"u8))
@@ -346,7 +442,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value);
+                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))
@@ -361,8 +457,72 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServicePlanPatch(id, name, type, systemData.Value, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServicePlanPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                workerTierName.Value,
+                Optional.ToNullable(status),
+                subscription.Value,
+                hostingEnvironmentProfile.Value,
+                Optional.ToNullable(maximumNumberOfWorkers),
+                geoRegion.Value,
+                Optional.ToNullable(perSiteScaling),
+                Optional.ToNullable(elasticScaleEnabled),
+                Optional.ToNullable(maximumElasticWorkerCount),
+                Optional.ToNullable(numberOfSites),
+                Optional.ToNullable(isSpot),
+                Optional.ToNullable(spotExpirationTime),
+                Optional.ToNullable(freeOfferExpirationTime),
+                resourceGroup.Value,
+                Optional.ToNullable(reserved),
+                Optional.ToNullable(isXenon),
+                Optional.ToNullable(hyperV),
+                Optional.ToNullable(targetWorkerCount),
+                Optional.ToNullable(targetWorkerSizeId),
+                Optional.ToNullable(provisioningState),
+                kubeEnvironmentProfile.Value,
+                Optional.ToNullable(zoneRedundant),
+                kind.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServicePlanPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServicePlanPatch IPersistableModel<AppServicePlanPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServicePlanPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServicePlanPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

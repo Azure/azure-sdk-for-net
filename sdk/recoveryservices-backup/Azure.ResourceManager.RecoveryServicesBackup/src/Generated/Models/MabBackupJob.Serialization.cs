@@ -6,23 +6,32 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabBackupJob : IUtf8JsonSerializable
+    public partial class MabBackupJob : IUtf8JsonSerializable, IJsonModel<MabBackupJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MabBackupJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MabBackupJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MabBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MabBackupJob)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(ActionsInfo))
+            if (!(ActionsInfo is ChangeTrackingList<JobSupportedAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionsInfo"u8);
                 writer.WriteStartArray();
@@ -32,22 +41,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MabServerName))
+            if (MabServerName != null)
             {
                 writer.WritePropertyName("mabServerName"u8);
                 writer.WriteStringValue(MabServerName);
             }
-            if (Optional.IsDefined(MabServerType))
+            if (MabServerType.HasValue)
             {
                 writer.WritePropertyName("mabServerType"u8);
                 writer.WriteStringValue(MabServerType.Value.ToString());
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType.HasValue)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ErrorDetails))
+            if (!(ErrorDetails is ChangeTrackingList<MabErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -57,63 +66,92 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(EntityFriendlyName))
+            if (EntityFriendlyName != null)
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(Operation))
+            if (Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(ActivityId))
+            if (ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MabBackupJob DeserializeMabBackupJob(JsonElement element)
+        MabBackupJob IJsonModel<MabBackupJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MabBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MabBackupJob)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMabBackupJob(document.RootElement, options);
+        }
+
+        internal static MabBackupJob DeserializeMabBackupJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<TimeSpan> duration = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
+            IList<JobSupportedAction> actionsInfo = default;
             Optional<string> mabServerName = default;
             Optional<MabServerType> mabServerType = default;
             Optional<BackupWorkloadType> workloadType = default;
-            Optional<IList<MabErrorInfo>> errorDetails = default;
+            IList<MabErrorInfo> errorDetails = default;
             Optional<MabBackupJobExtendedInfo> extendedInfo = default;
             Optional<string> entityFriendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -123,6 +161,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<string> activityId = default;
             string jobType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"u8))
@@ -180,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<MabErrorInfo> array = new List<MabErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MabErrorInfo.DeserializeMabErrorInfo(item));
+                        array.Add(MabErrorInfo.DeserializeMabErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -191,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = MabBackupJobExtendedInfo.DeserializeMabBackupJobExtendedInfo(property.Value);
+                    extendedInfo = MabBackupJobExtendedInfo.DeserializeMabBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))
@@ -246,8 +286,60 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     jobType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MabBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToNullable(duration), Optional.ToList(actionsInfo), mabServerName.Value, Optional.ToNullable(mabServerType), Optional.ToNullable(workloadType), Optional.ToList(errorDetails), extendedInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MabBackupJob(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(duration),
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                mabServerName.Value,
+                Optional.ToNullable(mabServerType),
+                Optional.ToNullable(workloadType),
+                errorDetails ?? new ChangeTrackingList<MabErrorInfo>(),
+                extendedInfo.Value);
         }
+
+        BinaryData IPersistableModel<MabBackupJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MabBackupJob)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MabBackupJob IPersistableModel<MabBackupJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMabBackupJob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MabBackupJob)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MabBackupJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

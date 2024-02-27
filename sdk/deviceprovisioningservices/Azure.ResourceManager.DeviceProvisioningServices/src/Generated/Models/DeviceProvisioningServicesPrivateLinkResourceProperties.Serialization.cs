@@ -5,23 +5,95 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesPrivateLinkResourceProperties
+    public partial class DeviceProvisioningServicesPrivateLinkResourceProperties : IUtf8JsonSerializable, IJsonModel<DeviceProvisioningServicesPrivateLinkResourceProperties>
     {
-        internal static DeviceProvisioningServicesPrivateLinkResourceProperties DeserializeDeviceProvisioningServicesPrivateLinkResourceProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServicesPrivateLinkResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeviceProvisioningServicesPrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateLinkResourceProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (GroupId != null)
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (!(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("requiredMembers"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequiredMembers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("requiredZoneNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequiredZoneNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DeviceProvisioningServicesPrivateLinkResourceProperties IJsonModel<DeviceProvisioningServicesPrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateLinkResourceProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceProvisioningServicesPrivateLinkResourceProperties(document.RootElement, options);
+        }
+
+        internal static DeviceProvisioningServicesPrivateLinkResourceProperties DeserializeDeviceProvisioningServicesPrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IReadOnlyList<string>> requiredZoneNames = default;
+            IReadOnlyList<string> requiredMembers = default;
+            IReadOnlyList<string> requiredZoneNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -57,8 +129,44 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     requiredZoneNames = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceProvisioningServicesPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DeviceProvisioningServicesPrivateLinkResourceProperties IPersistableModel<DeviceProvisioningServicesPrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceProvisioningServicesPrivateLinkResourceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceProvisioningServicesPrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

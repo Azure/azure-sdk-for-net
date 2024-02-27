@@ -5,21 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDataVersionProperties : IUtf8JsonSerializable
+    public partial class MachineLearningDataVersionProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningDataVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDataVersionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningDataVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDataVersionProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("dataUri"u8);
             writer.WriteStringValue(DataUri.AbsoluteUri);
-            if (Optional.IsDefined(IntellectualProperty))
+            if (IntellectualProperty != null)
             {
                 if (IntellectualProperty != null)
                 {
@@ -31,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("intellectualProperty");
                 }
             }
-            if (Optional.IsDefined(Stage))
+            if (Stage != null)
             {
                 if (Stage != null)
                 {
@@ -43,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stage");
                 }
             }
-            if (Optional.IsDefined(AutoDeleteSetting))
+            if (AutoDeleteSetting != null)
             {
                 if (AutoDeleteSetting != null)
                 {
@@ -55,17 +65,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("autoDeleteSetting");
                 }
             }
-            if (Optional.IsDefined(IsAnonymous))
+            if (IsAnonymous.HasValue)
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (Optional.IsDefined(IsArchived))
+            if (IsArchived.HasValue)
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -77,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -95,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -113,11 +123,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDataVersionProperties DeserializeMachineLearningDataVersionProperties(JsonElement element)
+        MachineLearningDataVersionProperties IJsonModel<MachineLearningDataVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDataVersionProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDataVersionProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningDataVersionProperties DeserializeMachineLearningDataVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -126,12 +165,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "mltable": return MachineLearningTable.DeserializeMachineLearningTable(element);
-                    case "uri_file": return MachineLearningUriFileDataVersion.DeserializeMachineLearningUriFileDataVersion(element);
-                    case "uri_folder": return MachineLearningUriFolderDataVersion.DeserializeMachineLearningUriFolderDataVersion(element);
+                    case "mltable": return MachineLearningTable.DeserializeMachineLearningTable(element, options);
+                    case "uri_file": return MachineLearningUriFileDataVersion.DeserializeMachineLearningUriFileDataVersion(element, options);
+                    case "uri_folder": return MachineLearningUriFolderDataVersion.DeserializeMachineLearningUriFolderDataVersion(element, options);
                 }
             }
-            return UnknownDataVersionBase.DeserializeUnknownDataVersionBase(element);
+            return UnknownDataVersionBase.DeserializeUnknownDataVersionBase(element, options);
         }
+
+        BinaryData IPersistableModel<MachineLearningDataVersionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDataVersionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningDataVersionProperties IPersistableModel<MachineLearningDataVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningDataVersionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDataVersionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningDataVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

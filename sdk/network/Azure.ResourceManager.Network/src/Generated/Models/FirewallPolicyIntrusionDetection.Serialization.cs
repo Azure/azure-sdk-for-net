@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(Profile))
+            if (Profile.HasValue)
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    configuration = FirewallPolicyIntrusionDetectionConfiguration.DeserializeFirewallPolicyIntrusionDetectionConfiguration(property.Value);
+                    configuration = FirewallPolicyIntrusionDetectionConfiguration.DeserializeFirewallPolicyIntrusionDetectionConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

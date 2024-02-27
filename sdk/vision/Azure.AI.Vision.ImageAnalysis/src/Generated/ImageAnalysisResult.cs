@@ -6,21 +6,59 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> Represents the outcome of an Image Analysis operation. </summary>
     public partial class ImageAnalysisResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ImageAnalysisResult"/>. </summary>
         /// <param name="metadata"> Metadata associated with the analyzed image. </param>
         /// <param name="modelVersion"> The cloud AI model used for the analysis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="modelVersion"/> is null. </exception>
         internal ImageAnalysisResult(ImageMetadata metadata, string modelVersion)
         {
-            Argument.AssertNotNull(metadata, nameof(metadata));
-            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
+            if (metadata == null)
+            {
+                throw new ArgumentNullException(nameof(metadata));
+            }
+            if (modelVersion == null)
+            {
+                throw new ArgumentNullException(nameof(modelVersion));
+            }
 
             Metadata = metadata;
             ModelVersion = modelVersion;
@@ -42,7 +80,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// These regions preserve as much content as possible from the analyzed image, with priority given to detected faces.
         /// </param>
         /// <param name="tags"> A list of content tags in the analyzed image. </param>
-        internal ImageAnalysisResult(CaptionResult caption, DenseCaptionsResult denseCaptions, ImageMetadata metadata, string modelVersion, ObjectsResult objects, PeopleResult people, ReadResult read, SmartCropsResult smartCrops, TagsResult tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageAnalysisResult(CaptionResult caption, DenseCaptionsResult denseCaptions, ImageMetadata metadata, string modelVersion, ObjectsResult objects, PeopleResult people, ReadResult read, SmartCropsResult smartCrops, TagsResult tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Caption = caption;
             DenseCaptions = denseCaptions;
@@ -53,6 +92,12 @@ namespace Azure.AI.Vision.ImageAnalysis
             Read = read;
             SmartCrops = smartCrops;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageAnalysisResult"/> for deserialization. </summary>
+        internal ImageAnalysisResult()
+        {
         }
 
         /// <summary> The generated phrase that describes the content of the analyzed image. </summary>

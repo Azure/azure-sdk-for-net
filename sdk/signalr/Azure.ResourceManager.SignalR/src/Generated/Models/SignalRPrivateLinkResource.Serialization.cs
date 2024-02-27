@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,19 +14,47 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRPrivateLinkResource : IUtf8JsonSerializable
+    public partial class SignalRPrivateLinkResource : IUtf8JsonSerializable, IJsonModel<SignalRPrivateLinkResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRPrivateLinkResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SignalRPrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SignalRPrivateLinkResource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsCollectionDefined(RequiredMembers))
+            if (!(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -34,7 +64,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (!(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -44,7 +74,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
+            if (!(ShareablePrivateLinkResourceTypes is ChangeTrackingList<ShareablePrivateLinkResourceType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("shareablePrivateLinkResourceTypes"u8);
                 writer.WriteStartArray();
@@ -55,11 +85,40 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SignalRPrivateLinkResource DeserializeSignalRPrivateLinkResource(JsonElement element)
+        SignalRPrivateLinkResource IJsonModel<SignalRPrivateLinkResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SignalRPrivateLinkResource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRPrivateLinkResource(document.RootElement, options);
+        }
+
+        internal static SignalRPrivateLinkResource DeserializeSignalRPrivateLinkResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,9 +128,11 @@ namespace Azure.ResourceManager.SignalR.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
-            Optional<IList<ShareablePrivateLinkResourceType>> shareablePrivateLinkResourceTypes = default;
+            IList<string> requiredMembers = default;
+            IList<string> requiredZoneNames = default;
+            IList<ShareablePrivateLinkResourceType> shareablePrivateLinkResourceTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -149,7 +210,7 @@ namespace Azure.ResourceManager.SignalR.Models
                             List<ShareablePrivateLinkResourceType> array = new List<ShareablePrivateLinkResourceType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareablePrivateLinkResourceType.DeserializeShareablePrivateLinkResourceType(item));
+                                array.Add(ShareablePrivateLinkResourceType.DeserializeShareablePrivateLinkResourceType(item, options));
                             }
                             shareablePrivateLinkResourceTypes = array;
                             continue;
@@ -157,8 +218,53 @@ namespace Azure.ResourceManager.SignalR.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SignalRPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToList(shareablePrivateLinkResourceTypes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SignalRPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareablePrivateLinkResourceType>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SignalRPrivateLinkResource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SignalRPrivateLinkResource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SignalRPrivateLinkResource IPersistableModel<SignalRPrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSignalRPrivateLinkResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SignalRPrivateLinkResource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SignalRPrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

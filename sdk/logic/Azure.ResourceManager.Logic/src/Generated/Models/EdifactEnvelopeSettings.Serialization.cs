@@ -5,22 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactEnvelopeSettings : IUtf8JsonSerializable
+    public partial class EdifactEnvelopeSettings : IUtf8JsonSerializable, IJsonModel<EdifactEnvelopeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactEnvelopeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdifactEnvelopeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupAssociationAssignedCode))
+            if (GroupAssociationAssignedCode != null)
             {
                 writer.WritePropertyName("groupAssociationAssignedCode"u8);
                 writer.WriteStringValue(GroupAssociationAssignedCode);
             }
-            if (Optional.IsDefined(CommunicationAgreementId))
+            if (CommunicationAgreementId != null)
             {
                 writer.WritePropertyName("communicationAgreementId"u8);
                 writer.WriteStringValue(CommunicationAgreementId);
@@ -31,22 +42,22 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(CreateGroupingSegments);
             writer.WritePropertyName("enableDefaultGroupHeaders"u8);
             writer.WriteBooleanValue(EnableDefaultGroupHeaders);
-            if (Optional.IsDefined(RecipientReferencePasswordValue))
+            if (RecipientReferencePasswordValue != null)
             {
                 writer.WritePropertyName("recipientReferencePasswordValue"u8);
                 writer.WriteStringValue(RecipientReferencePasswordValue);
             }
-            if (Optional.IsDefined(RecipientReferencePasswordQualifier))
+            if (RecipientReferencePasswordQualifier != null)
             {
                 writer.WritePropertyName("recipientReferencePasswordQualifier"u8);
                 writer.WriteStringValue(RecipientReferencePasswordQualifier);
             }
-            if (Optional.IsDefined(ApplicationReferenceId))
+            if (ApplicationReferenceId != null)
             {
                 writer.WritePropertyName("applicationReferenceId"u8);
                 writer.WriteStringValue(ApplicationReferenceId);
             }
-            if (Optional.IsDefined(ProcessingPriorityCode))
+            if (ProcessingPriorityCode != null)
             {
                 writer.WritePropertyName("processingPriorityCode"u8);
                 writer.WriteStringValue(ProcessingPriorityCode);
@@ -57,42 +68,42 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(InterchangeControlNumberUpperBound);
             writer.WritePropertyName("rolloverInterchangeControlNumber"u8);
             writer.WriteBooleanValue(RolloverInterchangeControlNumber);
-            if (Optional.IsDefined(InterchangeControlNumberPrefix))
+            if (InterchangeControlNumberPrefix != null)
             {
                 writer.WritePropertyName("interchangeControlNumberPrefix"u8);
                 writer.WriteStringValue(InterchangeControlNumberPrefix);
             }
-            if (Optional.IsDefined(InterchangeControlNumberSuffix))
+            if (InterchangeControlNumberSuffix != null)
             {
                 writer.WritePropertyName("interchangeControlNumberSuffix"u8);
                 writer.WriteStringValue(InterchangeControlNumberSuffix);
             }
-            if (Optional.IsDefined(SenderReverseRoutingAddress))
+            if (SenderReverseRoutingAddress != null)
             {
                 writer.WritePropertyName("senderReverseRoutingAddress"u8);
                 writer.WriteStringValue(SenderReverseRoutingAddress);
             }
-            if (Optional.IsDefined(ReceiverReverseRoutingAddress))
+            if (ReceiverReverseRoutingAddress != null)
             {
                 writer.WritePropertyName("receiverReverseRoutingAddress"u8);
                 writer.WriteStringValue(ReceiverReverseRoutingAddress);
             }
-            if (Optional.IsDefined(FunctionalGroupId))
+            if (FunctionalGroupId != null)
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
             }
-            if (Optional.IsDefined(GroupControllingAgencyCode))
+            if (GroupControllingAgencyCode != null)
             {
                 writer.WritePropertyName("groupControllingAgencyCode"u8);
                 writer.WriteStringValue(GroupControllingAgencyCode);
             }
-            if (Optional.IsDefined(GroupMessageVersion))
+            if (GroupMessageVersion != null)
             {
                 writer.WritePropertyName("groupMessageVersion"u8);
                 writer.WriteStringValue(GroupMessageVersion);
             }
-            if (Optional.IsDefined(GroupMessageRelease))
+            if (GroupMessageRelease != null)
             {
                 writer.WritePropertyName("groupMessageRelease"u8);
                 writer.WriteStringValue(GroupMessageRelease);
@@ -103,49 +114,49 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(GroupControlNumberUpperBound);
             writer.WritePropertyName("rolloverGroupControlNumber"u8);
             writer.WriteBooleanValue(RolloverGroupControlNumber);
-            if (Optional.IsDefined(GroupControlNumberPrefix))
+            if (GroupControlNumberPrefix != null)
             {
                 writer.WritePropertyName("groupControlNumberPrefix"u8);
                 writer.WriteStringValue(GroupControlNumberPrefix);
             }
-            if (Optional.IsDefined(GroupControlNumberSuffix))
+            if (GroupControlNumberSuffix != null)
             {
                 writer.WritePropertyName("groupControlNumberSuffix"u8);
                 writer.WriteStringValue(GroupControlNumberSuffix);
             }
-            if (Optional.IsDefined(GroupApplicationReceiverQualifier))
+            if (GroupApplicationReceiverQualifier != null)
             {
                 writer.WritePropertyName("groupApplicationReceiverQualifier"u8);
                 writer.WriteStringValue(GroupApplicationReceiverQualifier);
             }
-            if (Optional.IsDefined(GroupApplicationReceiverId))
+            if (GroupApplicationReceiverId != null)
             {
                 writer.WritePropertyName("groupApplicationReceiverId"u8);
                 writer.WriteStringValue(GroupApplicationReceiverId);
             }
-            if (Optional.IsDefined(GroupApplicationSenderQualifier))
+            if (GroupApplicationSenderQualifier != null)
             {
                 writer.WritePropertyName("groupApplicationSenderQualifier"u8);
                 writer.WriteStringValue(GroupApplicationSenderQualifier);
             }
-            if (Optional.IsDefined(GroupApplicationSenderId))
+            if (GroupApplicationSenderId != null)
             {
                 writer.WritePropertyName("groupApplicationSenderId"u8);
                 writer.WriteStringValue(GroupApplicationSenderId);
             }
-            if (Optional.IsDefined(GroupApplicationPassword))
+            if (GroupApplicationPassword != null)
             {
                 writer.WritePropertyName("groupApplicationPassword"u8);
                 writer.WriteStringValue(GroupApplicationPassword);
             }
             writer.WritePropertyName("overwriteExistingTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(OverwriteExistingTransactionSetControlNumber);
-            if (Optional.IsDefined(TransactionSetControlNumberPrefix))
+            if (TransactionSetControlNumberPrefix != null)
             {
                 writer.WritePropertyName("transactionSetControlNumberPrefix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberPrefix);
             }
-            if (Optional.IsDefined(TransactionSetControlNumberSuffix))
+            if (TransactionSetControlNumberSuffix != null)
             {
                 writer.WritePropertyName("transactionSetControlNumberSuffix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberSuffix);
@@ -158,31 +169,60 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(RolloverTransactionSetControlNumber);
             writer.WritePropertyName("isTestInterchange"u8);
             writer.WriteBooleanValue(IsTestInterchange);
-            if (Optional.IsDefined(SenderInternalIdentification))
+            if (SenderInternalIdentification != null)
             {
                 writer.WritePropertyName("senderInternalIdentification"u8);
                 writer.WriteStringValue(SenderInternalIdentification);
             }
-            if (Optional.IsDefined(SenderInternalSubIdentification))
+            if (SenderInternalSubIdentification != null)
             {
                 writer.WritePropertyName("senderInternalSubIdentification"u8);
                 writer.WriteStringValue(SenderInternalSubIdentification);
             }
-            if (Optional.IsDefined(ReceiverInternalIdentification))
+            if (ReceiverInternalIdentification != null)
             {
                 writer.WritePropertyName("receiverInternalIdentification"u8);
                 writer.WriteStringValue(ReceiverInternalIdentification);
             }
-            if (Optional.IsDefined(ReceiverInternalSubIdentification))
+            if (ReceiverInternalSubIdentification != null)
             {
                 writer.WritePropertyName("receiverInternalSubIdentification"u8);
                 writer.WriteStringValue(ReceiverInternalSubIdentification);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdifactEnvelopeSettings DeserializeEdifactEnvelopeSettings(JsonElement element)
+        EdifactEnvelopeSettings IJsonModel<EdifactEnvelopeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactEnvelopeSettings(document.RootElement, options);
+        }
+
+        internal static EdifactEnvelopeSettings DeserializeEdifactEnvelopeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -228,6 +268,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> senderInternalSubIdentification = default;
             Optional<string> receiverInternalIdentification = default;
             Optional<string> receiverInternalSubIdentification = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupAssociationAssignedCode"u8))
@@ -435,8 +477,86 @@ namespace Azure.ResourceManager.Logic.Models
                     receiverInternalSubIdentification = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdifactEnvelopeSettings(groupAssociationAssignedCode.Value, communicationAgreementId.Value, applyDelimiterStringAdvice, createGroupingSegments, enableDefaultGroupHeaders, recipientReferencePasswordValue.Value, recipientReferencePasswordQualifier.Value, applicationReferenceId.Value, processingPriorityCode.Value, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, interchangeControlNumberPrefix.Value, interchangeControlNumberSuffix.Value, senderReverseRoutingAddress.Value, receiverReverseRoutingAddress.Value, functionalGroupId.Value, groupControllingAgencyCode.Value, groupMessageVersion.Value, groupMessageRelease.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupControlNumberPrefix.Value, groupControlNumberSuffix.Value, groupApplicationReceiverQualifier.Value, groupApplicationReceiverId.Value, groupApplicationSenderQualifier.Value, groupApplicationSenderId.Value, groupApplicationPassword.Value, overwriteExistingTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, isTestInterchange, senderInternalIdentification.Value, senderInternalSubIdentification.Value, receiverInternalIdentification.Value, receiverInternalSubIdentification.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdifactEnvelopeSettings(
+                groupAssociationAssignedCode.Value,
+                communicationAgreementId.Value,
+                applyDelimiterStringAdvice,
+                createGroupingSegments,
+                enableDefaultGroupHeaders,
+                recipientReferencePasswordValue.Value,
+                recipientReferencePasswordQualifier.Value,
+                applicationReferenceId.Value,
+                processingPriorityCode.Value,
+                interchangeControlNumberLowerBound,
+                interchangeControlNumberUpperBound,
+                rolloverInterchangeControlNumber,
+                interchangeControlNumberPrefix.Value,
+                interchangeControlNumberSuffix.Value,
+                senderReverseRoutingAddress.Value,
+                receiverReverseRoutingAddress.Value,
+                functionalGroupId.Value,
+                groupControllingAgencyCode.Value,
+                groupMessageVersion.Value,
+                groupMessageRelease.Value,
+                groupControlNumberLowerBound,
+                groupControlNumberUpperBound,
+                rolloverGroupControlNumber,
+                groupControlNumberPrefix.Value,
+                groupControlNumberSuffix.Value,
+                groupApplicationReceiverQualifier.Value,
+                groupApplicationReceiverId.Value,
+                groupApplicationSenderQualifier.Value,
+                groupApplicationSenderId.Value,
+                groupApplicationPassword.Value,
+                overwriteExistingTransactionSetControlNumber,
+                transactionSetControlNumberPrefix.Value,
+                transactionSetControlNumberSuffix.Value,
+                transactionSetControlNumberLowerBound,
+                transactionSetControlNumberUpperBound,
+                rolloverTransactionSetControlNumber,
+                isTestInterchange,
+                senderInternalIdentification.Value,
+                senderInternalSubIdentification.Value,
+                receiverInternalIdentification.Value,
+                receiverInternalSubIdentification.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdifactEnvelopeSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EdifactEnvelopeSettings IPersistableModel<EdifactEnvelopeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdifactEnvelopeSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdifactEnvelopeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

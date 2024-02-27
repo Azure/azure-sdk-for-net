@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,19 +14,27 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AzureCliScript : IUtf8JsonSerializable
+    public partial class AzureCliScript : IUtf8JsonSerializable, IJsonModel<AzureCliScript>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCliScript>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureCliScript>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCliScript>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureCliScript)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,29 +47,71 @@ namespace Azure.ResourceManager.Resources.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerSettings))
+            if (ContainerSettings != null)
             {
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);
             }
-            if (Optional.IsDefined(StorageAccountSettings))
+            if (StorageAccountSettings != null)
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
                 writer.WriteObjectValue(StorageAccountSettings);
             }
-            if (Optional.IsDefined(CleanupPreference))
+            if (CleanupPreference.HasValue)
             {
                 writer.WritePropertyName("cleanupPreference"u8);
                 writer.WriteStringValue(CleanupPreference.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryScriptUri))
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Status != null)
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status);
+            }
+            if (options.Format != "W" && Outputs != null)
+            {
+                writer.WritePropertyName("outputs"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Outputs);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Outputs))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (PrimaryScriptUri != null)
             {
                 writer.WritePropertyName("primaryScriptUri"u8);
                 writer.WriteStringValue(PrimaryScriptUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(SupportingScriptUris))
+            if (!(SupportingScriptUris is ChangeTrackingList<Uri> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportingScriptUris"u8);
                 writer.WriteStartArray();
@@ -75,17 +126,17 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ScriptContent))
+            if (ScriptContent != null)
             {
                 writer.WritePropertyName("scriptContent"u8);
                 writer.WriteStringValue(ScriptContent);
             }
-            if (Optional.IsDefined(Arguments))
+            if (Arguments != null)
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingList<ScriptEnvironmentVariable> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
@@ -95,14 +146,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
             writer.WritePropertyName("retentionInterval"u8);
             writer.WriteStringValue(RetentionInterval, "P");
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -110,18 +161,47 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WritePropertyName("azCliVersion"u8);
             writer.WriteStringValue(AzCliVersion);
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureCliScript DeserializeAzureCliScript(JsonElement element)
+        AzureCliScript IJsonModel<AzureCliScript>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCliScript>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureCliScript)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureCliScript(document.RootElement, options);
+        }
+
+        internal static AzureCliScript DeserializeAzureCliScript(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ScriptType kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -134,14 +214,16 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ScriptStatus> status = default;
             Optional<BinaryData> outputs = default;
             Optional<Uri> primaryScriptUri = default;
-            Optional<IList<Uri>> supportingScriptUris = default;
+            IList<Uri> supportingScriptUris = default;
             Optional<string> scriptContent = default;
             Optional<string> arguments = default;
-            Optional<IList<ScriptEnvironmentVariable>> environmentVariables = default;
+            IList<ScriptEnvironmentVariable> environmentVariables = default;
             Optional<string> forceUpdateTag = default;
             TimeSpan retentionInterval = default;
             Optional<TimeSpan> timeout = default;
             string azCliVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -150,7 +232,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -216,7 +298,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value);
+                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageAccountSettings"u8))
@@ -225,7 +307,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value);
+                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cleanupPreference"u8))
@@ -252,7 +334,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            status = ScriptStatus.DeserializeScriptStatus(property0.Value);
+                            status = ScriptStatus.DeserializeScriptStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -313,7 +395,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ScriptEnvironmentVariable> array = new List<ScriptEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item));
+                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item, options));
                             }
                             environmentVariables = array;
                             continue;
@@ -345,8 +427,68 @@ namespace Azure.ResourceManager.Resources.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureCliScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureCliScript(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity.Value,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                serializedAdditionalRawData,
+                containerSettings.Value,
+                storageAccountSettings.Value,
+                Optional.ToNullable(cleanupPreference),
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                outputs.Value,
+                primaryScriptUri.Value,
+                supportingScriptUris ?? new ChangeTrackingList<Uri>(),
+                scriptContent.Value,
+                arguments.Value,
+                environmentVariables ?? new ChangeTrackingList<ScriptEnvironmentVariable>(),
+                forceUpdateTag.Value,
+                retentionInterval,
+                Optional.ToNullable(timeout),
+                azCliVersion);
         }
+
+        BinaryData IPersistableModel<AzureCliScript>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCliScript>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureCliScript)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureCliScript IPersistableModel<AzureCliScript>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCliScript>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureCliScript(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureCliScript)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureCliScript>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

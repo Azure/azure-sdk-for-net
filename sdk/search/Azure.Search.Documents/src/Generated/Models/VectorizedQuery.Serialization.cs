@@ -25,20 +25,25 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(KNearestNeighborsCount))
+            if (KNearestNeighborsCount.HasValue)
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
-            if (Optional.IsDefined(FieldsRaw))
+            if (FieldsRaw != null)
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStringValue(FieldsRaw);
             }
-            if (Optional.IsDefined(Exhaustive))
+            if (Exhaustive.HasValue)
             {
                 writer.WritePropertyName("exhaustive"u8);
                 writer.WriteBooleanValue(Exhaustive.Value);
+            }
+            if (Oversampling.HasValue)
+            {
+                writer.WritePropertyName("oversampling"u8);
+                writer.WriteNumberValue(Oversampling.Value);
             }
             writer.WriteEndObject();
         }
@@ -54,6 +59,7 @@ namespace Azure.Search.Documents.Models
             Optional<int> k = default;
             Optional<string> fields = default;
             Optional<bool> exhaustive = default;
+            Optional<double> oversampling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vector"u8))
@@ -100,8 +106,23 @@ namespace Azure.Search.Documents.Models
                     exhaustive = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("oversampling"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oversampling = property.Value.GetDouble();
+                    continue;
+                }
             }
-            return new VectorizedQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), vector);
+            return new VectorizedQuery(
+                kind,
+                Optional.ToNullable(k),
+                fields.Value,
+                Optional.ToNullable(exhaustive),
+                Optional.ToNullable(oversampling),
+                vector);
         }
     }
 }

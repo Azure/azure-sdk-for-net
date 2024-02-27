@@ -5,25 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataStoreSettings : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownDataStoreParameters))]
+    public partial class DataStoreSettings : IUtf8JsonSerializable, IJsonModel<DataStoreSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataStoreSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataStoreSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataStoreSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("dataStoreType"u8);
             writer.WriteStringValue(DataStoreType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataStoreSettings DeserializeDataStoreSettings(JsonElement element)
+        DataStoreSettings IJsonModel<DataStoreSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataStoreSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataStoreSettings(document.RootElement, options);
+        }
+
+        internal static DataStoreSettings DeserializeDataStoreSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,10 +72,41 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureOperationalStoreParameters": return OperationalDataStoreSettings.DeserializeOperationalDataStoreSettings(element);
+                    case "AzureOperationalStoreParameters": return OperationalDataStoreSettings.DeserializeOperationalDataStoreSettings(element, options);
                 }
             }
-            return UnknownDataStoreParameters.DeserializeUnknownDataStoreParameters(element);
+            return UnknownDataStoreParameters.DeserializeUnknownDataStoreParameters(element, options);
         }
+
+        BinaryData IPersistableModel<DataStoreSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataStoreSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataStoreSettings IPersistableModel<DataStoreSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataStoreSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataStoreSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataStoreSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

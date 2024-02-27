@@ -6,18 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CustomEventsTrigger : IUtf8JsonSerializable
+    public partial class CustomEventsTrigger : IUtf8JsonSerializable, IJsonModel<CustomEventsTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEventsTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomEventsTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomEventsTrigger)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Pipelines))
+            if (!(Pipelines is ChangeTrackingList<TriggerPipelineReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
@@ -29,12 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (options.Format != "W" && RuntimeState.HasValue)
+            {
+                writer.WritePropertyName("runtimeState"u8);
+                writer.WriteStringValue(RuntimeState.Value.ToString());
+            }
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -58,12 +72,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubjectBeginsWith))
+            if (SubjectBeginsWith != null)
             {
                 writer.WritePropertyName("subjectBeginsWith"u8);
                 writer.WriteStringValue(SubjectBeginsWith);
             }
-            if (Optional.IsDefined(SubjectEndsWith))
+            if (SubjectEndsWith != null)
             {
                 writer.WritePropertyName("subjectEndsWith"u8);
                 writer.WriteStringValue(SubjectEndsWith);
@@ -105,17 +119,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomEventsTrigger DeserializeCustomEventsTrigger(JsonElement element)
+        CustomEventsTrigger IJsonModel<CustomEventsTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomEventsTrigger)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomEventsTrigger(document.RootElement, options);
+        }
+
+        internal static CustomEventsTrigger DeserializeCustomEventsTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<TriggerPipelineReference>> pipelines = default;
+            IList<TriggerPipelineReference> pipelines = default;
             string type = default;
             Optional<string> description = default;
             Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<string> subjectBeginsWith = default;
             Optional<string> subjectEndsWith = default;
             IList<BinaryData> events = default;
@@ -133,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item));
+                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
                     }
                     pipelines = array;
                     continue;
@@ -225,7 +253,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomEventsTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), subjectBeginsWith.Value, subjectEndsWith.Value, events, scope);
+            return new CustomEventsTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                subjectBeginsWith.Value,
+                subjectEndsWith.Value,
+                events,
+                scope);
         }
+
+        BinaryData IPersistableModel<CustomEventsTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomEventsTrigger)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomEventsTrigger IPersistableModel<CustomEventsTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomEventsTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomEventsTrigger)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomEventsTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

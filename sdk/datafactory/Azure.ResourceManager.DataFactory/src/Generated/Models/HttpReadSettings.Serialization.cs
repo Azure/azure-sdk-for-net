@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,32 +14,40 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HttpReadSettings : IUtf8JsonSerializable
+    public partial class HttpReadSettings : IUtf8JsonSerializable, IJsonModel<HttpReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HttpReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HttpReadSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestMethod))
+            if (RequestMethod != null)
             {
                 writer.WritePropertyName("requestMethod"u8);
                 JsonSerializer.Serialize(writer, RequestMethod);
             }
-            if (Optional.IsDefined(RequestBody))
+            if (RequestBody != null)
             {
                 writer.WritePropertyName("requestBody"u8);
                 JsonSerializer.Serialize(writer, RequestBody);
             }
-            if (Optional.IsDefined(AdditionalHeaders))
+            if (AdditionalHeaders != null)
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 JsonSerializer.Serialize(writer, AdditionalHeaders);
             }
-            if (Optional.IsDefined(RequestTimeout))
+            if (RequestTimeout != null)
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 JsonSerializer.Serialize(writer, RequestTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -52,12 +61,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -77,8 +86,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpReadSettings DeserializeHttpReadSettings(JsonElement element)
+        HttpReadSettings IJsonModel<HttpReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HttpReadSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpReadSettings(document.RootElement, options);
+        }
+
+        internal static HttpReadSettings DeserializeHttpReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -166,7 +189,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, additionalColumns.Value);
+            return new HttpReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                requestMethod.Value,
+                requestBody.Value,
+                additionalHeaders.Value,
+                requestTimeout.Value,
+                additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<HttpReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HttpReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HttpReadSettings IPersistableModel<HttpReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHttpReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HttpReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HttpReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

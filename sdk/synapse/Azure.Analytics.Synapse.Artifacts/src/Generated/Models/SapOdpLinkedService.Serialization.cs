@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -59,92 +59,92 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Server != null)
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteObjectValue(Server);
             }
-            if (Optional.IsDefined(SystemNumber))
+            if (SystemNumber != null)
             {
                 writer.WritePropertyName("systemNumber"u8);
                 writer.WriteObjectValue(SystemNumber);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue(ClientId);
             }
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteObjectValue(Language);
             }
-            if (Optional.IsDefined(SystemId))
+            if (SystemId != null)
             {
                 writer.WritePropertyName("systemId"u8);
                 writer.WriteObjectValue(SystemId);
             }
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(MessageServer))
+            if (MessageServer != null)
             {
                 writer.WritePropertyName("messageServer"u8);
                 writer.WriteObjectValue(MessageServer);
             }
-            if (Optional.IsDefined(MessageServerService))
+            if (MessageServerService != null)
             {
                 writer.WritePropertyName("messageServerService"u8);
                 writer.WriteObjectValue(MessageServerService);
             }
-            if (Optional.IsDefined(SncMode))
+            if (SncMode != null)
             {
                 writer.WritePropertyName("sncMode"u8);
                 writer.WriteObjectValue(SncMode);
             }
-            if (Optional.IsDefined(SncMyName))
+            if (SncMyName != null)
             {
                 writer.WritePropertyName("sncMyName"u8);
                 writer.WriteObjectValue(SncMyName);
             }
-            if (Optional.IsDefined(SncPartnerName))
+            if (SncPartnerName != null)
             {
                 writer.WritePropertyName("sncPartnerName"u8);
                 writer.WriteObjectValue(SncPartnerName);
             }
-            if (Optional.IsDefined(SncLibraryPath))
+            if (SncLibraryPath != null)
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
                 writer.WriteObjectValue(SncLibraryPath);
             }
-            if (Optional.IsDefined(SncQop))
+            if (SncQop != null)
             {
                 writer.WritePropertyName("sncQop"u8);
                 writer.WriteObjectValue(SncQop);
             }
-            if (Optional.IsDefined(X509CertificatePath))
+            if (X509CertificatePath != null)
             {
                 writer.WritePropertyName("x509CertificatePath"u8);
                 writer.WriteObjectValue(X509CertificatePath);
             }
-            if (Optional.IsDefined(LogonGroup))
+            if (LogonGroup != null)
             {
                 writer.WritePropertyName("logonGroup"u8);
                 writer.WriteObjectValue(LogonGroup);
             }
-            if (Optional.IsDefined(SubscriberName))
+            if (SubscriberName != null)
             {
                 writer.WritePropertyName("subscriberName"u8);
                 writer.WriteObjectValue(SubscriberName);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
@@ -167,8 +167,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             Optional<object> server = default;
             Optional<object> systemNumber = default;
             Optional<object> clientId = default;
@@ -422,7 +422,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, x509CertificatePath.Value, logonGroup.Value, subscriberName.Value, encryptedCredential.Value);
+            return new SapOdpLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                server.Value,
+                systemNumber.Value,
+                clientId.Value,
+                language.Value,
+                systemId.Value,
+                userName.Value,
+                password.Value,
+                messageServer.Value,
+                messageServerService.Value,
+                sncMode.Value,
+                sncMyName.Value,
+                sncPartnerName.Value,
+                sncLibraryPath.Value,
+                sncQop.Value,
+                x509CertificatePath.Value,
+                logonGroup.Value,
+                subscriberName.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class SapOdpLinkedServiceConverter : JsonConverter<SapOdpLinkedService>

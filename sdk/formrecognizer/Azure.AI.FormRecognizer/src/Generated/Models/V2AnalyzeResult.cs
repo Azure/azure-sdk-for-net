@@ -19,7 +19,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         internal V2AnalyzeResult(string version)
         {
-            Argument.AssertNotNull(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
 
             Version = version;
             ReadResults = new ChangeTrackingList<ReadResult>();

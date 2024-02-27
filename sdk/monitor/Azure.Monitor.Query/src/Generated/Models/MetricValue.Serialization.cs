@@ -78,7 +78,13 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricValue(timeStamp, Optional.ToNullable(average), Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(total), Optional.ToNullable(count));
+            return new MetricValue(
+                timeStamp,
+                Optional.ToNullable(average),
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(total),
+                Optional.ToNullable(count));
         }
     }
 }

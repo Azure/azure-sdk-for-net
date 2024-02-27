@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSetting(document.RootElement, options);
+            return DeserializeSecuritySettingData(document.RootElement, options);
         }
 
         internal static UnknownSetting DeserializeUnknownSetting(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownSetting(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySettingData>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSetting(document.RootElement, options);
+                        return DeserializeSecuritySettingData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecuritySettingData)} does not support '{options.Format}' format.");

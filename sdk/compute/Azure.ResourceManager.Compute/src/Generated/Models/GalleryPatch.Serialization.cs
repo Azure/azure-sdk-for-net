@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,39 +53,39 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Identifier))
+            if (Identifier != null)
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteObjectValue(Identifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(SharingProfile))
+            if (SharingProfile != null)
             {
                 writer.WritePropertyName("sharingProfile"u8);
                 writer.WriteObjectValue(SharingProfile);
             }
-            if (Optional.IsDefined(SoftDeletePolicy))
+            if (SoftDeletePolicy != null)
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
                 writer.WriteObjectValue(SoftDeletePolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(SharingStatus))
+            if (options.Format != "W" && SharingStatus != null)
             {
                 writer.WritePropertyName("sharingStatus"u8);
                 writer.WriteObjectValue(SharingStatus);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value);
+                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value);
+                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("softDeletePolicy"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value);
+                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sharingStatus"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value);
+                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryPatch(id, name, type, systemData.Value, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value, softDeletePolicy.Value, sharingStatus.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                identifier.Value,
+                Optional.ToNullable(provisioningState),
+                sharingProfile.Value,
+                softDeletePolicy.Value,
+                sharingStatus.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryPatch>.Write(ModelReaderWriterOptions options)

@@ -5,60 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkToNetworkInterconnectPatch : IUtf8JsonSerializable
+    public partial class NetworkToNetworkInterconnectPatch : IUtf8JsonSerializable, IJsonModel<NetworkToNetworkInterconnectPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkToNetworkInterconnectPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkToNetworkInterconnectPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Layer2Configuration))
+            if (Layer2Configuration != null)
             {
                 writer.WritePropertyName("layer2Configuration"u8);
                 writer.WriteObjectValue(Layer2Configuration);
             }
-            if (Optional.IsDefined(OptionBLayer3Configuration))
+            if (OptionBLayer3Configuration != null)
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
                 writer.WriteObjectValue(OptionBLayer3Configuration);
             }
-            if (Optional.IsDefined(NpbStaticRouteConfiguration))
+            if (NpbStaticRouteConfiguration != null)
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
                 writer.WriteObjectValue(NpbStaticRouteConfiguration);
             }
-            if (Optional.IsDefined(ImportRoutePolicy))
+            if (ImportRoutePolicy != null)
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (ExportRoutePolicy != null)
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (Optional.IsDefined(EgressAclId))
+            if (EgressAclId != null)
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (Optional.IsDefined(IngressAclId))
+            if (IngressAclId != null)
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkToNetworkInterconnectPatch DeserializeNetworkToNetworkInterconnectPatch(JsonElement element)
+        NetworkToNetworkInterconnectPatch IJsonModel<NetworkToNetworkInterconnectPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkToNetworkInterconnectPatch(document.RootElement, options);
+        }
+
+        internal static NetworkToNetworkInterconnectPatch DeserializeNetworkToNetworkInterconnectPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +134,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
             Optional<ResourceIdentifier> egressAclId = default;
             Optional<ResourceIdentifier> ingressAclId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -115,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value);
+                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("optionBLayer3Configuration"u8))
@@ -124,7 +186,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(property0.Value);
+                            optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("npbStaticRouteConfiguration"u8))
@@ -133,7 +195,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value);
+                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("importRoutePolicy"u8))
@@ -142,7 +204,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value);
+                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -151,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("egressAclId"u8))
@@ -175,8 +237,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkToNetworkInterconnectPatch(id, name, type, systemData.Value, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                layer2Configuration.Value,
+                optionBLayer3Configuration.Value,
+                npbStaticRouteConfiguration.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                egressAclId.Value,
+                ingressAclId.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkToNetworkInterconnectPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkToNetworkInterconnectPatch IPersistableModel<NetworkToNetworkInterconnectPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkToNetworkInterconnectPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkToNetworkInterconnectPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

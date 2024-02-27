@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(BytesCopied))
+            if (options.Format != "W" && BytesCopied.HasValue)
             {
                 writer.WritePropertyName("bytesCopied"u8);
                 writer.WriteNumberValue(BytesCopied.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
+            if (options.Format != "W" && !(Actions is ChangeTrackingList<CustomerResolutionCode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<int> percentComplete = default;
             Optional<DataBoxCopyStatus> status = default;
             Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            IReadOnlyList<CustomerResolutionCode> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskCopyProgress(serialNumber.Value, Optional.ToNullable(bytesCopied), Optional.ToNullable(percentComplete), Optional.ToNullable(status), error.Value, Optional.ToList(actions), serializedAdditionalRawData);
+            return new DataBoxDiskCopyProgress(
+                serialNumber.Value,
+                Optional.ToNullable(bytesCopied),
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(status),
+                error.Value,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxDiskCopyProgress>.Write(ModelReaderWriterOptions options)

@@ -5,16 +5,166 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KubernetesClusterNode
+    public partial class KubernetesClusterNode : IUtf8JsonSerializable, IJsonModel<KubernetesClusterNode>
     {
-        internal static KubernetesClusterNode DeserializeKubernetesClusterNode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubernetesClusterNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && AgentPoolId != null)
+            {
+                writer.WritePropertyName("agentPoolId"u8);
+                writer.WriteStringValue(AgentPoolId);
+            }
+            if (options.Format != "W" && AvailabilityZone != null)
+            {
+                writer.WritePropertyName("availabilityZone"u8);
+                writer.WriteStringValue(AvailabilityZone);
+            }
+            if (options.Format != "W" && BareMetalMachineId != null)
+            {
+                writer.WritePropertyName("bareMetalMachineId"u8);
+                writer.WriteStringValue(BareMetalMachineId);
+            }
+            if (options.Format != "W" && CpuCores.HasValue)
+            {
+                writer.WritePropertyName("cpuCores"u8);
+                writer.WriteNumberValue(CpuCores.Value);
+            }
+            if (options.Format != "W" && DetailedStatus.HasValue)
+            {
+                writer.WritePropertyName("detailedStatus"u8);
+                writer.WriteStringValue(DetailedStatus.Value.ToString());
+            }
+            if (options.Format != "W" && DetailedStatusMessage != null)
+            {
+                writer.WritePropertyName("detailedStatusMessage"u8);
+                writer.WriteStringValue(DetailedStatusMessage);
+            }
+            if (options.Format != "W" && DiskSizeGB.HasValue)
+            {
+                writer.WritePropertyName("diskSizeGB"u8);
+                writer.WriteNumberValue(DiskSizeGB.Value);
+            }
+            if (options.Format != "W" && Image != null)
+            {
+                writer.WritePropertyName("image"u8);
+                writer.WriteStringValue(Image);
+            }
+            if (options.Format != "W" && KubernetesVersion != null)
+            {
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
+            }
+            if (options.Format != "W" && !(Labels is ChangeTrackingList<KubernetesLabel> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartArray();
+                foreach (var item in Labels)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && MemorySizeGB.HasValue)
+            {
+                writer.WritePropertyName("memorySizeGB"u8);
+                writer.WriteNumberValue(MemorySizeGB.Value);
+            }
+            if (options.Format != "W" && Mode.HasValue)
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
+            if (options.Format != "W" && Name != null)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && !(NetworkAttachments is ChangeTrackingList<NetworkAttachment> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("networkAttachments"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkAttachments)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && PowerState.HasValue)
+            {
+                writer.WritePropertyName("powerState"u8);
+                writer.WriteStringValue(PowerState.Value.ToString());
+            }
+            if (options.Format != "W" && Role.HasValue)
+            {
+                writer.WritePropertyName("role"u8);
+                writer.WriteStringValue(Role.Value.ToString());
+            }
+            if (options.Format != "W" && !(Taints is ChangeTrackingList<KubernetesLabel> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("taints"u8);
+                writer.WriteStartArray();
+                foreach (var item in Taints)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && VmSkuName != null)
+            {
+                writer.WritePropertyName("vmSkuName"u8);
+                writer.WriteStringValue(VmSkuName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KubernetesClusterNode IJsonModel<KubernetesClusterNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesClusterNode(document.RootElement, options);
+        }
+
+        internal static KubernetesClusterNode DeserializeKubernetesClusterNode(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,15 +178,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<long> diskSizeGB = default;
             Optional<string> image = default;
             Optional<string> kubernetesVersion = default;
-            Optional<IReadOnlyList<KubernetesLabel>> labels = default;
+            IReadOnlyList<KubernetesLabel> labels = default;
             Optional<long> memorySizeGB = default;
             Optional<NetworkCloudAgentPoolMode> mode = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<NetworkAttachment>> networkAttachments = default;
+            IReadOnlyList<NetworkAttachment> networkAttachments = default;
             Optional<KubernetesNodePowerState> powerState = default;
             Optional<KubernetesNodeRole> role = default;
-            Optional<IReadOnlyList<KubernetesLabel>> taints = default;
+            IReadOnlyList<KubernetesLabel> taints = default;
             Optional<string> vmSkuName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentPoolId"u8))
@@ -105,7 +257,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<KubernetesLabel> array = new List<KubernetesLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                     }
                     labels = array;
                     continue;
@@ -142,7 +294,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkAttachment> array = new List<NetworkAttachment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkAttachment.DeserializeNetworkAttachment(item));
+                        array.Add(NetworkAttachment.DeserializeNetworkAttachment(item, options));
                     }
                     networkAttachments = array;
                     continue;
@@ -174,7 +326,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<KubernetesLabel> array = new List<KubernetesLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                     }
                     taints = array;
                     continue;
@@ -184,8 +336,63 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     vmSkuName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Optional.ToList(labels), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, Optional.ToList(networkAttachments), Optional.ToNullable(powerState), Optional.ToNullable(role), Optional.ToList(taints), vmSkuName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KubernetesClusterNode(
+                agentPoolId.Value,
+                availabilityZone.Value,
+                bareMetalMachineId.Value,
+                Optional.ToNullable(cpuCores),
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                Optional.ToNullable(diskSizeGB),
+                image.Value,
+                kubernetesVersion.Value,
+                labels ?? new ChangeTrackingList<KubernetesLabel>(),
+                Optional.ToNullable(memorySizeGB),
+                Optional.ToNullable(mode),
+                name.Value,
+                networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
+                Optional.ToNullable(powerState),
+                Optional.ToNullable(role),
+                taints ?? new ChangeTrackingList<KubernetesLabel>(),
+                vmSkuName.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesClusterNode>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KubernetesClusterNode IPersistableModel<KubernetesClusterNode>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesClusterNode(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesClusterNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

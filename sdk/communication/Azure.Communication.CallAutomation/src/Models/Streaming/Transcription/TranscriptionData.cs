@@ -11,16 +11,17 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text, string format, double confidence, ulong offset, IEnumerable<WordData> words, string participantRawID, string resultStatus)
+        internal TranscriptionData(string text, string format, double confidence, ulong offset, ulong duration, IEnumerable<WordData> words, string participantRawID, string resultStatus)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
             Confidence = confidence;
             Offset = offset;
+            Duration = duration;
             Words = words;
             if (participantRawID != null)
             {
-                Participant = new CommunicationUserIdentifier(participantRawID);
+                Participant = CommunicationIdentifier.FromRawId(participantRawID);
             }
             ResultStatus = ConvertToResultStatusEnum(resultStatus);
         }
@@ -47,6 +48,11 @@ namespace Azure.Communication.CallAutomation
         public ulong Offset { get; set; }
 
         /// <summary>
+        /// Duration in ticks. 1 tick = 100 nanoseconds.
+        /// </summary>
+        public ulong Duration { get; set; }
+
+        /// <summary>
         /// The result for each word of the phrase
         /// </summary>
         public IEnumerable<WordData> Words { get; set; }
@@ -54,7 +60,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The identified speaker based on participant raw ID
         /// </summary>
-        public CommunicationUserIdentifier Participant { get; set; }
+        public CommunicationIdentifier Participant { get; set; }
 
         /// <summary>
         /// Status of the result of transcription

@@ -637,7 +637,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.Update");
             scope.Start();
@@ -683,7 +686,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DataProtectionBackupVaultResource> Update(WaitUntil waitUntil, DataProtectionBackupVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.Update");
             scope.Start();
@@ -729,7 +735,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateAdhocBackupAsync(WaitUntil waitUntil, AdhocBackupValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.ValidateAdhocBackup");
             scope.Start();
@@ -775,7 +784,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateAdhocBackup(WaitUntil waitUntil, AdhocBackupValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.ValidateAdhocBackup");
             scope.Start();
@@ -897,8 +909,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupVaultResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.AddTag");
             scope.Start();
@@ -959,8 +977,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DataProtectionBackupVaultResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.AddTag");
             scope.Start();
@@ -1020,7 +1044,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupVaultResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.SetTags");
             scope.Start();
@@ -1077,7 +1104,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DataProtectionBackupVaultResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.SetTags");
             scope.Start();
@@ -1134,7 +1164,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupVaultResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.RemoveTag");
             scope.Start();
@@ -1194,7 +1227,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DataProtectionBackupVaultResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultResource.RemoveTag");
             scope.Start();

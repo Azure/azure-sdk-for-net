@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("searchString"u8);
             writer.WriteStringValue(SearchString);
-            if (Optional.IsDefined(Take))
+            if (Take.HasValue)
             {
                 writer.WritePropertyName("take"u8);
                 writer.WriteNumberValue(Take.Value);

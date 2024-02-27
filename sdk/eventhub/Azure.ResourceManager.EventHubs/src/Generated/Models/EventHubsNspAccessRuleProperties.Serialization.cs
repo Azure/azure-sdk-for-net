@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,19 +14,109 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNspAccessRuleProperties
+    public partial class EventHubsNspAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<EventHubsNspAccessRuleProperties>
     {
-        internal static EventHubsNspAccessRuleProperties DeserializeEventHubsNspAccessRuleProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNspAccessRuleProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventHubsNspAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Direction.HasValue)
+            {
+                writer.WritePropertyName("direction"u8);
+                writer.WriteStringValue(Direction.Value.ToString());
+            }
+            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("addressPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddressPrefixes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(Subscriptions is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("subscriptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Subscriptions)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(NetworkSecurityPerimeters is ChangeTrackingList<EventHubsNetworkSecurityPerimeter> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("networkSecurityPerimeters"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkSecurityPerimeters)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(FullyQualifiedDomainNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("fullyQualifiedDomainNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in FullyQualifiedDomainNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EventHubsNspAccessRuleProperties IJsonModel<EventHubsNspAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsNspAccessRuleProperties(document.RootElement, options);
+        }
+
+        internal static EventHubsNspAccessRuleProperties DeserializeEventHubsNspAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<EventHubsNspAccessRuleDirection> direction = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<IReadOnlyList<SubResource>> subscriptions = default;
-            Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeter>> networkSecurityPerimeters = default;
-            Optional<IReadOnlyList<string>> fullyQualifiedDomainNames = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            IReadOnlyList<SubResource> subscriptions = default;
+            IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IReadOnlyList<string> fullyQualifiedDomainNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -73,7 +165,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsNetworkSecurityPerimeter> array = new List<EventHubsNetworkSecurityPerimeter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(item));
+                        array.Add(EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(item, options));
                     }
                     networkSecurityPerimeters = array;
                     continue;
@@ -92,8 +184,50 @@ namespace Azure.ResourceManager.EventHubs.Models
                     fullyQualifiedDomainNames = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubsNspAccessRuleProperties(
+                Optional.ToNullable(direction),
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                subscriptions ?? new ChangeTrackingList<SubResource>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<EventHubsNetworkSecurityPerimeter>(),
+                fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventHubsNspAccessRuleProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventHubsNspAccessRuleProperties IPersistableModel<EventHubsNspAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventHubsNspAccessRuleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventHubsNspAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

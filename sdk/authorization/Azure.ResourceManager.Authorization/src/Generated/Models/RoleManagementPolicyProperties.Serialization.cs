@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScopeId))
+            if (ScopeId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ScopeId);
             }
-            if (Optional.IsDefined(ScopeDisplayName))
+            if (ScopeDisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(ScopeDisplayName);
             }
-            if (Optional.IsDefined(ScopeType))
+            if (ScopeType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());

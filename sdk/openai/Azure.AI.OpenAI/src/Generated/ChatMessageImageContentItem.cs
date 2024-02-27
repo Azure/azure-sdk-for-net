@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -18,7 +18,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
         public ChatMessageImageContentItem(ChatMessageImageUrl imageUrl)
         {
-            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
+            if (imageUrl == null)
+            {
+                throw new ArgumentNullException(nameof(imageUrl));
+            }
 
             Type = "image_url";
             ImageUrl = imageUrl;
@@ -26,10 +29,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
-        internal ChatMessageImageContentItem(string type, ChatMessageImageUrl imageUrl) : base(type)
+        internal ChatMessageImageContentItem(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ChatMessageImageUrl imageUrl) : base(type, serializedAdditionalRawData)
         {
             ImageUrl = imageUrl;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/> for deserialization. </summary>
+        internal ChatMessageImageContentItem()
+        {
         }
 
         /// <summary> An internet location, which must be accessible to the model,from which the image may be retrieved. </summary>

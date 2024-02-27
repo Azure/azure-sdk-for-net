@@ -6,16 +6,134 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryPipelineRunInfo
+    public partial class DataFactoryPipelineRunInfo : IUtf8JsonSerializable, IJsonModel<DataFactoryPipelineRunInfo>
     {
-        internal static DataFactoryPipelineRunInfo DeserializeDataFactoryPipelineRunInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryPipelineRunInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryPipelineRunInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineRunInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryPipelineRunInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && RunId.HasValue)
+            {
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId.Value);
+            }
+            if (options.Format != "W" && RunGroupId != null)
+            {
+                writer.WritePropertyName("runGroupId"u8);
+                writer.WriteStringValue(RunGroupId);
+            }
+            if (options.Format != "W" && IsLatest.HasValue)
+            {
+                writer.WritePropertyName("isLatest"u8);
+                writer.WriteBooleanValue(IsLatest.Value);
+            }
+            if (options.Format != "W" && PipelineName != null)
+            {
+                writer.WritePropertyName("pipelineName"u8);
+                writer.WriteStringValue(PipelineName);
+            }
+            if (options.Format != "W" && !(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && !(RunDimensions is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("runDimensions"u8);
+                writer.WriteStartObject();
+                foreach (var item in RunDimensions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && InvokedBy != null)
+            {
+                writer.WritePropertyName("invokedBy"u8);
+                writer.WriteObjectValue(InvokedBy);
+            }
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            {
+                writer.WritePropertyName("lastUpdated"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && RunStartOn.HasValue)
+            {
+                writer.WritePropertyName("runStart"u8);
+                writer.WriteStringValue(RunStartOn.Value, "O");
+            }
+            if (options.Format != "W" && RunEndOn.HasValue)
+            {
+                writer.WritePropertyName("runEnd"u8);
+                writer.WriteStringValue(RunEndOn.Value, "O");
+            }
+            if (options.Format != "W" && DurationInMs.HasValue)
+            {
+                writer.WritePropertyName("durationInMs"u8);
+                writer.WriteNumberValue(DurationInMs.Value);
+            }
+            if (options.Format != "W" && Status != null)
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Message != null)
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        DataFactoryPipelineRunInfo IJsonModel<DataFactoryPipelineRunInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineRunInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryPipelineRunInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryPipelineRunInfo(document.RootElement, options);
+        }
+
+        internal static DataFactoryPipelineRunInfo DeserializeDataFactoryPipelineRunInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,8 +142,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> runGroupId = default;
             Optional<bool> isLatest = default;
             Optional<string> pipelineName = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
-            Optional<IReadOnlyDictionary<string, string>> runDimensions = default;
+            IReadOnlyDictionary<string, string> parameters = default;
+            IReadOnlyDictionary<string, string> runDimensions = default;
             Optional<DataFactoryPipelineRunEntityInfo> invokedBy = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<DateTimeOffset> runStart = default;
@@ -99,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    invokedBy = DataFactoryPipelineRunEntityInfo.DeserializeDataFactoryPipelineRunEntityInfo(property.Value);
+                    invokedBy = DataFactoryPipelineRunEntityInfo.DeserializeDataFactoryPipelineRunEntityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdated"u8))
@@ -151,7 +269,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunInfo(Optional.ToNullable(runId), runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), Optional.ToDictionary(runDimensions), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new DataFactoryPipelineRunInfo(
+                Optional.ToNullable(runId),
+                runGroupId.Value,
+                Optional.ToNullable(isLatest),
+                pipelineName.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                runDimensions ?? new ChangeTrackingDictionary<string, string>(),
+                invokedBy.Value,
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(runStart),
+                Optional.ToNullable(runEnd),
+                Optional.ToNullable(durationInMs),
+                status.Value,
+                message.Value,
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFactoryPipelineRunInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineRunInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryPipelineRunInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryPipelineRunInfo IPersistableModel<DataFactoryPipelineRunInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineRunInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryPipelineRunInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryPipelineRunInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryPipelineRunInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

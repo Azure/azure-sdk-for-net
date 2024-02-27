@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumTimeStamp))
+            if (MinimumTimeStamp.HasValue)
             {
                 writer.WritePropertyName("minimumTimeStamp"u8);
                 writer.WriteStringValue(MinimumTimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(MaximumTimeStamp))
+            if (MaximumTimeStamp.HasValue)
             {
                 writer.WritePropertyName("maximumTimeStamp"u8);
                 writer.WriteStringValue(MaximumTimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(Include))
+            if (Include != null)
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStringValue(Include);
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerSupportPackageContent(id, name, type, systemData.Value, Optional.ToNullable(minimumTimeStamp), Optional.ToNullable(maximumTimeStamp), include.Value, serializedAdditionalRawData);
+            return new TriggerSupportPackageContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(minimumTimeStamp),
+                Optional.ToNullable(maximumTimeStamp),
+                include.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerSupportPackageContent>.Write(ModelReaderWriterOptions options)

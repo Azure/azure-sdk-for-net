@@ -5,42 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapTablePartitionSettings : IUtf8JsonSerializable
+    public partial class SapTablePartitionSettings : IUtf8JsonSerializable, IJsonModel<SapTablePartitionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapTablePartitionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SapTablePartitionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapTablePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartitionColumnName))
+            if (PartitionColumnName != null)
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);
             }
-            if (Optional.IsDefined(PartitionUpperBound))
+            if (PartitionUpperBound != null)
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
-            if (Optional.IsDefined(PartitionLowerBound))
+            if (PartitionLowerBound != null)
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 JsonSerializer.Serialize(writer, PartitionLowerBound);
             }
-            if (Optional.IsDefined(MaxPartitionsNumber))
+            if (MaxPartitionsNumber != null)
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
                 JsonSerializer.Serialize(writer, MaxPartitionsNumber);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapTablePartitionSettings DeserializeSapTablePartitionSettings(JsonElement element)
+        SapTablePartitionSettings IJsonModel<SapTablePartitionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapTablePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapTablePartitionSettings(document.RootElement, options);
+        }
+
+        internal static SapTablePartitionSettings DeserializeSapTablePartitionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +89,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> partitionUpperBound = default;
             Optional<DataFactoryElement<string>> partitionLowerBound = default;
             Optional<DataFactoryElement<int>> maxPartitionsNumber = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -87,8 +129,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     maxPartitionsNumber = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SapTablePartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, maxPartitionsNumber.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SapTablePartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, maxPartitionsNumber.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SapTablePartitionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapTablePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SapTablePartitionSettings IPersistableModel<SapTablePartitionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapTablePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapTablePartitionSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapTablePartitionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

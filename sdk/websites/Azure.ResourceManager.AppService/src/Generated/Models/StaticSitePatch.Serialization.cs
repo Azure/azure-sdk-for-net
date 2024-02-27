@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,59 +15,166 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSitePatch : IUtf8JsonSerializable
+    public partial class StaticSitePatch : IUtf8JsonSerializable, IJsonModel<StaticSitePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StaticSitePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepositoryUri))
+            if (options.Format != "W" && DefaultHostname != null)
+            {
+                writer.WritePropertyName("defaultHostname"u8);
+                writer.WriteStringValue(DefaultHostname);
+            }
+            if (RepositoryUri != null)
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(RepositoryToken))
+            if (options.Format != "W" && !(CustomDomains is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("customDomains"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomDomains)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (RepositoryToken != null)
             {
                 writer.WritePropertyName("repositoryToken"u8);
                 writer.WriteStringValue(RepositoryToken);
             }
-            if (Optional.IsDefined(BuildProperties))
+            if (BuildProperties != null)
             {
                 writer.WritePropertyName("buildProperties"u8);
                 writer.WriteObjectValue(BuildProperties);
             }
-            if (Optional.IsDefined(StagingEnvironmentPolicy))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (StagingEnvironmentPolicy.HasValue)
             {
                 writer.WritePropertyName("stagingEnvironmentPolicy"u8);
                 writer.WriteStringValue(StagingEnvironmentPolicy.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AllowConfigFileUpdates))
+            if (AllowConfigFileUpdates.HasValue)
             {
                 writer.WritePropertyName("allowConfigFileUpdates"u8);
                 writer.WriteBooleanValue(AllowConfigFileUpdates.Value);
             }
-            if (Optional.IsDefined(TemplateProperties))
+            if (TemplateProperties != null)
             {
                 writer.WritePropertyName("templateProperties"u8);
                 writer.WriteObjectValue(TemplateProperties);
             }
+            if (options.Format != "W" && ContentDistributionEndpoint != null)
+            {
+                writer.WritePropertyName("contentDistributionEndpoint"u8);
+                writer.WriteStringValue(ContentDistributionEndpoint);
+            }
+            if (options.Format != "W" && KeyVaultReferenceIdentity != null)
+            {
+                writer.WritePropertyName("keyVaultReferenceIdentity"u8);
+                writer.WriteStringValue(KeyVaultReferenceIdentity);
+            }
+            if (options.Format != "W" && !(UserProvidedFunctionApps is ChangeTrackingList<StaticSiteUserProvidedFunctionAppData> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("userProvidedFunctionApps"u8);
+                writer.WriteStartArray();
+                foreach (var item in UserProvidedFunctionApps)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Provider != null)
+            {
+                writer.WritePropertyName("provider"u8);
+                writer.WriteStringValue(Provider);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StaticSitePatch DeserializeStaticSitePatch(JsonElement element)
+        StaticSitePatch IJsonModel<StaticSitePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticSitePatch(document.RootElement, options);
+        }
+
+        internal static StaticSitePatch DeserializeStaticSitePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,17 +187,19 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> defaultHostname = default;
             Optional<Uri> repositoryUrl = default;
             Optional<string> branch = default;
-            Optional<IReadOnlyList<string>> customDomains = default;
+            IReadOnlyList<string> customDomains = default;
             Optional<string> repositoryToken = default;
             Optional<StaticSiteBuildProperties> buildProperties = default;
-            Optional<IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>> privateEndpointConnections = default;
+            IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default;
             Optional<StagingEnvironmentPolicy> stagingEnvironmentPolicy = default;
             Optional<bool> allowConfigFileUpdates = default;
             Optional<StaticSiteTemplate> templateProperties = default;
             Optional<string> contentDistributionEndpoint = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
+            IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
             Optional<string> provider = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -174,7 +284,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value);
+                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -186,7 +296,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<ResponseMessageEnvelopeRemotePrivateEndpointConnection> array = new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item));
+                                array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -215,7 +325,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            templateProperties = StaticSiteTemplate.DeserializeStaticSiteTemplate(property0.Value);
+                            templateProperties = StaticSiteTemplate.DeserializeStaticSiteTemplate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contentDistributionEndpoint"u8))
@@ -237,7 +347,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item));
+                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item, options));
                             }
                             userProvidedFunctionApps = array;
                             continue;
@@ -250,8 +360,64 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StaticSitePatch(id, name, type, systemData.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StaticSitePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                defaultHostname.Value,
+                repositoryUrl.Value,
+                branch.Value,
+                customDomains ?? new ChangeTrackingList<string>(),
+                repositoryToken.Value,
+                buildProperties.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(),
+                Optional.ToNullable(stagingEnvironmentPolicy),
+                Optional.ToNullable(allowConfigFileUpdates),
+                templateProperties.Value,
+                contentDistributionEndpoint.Value,
+                keyVaultReferenceIdentity.Value,
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                provider.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StaticSitePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StaticSitePatch IPersistableModel<StaticSitePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStaticSitePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StaticSitePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

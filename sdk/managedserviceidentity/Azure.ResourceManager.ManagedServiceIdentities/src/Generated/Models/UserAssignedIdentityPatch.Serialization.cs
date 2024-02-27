@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,12 +14,20 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
-    public partial class UserAssignedIdentityPatch : IUtf8JsonSerializable
+    public partial class UserAssignedIdentityPatch : IUtf8JsonSerializable, IJsonModel<UserAssignedIdentityPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentityPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UserAssignedIdentityPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserAssignedIdentityPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -31,19 +40,83 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && TenantId.HasValue)
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (options.Format != "W" && PrincipalId.HasValue)
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (options.Format != "W" && ClientId.HasValue)
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UserAssignedIdentityPatch DeserializeUserAssignedIdentityPatch(JsonElement element)
+        UserAssignedIdentityPatch IJsonModel<UserAssignedIdentityPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserAssignedIdentityPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserAssignedIdentityPatch(document.RootElement, options);
+        }
+
+        internal static UserAssignedIdentityPatch DeserializeUserAssignedIdentityPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -52,6 +125,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             Optional<Guid> tenantId = default;
             Optional<Guid> principalId = default;
             Optional<Guid> clientId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -136,8 +211,54 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UserAssignedIdentityPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(tenantId), Optional.ToNullable(principalId), Optional.ToNullable(clientId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UserAssignedIdentityPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(clientId),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UserAssignedIdentityPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UserAssignedIdentityPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        UserAssignedIdentityPatch IPersistableModel<UserAssignedIdentityPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUserAssignedIdentityPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserAssignedIdentityPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UserAssignedIdentityPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

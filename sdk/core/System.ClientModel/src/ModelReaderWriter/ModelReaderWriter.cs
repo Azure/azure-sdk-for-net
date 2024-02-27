@@ -31,11 +31,11 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        if (IsJsonFormatRequested(model, options) && model is IJsonModel<T> jsonModel)
+        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
         {
-            using (ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options))
+            using (UnsafeBufferSequence.Reader reader = new ModelWriter<T>(jsonModel, options).ExtractReader())
             {
-                return writer.ToBinaryData();
+                return reader.ToBinaryData();
             }
         }
         else
@@ -68,11 +68,11 @@ public static class ModelReaderWriter
             throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
         }
 
-        if (IsJsonFormatRequested(iModel, options) && model is IJsonModel<object> jsonModel)
+        if (ShouldWriteAsJson(iModel, options, out IJsonModel<object>? jsonModel))
         {
-            using (ModelWriter<object> writer = new ModelWriter<object>(jsonModel, options))
+            using (UnsafeBufferSequence.Reader reader = new ModelWriter<object>(jsonModel, options).ExtractReader())
             {
-                return writer.ToBinaryData();
+                return reader.ToBinaryData();
             }
         }
         else
@@ -171,6 +171,27 @@ public static class ModelReaderWriter
         }
         return obj;
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool ShouldWriteAsJson<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+        => ShouldWriteAsJson(model, options, out _);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool ShouldWriteAsJson<T>(IPersistableModel<T> model, ModelReaderWriterOptions options, [MaybeNullWhen(false)] out IJsonModel<T> jsonModel)
+    {
+        if (IsJsonFormatRequested(model, options) && model is IJsonModel<T> iJsonModel)
+        {
+            jsonModel = iJsonModel;
+            return true;
+        }
+
+        jsonModel = default;
+        return false;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool ShouldWriteAsJson(IPersistableModel<object> model, ModelReaderWriterOptions options, [MaybeNullWhen(false)] out IJsonModel<object> jsonModel)
+        => ShouldWriteAsJson<object>(model, options, out jsonModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)

@@ -22,8 +22,8 @@ namespace Azure.Communication.Chat
             }
             Optional<string> message = default;
             Optional<string> topic = default;
-            Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
-            Optional<IReadOnlyList<ChatAttachmentInternal>> attachments = default;
+            IReadOnlyList<ChatParticipantInternal> participants = default;
+            IReadOnlyList<ChatAttachmentInternal> attachments = default;
             Optional<CommunicationIdentifierModel> initiatorCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageContentInternal(message.Value, topic.Value, Optional.ToList(participants), Optional.ToList(attachments), initiatorCommunicationIdentifier.Value);
+            return new ChatMessageContentInternal(message.Value, topic.Value, participants ?? new ChangeTrackingList<ChatParticipantInternal>(), attachments ?? new ChangeTrackingList<ChatAttachmentInternal>(), initiatorCommunicationIdentifier.Value);
         }
     }
 }

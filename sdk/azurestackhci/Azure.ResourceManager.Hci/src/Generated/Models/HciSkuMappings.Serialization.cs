@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogPlanId))
+            if (CatalogPlanId != null)
             {
                 writer.WritePropertyName("catalogPlanId"u8);
                 writer.WriteStringValue(CatalogPlanId);
             }
-            if (Optional.IsDefined(MarketplaceSkuId))
+            if (MarketplaceSkuId != null)
             {
                 writer.WritePropertyName("marketplaceSkuId"u8);
                 writer.WriteStringValue(MarketplaceSkuId);
             }
-            if (Optional.IsCollectionDefined(MarketplaceSkuVersions))
+            if (!(MarketplaceSkuVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("marketplaceSkuVersions"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             Optional<string> catalogPlanId = default;
             Optional<string> marketplaceSkuId = default;
-            Optional<IList<string>> marketplaceSkuVersions = default;
+            IList<string> marketplaceSkuVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, Optional.ToList(marketplaceSkuVersions), serializedAdditionalRawData);
+            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, marketplaceSkuVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciSkuMappings>.Write(ModelReaderWriterOptions options)

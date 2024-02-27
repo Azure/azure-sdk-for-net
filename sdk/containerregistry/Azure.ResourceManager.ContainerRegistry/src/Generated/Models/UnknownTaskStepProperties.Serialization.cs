@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(BaseImageDependencies))
+            if (options.Format != "W" && !(BaseImageDependencies is ChangeTrackingList<ContainerRegistryBaseImageDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("baseImageDependencies"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContextPath))
+            if (ContextPath != null)
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(ContextAccessToken))
+            if (ContextAccessToken != null)
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTaskStepProperties(document.RootElement, options);
+            return DeserializeContainerRegistryTaskStepProperties(document.RootElement, options);
         }
 
         internal static UnknownTaskStepProperties DeserializeUnknownTaskStepProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryTaskStepType type = "Unknown";
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
+            IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
             Optional<string> contextPath = default;
             Optional<string> contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
+                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownTaskStepProperties(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData);
+            return new UnknownTaskStepProperties(type, baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskStepProperties>.Write(ModelReaderWriterOptions options)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTaskStepProperties(document.RootElement, options);
+                        return DeserializeContainerRegistryTaskStepProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support '{options.Format}' format.");

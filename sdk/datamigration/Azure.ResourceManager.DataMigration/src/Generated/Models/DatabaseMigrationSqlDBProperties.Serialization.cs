@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
+            if (options.Format != "W" && MigrationStatusDetails != null)
             {
                 writer.WritePropertyName("migrationStatusDetails"u8);
                 writer.WriteObjectValue(MigrationStatusDetails);
             }
-            if (Optional.IsDefined(TargetSqlConnection))
+            if (TargetSqlConnection != null)
             {
                 writer.WritePropertyName("targetSqlConnection"u8);
                 writer.WriteObjectValue(TargetSqlConnection);
             }
-            if (options.Format != "W" && Optional.IsDefined(OfflineConfiguration))
+            if (options.Format != "W" && OfflineConfiguration != null)
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
                 writer.WriteObjectValue(OfflineConfiguration);
             }
-            if (Optional.IsCollectionDefined(TableList))
+            if (!(TableList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tableList"u8);
                 writer.WriteStartArray();
@@ -53,67 +53,67 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationStatus))
+            if (options.Format != "W" && MigrationStatus != null)
             {
                 writer.WritePropertyName("migrationStatus"u8);
                 writer.WriteStringValue(MigrationStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceSqlConnection))
+            if (SourceSqlConnection != null)
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
                 writer.WriteObjectValue(SourceSqlConnection);
             }
-            if (Optional.IsDefined(SourceDatabaseName))
+            if (SourceDatabaseName != null)
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerName))
+            if (options.Format != "W" && SourceServerName != null)
             {
                 writer.WritePropertyName("sourceServerName"u8);
                 writer.WriteStringValue(SourceServerName);
             }
-            if (Optional.IsDefined(MigrationService))
+            if (MigrationService != null)
             {
                 writer.WritePropertyName("migrationService"u8);
                 writer.WriteStringValue(MigrationService);
             }
-            if (Optional.IsDefined(MigrationOperationId))
+            if (MigrationOperationId != null)
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
+            if (options.Format != "W" && MigrationFailureError != null)
             {
                 writer.WritePropertyName("migrationFailureError"u8);
                 writer.WriteObjectValue(MigrationFailureError);
             }
-            if (Optional.IsDefined(TargetDatabaseCollation))
+            if (TargetDatabaseCollation != null)
             {
                 writer.WritePropertyName("targetDatabaseCollation"u8);
                 writer.WriteStringValue(TargetDatabaseCollation);
             }
-            if (Optional.IsDefined(ProvisioningError))
+            if (ProvisioningError != null)
             {
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<SqlDBMigrationStatusDetails> migrationStatusDetails = default;
             Optional<SqlConnectionInformation> targetSqlConnection = default;
             Optional<SqlDBOfflineConfiguration> offlineConfiguration = default;
-            Optional<IList<string>> tableList = default;
+            IList<string> tableList = default;
             ResourceType kind = default;
             Optional<string> scope = default;
             Optional<string> provisioningState = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationStatusDetails = SqlDBMigrationStatusDetails.DeserializeSqlDBMigrationStatusDetails(property.Value);
+                    migrationStatusDetails = SqlDBMigrationStatusDetails.DeserializeSqlDBMigrationStatusDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetSqlConnection"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value);
+                    targetSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offlineConfiguration"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    offlineConfiguration = SqlDBOfflineConfiguration.DeserializeSqlDBOfflineConfiguration(property.Value);
+                    offlineConfiguration = SqlDBOfflineConfiguration.DeserializeSqlDBOfflineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tableList"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value);
+                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseName"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value);
+                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDatabaseCollation"u8))
@@ -311,7 +311,26 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseMigrationSqlDBProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData, migrationStatusDetails.Value, targetSqlConnection.Value, offlineConfiguration.Value, Optional.ToList(tableList));
+            return new DatabaseMigrationSqlDBProperties(
+                kind,
+                scope.Value,
+                provisioningState.Value,
+                migrationStatus.Value,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                sourceSqlConnection.Value,
+                sourceDatabaseName.Value,
+                sourceServerName.Value,
+                migrationService.Value,
+                migrationOperationId.Value,
+                migrationFailureError.Value,
+                targetDatabaseCollation.Value,
+                provisioningError.Value,
+                serializedAdditionalRawData,
+                migrationStatusDetails.Value,
+                targetSqlConnection.Value,
+                offlineConfiguration.Value,
+                tableList ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DatabaseMigrationSqlDBProperties>.Write(ModelReaderWriterOptions options)

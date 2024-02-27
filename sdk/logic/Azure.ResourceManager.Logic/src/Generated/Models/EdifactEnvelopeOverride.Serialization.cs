@@ -5,96 +5,136 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactEnvelopeOverride : IUtf8JsonSerializable
+    public partial class EdifactEnvelopeOverride : IUtf8JsonSerializable, IJsonModel<EdifactEnvelopeOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactEnvelopeOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdifactEnvelopeOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdifactEnvelopeOverride)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageId))
+            if (MessageId != null)
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(MessageVersion))
+            if (MessageVersion != null)
             {
                 writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
-            if (Optional.IsDefined(MessageRelease))
+            if (MessageRelease != null)
             {
                 writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
             }
-            if (Optional.IsDefined(MessageAssociationAssignedCode))
+            if (MessageAssociationAssignedCode != null)
             {
                 writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
-            if (Optional.IsDefined(TargetNamespace))
+            if (TargetNamespace != null)
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
-            if (Optional.IsDefined(FunctionalGroupId))
+            if (FunctionalGroupId != null)
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
             }
-            if (Optional.IsDefined(SenderApplicationQualifier))
+            if (SenderApplicationQualifier != null)
             {
                 writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
-            if (Optional.IsDefined(SenderApplicationId))
+            if (SenderApplicationId != null)
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            if (Optional.IsDefined(ReceiverApplicationQualifier))
+            if (ReceiverApplicationQualifier != null)
             {
                 writer.WritePropertyName("receiverApplicationQualifier"u8);
                 writer.WriteStringValue(ReceiverApplicationQualifier);
             }
-            if (Optional.IsDefined(ReceiverApplicationId))
+            if (ReceiverApplicationId != null)
             {
                 writer.WritePropertyName("receiverApplicationId"u8);
                 writer.WriteStringValue(ReceiverApplicationId);
             }
-            if (Optional.IsDefined(ControllingAgencyCode))
+            if (ControllingAgencyCode != null)
             {
                 writer.WritePropertyName("controllingAgencyCode"u8);
                 writer.WriteStringValue(ControllingAgencyCode);
             }
-            if (Optional.IsDefined(GroupHeaderMessageVersion))
+            if (GroupHeaderMessageVersion != null)
             {
                 writer.WritePropertyName("groupHeaderMessageVersion"u8);
                 writer.WriteStringValue(GroupHeaderMessageVersion);
             }
-            if (Optional.IsDefined(GroupHeaderMessageRelease))
+            if (GroupHeaderMessageRelease != null)
             {
                 writer.WritePropertyName("groupHeaderMessageRelease"u8);
                 writer.WriteStringValue(GroupHeaderMessageRelease);
             }
-            if (Optional.IsDefined(AssociationAssignedCode))
+            if (AssociationAssignedCode != null)
             {
                 writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
             }
-            if (Optional.IsDefined(ApplicationPassword))
+            if (ApplicationPassword != null)
             {
                 writer.WritePropertyName("applicationPassword"u8);
                 writer.WriteStringValue(ApplicationPassword);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdifactEnvelopeOverride DeserializeEdifactEnvelopeOverride(JsonElement element)
+        EdifactEnvelopeOverride IJsonModel<EdifactEnvelopeOverride>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdifactEnvelopeOverride)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactEnvelopeOverride(document.RootElement, options);
+        }
+
+        internal static EdifactEnvelopeOverride DeserializeEdifactEnvelopeOverride(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,6 +154,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> groupHeaderMessageRelease = default;
             Optional<string> associationAssignedCode = default;
             Optional<string> applicationPassword = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -191,8 +233,60 @@ namespace Azure.ResourceManager.Logic.Models
                     applicationPassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdifactEnvelopeOverride(messageId.Value, messageVersion.Value, messageRelease.Value, messageAssociationAssignedCode.Value, targetNamespace.Value, functionalGroupId.Value, senderApplicationQualifier.Value, senderApplicationId.Value, receiverApplicationQualifier.Value, receiverApplicationId.Value, controllingAgencyCode.Value, groupHeaderMessageVersion.Value, groupHeaderMessageRelease.Value, associationAssignedCode.Value, applicationPassword.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdifactEnvelopeOverride(
+                messageId.Value,
+                messageVersion.Value,
+                messageRelease.Value,
+                messageAssociationAssignedCode.Value,
+                targetNamespace.Value,
+                functionalGroupId.Value,
+                senderApplicationQualifier.Value,
+                senderApplicationId.Value,
+                receiverApplicationQualifier.Value,
+                receiverApplicationId.Value,
+                controllingAgencyCode.Value,
+                groupHeaderMessageVersion.Value,
+                groupHeaderMessageRelease.Value,
+                associationAssignedCode.Value,
+                applicationPassword.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdifactEnvelopeOverride>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdifactEnvelopeOverride)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EdifactEnvelopeOverride IPersistableModel<EdifactEnvelopeOverride>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdifactEnvelopeOverride(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdifactEnvelopeOverride)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdifactEnvelopeOverride>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsCollectionDefined(Passwords))
+            if (!(Passwords is ChangeTrackingList<ContainerRegistryPassword> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             Optional<string> username = default;
-            Optional<IReadOnlyList<ContainerRegistryPassword>> passwords = default;
+            IReadOnlyList<ContainerRegistryPassword> passwords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryPassword> array = new List<ContainerRegistryPassword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryPassword.DeserializeContainerRegistryPassword(item));
+                        array.Add(ContainerRegistryPassword.DeserializeContainerRegistryPassword(item, options));
                     }
                     passwords = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryListCredentialsResult(username.Value, Optional.ToList(passwords), serializedAdditionalRawData);
+            return new ContainerRegistryListCredentialsResult(username.Value, passwords ?? new ChangeTrackingList<ContainerRegistryPassword>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryListCredentialsResult>.Write(ModelReaderWriterOptions options)

@@ -5,40 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuSetting : IUtf8JsonSerializable
+    public partial class ResourceTypeSkuSetting : IUtf8JsonSerializable, IJsonModel<ResourceTypeSkuSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeSkuSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceTypeSkuSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuSetting>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceTypeSkuSetting)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(Size))
+            if (Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Family))
+            if (Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -48,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocationInfo))
+            if (!(LocationInfo is ChangeTrackingList<ResourceTypeSkuLocationInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -58,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredQuotaIds))
+            if (!(RequiredQuotaIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("requiredQuotaIds"u8);
                 writer.WriteStartArray();
@@ -68,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredFeatures))
+            if (!(RequiredFeatures is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -78,12 +88,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Optional.IsCollectionDefined(Costs))
+            if (!(Costs is ChangeTrackingList<ResourceTypeSkuCost> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -93,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<ResourceSkuCapability> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -103,11 +113,40 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeSkuSetting DeserializeResourceTypeSkuSetting(JsonElement element)
+        ResourceTypeSkuSetting IJsonModel<ResourceTypeSkuSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuSetting>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceTypeSkuSetting)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeSkuSetting(document.RootElement, options);
+        }
+
+        internal static ResourceTypeSkuSetting DeserializeResourceTypeSkuSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,13 +156,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<string> kind = default;
-            Optional<IList<string>> locations = default;
-            Optional<IList<ResourceTypeSkuLocationInfo>> locationInfo = default;
-            Optional<IList<string>> requiredQuotaIds = default;
-            Optional<IList<string>> requiredFeatures = default;
+            IList<string> locations = default;
+            IList<ResourceTypeSkuLocationInfo> locationInfo = default;
+            IList<string> requiredQuotaIds = default;
+            IList<string> requiredFeatures = default;
             Optional<ResourceTypeSkuCapacity> capacity = default;
-            Optional<IList<ResourceTypeSkuCost>> costs = default;
-            Optional<IList<ResourceSkuCapability>> capabilities = default;
+            IList<ResourceTypeSkuCost> costs = default;
+            IList<ResourceSkuCapability> capabilities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -174,7 +215,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuLocationInfo> array = new List<ResourceTypeSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuLocationInfo.DeserializeResourceTypeSkuLocationInfo(item));
+                        array.Add(ResourceTypeSkuLocationInfo.DeserializeResourceTypeSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -213,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    capacity = ResourceTypeSkuCapacity.DeserializeResourceTypeSkuCapacity(property.Value);
+                    capacity = ResourceTypeSkuCapacity.DeserializeResourceTypeSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("costs"u8))
@@ -225,7 +266,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuCost> array = new List<ResourceTypeSkuCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuCost.DeserializeResourceTypeSkuCost(item));
+                        array.Add(ResourceTypeSkuCost.DeserializeResourceTypeSkuCost(item, options));
                     }
                     costs = array;
                     continue;
@@ -239,13 +280,62 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceSkuCapability> array = new List<ResourceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item));
+                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(requiredQuotaIds), Optional.ToList(requiredFeatures), capacity.Value, Optional.ToList(costs), Optional.ToList(capabilities));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceTypeSkuSetting(
+                name,
+                tier.Value,
+                size.Value,
+                family.Value,
+                kind.Value,
+                locations ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<ResourceTypeSkuLocationInfo>(),
+                requiredQuotaIds ?? new ChangeTrackingList<string>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                capacity.Value,
+                costs ?? new ChangeTrackingList<ResourceTypeSkuCost>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceTypeSkuSetting>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuSetting>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeSkuSetting)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ResourceTypeSkuSetting IPersistableModel<ResourceTypeSkuSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuSetting>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceTypeSkuSetting(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeSkuSetting)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceTypeSkuSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

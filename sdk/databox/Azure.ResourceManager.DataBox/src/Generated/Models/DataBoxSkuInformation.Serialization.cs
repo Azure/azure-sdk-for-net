@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Sku))
+            if (options.Format != "W" && Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataLocationToServiceLocationMap))
+            if (options.Format != "W" && !(DataLocationToServiceLocationMap is ChangeTrackingList<DataLocationToServiceLocationMap> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataLocationToServiceLocationMap"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Capacity))
+            if (options.Format != "W" && Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
+            if (options.Format != "W" && !(Costs is ChangeTrackingList<DataBoxSkuCost> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
+            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DisabledReason))
+            if (options.Format != "W" && DisabledReason.HasValue)
             {
                 writer.WritePropertyName("disabledReason"u8);
                 writer.WriteStringValue(DisabledReason.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisabledReasonMessage))
+            if (options.Format != "W" && DisabledReasonMessage != null)
             {
                 writer.WritePropertyName("disabledReasonMessage"u8);
                 writer.WriteStringValue(DisabledReasonMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequiredFeature))
+            if (options.Format != "W" && RequiredFeature != null)
             {
                 writer.WritePropertyName("requiredFeature"u8);
                 writer.WriteStringValue(RequiredFeature);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CountriesWithinCommerceBoundary))
+            if (options.Format != "W" && !(CountriesWithinCommerceBoundary is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("countriesWithinCommerceBoundary"u8);
                 writer.WriteStartArray();
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             Optional<DataBoxSku> sku = default;
             Optional<bool> enabled = default;
-            Optional<IReadOnlyList<DataLocationToServiceLocationMap>> dataLocationToServiceLocationMap = default;
+            IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = default;
             Optional<DataBoxSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<DataBoxSkuCost>> costs = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
+            IReadOnlyList<DataBoxSkuCost> costs = default;
+            IReadOnlyList<string> apiVersions = default;
             Optional<SkuDisabledReason> disabledReason = default;
             Optional<string> disabledReasonMessage = default;
             Optional<string> requiredFeature = default;
-            Optional<IReadOnlyList<string>> countriesWithinCommerceBoundary = default;
+            IReadOnlyList<string> countriesWithinCommerceBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
+                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enabled"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataLocationToServiceLocationMap> array = new List<DataLocationToServiceLocationMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.DataLocationToServiceLocationMap.DeserializeDataLocationToServiceLocationMap(item));
+                                array.Add(Models.DataLocationToServiceLocationMap.DeserializeDataLocationToServiceLocationMap(item, options));
                             }
                             dataLocationToServiceLocationMap = array;
                             continue;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value);
+                            capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("costs"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxSkuCost> array = new List<DataBoxSkuCost>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxSkuCost.DeserializeDataBoxSkuCost(item));
+                                array.Add(DataBoxSkuCost.DeserializeDataBoxSkuCost(item, options));
                             }
                             costs = array;
                             continue;
@@ -271,7 +271,18 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Optional.ToList(countriesWithinCommerceBoundary), serializedAdditionalRawData);
+            return new DataBoxSkuInformation(
+                sku.Value,
+                Optional.ToNullable(enabled),
+                dataLocationToServiceLocationMap ?? new ChangeTrackingList<DataLocationToServiceLocationMap>(),
+                capacity.Value,
+                costs ?? new ChangeTrackingList<DataBoxSkuCost>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(disabledReason),
+                disabledReasonMessage.Value,
+                requiredFeature.Value,
+                countriesWithinCommerceBoundary ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuInformation>.Write(ModelReaderWriterOptions options)

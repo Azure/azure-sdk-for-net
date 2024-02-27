@@ -5,19 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class UpdateReplicationProtectedItemProviderContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownUpdateReplicationProtectedItemProviderContent))]
+    public partial class UpdateReplicationProtectedItemProviderContent : IUtf8JsonSerializable, IJsonModel<UpdateReplicationProtectedItemProviderContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateReplicationProtectedItemProviderContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UpdateReplicationProtectedItemProviderContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProviderContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        UpdateReplicationProtectedItemProviderContent IJsonModel<UpdateReplicationProtectedItemProviderContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProviderContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateReplicationProtectedItemProviderContent(document.RootElement, options);
+        }
+
+        internal static UpdateReplicationProtectedItemProviderContent DeserializeUpdateReplicationProtectedItemProviderContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "A2A": return A2AUpdateReplicationProtectedItemContent.DeserializeA2AUpdateReplicationProtectedItemContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureUpdateReplicationProtectedItemContent.DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2UpdateReplicationProtectedItemContent.DeserializeInMageAzureV2UpdateReplicationProtectedItemContent(element, options);
+                    case "InMageRcm": return InMageRcmUpdateReplicationProtectedItemContent.DeserializeInMageRcmUpdateReplicationProtectedItemContent(element, options);
+                }
+            }
+            return UnknownUpdateReplicationProtectedItemProviderContent.DeserializeUnknownUpdateReplicationProtectedItemProviderContent(element, options);
+        }
+
+        BinaryData IPersistableModel<UpdateReplicationProtectedItemProviderContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProviderContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        UpdateReplicationProtectedItemProviderContent IPersistableModel<UpdateReplicationProtectedItemProviderContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProviderContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUpdateReplicationProtectedItemProviderContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UpdateReplicationProtectedItemProviderContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

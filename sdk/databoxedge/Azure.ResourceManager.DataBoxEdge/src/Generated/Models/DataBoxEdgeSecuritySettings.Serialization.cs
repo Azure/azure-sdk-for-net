@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("deviceAdminPassword"u8))
                         {
-                            deviceAdminPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
+                            deviceAdminPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
                             continue;
                         }
                     }
@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeSecuritySettings(id, name, type, systemData.Value, deviceAdminPassword, serializedAdditionalRawData);
+            return new DataBoxEdgeSecuritySettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deviceAdminPassword,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeSecuritySettings>.Write(ModelReaderWriterOptions options)

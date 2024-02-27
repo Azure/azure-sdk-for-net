@@ -372,7 +372,10 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ElasticMonitorResource>> UpdateAsync(ElasticMonitorResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
             scope.Start();
@@ -414,7 +417,10 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ElasticMonitorResource> Update(ElasticMonitorResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
             scope.Start();
@@ -453,7 +459,7 @@ namespace Azure.ResourceManager.Elastic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoredResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MonitoredResourceContent.DeserializeMonitoredResourceContent, _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MonitoredResourceContent.DeserializeMonitoredResourceContent(e), _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -479,7 +485,7 @@ namespace Azure.ResourceManager.Elastic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoredResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MonitoredResourceContent.DeserializeMonitoredResourceContent, _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MonitoredResourceContent.DeserializeMonitoredResourceContent(e), _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -573,7 +579,7 @@ namespace Azure.ResourceManager.Elastic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vmHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vmHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VmResources.DeserializeVmResources, _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VmResources.DeserializeVmResources(e), _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -599,7 +605,7 @@ namespace Azure.ResourceManager.Elastic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vmHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vmHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VmResources.DeserializeVmResources, _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VmResources.DeserializeVmResources(e), _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -767,8 +773,14 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ElasticMonitorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.AddTag");
             scope.Start();
@@ -829,8 +841,14 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ElasticMonitorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.AddTag");
             scope.Start();
@@ -890,7 +908,10 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ElasticMonitorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.SetTags");
             scope.Start();
@@ -947,7 +968,10 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ElasticMonitorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.SetTags");
             scope.Start();
@@ -1004,7 +1028,10 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ElasticMonitorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.RemoveTag");
             scope.Start();
@@ -1064,7 +1091,10 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ElasticMonitorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.RemoveTag");
             scope.Start();

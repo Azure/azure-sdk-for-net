@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Text);
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
-            if (Optional.IsDefined(Subcategory))
+            if (Subcategory != null)
             {
                 writer.WritePropertyName("subcategory"u8);
                 writer.WriteStringValue(Subcategory);
@@ -32,17 +32,17 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteNumberValue(Length);
             writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
-            if (Optional.IsDefined(Assertion))
+            if (Assertion != null)
             {
                 writer.WritePropertyName("assertion"u8);
                 writer.WriteObjectValue(Assertion);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<EntityDataSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Models
             double confidenceScore = default;
             Optional<HealthcareEntityAssertion> assertion = default;
             Optional<string> name = default;
-            Optional<IList<EntityDataSource>> links = default;
+            IList<EntityDataSource> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -131,7 +131,16 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links));
+            return new HealthcareEntityInternal(
+                text,
+                category,
+                subcategory.Value,
+                offset,
+                length,
+                confidenceScore,
+                assertion.Value,
+                name.Value,
+                links ?? new ChangeTrackingList<EntityDataSource>());
         }
     }
 }

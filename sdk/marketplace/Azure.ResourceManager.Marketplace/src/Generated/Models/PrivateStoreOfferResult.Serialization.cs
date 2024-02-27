@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +14,129 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStoreOfferResult
+    public partial class PrivateStoreOfferResult : IUtf8JsonSerializable, IJsonModel<PrivateStoreOfferResult>
     {
-        internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreOfferResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrivateStoreOfferResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateStoreOfferResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && UniqueOfferId != null)
+            {
+                writer.WritePropertyName("uniqueOfferId"u8);
+                writer.WriteStringValue(UniqueOfferId);
+            }
+            if (options.Format != "W" && OfferDisplayName != null)
+            {
+                writer.WritePropertyName("offerDisplayName"u8);
+                writer.WriteStringValue(OfferDisplayName);
+            }
+            if (options.Format != "W" && PublisherDisplayName != null)
+            {
+                writer.WritePropertyName("publisherDisplayName"u8);
+                writer.WriteStringValue(PublisherDisplayName);
+            }
+            if (ETag.HasValue)
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W" && PrivateStoreId.HasValue)
+            {
+                writer.WritePropertyName("privateStoreId"u8);
+                writer.WriteStringValue(PrivateStoreId.Value);
+            }
+            if (options.Format != "W" && CreatedOn.HasValue)
+            {
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && ModifiedOn.HasValue)
+            {
+                writer.WritePropertyName("modifiedAt"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
+            }
+            if (!(SpecificPlanIdsLimitation is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("specificPlanIdsLimitation"u8);
+                writer.WriteStartArray();
+                foreach (var item in SpecificPlanIdsLimitation)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (IsUpdateSuppressedDueToIdempotence.HasValue)
+            {
+                writer.WritePropertyName("updateSuppressedDueIdempotence"u8);
+                writer.WriteBooleanValue(IsUpdateSuppressedDueToIdempotence.Value);
+            }
+            if (!(IconFileUris is ChangeTrackingDictionary<string, Uri> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("iconFileUris"u8);
+                writer.WriteStartObject();
+                foreach (var item in IconFileUris)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value.AbsoluteUri);
+                }
+                writer.WriteEndObject();
+            }
+            if (!(Plans is ChangeTrackingList<PrivateStorePlan> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("plans"u8);
+                writer.WriteStartArray();
+                foreach (var item in Plans)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PrivateStoreOfferResult IJsonModel<PrivateStoreOfferResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateStoreOfferResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateStoreOfferResult(document.RootElement, options);
+        }
+
+        internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,10 +148,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<Guid> privateStoreId = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> modifiedAt = default;
-            Optional<IReadOnlyList<string>> specificPlanIdsLimitation = default;
+            IReadOnlyList<string> specificPlanIdsLimitation = default;
             Optional<bool> updateSuppressedDueIdempotence = default;
-            Optional<IReadOnlyDictionary<string, Uri>> iconFileUris = default;
-            Optional<IReadOnlyList<PrivateStorePlan>> plans = default;
+            IReadOnlyDictionary<string, Uri> iconFileUris = default;
+            IReadOnlyList<PrivateStorePlan> plans = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueOfferId"u8))
@@ -138,13 +260,61 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStorePlan> array = new List<PrivateStorePlan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item));
+                        array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item, options));
                     }
                     plans = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateStoreOfferResult(uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), Optional.ToList(specificPlanIdsLimitation), Optional.ToNullable(updateSuppressedDueIdempotence), Optional.ToDictionary(iconFileUris), Optional.ToList(plans));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrivateStoreOfferResult(
+                uniqueOfferId.Value,
+                offerDisplayName.Value,
+                publisherDisplayName.Value,
+                Optional.ToNullable(eTag),
+                Optional.ToNullable(privateStoreId),
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(modifiedAt),
+                specificPlanIdsLimitation ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(updateSuppressedDueIdempotence),
+                iconFileUris ?? new ChangeTrackingDictionary<string, Uri>(),
+                plans ?? new ChangeTrackingList<PrivateStorePlan>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateStoreOfferResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateStoreOfferResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PrivateStoreOfferResult IPersistableModel<PrivateStoreOfferResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateStoreOfferResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateStoreOfferResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateStoreOfferResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

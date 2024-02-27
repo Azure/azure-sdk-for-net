@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId != null)
             {
                 writer.WritePropertyName("meterID"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Quantity))
+            if (options.Format != "W" && Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedUnit))
+            if (options.Format != "W" && ExtendedUnit != null)
             {
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);

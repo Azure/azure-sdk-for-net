@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Origin))
+            if (Origin != null)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 if (Properties != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsDefined(IsDataAction))
+            if (IsDataAction.HasValue)
             {
                 writer.WritePropertyName("isDataAction"u8);
                 writer.WriteBooleanValue(IsDataAction.Value);
@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value, Optional.ToNullable(isDataAction), serializedAdditionalRawData);
+            return new AuthorizationProviderOperationInfo(
+                name.Value,
+                displayName.Value,
+                description.Value,
+                origin.Value,
+                properties.Value,
+                Optional.ToNullable(isDataAction),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderOperationInfo>.Write(ModelReaderWriterOptions options)

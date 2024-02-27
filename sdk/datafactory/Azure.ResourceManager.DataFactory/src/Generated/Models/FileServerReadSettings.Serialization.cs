@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,69 +14,77 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FileServerReadSettings : IUtf8JsonSerializable
+    public partial class FileServerReadSettings : IUtf8JsonSerializable, IJsonModel<FileServerReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileServerReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FileServerReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FileServerReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FileServerReadSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Recursive))
+            if (Recursive != null)
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (Optional.IsDefined(WildcardFolderPath))
+            if (WildcardFolderPath != null)
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
-            if (Optional.IsDefined(WildcardFileName))
+            if (WildcardFileName != null)
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 JsonSerializer.Serialize(writer, WildcardFileName);
             }
-            if (Optional.IsDefined(FileListPath))
+            if (FileListPath != null)
             {
                 writer.WritePropertyName("fileListPath"u8);
                 JsonSerializer.Serialize(writer, FileListPath);
             }
-            if (Optional.IsDefined(EnablePartitionDiscovery))
+            if (EnablePartitionDiscovery != null)
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
-            if (Optional.IsDefined(PartitionRootPath))
+            if (PartitionRootPath != null)
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 JsonSerializer.Serialize(writer, PartitionRootPath);
             }
-            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            if (DeleteFilesAfterCompletion != null)
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
-            if (Optional.IsDefined(ModifiedDatetimeStart))
+            if (ModifiedDatetimeStart != null)
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
-            if (Optional.IsDefined(ModifiedDatetimeEnd))
+            if (ModifiedDatetimeEnd != null)
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
-            if (Optional.IsDefined(FileFilter))
+            if (FileFilter != null)
             {
                 writer.WritePropertyName("fileFilter"u8);
                 JsonSerializer.Serialize(writer, FileFilter);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -95,8 +104,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static FileServerReadSettings DeserializeFileServerReadSettings(JsonElement element)
+        FileServerReadSettings IJsonModel<FileServerReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FileServerReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FileServerReadSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFileServerReadSettings(document.RootElement, options);
+        }
+
+        internal static FileServerReadSettings DeserializeFileServerReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -234,7 +257,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FileServerReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, fileFilter.Value);
+            return new FileServerReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                recursive.Value,
+                wildcardFolderPath.Value,
+                wildcardFileName.Value,
+                fileListPath.Value,
+                enablePartitionDiscovery.Value,
+                partitionRootPath.Value,
+                deleteFilesAfterCompletion.Value,
+                modifiedDatetimeStart.Value,
+                modifiedDatetimeEnd.Value,
+                fileFilter.Value);
         }
+
+        BinaryData IPersistableModel<FileServerReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileServerReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FileServerReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FileServerReadSettings IPersistableModel<FileServerReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileServerReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFileServerReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileServerReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FileServerReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

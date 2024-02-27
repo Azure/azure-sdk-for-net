@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxThroughput"u8);
             writer.WriteNumberValue(MaxThroughput);
-            if (Optional.IsDefined(AutoUpgradePolicy))
+            if (AutoUpgradePolicy != null)
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
                 writer.WriteObjectValue(AutoUpgradePolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetMaxThroughput))
+            if (options.Format != "W" && TargetMaxThroughput.HasValue)
             {
                 writer.WritePropertyName("targetMaxThroughput"u8);
                 writer.WriteNumberValue(TargetMaxThroughput.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoUpgradePolicy = AutoUpgradePolicyResourceInfo.DeserializeAutoUpgradePolicyResourceInfo(property.Value);
+                    autoUpgradePolicy = AutoUpgradePolicyResourceInfo.DeserializeAutoUpgradePolicyResourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetMaxThroughput"u8))

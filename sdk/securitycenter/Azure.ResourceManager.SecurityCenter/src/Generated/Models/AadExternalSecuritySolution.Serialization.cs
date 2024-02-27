@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("kind");
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = AadSolutionProperties.DeserializeAadSolutionProperties(property.Value);
+                    properties = AadSolutionProperties.DeserializeAadSolutionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AadExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            return new AadExternalSecuritySolution(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                properties.Value);
         }
 
         BinaryData IPersistableModel<AadExternalSecuritySolution>.Write(ModelReaderWriterOptions options)

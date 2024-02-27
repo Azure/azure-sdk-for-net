@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +14,91 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    internal partial class UnknownOperationDetails
+    internal partial class UnknownOperationDetails : IUtf8JsonSerializable, IJsonModel<OperationDetails>
     {
-        internal static UnknownOperationDetails DeserializeUnknownOperationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("operationId"u8);
+            writer.WriteStringValue(OperationId);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (PercentCompleted.HasValue)
+            {
+                writer.WritePropertyName("percentCompleted"u8);
+                writer.WriteNumberValue(PercentCompleted.Value);
+            }
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedDateTime, "O");
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
+            writer.WriteStringValue(LastUpdatedDateTime, "O");
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("resourceLocation"u8);
+            writer.WriteStringValue(ResourceLocation.AbsoluteUri);
+            if (ApiVersion != null)
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Error != null)
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OperationDetails IJsonModel<OperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationDetails(document.RootElement, options);
+        }
+
+        internal static UnknownOperationDetails DeserializeUnknownOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,8 +111,10 @@ namespace Azure.AI.DocumentIntelligence
             OperationKind kind = "Unknown";
             Uri resourceLocation = default;
             Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<DocumentIntelligenceError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -97,12 +181,59 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value);
+                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownOperationDetails(
+                operationId,
+                status,
+                Optional.ToNullable(percentCompleted),
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OperationDetails IPersistableModel<OperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -110,6 +241,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeUnknownOperationDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

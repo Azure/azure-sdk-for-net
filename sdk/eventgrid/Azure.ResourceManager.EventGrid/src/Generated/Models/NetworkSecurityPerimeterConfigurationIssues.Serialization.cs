@@ -5,40 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class NetworkSecurityPerimeterConfigurationIssues : IUtf8JsonSerializable
+    public partial class NetworkSecurityPerimeterConfigurationIssues : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterConfigurationIssues>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationIssues>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkSecurityPerimeterConfigurationIssues>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IssueType))
+            if (IssueType.HasValue)
             {
                 writer.WritePropertyName("issueType"u8);
                 writer.WriteStringValue(IssueType.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(SuggestedResourceIds))
+            if (!(SuggestedResourceIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("suggestedResourceIds"u8);
                 writer.WriteStartArray();
@@ -48,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SuggestedAccessRules))
+            if (!(SuggestedAccessRules is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("suggestedAccessRules"u8);
                 writer.WriteStartArray();
@@ -59,11 +69,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkSecurityPerimeterConfigurationIssues DeserializeNetworkSecurityPerimeterConfigurationIssues(JsonElement element)
+        NetworkSecurityPerimeterConfigurationIssues IJsonModel<NetworkSecurityPerimeterConfigurationIssues>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkSecurityPerimeterConfigurationIssues(document.RootElement, options);
+        }
+
+        internal static NetworkSecurityPerimeterConfigurationIssues DeserializeNetworkSecurityPerimeterConfigurationIssues(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,8 +111,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<NetworkSecurityPerimeterConfigurationIssueType> issueType = default;
             Optional<NetworkSecurityPerimeterConfigurationIssueSeverity> severity = default;
             Optional<string> description = default;
-            Optional<IList<string>> suggestedResourceIds = default;
-            Optional<IList<string>> suggestedAccessRules = default;
+            IList<string> suggestedResourceIds = default;
+            IList<string> suggestedAccessRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -144,8 +185,51 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkSecurityPerimeterConfigurationIssues(name.Value, Optional.ToNullable(issueType), Optional.ToNullable(severity), description.Value, Optional.ToList(suggestedResourceIds), Optional.ToList(suggestedAccessRules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkSecurityPerimeterConfigurationIssues(
+                name.Value,
+                Optional.ToNullable(issueType),
+                Optional.ToNullable(severity),
+                description.Value,
+                suggestedResourceIds ?? new ChangeTrackingList<string>(),
+                suggestedAccessRules ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkSecurityPerimeterConfigurationIssues IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkSecurityPerimeterConfigurationIssues(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

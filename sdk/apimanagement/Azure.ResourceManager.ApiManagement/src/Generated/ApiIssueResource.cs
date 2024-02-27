@@ -425,7 +425,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ApiIssueResource>> UpdateAsync(ETag ifMatch, ApiIssuePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueResource.Update");
             scope.Start();
@@ -468,7 +471,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ApiIssueResource> Update(ETag ifMatch, ApiIssuePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueResource.Update");
             scope.Start();

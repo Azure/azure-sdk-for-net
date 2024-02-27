@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The output configuration of a job step. </summary>
     public partial class JobStepOutput
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JobStepOutput"/>. </summary>
         /// <param name="serverName"> The output destination server name. </param>
         /// <param name="databaseName"> The output destination database. </param>
@@ -21,10 +53,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="tableName"/> or <paramref name="credential"/> is null. </exception>
         public JobStepOutput(string serverName, string databaseName, string tableName, string credential)
         {
-            Argument.AssertNotNull(serverName, nameof(serverName));
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(tableName, nameof(tableName));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             ServerName = serverName;
             DatabaseName = databaseName;
@@ -41,7 +85,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="schemaName"> The output destination schema. </param>
         /// <param name="tableName"> The output destination table. </param>
         /// <param name="credential"> The resource ID of the credential to use to connect to the output destination. </param>
-        internal JobStepOutput(JobStepOutputType? outputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobStepOutput(JobStepOutputType? outputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OutputType = outputType;
             SubscriptionId = subscriptionId;
@@ -51,6 +96,12 @@ namespace Azure.ResourceManager.Sql.Models
             SchemaName = schemaName;
             TableName = tableName;
             Credential = credential;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobStepOutput"/> for deserialization. </summary>
+        internal JobStepOutput()
+        {
         }
 
         /// <summary> The output destination type. </summary>

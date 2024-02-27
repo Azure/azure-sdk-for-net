@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretText))
+            if (SecretText != null)
             {
                 writer.WritePropertyName("secretText"u8);
                 writer.WriteStringValue(SecretText);
             }
-            if (Optional.IsDefined(KeyId))
+            if (KeyId != null)
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
@@ -13,19 +15,121 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SecurityEvent : IUtf8JsonSerializable
+    public partial class SecurityEvent : IUtf8JsonSerializable, IJsonModel<SecurityEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && EventOn.HasValue)
+            {
+                writer.WritePropertyName("eventTime"u8);
+                writer.WriteStringValue(EventOn.Value, "O");
+            }
+            if (options.Format != "W" && SecurityEventType.HasValue)
+            {
+                writer.WritePropertyName("securityEventType"u8);
+                writer.WriteStringValue(SecurityEventType.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Subscription != null)
+            {
+                writer.WritePropertyName("subscription"u8);
+                writer.WriteStringValue(Subscription);
+            }
+            if (options.Format != "W" && Server != null)
+            {
+                writer.WritePropertyName("server"u8);
+                writer.WriteStringValue(Server);
+            }
+            if (options.Format != "W" && Database != null)
+            {
+                writer.WritePropertyName("database"u8);
+                writer.WriteStringValue(Database);
+            }
+            if (options.Format != "W" && ClientIP != null)
+            {
+                writer.WritePropertyName("clientIp"u8);
+                writer.WriteStringValue(ClientIP.ToString());
+            }
+            if (options.Format != "W" && ApplicationName != null)
+            {
+                writer.WritePropertyName("applicationName"u8);
+                writer.WriteStringValue(ApplicationName);
+            }
+            if (options.Format != "W" && PrincipalName != null)
+            {
+                writer.WritePropertyName("principalName"u8);
+                writer.WriteStringValue(PrincipalName);
+            }
+            if (options.Format != "W" && SecurityEventSqlInjectionAdditionalProperties != null)
+            {
+                writer.WritePropertyName("securityEventSqlInjectionAdditionalProperties"u8);
+                writer.WriteObjectValue(SecurityEventSqlInjectionAdditionalProperties);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityEvent DeserializeSecurityEvent(JsonElement element)
+        SecurityEvent IJsonModel<SecurityEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityEvent(document.RootElement, options);
+        }
+
+        internal static SecurityEvent DeserializeSecurityEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +147,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> applicationName = default;
             Optional<string> principalName = default;
             Optional<SecurityEventSqlInjectionAdditionalProperties> securityEventSqlInjectionAdditionalProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,14 +242,64 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value);
+                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityEvent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(eventTime),
+                Optional.ToNullable(securityEventType),
+                subscription.Value,
+                server.Value,
+                database.Value,
+                clientIP.Value,
+                applicationName.Value,
+                principalName.Value,
+                securityEventSqlInjectionAdditionalProperties.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityEvent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecurityEvent IPersistableModel<SecurityEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityEvent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

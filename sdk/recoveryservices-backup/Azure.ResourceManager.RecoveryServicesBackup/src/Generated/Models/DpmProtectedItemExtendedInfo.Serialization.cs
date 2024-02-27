@@ -6,18 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmProtectedItemExtendedInfo : IUtf8JsonSerializable
+    public partial class DpmProtectedItemExtendedInfo : IUtf8JsonSerializable, IJsonModel<DpmProtectedItemExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DpmProtectedItemExtendedInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DpmProtectedItemExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ProtectableObjectLoadPath))
+            if (!(ProtectableObjectLoadPath is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectableObjectLoadPath"u8);
                 writer.WriteStartObject();
@@ -28,81 +37,110 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsProtected))
+            if (IsProtected.HasValue)
             {
                 writer.WritePropertyName("protected"u8);
                 writer.WriteBooleanValue(IsProtected.Value);
             }
-            if (Optional.IsDefined(IsPresentOnCloud))
+            if (IsPresentOnCloud.HasValue)
             {
                 writer.WritePropertyName("isPresentOnCloud"u8);
                 writer.WriteBooleanValue(IsPresentOnCloud.Value);
             }
-            if (Optional.IsDefined(LastBackupStatus))
+            if (LastBackupStatus != null)
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
-            if (Optional.IsDefined(LastRefreshedOn))
+            if (LastRefreshedOn.HasValue)
             {
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoverOn))
+            if (OldestRecoverOn.HasValue)
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointCount))
+            if (RecoveryPointCount.HasValue)
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(OnPremiseOldestRecoverOn))
+            if (OnPremiseOldestRecoverOn.HasValue)
             {
                 writer.WritePropertyName("onPremiseOldestRecoveryPoint"u8);
                 writer.WriteStringValue(OnPremiseOldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(OnPremiseLatestRecoverOn))
+            if (OnPremiseLatestRecoverOn.HasValue)
             {
                 writer.WritePropertyName("onPremiseLatestRecoveryPoint"u8);
                 writer.WriteStringValue(OnPremiseLatestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(OnPremiseRecoveryPointCount))
+            if (OnPremiseRecoveryPointCount.HasValue)
             {
                 writer.WritePropertyName("onPremiseRecoveryPointCount"u8);
                 writer.WriteNumberValue(OnPremiseRecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(IsCollocated))
+            if (IsCollocated.HasValue)
             {
                 writer.WritePropertyName("isCollocated"u8);
                 writer.WriteBooleanValue(IsCollocated.Value);
             }
-            if (Optional.IsDefined(ProtectionGroupName))
+            if (ProtectionGroupName != null)
             {
                 writer.WritePropertyName("protectionGroupName"u8);
                 writer.WriteStringValue(ProtectionGroupName);
             }
-            if (Optional.IsDefined(DiskStorageUsedInBytes))
+            if (DiskStorageUsedInBytes != null)
             {
                 writer.WritePropertyName("diskStorageUsedInBytes"u8);
                 writer.WriteStringValue(DiskStorageUsedInBytes);
             }
-            if (Optional.IsDefined(TotalDiskStorageSizeInBytes))
+            if (TotalDiskStorageSizeInBytes != null)
             {
                 writer.WritePropertyName("totalDiskStorageSizeInBytes"u8);
                 writer.WriteStringValue(TotalDiskStorageSizeInBytes);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DpmProtectedItemExtendedInfo DeserializeDpmProtectedItemExtendedInfo(JsonElement element)
+        DpmProtectedItemExtendedInfo IJsonModel<DpmProtectedItemExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDpmProtectedItemExtendedInfo(document.RootElement, options);
+        }
+
+        internal static DpmProtectedItemExtendedInfo DeserializeDpmProtectedItemExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> protectableObjectLoadPath = default;
+            IDictionary<string, string> protectableObjectLoadPath = default;
             Optional<bool> @protected = default;
             Optional<bool> isPresentOnCloud = default;
             Optional<string> lastBackupStatus = default;
@@ -116,6 +154,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> protectionGroupName = default;
             Optional<string> diskStorageUsedInBytes = default;
             Optional<string> totalDiskStorageSizeInBytes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectableObjectLoadPath"u8))
@@ -233,8 +273,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     totalDiskStorageSizeInBytes = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DpmProtectedItemExtendedInfo(Optional.ToDictionary(protectableObjectLoadPath), Optional.ToNullable(@protected), Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(onPremiseOldestRecoveryPoint), Optional.ToNullable(onPremiseLatestRecoveryPoint), Optional.ToNullable(onPremiseRecoveryPointCount), Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DpmProtectedItemExtendedInfo(
+                protectableObjectLoadPath ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(@protected),
+                Optional.ToNullable(isPresentOnCloud),
+                lastBackupStatus.Value,
+                Optional.ToNullable(lastRefreshedAt),
+                Optional.ToNullable(oldestRecoveryPoint),
+                Optional.ToNullable(recoveryPointCount),
+                Optional.ToNullable(onPremiseOldestRecoveryPoint),
+                Optional.ToNullable(onPremiseLatestRecoveryPoint),
+                Optional.ToNullable(onPremiseRecoveryPointCount),
+                Optional.ToNullable(isCollocated),
+                protectionGroupName.Value,
+                diskStorageUsedInBytes.Value,
+                totalDiskStorageSizeInBytes.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DpmProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DpmProtectedItemExtendedInfo IPersistableModel<DpmProtectedItemExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDpmProtectedItemExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DpmProtectedItemExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

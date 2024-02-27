@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedBy))
+            if (UpdatedBy != null)
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (Optional.IsDefined(Parent))
+            if (Parent != null)
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteObjectValue(Parent);
             }
-            if (Optional.IsCollectionDefined(Path))
+            if (!(Path is ChangeTrackingList<ManagementGroupPathElement> collection && collection.IsUndefined))
             {
                 if (Path != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("path");
                 }
             }
-            if (Optional.IsCollectionDefined(ManagementGroupAncestors))
+            if (!(ManagementGroupAncestors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (ManagementGroupAncestors != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("managementGroupAncestors");
                 }
             }
-            if (Optional.IsCollectionDefined(ManagementGroupAncestorChain))
+            if (!(ManagementGroupAncestorChain is ChangeTrackingList<ManagementGroupPathElement> collection1 && collection1.IsUndefined))
             {
                 if (ManagementGroupAncestorChain != null)
                 {
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<DateTimeOffset> updatedTime = default;
             Optional<string> updatedBy = default;
             Optional<ParentManagementGroupInfo> parent = default;
-            Optional<IReadOnlyList<ManagementGroupPathElement>> path = default;
-            Optional<IReadOnlyList<string>> managementGroupAncestors = default;
-            Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
+            IReadOnlyList<ManagementGroupPathElement> path = default;
+            IReadOnlyList<string> managementGroupAncestors = default;
+            IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorsChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value);
+                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item, options));
                     }
                     path = array;
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item, options));
                     }
                     managementGroupAncestorsChain = array;
                     continue;
@@ -229,7 +229,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain), serializedAdditionalRawData);
+            return new ManagementGroupInfo(
+                Optional.ToNullable(version),
+                Optional.ToNullable(updatedTime),
+                updatedBy.Value,
+                parent.Value,
+                path ?? new ChangeTrackingList<ManagementGroupPathElement>(),
+                managementGroupAncestors ?? new ChangeTrackingList<string>(),
+                managementGroupAncestorsChain ?? new ChangeTrackingList<ManagementGroupPathElement>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupInfo>.Write(ModelReaderWriterOptions options)

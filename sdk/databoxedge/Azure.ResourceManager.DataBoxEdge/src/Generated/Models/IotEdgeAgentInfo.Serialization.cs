@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(ImageName);
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
-            if (Optional.IsDefined(ImageRepository))
+            if (ImageRepository != null)
             {
                 writer.WritePropertyName("imageRepository"u8);
                 writer.WriteObjectValue(ImageRepository);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    imageRepository = ImageRepositoryCredential.DeserializeImageRepositoryCredential(property.Value);
+                    imageRepository = ImageRepositoryCredential.DeserializeImageRepositoryCredential(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

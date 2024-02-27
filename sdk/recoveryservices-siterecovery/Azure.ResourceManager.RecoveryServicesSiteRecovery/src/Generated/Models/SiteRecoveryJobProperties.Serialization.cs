@@ -6,16 +6,145 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryJobProperties
+    public partial class SiteRecoveryJobProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryJobProperties>
     {
-        internal static SiteRecoveryJobProperties DeserializeSiteRecoveryJobProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryJobProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (ActivityId != null)
+            {
+                writer.WritePropertyName("activityId"u8);
+                writer.WriteStringValue(ActivityId);
+            }
+            if (ScenarioName != null)
+            {
+                writer.WritePropertyName("scenarioName"u8);
+                writer.WriteStringValue(ScenarioName);
+            }
+            if (FriendlyName != null)
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (State != null)
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (StateDescription != null)
+            {
+                writer.WritePropertyName("stateDescription"u8);
+                writer.WriteStringValue(StateDescription);
+            }
+            if (!(Tasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("tasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(Errors is ChangeTrackingList<SiteRecoveryJobErrorDetails> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (StartOn.HasValue)
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (EndOn.HasValue)
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (!(AllowedActions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("allowedActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (TargetObjectId != null)
+            {
+                writer.WritePropertyName("targetObjectId"u8);
+                writer.WriteStringValue(TargetObjectId);
+            }
+            if (TargetObjectName != null)
+            {
+                writer.WritePropertyName("targetObjectName"u8);
+                writer.WriteStringValue(TargetObjectName);
+            }
+            if (TargetInstanceType != null)
+            {
+                writer.WritePropertyName("targetInstanceType"u8);
+                writer.WriteStringValue(TargetInstanceType);
+            }
+            if (CustomDetails != null)
+            {
+                writer.WritePropertyName("customDetails"u8);
+                writer.WriteObjectValue(CustomDetails);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryJobProperties IJsonModel<SiteRecoveryJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryJobProperties(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryJobProperties DeserializeSiteRecoveryJobProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,15 +154,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> friendlyName = default;
             Optional<string> state = default;
             Optional<string> stateDescription = default;
-            Optional<IReadOnlyList<AsrTask>> tasks = default;
-            Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
+            IReadOnlyList<AsrTask> tasks = default;
+            IReadOnlyList<SiteRecoveryJobErrorDetails> errors = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
+            IReadOnlyList<string> allowedActions = default;
             Optional<string> targetObjectId = default;
             Optional<string> targetObjectName = default;
             Optional<string> targetInstanceType = default;
             Optional<SiteRecoveryJobDetails> customDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activityId"u8))
@@ -70,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item, options));
                     }
                     tasks = array;
                     continue;
@@ -84,7 +215,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryJobErrorDetails> array = new List<SiteRecoveryJobErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item));
+                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item, options));
                     }
                     errors = array;
                     continue;
@@ -142,11 +273,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryJobDetails.DeserializeSiteRecoveryJobDetails(property.Value);
+                    customDetails = SiteRecoveryJobDetails.DeserializeSiteRecoveryJobDetails(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryJobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, Optional.ToList(tasks), Optional.ToList(errors), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryJobProperties(
+                activityId.Value,
+                scenarioName.Value,
+                friendlyName.Value,
+                state.Value,
+                stateDescription.Value,
+                tasks ?? new ChangeTrackingList<AsrTask>(),
+                errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                allowedActions ?? new ChangeTrackingList<string>(),
+                targetObjectId.Value,
+                targetObjectName.Value,
+                targetInstanceType.Value,
+                customDetails.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryJobProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryJobProperties IPersistableModel<SiteRecoveryJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryJobProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

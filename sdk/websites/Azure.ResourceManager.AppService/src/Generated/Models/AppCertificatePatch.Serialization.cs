@@ -5,29 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppCertificatePatch : IUtf8JsonSerializable
+    public partial class AppCertificatePatch : IUtf8JsonSerializable, IJsonModel<AppCertificatePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCertificatePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppCertificatePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsCollectionDefined(HostNames))
+            if (options.Format != "W" && FriendlyName != null)
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (options.Format != "W" && SubjectName != null)
+            {
+                writer.WritePropertyName("subjectName"u8);
+                writer.WriteStringValue(SubjectName);
+            }
+            if (!(HostNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -37,38 +77,151 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PfxBlob))
+            if (PfxBlob != null)
             {
                 writer.WritePropertyName("pfxBlob"u8);
                 writer.WriteBase64StringValue(PfxBlob, "D");
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (options.Format != "W" && SiteName != null)
+            {
+                writer.WritePropertyName("siteName"u8);
+                writer.WriteStringValue(SiteName);
+            }
+            if (options.Format != "W" && SelfLink != null)
+            {
+                writer.WritePropertyName("selfLink"u8);
+                writer.WriteStringValue(SelfLink);
+            }
+            if (options.Format != "W" && Issuer != null)
+            {
+                writer.WritePropertyName("issuer"u8);
+                writer.WriteStringValue(Issuer);
+            }
+            if (options.Format != "W" && IssueOn.HasValue)
+            {
+                writer.WritePropertyName("issueDate"u8);
+                writer.WriteStringValue(IssueOn.Value, "O");
+            }
+            if (options.Format != "W" && ExpireOn.HasValue)
+            {
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (options.Format != "W" && ThumbprintString != null)
+            {
+                writer.WritePropertyName("thumbprint"u8);
+                writer.WriteStringValue(ThumbprintString);
+            }
+            if (options.Format != "W" && IsValid.HasValue)
+            {
+                writer.WritePropertyName("valid"u8);
+                writer.WriteBooleanValue(IsValid.Value);
+            }
+            if (options.Format != "W" && CerBlob != null)
+            {
+                writer.WritePropertyName("cerBlob"u8);
+                writer.WriteBase64StringValue(CerBlob, "D");
+            }
+            if (options.Format != "W" && PublicKeyHash != null)
+            {
+                writer.WritePropertyName("publicKeyHash"u8);
+                writer.WriteStringValue(PublicKeyHash);
+            }
+            if (options.Format != "W" && HostingEnvironmentProfile != null)
+            {
+                writer.WritePropertyName("hostingEnvironmentProfile"u8);
+                writer.WriteObjectValue(HostingEnvironmentProfile);
+            }
+            if (KeyVaultId != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (Optional.IsDefined(KeyVaultSecretName))
+            if (KeyVaultSecretName != null)
             {
                 writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (options.Format != "W" && KeyVaultSecretStatus.HasValue)
+            {
+                writer.WritePropertyName("keyVaultSecretStatus"u8);
+                writer.WriteStringValue(KeyVaultSecretStatus.Value.ToSerialString());
+            }
+            if (ServerFarmId != null)
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (Optional.IsDefined(CanonicalName))
+            if (CanonicalName != null)
             {
                 writer.WritePropertyName("canonicalName"u8);
                 writer.WriteStringValue(CanonicalName);
             }
-            if (Optional.IsDefined(DomainValidationMethod))
+            if (DomainValidationMethod != null)
             {
                 writer.WritePropertyName("domainValidationMethod"u8);
                 writer.WriteStringValue(DomainValidationMethod);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AppCertificatePatch IJsonModel<AppCertificatePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppCertificatePatch(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<AppCertificatePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppCertificatePatch IPersistableModel<AppCertificatePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppCertificatePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppCertificatePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

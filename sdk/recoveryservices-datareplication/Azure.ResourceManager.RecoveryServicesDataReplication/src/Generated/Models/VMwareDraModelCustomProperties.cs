@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -19,8 +19,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="biosId"/> or <paramref name="marsAuthenticationIdentity"/> is null. </exception>
         public VMwareDraModelCustomProperties(string biosId, DataReplicationIdentity marsAuthenticationIdentity)
         {
-            Argument.AssertNotNull(biosId, nameof(biosId));
-            Argument.AssertNotNull(marsAuthenticationIdentity, nameof(marsAuthenticationIdentity));
+            if (biosId == null)
+            {
+                throw new ArgumentNullException(nameof(biosId));
+            }
+            if (marsAuthenticationIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(marsAuthenticationIdentity));
+            }
 
             BiosId = biosId;
             MarsAuthenticationIdentity = marsAuthenticationIdentity;
@@ -29,13 +35,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="VMwareDraModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="biosId"> Gets or sets the BIOS Id of the DRA machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>
-        internal VMwareDraModelCustomProperties(string instanceType, string biosId, DataReplicationIdentity marsAuthenticationIdentity) : base(instanceType)
+        internal VMwareDraModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string biosId, DataReplicationIdentity marsAuthenticationIdentity) : base(instanceType, serializedAdditionalRawData)
         {
             BiosId = biosId;
             MarsAuthenticationIdentity = marsAuthenticationIdentity;
             InstanceType = instanceType ?? "VMware";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareDraModelCustomProperties"/> for deserialization. </summary>
+        internal VMwareDraModelCustomProperties()
+        {
         }
 
         /// <summary> Gets or sets the BIOS Id of the DRA machine. </summary>

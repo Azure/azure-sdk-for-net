@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
-            if (Optional.IsDefined(Selector))
+            if (Selector != null)
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(MatchOperator.ToString());
-            if (Optional.IsDefined(NegateCondition))
+            if (NegateCondition.HasValue)
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (!(Transforms is ChangeTrackingList<TransformType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchOperator @operator = default;
             Optional<bool> negateCondition = default;
             IList<string> matchValue = default;
-            Optional<IList<TransformType>> transforms = default;
+            IList<TransformType> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms), serializedAdditionalRawData);
+            return new CustomRuleMatchCondition(
+                matchVariable,
+                selector.Value,
+                @operator,
+                Optional.ToNullable(negateCondition),
+                matchValue,
+                transforms ?? new ChangeTrackingList<TransformType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRuleMatchCondition>.Write(ModelReaderWriterOptions options)

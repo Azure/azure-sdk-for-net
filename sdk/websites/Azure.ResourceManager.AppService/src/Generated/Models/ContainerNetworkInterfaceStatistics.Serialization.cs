@@ -5,61 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerNetworkInterfaceStatistics : IUtf8JsonSerializable
+    public partial class ContainerNetworkInterfaceStatistics : IUtf8JsonSerializable, IJsonModel<ContainerNetworkInterfaceStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerNetworkInterfaceStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerNetworkInterfaceStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(RxBytes))
+            if (RxBytes.HasValue)
             {
                 writer.WritePropertyName("rxBytes"u8);
                 writer.WriteNumberValue(RxBytes.Value);
             }
-            if (Optional.IsDefined(RxPackets))
+            if (RxPackets.HasValue)
             {
                 writer.WritePropertyName("rxPackets"u8);
                 writer.WriteNumberValue(RxPackets.Value);
             }
-            if (Optional.IsDefined(RxErrors))
+            if (RxErrors.HasValue)
             {
                 writer.WritePropertyName("rxErrors"u8);
                 writer.WriteNumberValue(RxErrors.Value);
             }
-            if (Optional.IsDefined(RxDropped))
+            if (RxDropped.HasValue)
             {
                 writer.WritePropertyName("rxDropped"u8);
                 writer.WriteNumberValue(RxDropped.Value);
             }
-            if (Optional.IsDefined(TxBytes))
+            if (TxBytes.HasValue)
             {
                 writer.WritePropertyName("txBytes"u8);
                 writer.WriteNumberValue(TxBytes.Value);
             }
-            if (Optional.IsDefined(TxPackets))
+            if (TxPackets.HasValue)
             {
                 writer.WritePropertyName("txPackets"u8);
                 writer.WriteNumberValue(TxPackets.Value);
             }
-            if (Optional.IsDefined(TxErrors))
+            if (TxErrors.HasValue)
             {
                 writer.WritePropertyName("txErrors"u8);
                 writer.WriteNumberValue(TxErrors.Value);
             }
-            if (Optional.IsDefined(TxDropped))
+            if (TxDropped.HasValue)
             {
                 writer.WritePropertyName("txDropped"u8);
                 writer.WriteNumberValue(TxDropped.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerNetworkInterfaceStatistics DeserializeContainerNetworkInterfaceStatistics(JsonElement element)
+        ContainerNetworkInterfaceStatistics IJsonModel<ContainerNetworkInterfaceStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerNetworkInterfaceStatistics(document.RootElement, options);
+        }
+
+        internal static ContainerNetworkInterfaceStatistics DeserializeContainerNetworkInterfaceStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +112,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> txPackets = default;
             Optional<long> txErrors = default;
             Optional<long> txDropped = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rxBytes"u8))
@@ -146,8 +188,53 @@ namespace Azure.ResourceManager.AppService.Models
                     txDropped = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerNetworkInterfaceStatistics(Optional.ToNullable(rxBytes), Optional.ToNullable(rxPackets), Optional.ToNullable(rxErrors), Optional.ToNullable(rxDropped), Optional.ToNullable(txBytes), Optional.ToNullable(txPackets), Optional.ToNullable(txErrors), Optional.ToNullable(txDropped));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerNetworkInterfaceStatistics(
+                Optional.ToNullable(rxBytes),
+                Optional.ToNullable(rxPackets),
+                Optional.ToNullable(rxErrors),
+                Optional.ToNullable(rxDropped),
+                Optional.ToNullable(txBytes),
+                Optional.ToNullable(txPackets),
+                Optional.ToNullable(txErrors),
+                Optional.ToNullable(txDropped),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerNetworkInterfaceStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerNetworkInterfaceStatistics IPersistableModel<ContainerNetworkInterfaceStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerNetworkInterfaceStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerNetworkInterfaceStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

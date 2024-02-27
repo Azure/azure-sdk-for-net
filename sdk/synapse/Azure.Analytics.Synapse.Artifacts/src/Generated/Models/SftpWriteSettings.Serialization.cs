@@ -19,24 +19,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationTimeout))
+            if (OperationTimeout != null)
             {
                 writer.WritePropertyName("operationTimeout"u8);
                 writer.WriteObjectValue(OperationTimeout);
             }
-            if (Optional.IsDefined(UseTempFileRename))
+            if (UseTempFileRename != null)
             {
                 writer.WritePropertyName("useTempFileRename"u8);
                 writer.WriteObjectValue(UseTempFileRename);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(CopyBehavior))
+            if (CopyBehavior != null)
             {
                 writer.WritePropertyName("copyBehavior"u8);
                 writer.WriteObjectValue(CopyBehavior);
@@ -108,7 +108,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, operationTimeout.Value, useTempFileRename.Value);
+            return new SftpWriteSettings(
+                type,
+                maxConcurrentConnections.Value,
+                copyBehavior.Value,
+                additionalProperties,
+                operationTimeout.Value,
+                useTempFileRename.Value);
         }
 
         internal partial class SftpWriteSettingsConverter : JsonConverter<SftpWriteSettings>

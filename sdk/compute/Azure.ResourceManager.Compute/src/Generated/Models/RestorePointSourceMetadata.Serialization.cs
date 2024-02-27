@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
+            if (options.Format != "W" && HardwareProfile != null)
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSProfile))
+            if (options.Format != "W" && OSProfile != null)
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiagnosticsProfile))
+            if (options.Format != "W" && DiagnosticsProfile != null)
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(LicenseType))
+            if (options.Format != "W" && LicenseType != null)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmId))
+            if (options.Format != "W" && VmId != null)
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecurityProfile))
+            if (options.Format != "W" && SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserData))
+            if (options.Format != "W" && UserData != null)
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (options.Format != "W" && Optional.IsDefined(HyperVGeneration))
+            if (options.Format != "W" && HyperVGeneration.HasValue)
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property.Value);
+                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageProfile = RestorePointSourceVmStorageProfile.DeserializeRestorePointSourceVmStorageProfile(property.Value);
+                    storageProfile = RestorePointSourceVmStorageProfile.DeserializeRestorePointSourceVmStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property.Value);
+                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value);
+                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, Optional.ToNullable(location), userData.Value, Optional.ToNullable(hyperVGeneration), serializedAdditionalRawData);
+            return new RestorePointSourceMetadata(
+                hardwareProfile.Value,
+                storageProfile.Value,
+                osProfile.Value,
+                diagnosticsProfile.Value,
+                licenseType.Value,
+                vmId.Value,
+                securityProfile.Value,
+                Optional.ToNullable(location),
+                userData.Value,
+                Optional.ToNullable(hyperVGeneration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointSourceMetadata>.Write(ModelReaderWriterOptions options)

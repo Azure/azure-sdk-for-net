@@ -5,33 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class InitialAgentPoolConfiguration : IUtf8JsonSerializable
+    public partial class InitialAgentPoolConfiguration : IUtf8JsonSerializable, IJsonModel<InitialAgentPoolConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InitialAgentPoolConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InitialAgentPoolConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorConfiguration))
+            if (AdministratorConfiguration != null)
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (Optional.IsDefined(AgentOptions))
+            if (AgentOptions != null)
             {
                 writer.WritePropertyName("agentOptions"u8);
                 writer.WriteObjectValue(AgentOptions);
             }
-            if (Optional.IsDefined(AttachedNetworkConfiguration))
+            if (AttachedNetworkConfiguration != null)
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
                 writer.WriteObjectValue(AttachedNetworkConfiguration);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -43,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<KubernetesLabel> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -57,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(Mode.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(Taints))
+            if (!(Taints is ChangeTrackingList<KubernetesLabel> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("taints"u8);
                 writer.WriteStartArray();
@@ -67,18 +77,47 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpgradeSettings))
+            if (UpgradeSettings != null)
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
             }
             writer.WritePropertyName("vmSkuName"u8);
             writer.WriteStringValue(VmSkuName);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InitialAgentPoolConfiguration DeserializeInitialAgentPoolConfiguration(JsonElement element)
+        InitialAgentPoolConfiguration IJsonModel<InitialAgentPoolConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInitialAgentPoolConfiguration(document.RootElement, options);
+        }
+
+        internal static InitialAgentPoolConfiguration DeserializeInitialAgentPoolConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,14 +125,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<AdministratorConfiguration> administratorConfiguration = default;
             Optional<NetworkCloudAgentConfiguration> agentOptions = default;
             Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<IList<string>> availabilityZones = default;
+            IList<string> availabilityZones = default;
             long count = default;
-            Optional<IList<KubernetesLabel>> labels = default;
+            IList<KubernetesLabel> labels = default;
             NetworkCloudAgentPoolMode mode = default;
             string name = default;
-            Optional<IList<KubernetesLabel>> taints = default;
+            IList<KubernetesLabel> taints = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             string vmSkuName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administratorConfiguration"u8))
@@ -102,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value);
+                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("agentOptions"u8))
@@ -111,7 +152,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property.Value);
+                    agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("attachedNetworkConfiguration"u8))
@@ -120,7 +161,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property.Value);
+                    attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))
@@ -151,7 +192,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<KubernetesLabel> array = new List<KubernetesLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                     }
                     labels = array;
                     continue;
@@ -175,7 +216,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<KubernetesLabel> array = new List<KubernetesLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                     }
                     taints = array;
                     continue;
@@ -186,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value);
+                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmSkuName"u8))
@@ -194,8 +235,56 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     vmSkuName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToList(labels), mode, name, Optional.ToList(taints), upgradeSettings.Value, vmSkuName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InitialAgentPoolConfiguration(
+                administratorConfiguration.Value,
+                agentOptions.Value,
+                attachedNetworkConfiguration.Value,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                count,
+                labels ?? new ChangeTrackingList<KubernetesLabel>(),
+                mode,
+                name,
+                taints ?? new ChangeTrackingList<KubernetesLabel>(),
+                upgradeSettings.Value,
+                vmSkuName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InitialAgentPoolConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InitialAgentPoolConfiguration IPersistableModel<InitialAgentPoolConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInitialAgentPoolConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InitialAgentPoolConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

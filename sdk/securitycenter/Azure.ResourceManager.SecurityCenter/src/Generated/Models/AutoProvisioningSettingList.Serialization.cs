@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutoProvisioningSettingData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutoProvisioningSettingData>> value = default;
+            IReadOnlyList<AutoProvisioningSettingData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<AutoProvisioningSettingData> array = new List<AutoProvisioningSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(item));
+                        array.Add(AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoProvisioningSettingList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutoProvisioningSettingList(value ?? new ChangeTrackingList<AutoProvisioningSettingData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoProvisioningSettingList>.Write(ModelReaderWriterOptions options)

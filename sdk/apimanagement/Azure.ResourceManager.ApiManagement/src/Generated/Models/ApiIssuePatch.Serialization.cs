@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(ApiId))
+            if (ApiId != null)
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
@@ -167,7 +167,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiIssuePatch(Optional.ToNullable(createdDate), Optional.ToNullable(state), apiId.Value, title.Value, description.Value, userId.Value, serializedAdditionalRawData);
+            return new ApiIssuePatch(
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(state),
+                apiId.Value,
+                title.Value,
+                description.Value,
+                userId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiIssuePatch>.Write(ModelReaderWriterOptions options)

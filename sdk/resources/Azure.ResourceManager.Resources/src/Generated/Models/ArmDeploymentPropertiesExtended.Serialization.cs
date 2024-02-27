@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,10 +15,172 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentPropertiesExtended
+    public partial class ArmDeploymentPropertiesExtended : IUtf8JsonSerializable, IJsonModel<ArmDeploymentPropertiesExtended>
     {
-        internal static ArmDeploymentPropertiesExtended DeserializeArmDeploymentPropertiesExtended(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentPropertiesExtended>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArmDeploymentPropertiesExtended>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentPropertiesExtended>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && CorrelationId != null)
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (options.Format != "W" && Timestamp.HasValue)
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (options.Format != "W" && Duration.HasValue)
+            {
+                writer.WritePropertyName("duration"u8);
+                writer.WriteStringValue(Duration.Value, "P");
+            }
+            if (options.Format != "W" && Outputs != null)
+            {
+                writer.WritePropertyName("outputs"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Outputs);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Outputs))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && !(Providers is ChangeTrackingList<ResourceProviderData> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("providers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Providers)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(Dependencies is ChangeTrackingList<ArmDependency> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("dependencies"u8);
+                writer.WriteStartArray();
+                foreach (var item in Dependencies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && TemplateLink != null)
+            {
+                writer.WritePropertyName("templateLink"u8);
+                writer.WriteObjectValue(TemplateLink);
+            }
+            if (options.Format != "W" && Parameters != null)
+            {
+                writer.WritePropertyName("parameters"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Parameters);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Parameters))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && ParametersLink != null)
+            {
+                writer.WritePropertyName("parametersLink"u8);
+                writer.WriteObjectValue(ParametersLink);
+            }
+            if (options.Format != "W" && Mode.HasValue)
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToSerialString());
+            }
+            if (options.Format != "W" && DebugSetting != null)
+            {
+                writer.WritePropertyName("debugSetting"u8);
+                writer.WriteObjectValue(DebugSetting);
+            }
+            if (options.Format != "W" && ErrorDeployment != null)
+            {
+                writer.WritePropertyName("onErrorDeployment"u8);
+                writer.WriteObjectValue(ErrorDeployment);
+            }
+            if (options.Format != "W" && TemplateHash != null)
+            {
+                writer.WritePropertyName("templateHash"u8);
+                writer.WriteStringValue(TemplateHash);
+            }
+            if (options.Format != "W" && !(OutputResources is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("outputResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in OutputResources)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(ValidatedResources is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("validatedResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValidatedResources)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Error != null)
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ArmDeploymentPropertiesExtended IJsonModel<ArmDeploymentPropertiesExtended>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentPropertiesExtended>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmDeploymentPropertiesExtended(document.RootElement, options);
+        }
+
+        internal static ArmDeploymentPropertiesExtended DeserializeArmDeploymentPropertiesExtended(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,8 +190,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DateTimeOffset> timestamp = default;
             Optional<TimeSpan> duration = default;
             Optional<BinaryData> outputs = default;
-            Optional<IReadOnlyList<ResourceProviderData>> providers = default;
-            Optional<IReadOnlyList<ArmDependency>> dependencies = default;
+            IReadOnlyList<ResourceProviderData> providers = default;
+            IReadOnlyList<ArmDependency> dependencies = default;
             Optional<ArmDeploymentTemplateLink> templateLink = default;
             Optional<BinaryData> parameters = default;
             Optional<ArmDeploymentParametersLink> parametersLink = default;
@@ -36,9 +199,11 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DebugSetting> debugSetting = default;
             Optional<ErrorDeploymentExtended> onErrorDeployment = default;
             Optional<string> templateHash = default;
-            Optional<IReadOnlyList<SubResource>> outputResources = default;
-            Optional<IReadOnlyList<SubResource>> validatedResources = default;
+            IReadOnlyList<SubResource> outputResources = default;
+            IReadOnlyList<SubResource> validatedResources = default;
             Optional<ResponseError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -105,7 +270,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmDependency> array = new List<ArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDependency.DeserializeArmDependency(item));
+                        array.Add(ArmDependency.DeserializeArmDependency(item, options));
                     }
                     dependencies = array;
                     continue;
@@ -116,7 +281,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value);
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -134,7 +299,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -152,7 +317,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
+                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -161,7 +326,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value);
+                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("templateHash"u8))
@@ -206,8 +371,62 @@ namespace Azure.ResourceManager.Resources.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArmDeploymentPropertiesExtended(
+                Optional.ToNullable(provisioningState),
+                correlationId.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(duration),
+                outputs.Value,
+                providers ?? new ChangeTrackingList<ResourceProviderData>(),
+                dependencies ?? new ChangeTrackingList<ArmDependency>(),
+                templateLink.Value,
+                parameters.Value,
+                parametersLink.Value,
+                Optional.ToNullable(mode),
+                debugSetting.Value,
+                onErrorDeployment.Value,
+                templateHash.Value,
+                outputResources ?? new ChangeTrackingList<SubResource>(),
+                validatedResources ?? new ChangeTrackingList<SubResource>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArmDeploymentPropertiesExtended>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentPropertiesExtended>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArmDeploymentPropertiesExtended IPersistableModel<ArmDeploymentPropertiesExtended>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentPropertiesExtended>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArmDeploymentPropertiesExtended(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArmDeploymentPropertiesExtended>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HttpProxy))
+            if (HttpProxy != null)
             {
                 writer.WritePropertyName("httpProxy"u8);
                 writer.WriteStringValue(HttpProxy);
             }
-            if (Optional.IsDefined(HttpsProxy))
+            if (HttpsProxy != null)
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
-            if (Optional.IsCollectionDefined(NoProxy))
+            if (!(NoProxy is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrustedCa))
+            if (TrustedCa != null)
             {
                 writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCa);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             Optional<string> httpProxy = default;
             Optional<string> httpsProxy = default;
-            Optional<IList<string>> noProxy = default;
+            IList<string> noProxy = default;
             Optional<string> trustedCa = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpProxyConfiguration(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCa.Value, serializedAdditionalRawData);
+            return new HttpProxyConfiguration(httpProxy.Value, httpsProxy.Value, noProxy ?? new ChangeTrackingList<string>(), trustedCa.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpProxyConfiguration>.Write(ModelReaderWriterOptions options)

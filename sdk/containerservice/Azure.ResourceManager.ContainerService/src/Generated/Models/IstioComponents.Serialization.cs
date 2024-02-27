@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IngressGateways))
+            if (!(IngressGateways is ChangeTrackingList<IstioIngressGateway> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ingressGateways"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EgressGateways))
+            if (!(EgressGateways is ChangeTrackingList<IstioEgressGateway> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("egressGateways"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<IstioIngressGateway>> ingressGateways = default;
-            Optional<IList<IstioEgressGateway>> egressGateways = default;
+            IList<IstioIngressGateway> ingressGateways = default;
+            IList<IstioEgressGateway> egressGateways = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<IstioIngressGateway> array = new List<IstioIngressGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IstioIngressGateway.DeserializeIstioIngressGateway(item));
+                        array.Add(IstioIngressGateway.DeserializeIstioIngressGateway(item, options));
                     }
                     ingressGateways = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<IstioEgressGateway> array = new List<IstioEgressGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IstioEgressGateway.DeserializeIstioEgressGateway(item));
+                        array.Add(IstioEgressGateway.DeserializeIstioEgressGateway(item, options));
                     }
                     egressGateways = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioComponents(Optional.ToList(ingressGateways), Optional.ToList(egressGateways), serializedAdditionalRawData);
+            return new IstioComponents(ingressGateways ?? new ChangeTrackingList<IstioIngressGateway>(), egressGateways ?? new ChangeTrackingList<IstioEgressGateway>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioComponents>.Write(ModelReaderWriterOptions options)

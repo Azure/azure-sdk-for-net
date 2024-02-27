@@ -8,13 +8,14 @@ using System.Threading;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Controls the end-to-end duration of the service method call, including
-/// the message being sent down the pipeline.  For the duration of pipeline.Send,
-/// this may change some behaviors in various pipeline policies and the transport.
+/// Options that can be used to control the behavior of a request sent by a client.
 /// </summary>
 public class RequestOptions
 {
     private bool _frozen;
+
+    private CancellationToken _cancellationToken = CancellationToken.None;
+    private ClientErrorBehaviors _errorOptions = ClientErrorBehaviors.Default;
 
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
@@ -22,16 +23,51 @@ public class RequestOptions
 
     private List<HeadersUpdate>? _headersUpdates;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequestOptions"/> class
+    /// </summary>
     public RequestOptions()
     {
-        CancellationToken = CancellationToken.None;
-        ErrorOptions = ClientErrorBehaviors.Default;
     }
 
-    public CancellationToken CancellationToken { get; set; }
+    /// <summary>
+    /// Gets or sets the <see cref="CancellationToken"/> used for the duration
+    /// of the call to <see cref="ClientPipeline.Send(PipelineMessage)"/>.
+    /// </summary>
+    public CancellationToken CancellationToken
+    {
+        get => _cancellationToken;
+        set
+        {
+            AssertNotFrozen();
 
-    public ClientErrorBehaviors ErrorOptions { get; set; }
+            _cancellationToken = value;
+        }
+    }
 
+    /// <summary>
+    /// Gets or sets a value that describes when a client's service method will
+    /// raise an exception if the underlying response is considered an error.
+    /// </summary>
+    public ClientErrorBehaviors ErrorOptions
+    {
+        get => _errorOptions;
+        set
+        {
+            AssertNotFrozen();
+
+            _errorOptions = value;
+        }
+    }
+
+    /// <summary>
+    /// Adds the specified header and its value to the request's header
+    /// collection. If a header with this name is already present in the
+    /// collection, the value will be added to the comma-separated list of
+    /// values associated with the header.
+    /// </summary>
+    /// <param name="name">The name of the header to add.</param>
+    /// <param name="value">The value of the header.</param>
     public void AddHeader(string name, string value)
     {
         Argument.AssertNotNull(name, nameof(name));
@@ -43,6 +79,13 @@ public class RequestOptions
         _headersUpdates.Add(new HeadersUpdate(HeaderOperation.Add, name, value));
     }
 
+    /// <summary>
+    /// Sets the specified header and its value in the request's header
+    /// collection. If a header with this name is already present in the
+    /// collection, the header's value will be replaced with the specified value.
+    /// </summary>
+    /// <param name="name">The name of the header to set.</param>
+    /// <param name="value">The value of the header.</param>
     public void SetHeader(string name, string value)
     {
         Argument.AssertNotNull(name, nameof(name));
@@ -54,6 +97,15 @@ public class RequestOptions
         _headersUpdates.Add(new HeadersUpdate(HeaderOperation.Set, name, value));
     }
 
+    /// <summary>
+    /// Adds a <see cref="PipelinePolicy"/> into the pipeline for the duration
+    /// of this request.
+    /// </summary>
+    /// <param name="policy">The <see cref="PipelinePolicy"/> to add to the
+    /// pipeline.</param>
+    /// <param name="position">The position of the policy in the pipeline.</param>
+    /// <exception cref="ArgumentException">Thrown when the provided policy
+    /// is <c>null</c>.</exception>
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
         Argument.AssertNotNull(policy, nameof(policy));
@@ -79,19 +131,13 @@ public class RequestOptions
     // Set options on the message before sending it through the pipeline.
     internal void Apply(PipelineMessage message)
     {
-        _frozen = true;
+        Freeze();
 
         // Set the cancellation token on the message so pipeline policies
         // will have access to it as the message flows through the pipeline.
         // This doesn't affect Azure.Core-based clients because the HttpMessage
         // cancellation token will be set again in HttpPipeline.Send.
         message.CancellationToken = CancellationToken;
-
-        // We don't overwrite the classifier on the message if it's already set.
-        // This preserves any values set by the client author, and is also
-        // needed for Azure.Core-based clients so we don't overwrite a default
-        // Azure.Core ResponseClassifier.
-        message.MessageClassifier ??= PipelineMessageClassifier.Default;
 
         // Copy custom pipeline policies to the message.
         message.PerCallPolicies = _perCallPolicies;
@@ -119,7 +165,21 @@ public class RequestOptions
         }
     }
 
-    private void AssertNotFrozen()
+    /// <summary>
+    /// Freeze this instance of <see cref="RequestOptions"/>.  After this method
+    /// has been called, any attempt to set properties on the instance or call
+    /// methods that would change its state will throw <see cref="InvalidOperationException"/>.
+    /// </summary>
+    public virtual void Freeze() => _frozen = true;
+
+    /// <summary>
+    /// Assert that <see cref="Freeze"/> has not been called on this
+    /// <see cref="RequestOptions"/> instance.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when an attempt is
+    /// made to change the state of this <see cref="RequestOptions"/> instance
+    /// after <see cref="Freeze"/> has been called.</exception>
+    protected void AssertNotFrozen()
     {
         if (_frozen)
         {

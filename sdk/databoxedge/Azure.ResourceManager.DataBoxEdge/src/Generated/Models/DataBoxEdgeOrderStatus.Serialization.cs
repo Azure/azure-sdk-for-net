@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (options.Format != "W" && Optional.IsDefined(UpdateOn))
+            if (options.Format != "W" && UpdateOn.HasValue)
             {
                 writer.WritePropertyName("updateDateTime"u8);
                 writer.WriteStringValue(UpdateOn.Value, "O");
             }
-            if (Optional.IsDefined(Comments))
+            if (Comments != null)
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrackingInformation))
+            if (options.Format != "W" && TrackingInformation != null)
             {
                 writer.WritePropertyName("trackingInformation"u8);
                 writer.WriteObjectValue(TrackingInformation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalOrderDetails))
+            if (options.Format != "W" && !(AdditionalOrderDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalOrderDetails"u8);
                 writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DateTimeOffset> updateDateTime = default;
             Optional<string> comments = default;
             Optional<DataBoxEdgeTrackingInfo> trackingInformation = default;
-            Optional<IReadOnlyDictionary<string, string>> additionalOrderDetails = default;
+            IReadOnlyDictionary<string, string> additionalOrderDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    trackingInformation = DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(property.Value);
+                    trackingInformation = DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalOrderDetails"u8))
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeOrderStatus(status, Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, Optional.ToDictionary(additionalOrderDetails), serializedAdditionalRawData);
+            return new DataBoxEdgeOrderStatus(
+                status,
+                Optional.ToNullable(updateDateTime),
+                comments.Value,
+                trackingInformation.Value,
+                additionalOrderDetails ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeOrderStatus>.Write(ModelReaderWriterOptions options)

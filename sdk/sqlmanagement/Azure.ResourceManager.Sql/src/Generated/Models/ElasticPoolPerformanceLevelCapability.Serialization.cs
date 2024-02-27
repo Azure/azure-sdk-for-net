@@ -5,32 +5,164 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolPerformanceLevelCapability
+    public partial class ElasticPoolPerformanceLevelCapability : IUtf8JsonSerializable, IJsonModel<ElasticPoolPerformanceLevelCapability>
     {
-        internal static ElasticPoolPerformanceLevelCapability DeserializeElasticPoolPerformanceLevelCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolPerformanceLevelCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ElasticPoolPerformanceLevelCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolPerformanceLevelCapability)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && PerformanceLevel != null)
+            {
+                writer.WritePropertyName("performanceLevel"u8);
+                writer.WriteObjectValue(PerformanceLevel);
+            }
+            if (options.Format != "W" && Sku != null)
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku);
+            }
+            if (options.Format != "W" && !(SupportedLicenseTypes is ChangeTrackingList<LicenseTypeCapability> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("supportedLicenseTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedLicenseTypes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && MaxDatabaseCount.HasValue)
+            {
+                writer.WritePropertyName("maxDatabaseCount"u8);
+                writer.WriteNumberValue(MaxDatabaseCount.Value);
+            }
+            if (options.Format != "W" && IncludedMaxSize != null)
+            {
+                writer.WritePropertyName("includedMaxSize"u8);
+                writer.WriteObjectValue(IncludedMaxSize);
+            }
+            if (options.Format != "W" && !(SupportedMaxSizes is ChangeTrackingList<MaxSizeRangeCapability> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("supportedMaxSizes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedMaxSizes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(SupportedPerDatabaseMaxSizes is ChangeTrackingList<MaxSizeRangeCapability> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("supportedPerDatabaseMaxSizes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedPerDatabaseMaxSizes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(SupportedPerDatabaseMaxPerformanceLevels is ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("supportedPerDatabaseMaxPerformanceLevels"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedPerDatabaseMaxPerformanceLevels)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && IsZoneRedundant.HasValue)
+            {
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
+            }
+            if (options.Format != "W" && !(SupportedMaintenanceConfigurations is ChangeTrackingList<MaintenanceConfigurationCapability> collection3 && collection3.IsUndefined))
+            {
+                writer.WritePropertyName("supportedMaintenanceConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedMaintenanceConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Status.HasValue)
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (Reason != null)
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ElasticPoolPerformanceLevelCapability IJsonModel<ElasticPoolPerformanceLevelCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolPerformanceLevelCapability)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticPoolPerformanceLevelCapability(document.RootElement, options);
+        }
+
+        internal static ElasticPoolPerformanceLevelCapability DeserializeElasticPoolPerformanceLevelCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<PerformanceLevelCapability> performanceLevel = default;
             Optional<SqlSku> sku = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
+            IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
             Optional<int> maxDatabaseCount = default;
             Optional<MaxSizeCapability> includedMaxSize = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedPerDatabaseMaxSizes = default;
-            Optional<IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>> supportedPerDatabaseMaxPerformanceLevels = default;
+            IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes = default;
+            IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = default;
+            IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = default;
             Optional<bool> zoneRedundant = default;
-            Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
+            IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("performanceLevel"u8))
@@ -39,7 +171,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value);
+                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -48,7 +180,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -60,7 +192,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -80,7 +212,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedMaxSizes"u8))
@@ -92,7 +224,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedMaxSizes = array;
                     continue;
@@ -106,7 +238,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedPerDatabaseMaxSizes = array;
                     continue;
@@ -120,7 +252,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> array = new List<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerDatabaseMaxPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(item));
+                        array.Add(ElasticPoolPerDatabaseMaxPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(item, options));
                     }
                     supportedPerDatabaseMaxPerformanceLevels = array;
                     continue;
@@ -143,7 +275,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaintenanceConfigurationCapability> array = new List<MaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item));
+                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item, options));
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;
@@ -162,8 +294,57 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Optional.ToList(supportedMaxSizes), Optional.ToList(supportedPerDatabaseMaxSizes), Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ElasticPoolPerformanceLevelCapability(
+                performanceLevel.Value,
+                sku.Value,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                Optional.ToNullable(maxDatabaseCount),
+                includedMaxSize.Value,
+                supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                supportedPerDatabaseMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(),
+                Optional.ToNullable(zoneRedundant),
+                supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticPoolPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticPoolPerformanceLevelCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ElasticPoolPerformanceLevelCapability IPersistableModel<ElasticPoolPerformanceLevelCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeElasticPoolPerformanceLevelCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticPoolPerformanceLevelCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticPoolPerformanceLevelCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsCollectionDefined(Activities))
+            if (!(Activities is ChangeTrackingList<Activity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             Optional<string> value = default;
-            Optional<IList<Activity>> activities = default;
+            IList<Activity> activities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SwitchCase(value.Value, Optional.ToList(activities));
+            return new SwitchCase(value.Value, activities ?? new ChangeTrackingList<Activity>());
         }
 
         internal partial class SwitchCaseConverter : JsonConverter<SwitchCase>

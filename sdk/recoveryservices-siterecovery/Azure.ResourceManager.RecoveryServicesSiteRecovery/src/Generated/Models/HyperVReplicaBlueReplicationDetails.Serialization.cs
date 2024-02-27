@@ -6,28 +6,121 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaBlueReplicationDetails
+    public partial class HyperVReplicaBlueReplicationDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaBlueReplicationDetails>
     {
-        internal static HyperVReplicaBlueReplicationDetails DeserializeHyperVReplicaBlueReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaBlueReplicationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HyperVReplicaBlueReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaBlueReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaBlueReplicationDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (LastReplicatedOn.HasValue)
+            {
+                writer.WritePropertyName("lastReplicatedTime"u8);
+                writer.WriteStringValue(LastReplicatedOn.Value, "O");
+            }
+            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("vmNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmNics)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (VmId != null)
+            {
+                writer.WritePropertyName("vmId"u8);
+                writer.WriteStringValue(VmId);
+            }
+            if (VmProtectionState != null)
+            {
+                writer.WritePropertyName("vmProtectionState"u8);
+                writer.WriteStringValue(VmProtectionState);
+            }
+            if (VmProtectionStateDescription != null)
+            {
+                writer.WritePropertyName("vmProtectionStateDescription"u8);
+                writer.WriteStringValue(VmProtectionStateDescription);
+            }
+            if (InitialReplicationDetails != null)
+            {
+                writer.WritePropertyName("initialReplicationDetails"u8);
+                writer.WriteObjectValue(InitialReplicationDetails);
+            }
+            if (!(VmDiskDetails is ChangeTrackingList<SiteRecoveryDiskDetails> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("vMDiskDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmDiskDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HyperVReplicaBlueReplicationDetails IJsonModel<HyperVReplicaBlueReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaBlueReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaBlueReplicationDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaBlueReplicationDetails(document.RootElement, options);
+        }
+
+        internal static HyperVReplicaBlueReplicationDetails DeserializeHyperVReplicaBlueReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> lastReplicatedTime = default;
-            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
+            IReadOnlyList<VmNicDetails> vmNics = default;
             Optional<string> vmId = default;
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
             Optional<InitialReplicationDetails> initialReplicationDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> vmDiskDetails = default;
+            IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastReplicatedTime"u8))
@@ -48,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -74,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value);
+                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vMDiskDetails"u8))
@@ -86,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
+                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item, options));
                     }
                     vmDiskDetails = array;
                     continue;
@@ -96,8 +189,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVReplicaBlueReplicationDetails(instanceType, Optional.ToNullable(lastReplicatedTime), Optional.ToList(vmNics), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmDiskDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HyperVReplicaBlueReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(lastReplicatedTime),
+                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                vmId.Value,
+                vmProtectionState.Value,
+                vmProtectionStateDescription.Value,
+                initialReplicationDetails.Value,
+                vmDiskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>());
         }
+
+        BinaryData IPersistableModel<HyperVReplicaBlueReplicationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaBlueReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaBlueReplicationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HyperVReplicaBlueReplicationDetails IPersistableModel<HyperVReplicaBlueReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaBlueReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHyperVReplicaBlueReplicationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaBlueReplicationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVReplicaBlueReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,54 +19,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestMethod))
+            if (RequestMethod != null)
             {
                 writer.WritePropertyName("requestMethod"u8);
                 writer.WriteObjectValue(RequestMethod);
             }
-            if (Optional.IsDefined(AdditionalHeaders))
+            if (AdditionalHeaders != null)
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 writer.WriteObjectValue(AdditionalHeaders);
             }
-            if (Optional.IsDefined(HttpRequestTimeout))
+            if (HttpRequestTimeout != null)
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
                 writer.WriteObjectValue(HttpRequestTimeout);
             }
-            if (Optional.IsDefined(RequestInterval))
+            if (RequestInterval != null)
             {
                 writer.WritePropertyName("requestInterval"u8);
                 writer.WriteObjectValue(RequestInterval);
             }
-            if (Optional.IsDefined(HttpCompressionType))
+            if (HttpCompressionType != null)
             {
                 writer.WritePropertyName("httpCompressionType"u8);
                 writer.WriteObjectValue(HttpCompressionType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -198,7 +198,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, additionalHeaders.Value, httpRequestTimeout.Value, requestInterval.Value, httpCompressionType.Value);
+            return new RestSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                requestMethod.Value,
+                additionalHeaders.Value,
+                httpRequestTimeout.Value,
+                requestInterval.Value,
+                httpCompressionType.Value);
         }
 
         internal partial class RestSinkConverter : JsonConverter<RestSink>

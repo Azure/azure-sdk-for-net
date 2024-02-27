@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
+            if (OriginResponseTimeoutSeconds.HasValue)
             {
                 writer.WritePropertyName("originResponseTimeoutSeconds"u8);
                 writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<int> originResponseTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfilePatch(Optional.ToDictionary(tags), Optional.ToNullable(originResponseTimeoutSeconds), serializedAdditionalRawData);
+            return new ProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(originResponseTimeoutSeconds), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfilePatch>.Write(ModelReaderWriterOptions options)

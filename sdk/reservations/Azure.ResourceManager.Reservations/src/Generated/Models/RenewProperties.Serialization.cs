@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class RenewProperties
+    public partial class RenewProperties : IUtf8JsonSerializable, IJsonModel<RenewProperties>
     {
-        internal static RenewProperties DeserializeRenewProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenewProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RenewProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RenewProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RenewProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (PurchaseProperties != null)
+            {
+                writer.WritePropertyName("purchaseProperties"u8);
+                writer.WriteObjectValue(PurchaseProperties);
+            }
+            if (PricingCurrencyTotal != null)
+            {
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                writer.WriteObjectValue(PricingCurrencyTotal);
+            }
+            if (BillingCurrencyTotal != null)
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                writer.WriteObjectValue(BillingCurrencyTotal);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RenewProperties IJsonModel<RenewProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RenewProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RenewProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRenewProperties(document.RootElement, options);
+        }
+
+        internal static RenewProperties DeserializeRenewProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ReservationPurchaseContent> purchaseProperties = default;
             Optional<RenewPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
             Optional<RenewPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purchaseProperties"u8))
@@ -29,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
+                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -38,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = RenewPropertiesPricingCurrencyTotal.DeserializeRenewPropertiesPricingCurrencyTotal(property.Value);
+                    pricingCurrencyTotal = RenewPropertiesPricingCurrencyTotal.DeserializeRenewPropertiesPricingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -47,11 +110,47 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = RenewPropertiesBillingCurrencyTotal.DeserializeRenewPropertiesBillingCurrencyTotal(property.Value);
+                    billingCurrencyTotal = RenewPropertiesBillingCurrencyTotal.DeserializeRenewPropertiesBillingCurrencyTotal(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RenewProperties(purchaseProperties.Value, pricingCurrencyTotal.Value, billingCurrencyTotal.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RenewProperties(purchaseProperties.Value, pricingCurrencyTotal.Value, billingCurrencyTotal.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RenewProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RenewProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RenewProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RenewProperties IPersistableModel<RenewProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RenewProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRenewProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RenewProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RenewProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

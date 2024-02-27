@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ScalingPlanPersonalScheduleResource>> UpdateAsync(ScalingPlanPersonalSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleResource.Update");
             scope.Start();
@@ -323,7 +326,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ScalingPlanPersonalScheduleResource> Update(ScalingPlanPersonalSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleResource.Update");
             scope.Start();

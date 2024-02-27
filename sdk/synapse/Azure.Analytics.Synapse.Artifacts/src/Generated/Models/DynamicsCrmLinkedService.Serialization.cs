@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,54 +61,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteObjectValue(DeploymentType);
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteObjectValue(HostName);
             }
-            if (Optional.IsDefined(Port))
+            if (Port != null)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteObjectValue(Port);
             }
-            if (Optional.IsDefined(ServiceUri))
+            if (ServiceUri != null)
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteObjectValue(ServiceUri);
             }
-            if (Optional.IsDefined(OrganizationName))
+            if (OrganizationName != null)
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteObjectValue(OrganizationName);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteObjectValue(AuthenticationType);
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(ServicePrincipalId))
+            if (ServicePrincipalId != null)
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue(ServicePrincipalId);
             }
-            if (Optional.IsDefined(ServicePrincipalCredentialType))
+            if (ServicePrincipalCredentialType != null)
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
                 writer.WriteObjectValue(ServicePrincipalCredentialType);
             }
-            if (Optional.IsDefined(ServicePrincipalCredential))
+            if (ServicePrincipalCredential != null)
             {
                 writer.WritePropertyName("servicePrincipalCredential"u8);
                 writer.WriteObjectValue(ServicePrincipalCredential);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
@@ -131,8 +131,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object deploymentType = default;
             Optional<object> hostName = default;
             Optional<object> port = default;
@@ -318,7 +318,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsCrmLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, encryptedCredential.Value);
+            return new DynamicsCrmLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                deploymentType,
+                hostName.Value,
+                port.Value,
+                serviceUri.Value,
+                organizationName.Value,
+                authenticationType,
+                username.Value,
+                password.Value,
+                servicePrincipalId.Value,
+                servicePrincipalCredentialType.Value,
+                servicePrincipalCredential.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class DynamicsCrmLinkedServiceConverter : JsonConverter<DynamicsCrmLinkedService>

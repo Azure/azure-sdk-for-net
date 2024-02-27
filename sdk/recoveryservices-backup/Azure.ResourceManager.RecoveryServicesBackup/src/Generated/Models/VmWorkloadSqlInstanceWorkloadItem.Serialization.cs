@@ -5,18 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSqlInstanceWorkloadItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSqlInstanceWorkloadItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSqlInstanceWorkloadItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSqlInstanceWorkloadItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VmWorkloadSqlInstanceWorkloadItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataDirectoryPaths))
+            if (!(DataDirectoryPaths is ChangeTrackingList<SqlDataDirectory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
@@ -26,63 +36,92 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ParentName))
+            if (ParentName != null)
             {
                 writer.WritePropertyName("parentName"u8);
                 writer.WriteStringValue(ParentName);
             }
-            if (Optional.IsDefined(ServerName))
+            if (ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(IsAutoProtectable))
+            if (IsAutoProtectable.HasValue)
             {
                 writer.WritePropertyName("isAutoProtectable"u8);
                 writer.WriteBooleanValue(IsAutoProtectable.Value);
             }
-            if (Optional.IsDefined(SubInquiredItemCount))
+            if (SubInquiredItemCount.HasValue)
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
                 writer.WriteNumberValue(SubInquiredItemCount.Value);
             }
-            if (Optional.IsDefined(SubWorkloadItemCount))
+            if (SubWorkloadItemCount.HasValue)
             {
                 writer.WritePropertyName("subWorkloadItemCount"u8);
                 writer.WriteNumberValue(SubWorkloadItemCount.Value);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType != null)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType != null)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("workloadItemType"u8);
             writer.WriteStringValue(WorkloadItemType);
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadSqlInstanceWorkloadItem DeserializeVmWorkloadSqlInstanceWorkloadItem(JsonElement element)
+        VmWorkloadSqlInstanceWorkloadItem IJsonModel<VmWorkloadSqlInstanceWorkloadItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadSqlInstanceWorkloadItem(document.RootElement, options);
+        }
+
+        internal static VmWorkloadSqlInstanceWorkloadItem DeserializeVmWorkloadSqlInstanceWorkloadItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
+            IList<SqlDataDirectory> dataDirectoryPaths = default;
             Optional<string> parentName = default;
             Optional<string> serverName = default;
             Optional<bool> isAutoProtectable = default;
@@ -93,6 +132,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string workloadItemType = default;
             Optional<string> friendlyName = default;
             Optional<BackupProtectionStatus> protectionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDirectoryPaths"u8))
@@ -104,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SqlDataDirectory> array = new List<SqlDataDirectory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item));
+                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item, options));
                     }
                     dataDirectoryPaths = array;
                     continue;
@@ -175,8 +216,56 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmWorkloadSqlInstanceWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount), Optional.ToList(dataDirectoryPaths));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VmWorkloadSqlInstanceWorkloadItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                workloadItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData,
+                parentName.Value,
+                serverName.Value,
+                Optional.ToNullable(isAutoProtectable),
+                Optional.ToNullable(subinquireditemcount),
+                Optional.ToNullable(subWorkloadItemCount),
+                dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>());
         }
+
+        BinaryData IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VmWorkloadSqlInstanceWorkloadItem IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVmWorkloadSqlInstanceWorkloadItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

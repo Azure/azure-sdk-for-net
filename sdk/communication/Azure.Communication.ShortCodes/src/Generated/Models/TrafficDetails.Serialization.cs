@@ -15,32 +15,32 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalMonthlyVolume))
+            if (TotalMonthlyVolume.HasValue)
             {
                 writer.WritePropertyName("totalMonthlyVolume"u8);
                 writer.WriteNumberValue(TotalMonthlyVolume.Value);
             }
-            if (Optional.IsDefined(MonthlyAverageMessagesFromUser))
+            if (MonthlyAverageMessagesFromUser.HasValue)
             {
                 writer.WritePropertyName("monthlyAverageMessagesFromUser"u8);
                 writer.WriteNumberValue(MonthlyAverageMessagesFromUser.Value);
             }
-            if (Optional.IsDefined(MonthlyAverageMessagesToUser))
+            if (MonthlyAverageMessagesToUser.HasValue)
             {
                 writer.WritePropertyName("monthlyAverageMessagesToUser"u8);
                 writer.WriteNumberValue(MonthlyAverageMessagesToUser.Value);
             }
-            if (Optional.IsDefined(IsSpiky))
+            if (IsSpiky.HasValue)
             {
                 writer.WritePropertyName("isSpiky"u8);
                 writer.WriteBooleanValue(IsSpiky.Value);
             }
-            if (Optional.IsDefined(SpikeDetails))
+            if (SpikeDetails != null)
             {
                 writer.WritePropertyName("spikeDetails"u8);
                 writer.WriteStringValue(SpikeDetails);
             }
-            if (Optional.IsDefined(EstimatedRampUpTimeInDays))
+            if (EstimatedRampUpTimeInDays.HasValue)
             {
                 writer.WritePropertyName("estimatedRampUpTimeInDays"u8);
                 writer.WriteNumberValue(EstimatedRampUpTimeInDays.Value);
@@ -113,7 +113,13 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new TrafficDetails(Optional.ToNullable(totalMonthlyVolume), Optional.ToNullable(monthlyAverageMessagesFromUser), Optional.ToNullable(monthlyAverageMessagesToUser), Optional.ToNullable(isSpiky), spikeDetails.Value, Optional.ToNullable(estimatedRampUpTimeInDays));
+            return new TrafficDetails(
+                Optional.ToNullable(totalMonthlyVolume),
+                Optional.ToNullable(monthlyAverageMessagesFromUser),
+                Optional.ToNullable(monthlyAverageMessagesToUser),
+                Optional.ToNullable(isSpiky),
+                spikeDetails.Value,
+                Optional.ToNullable(estimatedRampUpTimeInDays));
         }
     }
 }

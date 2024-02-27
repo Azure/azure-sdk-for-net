@@ -5,17 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TableParameterSubspace : IUtf8JsonSerializable
+    public partial class TableParameterSubspace : IUtf8JsonSerializable, IJsonModel<TableParameterSubspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableParameterSubspace>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TableParameterSubspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TableParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Booster))
+            if (Booster != null)
             {
                 if (Booster != null)
                 {
@@ -27,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("booster");
                 }
             }
-            if (Optional.IsDefined(BoostingType))
+            if (BoostingType != null)
             {
                 if (BoostingType != null)
                 {
@@ -39,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("boostingType");
                 }
             }
-            if (Optional.IsDefined(GrowPolicy))
+            if (GrowPolicy != null)
             {
                 if (GrowPolicy != null)
                 {
@@ -51,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("growPolicy");
                 }
             }
-            if (Optional.IsDefined(LearningRate))
+            if (LearningRate != null)
             {
                 if (LearningRate != null)
                 {
@@ -63,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRate");
                 }
             }
-            if (Optional.IsDefined(MaxBin))
+            if (MaxBin != null)
             {
                 if (MaxBin != null)
                 {
@@ -75,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxBin");
                 }
             }
-            if (Optional.IsDefined(MaxDepth))
+            if (MaxDepth != null)
             {
                 if (MaxDepth != null)
                 {
@@ -87,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxDepth");
                 }
             }
-            if (Optional.IsDefined(MaxLeaves))
+            if (MaxLeaves != null)
             {
                 if (MaxLeaves != null)
                 {
@@ -99,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxLeaves");
                 }
             }
-            if (Optional.IsDefined(MinDataInLeaf))
+            if (MinDataInLeaf != null)
             {
                 if (MinDataInLeaf != null)
                 {
@@ -111,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("minDataInLeaf");
                 }
             }
-            if (Optional.IsDefined(MinSplitGain))
+            if (MinSplitGain != null)
             {
                 if (MinSplitGain != null)
                 {
@@ -123,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("minSplitGain");
                 }
             }
-            if (Optional.IsDefined(ModelName))
+            if (ModelName != null)
             {
                 if (ModelName != null)
                 {
@@ -135,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelName");
                 }
             }
-            if (Optional.IsDefined(NEstimators))
+            if (NEstimators != null)
             {
                 if (NEstimators != null)
                 {
@@ -147,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nEstimators");
                 }
             }
-            if (Optional.IsDefined(NumLeaves))
+            if (NumLeaves != null)
             {
                 if (NumLeaves != null)
                 {
@@ -159,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numLeaves");
                 }
             }
-            if (Optional.IsDefined(PreprocessorName))
+            if (PreprocessorName != null)
             {
                 if (PreprocessorName != null)
                 {
@@ -171,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("preprocessorName");
                 }
             }
-            if (Optional.IsDefined(RegAlpha))
+            if (RegAlpha != null)
             {
                 if (RegAlpha != null)
                 {
@@ -183,7 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("regAlpha");
                 }
             }
-            if (Optional.IsDefined(RegLambda))
+            if (RegLambda != null)
             {
                 if (RegLambda != null)
                 {
@@ -195,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("regLambda");
                 }
             }
-            if (Optional.IsDefined(Subsample))
+            if (Subsample != null)
             {
                 if (Subsample != null)
                 {
@@ -207,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subsample");
                 }
             }
-            if (Optional.IsDefined(SubsampleFreq))
+            if (SubsampleFreq != null)
             {
                 if (SubsampleFreq != null)
                 {
@@ -219,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subsampleFreq");
                 }
             }
-            if (Optional.IsDefined(TreeMethod))
+            if (TreeMethod != null)
             {
                 if (TreeMethod != null)
                 {
@@ -231,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("treeMethod");
                 }
             }
-            if (Optional.IsDefined(WithMean))
+            if (WithMean != null)
             {
                 if (WithMean != null)
                 {
@@ -243,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("withMean");
                 }
             }
-            if (Optional.IsDefined(WithStd))
+            if (WithStd != null)
             {
                 if (WithStd != null)
                 {
@@ -255,11 +266,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("withStd");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TableParameterSubspace DeserializeTableParameterSubspace(JsonElement element)
+        TableParameterSubspace IJsonModel<TableParameterSubspace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TableParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTableParameterSubspace(document.RootElement, options);
+        }
+
+        internal static TableParameterSubspace DeserializeTableParameterSubspace(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -284,6 +324,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> treeMethod = default;
             Optional<string> withMean = default;
             Optional<string> withStd = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("booster"u8))
@@ -486,8 +528,65 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     withStd = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TableParameterSubspace(booster.Value, boostingType.Value, growPolicy.Value, learningRate.Value, maxBin.Value, maxDepth.Value, maxLeaves.Value, minDataInLeaf.Value, minSplitGain.Value, modelName.Value, nEstimators.Value, numLeaves.Value, preprocessorName.Value, regAlpha.Value, regLambda.Value, subsample.Value, subsampleFreq.Value, treeMethod.Value, withMean.Value, withStd.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TableParameterSubspace(
+                booster.Value,
+                boostingType.Value,
+                growPolicy.Value,
+                learningRate.Value,
+                maxBin.Value,
+                maxDepth.Value,
+                maxLeaves.Value,
+                minDataInLeaf.Value,
+                minSplitGain.Value,
+                modelName.Value,
+                nEstimators.Value,
+                numLeaves.Value,
+                preprocessorName.Value,
+                regAlpha.Value,
+                regLambda.Value,
+                subsample.Value,
+                subsampleFreq.Value,
+                treeMethod.Value,
+                withMean.Value,
+                withStd.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TableParameterSubspace>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TableParameterSubspace IPersistableModel<TableParameterSubspace>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTableParameterSubspace(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TableParameterSubspace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

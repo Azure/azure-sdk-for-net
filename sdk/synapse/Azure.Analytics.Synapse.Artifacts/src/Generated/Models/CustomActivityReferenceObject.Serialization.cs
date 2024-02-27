@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LinkedServices))
+            if (!(LinkedServices is ChangeTrackingList<LinkedServiceReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Datasets))
+            if (!(Datasets is ChangeTrackingList<DatasetReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -48,8 +48,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<LinkedServiceReference>> linkedServices = default;
-            Optional<IList<DatasetReference>> datasets = default;
+            IList<LinkedServiceReference> linkedServices = default;
+            IList<DatasetReference> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServices"u8))
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets));
+            return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>());
         }
 
         internal partial class CustomActivityReferenceObjectConverter : JsonConverter<CustomActivityReferenceObject>

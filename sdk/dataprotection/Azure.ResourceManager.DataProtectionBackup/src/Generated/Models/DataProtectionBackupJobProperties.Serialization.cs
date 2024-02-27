@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,32 +14,65 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupJobProperties : IUtf8JsonSerializable
+    public partial class DataProtectionBackupJobProperties : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupJobProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupJobProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataProtectionBackupJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("activityID"u8);
             writer.WriteStringValue(ActivityId);
             writer.WritePropertyName("backupInstanceFriendlyName"u8);
             writer.WriteStringValue(BackupInstanceFriendlyName);
+            if (options.Format != "W" && BackupInstanceId != null)
+            {
+                writer.WritePropertyName("backupInstanceId"u8);
+                writer.WriteStringValue(BackupInstanceId);
+            }
             writer.WritePropertyName("dataSourceId"u8);
             writer.WriteStringValue(DataSourceId);
             writer.WritePropertyName("dataSourceLocation"u8);
             writer.WriteStringValue(DataSourceLocation);
             writer.WritePropertyName("dataSourceName"u8);
             writer.WriteStringValue(DataSourceName);
-            if (Optional.IsDefined(DataSourceSetName))
+            if (DataSourceSetName != null)
             {
                 writer.WritePropertyName("dataSourceSetName"u8);
                 writer.WriteStringValue(DataSourceSetName);
             }
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType);
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
+            }
+            if (options.Format != "W" && EndOn.HasValue)
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ErrorDetails)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && ExtendedInfo != null)
+            {
+                writer.WritePropertyName("extendedInfo"u8);
+                writer.WriteObjectValue(ExtendedInfo);
             }
             writer.WritePropertyName("isUserTriggered"u8);
             writer.WriteBooleanValue(IsUserTriggered);
@@ -46,8 +80,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(Operation);
             writer.WritePropertyName("operationCategory"u8);
             writer.WriteStringValue(OperationCategory);
+            if (options.Format != "W" && PolicyId != null)
+            {
+                writer.WritePropertyName("policyId"u8);
+                writer.WriteStringValue(PolicyId);
+            }
+            if (options.Format != "W" && PolicyName != null)
+            {
+                writer.WritePropertyName("policyName"u8);
+                writer.WriteStringValue(PolicyName);
+            }
             writer.WritePropertyName("progressEnabled"u8);
             writer.WriteBooleanValue(IsProgressEnabled);
+            if (options.Format != "W" && ProgressUri != null)
+            {
+                writer.WritePropertyName("progressUrl"u8);
+                writer.WriteStringValue(ProgressUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && RehydrationPriority != null)
+            {
+                writer.WritePropertyName("rehydrationPriority"u8);
+                writer.WriteStringValue(RehydrationPriority);
+            }
+            if (options.Format != "W" && RestoreType != null)
+            {
+                writer.WritePropertyName("restoreType"u8);
+                writer.WriteStringValue(RestoreType);
+            }
             writer.WritePropertyName("sourceResourceGroup"u8);
             writer.WriteStringValue(SourceResourceGroup);
             writer.WritePropertyName("sourceSubscriptionID"u8);
@@ -67,26 +126,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndArray();
             writer.WritePropertyName("vaultName"u8);
             writer.WriteStringValue(VaultName);
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(SourceDataStoreName))
+            if (SourceDataStoreName != null)
             {
                 writer.WritePropertyName("sourceDataStoreName"u8);
                 writer.WriteStringValue(SourceDataStoreName);
             }
-            if (Optional.IsDefined(DestinationDataStoreName))
+            if (DestinationDataStoreName != null)
             {
                 writer.WritePropertyName("destinationDataStoreName"u8);
                 writer.WriteStringValue(DestinationDataStoreName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupJobProperties DeserializeDataProtectionBackupJobProperties(JsonElement element)
+        DataProtectionBackupJobProperties IJsonModel<DataProtectionBackupJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupJobProperties(document.RootElement, options);
+        }
+
+        internal static DataProtectionBackupJobProperties DeserializeDataProtectionBackupJobProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,7 +189,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string dataSourceType = default;
             Optional<TimeSpan> duration = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            IReadOnlyList<ResponseError> errorDetails = default;
             Optional<BackupJobExtendedInfo> extendedInfo = default;
             bool isUserTriggered = default;
             string operation = default;
@@ -122,6 +210,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<ETag> etag = default;
             Optional<string> sourceDataStoreName = default;
             Optional<string> destinationDataStoreName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activityID"u8))
@@ -206,7 +296,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = BackupJobExtendedInfo.DeserializeBackupJobExtendedInfo(property.Value);
+                    extendedInfo = BackupJobExtendedInfo.DeserializeBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isUserTriggered"u8))
@@ -321,8 +411,76 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     destinationDataStoreName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId.Value, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName.Value, dataSourceType, Optional.ToNullable(duration), Optional.ToNullable(endTime), Optional.ToList(errorDetails), extendedInfo.Value, isUserTriggered, operation, operationCategory, policyId.Value, policyName.Value, progressEnabled, progressUrl.Value, rehydrationPriority.Value, restoreType.Value, sourceResourceGroup, sourceSubscriptionId, startTime, status, subscriptionId, supportedActions, vaultName, Optional.ToNullable(etag), sourceDataStoreName.Value, destinationDataStoreName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataProtectionBackupJobProperties(
+                activityId,
+                backupInstanceFriendlyName,
+                backupInstanceId.Value,
+                dataSourceId,
+                dataSourceLocation,
+                dataSourceName,
+                dataSourceSetName.Value,
+                dataSourceType,
+                Optional.ToNullable(duration),
+                Optional.ToNullable(endTime),
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                extendedInfo.Value,
+                isUserTriggered,
+                operation,
+                operationCategory,
+                policyId.Value,
+                policyName.Value,
+                progressEnabled,
+                progressUrl.Value,
+                rehydrationPriority.Value,
+                restoreType.Value,
+                sourceResourceGroup,
+                sourceSubscriptionId,
+                startTime,
+                status,
+                subscriptionId,
+                supportedActions,
+                vaultName,
+                Optional.ToNullable(etag),
+                sourceDataStoreName.Value,
+                destinationDataStoreName.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataProtectionBackupJobProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataProtectionBackupJobProperties IPersistableModel<DataProtectionBackupJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataProtectionBackupJobProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataProtectionBackupJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

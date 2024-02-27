@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -13,17 +14,247 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareDetails
+    public partial class VMwareDetails : IUtf8JsonSerializable, IJsonModel<VMwareDetails>
     {
-        internal static VMwareDetails DeserializeVMwareDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VMwareDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (!(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServer> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("processServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProcessServers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(MasterTargetServers is ChangeTrackingList<MasterTargetServer> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("masterTargetServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in MasterTargetServers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(RunAsAccounts is ChangeTrackingList<SiteRecoveryRunAsAccount> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("runAsAccounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in RunAsAccounts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (ReplicationPairCount != null)
+            {
+                writer.WritePropertyName("replicationPairCount"u8);
+                writer.WriteStringValue(ReplicationPairCount);
+            }
+            if (ProcessServerCount != null)
+            {
+                writer.WritePropertyName("processServerCount"u8);
+                writer.WriteStringValue(ProcessServerCount);
+            }
+            if (AgentCount != null)
+            {
+                writer.WritePropertyName("agentCount"u8);
+                writer.WriteStringValue(AgentCount);
+            }
+            if (ProtectedServers != null)
+            {
+                writer.WritePropertyName("protectedServers"u8);
+                writer.WriteStringValue(ProtectedServers);
+            }
+            if (SystemLoad != null)
+            {
+                writer.WritePropertyName("systemLoad"u8);
+                writer.WriteStringValue(SystemLoad);
+            }
+            if (SystemLoadStatus != null)
+            {
+                writer.WritePropertyName("systemLoadStatus"u8);
+                writer.WriteStringValue(SystemLoadStatus);
+            }
+            if (CpuLoad != null)
+            {
+                writer.WritePropertyName("cpuLoad"u8);
+                writer.WriteStringValue(CpuLoad);
+            }
+            if (CpuLoadStatus != null)
+            {
+                writer.WritePropertyName("cpuLoadStatus"u8);
+                writer.WriteStringValue(CpuLoadStatus);
+            }
+            if (TotalMemoryInBytes.HasValue)
+            {
+                writer.WritePropertyName("totalMemoryInBytes"u8);
+                writer.WriteNumberValue(TotalMemoryInBytes.Value);
+            }
+            if (AvailableMemoryInBytes.HasValue)
+            {
+                writer.WritePropertyName("availableMemoryInBytes"u8);
+                writer.WriteNumberValue(AvailableMemoryInBytes.Value);
+            }
+            if (MemoryUsageStatus != null)
+            {
+                writer.WritePropertyName("memoryUsageStatus"u8);
+                writer.WriteStringValue(MemoryUsageStatus);
+            }
+            if (TotalSpaceInBytes.HasValue)
+            {
+                writer.WritePropertyName("totalSpaceInBytes"u8);
+                writer.WriteNumberValue(TotalSpaceInBytes.Value);
+            }
+            if (AvailableSpaceInBytes.HasValue)
+            {
+                writer.WritePropertyName("availableSpaceInBytes"u8);
+                writer.WriteNumberValue(AvailableSpaceInBytes.Value);
+            }
+            if (SpaceUsageStatus != null)
+            {
+                writer.WritePropertyName("spaceUsageStatus"u8);
+                writer.WriteStringValue(SpaceUsageStatus);
+            }
+            if (WebLoad != null)
+            {
+                writer.WritePropertyName("webLoad"u8);
+                writer.WriteStringValue(WebLoad);
+            }
+            if (WebLoadStatus != null)
+            {
+                writer.WritePropertyName("webLoadStatus"u8);
+                writer.WriteStringValue(WebLoadStatus);
+            }
+            if (DatabaseServerLoad != null)
+            {
+                writer.WritePropertyName("databaseServerLoad"u8);
+                writer.WriteStringValue(DatabaseServerLoad);
+            }
+            if (DatabaseServerLoadStatus != null)
+            {
+                writer.WritePropertyName("databaseServerLoadStatus"u8);
+                writer.WriteStringValue(DatabaseServerLoadStatus);
+            }
+            if (CsServiceStatus != null)
+            {
+                writer.WritePropertyName("csServiceStatus"u8);
+                writer.WriteStringValue(CsServiceStatus);
+            }
+            if (IPAddress != null)
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (AgentVersion != null)
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (HostName != null)
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
+            if (LastHeartbeat.HasValue)
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeat.Value, "O");
+            }
+            if (VersionStatus != null)
+            {
+                writer.WritePropertyName("versionStatus"u8);
+                writer.WriteStringValue(VersionStatus);
+            }
+            if (SslCertExpireOn.HasValue)
+            {
+                writer.WritePropertyName("sslCertExpiryDate"u8);
+                writer.WriteStringValue(SslCertExpireOn.Value, "O");
+            }
+            if (SslCertExpiryRemainingDays.HasValue)
+            {
+                writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
+                writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
+            }
+            if (PSTemplateVersion != null)
+            {
+                writer.WritePropertyName("psTemplateVersion"u8);
+                writer.WriteStringValue(PSTemplateVersion);
+            }
+            if (AgentExpireOn.HasValue)
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (AgentVersionDetails != null)
+            {
+                writer.WritePropertyName("agentVersionDetails"u8);
+                writer.WriteObjectValue(AgentVersionDetails);
+            }
+            if (!(SwitchProviderBlockingErrorDetails is ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in SwitchProviderBlockingErrorDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VMwareDetails IJsonModel<VMwareDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareDetails(document.RootElement, options);
+        }
+
+        internal static VMwareDetails DeserializeVMwareDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryProcessServer>> processServers = default;
-            Optional<IReadOnlyList<MasterTargetServer>> masterTargetServers = default;
-            Optional<IReadOnlyList<SiteRecoveryRunAsAccount>> runAsAccounts = default;
+            IReadOnlyList<SiteRecoveryProcessServer> processServers = default;
+            IReadOnlyList<MasterTargetServer> masterTargetServers = default;
+            IReadOnlyList<SiteRecoveryRunAsAccount> runAsAccounts = default;
             Optional<string> replicationPairCount = default;
             Optional<string> processServerCount = default;
             Optional<string> agentCount = default;
@@ -53,8 +284,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> psTemplateVersion = default;
             Optional<DateTimeOffset> agentExpireOn = default;
             Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
-            Optional<IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
+            IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("processServers"u8))
@@ -66,7 +299,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryProcessServer> array = new List<SiteRecoveryProcessServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryProcessServer.DeserializeSiteRecoveryProcessServer(item));
+                        array.Add(SiteRecoveryProcessServer.DeserializeSiteRecoveryProcessServer(item, options));
                     }
                     processServers = array;
                     continue;
@@ -80,7 +313,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MasterTargetServer> array = new List<MasterTargetServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MasterTargetServer.DeserializeMasterTargetServer(item));
+                        array.Add(MasterTargetServer.DeserializeMasterTargetServer(item, options));
                     }
                     masterTargetServers = array;
                     continue;
@@ -94,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryRunAsAccount> array = new List<SiteRecoveryRunAsAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryRunAsAccount.DeserializeSiteRecoveryRunAsAccount(item));
+                        array.Add(SiteRecoveryRunAsAccount.DeserializeSiteRecoveryRunAsAccount(item, options));
                     }
                     runAsAccounts = array;
                     continue;
@@ -281,7 +514,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("switchProviderBlockingErrorDetails"u8))
@@ -293,7 +526,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageFabricSwitchProviderBlockingErrorDetails> array = new List<InMageFabricSwitchProviderBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageFabricSwitchProviderBlockingErrorDetails.DeserializeInMageFabricSwitchProviderBlockingErrorDetails(item));
+                        array.Add(InMageFabricSwitchProviderBlockingErrorDetails.DeserializeInMageFabricSwitchProviderBlockingErrorDetails(item, options));
                     }
                     switchProviderBlockingErrorDetails = array;
                     continue;
@@ -303,8 +536,79 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareDetails(instanceType, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VMwareDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                processServers ?? new ChangeTrackingList<SiteRecoveryProcessServer>(),
+                masterTargetServers ?? new ChangeTrackingList<MasterTargetServer>(),
+                runAsAccounts ?? new ChangeTrackingList<SiteRecoveryRunAsAccount>(),
+                replicationPairCount.Value,
+                processServerCount.Value,
+                agentCount.Value,
+                protectedServers.Value,
+                systemLoad.Value,
+                systemLoadStatus.Value,
+                cpuLoad.Value,
+                cpuLoadStatus.Value,
+                Optional.ToNullable(totalMemoryInBytes),
+                Optional.ToNullable(availableMemoryInBytes),
+                memoryUsageStatus.Value,
+                Optional.ToNullable(totalSpaceInBytes),
+                Optional.ToNullable(availableSpaceInBytes),
+                spaceUsageStatus.Value,
+                webLoad.Value,
+                webLoadStatus.Value,
+                databaseServerLoad.Value,
+                databaseServerLoadStatus.Value,
+                csServiceStatus.Value,
+                ipAddress.Value,
+                agentVersion.Value,
+                hostName.Value,
+                Optional.ToNullable(lastHeartbeat),
+                versionStatus.Value,
+                Optional.ToNullable(sslCertExpireOn),
+                Optional.ToNullable(sslCertExpiryRemainingDays),
+                psTemplateVersion.Value,
+                Optional.ToNullable(agentExpireOn),
+                agentVersionDetails.Value,
+                switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>());
         }
+
+        BinaryData IPersistableModel<VMwareDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VMwareDetails IPersistableModel<VMwareDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVMwareDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VMwareDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

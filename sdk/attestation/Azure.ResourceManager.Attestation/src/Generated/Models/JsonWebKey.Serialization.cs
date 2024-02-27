@@ -26,79 +26,79 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Alg))
+            if (Alg != null)
             {
                 writer.WritePropertyName("alg"u8);
                 writer.WriteStringValue(Alg);
             }
-            if (Optional.IsDefined(Crv))
+            if (Crv != null)
             {
                 writer.WritePropertyName("crv"u8);
                 writer.WriteStringValue(Crv);
             }
-            if (Optional.IsDefined(D))
+            if (D != null)
             {
                 writer.WritePropertyName("d"u8);
                 writer.WriteStringValue(D);
             }
-            if (Optional.IsDefined(Dp))
+            if (Dp != null)
             {
                 writer.WritePropertyName("dp"u8);
                 writer.WriteStringValue(Dp);
             }
-            if (Optional.IsDefined(Dq))
+            if (Dq != null)
             {
                 writer.WritePropertyName("dq"u8);
                 writer.WriteStringValue(Dq);
             }
-            if (Optional.IsDefined(E))
+            if (E != null)
             {
                 writer.WritePropertyName("e"u8);
                 writer.WriteStringValue(E);
             }
-            if (Optional.IsDefined(K))
+            if (K != null)
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteStringValue(K);
             }
-            if (Optional.IsDefined(Kid))
+            if (Kid != null)
             {
                 writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(Kid);
             }
             writer.WritePropertyName("kty"u8);
             writer.WriteStringValue(Kty);
-            if (Optional.IsDefined(N))
+            if (N != null)
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteStringValue(N);
             }
-            if (Optional.IsDefined(P))
+            if (P != null)
             {
                 writer.WritePropertyName("p"u8);
                 writer.WriteStringValue(P);
             }
-            if (Optional.IsDefined(Q))
+            if (Q != null)
             {
                 writer.WritePropertyName("q"u8);
                 writer.WriteStringValue(Q);
             }
-            if (Optional.IsDefined(Qi))
+            if (Qi != null)
             {
                 writer.WritePropertyName("qi"u8);
                 writer.WriteStringValue(Qi);
             }
-            if (Optional.IsDefined(Use))
+            if (Use != null)
             {
                 writer.WritePropertyName("use"u8);
                 writer.WriteStringValue(Use);
             }
-            if (Optional.IsDefined(X))
+            if (X != null)
             {
                 writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
-            if (Optional.IsCollectionDefined(X5C))
+            if (!(X5C is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Y))
+            if (Y != null)
             {
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Attestation.Models
             Optional<string> qi = default;
             Optional<string> use = default;
             Optional<string> x = default;
-            Optional<IList<string>> x5c = default;
+            IList<string> x5c = default;
             Optional<string> y = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -272,7 +272,25 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value, serializedAdditionalRawData);
+            return new JsonWebKey(
+                alg.Value,
+                crv.Value,
+                d.Value,
+                dp.Value,
+                dq.Value,
+                e.Value,
+                k.Value,
+                kid.Value,
+                kty,
+                n.Value,
+                p.Value,
+                q.Value,
+                qi.Value,
+                use.Value,
+                x.Value,
+                x5c ?? new ChangeTrackingList<string>(),
+                y.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonWebKey>.Write(ModelReaderWriterOptions options)

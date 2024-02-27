@@ -5,17 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsAccountPatch : IUtf8JsonSerializable
+    public partial class MapsAccountPatch : IUtf8JsonSerializable, IJsonModel<MapsAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MapsAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,29 +38,39 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (options.Format != "W" && UniqueId.HasValue)
+            {
+                writer.WritePropertyName("uniqueId"u8);
+                writer.WriteStringValue(UniqueId.Value);
+            }
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Optional.IsCollectionDefined(LinkedResources))
+            if (options.Format != "W" && ProvisioningState != null)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (!(LinkedResources is ChangeTrackingList<MapsLinkedResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linkedResources"u8);
                 writer.WriteStartArray();
@@ -58,13 +80,210 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Cors))
+            if (Cors != null)
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MapsAccountPatch IJsonModel<MapsAccountPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapsAccountPatch(document.RootElement, options);
+        }
+
+        internal static MapsAccountPatch DeserializeMapsAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            Optional<MapsAccountKind> kind = default;
+            Optional<MapsSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<Guid> uniqueId = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<string> provisioningState = default;
+            IList<MapsLinkedResource> linkedResources = default;
+            Optional<CorsRules> cors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new MapsAccountKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = MapsSku.DeserializeMapsSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("uniqueId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uniqueId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("disableLocalAuth"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("linkedResources"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<MapsLinkedResource> array = new List<MapsLinkedResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item, options));
+                            }
+                            linkedResources = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("cors"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cors = CorsRules.DeserializeCorsRules(property0.Value, options);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MapsAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(kind),
+                sku.Value,
+                identity,
+                Optional.ToNullable(uniqueId),
+                Optional.ToNullable(disableLocalAuth),
+                provisioningState.Value,
+                linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
+                cors.Value,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MapsAccountPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MapsAccountPatch IPersistableModel<MapsAccountPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMapsAccountPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MapsAccountPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MapsAccountPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

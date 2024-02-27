@@ -26,122 +26,122 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(OSDiskSizeInGB))
+            if (OSDiskSizeInGB.HasValue)
             {
                 writer.WritePropertyName("osDiskSizeGB"u8);
                 writer.WriteNumberValue(OSDiskSizeInGB.Value);
             }
-            if (Optional.IsDefined(OSDiskType))
+            if (OSDiskType.HasValue)
             {
                 writer.WritePropertyName("osDiskType"u8);
                 writer.WriteStringValue(OSDiskType.Value.ToString());
             }
-            if (Optional.IsDefined(KubeletDiskType))
+            if (KubeletDiskType.HasValue)
             {
                 writer.WritePropertyName("kubeletDiskType"u8);
                 writer.WriteStringValue(KubeletDiskType.Value.ToString());
             }
-            if (Optional.IsDefined(WorkloadRuntime))
+            if (WorkloadRuntime.HasValue)
             {
                 writer.WritePropertyName("workloadRuntime"u8);
                 writer.WriteStringValue(WorkloadRuntime.Value.ToString());
             }
-            if (Optional.IsDefined(VnetSubnetId))
+            if (VnetSubnetId != null)
             {
                 writer.WritePropertyName("vnetSubnetID"u8);
                 writer.WriteStringValue(VnetSubnetId);
             }
-            if (Optional.IsDefined(PodSubnetId))
+            if (PodSubnetId != null)
             {
                 writer.WritePropertyName("podSubnetID"u8);
                 writer.WriteStringValue(PodSubnetId);
             }
-            if (Optional.IsDefined(MaxPods))
+            if (MaxPods.HasValue)
             {
                 writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Optional.IsDefined(OSSku))
+            if (OSSku.HasValue)
             {
                 writer.WritePropertyName("osSKU"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (Optional.IsDefined(MaxCount))
+            if (MaxCount.HasValue)
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (Optional.IsDefined(MinCount))
+            if (MinCount.HasValue)
             {
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (Optional.IsDefined(EnableAutoScaling))
+            if (EnableAutoScaling.HasValue)
             {
                 writer.WritePropertyName("enableAutoScaling"u8);
                 writer.WriteBooleanValue(EnableAutoScaling.Value);
             }
-            if (Optional.IsDefined(ScaleDownMode))
+            if (ScaleDownMode.HasValue)
             {
                 writer.WritePropertyName("scaleDownMode"u8);
                 writer.WriteStringValue(ScaleDownMode.Value.ToString());
             }
-            if (Optional.IsDefined(AgentPoolType))
+            if (AgentPoolType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AgentPoolType.Value.ToString());
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(OrchestratorVersion))
+            if (OrchestratorVersion != null)
             {
                 writer.WritePropertyName("orchestratorVersion"u8);
                 writer.WriteStringValue(OrchestratorVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentOrchestratorVersion))
+            if (options.Format != "W" && CurrentOrchestratorVersion != null)
             {
                 writer.WritePropertyName("currentOrchestratorVersion"u8);
                 writer.WriteStringValue(CurrentOrchestratorVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeImageVersion))
+            if (options.Format != "W" && NodeImageVersion != null)
             {
                 writer.WritePropertyName("nodeImageVersion"u8);
                 writer.WriteStringValue(NodeImageVersion);
             }
-            if (Optional.IsDefined(UpgradeSettings))
+            if (UpgradeSettings != null)
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(PowerState))
+            if (PowerState != null)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteObjectValue(PowerState);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -151,32 +151,32 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableNodePublicIP))
+            if (EnableNodePublicIP.HasValue)
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(EnableNodePublicIP.Value);
             }
-            if (Optional.IsDefined(NodePublicIPPrefixId))
+            if (NodePublicIPPrefixId != null)
             {
                 writer.WritePropertyName("nodePublicIPPrefixID"u8);
                 writer.WriteStringValue(NodePublicIPPrefixId);
             }
-            if (Optional.IsDefined(ScaleSetPriority))
+            if (ScaleSetPriority.HasValue)
             {
                 writer.WritePropertyName("scaleSetPriority"u8);
                 writer.WriteStringValue(ScaleSetPriority.Value.ToString());
             }
-            if (Optional.IsDefined(ScaleSetEvictionPolicy))
+            if (ScaleSetEvictionPolicy.HasValue)
             {
                 writer.WritePropertyName("scaleSetEvictionPolicy"u8);
                 writer.WriteStringValue(ScaleSetEvictionPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(SpotMaxPrice))
+            if (SpotMaxPrice.HasValue)
             {
                 writer.WritePropertyName("spotMaxPrice"u8);
                 writer.WriteNumberValue(SpotMaxPrice.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NodeLabels))
+            if (!(NodeLabels is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NodeTaints))
+            if (!(NodeTaints is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
@@ -208,57 +208,57 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProximityPlacementGroupId))
+            if (ProximityPlacementGroupId != null)
             {
                 writer.WritePropertyName("proximityPlacementGroupID"u8);
                 writer.WriteStringValue(ProximityPlacementGroupId);
             }
-            if (Optional.IsDefined(KubeletConfig))
+            if (KubeletConfig != null)
             {
                 writer.WritePropertyName("kubeletConfig"u8);
                 writer.WriteObjectValue(KubeletConfig);
             }
-            if (Optional.IsDefined(LinuxOSConfig))
+            if (LinuxOSConfig != null)
             {
                 writer.WritePropertyName("linuxOSConfig"u8);
                 writer.WriteObjectValue(LinuxOSConfig);
             }
-            if (Optional.IsDefined(EnableEncryptionAtHost))
+            if (EnableEncryptionAtHost.HasValue)
             {
                 writer.WritePropertyName("enableEncryptionAtHost"u8);
                 writer.WriteBooleanValue(EnableEncryptionAtHost.Value);
             }
-            if (Optional.IsDefined(EnableUltraSsd))
+            if (EnableUltraSsd.HasValue)
             {
                 writer.WritePropertyName("enableUltraSSD"u8);
                 writer.WriteBooleanValue(EnableUltraSsd.Value);
             }
-            if (Optional.IsDefined(EnableFips))
+            if (EnableFips.HasValue)
             {
                 writer.WritePropertyName("enableFIPS"u8);
                 writer.WriteBooleanValue(EnableFips.Value);
             }
-            if (Optional.IsDefined(GpuInstanceProfile))
+            if (GpuInstanceProfile.HasValue)
             {
                 writer.WritePropertyName("gpuInstanceProfile"u8);
                 writer.WriteStringValue(GpuInstanceProfile.Value.ToString());
             }
-            if (Optional.IsDefined(CreationData))
+            if (CreationData != null)
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
-            if (Optional.IsDefined(CapacityReservationGroupId))
+            if (CapacityReservationGroupId != null)
             {
                 writer.WritePropertyName("capacityReservationGroupID"u8);
                 writer.WriteStringValue(CapacityReservationGroupId);
             }
-            if (Optional.IsDefined(HostGroupId))
+            if (HostGroupId != null)
             {
                 writer.WritePropertyName("hostGroupID"u8);
                 writer.WriteStringValue(HostGroupId);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
@@ -324,15 +324,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             Optional<string> provisioningState = default;
             Optional<ContainerServicePowerState> powerState = default;
-            Optional<IList<string>> availabilityZones = default;
+            IList<string> availabilityZones = default;
             Optional<bool> enableNodePublicIP = default;
             Optional<ResourceIdentifier> nodePublicIPPrefixId = default;
             Optional<ScaleSetPriority> scaleSetPriority = default;
             Optional<ScaleSetEvictionPolicy> scaleSetEvictionPolicy = default;
             Optional<float> spotMaxPrice = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, string> nodeLabels = default;
+            IList<string> nodeTaints = default;
             Optional<ResourceIdentifier> proximityPlacementGroupId = default;
             Optional<KubeletConfig> kubeletConfig = default;
             Optional<LinuxOSConfig> linuxOSConfig = default;
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value);
+                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value);
+                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property.Value);
+                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxOSConfig"u8))
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property.Value);
+                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableEncryptionAtHost"u8))
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value);
+                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacityReservationGroupID"u8))
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property.Value);
+                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -741,7 +741,51 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAgentPoolProfileProperties(Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, capacityReservationGroupId.Value, hostGroupId.Value, networkProfile.Value, serializedAdditionalRawData);
+            return new ManagedClusterAgentPoolProfileProperties(
+                Optional.ToNullable(count),
+                vmSize.Value,
+                Optional.ToNullable(osDiskSizeGB),
+                Optional.ToNullable(osDiskType),
+                Optional.ToNullable(kubeletDiskType),
+                Optional.ToNullable(workloadRuntime),
+                vnetSubnetId.Value,
+                podSubnetId.Value,
+                Optional.ToNullable(maxPods),
+                Optional.ToNullable(osType),
+                Optional.ToNullable(osSku),
+                Optional.ToNullable(maxCount),
+                Optional.ToNullable(minCount),
+                Optional.ToNullable(enableAutoScaling),
+                Optional.ToNullable(scaleDownMode),
+                Optional.ToNullable(type),
+                Optional.ToNullable(mode),
+                orchestratorVersion.Value,
+                currentOrchestratorVersion.Value,
+                nodeImageVersion.Value,
+                upgradeSettings.Value,
+                provisioningState.Value,
+                powerState.Value,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(enableNodePublicIP),
+                nodePublicIPPrefixId.Value,
+                Optional.ToNullable(scaleSetPriority),
+                Optional.ToNullable(scaleSetEvictionPolicy),
+                Optional.ToNullable(spotMaxPrice),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                nodeTaints ?? new ChangeTrackingList<string>(),
+                proximityPlacementGroupId.Value,
+                kubeletConfig.Value,
+                linuxOSConfig.Value,
+                Optional.ToNullable(enableEncryptionAtHost),
+                Optional.ToNullable(enableUltraSsd),
+                Optional.ToNullable(enableFIPS),
+                Optional.ToNullable(gpuInstanceProfile),
+                creationData.Value,
+                capacityReservationGroupId.Value,
+                hostGroupId.Value,
+                networkProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAgentPoolProfileProperties>.Write(ModelReaderWriterOptions options)

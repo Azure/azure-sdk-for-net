@@ -198,7 +198,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AuthorizationPolicyResourceFormatResource>> UpdateAsync(WaitUntil waitUntil, AuthorizationPolicyResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatResource.Update");
             scope.Start();
@@ -244,7 +247,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AuthorizationPolicyResourceFormatResource> Update(WaitUntil waitUntil, AuthorizationPolicyResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatResource.Update");
             scope.Start();

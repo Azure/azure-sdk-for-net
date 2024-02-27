@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public ServiceNowLinkedService(object endpoint, ServiceNowAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
 
             Endpoint = endpoint;
             AuthenticationType = authenticationType;

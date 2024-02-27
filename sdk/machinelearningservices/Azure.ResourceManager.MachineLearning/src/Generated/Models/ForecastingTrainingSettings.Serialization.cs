@@ -6,18 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ForecastingTrainingSettings : IUtf8JsonSerializable
+    public partial class ForecastingTrainingSettings : IUtf8JsonSerializable, IJsonModel<ForecastingTrainingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastingTrainingSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ForecastingTrainingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ForecastingTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ForecastingTrainingSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
+            if (!(AllowedTrainingAlgorithms is ChangeTrackingList<ForecastingModel> collection && collection.IsUndefined))
             {
                 if (AllowedTrainingAlgorithms != null)
                 {
@@ -34,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("allowedTrainingAlgorithms");
                 }
             }
-            if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
+            if (!(BlockedTrainingAlgorithms is ChangeTrackingList<ForecastingModel> collection0 && collection0.IsUndefined))
             {
                 if (BlockedTrainingAlgorithms != null)
                 {
@@ -51,37 +60,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTrainingAlgorithms");
                 }
             }
-            if (Optional.IsDefined(IsDnnTrainingEnabled))
+            if (IsDnnTrainingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableDnnTraining"u8);
                 writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
-            if (Optional.IsDefined(IsModelExplainabilityEnabled))
+            if (IsModelExplainabilityEnabled.HasValue)
             {
                 writer.WritePropertyName("enableModelExplainability"u8);
                 writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
-            if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
+            if (IsOnnxCompatibleModelsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableOnnxCompatibleModels"u8);
                 writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
             }
-            if (Optional.IsDefined(IsStackEnsembleEnabled))
+            if (IsStackEnsembleEnabled.HasValue)
             {
                 writer.WritePropertyName("enableStackEnsemble"u8);
                 writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
             }
-            if (Optional.IsDefined(IsVoteEnsembleEnabled))
+            if (IsVoteEnsembleEnabled.HasValue)
             {
                 writer.WritePropertyName("enableVoteEnsemble"u8);
                 writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
             }
-            if (Optional.IsDefined(EnsembleModelDownloadTimeout))
+            if (EnsembleModelDownloadTimeout.HasValue)
             {
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (Optional.IsDefined(StackEnsembleSettings))
+            if (StackEnsembleSettings != null)
             {
                 if (StackEnsembleSettings != null)
                 {
@@ -93,22 +102,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stackEnsembleSettings");
                 }
             }
-            if (Optional.IsDefined(TrainingMode))
+            if (TrainingMode.HasValue)
             {
                 writer.WritePropertyName("trainingMode"u8);
                 writer.WriteStringValue(TrainingMode.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ForecastingTrainingSettings DeserializeForecastingTrainingSettings(JsonElement element)
+        ForecastingTrainingSettings IJsonModel<ForecastingTrainingSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ForecastingTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ForecastingTrainingSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeForecastingTrainingSettings(document.RootElement, options);
+        }
+
+        internal static ForecastingTrainingSettings DeserializeForecastingTrainingSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<ForecastingModel>> allowedTrainingAlgorithms = default;
-            Optional<IList<ForecastingModel>> blockedTrainingAlgorithms = default;
+            IList<ForecastingModel> allowedTrainingAlgorithms = default;
+            IList<ForecastingModel> blockedTrainingAlgorithms = default;
             Optional<bool> enableDnnTraining = default;
             Optional<bool> enableModelExplainability = default;
             Optional<bool> enableOnnxCompatibleModels = default;
@@ -117,6 +155,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan> ensembleModelDownloadTimeout = default;
             Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
             Optional<TrainingMode> trainingMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedTrainingAlgorithms"u8))
@@ -210,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value);
+                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trainingMode"u8))
@@ -222,8 +262,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trainingMode = new TrainingMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ForecastingTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode), Optional.ToList(allowedTrainingAlgorithms), Optional.ToList(blockedTrainingAlgorithms));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ForecastingTrainingSettings(
+                Optional.ToNullable(enableDnnTraining),
+                Optional.ToNullable(enableModelExplainability),
+                Optional.ToNullable(enableOnnxCompatibleModels),
+                Optional.ToNullable(enableStackEnsemble),
+                Optional.ToNullable(enableVoteEnsemble),
+                Optional.ToNullable(ensembleModelDownloadTimeout),
+                stackEnsembleSettings.Value,
+                Optional.ToNullable(trainingMode),
+                serializedAdditionalRawData,
+                allowedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>(),
+                blockedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>());
         }
+
+        BinaryData IPersistableModel<ForecastingTrainingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ForecastingTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ForecastingTrainingSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ForecastingTrainingSettings IPersistableModel<ForecastingTrainingSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ForecastingTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeForecastingTrainingSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ForecastingTrainingSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ForecastingTrainingSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

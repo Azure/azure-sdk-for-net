@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
+            if (options.Format != "W" && SourceServerVersion != null)
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServer))
+            if (options.Format != "W" && SourceServer != null)
             {
                 writer.WritePropertyName("sourceServer"u8);
                 writer.WriteStringValue(SourceServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
+            if (options.Format != "W" && TargetServerVersion != null)
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServer))
+            if (options.Format != "W" && TargetServer != null)
             {
                 writer.WritePropertyName("targetServer"u8);
                 writer.WriteStringValue(TargetServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerType))
+            if (options.Format != "W" && SourceServerType.HasValue)
             {
                 writer.WritePropertyName("sourceServerType"u8);
                 writer.WriteStringValue(SourceServerType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerType))
+            if (options.Format != "W" && TargetServerType.HasValue)
             {
                 writer.WritePropertyName("targetServerType"u8);
                 writer.WriteStringValue(TargetServerType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(DatabaseCount))
+            if (DatabaseCount.HasValue)
             {
                 writer.WritePropertyName("databaseCount"u8);
                 writer.WriteNumberValue(DatabaseCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -227,7 +227,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerVersion.Value, sourceServer.Value, targetServerVersion.Value, targetServer.Value, Optional.ToNullable(sourceServerType), Optional.ToNullable(targetServerType), Optional.ToNullable(state), Optional.ToNullable(databaseCount));
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                sourceServerVersion.Value,
+                sourceServer.Value,
+                targetServerVersion.Value,
+                targetServer.Value,
+                Optional.ToNullable(sourceServerType),
+                Optional.ToNullable(targetServerType),
+                Optional.ToNullable(state),
+                Optional.ToNullable(databaseCount));
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

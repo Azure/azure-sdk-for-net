@@ -60,7 +60,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataLakeAnalyticsAccountBasic(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, location, tags, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsAccountBasic(
+                id,
+                name,
+                resourceType,
+                systemData,
+                accountId,
+                provisioningState,
+                state,
+                createdOn,
+                lastModifiedOn,
+                endpoint,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
@@ -133,7 +146,23 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             computePolicies ??= new List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
             firewallRules ??= new List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
 
-            return new DataLakeAnalyticsAccountCreateOrUpdateContent(location, tags, defaultDataLakeStoreAccount, dataLakeStoreAccounts?.ToList(), storageAccounts?.ToList(), computePolicies?.ToList(), firewallRules?.ToList(), firewallState, firewallAllowAzureIPs, newTier, maxJobCount, maxDegreeOfParallelism, maxDegreeOfParallelismPerJob, minPriorityPerJob, queryStoreRetention, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsAccountCreateOrUpdateContent(
+                location,
+                tags,
+                defaultDataLakeStoreAccount,
+                dataLakeStoreAccounts?.ToList(),
+                storageAccounts?.ToList(),
+                computePolicies?.ToList(),
+                firewallRules?.ToList(),
+                firewallState,
+                firewallAllowAzureIPs,
+                newTier,
+                maxJobCount,
+                maxDegreeOfParallelism,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                queryStoreRetention,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
@@ -194,7 +223,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent"/> instance for mocking. </returns>
         public static ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(string name = null, Guid objectId = default, AadObjectIdentifierType objectType = default, int? maxDegreeOfParallelismPerJob = null, int? minPriorityPerJob = null)
         {
-            return new ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(name, objectId, objectType, maxDegreeOfParallelismPerJob, minPriorityPerJob, serializedAdditionalRawData: null);
+            return new ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(
+                name,
+                objectId,
+                objectType,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsAccountData"/>. </summary>
@@ -338,7 +373,43 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             firewallRules ??= new List<DataLakeAnalyticsFirewallRuleData>();
             tags ??= new Dictionary<string, string>();
 
-            return new DataLakeAnalyticsAccountData(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, defaultDataLakeStoreAccount, dataLakeStoreAccounts?.ToList(), publicDataLakeStoreAccounts?.ToList(), storageAccounts?.ToList(), computePolicies?.ToList(), hiveMetastores?.ToList(), virtualNetworkRules?.ToList(), firewallRules?.ToList(), firewallState, firewallAllowAzureIPs, newTier, currentTier, maxJobCount, maxActiveJobCountPerUser, maxQueuedJobCountPerUser, maxJobRunningTimeInMin, systemMaxJobCount, maxDegreeOfParallelism, systemMaxDegreeOfParallelism, maxDegreeOfParallelismPerJob, minPriorityPerJob, queryStoreRetention, debugDataAccessLevel, location, tags, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                accountId,
+                provisioningState,
+                state,
+                createdOn,
+                lastModifiedOn,
+                endpoint,
+                defaultDataLakeStoreAccount,
+                dataLakeStoreAccounts?.ToList(),
+                publicDataLakeStoreAccounts?.ToList(),
+                storageAccounts?.ToList(),
+                computePolicies?.ToList(),
+                hiveMetastores?.ToList(),
+                virtualNetworkRules?.ToList(),
+                firewallRules?.ToList(),
+                firewallState,
+                firewallAllowAzureIPs,
+                newTier,
+                currentTier,
+                maxJobCount,
+                maxActiveJobCountPerUser,
+                maxQueuedJobCountPerUser,
+                maxJobRunningTimeInMin,
+                systemMaxJobCount,
+                maxDegreeOfParallelism,
+                systemMaxDegreeOfParallelism,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                queryStoreRetention,
+                debugDataAccessLevel,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeStoreAccountInformationData"/>. </summary>
@@ -353,7 +424,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="DataLakeAnalytics.DataLakeStoreAccountInformationData"/> instance for mocking. </returns>
         public static DataLakeStoreAccountInformationData DataLakeStoreAccountInformationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string suffix = null)
         {
-            return new DataLakeStoreAccountInformationData(id, name, resourceType, systemData, suffix, serializedAdditionalRawData: null);
+            return new DataLakeStoreAccountInformationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                suffix,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData"/>. </summary>
@@ -368,7 +445,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData"/> instance for mocking. </returns>
         public static DataLakeAnalyticsStorageAccountInformationData DataLakeAnalyticsStorageAccountInformationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string suffix = null)
         {
-            return new DataLakeAnalyticsStorageAccountInformationData(id, name, resourceType, systemData, suffix, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsStorageAccountInformationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                suffix,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsComputePolicyData"/>. </summary>
@@ -395,7 +478,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="DataLakeAnalytics.DataLakeAnalyticsComputePolicyData"/> instance for mocking. </returns>
         public static DataLakeAnalyticsComputePolicyData DataLakeAnalyticsComputePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? objectId = null, AadObjectIdentifierType? objectType = null, int? maxDegreeOfParallelismPerJob = null, int? minPriorityPerJob = null)
         {
-            return new DataLakeAnalyticsComputePolicyData(id, name, resourceType, systemData, objectId, objectType, maxDegreeOfParallelismPerJob, minPriorityPerJob, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsComputePolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                objectId,
+                objectType,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsHiveMetastore"/>. </summary>
@@ -430,7 +522,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="Models.DataLakeAnalyticsHiveMetastore"/> instance for mocking. </returns>
         public static DataLakeAnalyticsHiveMetastore DataLakeAnalyticsHiveMetastore(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri serverUri = null, string databaseName = null, string runtimeVersion = null, string userName = null, string password = null, NestedResourceProvisioningState? nestedResourceProvisioningState = null)
         {
-            return new DataLakeAnalyticsHiveMetastore(id, name, resourceType, systemData, serverUri, databaseName, runtimeVersion, userName, password, nestedResourceProvisioningState, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsHiveMetastore(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverUri,
+                databaseName,
+                runtimeVersion,
+                userName,
+                password,
+                nestedResourceProvisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsVirtualNetworkRule"/>. </summary>
@@ -449,7 +552,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="Models.DataLakeAnalyticsVirtualNetworkRule"/> instance for mocking. </returns>
         public static DataLakeAnalyticsVirtualNetworkRule DataLakeAnalyticsVirtualNetworkRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier subnetId = null, DataLakeAnalyticsVirtualNetworkRuleState? virtualNetworkRuleState = null)
         {
-            return new DataLakeAnalyticsVirtualNetworkRule(id, name, resourceType, systemData, subnetId, virtualNetworkRuleState, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsVirtualNetworkRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                subnetId,
+                virtualNetworkRuleState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData"/>. </summary>
@@ -468,7 +578,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData"/> instance for mocking. </returns>
         public static DataLakeAnalyticsFirewallRuleData DataLakeAnalyticsFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
-            return new DataLakeAnalyticsFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
@@ -529,7 +646,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="Models.ComputePolicyForDataLakeAnalyticsAccountUpdateContent"/> instance for mocking. </returns>
         public static ComputePolicyForDataLakeAnalyticsAccountUpdateContent ComputePolicyForDataLakeAnalyticsAccountUpdateContent(string name = null, Guid? objectId = null, AadObjectIdentifierType? objectType = null, int? maxDegreeOfParallelismPerJob = null, int? minPriorityPerJob = null)
         {
-            return new ComputePolicyForDataLakeAnalyticsAccountUpdateContent(name, objectId, objectType, maxDegreeOfParallelismPerJob, minPriorityPerJob, serializedAdditionalRawData: null);
+            return new ComputePolicyForDataLakeAnalyticsAccountUpdateContent(
+                name,
+                objectId,
+                objectType,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirewallRuleForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
@@ -578,7 +701,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="DataLakeAnalytics.DataLakeAnalyticsStorageContainerData"/> instance for mocking. </returns>
         public static DataLakeAnalyticsStorageContainerData DataLakeAnalyticsStorageContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new DataLakeAnalyticsStorageContainerData(id, name, resourceType, systemData, lastModifiedOn, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsStorageContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastModifiedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsSasTokenInformation"/>. </summary>
@@ -639,7 +768,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <returns> A new <see cref="Models.DataLakeAnalyticsCapabilityInformation"/> instance for mocking. </returns>
         public static DataLakeAnalyticsCapabilityInformation DataLakeAnalyticsCapabilityInformation(Guid? subscriptionId = null, DataLakeAnalyticsSubscriptionState? state = null, int? maxAccountCount = null, int? accountCount = null, bool? isUnderMigrationState = null)
         {
-            return new DataLakeAnalyticsCapabilityInformation(subscriptionId, state, maxAccountCount, accountCount, isUnderMigrationState, serializedAdditionalRawData: null);
+            return new DataLakeAnalyticsCapabilityInformation(
+                subscriptionId,
+                state,
+                maxAccountCount,
+                accountCount,
+                isUnderMigrationState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeAnalyticsAccountNameAvailabilityResult"/>. </summary>

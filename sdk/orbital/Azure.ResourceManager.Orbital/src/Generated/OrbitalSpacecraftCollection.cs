@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OrbitalSpacecraftResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string spacecraftName, OrbitalSpacecraftData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OrbitalSpacecraftResource> CreateOrUpdate(WaitUntil waitUntil, string spacecraftName, OrbitalSpacecraftData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
         public virtual async Task<Response<OrbitalSpacecraftResource>> GetAsync(string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
         public virtual Response<OrbitalSpacecraftResource> Get(string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
         public virtual Response<bool> Exists(string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
         public virtual async Task<NullableResponse<OrbitalSpacecraftResource>> GetIfExistsAsync(string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="spacecraftName"/> is null. </exception>
         public virtual NullableResponse<OrbitalSpacecraftResource> GetIfExists(string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetIfExists");
             scope.Start();

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageQueueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string queueName, StorageQueueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageQueueResource> CreateOrUpdate(WaitUntil waitUntil, string queueName, StorageQueueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual async Task<Response<StorageQueueResource>> GetAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<StorageQueueResource> Get(string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<bool> Exists(string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageQueueResource>> GetIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual NullableResponse<StorageQueueResource> GetIfExists(string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
             scope.Start();

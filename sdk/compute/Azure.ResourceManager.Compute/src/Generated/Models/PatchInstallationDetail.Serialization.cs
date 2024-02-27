@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PatchId))
+            if (options.Format != "W" && PatchId != null)
             {
                 writer.WritePropertyName("patchId"u8);
                 writer.WriteStringValue(PatchId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(KbId))
+            if (options.Format != "W" && KbId != null)
             {
                 writer.WritePropertyName("kbId"u8);
                 writer.WriteStringValue(KbId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Classifications))
+            if (options.Format != "W" && !(Classifications is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(InstallationState))
+            if (options.Format != "W" && InstallationState.HasValue)
             {
                 writer.WritePropertyName("installationState"u8);
                 writer.WriteStringValue(InstallationState.Value.ToString());
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<string> version = default;
             Optional<string> kbId = default;
-            Optional<IReadOnlyList<string>> classifications = default;
+            IReadOnlyList<string> classifications = default;
             Optional<PatchInstallationState> installationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatchInstallationDetail(patchId.Value, name.Value, version.Value, kbId.Value, Optional.ToList(classifications), Optional.ToNullable(installationState), serializedAdditionalRawData);
+            return new PatchInstallationDetail(
+                patchId.Value,
+                name.Value,
+                version.Value,
+                kbId.Value,
+                classifications ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(installationState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatchInstallationDetail>.Write(ModelReaderWriterOptions options)

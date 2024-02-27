@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,79 +14,196 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceDomainPatch : IUtf8JsonSerializable
+    public partial class AppServiceDomainPatch : IUtf8JsonSerializable, IJsonModel<AppServiceDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceDomainPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContactAdmin))
+            if (ContactAdmin != null)
             {
                 writer.WritePropertyName("contactAdmin"u8);
                 writer.WriteObjectValue(ContactAdmin);
             }
-            if (Optional.IsDefined(ContactBilling))
+            if (ContactBilling != null)
             {
                 writer.WritePropertyName("contactBilling"u8);
                 writer.WriteObjectValue(ContactBilling);
             }
-            if (Optional.IsDefined(ContactRegistrant))
+            if (ContactRegistrant != null)
             {
                 writer.WritePropertyName("contactRegistrant"u8);
                 writer.WriteObjectValue(ContactRegistrant);
             }
-            if (Optional.IsDefined(ContactTech))
+            if (ContactTech != null)
             {
                 writer.WritePropertyName("contactTech"u8);
                 writer.WriteObjectValue(ContactTech);
             }
-            if (Optional.IsDefined(IsDomainPrivacyEnabled))
+            if (options.Format != "W" && RegistrationStatus.HasValue)
+            {
+                writer.WritePropertyName("registrationStatus"u8);
+                writer.WriteStringValue(RegistrationStatus.Value.ToSerialString());
+            }
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+            }
+            if (options.Format != "W" && !(NameServers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("nameServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in NameServers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (IsDomainPrivacyEnabled.HasValue)
             {
                 writer.WritePropertyName("privacy"u8);
                 writer.WriteBooleanValue(IsDomainPrivacyEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutoRenew))
+            if (options.Format != "W" && CreatedOn.HasValue)
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && ExpireOn.HasValue)
+            {
+                writer.WritePropertyName("expirationTime"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (options.Format != "W" && LastRenewedOn.HasValue)
+            {
+                writer.WritePropertyName("lastRenewedTime"u8);
+                writer.WriteStringValue(LastRenewedOn.Value, "O");
+            }
+            if (IsAutoRenew.HasValue)
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(IsAutoRenew.Value);
             }
-            if (Optional.IsDefined(Consent))
+            if (options.Format != "W" && IsReadyForDnsRecordManagement.HasValue)
+            {
+                writer.WritePropertyName("readyForDnsRecordManagement"u8);
+                writer.WriteBooleanValue(IsReadyForDnsRecordManagement.Value);
+            }
+            if (options.Format != "W" && !(ManagedHostNames is ChangeTrackingList<AppServiceHostName> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("managedHostNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedHostNames)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Consent != null)
             {
                 writer.WritePropertyName("consent"u8);
                 writer.WriteObjectValue(Consent);
             }
-            if (Optional.IsDefined(DnsType))
+            if (options.Format != "W" && !(DomainNotRenewableReasons is ChangeTrackingList<DomainNotRenewableReason> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("domainNotRenewableReasons"u8);
+                writer.WriteStartArray();
+                foreach (var item in DomainNotRenewableReasons)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (DnsType.HasValue)
             {
                 writer.WritePropertyName("dnsType"u8);
                 writer.WriteStringValue(DnsType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DnsZoneId))
+            if (DnsZoneId != null)
             {
                 writer.WritePropertyName("dnsZoneId"u8);
                 writer.WriteStringValue(DnsZoneId);
             }
-            if (Optional.IsDefined(TargetDnsType))
+            if (TargetDnsType.HasValue)
             {
                 writer.WritePropertyName("targetDnsType"u8);
                 writer.WriteStringValue(TargetDnsType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AuthCode))
+            if (AuthCode != null)
             {
                 writer.WritePropertyName("authCode"u8);
                 writer.WriteStringValue(AuthCode);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceDomainPatch DeserializeAppServiceDomainPatch(JsonElement element)
+        AppServiceDomainPatch IJsonModel<AppServiceDomainPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceDomainPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceDomainPatch(document.RootElement, options);
+        }
+
+        internal static AppServiceDomainPatch DeserializeAppServiceDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,20 +219,22 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<RegistrationContactInfo> contactTech = default;
             Optional<AppServiceDomainStatus> registrationStatus = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<string>> nameServers = default;
+            IReadOnlyList<string> nameServers = default;
             Optional<bool> privacy = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> expirationTime = default;
             Optional<DateTimeOffset> lastRenewedTime = default;
             Optional<bool> autoRenew = default;
             Optional<bool> readyForDnsRecordManagement = default;
-            Optional<IReadOnlyList<AppServiceHostName>> managedHostNames = default;
+            IReadOnlyList<AppServiceHostName> managedHostNames = default;
             Optional<DomainPurchaseConsent> consent = default;
-            Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
+            IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
             Optional<AppServiceDnsType> dnsType = default;
             Optional<string> dnsZoneId = default;
             Optional<AppServiceDnsType> targetDnsType = default;
             Optional<string> authCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -161,7 +281,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactBilling"u8))
@@ -170,7 +290,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactRegistrant"u8))
@@ -179,7 +299,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactTech"u8))
@@ -188,7 +308,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("registrationStatus"u8))
@@ -286,7 +406,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceHostName> array = new List<AppServiceHostName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item));
+                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item, options));
                             }
                             managedHostNames = array;
                             continue;
@@ -297,7 +417,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value);
+                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("domainNotRenewableReasons"u8))
@@ -345,8 +465,70 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceDomainPatch(id, name, type, systemData.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceDomainPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                contactAdmin.Value,
+                contactBilling.Value,
+                contactRegistrant.Value,
+                contactTech.Value,
+                Optional.ToNullable(registrationStatus),
+                Optional.ToNullable(provisioningState),
+                nameServers ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(privacy),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(expirationTime),
+                Optional.ToNullable(lastRenewedTime),
+                Optional.ToNullable(autoRenew),
+                Optional.ToNullable(readyForDnsRecordManagement),
+                managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(),
+                consent.Value,
+                domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(),
+                Optional.ToNullable(dnsType),
+                dnsZoneId.Value,
+                Optional.ToNullable(targetDnsType),
+                authCode.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceDomainPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceDomainPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceDomainPatch IPersistableModel<AppServiceDomainPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceDomainPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceDomainPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceDomainPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

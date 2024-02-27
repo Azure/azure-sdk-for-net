@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Optional.IsDefined(Addr))
+            if (Addr != null)
             {
                 writer.WritePropertyName("addr"u8);
                 writer.WriteStringValue(Addr);
             }
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(Method))
+            if (Method != null)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UserAgent))
+            if (UserAgent != null)
             {
                 writer.WritePropertyName("useragent"u8);
                 writer.WriteStringValue(UserAgent);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventRequestContent(Optional.ToNullable(id), addr.Value, host.Value, method.Value, userAgent.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventRequestContent(
+                Optional.ToNullable(id),
+                addr.Value,
+                host.Value,
+                method.Value,
+                userAgent.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventRequestContent>.Write(ModelReaderWriterOptions options)

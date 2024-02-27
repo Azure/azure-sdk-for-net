@@ -22,7 +22,10 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         internal MetricsBatchResultValues(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<MetricResult> metrics)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             StartTime = startTime;
             EndTime = endTime;

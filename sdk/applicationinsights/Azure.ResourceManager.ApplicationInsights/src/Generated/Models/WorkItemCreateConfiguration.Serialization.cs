@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectorId))
+            if (ConnectorId != null)
             {
                 writer.WritePropertyName("ConnectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (Optional.IsDefined(ConnectorDataConfiguration))
+            if (ConnectorDataConfiguration != null)
             {
                 writer.WritePropertyName("ConnectorDataConfiguration"u8);
                 writer.WriteStringValue(ConnectorDataConfiguration);
             }
-            if (Optional.IsDefined(IsValidateOnly))
+            if (IsValidateOnly.HasValue)
             {
                 writer.WritePropertyName("ValidateOnly"u8);
                 writer.WriteBooleanValue(IsValidateOnly.Value);
             }
-            if (Optional.IsCollectionDefined(WorkItemProperties))
+            if (!(WorkItemProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("WorkItemProperties"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> connectorId = default;
             Optional<string> connectorDataConfiguration = default;
             Optional<bool> validateOnly = default;
-            Optional<IDictionary<string, string>> workItemProperties = default;
+            IDictionary<string, string> workItemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkItemCreateConfiguration(connectorId.Value, connectorDataConfiguration.Value, Optional.ToNullable(validateOnly), Optional.ToDictionary(workItemProperties), serializedAdditionalRawData);
+            return new WorkItemCreateConfiguration(connectorId.Value, connectorDataConfiguration.Value, Optional.ToNullable(validateOnly), workItemProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkItemCreateConfiguration>.Write(ModelReaderWriterOptions options)

@@ -142,7 +142,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = SearchServiceServicesClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability");
             scope.Start();
@@ -185,7 +188,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = SearchServiceServicesClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability");
             scope.Start();
@@ -226,7 +232,7 @@ namespace Azure.ResourceManager.Search.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaUsageResult.DeserializeQuotaUsageResult(e), UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +260,7 @@ namespace Azure.ResourceManager.Search.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaUsageResult.DeserializeQuotaUsageResult(e), UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +288,14 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+            if (skuName == null)
+            {
+                throw new ArgumentNullException(nameof(skuName));
+            }
+            if (skuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
             scope.Start();
@@ -323,7 +336,14 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<QuotaUsageResult> UsageBySubscriptionSku(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+            if (skuName == null)
+            {
+                throw new ArgumentNullException(nameof(skuName));
+            }
+            if (skuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
             scope.Start();

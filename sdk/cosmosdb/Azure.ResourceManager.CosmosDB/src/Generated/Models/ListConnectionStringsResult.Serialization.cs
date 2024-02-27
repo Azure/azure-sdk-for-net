@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectionStrings))
+            if (options.Format != "W" && !(ConnectionStrings is ChangeTrackingList<CosmosDBConnectionString> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionStrings"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBConnectionString>> connectionStrings = default;
+            IReadOnlyList<CosmosDBConnectionString> connectionStrings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBConnectionString> array = new List<CosmosDBConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item));
+                        array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item, options));
                     }
                     connectionStrings = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListConnectionStringsResult(Optional.ToList(connectionStrings), serializedAdditionalRawData);
+            return new ListConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<CosmosDBConnectionString>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListConnectionStringsResult>.Write(ModelReaderWriterOptions options)

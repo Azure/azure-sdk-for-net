@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyTrackedResourceRecord
+    public partial class PolicyTrackedResourceRecord : IUtf8JsonSerializable, IJsonModel<PolicyTrackedResourceRecord>
     {
-        internal static PolicyTrackedResourceRecord DeserializePolicyTrackedResourceRecord(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyTrackedResourceRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PolicyTrackedResourceRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyTrackedResourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && TrackedResourceId != null)
+            {
+                writer.WritePropertyName("trackedResourceId"u8);
+                writer.WriteStringValue(TrackedResourceId);
+            }
+            if (options.Format != "W" && PolicyDetails != null)
+            {
+                writer.WritePropertyName("policyDetails"u8);
+                writer.WriteObjectValue(PolicyDetails);
+            }
+            if (options.Format != "W" && CreatedBy != null)
+            {
+                writer.WritePropertyName("createdBy"u8);
+                writer.WriteObjectValue(CreatedBy);
+            }
+            if (options.Format != "W" && LastModifiedBy != null)
+            {
+                writer.WritePropertyName("lastModifiedBy"u8);
+                writer.WriteObjectValue(LastModifiedBy);
+            }
+            if (options.Format != "W" && LastUpdateOn.HasValue)
+            {
+                writer.WritePropertyName("lastUpdateUtc"u8);
+                writer.WriteStringValue(LastUpdateOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyTrackedResourceRecord IJsonModel<PolicyTrackedResourceRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyTrackedResourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyTrackedResourceRecord(document.RootElement, options);
+        }
+
+        internal static PolicyTrackedResourceRecord DeserializePolicyTrackedResourceRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +94,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<TrackedResourceModificationDetails> createdBy = default;
             Optional<TrackedResourceModificationDetails> lastModifiedBy = default;
             Optional<DateTimeOffset> lastUpdateUtc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackedResourceId"u8))
@@ -41,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
+                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdBy"u8))
@@ -50,7 +122,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    createdBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value);
+                    createdBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastModifiedBy"u8))
@@ -59,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    lastModifiedBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value);
+                    lastModifiedBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateUtc"u8))
@@ -71,8 +143,50 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     lastUpdateUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyTrackedResourceRecord(trackedResourceId.Value, policyDetails.Value, createdBy.Value, lastModifiedBy.Value, Optional.ToNullable(lastUpdateUtc));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PolicyTrackedResourceRecord(
+                trackedResourceId.Value,
+                policyDetails.Value,
+                createdBy.Value,
+                lastModifiedBy.Value,
+                Optional.ToNullable(lastUpdateUtc),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyTrackedResourceRecord>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyTrackedResourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PolicyTrackedResourceRecord IPersistableModel<PolicyTrackedResourceRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyTrackedResourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicyTrackedResourceRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyTrackedResourceRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

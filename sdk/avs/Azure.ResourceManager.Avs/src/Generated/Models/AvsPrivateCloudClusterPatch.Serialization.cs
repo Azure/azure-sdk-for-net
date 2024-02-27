@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterSize))
+            if (ClusterSize.HasValue)
             {
                 writer.WritePropertyName("clusterSize"u8);
                 writer.WriteNumberValue(ClusterSize.Value);
             }
-            if (Optional.IsCollectionDefined(Hosts))
+            if (!(Hosts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             Optional<int> clusterSize = default;
-            Optional<IList<string>> hosts = default;
+            IList<string> hosts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudClusterPatch(Optional.ToNullable(clusterSize), Optional.ToList(hosts), serializedAdditionalRawData);
+            return new AvsPrivateCloudClusterPatch(Optional.ToNullable(clusterSize), hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudClusterPatch>.Write(ModelReaderWriterOptions options)

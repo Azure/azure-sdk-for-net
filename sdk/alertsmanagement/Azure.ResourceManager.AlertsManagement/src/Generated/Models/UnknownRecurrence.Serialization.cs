@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRecurrence(document.RootElement, options);
+            return DeserializeAlertProcessingRuleRecurrence(document.RootElement, options);
         }
 
         internal static UnknownRecurrence DeserializeUnknownRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRecurrence(document.RootElement, options);
+                        return DeserializeAlertProcessingRuleRecurrence(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AlertProcessingRuleRecurrence)} does not support '{options.Format}' format.");

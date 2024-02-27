@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         public virtual AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockableMySqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MySqlPerformanceTier.DeserializeMySqlPerformanceTier(e), LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockableMySqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         public virtual Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockableMySqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MySqlPerformanceTier.DeserializeMySqlPerformanceTier(e), LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockableMySqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +185,10 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableMySqlSubscriptionResource.CheckMySqlNameAvailability");
             scope.Start();
@@ -223,7 +226,10 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<MySqlNameAvailabilityResult> CheckMySqlNameAvailability(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableMySqlSubscriptionResource.CheckMySqlNameAvailability");
             scope.Start();

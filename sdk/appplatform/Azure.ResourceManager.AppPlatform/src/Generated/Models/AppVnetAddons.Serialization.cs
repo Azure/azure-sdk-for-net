@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPublicEndpoint))
+            if (IsPublicEndpoint.HasValue)
             {
                 writer.WritePropertyName("publicEndpoint"u8);
                 writer.WriteBooleanValue(IsPublicEndpoint.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicEndpointUri))
+            if (options.Format != "W" && PublicEndpointUri != null)
             {
                 writer.WritePropertyName("publicEndpointUrl"u8);
                 writer.WriteStringValue(PublicEndpointUri.AbsoluteUri);

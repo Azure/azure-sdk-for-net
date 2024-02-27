@@ -18,57 +18,57 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Type != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(ProjectName))
+            if (ProjectName != null)
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Optional.IsDefined(RepositoryName))
+            if (RepositoryName != null)
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (Optional.IsDefined(CollaborationBranch))
+            if (CollaborationBranch != null)
             {
                 writer.WritePropertyName("collaborationBranch"u8);
                 writer.WriteStringValue(CollaborationBranch);
             }
-            if (Optional.IsDefined(RootFolder))
+            if (RootFolder != null)
             {
                 writer.WritePropertyName("rootFolder"u8);
                 writer.WriteStringValue(RootFolder);
             }
-            if (Optional.IsDefined(LastCommitId))
+            if (LastCommitId != null)
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteObjectValue(ClientSecret);
@@ -159,7 +159,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), clientId.Value, clientSecret.Value);
+            return new WorkspaceRepositoryConfiguration(
+                type.Value,
+                hostName.Value,
+                accountName.Value,
+                projectName.Value,
+                repositoryName.Value,
+                collaborationBranch.Value,
+                rootFolder.Value,
+                lastCommitId.Value,
+                Optional.ToNullable(tenantId),
+                clientId.Value,
+                clientSecret.Value);
         }
 
         internal partial class WorkspaceRepositoryConfigurationConverter : JsonConverter<WorkspaceRepositoryConfiguration>

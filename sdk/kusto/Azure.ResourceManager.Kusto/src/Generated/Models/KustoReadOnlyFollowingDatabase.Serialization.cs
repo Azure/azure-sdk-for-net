@@ -6,37 +6,146 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoReadOnlyFollowingDatabase : IUtf8JsonSerializable
+    public partial class KustoReadOnlyFollowingDatabase : IUtf8JsonSerializable, IJsonModel<KustoReadOnlyFollowingDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoReadOnlyFollowingDatabase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KustoReadOnlyFollowingDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HotCachePeriod))
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && SoftDeletePeriod.HasValue)
+            {
+                writer.WritePropertyName("softDeletePeriod"u8);
+                writer.WriteStringValue(SoftDeletePeriod.Value, "P");
+            }
+            if (HotCachePeriod.HasValue)
             {
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
+            if (options.Format != "W" && Statistics != null)
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue(Statistics);
+            }
+            if (options.Format != "W" && LeaderClusterResourceId != null)
+            {
+                writer.WritePropertyName("leaderClusterResourceId"u8);
+                writer.WriteStringValue(LeaderClusterResourceId);
+            }
+            if (options.Format != "W" && AttachedDatabaseConfigurationName != null)
+            {
+                writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
+                writer.WriteStringValue(AttachedDatabaseConfigurationName);
+            }
+            if (options.Format != "W" && PrincipalsModificationKind.HasValue)
+            {
+                writer.WritePropertyName("principalsModificationKind"u8);
+                writer.WriteStringValue(PrincipalsModificationKind.Value.ToString());
+            }
+            if (options.Format != "W" && TableLevelSharingProperties != null)
+            {
+                writer.WritePropertyName("tableLevelSharingProperties"u8);
+                writer.WriteObjectValue(TableLevelSharingProperties);
+            }
+            if (options.Format != "W" && OriginalDatabaseName != null)
+            {
+                writer.WritePropertyName("originalDatabaseName"u8);
+                writer.WriteStringValue(OriginalDatabaseName);
+            }
+            if (options.Format != "W" && DatabaseShareOrigin.HasValue)
+            {
+                writer.WritePropertyName("databaseShareOrigin"u8);
+                writer.WriteStringValue(DatabaseShareOrigin.Value.ToString());
+            }
+            if (options.Format != "W" && SuspensionDetails != null)
+            {
+                writer.WritePropertyName("suspensionDetails"u8);
+                writer.WriteObjectValue(SuspensionDetails);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoReadOnlyFollowingDatabase DeserializeKustoReadOnlyFollowingDatabase(JsonElement element)
+        KustoReadOnlyFollowingDatabase IJsonModel<KustoReadOnlyFollowingDatabase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoReadOnlyFollowingDatabase(document.RootElement, options);
+        }
+
+        internal static KustoReadOnlyFollowingDatabase DeserializeKustoReadOnlyFollowingDatabase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +167,8 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> originalDatabaseName = default;
             Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
             Optional<SuspensionDetails> suspensionDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -140,7 +251,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
+                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("leaderClusterResourceId"u8))
@@ -168,7 +279,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("originalDatabaseName"u8))
@@ -191,14 +302,68 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value);
+                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KustoReadOnlyFollowingDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(softDeletePeriod),
+                Optional.ToNullable(hotCachePeriod),
+                statistics.Value,
+                leaderClusterResourceId.Value,
+                attachedDatabaseConfigurationName.Value,
+                Optional.ToNullable(principalsModificationKind),
+                tableLevelSharingProperties.Value,
+                originalDatabaseName.Value,
+                Optional.ToNullable(databaseShareOrigin),
+                suspensionDetails.Value);
         }
+
+        BinaryData IPersistableModel<KustoReadOnlyFollowingDatabase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KustoReadOnlyFollowingDatabase IPersistableModel<KustoReadOnlyFollowingDatabase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKustoReadOnlyFollowingDatabase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KustoReadOnlyFollowingDatabase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

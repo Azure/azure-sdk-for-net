@@ -6,23 +6,32 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmProperties : IUtf8JsonSerializable
+    public partial class ManagedHsmProperties : IUtf8JsonSerializable, IJsonModel<ManagedHsmProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedHsmProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsCollectionDefined(InitialAdminObjectIds))
+            if (!(InitialAdminObjectIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("initialAdminObjectIds"u8);
                 writer.WriteStartArray();
@@ -32,32 +41,47 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableSoftDelete))
+            if (options.Format != "W" && HsmUri != null)
+            {
+                writer.WritePropertyName("hsmUri"u8);
+                writer.WriteStringValue(HsmUri.AbsoluteUri);
+            }
+            if (EnableSoftDelete.HasValue)
             {
                 writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            if (SoftDeleteRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (Optional.IsDefined(EnablePurgeProtection))
+            if (EnablePurgeProtection.HasValue)
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (options.Format != "W" && StatusMessage != null)
+            {
+                writer.WritePropertyName("statusMessage"u8);
+                writer.WriteStringValue(StatusMessage);
+            }
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (NetworkRuleSet != null)
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<ManagedHsmGeoReplicatedRegion> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -67,22 +91,71 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
+            {
+                writer.WritePropertyName("scheduledPurgeDate"u8);
+                writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
+            }
+            if (options.Format != "W" && SecurityDomainProperties != null)
+            {
+                writer.WritePropertyName("securityDomainProperties"u8);
+                writer.WriteObjectValue(SecurityDomainProperties);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmProperties DeserializeManagedHsmProperties(JsonElement element)
+        ManagedHsmProperties IJsonModel<ManagedHsmProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedHsmProperties(document.RootElement, options);
+        }
+
+        internal static ManagedHsmProperties DeserializeManagedHsmProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Guid> tenantId = default;
-            Optional<IList<string>> initialAdminObjectIds = default;
+            IList<string> initialAdminObjectIds = default;
             Optional<Uri> hsmUri = default;
             Optional<bool> enableSoftDelete = default;
             Optional<int> softDeleteRetentionInDays = default;
@@ -91,11 +164,13 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> statusMessage = default;
             Optional<ManagedHsmProvisioningState> provisioningState = default;
             Optional<ManagedHsmNetworkRuleSet> networkAcls = default;
-            Optional<IList<ManagedHsmGeoReplicatedRegion>> regions = default;
-            Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
+            IList<ManagedHsmGeoReplicatedRegion> regions = default;
+            IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections = default;
             Optional<ManagedHsmPublicNetworkAccess> publicNetworkAccess = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             Optional<ManagedHSMSecurityDomainProperties> securityDomainProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -186,7 +261,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = ManagedHsmNetworkRuleSet.DeserializeManagedHsmNetworkRuleSet(property.Value);
+                    networkAcls = ManagedHsmNetworkRuleSet.DeserializeManagedHsmNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("regions"u8))
@@ -198,7 +273,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmGeoReplicatedRegion> array = new List<ManagedHsmGeoReplicatedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(item));
+                        array.Add(ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(item, options));
                     }
                     regions = array;
                     continue;
@@ -212,7 +287,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmPrivateEndpointConnectionItemData> array = new List<ManagedHsmPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateEndpointConnectionItemData.DeserializeManagedHsmPrivateEndpointConnectionItemData(item));
+                        array.Add(ManagedHsmPrivateEndpointConnectionItemData.DeserializeManagedHsmPrivateEndpointConnectionItemData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -241,11 +316,63 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    securityDomainProperties = ManagedHSMSecurityDomainProperties.DeserializeManagedHSMSecurityDomainProperties(property.Value);
+                    securityDomainProperties = ManagedHSMSecurityDomainProperties.DeserializeManagedHSMSecurityDomainProperties(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedHsmProperties(Optional.ToNullable(tenantId), Optional.ToList(initialAdminObjectIds), hsmUri.Value, Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), statusMessage.Value, Optional.ToNullable(provisioningState), networkAcls.Value, Optional.ToList(regions), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(scheduledPurgeDate), securityDomainProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedHsmProperties(
+                Optional.ToNullable(tenantId),
+                initialAdminObjectIds ?? new ChangeTrackingList<string>(),
+                hsmUri.Value,
+                Optional.ToNullable(enableSoftDelete),
+                Optional.ToNullable(softDeleteRetentionInDays),
+                Optional.ToNullable(enablePurgeProtection),
+                Optional.ToNullable(createMode),
+                statusMessage.Value,
+                Optional.ToNullable(provisioningState),
+                networkAcls.Value,
+                regions ?? new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(scheduledPurgeDate),
+                securityDomainProperties.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedHsmProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedHsmProperties IPersistableModel<ManagedHsmProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedHsmProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedHsmProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

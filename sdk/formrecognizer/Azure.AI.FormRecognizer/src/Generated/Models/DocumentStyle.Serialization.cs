@@ -87,7 +87,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentStyle(Optional.ToNullable(isHandwritten), similarFontFamily.Value, Optional.ToNullable(fontStyle), Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence);
+            return new DocumentStyle(
+                Optional.ToNullable(isHandwritten),
+                similarFontFamily.Value,
+                Optional.ToNullable(fontStyle),
+                Optional.ToNullable(fontWeight),
+                color.Value,
+                backgroundColor.Value,
+                spans,
+                confidence);
         }
     }
 }

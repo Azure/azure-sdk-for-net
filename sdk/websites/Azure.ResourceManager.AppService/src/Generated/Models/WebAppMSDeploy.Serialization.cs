@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,39 +14,67 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppMSDeploy : IUtf8JsonSerializable
+    public partial class WebAppMSDeploy : IUtf8JsonSerializable, IJsonModel<WebAppMSDeploy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppMSDeploy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebAppMSDeploy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppMSDeploy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebAppMSDeploy)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageUri))
+            if (PackageUri != null)
             {
                 writer.WritePropertyName("packageUri"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(DBType))
+            if (DBType != null)
             {
                 writer.WritePropertyName("dbType"u8);
                 writer.WriteStringValue(DBType);
             }
-            if (Optional.IsDefined(SetParametersXmlFileUri))
+            if (SetParametersXmlFileUri != null)
             {
                 writer.WritePropertyName("setParametersXmlFileUri"u8);
                 writer.WriteStringValue(SetParametersXmlFileUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(SetParameters))
+            if (!(SetParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("setParameters"u8);
                 writer.WriteStartObject();
@@ -56,22 +85,51 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SkipAppData))
+            if (SkipAppData.HasValue)
             {
                 writer.WritePropertyName("skipAppData"u8);
                 writer.WriteBooleanValue(SkipAppData.Value);
             }
-            if (Optional.IsDefined(IsAppOffline))
+            if (IsAppOffline.HasValue)
             {
                 writer.WritePropertyName("appOffline"u8);
                 writer.WriteBooleanValue(IsAppOffline.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebAppMSDeploy DeserializeWebAppMSDeploy(JsonElement element)
+        WebAppMSDeploy IJsonModel<WebAppMSDeploy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppMSDeploy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebAppMSDeploy)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppMSDeploy(document.RootElement, options);
+        }
+
+        internal static WebAppMSDeploy DeserializeWebAppMSDeploy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,9 +143,11 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> connectionString = default;
             Optional<string> dbType = default;
             Optional<Uri> setParametersXmlFileUri = default;
-            Optional<IDictionary<string, string>> setParameters = default;
+            IDictionary<string, string> setParameters = default;
             Optional<bool> skipAppData = default;
             Optional<bool> appOffline = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -191,8 +251,57 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebAppMSDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Optional.ToDictionary(setParameters), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebAppMSDeploy(
+                id,
+                name,
+                type,
+                systemData.Value,
+                packageUri.Value,
+                connectionString.Value,
+                dbType.Value,
+                setParametersXmlFileUri.Value,
+                setParameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(skipAppData),
+                Optional.ToNullable(appOffline),
+                kind.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebAppMSDeploy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppMSDeploy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebAppMSDeploy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebAppMSDeploy IPersistableModel<WebAppMSDeploy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppMSDeploy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebAppMSDeploy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebAppMSDeploy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebAppMSDeploy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

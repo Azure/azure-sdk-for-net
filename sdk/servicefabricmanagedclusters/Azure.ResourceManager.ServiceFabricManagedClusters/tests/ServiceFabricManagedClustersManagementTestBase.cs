@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             options.SetApiVersion(UserAssignedIdentityResource.ResourceType, "2018-11-30");
 
             Client = GetArmClient(options);
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
         public async Task<ResourceGroupResource> CreateResourceGroupWithTag()

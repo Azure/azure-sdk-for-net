@@ -271,7 +271,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<WebSiteConfigResource>> UpdateAsync(SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Update");
             scope.Start();
@@ -313,7 +316,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<WebSiteConfigResource> Update(SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Update");
             scope.Start();
@@ -356,7 +362,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.CreateOrUpdate");
             scope.Start();
@@ -402,7 +411,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSiteConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.CreateOrUpdate");
             scope.Start();
@@ -448,7 +460,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo(e), _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -478,7 +490,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo(e), _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
         }
     }
 }

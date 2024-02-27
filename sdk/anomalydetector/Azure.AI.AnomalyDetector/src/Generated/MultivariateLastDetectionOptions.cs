@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Request of the last detection. </summary>
     public partial class MultivariateLastDetectionOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/>. </summary>
         /// <param name="variables">
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
@@ -23,7 +54,10 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
         public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables)
         {
-            Argument.AssertNotNull(variables, nameof(variables));
+            if (variables == null)
+            {
+                throw new ArgumentNullException(nameof(variables));
+            }
 
             Variables = variables.ToList();
         }
@@ -38,10 +72,17 @@ namespace Azure.AI.AnomalyDetector
         /// variables for one anomalous time stamp in the response. The default is
         /// 10.
         /// </param>
-        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Variables = variables;
             TopContributorCount = topContributorCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/> for deserialization. </summary>
+        internal MultivariateLastDetectionOptions()
+        {
         }
 
         /// <summary>

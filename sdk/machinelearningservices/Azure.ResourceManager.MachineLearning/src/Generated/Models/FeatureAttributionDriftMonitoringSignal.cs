@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -30,9 +29,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricThreshold"/>, <paramref name="productionData"/> or <paramref name="referenceData"/> is null. </exception>
         public FeatureAttributionDriftMonitoringSignal(FeatureAttributionMetricThreshold metricThreshold, IEnumerable<MonitoringInputDataBase> productionData, MonitoringInputDataBase referenceData)
         {
-            Argument.AssertNotNull(metricThreshold, nameof(metricThreshold));
-            Argument.AssertNotNull(productionData, nameof(productionData));
-            Argument.AssertNotNull(referenceData, nameof(referenceData));
+            if (metricThreshold == null)
+            {
+                throw new ArgumentNullException(nameof(metricThreshold));
+            }
+            if (productionData == null)
+            {
+                throw new ArgumentNullException(nameof(productionData));
+            }
+            if (referenceData == null)
+            {
+                throw new ArgumentNullException(nameof(referenceData));
+            }
 
             MetricThreshold = metricThreshold;
             ProductionData = productionData.ToList();
@@ -44,6 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metricThreshold"> [Required] A list of metrics to calculate and their associated thresholds. </param>
         /// <param name="productionData">
         /// [Required] The data which drift will be calculated for.
@@ -55,12 +64,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
         /// </param>
-        internal FeatureAttributionDriftMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, FeatureAttributionMetricThreshold metricThreshold, IList<MonitoringInputDataBase> productionData, MonitoringInputDataBase referenceData) : base(mode, properties, signalType)
+        internal FeatureAttributionDriftMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, FeatureAttributionMetricThreshold metricThreshold, IList<MonitoringInputDataBase> productionData, MonitoringInputDataBase referenceData) : base(mode, properties, signalType, serializedAdditionalRawData)
         {
             MetricThreshold = metricThreshold;
             ProductionData = productionData;
             ReferenceData = referenceData;
             SignalType = signalType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FeatureAttributionDriftMonitoringSignal"/> for deserialization. </summary>
+        internal FeatureAttributionDriftMonitoringSignal()
+        {
         }
 
         /// <summary> [Required] A list of metrics to calculate and their associated thresholds. </summary>

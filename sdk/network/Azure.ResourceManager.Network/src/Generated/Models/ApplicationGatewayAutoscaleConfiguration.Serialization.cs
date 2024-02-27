@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("minCapacity"u8);
             writer.WriteNumberValue(MinCapacity);
-            if (Optional.IsDefined(MaxCapacity))
+            if (MaxCapacity.HasValue)
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);

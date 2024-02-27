@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RestoreDatabaseNameErrors))
+            if (options.Format != "W" && !(RestoreDatabaseNameErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreDatabaseNameErrors"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupFolderErrors))
+            if (options.Format != "W" && !(BackupFolderErrors is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("backupFolderErrors"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupShareCredentialsErrors))
+            if (options.Format != "W" && !(BackupShareCredentialsErrors is ChangeTrackingList<ReportableException> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("backupShareCredentialsErrors"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupStorageAccountErrors))
+            if (options.Format != "W" && !(BackupStorageAccountErrors is ChangeTrackingList<ReportableException> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("backupStorageAccountErrors"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExistingBackupErrors))
+            if (options.Format != "W" && !(ExistingBackupErrors is ChangeTrackingList<ReportableException> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("existingBackupErrors"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DatabaseBackupInfo))
+            if (DatabaseBackupInfo != null)
             {
                 writer.WritePropertyName("databaseBackupInfo"u8);
                 writer.WriteObjectValue(DatabaseBackupInfo);
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<ReportableException>> restoreDatabaseNameErrors = default;
-            Optional<IReadOnlyList<ReportableException>> backupFolderErrors = default;
-            Optional<IReadOnlyList<ReportableException>> backupShareCredentialsErrors = default;
-            Optional<IReadOnlyList<ReportableException>> backupStorageAccountErrors = default;
-            Optional<IReadOnlyList<ReportableException>> existingBackupErrors = default;
+            IReadOnlyList<ReportableException> restoreDatabaseNameErrors = default;
+            IReadOnlyList<ReportableException> backupFolderErrors = default;
+            IReadOnlyList<ReportableException> backupShareCredentialsErrors = default;
+            IReadOnlyList<ReportableException> backupStorageAccountErrors = default;
+            IReadOnlyList<ReportableException> existingBackupErrors = default;
             Optional<DatabaseBackupInfo> databaseBackupInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     restoreDatabaseNameErrors = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     backupFolderErrors = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     backupShareCredentialsErrors = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     backupStorageAccountErrors = array;
                     continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     existingBackupErrors = array;
                     continue;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    databaseBackupInfo = DatabaseBackupInfo.DeserializeDatabaseBackupInfo(property.Value);
+                    databaseBackupInfo = DatabaseBackupInfo.DeserializeDatabaseBackupInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -236,7 +236,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateMigrationInputSqlServerSqlMITaskOutput(id.Value, name.Value, Optional.ToList(restoreDatabaseNameErrors), Optional.ToList(backupFolderErrors), Optional.ToList(backupShareCredentialsErrors), Optional.ToList(backupStorageAccountErrors), Optional.ToList(existingBackupErrors), databaseBackupInfo.Value, serializedAdditionalRawData);
+            return new ValidateMigrationInputSqlServerSqlMITaskOutput(
+                id.Value,
+                name.Value,
+                restoreDatabaseNameErrors ?? new ChangeTrackingList<ReportableException>(),
+                backupFolderErrors ?? new ChangeTrackingList<ReportableException>(),
+                backupShareCredentialsErrors ?? new ChangeTrackingList<ReportableException>(),
+                backupStorageAccountErrors ?? new ChangeTrackingList<ReportableException>(),
+                existingBackupErrors ?? new ChangeTrackingList<ReportableException>(),
+                databaseBackupInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskOutput>.Write(ModelReaderWriterOptions options)

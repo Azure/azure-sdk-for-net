@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="prometheusForwarder"> The list of Prometheus forwarder data source configurations. </param>
         /// <param name="platformTelemetry"> The list of platform telemetry configurations. </param>
         /// <param name="dataImports"> Specifications of pull based data sources. </param>
-        internal DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports) : base(performanceCounters, windowsEventLogs, syslog, extensions, logFiles, iisLogs, windowsFirewallLogs, prometheusForwarder, platformTelemetry, dataImports)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(performanceCounters, windowsEventLogs, syslog, extensions, logFiles, iisLogs, windowsFirewallLogs, prometheusForwarder, platformTelemetry, dataImports, serializedAdditionalRawData)
         {
         }
     }

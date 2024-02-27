@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(QueryParameters))
+            if (!(QueryParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<ParameterContract> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Representations))
+            if (!(Representations is ChangeTrackingList<RepresentationContract> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("representations"u8);
                 writer.WriteStartArray();
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             Optional<string> description = default;
-            Optional<IList<ParameterContract>> queryParameters = default;
-            Optional<IList<ParameterContract>> headers = default;
-            Optional<IList<RepresentationContract>> representations = default;
+            IList<ParameterContract> queryParameters = default;
+            IList<ParameterContract> headers = default;
+            IList<RepresentationContract> representations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     queryParameters = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     headers = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<RepresentationContract> array = new List<RepresentationContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RepresentationContract.DeserializeRepresentationContract(item));
+                        array.Add(RepresentationContract.DeserializeRepresentationContract(item, options));
                     }
                     representations = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestContract(description.Value, Optional.ToList(queryParameters), Optional.ToList(headers), Optional.ToList(representations), serializedAdditionalRawData);
+            return new RequestContract(description.Value, queryParameters ?? new ChangeTrackingList<ParameterContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), representations ?? new ChangeTrackingList<RepresentationContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestContract>.Write(ModelReaderWriterOptions options)

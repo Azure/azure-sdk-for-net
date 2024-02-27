@@ -6,21 +6,281 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureReplicationDetails
+    public partial class HyperVReplicaAzureReplicationDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzureReplicationDetails>
     {
-        internal static HyperVReplicaAzureReplicationDetails DeserializeHyperVReplicaAzureReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureReplicationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HyperVReplicaAzureReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (!(AzureVmDiskDetails is ChangeTrackingList<SiteRecoveryVmDiskDetails> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("azureVmDiskDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in AzureVmDiskDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (RecoveryAzureVmName != null)
+            {
+                writer.WritePropertyName("recoveryAzureVmName"u8);
+                writer.WriteStringValue(RecoveryAzureVmName);
+            }
+            if (RecoveryAzureVmSize != null)
+            {
+                writer.WritePropertyName("recoveryAzureVMSize"u8);
+                writer.WriteStringValue(RecoveryAzureVmSize);
+            }
+            if (RecoveryAzureStorageAccount != null)
+            {
+                writer.WritePropertyName("recoveryAzureStorageAccount"u8);
+                writer.WriteStringValue(RecoveryAzureStorageAccount);
+            }
+            if (RecoveryAzureLogStorageAccountId != null)
+            {
+                writer.WritePropertyName("recoveryAzureLogStorageAccountId"u8);
+                writer.WriteStringValue(RecoveryAzureLogStorageAccountId);
+            }
+            if (LastReplicatedOn.HasValue)
+            {
+                writer.WritePropertyName("lastReplicatedTime"u8);
+                writer.WriteStringValue(LastReplicatedOn.Value, "O");
+            }
+            if (RpoInSeconds.HasValue)
+            {
+                writer.WritePropertyName("rpoInSeconds"u8);
+                writer.WriteNumberValue(RpoInSeconds.Value);
+            }
+            if (LastRpoCalculatedOn.HasValue)
+            {
+                writer.WritePropertyName("lastRpoCalculatedTime"u8);
+                writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
+            }
+            if (VmId != null)
+            {
+                writer.WritePropertyName("vmId"u8);
+                writer.WriteStringValue(VmId);
+            }
+            if (VmProtectionState != null)
+            {
+                writer.WritePropertyName("vmProtectionState"u8);
+                writer.WriteStringValue(VmProtectionState);
+            }
+            if (VmProtectionStateDescription != null)
+            {
+                writer.WritePropertyName("vmProtectionStateDescription"u8);
+                writer.WriteStringValue(VmProtectionStateDescription);
+            }
+            if (InitialReplicationDetails != null)
+            {
+                writer.WritePropertyName("initialReplicationDetails"u8);
+                writer.WriteObjectValue(InitialReplicationDetails);
+            }
+            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("vmNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmNics)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (SelectedRecoveryAzureNetworkId != null)
+            {
+                writer.WritePropertyName("selectedRecoveryAzureNetworkId"u8);
+                writer.WriteStringValue(SelectedRecoveryAzureNetworkId);
+            }
+            if (SelectedSourceNicId != null)
+            {
+                writer.WritePropertyName("selectedSourceNicId"u8);
+                writer.WriteStringValue(SelectedSourceNicId);
+            }
+            if (Encryption != null)
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteStringValue(Encryption);
+            }
+            if (OSDetails != null)
+            {
+                writer.WritePropertyName("oSDetails"u8);
+                writer.WriteObjectValue(OSDetails);
+            }
+            if (SourceVmRamSizeInMB.HasValue)
+            {
+                writer.WritePropertyName("sourceVmRamSizeInMB"u8);
+                writer.WriteNumberValue(SourceVmRamSizeInMB.Value);
+            }
+            if (SourceVmCpuCount.HasValue)
+            {
+                writer.WritePropertyName("sourceVmCpuCount"u8);
+                writer.WriteNumberValue(SourceVmCpuCount.Value);
+            }
+            if (EnableRdpOnTargetOption != null)
+            {
+                writer.WritePropertyName("enableRdpOnTargetOption"u8);
+                writer.WriteStringValue(EnableRdpOnTargetOption);
+            }
+            if (RecoveryAzureResourceGroupId != null)
+            {
+                writer.WritePropertyName("recoveryAzureResourceGroupId"u8);
+                writer.WriteStringValue(RecoveryAzureResourceGroupId);
+            }
+            if (RecoveryAvailabilitySetId != null)
+            {
+                writer.WritePropertyName("recoveryAvailabilitySetId"u8);
+                writer.WriteStringValue(RecoveryAvailabilitySetId);
+            }
+            if (TargetAvailabilityZone != null)
+            {
+                writer.WritePropertyName("targetAvailabilityZone"u8);
+                writer.WriteStringValue(TargetAvailabilityZone);
+            }
+            if (TargetProximityPlacementGroupId != null)
+            {
+                writer.WritePropertyName("targetProximityPlacementGroupId"u8);
+                writer.WriteStringValue(TargetProximityPlacementGroupId);
+            }
+            if (UseManagedDisks != null)
+            {
+                writer.WritePropertyName("useManagedDisks"u8);
+                writer.WriteStringValue(UseManagedDisks);
+            }
+            if (LicenseType != null)
+            {
+                writer.WritePropertyName("licenseType"u8);
+                writer.WriteStringValue(LicenseType);
+            }
+            if (SqlServerLicenseType != null)
+            {
+                writer.WritePropertyName("sqlServerLicenseType"u8);
+                writer.WriteStringValue(SqlServerLicenseType);
+            }
+            if (options.Format != "W" && LastRecoveryPointReceived.HasValue)
+            {
+                writer.WritePropertyName("lastRecoveryPointReceived"u8);
+                writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
+            }
+            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("targetVmTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetVmTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (!(SeedManagedDiskTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("seedManagedDiskTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in SeedManagedDiskTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (!(TargetManagedDiskTags is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
+            {
+                writer.WritePropertyName("targetManagedDiskTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetManagedDiskTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
+            {
+                writer.WritePropertyName("targetNicTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetNicTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (!(ProtectedManagedDisks is ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails> collection5 && collection5.IsUndefined))
+            {
+                writer.WritePropertyName("protectedManagedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedManagedDisks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(AllAvailableOSUpgradeConfigurations is ChangeTrackingList<OSUpgradeSupportedVersions> collection6 && collection6.IsUndefined))
+            {
+                writer.WritePropertyName("allAvailableOSUpgradeConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllAvailableOSUpgradeConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HyperVReplicaAzureReplicationDetails IJsonModel<HyperVReplicaAzureReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaAzureReplicationDetails(document.RootElement, options);
+        }
+
+        internal static HyperVReplicaAzureReplicationDetails DeserializeHyperVReplicaAzureReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryVmDiskDetails>> azureVmDiskDetails = default;
+            IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails = default;
             Optional<string> recoveryAzureVmName = default;
             Optional<string> recoveryAzureVmSize = default;
             Optional<string> recoveryAzureStorageAccount = default;
@@ -32,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
             Optional<InitialReplicationDetails> initialReplicationDetails = default;
-            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
+            IReadOnlyList<VmNicDetails> vmNics = default;
             Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
             Optional<string> selectedSourceNicId = default;
             Optional<string> encryption = default;
@@ -48,13 +308,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> licenseType = default;
             Optional<string> sqlServerLicenseType = default;
             Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
-            Optional<IReadOnlyDictionary<string, string>> seedManagedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
-            Optional<IReadOnlyList<HyperVReplicaAzureManagedDiskDetails>> protectedManagedDisks = default;
-            Optional<IReadOnlyList<OSUpgradeSupportedVersions>> allAvailableOSUpgradeConfigurations = default;
+            IReadOnlyDictionary<string, string> targetVmTags = default;
+            IReadOnlyDictionary<string, string> seedManagedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetManagedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetNicTags = default;
+            IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = default;
+            IReadOnlyList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureVmDiskDetails"u8))
@@ -66,7 +328,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryVmDiskDetails> array = new List<SiteRecoveryVmDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryVmDiskDetails.DeserializeSiteRecoveryVmDiskDetails(item));
+                        array.Add(SiteRecoveryVmDiskDetails.DeserializeSiteRecoveryVmDiskDetails(item, options));
                     }
                     azureVmDiskDetails = array;
                     continue;
@@ -143,7 +405,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value);
+                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmNics"u8))
@@ -155,7 +417,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -185,7 +447,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value);
+                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceVmRamSizeInMB"u8))
@@ -332,7 +594,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVReplicaAzureManagedDiskDetails> array = new List<HyperVReplicaAzureManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVReplicaAzureManagedDiskDetails.DeserializeHyperVReplicaAzureManagedDiskDetails(item));
+                        array.Add(HyperVReplicaAzureManagedDiskDetails.DeserializeHyperVReplicaAzureManagedDiskDetails(item, options));
                     }
                     protectedManagedDisks = array;
                     continue;
@@ -346,7 +608,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<OSUpgradeSupportedVersions> array = new List<OSUpgradeSupportedVersions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OSUpgradeSupportedVersions.DeserializeOSUpgradeSupportedVersions(item));
+                        array.Add(OSUpgradeSupportedVersions.DeserializeOSUpgradeSupportedVersions(item, options));
                     }
                     allAvailableOSUpgradeConfigurations = array;
                     continue;
@@ -356,8 +618,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVReplicaAzureReplicationDetails(instanceType, Optional.ToList(azureVmDiskDetails), recoveryAzureVmName.Value, recoveryAzureVmSize.Value, recoveryAzureStorageAccount.Value, recoveryAzureLogStorageAccountId.Value, Optional.ToNullable(lastReplicatedTime), Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmNics), selectedRecoveryAzureNetworkId.Value, selectedSourceNicId.Value, encryption.Value, osDetails.Value, Optional.ToNullable(sourceVmRamSizeInMB), Optional.ToNullable(sourceVmCpuCount), enableRdpOnTargetOption.Value, recoveryAzureResourceGroupId.Value, recoveryAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, useManagedDisks.Value, licenseType.Value, sqlServerLicenseType.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), Optional.ToList(protectedManagedDisks), Optional.ToList(allAvailableOSUpgradeConfigurations));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HyperVReplicaAzureReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>(),
+                recoveryAzureVmName.Value,
+                recoveryAzureVmSize.Value,
+                recoveryAzureStorageAccount.Value,
+                recoveryAzureLogStorageAccountId.Value,
+                Optional.ToNullable(lastReplicatedTime),
+                Optional.ToNullable(rpoInSeconds),
+                Optional.ToNullable(lastRpoCalculatedTime),
+                vmId.Value,
+                vmProtectionState.Value,
+                vmProtectionStateDescription.Value,
+                initialReplicationDetails.Value,
+                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                selectedRecoveryAzureNetworkId.Value,
+                selectedSourceNicId.Value,
+                encryption.Value,
+                osDetails.Value,
+                Optional.ToNullable(sourceVmRamSizeInMB),
+                Optional.ToNullable(sourceVmCpuCount),
+                enableRdpOnTargetOption.Value,
+                recoveryAzureResourceGroupId.Value,
+                recoveryAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                useManagedDisks.Value,
+                licenseType.Value,
+                sqlServerLicenseType.Value,
+                Optional.ToNullable(lastRecoveryPointReceived),
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                protectedManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>(),
+                allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>());
         }
+
+        BinaryData IPersistableModel<HyperVReplicaAzureReplicationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HyperVReplicaAzureReplicationDetails IPersistableModel<HyperVReplicaAzureReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHyperVReplicaAzureReplicationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVReplicaAzureReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

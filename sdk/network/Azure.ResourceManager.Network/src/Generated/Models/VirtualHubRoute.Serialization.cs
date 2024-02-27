@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AddressPrefixes))
+            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextHopIPAddress))
+            if (NextHopIPAddress != null)
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> addressPrefixes = default;
+            IList<string> addressPrefixes = default;
             Optional<string> nextHopIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubRoute(Optional.ToList(addressPrefixes), nextHopIPAddress.Value, serializedAdditionalRawData);
+            return new VirtualHubRoute(addressPrefixes ?? new ChangeTrackingList<string>(), nextHopIPAddress.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubRoute>.Write(ModelReaderWriterOptions options)

@@ -19,59 +19,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnDelimiter))
+            if (ColumnDelimiter != null)
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteObjectValue(ColumnDelimiter);
             }
-            if (Optional.IsDefined(RowDelimiter))
+            if (RowDelimiter != null)
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 writer.WriteObjectValue(RowDelimiter);
             }
-            if (Optional.IsDefined(EscapeChar))
+            if (EscapeChar != null)
             {
                 writer.WritePropertyName("escapeChar"u8);
                 writer.WriteObjectValue(EscapeChar);
             }
-            if (Optional.IsDefined(QuoteChar))
+            if (QuoteChar != null)
             {
                 writer.WritePropertyName("quoteChar"u8);
                 writer.WriteObjectValue(QuoteChar);
             }
-            if (Optional.IsDefined(NullValue))
+            if (NullValue != null)
             {
                 writer.WritePropertyName("nullValue"u8);
                 writer.WriteObjectValue(NullValue);
             }
-            if (Optional.IsDefined(EncodingName))
+            if (EncodingName != null)
             {
                 writer.WritePropertyName("encodingName"u8);
                 writer.WriteObjectValue(EncodingName);
             }
-            if (Optional.IsDefined(TreatEmptyAsNull))
+            if (TreatEmptyAsNull != null)
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
                 writer.WriteObjectValue(TreatEmptyAsNull);
             }
-            if (Optional.IsDefined(SkipLineCount))
+            if (SkipLineCount != null)
             {
                 writer.WritePropertyName("skipLineCount"u8);
                 writer.WriteObjectValue(SkipLineCount);
             }
-            if (Optional.IsDefined(FirstRowAsHeader))
+            if (FirstRowAsHeader != null)
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 writer.WriteObjectValue(FirstRowAsHeader);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Serializer))
+            if (Serializer != null)
             {
                 writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Deserializer != null)
             {
                 writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);
@@ -213,7 +213,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TextFormat(type, serializer.Value, deserializer.Value, additionalProperties, columnDelimiter.Value, rowDelimiter.Value, escapeChar.Value, quoteChar.Value, nullValue.Value, encodingName.Value, treatEmptyAsNull.Value, skipLineCount.Value, firstRowAsHeader.Value);
+            return new TextFormat(
+                type,
+                serializer.Value,
+                deserializer.Value,
+                additionalProperties,
+                columnDelimiter.Value,
+                rowDelimiter.Value,
+                escapeChar.Value,
+                quoteChar.Value,
+                nullValue.Value,
+                encodingName.Value,
+                treatEmptyAsNull.Value,
+                skipLineCount.Value,
+                firstRowAsHeader.Value);
         }
 
         internal partial class TextFormatConverter : JsonConverter<TextFormat>

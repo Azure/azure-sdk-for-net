@@ -5,16 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class SkuCapabilityV2
+    public partial class SkuCapabilityV2 : IUtf8JsonSerializable, IJsonModel<SkuCapabilityV2>
     {
-        internal static SkuCapabilityV2 DeserializeSkuCapabilityV2(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuCapabilityV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SkuCapabilityV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SkuCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Name != null)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && VCores.HasValue)
+            {
+                writer.WritePropertyName("vCores"u8);
+                writer.WriteNumberValue(VCores.Value);
+            }
+            if (options.Format != "W" && SupportedIops.HasValue)
+            {
+                writer.WritePropertyName("supportedIops"u8);
+                writer.WriteNumberValue(SupportedIops.Value);
+            }
+            if (options.Format != "W" && SupportedMemoryPerVCoreMB.HasValue)
+            {
+                writer.WritePropertyName("supportedMemoryPerVCoreMB"u8);
+                writer.WriteNumberValue(SupportedMemoryPerVCoreMB.Value);
+            }
+            if (options.Format != "W" && !(SupportedZones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("supportedZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedZones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(SupportedHAMode is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("supportedHAMode"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedHAMode)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SkuCapabilityV2 IJsonModel<SkuCapabilityV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkuCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSkuCapabilityV2(document.RootElement, options);
+        }
+
+        internal static SkuCapabilityV2 DeserializeSkuCapabilityV2(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,8 +108,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<long> vCores = default;
             Optional<long> supportedIops = default;
             Optional<long> supportedMemoryPerVCoreMB = default;
-            Optional<IReadOnlyList<string>> supportedZones = default;
-            Optional<IReadOnlyList<string>> supportedHAMode = default;
+            IReadOnlyList<string> supportedZones = default;
+            IReadOnlyList<string> supportedHAMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -87,8 +174,51 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     supportedHAMode = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SkuCapabilityV2(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB), Optional.ToList(supportedZones), Optional.ToList(supportedHAMode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SkuCapabilityV2(
+                name.Value,
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(supportedIops),
+                Optional.ToNullable(supportedMemoryPerVCoreMB),
+                supportedZones ?? new ChangeTrackingList<string>(),
+                supportedHAMode ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SkuCapabilityV2>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkuCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SkuCapabilityV2 IPersistableModel<SkuCapabilityV2>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkuCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSkuCapabilityV2(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SkuCapabilityV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

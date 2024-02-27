@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformBuildServiceAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, AppPlatformBuildServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformBuildServiceAgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, AppPlatformBuildServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformBuildServiceAgentPoolResource>> GetAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual Response<AppPlatformBuildServiceAgentPoolResource> Get(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformBuildServiceAgentPoolResource>> GetIfExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformBuildServiceAgentPoolResource> GetIfExists(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.GetIfExists");
             scope.Start();

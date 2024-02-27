@@ -5,58 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FileShareProtectableItem : IUtf8JsonSerializable
+    public partial class FileShareProtectableItem : IUtf8JsonSerializable, IJsonModel<FileShareProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareProtectableItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FileShareProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FileShareProtectableItem)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParentContainerFabricId))
+            if (ParentContainerFabricId != null)
             {
                 writer.WritePropertyName("parentContainerFabricId"u8);
                 writer.WriteStringValue(ParentContainerFabricId);
             }
-            if (Optional.IsDefined(ParentContainerFriendlyName))
+            if (ParentContainerFriendlyName != null)
             {
                 writer.WritePropertyName("parentContainerFriendlyName"u8);
                 writer.WriteStringValue(ParentContainerFriendlyName);
             }
-            if (Optional.IsDefined(AzureFileShareType))
+            if (AzureFileShareType.HasValue)
             {
                 writer.WritePropertyName("azureFileShareType"u8);
                 writer.WriteStringValue(AzureFileShareType.Value.ToString());
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType != null)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType != null)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FileShareProtectableItem DeserializeFileShareProtectableItem(JsonElement element)
+        FileShareProtectableItem IJsonModel<FileShareProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FileShareProtectableItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFileShareProtectableItem(document.RootElement, options);
+        }
+
+        internal static FileShareProtectableItem DeserializeFileShareProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +109,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string protectableItemType = default;
             Optional<string> friendlyName = default;
             Optional<BackupProtectionStatus> protectionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentContainerFabricId"u8))
@@ -119,8 +161,53 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FileShareProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentContainerFabricId.Value, parentContainerFriendlyName.Value, Optional.ToNullable(azureFileShareType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FileShareProtectableItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                protectableItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData,
+                parentContainerFabricId.Value,
+                parentContainerFriendlyName.Value,
+                Optional.ToNullable(azureFileShareType));
         }
+
+        BinaryData IPersistableModel<FileShareProtectableItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FileShareProtectableItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FileShareProtectableItem IPersistableModel<FileShareProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFileShareProtectableItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileShareProtectableItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FileShareProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

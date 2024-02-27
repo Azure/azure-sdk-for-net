@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (!(VirtualNetworkRules is ChangeTrackingList<ElasticSanVirtualNetworkRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<IList<ElasticSanVirtualNetworkRule>> virtualNetworkRules = default;
+            IList<ElasticSanVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanVirtualNetworkRule> array = new List<ElasticSanVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanVirtualNetworkRule.DeserializeElasticSanVirtualNetworkRule(item));
+                        array.Add(ElasticSanVirtualNetworkRule.DeserializeElasticSanVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRuleSet(Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            return new NetworkRuleSet(virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkRuleSet>.Write(ModelReaderWriterOptions options)

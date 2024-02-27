@@ -6,16 +6,105 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineRunCommandInstanceView
+    public partial class MachineRunCommandInstanceView : IUtf8JsonSerializable, IJsonModel<MachineRunCommandInstanceView>
     {
-        internal static MachineRunCommandInstanceView DeserializeMachineRunCommandInstanceView(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineRunCommandInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineRunCommandInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (ExecutionState.HasValue)
+            {
+                writer.WritePropertyName("executionState"u8);
+                writer.WriteStringValue(ExecutionState.Value.ToString());
+            }
+            if (ExecutionMessage != null)
+            {
+                writer.WritePropertyName("executionMessage"u8);
+                writer.WriteStringValue(ExecutionMessage);
+            }
+            if (ExitCode.HasValue)
+            {
+                writer.WritePropertyName("exitCode"u8);
+                writer.WriteNumberValue(ExitCode.Value);
+            }
+            if (Output != null)
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStringValue(Output);
+            }
+            if (Error != null)
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteStringValue(Error);
+            }
+            if (StartOn.HasValue)
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (EndOn.HasValue)
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (!(Statuses is ChangeTrackingList<ExtensionsResourceStatus> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineRunCommandInstanceView IJsonModel<MachineRunCommandInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineRunCommandInstanceView(document.RootElement, options);
+        }
+
+        internal static MachineRunCommandInstanceView DeserializeMachineRunCommandInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,7 +116,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> error = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<ExtensionsResourceStatus>> statuses = default;
+            IReadOnlyList<ExtensionsResourceStatus> statuses = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("executionState"u8))
@@ -90,13 +181,58 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<ExtensionsResourceStatus> array = new List<ExtensionsResourceStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item));
+                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item, options));
                     }
                     statuses = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(statuses));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineRunCommandInstanceView(
+                Optional.ToNullable(executionState),
+                executionMessage.Value,
+                Optional.ToNullable(exitCode),
+                output.Value,
+                error.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                statuses ?? new ChangeTrackingList<ExtensionsResourceStatus>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineRunCommandInstanceView>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineRunCommandInstanceView IPersistableModel<MachineRunCommandInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineRunCommandInstanceView(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineRunCommandInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

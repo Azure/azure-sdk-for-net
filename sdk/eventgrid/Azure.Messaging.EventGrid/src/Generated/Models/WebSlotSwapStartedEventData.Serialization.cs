@@ -70,7 +70,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new WebSlotSwapStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+            return new WebSlotSwapStartedEventData(
+                appEventTypeDetail.Value,
+                name.Value,
+                clientRequestId.Value,
+                correlationRequestId.Value,
+                requestId.Value,
+                address.Value,
+                verb.Value);
         }
 
         internal partial class WebSlotSwapStartedEventDataConverter : JsonConverter<WebSlotSwapStartedEventData>

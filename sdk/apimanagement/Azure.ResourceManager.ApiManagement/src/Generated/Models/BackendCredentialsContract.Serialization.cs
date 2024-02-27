@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CertificateIds))
+            if (!(CertificateIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("certificateIds"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Certificate))
+            if (!(Certificate is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Query))
+            if (!(Query is ChangeTrackingDictionary<string, IList<string>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Header))
+            if (!(Header is ChangeTrackingDictionary<string, IList<string>> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Authorization))
+            if (Authorization != null)
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IList<string>> certificateIds = default;
-            Optional<IList<string>> certificate = default;
-            Optional<IDictionary<string, IList<string>>> query = default;
-            Optional<IDictionary<string, IList<string>>> header = default;
+            IList<string> certificateIds = default;
+            IList<string> certificate = default;
+            IDictionary<string, IList<string>> query = default;
+            IDictionary<string, IList<string>> header = default;
             Optional<BackendAuthorizationHeaderCredentials> authorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    authorization = BackendAuthorizationHeaderCredentials.DeserializeBackendAuthorizationHeaderCredentials(property.Value);
+                    authorization = BackendAuthorizationHeaderCredentials.DeserializeBackendAuthorizationHeaderCredentials(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -235,7 +235,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendCredentialsContract(Optional.ToList(certificateIds), Optional.ToList(certificate), Optional.ToDictionary(query), Optional.ToDictionary(header), authorization.Value, serializedAdditionalRawData);
+            return new BackendCredentialsContract(
+                certificateIds ?? new ChangeTrackingList<string>(),
+                certificate ?? new ChangeTrackingList<string>(),
+                query ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                header ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                authorization.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendCredentialsContract>.Write(ModelReaderWriterOptions options)

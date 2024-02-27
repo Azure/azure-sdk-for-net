@@ -82,7 +82,14 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricsBatchResultValues(starttime, endtime, Optional.ToNullable(interval), @namespace.Value, resourceregion, resourceid.Value, value);
+            return new MetricsBatchResultValues(
+                starttime,
+                endtime,
+                Optional.ToNullable(interval),
+                @namespace.Value,
+                resourceregion,
+                resourceid.Value,
+                value);
         }
     }
 }

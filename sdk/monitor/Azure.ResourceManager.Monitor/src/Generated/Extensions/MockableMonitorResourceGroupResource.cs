@@ -757,7 +757,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public virtual async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+            if (asyncOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(asyncOperationId));
+            }
+            if (asyncOperationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(asyncOperationId));
+            }
 
             using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetPrivateLinkScopeOperationStatus");
             scope.Start();
@@ -796,7 +803,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public virtual Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+            if (asyncOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(asyncOperationId));
+            }
+            if (asyncOperationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(asyncOperationId));
+            }
 
             using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetPrivateLinkScopeOperationStatus");
             scope.Start();

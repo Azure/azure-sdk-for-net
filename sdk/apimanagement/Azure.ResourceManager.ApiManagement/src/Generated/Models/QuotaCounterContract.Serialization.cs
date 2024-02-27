@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(PeriodStartOn, "O");
             writer.WritePropertyName("periodEndTime"u8);
             writer.WriteStringValue(PeriodEndOn, "O");
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    value = QuotaCounterValueContractProperties.DeserializeQuotaCounterValueContractProperties(property.Value);
+                    value = QuotaCounterValueContractProperties.DeserializeQuotaCounterValueContractProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCounterContract(counterKey, periodKey, periodStartTime, periodEndTime, value.Value, serializedAdditionalRawData);
+            return new QuotaCounterContract(
+                counterKey,
+                periodKey,
+                periodStartTime,
+                periodEndTime,
+                value.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCounterContract>.Write(ModelReaderWriterOptions options)

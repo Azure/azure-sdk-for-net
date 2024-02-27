@@ -25,8 +25,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
         public MultiMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(metricName, nameof(metricName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (metricName == null)
+            {
+                throw new ArgumentNullException(nameof(metricName));
+            }
 
             Name = name;
             MetricName = metricName;
@@ -54,6 +60,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Dimensions = dimensions;
             SkipMetricValidation = skipMetricValidation;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/> for deserialization. </summary>
+        internal MultiMetricCriteria()
+        {
         }
 
         /// <summary> Specifies the type of threshold criteria. </summary>

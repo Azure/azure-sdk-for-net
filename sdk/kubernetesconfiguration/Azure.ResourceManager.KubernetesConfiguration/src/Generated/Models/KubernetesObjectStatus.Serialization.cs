@@ -5,16 +5,122 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesObjectStatus
+    public partial class KubernetesObjectStatus : IUtf8JsonSerializable, IJsonModel<KubernetesObjectStatus>
     {
-        internal static KubernetesObjectStatus DeserializeKubernetesObjectStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesObjectStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubernetesObjectStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Name != null)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Namespace != null)
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Kind != null)
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
+            if (ComplianceState.HasValue)
+            {
+                writer.WritePropertyName("complianceState"u8);
+                writer.WriteStringValue(ComplianceState.Value.ToString());
+            }
+            if (AppliedBy != null)
+            {
+                if (AppliedBy != null)
+                {
+                    writer.WritePropertyName("appliedBy"u8);
+                    writer.WriteObjectValue(AppliedBy);
+                }
+                else
+                {
+                    writer.WriteNull("appliedBy");
+                }
+            }
+            if (!(StatusConditions is ChangeTrackingList<KubernetesObjectStatusCondition> collection && collection.IsUndefined))
+            {
+                if (StatusConditions != null)
+                {
+                    writer.WritePropertyName("statusConditions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in StatusConditions)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("statusConditions");
+                }
+            }
+            if (HelmReleaseProperties != null)
+            {
+                if (HelmReleaseProperties != null)
+                {
+                    writer.WritePropertyName("helmReleaseProperties"u8);
+                    writer.WriteObjectValue(HelmReleaseProperties);
+                }
+                else
+                {
+                    writer.WriteNull("helmReleaseProperties");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KubernetesObjectStatus IJsonModel<KubernetesObjectStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesObjectStatus(document.RootElement, options);
+        }
+
+        internal static KubernetesObjectStatus DeserializeKubernetesObjectStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,8 +130,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> kind = default;
             Optional<KubernetesFluxComplianceState> complianceState = default;
             Optional<KubernetesObjectReference> appliedBy = default;
-            Optional<IReadOnlyList<KubernetesObjectStatusCondition>> statusConditions = default;
+            IReadOnlyList<KubernetesObjectStatusCondition> statusConditions = default;
             Optional<HelmReleaseProperties> helmReleaseProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -59,7 +167,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         appliedBy = null;
                         continue;
                     }
-                    appliedBy = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value);
+                    appliedBy = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("statusConditions"u8))
@@ -72,7 +180,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     List<KubernetesObjectStatusCondition> array = new List<KubernetesObjectStatusCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesObjectStatusCondition.DeserializeKubernetesObjectStatusCondition(item));
+                        array.Add(KubernetesObjectStatusCondition.DeserializeKubernetesObjectStatusCondition(item, options));
                     }
                     statusConditions = array;
                     continue;
@@ -84,11 +192,55 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         helmReleaseProperties = null;
                         continue;
                     }
-                    helmReleaseProperties = HelmReleaseProperties.DeserializeHelmReleaseProperties(property.Value);
+                    helmReleaseProperties = HelmReleaseProperties.DeserializeHelmReleaseProperties(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesObjectStatus(name.Value, @namespace.Value, kind.Value, Optional.ToNullable(complianceState), appliedBy.Value, Optional.ToList(statusConditions), helmReleaseProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KubernetesObjectStatus(
+                name.Value,
+                @namespace.Value,
+                kind.Value,
+                Optional.ToNullable(complianceState),
+                appliedBy.Value,
+                statusConditions ?? new ChangeTrackingList<KubernetesObjectStatusCondition>(),
+                helmReleaseProperties.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesObjectStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KubernetesObjectStatus IPersistableModel<KubernetesObjectStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesObjectStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesObjectStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

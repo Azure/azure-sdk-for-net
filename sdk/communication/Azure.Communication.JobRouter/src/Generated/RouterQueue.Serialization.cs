@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -12,25 +14,111 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterQueue
+    public partial class RouterQueue : IUtf8JsonSerializable, IJsonModel<RouterQueue>
     {
-        internal static RouterQueue DeserializeRouterQueue(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterQueue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouterQueue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterQueue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouterQueue)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Name != null)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (DistributionPolicyId != null)
+            {
+                writer.WritePropertyName("distributionPolicyId"u8);
+                writer.WriteStringValue(DistributionPolicyId);
+            }
+            if (!(_labels is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in _labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (ExceptionPolicyId != null)
+            {
+                writer.WritePropertyName("exceptionPolicyId"u8);
+                writer.WriteStringValue(ExceptionPolicyId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouterQueue IJsonModel<RouterQueue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterQueue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouterQueue)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterQueue(document.RootElement, options);
+        }
+
+        internal static RouterQueue DeserializeRouterQueue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string etag = default;
+            ETag etag = default;
             string id = default;
             Optional<string> name = default;
             Optional<string> distributionPolicyId = default;
-            Optional<IDictionary<string, object>> labels = default;
+            IDictionary<string, object> labels = default;
             Optional<string> exceptionPolicyId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -74,9 +162,52 @@ namespace Azure.Communication.JobRouter
                     exceptionPolicyId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouterQueue(etag, id, name.Value, distributionPolicyId.Value, Optional.ToDictionary(labels), exceptionPolicyId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouterQueue(
+                etag,
+                id,
+                name.Value,
+                distributionPolicyId.Value,
+                labels ?? new ChangeTrackingDictionary<string, object>(),
+                exceptionPolicyId.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouterQueue>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterQueue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RouterQueue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouterQueue IPersistableModel<RouterQueue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterQueue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouterQueue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RouterQueue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouterQueue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>

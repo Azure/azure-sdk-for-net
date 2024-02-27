@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServerUri))
+            if (options.Format != "W" && ServerUri != null)
             {
                 writer.WritePropertyName("serverUri"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuntimeVersion))
+            if (options.Format != "W" && RuntimeVersion != null)
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Password))
+            if (options.Format != "W" && Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && Optional.IsDefined(NestedResourceProvisioningState))
+            if (options.Format != "W" && NestedResourceProvisioningState.HasValue)
             {
                 writer.WritePropertyName("nestedResourceProvisioningState"u8);
                 writer.WriteStringValue(NestedResourceProvisioningState.Value.ToSerialString());
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsHiveMetastore(id, name, type, systemData.Value, serverUri.Value, databaseName.Value, runtimeVersion.Value, userName.Value, password.Value, Optional.ToNullable(nestedResourceProvisioningState), serializedAdditionalRawData);
+            return new DataLakeAnalyticsHiveMetastore(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverUri.Value,
+                databaseName.Value,
+                runtimeVersion.Value,
+                userName.Value,
+                password.Value,
+                Optional.ToNullable(nestedResourceProvisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsHiveMetastore>.Write(ModelReaderWriterOptions options)

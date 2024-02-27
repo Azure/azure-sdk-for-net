@@ -5,18 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class AvailabilityGroupConfiguration : IUtf8JsonSerializable
+    internal partial class AvailabilityGroupConfiguration : IUtf8JsonSerializable, IJsonModel<AvailabilityGroupConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilityGroupConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AvailabilityGroupConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Replicas))
+            if (!(Replicas is ChangeTrackingList<AvailabilityGroupReplica> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteStartArray();
@@ -26,16 +36,47 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AvailabilityGroupConfiguration DeserializeAvailabilityGroupConfiguration(JsonElement element)
+        AvailabilityGroupConfiguration IJsonModel<AvailabilityGroupConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailabilityGroupConfiguration(document.RootElement, options);
+        }
+
+        internal static AvailabilityGroupConfiguration DeserializeAvailabilityGroupConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<AvailabilityGroupReplica>> replicas = default;
+            IList<AvailabilityGroupReplica> replicas = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicas"u8))
@@ -47,13 +88,49 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<AvailabilityGroupReplica> array = new List<AvailabilityGroupReplica>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item));
+                        array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item, options));
                     }
                     replicas = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailabilityGroupConfiguration(Optional.ToList(replicas));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AvailabilityGroupConfiguration(replicas ?? new ChangeTrackingList<AvailabilityGroupReplica>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvailabilityGroupConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AvailabilityGroupConfiguration IPersistableModel<AvailabilityGroupConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAvailabilityGroupConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AvailabilityGroupConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

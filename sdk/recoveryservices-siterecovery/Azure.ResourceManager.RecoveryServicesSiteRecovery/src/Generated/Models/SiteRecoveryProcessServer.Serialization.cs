@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -13,10 +14,243 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryProcessServer
+    public partial class SiteRecoveryProcessServer : IUtf8JsonSerializable, IJsonModel<SiteRecoveryProcessServer>
     {
-        internal static SiteRecoveryProcessServer DeserializeSiteRecoveryProcessServer(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryProcessServer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryProcessServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (FriendlyName != null)
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Id != null)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (IPAddress != null)
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (OSType != null)
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (AgentVersion != null)
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (LastHeartbeatReceivedOn.HasValue)
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+            }
+            if (VersionStatus != null)
+            {
+                writer.WritePropertyName("versionStatus"u8);
+                writer.WriteStringValue(VersionStatus);
+            }
+            if (!(MobilityServiceUpdates is ChangeTrackingList<MobilityServiceUpdate> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("mobilityServiceUpdates"u8);
+                writer.WriteStartArray();
+                foreach (var item in MobilityServiceUpdates)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (HostId != null)
+            {
+                writer.WritePropertyName("hostId"u8);
+                writer.WriteStringValue(HostId);
+            }
+            if (MachineCount != null)
+            {
+                writer.WritePropertyName("machineCount"u8);
+                writer.WriteStringValue(MachineCount);
+            }
+            if (ReplicationPairCount != null)
+            {
+                writer.WritePropertyName("replicationPairCount"u8);
+                writer.WriteStringValue(ReplicationPairCount);
+            }
+            if (SystemLoad != null)
+            {
+                writer.WritePropertyName("systemLoad"u8);
+                writer.WriteStringValue(SystemLoad);
+            }
+            if (SystemLoadStatus != null)
+            {
+                writer.WritePropertyName("systemLoadStatus"u8);
+                writer.WriteStringValue(SystemLoadStatus);
+            }
+            if (CpuLoad != null)
+            {
+                writer.WritePropertyName("cpuLoad"u8);
+                writer.WriteStringValue(CpuLoad);
+            }
+            if (CpuLoadStatus != null)
+            {
+                writer.WritePropertyName("cpuLoadStatus"u8);
+                writer.WriteStringValue(CpuLoadStatus);
+            }
+            if (TotalMemoryInBytes.HasValue)
+            {
+                writer.WritePropertyName("totalMemoryInBytes"u8);
+                writer.WriteNumberValue(TotalMemoryInBytes.Value);
+            }
+            if (AvailableMemoryInBytes.HasValue)
+            {
+                writer.WritePropertyName("availableMemoryInBytes"u8);
+                writer.WriteNumberValue(AvailableMemoryInBytes.Value);
+            }
+            if (MemoryUsageStatus != null)
+            {
+                writer.WritePropertyName("memoryUsageStatus"u8);
+                writer.WriteStringValue(MemoryUsageStatus);
+            }
+            if (TotalSpaceInBytes.HasValue)
+            {
+                writer.WritePropertyName("totalSpaceInBytes"u8);
+                writer.WriteNumberValue(TotalSpaceInBytes.Value);
+            }
+            if (AvailableSpaceInBytes.HasValue)
+            {
+                writer.WritePropertyName("availableSpaceInBytes"u8);
+                writer.WriteNumberValue(AvailableSpaceInBytes.Value);
+            }
+            if (SpaceUsageStatus != null)
+            {
+                writer.WritePropertyName("spaceUsageStatus"u8);
+                writer.WriteStringValue(SpaceUsageStatus);
+            }
+            if (PsServiceStatus != null)
+            {
+                writer.WritePropertyName("psServiceStatus"u8);
+                writer.WriteStringValue(PsServiceStatus);
+            }
+            if (SslCertExpireOn.HasValue)
+            {
+                writer.WritePropertyName("sslCertExpiryDate"u8);
+                writer.WriteStringValue(SslCertExpireOn.Value, "O");
+            }
+            if (SslCertExpiryRemainingDays.HasValue)
+            {
+                writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
+                writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
+            }
+            if (OSVersion != null)
+            {
+                writer.WritePropertyName("osVersion"u8);
+                writer.WriteStringValue(OSVersion);
+            }
+            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("healthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (AgentExpireOn.HasValue)
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (AgentVersionDetails != null)
+            {
+                writer.WritePropertyName("agentVersionDetails"u8);
+                writer.WriteObjectValue(AgentVersionDetails);
+            }
+            if (options.Format != "W" && Health.HasValue)
+            {
+                writer.WritePropertyName("health"u8);
+                writer.WriteStringValue(Health.Value.ToString());
+            }
+            if (options.Format != "W" && PsStatsRefreshOn.HasValue)
+            {
+                writer.WritePropertyName("psStatsRefreshTime"u8);
+                writer.WriteStringValue(PsStatsRefreshOn.Value, "O");
+            }
+            if (options.Format != "W" && ThroughputUploadPendingDataInBytes.HasValue)
+            {
+                writer.WritePropertyName("throughputUploadPendingDataInBytes"u8);
+                writer.WriteNumberValue(ThroughputUploadPendingDataInBytes.Value);
+            }
+            if (options.Format != "W" && ThroughputInMBps.HasValue)
+            {
+                writer.WritePropertyName("throughputInMBps"u8);
+                writer.WriteNumberValue(ThroughputInMBps.Value);
+            }
+            if (options.Format != "W" && ThroughputInBytes.HasValue)
+            {
+                writer.WritePropertyName("throughputInBytes"u8);
+                writer.WriteNumberValue(ThroughputInBytes.Value);
+            }
+            if (options.Format != "W" && ThroughputStatus != null)
+            {
+                writer.WritePropertyName("throughputStatus"u8);
+                writer.WriteStringValue(ThroughputStatus);
+            }
+            if (options.Format != "W" && MarsCommunicationStatus != null)
+            {
+                writer.WritePropertyName("marsCommunicationStatus"u8);
+                writer.WriteStringValue(MarsCommunicationStatus);
+            }
+            if (options.Format != "W" && MarsRegistrationStatus != null)
+            {
+                writer.WritePropertyName("marsRegistrationStatus"u8);
+                writer.WriteStringValue(MarsRegistrationStatus);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryProcessServer IJsonModel<SiteRecoveryProcessServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryProcessServer DeserializeSiteRecoveryProcessServer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,7 +262,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> agentVersion = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<MobilityServiceUpdate>> mobilityServiceUpdates = default;
+            IReadOnlyList<MobilityServiceUpdate> mobilityServiceUpdates = default;
             Optional<string> hostId = default;
             Optional<string> machineCount = default;
             Optional<string> replicationPairCount = default;
@@ -46,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> sslCertExpireOn = default;
             Optional<int> sslCertExpiryRemainingDays = default;
             Optional<string> osVersion = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             Optional<DateTimeOffset> agentExpireOn = default;
             Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
             Optional<SiteRecoveryProtectionHealth> health = default;
@@ -57,6 +291,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> throughputStatus = default;
             Optional<string> marsCommunicationStatus = default;
             Optional<string> marsRegistrationStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -111,7 +347,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MobilityServiceUpdate> array = new List<MobilityServiceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobilityServiceUpdate.DeserializeMobilityServiceUpdate(item));
+                        array.Add(MobilityServiceUpdate.DeserializeMobilityServiceUpdate(item, options));
                     }
                     mobilityServiceUpdates = array;
                     continue;
@@ -234,7 +470,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -254,7 +490,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("health"u8))
@@ -317,8 +553,81 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     marsRegistrationStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryProcessServer(
+                friendlyName.Value,
+                id.Value,
+                ipAddress.Value,
+                osType.Value,
+                agentVersion.Value,
+                Optional.ToNullable(lastHeartbeat),
+                versionStatus.Value,
+                mobilityServiceUpdates ?? new ChangeTrackingList<MobilityServiceUpdate>(),
+                hostId.Value,
+                machineCount.Value,
+                replicationPairCount.Value,
+                systemLoad.Value,
+                systemLoadStatus.Value,
+                cpuLoad.Value,
+                cpuLoadStatus.Value,
+                Optional.ToNullable(totalMemoryInBytes),
+                Optional.ToNullable(availableMemoryInBytes),
+                memoryUsageStatus.Value,
+                Optional.ToNullable(totalSpaceInBytes),
+                Optional.ToNullable(availableSpaceInBytes),
+                spaceUsageStatus.Value,
+                psServiceStatus.Value,
+                Optional.ToNullable(sslCertExpireOn),
+                Optional.ToNullable(sslCertExpiryRemainingDays),
+                osVersion.Value,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(agentExpireOn),
+                agentVersionDetails.Value,
+                Optional.ToNullable(health),
+                Optional.ToNullable(psStatsRefreshTime),
+                Optional.ToNullable(throughputUploadPendingDataInBytes),
+                Optional.ToNullable(throughputInMBps),
+                Optional.ToNullable(throughputInBytes),
+                throughputStatus.Value,
+                marsCommunicationStatus.Value,
+                marsRegistrationStatus.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryProcessServer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryProcessServer IPersistableModel<SiteRecoveryProcessServer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryProcessServer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

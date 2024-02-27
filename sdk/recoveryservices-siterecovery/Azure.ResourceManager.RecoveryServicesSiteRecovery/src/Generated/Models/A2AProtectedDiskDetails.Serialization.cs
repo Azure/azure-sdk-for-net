@@ -6,16 +6,180 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AProtectedDiskDetails
+    public partial class A2AProtectedDiskDetails : IUtf8JsonSerializable, IJsonModel<A2AProtectedDiskDetails>
     {
-        internal static A2AProtectedDiskDetails DeserializeA2AProtectedDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AProtectedDiskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<A2AProtectedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AProtectedDiskDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (DiskUri != null)
+            {
+                writer.WritePropertyName("diskUri"u8);
+                writer.WriteStringValue(DiskUri.AbsoluteUri);
+            }
+            if (RecoveryAzureStorageAccountId != null)
+            {
+                writer.WritePropertyName("recoveryAzureStorageAccountId"u8);
+                writer.WriteStringValue(RecoveryAzureStorageAccountId);
+            }
+            if (PrimaryDiskAzureStorageAccountId != null)
+            {
+                writer.WritePropertyName("primaryDiskAzureStorageAccountId"u8);
+                writer.WriteStringValue(PrimaryDiskAzureStorageAccountId);
+            }
+            if (RecoveryDiskUri != null)
+            {
+                writer.WritePropertyName("recoveryDiskUri"u8);
+                writer.WriteStringValue(RecoveryDiskUri.AbsoluteUri);
+            }
+            if (DiskName != null)
+            {
+                writer.WritePropertyName("diskName"u8);
+                writer.WriteStringValue(DiskName);
+            }
+            if (DiskCapacityInBytes.HasValue)
+            {
+                writer.WritePropertyName("diskCapacityInBytes"u8);
+                writer.WriteNumberValue(DiskCapacityInBytes.Value);
+            }
+            if (PrimaryStagingAzureStorageAccountId != null)
+            {
+                writer.WritePropertyName("primaryStagingAzureStorageAccountId"u8);
+                writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
+            }
+            if (DiskType != null)
+            {
+                writer.WritePropertyName("diskType"u8);
+                writer.WriteStringValue(DiskType);
+            }
+            if (IsResyncRequired.HasValue)
+            {
+                writer.WritePropertyName("resyncRequired"u8);
+                writer.WriteBooleanValue(IsResyncRequired.Value);
+            }
+            if (MonitoringPercentageCompletion.HasValue)
+            {
+                writer.WritePropertyName("monitoringPercentageCompletion"u8);
+                writer.WriteNumberValue(MonitoringPercentageCompletion.Value);
+            }
+            if (MonitoringJobType != null)
+            {
+                writer.WritePropertyName("monitoringJobType"u8);
+                writer.WriteStringValue(MonitoringJobType);
+            }
+            if (DataPendingInStagingStorageAccountInMB.HasValue)
+            {
+                writer.WritePropertyName("dataPendingInStagingStorageAccountInMB"u8);
+                writer.WriteNumberValue(DataPendingInStagingStorageAccountInMB.Value);
+            }
+            if (DataPendingAtSourceAgentInMB.HasValue)
+            {
+                writer.WritePropertyName("dataPendingAtSourceAgentInMB"u8);
+                writer.WriteNumberValue(DataPendingAtSourceAgentInMB.Value);
+            }
+            if (DiskState != null)
+            {
+                writer.WritePropertyName("diskState"u8);
+                writer.WriteStringValue(DiskState);
+            }
+            if (!(AllowedDiskLevelOperation is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("allowedDiskLevelOperation"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedDiskLevelOperation)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (IsDiskEncrypted.HasValue)
+            {
+                writer.WritePropertyName("isDiskEncrypted"u8);
+                writer.WriteBooleanValue(IsDiskEncrypted.Value);
+            }
+            if (SecretIdentifier != null)
+            {
+                writer.WritePropertyName("secretIdentifier"u8);
+                writer.WriteStringValue(SecretIdentifier);
+            }
+            if (DekKeyVaultArmId != null)
+            {
+                writer.WritePropertyName("dekKeyVaultArmId"u8);
+                writer.WriteStringValue(DekKeyVaultArmId);
+            }
+            if (IsDiskKeyEncrypted.HasValue)
+            {
+                writer.WritePropertyName("isDiskKeyEncrypted"u8);
+                writer.WriteBooleanValue(IsDiskKeyEncrypted.Value);
+            }
+            if (KeyIdentifier != null)
+            {
+                writer.WritePropertyName("keyIdentifier"u8);
+                writer.WriteStringValue(KeyIdentifier);
+            }
+            if (KekKeyVaultArmId != null)
+            {
+                writer.WritePropertyName("kekKeyVaultArmId"u8);
+                writer.WriteStringValue(KekKeyVaultArmId);
+            }
+            if (FailoverDiskName != null)
+            {
+                writer.WritePropertyName("failoverDiskName"u8);
+                writer.WriteStringValue(FailoverDiskName);
+            }
+            if (TfoDiskName != null)
+            {
+                writer.WritePropertyName("tfoDiskName"u8);
+                writer.WriteStringValue(TfoDiskName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        A2AProtectedDiskDetails IJsonModel<A2AProtectedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AProtectedDiskDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AProtectedDiskDetails(document.RootElement, options);
+        }
+
+        internal static A2AProtectedDiskDetails DeserializeA2AProtectedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<double> dataPendingInStagingStorageAccountInMB = default;
             Optional<double> dataPendingAtSourceAgentInMB = default;
             Optional<string> diskState = default;
-            Optional<IReadOnlyList<string>> allowedDiskLevelOperation = default;
+            IReadOnlyList<string> allowedDiskLevelOperation = default;
             Optional<bool> isDiskEncrypted = default;
             Optional<string> secretIdentifier = default;
             Optional<ResourceIdentifier> dekKeyVaultArmId = default;
@@ -43,6 +207,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> kekKeyVaultArmId = default;
             Optional<string> failoverDiskName = default;
             Optional<string> tfoDiskName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskUri"u8))
@@ -225,8 +391,68 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tfoDiskName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new A2AProtectedDiskDetails(diskUri.Value, recoveryAzureStorageAccountId.Value, primaryDiskAzureStorageAccountId.Value, recoveryDiskUri.Value, diskName.Value, Optional.ToNullable(diskCapacityInBytes), primaryStagingAzureStorageAccountId.Value, diskType.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(dataPendingInStagingStorageAccountInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), diskState.Value, Optional.ToList(allowedDiskLevelOperation), Optional.ToNullable(isDiskEncrypted), secretIdentifier.Value, dekKeyVaultArmId.Value, Optional.ToNullable(isDiskKeyEncrypted), keyIdentifier.Value, kekKeyVaultArmId.Value, failoverDiskName.Value, tfoDiskName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new A2AProtectedDiskDetails(
+                diskUri.Value,
+                recoveryAzureStorageAccountId.Value,
+                primaryDiskAzureStorageAccountId.Value,
+                recoveryDiskUri.Value,
+                diskName.Value,
+                Optional.ToNullable(diskCapacityInBytes),
+                primaryStagingAzureStorageAccountId.Value,
+                diskType.Value,
+                Optional.ToNullable(resyncRequired),
+                Optional.ToNullable(monitoringPercentageCompletion),
+                monitoringJobType.Value,
+                Optional.ToNullable(dataPendingInStagingStorageAccountInMB),
+                Optional.ToNullable(dataPendingAtSourceAgentInMB),
+                diskState.Value,
+                allowedDiskLevelOperation ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isDiskEncrypted),
+                secretIdentifier.Value,
+                dekKeyVaultArmId.Value,
+                Optional.ToNullable(isDiskKeyEncrypted),
+                keyIdentifier.Value,
+                kekKeyVaultArmId.Value,
+                failoverDiskName.Value,
+                tfoDiskName.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<A2AProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(A2AProtectedDiskDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        A2AProtectedDiskDetails IPersistableModel<A2AProtectedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeA2AProtectedDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AProtectedDiskDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<A2AProtectedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

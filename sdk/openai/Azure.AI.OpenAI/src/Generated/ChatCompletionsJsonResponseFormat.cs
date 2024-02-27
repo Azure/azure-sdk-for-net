@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> A response format for Chat Completions that restricts responses to emitting valid JSON objects. </summary>
@@ -18,7 +21,8 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsJsonResponseFormat"/>. </summary>
         /// <param name="type"> The discriminated type for the response format. </param>
-        internal ChatCompletionsJsonResponseFormat(string type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatCompletionsJsonResponseFormat(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
         }
     }

@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AadClientId))
+            if (AadClientId.HasValue)
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (Optional.IsDefined(AadTenantId))
+            if (AadTenantId.HasValue)
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            if (AadServicePrincipalObjectId.HasValue)
             {
                 writer.WritePropertyName("aadServicePrincipalObjectId"u8);
                 writer.WriteStringValue(AadServicePrincipalObjectId.Value);
             }
-            if (Optional.IsDefined(AadApplicationObjectId))
+            if (AadApplicationObjectId.HasValue)
             {
                 writer.WritePropertyName("aadApplicationObjectId"u8);
                 writer.WriteStringValue(AadApplicationObjectId.Value);

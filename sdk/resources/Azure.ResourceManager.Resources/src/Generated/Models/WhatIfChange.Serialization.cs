@@ -6,16 +6,103 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class WhatIfChange
+    public partial class WhatIfChange : IUtf8JsonSerializable, IJsonModel<WhatIfChange>
     {
-        internal static WhatIfChange DeserializeWhatIfChange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WhatIfChange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WhatIfChange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resourceId"u8);
+            writer.WriteStringValue(ResourceId);
+            writer.WritePropertyName("changeType"u8);
+            writer.WriteStringValue(ChangeType.ToSerialString());
+            if (UnsupportedReason != null)
+            {
+                writer.WritePropertyName("unsupportedReason"u8);
+                writer.WriteStringValue(UnsupportedReason);
+            }
+            if (Before != null)
+            {
+                writer.WritePropertyName("before"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Before);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Before))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (After != null)
+            {
+                writer.WritePropertyName("after"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(After);
+#else
+                using (JsonDocument document = JsonDocument.Parse(After))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (!(Delta is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("delta"u8);
+                writer.WriteStartArray();
+                foreach (var item in Delta)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WhatIfChange IJsonModel<WhatIfChange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWhatIfChange(document.RootElement, options);
+        }
+
+        internal static WhatIfChange DeserializeWhatIfChange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,7 +112,9 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> unsupportedReason = default;
             Optional<BinaryData> before = default;
             Optional<BinaryData> after = default;
-            Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
+            IReadOnlyList<WhatIfPropertyChange> delta = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -70,13 +159,56 @@ namespace Azure.ResourceManager.Resources.Models
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
+                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item, options));
                     }
                     delta = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WhatIfChange(
+                resourceId,
+                changeType,
+                unsupportedReason.Value,
+                before.Value,
+                after.Value,
+                delta ?? new ChangeTrackingList<WhatIfPropertyChange>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WhatIfChange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WhatIfChange IPersistableModel<WhatIfChange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWhatIfChange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WhatIfChange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsMoveEligible))
+            if (options.Format != "W" && IsMoveEligible.HasValue)
             {
                 writer.WritePropertyName("isMoveEligible"u8);
                 writer.WriteBooleanValue(IsMoveEligible.Value);
             }
-            if (Optional.IsDefined(ErrorDetails))
+            if (ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    errorDetails = BillingSubscriptionValidateMoveEligibilityError.DeserializeBillingSubscriptionValidateMoveEligibilityError(property.Value);
+                    errorDetails = BillingSubscriptionValidateMoveEligibilityError.DeserializeBillingSubscriptionValidateMoveEligibilityError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

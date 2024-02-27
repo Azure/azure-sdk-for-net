@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(AppId))
+            if (AppId != null)
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(AppProtocol))
+            if (AppProtocol.HasValue)
             {
                 writer.WritePropertyName("appProtocol"u8);
                 writer.WriteStringValue(AppProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(AppPort))
+            if (AppPort.HasValue)
             {
                 writer.WritePropertyName("appPort"u8);
                 writer.WriteNumberValue(AppPort.Value);
             }
-            if (Optional.IsDefined(HttpReadBufferSize))
+            if (HttpReadBufferSize.HasValue)
             {
                 writer.WritePropertyName("httpReadBufferSize"u8);
                 writer.WriteNumberValue(HttpReadBufferSize.Value);
             }
-            if (Optional.IsDefined(HttpMaxRequestSize))
+            if (HttpMaxRequestSize.HasValue)
             {
                 writer.WritePropertyName("httpMaxRequestSize"u8);
                 writer.WriteNumberValue(HttpMaxRequestSize.Value);
             }
-            if (Optional.IsDefined(LogLevel))
+            if (LogLevel.HasValue)
             {
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteStringValue(LogLevel.Value.ToString());
             }
-            if (Optional.IsDefined(IsApiLoggingEnabled))
+            if (IsApiLoggingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableApiLogging"u8);
                 writer.WriteBooleanValue(IsApiLoggingEnabled.Value);
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprConfiguration(Optional.ToNullable(enabled), appId.Value, Optional.ToNullable(appProtocol), Optional.ToNullable(appPort), Optional.ToNullable(httpReadBufferSize), Optional.ToNullable(httpMaxRequestSize), Optional.ToNullable(logLevel), Optional.ToNullable(enableApiLogging), serializedAdditionalRawData);
+            return new ContainerAppDaprConfiguration(
+                Optional.ToNullable(enabled),
+                appId.Value,
+                Optional.ToNullable(appProtocol),
+                Optional.ToNullable(appPort),
+                Optional.ToNullable(httpReadBufferSize),
+                Optional.ToNullable(httpMaxRequestSize),
+                Optional.ToNullable(logLevel),
+                Optional.ToNullable(enableApiLogging),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprConfiguration>.Write(ModelReaderWriterOptions options)

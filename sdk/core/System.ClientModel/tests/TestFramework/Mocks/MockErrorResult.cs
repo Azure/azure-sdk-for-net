@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockErrorResult<T> : OptionalClientResult<T>
+public class MockErrorResult<T> : ClientResult<T?>
 {
     private readonly ClientResultException _exception;
 
@@ -17,6 +17,4 @@ public class MockErrorResult<T> : OptionalClientResult<T>
     }
 
     public override T? Value { get => throw _exception; }
-
-    public override bool HasValue => false;
 }

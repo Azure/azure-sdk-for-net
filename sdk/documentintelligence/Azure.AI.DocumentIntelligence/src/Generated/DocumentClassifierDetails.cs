@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Document classifier info. </summary>
     public partial class DocumentClassifierDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the document classifier was created. </param>
@@ -22,9 +53,18 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="apiVersion"/> or <paramref name="docTypes"/> is null. </exception>
         internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdDateTime, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
         {
-            Argument.AssertNotNull(classifierId, nameof(classifierId));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-            Argument.AssertNotNull(docTypes, nameof(docTypes));
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (docTypes == null)
+            {
+                throw new ArgumentNullException(nameof(docTypes));
+            }
 
             ClassifierId = classifierId;
             CreatedDateTime = createdDateTime;
@@ -39,7 +79,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="expirationDateTime"> Date and time (UTC) when the document classifier will expire. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClassifierId = classifierId;
             Description = description;
@@ -47,6 +88,12 @@ namespace Azure.AI.DocumentIntelligence
             ExpirationDateTime = expirationDateTime;
             ApiVersion = apiVersion;
             DocTypes = docTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/> for deserialization. </summary>
+        internal DocumentClassifierDetails()
+        {
         }
 
         /// <summary> Unique document classifier name. </summary>

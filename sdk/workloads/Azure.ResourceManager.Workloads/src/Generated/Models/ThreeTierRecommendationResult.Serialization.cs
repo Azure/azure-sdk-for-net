@@ -5,15 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ThreeTierRecommendationResult
+    public partial class ThreeTierRecommendationResult : IUtf8JsonSerializable, IJsonModel<ThreeTierRecommendationResult>
     {
-        internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierRecommendationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ThreeTierRecommendationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (DBVmSku != null)
+            {
+                writer.WritePropertyName("dbVmSku"u8);
+                writer.WriteStringValue(DBVmSku);
+            }
+            if (DatabaseInstanceCount.HasValue)
+            {
+                writer.WritePropertyName("databaseInstanceCount"u8);
+                writer.WriteNumberValue(DatabaseInstanceCount.Value);
+            }
+            if (CentralServerVmSku != null)
+            {
+                writer.WritePropertyName("centralServerVmSku"u8);
+                writer.WriteStringValue(CentralServerVmSku);
+            }
+            if (CentralServerInstanceCount.HasValue)
+            {
+                writer.WritePropertyName("centralServerInstanceCount"u8);
+                writer.WriteNumberValue(CentralServerInstanceCount.Value);
+            }
+            if (ApplicationServerVmSku != null)
+            {
+                writer.WritePropertyName("applicationServerVmSku"u8);
+                writer.WriteStringValue(ApplicationServerVmSku);
+            }
+            if (ApplicationServerInstanceCount.HasValue)
+            {
+                writer.WritePropertyName("applicationServerInstanceCount"u8);
+                writer.WriteNumberValue(ApplicationServerInstanceCount.Value);
+            }
+            writer.WritePropertyName("deploymentType"u8);
+            writer.WriteStringValue(DeploymentType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ThreeTierRecommendationResult IJsonModel<ThreeTierRecommendationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreeTierRecommendationResult(document.RootElement, options);
+        }
+
+        internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +103,8 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> applicationServerVmSku = default;
             Optional<long> applicationServerInstanceCount = default;
             SapDeploymentType deploymentType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dbVmSku"u8))
@@ -74,8 +154,52 @@ namespace Azure.ResourceManager.Workloads.Models
                     deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ThreeTierRecommendationResult(deploymentType, dbVmSku.Value, Optional.ToNullable(databaseInstanceCount), centralServerVmSku.Value, Optional.ToNullable(centralServerInstanceCount), applicationServerVmSku.Value, Optional.ToNullable(applicationServerInstanceCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ThreeTierRecommendationResult(
+                deploymentType,
+                serializedAdditionalRawData,
+                dbVmSku.Value,
+                Optional.ToNullable(databaseInstanceCount),
+                centralServerVmSku.Value,
+                Optional.ToNullable(centralServerInstanceCount),
+                applicationServerVmSku.Value,
+                Optional.ToNullable(applicationServerInstanceCount));
         }
+
+        BinaryData IPersistableModel<ThreeTierRecommendationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ThreeTierRecommendationResult IPersistableModel<ThreeTierRecommendationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeThreeTierRecommendationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ThreeTierRecommendationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

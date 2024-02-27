@@ -26,10 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objective"/>, <paramref name="samplingAlgorithm"/>, <paramref name="searchSpace"/> or <paramref name="trial"/> is null. </exception>
         public MachineLearningSweepJob(MachineLearningObjective objective, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial)
         {
-            Argument.AssertNotNull(objective, nameof(objective));
-            Argument.AssertNotNull(samplingAlgorithm, nameof(samplingAlgorithm));
-            Argument.AssertNotNull(searchSpace, nameof(searchSpace));
-            Argument.AssertNotNull(trial, nameof(trial));
+            if (objective == null)
+            {
+                throw new ArgumentNullException(nameof(objective));
+            }
+            if (samplingAlgorithm == null)
+            {
+                throw new ArgumentNullException(nameof(samplingAlgorithm));
+            }
+            if (searchSpace == null)
+            {
+                throw new ArgumentNullException(nameof(searchSpace));
+            }
+            if (trial == null)
+            {
+                throw new ArgumentNullException(nameof(trial));
+            }
 
             Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
             Objective = objective;
@@ -44,6 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
@@ -88,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <param name="trial"> [Required] Trial component definition. </param>
-        internal MachineLearningSweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, MachineLearningEarlyTerminationPolicy earlyTermination, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningSweepJobLimits limits, MachineLearningObjective objective, IDictionary<string, MachineLearningJobOutput> outputs, JobQueueSettings queueSettings, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal MachineLearningSweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, MachineLearningEarlyTerminationPolicy earlyTermination, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningSweepJobLimits limits, MachineLearningObjective objective, IDictionary<string, MachineLearningJobOutput> outputs, JobQueueSettings queueSettings, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             EarlyTermination = earlyTermination;
             Inputs = inputs;
@@ -100,6 +113,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SearchSpace = searchSpace;
             Trial = trial;
             JobType = jobType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/> for deserialization. </summary>
+        internal MachineLearningSweepJob()
+        {
         }
 
         /// <summary>

@@ -30,34 +30,34 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
             }
-            if (Optional.IsDefined(TargetType))
+            if (TargetType.HasValue)
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(BytesToCapturePerPacket))
+            if (BytesToCapturePerPacket.HasValue)
             {
                 writer.WritePropertyName("bytesToCapturePerPacket"u8);
                 writer.WriteNumberValue(BytesToCapturePerPacket.Value);
             }
-            if (Optional.IsDefined(TotalBytesPerSession))
+            if (TotalBytesPerSession.HasValue)
             {
                 writer.WritePropertyName("totalBytesPerSession"u8);
                 writer.WriteNumberValue(TotalBytesPerSession.Value);
             }
-            if (Optional.IsDefined(TimeLimitInSeconds))
+            if (TimeLimitInSeconds.HasValue)
             {
                 writer.WritePropertyName("timeLimitInSeconds"u8);
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
             writer.WritePropertyName("storageLocation"u8);
             writer.WriteObjectValue(StorageLocation);
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<PacketCaptureFilter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> totalBytesPerSession = default;
             Optional<int> timeLimitInSeconds = default;
             PacketCaptureStorageLocation storageLocation = default;
-            Optional<IList<PacketCaptureFilter>> filters = default;
+            IList<PacketCaptureFilter> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value);
+                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetType"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("storageLocation"u8))
                         {
-                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value);
+                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filters"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<PacketCaptureFilter> array = new List<PacketCaptureFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item));
+                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item, options));
                             }
                             filters = array;
                             continue;
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureCreateOrUpdateContent(target, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation, Optional.ToList(filters), serializedAdditionalRawData);
+            return new PacketCaptureCreateOrUpdateContent(
+                target,
+                scope.Value,
+                Optional.ToNullable(targetType),
+                Optional.ToNullable(bytesToCapturePerPacket),
+                Optional.ToNullable(totalBytesPerSession),
+                Optional.ToNullable(timeLimitInSeconds),
+                storageLocation,
+                filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

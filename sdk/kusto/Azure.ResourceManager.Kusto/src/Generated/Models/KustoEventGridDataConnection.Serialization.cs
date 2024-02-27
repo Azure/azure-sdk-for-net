@@ -6,87 +6,156 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoEventGridDataConnection : IUtf8JsonSerializable
+    public partial class KustoEventGridDataConnection : IUtf8JsonSerializable, IJsonModel<KustoEventGridDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoEventGridDataConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KustoEventGridDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (StorageAccountResourceId != null)
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(EventGridResourceId))
+            if (EventGridResourceId != null)
             {
                 writer.WritePropertyName("eventGridResourceId"u8);
                 writer.WriteStringValue(EventGridResourceId);
             }
-            if (Optional.IsDefined(EventHubResourceId))
+            if (EventHubResourceId != null)
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (Optional.IsDefined(ConsumerGroup))
+            if (ConsumerGroup != null)
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsDefined(MappingRuleName))
+            if (MappingRuleName != null)
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (Optional.IsDefined(DataFormat))
+            if (DataFormat.HasValue)
             {
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (Optional.IsDefined(IsFirstRecordIgnored))
+            if (IsFirstRecordIgnored.HasValue)
             {
                 writer.WritePropertyName("ignoreFirstRecord"u8);
                 writer.WriteBooleanValue(IsFirstRecordIgnored.Value);
             }
-            if (Optional.IsDefined(BlobStorageEventType))
+            if (BlobStorageEventType.HasValue)
             {
                 writer.WritePropertyName("blobStorageEventType"u8);
                 writer.WriteStringValue(BlobStorageEventType.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedIdentityResourceId))
+            if (ManagedIdentityResourceId != null)
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
             }
-            if (Optional.IsDefined(DatabaseRouting))
+            if (options.Format != "W" && ManagedIdentityObjectId.HasValue)
+            {
+                writer.WritePropertyName("managedIdentityObjectId"u8);
+                writer.WriteStringValue(ManagedIdentityObjectId.Value);
+            }
+            if (DatabaseRouting.HasValue)
             {
                 writer.WritePropertyName("databaseRouting"u8);
                 writer.WriteStringValue(DatabaseRouting.Value.ToString());
             }
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoEventGridDataConnection DeserializeKustoEventGridDataConnection(JsonElement element)
+        KustoEventGridDataConnection IJsonModel<KustoEventGridDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoEventGridDataConnection(document.RootElement, options);
+        }
+
+        internal static KustoEventGridDataConnection DeserializeKustoEventGridDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -110,6 +179,8 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<Guid> managedIdentityObjectId = default;
             Optional<KustoDatabaseRouting> databaseRouting = default;
             Optional<KustoProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -267,8 +338,64 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KustoEventGridDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, storageAccountResourceId.Value, eventGridResourceId.Value, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToNullable(ignoreFirstRecord), Optional.ToNullable(blobStorageEventType), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KustoEventGridDataConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                storageAccountResourceId.Value,
+                eventGridResourceId.Value,
+                eventHubResourceId.Value,
+                consumerGroup.Value,
+                tableName.Value,
+                mappingRuleName.Value,
+                Optional.ToNullable(dataFormat),
+                Optional.ToNullable(ignoreFirstRecord),
+                Optional.ToNullable(blobStorageEventType),
+                managedIdentityResourceId.Value,
+                Optional.ToNullable(managedIdentityObjectId),
+                Optional.ToNullable(databaseRouting),
+                Optional.ToNullable(provisioningState));
         }
+
+        BinaryData IPersistableModel<KustoEventGridDataConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KustoEventGridDataConnection IPersistableModel<KustoEventGridDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKustoEventGridDataConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoEventGridDataConnection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KustoEventGridDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

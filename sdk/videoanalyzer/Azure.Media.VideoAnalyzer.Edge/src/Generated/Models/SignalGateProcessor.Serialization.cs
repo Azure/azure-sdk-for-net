@@ -16,22 +16,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActivationEvaluationWindow))
+            if (ActivationEvaluationWindow != null)
             {
                 writer.WritePropertyName("activationEvaluationWindow"u8);
                 writer.WriteStringValue(ActivationEvaluationWindow);
             }
-            if (Optional.IsDefined(ActivationSignalOffset))
+            if (ActivationSignalOffset != null)
             {
                 writer.WritePropertyName("activationSignalOffset"u8);
                 writer.WriteStringValue(ActivationSignalOffset);
             }
-            if (Optional.IsDefined(MinimumActivationTime))
+            if (MinimumActivationTime != null)
             {
                 writer.WritePropertyName("minimumActivationTime"u8);
                 writer.WriteStringValue(MinimumActivationTime);
             }
-            if (Optional.IsDefined(MaximumActivationTime))
+            if (MaximumActivationTime != null)
             {
                 writer.WritePropertyName("maximumActivationTime"u8);
                 writer.WriteStringValue(MaximumActivationTime);
@@ -106,7 +106,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SignalGateProcessor(type, name, inputs, activationEvaluationWindow.Value, activationSignalOffset.Value, minimumActivationTime.Value, maximumActivationTime.Value);
+            return new SignalGateProcessor(
+                type,
+                name,
+                inputs,
+                activationEvaluationWindow.Value,
+                activationSignalOffset.Value,
+                minimumActivationTime.Value,
+                maximumActivationTime.Value);
         }
     }
 }

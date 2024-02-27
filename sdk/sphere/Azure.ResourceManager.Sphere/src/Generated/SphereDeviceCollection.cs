@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereDeviceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deviceName, SphereDeviceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+            if (deviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereDeviceResource> CreateOrUpdate(WaitUntil waitUntil, string deviceName, SphereDeviceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+            if (deviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
         public virtual async Task<Response<SphereDeviceResource>> GetAsync(string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+            if (deviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
         public virtual Response<SphereDeviceResource> Get(string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+            if (deviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+            if (deviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
         public virtual Response<bool> Exists(string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+            if (deviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SphereDeviceResource>> GetIfExistsAsync(string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+            if (deviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
         public virtual NullableResponse<SphereDeviceResource> GetIfExists(string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+            if (deviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
+            }
 
             using var scope = _sphereDeviceDevicesClientDiagnostics.CreateScope("SphereDeviceCollection.GetIfExists");
             scope.Start();

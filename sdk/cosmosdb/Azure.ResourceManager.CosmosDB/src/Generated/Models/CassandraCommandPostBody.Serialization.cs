@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartObject();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
-            if (Optional.IsDefined(CassandraStopStart))
+            if (CassandraStopStart.HasValue)
             {
                 writer.WritePropertyName("cassandra-stop-start"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (Optional.IsDefined(AllowWrite))
+            if (AllowWrite.HasValue)
             {
                 writer.WritePropertyName("readwrite"u8);
                 writer.WriteBooleanValue(AllowWrite.Value);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string command = default;
-            Optional<IDictionary<string, string>> arguments = default;
+            IDictionary<string, string> arguments = default;
             string host = default;
             Optional<bool> cassandraStopStart = default;
             Optional<bool> readwrite = default;
@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraCommandPostBody(command, Optional.ToDictionary(arguments), host, Optional.ToNullable(cassandraStopStart), Optional.ToNullable(readwrite), serializedAdditionalRawData);
+            return new CassandraCommandPostBody(
+                command,
+                arguments ?? new ChangeTrackingDictionary<string, string>(),
+                host,
+                Optional.ToNullable(cassandraStopStart),
+                Optional.ToNullable(readwrite),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraCommandPostBody>.Write(ModelReaderWriterOptions options)

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,69 +14,77 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AmazonS3ReadSettings : IUtf8JsonSerializable
+    public partial class AmazonS3ReadSettings : IUtf8JsonSerializable, IJsonModel<AmazonS3ReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonS3ReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AmazonS3ReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3ReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmazonS3ReadSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Recursive))
+            if (Recursive != null)
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (Optional.IsDefined(WildcardFolderPath))
+            if (WildcardFolderPath != null)
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
-            if (Optional.IsDefined(WildcardFileName))
+            if (WildcardFileName != null)
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 JsonSerializer.Serialize(writer, WildcardFileName);
             }
-            if (Optional.IsDefined(Prefix))
+            if (Prefix != null)
             {
                 writer.WritePropertyName("prefix"u8);
                 JsonSerializer.Serialize(writer, Prefix);
             }
-            if (Optional.IsDefined(FileListPath))
+            if (FileListPath != null)
             {
                 writer.WritePropertyName("fileListPath"u8);
                 JsonSerializer.Serialize(writer, FileListPath);
             }
-            if (Optional.IsDefined(EnablePartitionDiscovery))
+            if (EnablePartitionDiscovery != null)
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
-            if (Optional.IsDefined(PartitionRootPath))
+            if (PartitionRootPath != null)
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 JsonSerializer.Serialize(writer, PartitionRootPath);
             }
-            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            if (DeleteFilesAfterCompletion != null)
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
-            if (Optional.IsDefined(ModifiedDatetimeStart))
+            if (ModifiedDatetimeStart != null)
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
-            if (Optional.IsDefined(ModifiedDatetimeEnd))
+            if (ModifiedDatetimeEnd != null)
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -95,8 +104,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AmazonS3ReadSettings DeserializeAmazonS3ReadSettings(JsonElement element)
+        AmazonS3ReadSettings IJsonModel<AmazonS3ReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3ReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmazonS3ReadSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonS3ReadSettings(document.RootElement, options);
+        }
+
+        internal static AmazonS3ReadSettings DeserializeAmazonS3ReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -234,7 +257,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3ReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, prefix.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+            return new AmazonS3ReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                recursive.Value,
+                wildcardFolderPath.Value,
+                wildcardFileName.Value,
+                prefix.Value,
+                fileListPath.Value,
+                enablePartitionDiscovery.Value,
+                partitionRootPath.Value,
+                deleteFilesAfterCompletion.Value,
+                modifiedDatetimeStart.Value,
+                modifiedDatetimeEnd.Value);
         }
+
+        BinaryData IPersistableModel<AmazonS3ReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3ReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AmazonS3ReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AmazonS3ReadSettings IPersistableModel<AmazonS3ReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3ReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAmazonS3ReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmazonS3ReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AmazonS3ReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

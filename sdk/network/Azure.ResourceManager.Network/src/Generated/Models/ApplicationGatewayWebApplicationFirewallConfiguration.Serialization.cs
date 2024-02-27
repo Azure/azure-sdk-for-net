@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsCollectionDefined(DisabledRuleGroups))
+            if (!(DisabledRuleGroups is ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disabledRuleGroups"u8);
                 writer.WriteStartArray();
@@ -44,27 +44,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequestBodyCheck))
+            if (RequestBodyCheck.HasValue)
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (Optional.IsDefined(MaxRequestBodySize))
+            if (MaxRequestBodySize.HasValue)
             {
                 writer.WritePropertyName("maxRequestBodySize"u8);
                 writer.WriteNumberValue(MaxRequestBodySize.Value);
             }
-            if (Optional.IsDefined(MaxRequestBodySizeInKb))
+            if (MaxRequestBodySizeInKb.HasValue)
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (Optional.IsDefined(FileUploadLimitInMb))
+            if (FileUploadLimitInMb.HasValue)
             {
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (Optional.IsCollectionDefined(Exclusions))
+            if (!(Exclusions is ChangeTrackingList<ApplicationGatewayFirewallExclusion> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayFirewallMode firewallMode = default;
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<IList<ApplicationGatewayFirewallDisabledRuleGroup>> disabledRuleGroups = default;
+            IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = default;
             Optional<bool> requestBodyCheck = default;
             Optional<int> maxRequestBodySize = default;
             Optional<int> maxRequestBodySizeInKb = default;
             Optional<int> fileUploadLimitInMb = default;
-            Optional<IList<ApplicationGatewayFirewallExclusion>> exclusions = default;
+            IList<ApplicationGatewayFirewallExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallDisabledRuleGroup> array = new List<ApplicationGatewayFirewallDisabledRuleGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallDisabledRuleGroup.DeserializeApplicationGatewayFirewallDisabledRuleGroup(item));
+                        array.Add(ApplicationGatewayFirewallDisabledRuleGroup.DeserializeApplicationGatewayFirewallDisabledRuleGroup(item, options));
                     }
                     disabledRuleGroups = array;
                     continue;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallExclusion> array = new List<ApplicationGatewayFirewallExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallExclusion.DeserializeApplicationGatewayFirewallExclusion(item));
+                        array.Add(ApplicationGatewayFirewallExclusion.DeserializeApplicationGatewayFirewallExclusion(item, options));
                     }
                     exclusions = array;
                     continue;
@@ -216,7 +216,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayWebApplicationFirewallConfiguration(enabled, firewallMode, ruleSetType, ruleSetVersion, Optional.ToList(disabledRuleGroups), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(maxRequestBodySize), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadLimitInMb), Optional.ToList(exclusions), serializedAdditionalRawData);
+            return new ApplicationGatewayWebApplicationFirewallConfiguration(
+                enabled,
+                firewallMode,
+                ruleSetType,
+                ruleSetVersion,
+                disabledRuleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup>(),
+                Optional.ToNullable(requestBodyCheck),
+                Optional.ToNullable(maxRequestBodySize),
+                Optional.ToNullable(maxRequestBodySizeInKb),
+                Optional.ToNullable(fileUploadLimitInMb),
+                exclusions ?? new ChangeTrackingList<ApplicationGatewayFirewallExclusion>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayWebApplicationFirewallConfiguration>.Write(ModelReaderWriterOptions options)

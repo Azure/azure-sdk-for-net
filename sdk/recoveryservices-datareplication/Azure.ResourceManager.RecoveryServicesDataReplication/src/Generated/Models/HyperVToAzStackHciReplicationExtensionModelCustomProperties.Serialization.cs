@@ -6,37 +6,136 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class HyperVToAzStackHciReplicationExtensionModelCustomProperties : IUtf8JsonSerializable
+    public partial class HyperVToAzStackHciReplicationExtensionModelCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("hyperVFabricArmId"u8);
             writer.WriteStringValue(HyperVFabricArmId);
+            if (options.Format != "W" && HyperVSiteId != null)
+            {
+                writer.WritePropertyName("hyperVSiteId"u8);
+                writer.WriteStringValue(HyperVSiteId);
+            }
             writer.WritePropertyName("azStackHciFabricArmId"u8);
             writer.WriteStringValue(AzStackHciFabricArmId);
-            if (Optional.IsDefined(StorageAccountId))
+            if (options.Format != "W" && AzStackHciSiteId != null)
+            {
+                writer.WritePropertyName("azStackHciSiteId"u8);
+                writer.WriteStringValue(AzStackHciSiteId);
+            }
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(StorageAccountSasSecretName))
+            if (StorageAccountSasSecretName != null)
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
+            if (options.Format != "W" && AsrServiceUri != null)
+            {
+                writer.WritePropertyName("asrServiceUri"u8);
+                writer.WriteStringValue(AsrServiceUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && RcmServiceUri != null)
+            {
+                writer.WritePropertyName("rcmServiceUri"u8);
+                writer.WriteStringValue(RcmServiceUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && GatewayServiceUri != null)
+            {
+                writer.WritePropertyName("gatewayServiceUri"u8);
+                writer.WriteStringValue(GatewayServiceUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && SourceGatewayServiceId != null)
+            {
+                writer.WritePropertyName("sourceGatewayServiceId"u8);
+                writer.WriteStringValue(SourceGatewayServiceId);
+            }
+            if (options.Format != "W" && TargetGatewayServiceId != null)
+            {
+                writer.WritePropertyName("targetGatewayServiceId"u8);
+                writer.WriteStringValue(TargetGatewayServiceId);
+            }
+            if (options.Format != "W" && SourceStorageContainerName != null)
+            {
+                writer.WritePropertyName("sourceStorageContainerName"u8);
+                writer.WriteStringValue(SourceStorageContainerName);
+            }
+            if (options.Format != "W" && TargetStorageContainerName != null)
+            {
+                writer.WritePropertyName("targetStorageContainerName"u8);
+                writer.WriteStringValue(TargetStorageContainerName);
+            }
+            if (options.Format != "W" && ResourceLocation != null)
+            {
+                writer.WritePropertyName("resourceLocation"u8);
+                writer.WriteStringValue(ResourceLocation);
+            }
+            if (options.Format != "W" && SubscriptionId != null)
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (options.Format != "W" && ResourceGroup != null)
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HyperVToAzStackHciReplicationExtensionModelCustomProperties DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(JsonElement element)
+        HyperVToAzStackHciReplicationExtensionModelCustomProperties IJsonModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(document.RootElement, options);
+        }
+
+        internal static HyperVToAzStackHciReplicationExtensionModelCustomProperties DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +157,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> subscriptionId = default;
             Optional<string> resourceGroup = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hyperVFabricArmId"u8))
@@ -165,8 +266,62 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(instanceType, hyperVFabricArmId, hyperVSiteId.Value, azStackHciFabricArmId, azStackHciSiteId.Value, storageAccountId.Value, storageAccountSasSecretName.Value, asrServiceUri.Value, rcmServiceUri.Value, gatewayServiceUri.Value, sourceGatewayServiceId.Value, targetGatewayServiceId.Value, sourceStorageContainerName.Value, targetStorageContainerName.Value, resourceLocation.Value, subscriptionId.Value, resourceGroup.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                hyperVFabricArmId,
+                hyperVSiteId.Value,
+                azStackHciFabricArmId,
+                azStackHciSiteId.Value,
+                storageAccountId.Value,
+                storageAccountSasSecretName.Value,
+                asrServiceUri.Value,
+                rcmServiceUri.Value,
+                gatewayServiceUri.Value,
+                sourceGatewayServiceId.Value,
+                targetGatewayServiceId.Value,
+                sourceStorageContainerName.Value,
+                targetStorageContainerName.Value,
+                resourceLocation.Value,
+                subscriptionId.Value,
+                resourceGroup.Value);
         }
+
+        BinaryData IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HyperVToAzStackHciReplicationExtensionModelCustomProperties IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

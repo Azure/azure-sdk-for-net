@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MeterName))
+            if (options.Format != "W" && MeterName != null)
             {
                 writer.WritePropertyName("meterName"u8);
                 writer.WriteStringValue(MeterName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterCategory))
+            if (options.Format != "W" && MeterCategory != null)
             {
                 writer.WritePropertyName("meterCategory"u8);
                 writer.WriteStringValue(MeterCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterSubCategory))
+            if (options.Format != "W" && MeterSubCategory != null)
             {
                 writer.WritePropertyName("meterSubCategory"u8);
                 writer.WriteStringValue(MeterSubCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
+            if (options.Format != "W" && UnitOfMeasure != null)
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceFamily))
+            if (options.Format != "W" && ServiceFamily != null)
             {
                 writer.WritePropertyName("serviceFamily"u8);
                 writer.WriteStringValue(ServiceFamily);
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionMeterDetailsInfo(meterName.Value, meterCategory.Value, meterSubCategory.Value, unitOfMeasure.Value, serviceFamily.Value, serializedAdditionalRawData);
+            return new ConsumptionMeterDetailsInfo(
+                meterName.Value,
+                meterCategory.Value,
+                meterSubCategory.Value,
+                unitOfMeasure.Value,
+                serviceFamily.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionMeterDetailsInfo>.Write(ModelReaderWriterOptions options)

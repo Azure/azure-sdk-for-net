@@ -23,10 +23,22 @@ namespace Azure.Messaging.EventGrid.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="source"/>, <paramref name="type"/> or <paramref name="specversion"/> is null. </exception>
         public CloudEventInternal(string id, string source, string type, string specversion)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(specversion, nameof(specversion));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+            if (specversion == null)
+            {
+                throw new ArgumentNullException(nameof(specversion));
+            }
 
             Id = id;
             Source = source;

@@ -5,37 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAutoScaleConfiguration : IUtf8JsonSerializable
+    public partial class HDInsightAutoScaleConfiguration : IUtf8JsonSerializable, IJsonModel<HDInsightAutoScaleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightAutoScaleConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HDInsightAutoScaleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Recurrence != null)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightAutoScaleConfiguration DeserializeHDInsightAutoScaleConfiguration(JsonElement element)
+        HDInsightAutoScaleConfiguration IJsonModel<HDInsightAutoScaleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightAutoScaleConfiguration(document.RootElement, options);
+        }
+
+        internal static HDInsightAutoScaleConfiguration DeserializeHDInsightAutoScaleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<HDInsightAutoScaleCapacity> capacity = default;
             Optional<HDInsightAutoScaleRecurrence> recurrence = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacity"u8))
@@ -44,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    capacity = HDInsightAutoScaleCapacity.DeserializeHDInsightAutoScaleCapacity(property.Value);
+                    capacity = HDInsightAutoScaleCapacity.DeserializeHDInsightAutoScaleCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recurrence"u8))
@@ -53,11 +95,47 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    recurrence = HDInsightAutoScaleRecurrence.DeserializeHDInsightAutoScaleRecurrence(property.Value);
+                    recurrence = HDInsightAutoScaleRecurrence.DeserializeHDInsightAutoScaleRecurrence(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightAutoScaleConfiguration(capacity.Value, recurrence.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightAutoScaleConfiguration(capacity.Value, recurrence.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HDInsightAutoScaleConfiguration IPersistableModel<HDInsightAutoScaleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHDInsightAutoScaleConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightAutoScaleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

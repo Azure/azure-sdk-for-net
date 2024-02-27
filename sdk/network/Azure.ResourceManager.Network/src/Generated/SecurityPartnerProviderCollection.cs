@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityPartnerProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityPartnerProviderName, SecurityPartnerProviderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (securityPartnerProviderName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPartnerProviderName));
+            }
+            if (securityPartnerProviderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPartnerProviderName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityPartnerProviderResource> CreateOrUpdate(WaitUntil waitUntil, string securityPartnerProviderName, SecurityPartnerProviderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (securityPartnerProviderName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPartnerProviderName));
+            }
+            if (securityPartnerProviderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPartnerProviderName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual async Task<Response<SecurityPartnerProviderResource>> GetAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
+            if (securityPartnerProviderName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPartnerProviderName));
+            }
+            if (securityPartnerProviderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPartnerProviderName));
+            }
 
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual Response<SecurityPartnerProviderResource> Get(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
+            if (securityPartnerProviderName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPartnerProviderName));
+            }
+            if (securityPartnerProviderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPartnerProviderName));
+            }
 
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
+            if (securityPartnerProviderName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPartnerProviderName));
+            }
+            if (securityPartnerProviderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPartnerProviderName));
+            }
 
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
+            if (securityPartnerProviderName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPartnerProviderName));
+            }
+            if (securityPartnerProviderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPartnerProviderName));
+            }
 
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityPartnerProviderResource>> GetIfExistsAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
+            if (securityPartnerProviderName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPartnerProviderName));
+            }
+            if (securityPartnerProviderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPartnerProviderName));
+            }
 
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual NullableResponse<SecurityPartnerProviderResource> GetIfExists(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
+            if (securityPartnerProviderName == null)
+            {
+                throw new ArgumentNullException(nameof(securityPartnerProviderName));
+            }
+            if (securityPartnerProviderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPartnerProviderName));
+            }
 
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetIfExists");
             scope.Start();

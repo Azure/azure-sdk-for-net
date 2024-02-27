@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -23,8 +22,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
         internal DocumentModelComposeOperationDetails(string operationId, OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation) : base(operationId, status, createdDateTime, lastUpdatedDateTime, resourceLocation)
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
-            Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (resourceLocation == null)
+            {
+                throw new ArgumentNullException(nameof(resourceLocation));
+            }
 
             Kind = OperationKind.DocumentModelCompose;
         }
@@ -40,10 +45,16 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal DocumentModelComposeOperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags, error)
+        internal DocumentModelComposeOperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> serializedAdditionalRawData, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags, error, serializedAdditionalRawData)
         {
             Result = result;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentModelComposeOperationDetails"/> for deserialization. </summary>
+        internal DocumentModelComposeOperationDetails()
+        {
         }
 
         /// <summary> Operation result upon success. </summary>

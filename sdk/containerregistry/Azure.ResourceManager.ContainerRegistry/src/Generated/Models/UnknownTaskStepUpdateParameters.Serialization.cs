@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
-            if (Optional.IsDefined(ContextPath))
+            if (ContextPath != null)
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(ContextAccessToken))
+            if (ContextAccessToken != null)
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTaskStepUpdateParameters(document.RootElement, options);
+            return DeserializeContainerRegistryTaskStepUpdateContent(document.RootElement, options);
         }
 
         internal static UnknownTaskStepUpdateParameters DeserializeUnknownTaskStepUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTaskStepUpdateParameters(document.RootElement, options);
+                        return DeserializeContainerRegistryTaskStepUpdateContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support '{options.Format}' format.");

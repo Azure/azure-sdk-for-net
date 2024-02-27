@@ -5,15 +5,121 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AFabricSpecificLocationDetails
+    public partial class A2AFabricSpecificLocationDetails : IUtf8JsonSerializable, IJsonModel<A2AFabricSpecificLocationDetails>
     {
-        internal static A2AFabricSpecificLocationDetails DeserializeA2AFabricSpecificLocationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AFabricSpecificLocationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<A2AFabricSpecificLocationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AFabricSpecificLocationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AFabricSpecificLocationDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (InitialPrimaryZone != null)
+            {
+                writer.WritePropertyName("initialPrimaryZone"u8);
+                writer.WriteStringValue(InitialPrimaryZone);
+            }
+            if (InitialRecoveryZone != null)
+            {
+                writer.WritePropertyName("initialRecoveryZone"u8);
+                writer.WriteStringValue(InitialRecoveryZone);
+            }
+            if (InitialPrimaryExtendedLocation != null)
+            {
+                writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
+                writer.WriteObjectValue(InitialPrimaryExtendedLocation);
+            }
+            if (InitialRecoveryExtendedLocation != null)
+            {
+                writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
+                writer.WriteObjectValue(InitialRecoveryExtendedLocation);
+            }
+            if (InitialPrimaryFabricLocation.HasValue)
+            {
+                writer.WritePropertyName("initialPrimaryFabricLocation"u8);
+                writer.WriteStringValue(InitialPrimaryFabricLocation.Value);
+            }
+            if (InitialRecoveryFabricLocation.HasValue)
+            {
+                writer.WritePropertyName("initialRecoveryFabricLocation"u8);
+                writer.WriteStringValue(InitialRecoveryFabricLocation.Value);
+            }
+            if (PrimaryZone != null)
+            {
+                writer.WritePropertyName("primaryZone"u8);
+                writer.WriteStringValue(PrimaryZone);
+            }
+            if (RecoveryZone != null)
+            {
+                writer.WritePropertyName("recoveryZone"u8);
+                writer.WriteStringValue(RecoveryZone);
+            }
+            if (PrimaryExtendedLocation != null)
+            {
+                writer.WritePropertyName("primaryExtendedLocation"u8);
+                writer.WriteObjectValue(PrimaryExtendedLocation);
+            }
+            if (RecoveryExtendedLocation != null)
+            {
+                writer.WritePropertyName("recoveryExtendedLocation"u8);
+                writer.WriteObjectValue(RecoveryExtendedLocation);
+            }
+            if (PrimaryFabricLocation.HasValue)
+            {
+                writer.WritePropertyName("primaryFabricLocation"u8);
+                writer.WriteStringValue(PrimaryFabricLocation.Value);
+            }
+            if (RecoveryFabricLocation.HasValue)
+            {
+                writer.WritePropertyName("recoveryFabricLocation"u8);
+                writer.WriteStringValue(RecoveryFabricLocation.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        A2AFabricSpecificLocationDetails IJsonModel<A2AFabricSpecificLocationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AFabricSpecificLocationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AFabricSpecificLocationDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AFabricSpecificLocationDetails(document.RootElement, options);
+        }
+
+        internal static A2AFabricSpecificLocationDetails DeserializeA2AFabricSpecificLocationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +136,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
             Optional<AzureLocation> primaryFabricLocation = default;
             Optional<AzureLocation> recoveryFabricLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialPrimaryZone"u8))
@@ -48,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryExtendedLocation"u8))
@@ -57,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialPrimaryFabricLocation"u8))
@@ -94,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryExtendedLocation"u8))
@@ -103,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryFabricLocation"u8))
@@ -124,8 +232,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new A2AFabricSpecificLocationDetails(initialPrimaryZone.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialPrimaryFabricLocation), Optional.ToNullable(initialRecoveryFabricLocation), primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new A2AFabricSpecificLocationDetails(
+                initialPrimaryZone.Value,
+                initialRecoveryZone.Value,
+                initialPrimaryExtendedLocation.Value,
+                initialRecoveryExtendedLocation.Value,
+                Optional.ToNullable(initialPrimaryFabricLocation),
+                Optional.ToNullable(initialRecoveryFabricLocation),
+                primaryZone.Value,
+                recoveryZone.Value,
+                primaryExtendedLocation.Value,
+                recoveryExtendedLocation.Value,
+                Optional.ToNullable(primaryFabricLocation),
+                Optional.ToNullable(recoveryFabricLocation),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<A2AFabricSpecificLocationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AFabricSpecificLocationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(A2AFabricSpecificLocationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        A2AFabricSpecificLocationDetails IPersistableModel<A2AFabricSpecificLocationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AFabricSpecificLocationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeA2AFabricSpecificLocationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AFabricSpecificLocationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<A2AFabricSpecificLocationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

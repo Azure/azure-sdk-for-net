@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationName))
+            if (ConfigurationName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ConfigurationName);

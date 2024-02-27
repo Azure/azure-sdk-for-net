@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendationsExist))
+            if (options.Format != "W" && RecommendationsExist.HasValue)
             {
                 writer.WritePropertyName("recommendationsExist"u8);
                 writer.WriteBooleanValue(RecommendationsExist.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkZones))
+            if (options.Format != "W" && NetworkZones != null)
             {
                 writer.WritePropertyName("networkZones"u8);
                 writer.WriteStringValue(NetworkZones);
             }
-            if (options.Format != "W" && Optional.IsDefined(TopologyScore))
+            if (options.Format != "W" && TopologyScore.HasValue)
             {
                 writer.WritePropertyName("topologyScore"u8);
                 writer.WriteNumberValue(TopologyScore.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Parents))
+            if (options.Format != "W" && !(Parents is ChangeTrackingList<TopologySingleResourceParent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parents"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
+            if (options.Format != "W" && !(Children is ChangeTrackingList<TopologySingleResourceChild> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> networkZones = default;
             Optional<int> topologyScore = default;
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<TopologySingleResourceParent>> parents = default;
-            Optional<IReadOnlyList<TopologySingleResourceChild>> children = default;
+            IReadOnlyList<TopologySingleResourceParent> parents = default;
+            IReadOnlyList<TopologySingleResourceChild> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<TopologySingleResourceParent> array = new List<TopologySingleResourceParent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologySingleResourceParent.DeserializeTopologySingleResourceParent(item));
+                        array.Add(TopologySingleResourceParent.DeserializeTopologySingleResourceParent(item, options));
                     }
                     parents = array;
                     continue;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<TopologySingleResourceChild> array = new List<TopologySingleResourceChild>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologySingleResourceChild.DeserializeTopologySingleResourceChild(item));
+                        array.Add(TopologySingleResourceChild.DeserializeTopologySingleResourceChild(item, options));
                     }
                     children = array;
                     continue;
@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologySingleResource(resourceId.Value, severity.Value, Optional.ToNullable(recommendationsExist), networkZones.Value, Optional.ToNullable(topologyScore), Optional.ToNullable(location), Optional.ToList(parents), Optional.ToList(children), serializedAdditionalRawData);
+            return new TopologySingleResource(
+                resourceId.Value,
+                severity.Value,
+                Optional.ToNullable(recommendationsExist),
+                networkZones.Value,
+                Optional.ToNullable(topologyScore),
+                Optional.ToNullable(location),
+                parents ?? new ChangeTrackingList<TopologySingleResourceParent>(),
+                children ?? new ChangeTrackingList<TopologySingleResourceChild>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologySingleResource>.Write(ModelReaderWriterOptions options)

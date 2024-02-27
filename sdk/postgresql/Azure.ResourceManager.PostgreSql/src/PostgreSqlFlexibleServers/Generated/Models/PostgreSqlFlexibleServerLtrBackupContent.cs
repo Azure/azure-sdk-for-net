@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -20,10 +19,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>
         public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings)
         {
-            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
-            Argument.AssertNotNull(targetDetails, nameof(targetDetails));
+            if (backupSettings == null)
+            {
+                throw new ArgumentNullException(nameof(backupSettings));
+            }
+            if (targetDetails == null)
+            {
+                throw new ArgumentNullException(nameof(targetDetails));
+            }
 
             TargetDetails = targetDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
+        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="targetDetails"> Backup store detail for target server. </param>
+        internal PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> serializedAdditionalRawData, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings, serializedAdditionalRawData)
+        {
+            TargetDetails = targetDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/> for deserialization. </summary>
+        internal PostgreSqlFlexibleServerLtrBackupContent()
+        {
         }
 
         /// <summary> Backup store detail for target server. </summary>

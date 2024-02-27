@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<string> name = default;
             Optional<string> file = default;
             Optional<string> className = default;
-            Optional<IReadOnlyList<string>> args = default;
-            Optional<IReadOnlyList<string>> jars = default;
-            Optional<IReadOnlyList<string>> pyFiles = default;
-            Optional<IReadOnlyList<string>> files = default;
-            Optional<IReadOnlyList<string>> archives = default;
-            Optional<IReadOnlyDictionary<string, string>> conf = default;
+            IReadOnlyList<string> args = default;
+            IReadOnlyList<string> jars = default;
+            IReadOnlyList<string> pyFiles = default;
+            IReadOnlyList<string> files = default;
+            IReadOnlyList<string> archives = default;
+            IReadOnlyDictionary<string, string> conf = default;
             Optional<string> driverMemory = default;
             Optional<int> driverCores = default;
             Optional<string> executorMemory = default;
@@ -172,7 +172,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkRequest(name.Value, file.Value, className.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors));
+            return new SparkRequest(
+                name.Value,
+                file.Value,
+                className.Value,
+                args ?? new ChangeTrackingList<string>(),
+                jars ?? new ChangeTrackingList<string>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                driverMemory.Value,
+                Optional.ToNullable(driverCores),
+                executorMemory.Value,
+                Optional.ToNullable(executorCores),
+                Optional.ToNullable(numExecutors));
         }
     }
 }

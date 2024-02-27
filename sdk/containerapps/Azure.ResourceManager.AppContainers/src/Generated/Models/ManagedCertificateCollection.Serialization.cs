@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppManagedCertificateData> array = new List<ContainerAppManagedCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(item));
+                        array.Add(ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(item, options));
                     }
                     value = array;
                     continue;

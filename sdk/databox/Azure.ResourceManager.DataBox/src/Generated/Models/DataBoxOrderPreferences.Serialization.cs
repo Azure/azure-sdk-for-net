@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PreferredDataCenterRegion))
+            if (!(PreferredDataCenterRegion is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("preferredDataCenterRegion"u8);
                 writer.WriteStartArray();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TransportPreferences))
+            if (TransportPreferences != null)
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
-            if (Optional.IsDefined(ReverseTransportPreferences))
+            if (ReverseTransportPreferences != null)
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
                 writer.WriteObjectValue(ReverseTransportPreferences);
             }
-            if (Optional.IsDefined(EncryptionPreferences))
+            if (EncryptionPreferences != null)
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
-            if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
+            if (!(StorageAccountAccessTierPreferences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("storageAccountAccessTierPreferences"u8);
                 writer.WriteStartArray();
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IList<string>> preferredDataCenterRegion = default;
+            IList<string> preferredDataCenterRegion = default;
             Optional<TransportPreferences> transportPreferences = default;
             Optional<TransportPreferences> reverseTransportPreferences = default;
             Optional<DataBoxEncryptionPreferences> encryptionPreferences = default;
-            Optional<IList<string>> storageAccountAccessTierPreferences = default;
+            IList<string> storageAccountAccessTierPreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
+                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reverseTransportPreferences"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    reverseTransportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
+                    reverseTransportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionPreferences"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    encryptionPreferences = DataBoxEncryptionPreferences.DeserializeDataBoxEncryptionPreferences(property.Value);
+                    encryptionPreferences = DataBoxEncryptionPreferences.DeserializeDataBoxEncryptionPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountAccessTierPreferences"u8))
@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxOrderPreferences(Optional.ToList(preferredDataCenterRegion), transportPreferences.Value, reverseTransportPreferences.Value, encryptionPreferences.Value, Optional.ToList(storageAccountAccessTierPreferences), serializedAdditionalRawData);
+            return new DataBoxOrderPreferences(
+                preferredDataCenterRegion ?? new ChangeTrackingList<string>(),
+                transportPreferences.Value,
+                reverseTransportPreferences.Value,
+                encryptionPreferences.Value,
+                storageAccountAccessTierPreferences ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxOrderPreferences>.Write(ModelReaderWriterOptions options)

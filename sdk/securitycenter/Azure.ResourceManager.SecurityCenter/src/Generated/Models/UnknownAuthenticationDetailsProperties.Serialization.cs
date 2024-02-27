@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
+            if (options.Format != "W" && AuthenticationProvisioningState.HasValue)
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
+            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAuthenticationDetailsProperties(document.RootElement, options);
+            return DeserializeAuthenticationDetailsProperties(document.RootElement, options);
         }
 
         internal static UnknownAuthenticationDetailsProperties DeserializeUnknownAuthenticationDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
+            IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
             AuthenticationType authenticationType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, serializedAdditionalRawData);
+            return new UnknownAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(), authenticationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAuthenticationDetailsProperties(document.RootElement, options);
+                        return DeserializeAuthenticationDetailsProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{options.Format}' format.");

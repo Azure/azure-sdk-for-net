@@ -5,18 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TextNer : IUtf8JsonSerializable
+    public partial class TextNer : IUtf8JsonSerializable, IJsonModel<TextNer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextNer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TextNer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TextNer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TextNer)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(FeaturizationSettings))
+            if (options.Format != "W" && PrimaryMetric.HasValue)
+            {
+                writer.WritePropertyName("primaryMetric"u8);
+                writer.WriteStringValue(PrimaryMetric.Value.ToString());
+            }
+            if (FeaturizationSettings != null)
             {
                 if (FeaturizationSettings != null)
                 {
@@ -28,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (Optional.IsDefined(FixedParameters))
+            if (FixedParameters != null)
             {
                 if (FixedParameters != null)
                 {
@@ -40,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fixedParameters");
                 }
             }
-            if (Optional.IsDefined(LimitSettings))
+            if (LimitSettings != null)
             {
                 if (LimitSettings != null)
                 {
@@ -52,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(SearchSpace))
+            if (!(SearchSpace is ChangeTrackingList<NlpParameterSubspace> collection && collection.IsUndefined))
             {
                 if (SearchSpace != null)
                 {
@@ -69,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("searchSpace");
                 }
             }
-            if (Optional.IsDefined(SweepSettings))
+            if (SweepSettings != null)
             {
                 if (SweepSettings != null)
                 {
@@ -81,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (ValidationData != null)
             {
                 if (ValidationData != null)
                 {
@@ -93,12 +108,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Optional.IsDefined(LogVerbosity))
+            if (LogVerbosity.HasValue)
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (TargetColumnName != null)
             {
                 if (TargetColumnName != null)
                 {
@@ -114,11 +129,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
             writer.WriteObjectValue(TrainingData);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TextNer DeserializeTextNer(JsonElement element)
+        TextNer IJsonModel<TextNer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TextNer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TextNer)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextNer(document.RootElement, options);
+        }
+
+        internal static TextNer DeserializeTextNer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -127,13 +171,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<NlpFixedParameters> fixedParameters = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;
-            Optional<IList<NlpParameterSubspace>> searchSpace = default;
+            IList<NlpParameterSubspace> searchSpace = default;
             Optional<NlpSweepSettings> sweepSettings = default;
             Optional<MachineLearningTableJobInput> validationData = default;
             Optional<MachineLearningLogVerbosity> logVerbosity = default;
             Optional<string> targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMetric"u8))
@@ -152,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value);
+                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fixedParameters"u8))
@@ -162,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         fixedParameters = null;
                         continue;
                     }
-                    fixedParameters = NlpFixedParameters.DeserializeNlpFixedParameters(property.Value);
+                    fixedParameters = NlpFixedParameters.DeserializeNlpFixedParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"u8))
@@ -172,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limitSettings = null;
                         continue;
                     }
-                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value);
+                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchSpace"u8))
@@ -185,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<NlpParameterSubspace> array = new List<NlpParameterSubspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NlpParameterSubspace.DeserializeNlpParameterSubspace(item));
+                        array.Add(NlpParameterSubspace.DeserializeNlpParameterSubspace(item, options));
                     }
                     searchSpace = array;
                     continue;
@@ -197,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sweepSettings = null;
                         continue;
                     }
-                    sweepSettings = NlpSweepSettings.DeserializeNlpSweepSettings(property.Value);
+                    sweepSettings = NlpSweepSettings.DeserializeNlpSweepSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationData"u8))
@@ -207,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logVerbosity"u8))
@@ -236,11 +282,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TextNer(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, Optional.ToList(searchSpace), sweepSettings.Value, validationData.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TextNer(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                Optional.ToNullable(primaryMetric),
+                featurizationSettings.Value,
+                fixedParameters.Value,
+                limitSettings.Value,
+                searchSpace ?? new ChangeTrackingList<NlpParameterSubspace>(),
+                sweepSettings.Value,
+                validationData.Value);
         }
+
+        BinaryData IPersistableModel<TextNer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextNer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TextNer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TextNer IPersistableModel<TextNer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextNer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTextNer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextNer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TextNer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="ClientOptions"/> with the specificed <see cref="DiagnosticsOptions"/>.
+        /// Creates a new instance of <see cref="ClientOptions"/> with the specified <see cref="DiagnosticsOptions"/>.
         /// </summary>
         /// <param name="diagnostics"><see cref="DiagnosticsOptions"/> to be used for <see cref="Diagnostics"/>.</param>
         protected ClientOptions(DiagnosticsOptions? diagnostics)

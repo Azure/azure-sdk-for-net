@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DeviceErasureStatus))
+            if (options.Format != "W" && DeviceErasureStatus.HasValue)
             {
                 writer.WritePropertyName("deviceErasureStatus"u8);
                 writer.WriteStringValue(DeviceErasureStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErasureOrDestructionCertificateSasKey))
+            if (options.Format != "W" && ErasureOrDestructionCertificateSasKey != null)
             {
                 writer.WritePropertyName("erasureOrDestructionCertificateSasKey"u8);
                 writer.WriteStringValue(ErasureOrDestructionCertificateSasKey);

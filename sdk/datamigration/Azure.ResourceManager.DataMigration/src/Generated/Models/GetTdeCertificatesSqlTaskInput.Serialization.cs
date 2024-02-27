@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupFileShare"u8))
                 {
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedCertificates"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SelectedCertificateInput> array = new List<SelectedCertificateInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelectedCertificateInput.DeserializeSelectedCertificateInput(item));
+                        array.Add(SelectedCertificateInput.DeserializeSelectedCertificateInput(item, options));
                     }
                     selectedCertificates = array;
                     continue;

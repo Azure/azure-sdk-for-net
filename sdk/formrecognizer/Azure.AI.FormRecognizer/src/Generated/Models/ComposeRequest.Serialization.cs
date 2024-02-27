@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ModelName))
+            if (ModelName != null)
             {
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName);

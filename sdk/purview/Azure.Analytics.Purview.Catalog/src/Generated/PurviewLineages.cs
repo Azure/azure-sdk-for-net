@@ -73,8 +73,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraphAsync(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(direction, nameof(direction));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (direction == null)
+            {
+                throw new ArgumentNullException(nameof(direction));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
@@ -114,8 +124,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageGraph(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual Response GetLineageGraph(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(direction, nameof(direction));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (direction == null)
+            {
+                throw new ArgumentNullException(nameof(direction));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
@@ -154,8 +174,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineageAsync(string,string,bool?,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(direction, nameof(direction));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (direction == null)
+            {
+                throw new ArgumentNullException(nameof(direction));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
             scope.Start();
@@ -194,8 +224,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='NextPageLineage(string,string,bool?,int?,int?,RequestContext)']/*" />
         public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(direction, nameof(direction));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (direction == null)
+            {
+                throw new ArgumentNullException(nameof(direction));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
             scope.Start();
@@ -241,8 +281,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttributeAsync(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetLineageByUniqueAttributeAsync(string typeName, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(direction, nameof(direction));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (direction == null)
+            {
+                throw new ArgumentNullException(nameof(direction));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageByUniqueAttribute");
             scope.Start();
@@ -288,8 +338,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewLineages.xml" path="doc/members/member[@name='GetLineageByUniqueAttribute(string,string,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual Response GetLineageByUniqueAttribute(string typeName, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(direction, nameof(direction));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (direction == null)
+            {
+                throw new ArgumentNullException(nameof(direction));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageByUniqueAttribute");
             scope.Start();

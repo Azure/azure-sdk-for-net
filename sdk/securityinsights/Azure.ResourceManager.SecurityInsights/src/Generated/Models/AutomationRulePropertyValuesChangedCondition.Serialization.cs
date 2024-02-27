@@ -5,33 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRulePropertyValuesChangedCondition : IUtf8JsonSerializable
+    public partial class AutomationRulePropertyValuesChangedCondition : IUtf8JsonSerializable, IJsonModel<AutomationRulePropertyValuesChangedCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRulePropertyValuesChangedCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutomationRulePropertyValuesChangedCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(PropertyName))
+            if (PropertyName.HasValue)
             {
                 writer.WritePropertyName("propertyName"u8);
                 writer.WriteStringValue(PropertyName.Value.ToString());
             }
-            if (Optional.IsDefined(ChangeType))
+            if (ChangeType.HasValue)
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
-            if (Optional.IsDefined(Operator))
+            if (Operator.HasValue)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PropertyValues))
+            if (!(PropertyValues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyValues"u8);
                 writer.WriteStartArray();
@@ -41,11 +51,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationRulePropertyValuesChangedCondition DeserializeAutomationRulePropertyValuesChangedCondition(JsonElement element)
+        AutomationRulePropertyValuesChangedCondition IJsonModel<AutomationRulePropertyValuesChangedCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRulePropertyValuesChangedCondition(document.RootElement, options);
+        }
+
+        internal static AutomationRulePropertyValuesChangedCondition DeserializeAutomationRulePropertyValuesChangedCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,7 +92,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<AutomationRulePropertyChangedConditionSupportedPropertyType> propertyName = default;
             Optional<AutomationRulePropertyChangedConditionSupportedChangedType> changeType = default;
             Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
-            Optional<IList<string>> propertyValues = default;
+            IList<string> propertyValues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyName"u8))
@@ -97,8 +138,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     propertyValues = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationRulePropertyValuesChangedCondition(Optional.ToNullable(propertyName), Optional.ToNullable(changeType), Optional.ToNullable(@operator), Optional.ToList(propertyValues));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutomationRulePropertyValuesChangedCondition(Optional.ToNullable(propertyName), Optional.ToNullable(changeType), Optional.ToNullable(@operator), propertyValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutomationRulePropertyValuesChangedCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AutomationRulePropertyValuesChangedCondition IPersistableModel<AutomationRulePropertyValuesChangedCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationRulePropertyValuesChangedCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationRulePropertyValuesChangedCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

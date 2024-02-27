@@ -244,6 +244,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestBatch_MaxMessageBatchSizeProvidedOnTrigger()
+        {
+            await TestMultiple<TestBatchMaxMessageBatchSizeOnTrigger>();
+        }
+
+        [Test]
         public async Task TestSingle_InfiniteLockRenewal()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
@@ -1662,6 +1668,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // we want to validate that this doesn't trigger an exception in the SDK since AutoComplete = true
                 await messageActions.CompleteMessageAsync(message);
                 _waitHandle1.Set();
+            }
+        }
+        public class TestBatchMaxMessageBatchSizeOnTrigger
+        {
+            public static void Run(
+               [ServiceBusTrigger(FirstQueueNameKey, MaxMessageBatchSize = 2)]
+               ServiceBusReceivedMessage[] array)
+            {
+                Assert.AreEqual(array.Length, 2);
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
         }
 

@@ -1424,6 +1424,40 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [LiveOnly]
         [Test]
+        public async Task RenameAsync_SourceSasUri()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            string sourceDirectoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient sourceDirectoryClient = await directoryClient.CreateSubDirectoryAsync(sourceDirectoryName);
+            DataLakeFileClient sourceFile = await sourceDirectoryClient.CreateFileAsync(GetNewFileName());
+
+            // Make unique source sas
+            DataLakeSasQueryParameters sourceSas = GetNewDataLakeServiceSasCredentialsFileSystem(fileSystemName);
+            DataLakeUriBuilder sourceUriBuilder = new DataLakeUriBuilder(sourceDirectoryClient.Uri)
+            {
+                Sas = sourceSas
+            };
+
+            string destFileName = GetNewFileName();
+
+            DataLakeDirectoryClient sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(sourceUriBuilder.ToUri(), GetOptions()));
+            DataLakeFileClient sasFileClient = InstrumentClient(sasDirectoryClient.GetFileClient(sourceFile.Name));
+
+            // Make unique destination sas
+            string newPath = directoryClient.Path + "/" + destFileName;
+
+            // Act
+            DataLakeFileClient destFile = await sasFileClient.RenameAsync(destinationPath: newPath);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [LiveOnly]
+        [Test]
         public async Task RenameAsync_DifferentSasUri()
         {
             // Arrange

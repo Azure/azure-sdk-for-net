@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (!(Destinations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPorts))
+            if (!(DestinationPorts is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> sources = default;
-            Optional<IList<string>> destinations = default;
-            Optional<IList<string>> destinationPorts = default;
+            IList<string> sources = default;
+            IList<string> destinations = default;
+            IList<string> destinationPorts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallPacketCaptureRule(Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(destinationPorts), serializedAdditionalRawData);
+            return new AzureFirewallPacketCaptureRule(sources ?? new ChangeTrackingList<string>(), destinations ?? new ChangeTrackingList<string>(), destinationPorts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallPacketCaptureRule>.Write(ModelReaderWriterOptions options)

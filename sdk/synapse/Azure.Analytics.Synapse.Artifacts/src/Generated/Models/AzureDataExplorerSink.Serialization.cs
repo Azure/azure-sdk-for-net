@@ -19,44 +19,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IngestionMappingName))
+            if (IngestionMappingName != null)
             {
                 writer.WritePropertyName("ingestionMappingName"u8);
                 writer.WriteObjectValue(IngestionMappingName);
             }
-            if (Optional.IsDefined(IngestionMappingAsJson))
+            if (IngestionMappingAsJson != null)
             {
                 writer.WritePropertyName("ingestionMappingAsJson"u8);
                 writer.WriteObjectValue(IngestionMappingAsJson);
             }
-            if (Optional.IsDefined(FlushImmediately))
+            if (FlushImmediately != null)
             {
                 writer.WritePropertyName("flushImmediately"u8);
                 writer.WriteObjectValue(FlushImmediately);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -168,7 +168,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, ingestionMappingName.Value, ingestionMappingAsJson.Value, flushImmediately.Value);
+            return new AzureDataExplorerSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                ingestionMappingName.Value,
+                ingestionMappingAsJson.Value,
+                flushImmediately.Value);
         }
 
         internal partial class AzureDataExplorerSinkConverter : JsonConverter<AzureDataExplorerSink>

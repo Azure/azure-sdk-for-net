@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Topic))
+            if (Topic != null)
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
@@ -95,7 +95,15 @@ namespace Azure.Messaging.EventGrid.Models
                     continue;
                 }
             }
-            return new EventGridEventInternal(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion);
+            return new EventGridEventInternal(
+                id,
+                topic.Value,
+                subject,
+                data,
+                eventType,
+                eventTime,
+                metadataVersion.Value,
+                dataVersion);
         }
 
         internal partial class EventGridEventInternalConverter : JsonConverter<EventGridEventInternal>

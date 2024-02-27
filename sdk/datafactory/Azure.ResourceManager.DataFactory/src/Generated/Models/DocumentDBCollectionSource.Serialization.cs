@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,27 +14,35 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DocumentDBCollectionSource : IUtf8JsonSerializable
+    public partial class DocumentDBCollectionSource : IUtf8JsonSerializable, IJsonModel<DocumentDBCollectionSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentDBCollectionSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentDBCollectionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDBCollectionSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentDBCollectionSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 writer.WritePropertyName("query"u8);
                 JsonSerializer.Serialize(writer, Query);
             }
-            if (Optional.IsDefined(NestingSeparator))
+            if (NestingSeparator != null)
             {
                 writer.WritePropertyName("nestingSeparator"u8);
                 JsonSerializer.Serialize(writer, NestingSeparator);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (QueryTimeout != null)
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 JsonSerializer.Serialize(writer, QueryTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -47,22 +56,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -82,8 +91,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DocumentDBCollectionSource DeserializeDocumentDBCollectionSource(JsonElement element)
+        DocumentDBCollectionSource IJsonModel<DocumentDBCollectionSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDBCollectionSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentDBCollectionSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentDBCollectionSource(document.RootElement, options);
+        }
+
+        internal static DocumentDBCollectionSource DeserializeDocumentDBCollectionSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -181,7 +204,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DocumentDBCollectionSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, query.Value, nestingSeparator.Value, queryTimeout.Value, additionalColumns.Value);
+            return new DocumentDBCollectionSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                query.Value,
+                nestingSeparator.Value,
+                queryTimeout.Value,
+                additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<DocumentDBCollectionSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDBCollectionSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentDBCollectionSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DocumentDBCollectionSource IPersistableModel<DocumentDBCollectionSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDBCollectionSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentDBCollectionSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentDBCollectionSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentDBCollectionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

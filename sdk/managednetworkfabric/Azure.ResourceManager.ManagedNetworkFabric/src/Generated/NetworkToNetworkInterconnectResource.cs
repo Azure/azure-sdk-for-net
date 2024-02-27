@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkToNetworkInterconnectResource>> UpdateAsync(WaitUntil waitUntil, NetworkToNetworkInterconnectPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetworkToNetworkInterconnectResource> Update(WaitUntil waitUntil, NetworkToNetworkInterconnectPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectResource.Update");
             scope.Start();
@@ -374,7 +380,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateNpbStaticRouteBfdAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectResource.UpdateNpbStaticRouteBfdAdministrativeState");
             scope.Start();
@@ -420,7 +429,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateNpbStaticRouteBfdAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectResource.UpdateNpbStaticRouteBfdAdministrativeState");
             scope.Start();
@@ -466,7 +478,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectResource.UpdateAdministrativeState");
             scope.Start();
@@ -512,7 +527,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkToNetworkInterconnectClientDiagnostics.CreateScope("NetworkToNetworkInterconnectResource.UpdateAdministrativeState");
             scope.Start();

@@ -65,9 +65,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ListAsync(string subscriptionId, string resourceGroupName, string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualWanName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualWanName));
+            }
+            if (virtualWanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, virtualWanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -90,9 +111,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response List(string subscriptionId, string resourceGroupName, string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualWanName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualWanName));
+            }
+            if (virtualWanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, virtualWanName);
             _pipeline.Send(message, cancellationToken);

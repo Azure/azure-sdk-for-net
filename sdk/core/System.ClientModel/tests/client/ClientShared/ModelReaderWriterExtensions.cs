@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -178,7 +176,7 @@ internal static class ModelReaderWriterExtensions
         writer.WriteNumberValue(value.ToUnixTimeSeconds());
     }
 
-    public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
+    public static void WriteObjectValue(this Utf8JsonWriter writer, object? value)
     {
         switch (value)
         {

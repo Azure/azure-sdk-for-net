@@ -11,5 +11,7 @@ namespace Azure.Identity
     {
         Action<PublicClientApplicationBuilder> BeforeBuildClient { get; }
         bool IsProofOfPossessionRequired { get; set; }
+
+        bool UseOperatingSystemAccount { get; set; }
     }
 }

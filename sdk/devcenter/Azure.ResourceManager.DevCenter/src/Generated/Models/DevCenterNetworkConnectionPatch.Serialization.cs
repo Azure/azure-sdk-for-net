@@ -5,17 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterNetworkConnectionPatch : IUtf8JsonSerializable
+    public partial class DevCenterNetworkConnectionPatch : IUtf8JsonSerializable, IJsonModel<DevCenterNetworkConnectionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterNetworkConnectionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevCenterNetworkConnectionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterNetworkConnectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,40 +37,198 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DomainName))
+            if (DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsDefined(OrganizationUnit))
+            if (OrganizationUnit != null)
             {
                 writer.WritePropertyName("organizationUnit"u8);
                 writer.WriteStringValue(OrganizationUnit);
             }
-            if (Optional.IsDefined(DomainUsername))
+            if (DomainUsername != null)
             {
                 writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
-            if (Optional.IsDefined(DomainPassword))
+            if (DomainPassword != null)
             {
                 writer.WritePropertyName("domainPassword"u8);
                 writer.WriteStringValue(DomainPassword);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DevCenterNetworkConnectionPatch IJsonModel<DevCenterNetworkConnectionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterNetworkConnectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterNetworkConnectionPatch(document.RootElement, options);
+        }
+
+        internal static DevCenterNetworkConnectionPatch DeserializeDevCenterNetworkConnectionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            Optional<AzureLocation> location = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<string> domainName = default;
+            Optional<string> organizationUnit = default;
+            Optional<string> domainUsername = default;
+            Optional<string> domainPassword = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("subnetId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("domainName"u8))
+                        {
+                            domainName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("organizationUnit"u8))
+                        {
+                            organizationUnit = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("domainUsername"u8))
+                        {
+                            domainUsername = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("domainPassword"u8))
+                        {
+                            domainPassword = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevCenterNetworkConnectionPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                subnetId.Value,
+                domainName.Value,
+                organizationUnit.Value,
+                domainUsername.Value,
+                domainPassword.Value);
+        }
+
+        BinaryData IPersistableModel<DevCenterNetworkConnectionPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterNetworkConnectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevCenterNetworkConnectionPatch IPersistableModel<DevCenterNetworkConnectionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterNetworkConnectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevCenterNetworkConnectionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevCenterNetworkConnectionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

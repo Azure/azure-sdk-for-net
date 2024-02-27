@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Paths))
+            if (!(Paths is ChangeTrackingList<ResourceTypeAliasPath> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AliasType))
+            if (AliasType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AliasType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DefaultPath))
+            if (DefaultPath != null)
             {
                 writer.WritePropertyName("defaultPath"u8);
                 writer.WriteStringValue(DefaultPath);
             }
-            if (Optional.IsDefined(DefaultPattern))
+            if (DefaultPattern != null)
             {
                 writer.WritePropertyName("defaultPattern"u8);
                 writer.WriteObjectValue(DefaultPattern);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultMetadata))
+            if (options.Format != "W" && DefaultMetadata != null)
             {
                 writer.WritePropertyName("defaultMetadata"u8);
                 writer.WriteObjectValue(DefaultMetadata);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<ResourceTypeAliasPath>> paths = default;
+            IReadOnlyList<ResourceTypeAliasPath> paths = default;
             Optional<ResourceTypeAliasType> type = default;
             Optional<string> defaultPath = default;
             Optional<ResourceTypeAliasPattern> defaultPattern = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAliasPath> array = new List<ResourceTypeAliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item));
+                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item, options));
                     }
                     paths = array;
                     continue;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
+                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultMetadata"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value);
+                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAlias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value, serializedAdditionalRawData);
+            return new ResourceTypeAlias(
+                name.Value,
+                paths ?? new ChangeTrackingList<ResourceTypeAliasPath>(),
+                Optional.ToNullable(type),
+                defaultPath.Value,
+                defaultPattern.Value,
+                defaultMetadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAlias>.Write(ModelReaderWriterOptions options)

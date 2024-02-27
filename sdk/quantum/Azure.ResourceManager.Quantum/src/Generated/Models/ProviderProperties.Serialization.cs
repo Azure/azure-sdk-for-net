@@ -5,16 +5,131 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class ProviderProperties
+    public partial class ProviderProperties : IUtf8JsonSerializable, IJsonModel<ProviderProperties>
     {
-        internal static ProviderProperties DeserializeProviderProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProviderProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Description != null)
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && ProviderType != null)
+            {
+                writer.WritePropertyName("providerType"u8);
+                writer.WriteStringValue(ProviderType);
+            }
+            if (options.Format != "W" && Company != null)
+            {
+                writer.WritePropertyName("company"u8);
+                writer.WriteStringValue(Company);
+            }
+            if (options.Format != "W" && DefaultEndpoint != null)
+            {
+                writer.WritePropertyName("defaultEndpoint"u8);
+                writer.WriteStringValue(DefaultEndpoint);
+            }
+            if (Aad != null)
+            {
+                writer.WritePropertyName("aad"u8);
+                writer.WriteObjectValue(Aad);
+            }
+            if (ManagedApplication != null)
+            {
+                writer.WritePropertyName("managedApplication"u8);
+                writer.WriteObjectValue(ManagedApplication);
+            }
+            if (!(Targets is ChangeTrackingList<TargetDescription> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(Skus is ChangeTrackingList<SkuDescription> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("skus"u8);
+                writer.WriteStartArray();
+                foreach (var item in Skus)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(QuotaDimensions is ChangeTrackingList<QuotaDimension> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("quotaDimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in QuotaDimensions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(PricingDimensions is ChangeTrackingList<PricingDimension> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("pricingDimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in PricingDimensions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProviderProperties IJsonModel<ProviderProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderProperties(document.RootElement, options);
+        }
+
+        internal static ProviderProperties DeserializeProviderProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,10 +140,12 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<string> defaultEndpoint = default;
             Optional<ProviderPropertiesAad> aad = default;
             Optional<ProviderPropertiesManagedApplication> managedApplication = default;
-            Optional<IReadOnlyList<TargetDescription>> targets = default;
-            Optional<IReadOnlyList<SkuDescription>> skus = default;
-            Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
-            Optional<IReadOnlyList<PricingDimension>> pricingDimensions = default;
+            IReadOnlyList<TargetDescription> targets = default;
+            IReadOnlyList<SkuDescription> skus = default;
+            IReadOnlyList<QuotaDimension> quotaDimensions = default;
+            IReadOnlyList<PricingDimension> pricingDimensions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -57,7 +174,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    aad = ProviderPropertiesAad.DeserializeProviderPropertiesAad(property.Value);
+                    aad = ProviderPropertiesAad.DeserializeProviderPropertiesAad(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedApplication"u8))
@@ -66,7 +183,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    managedApplication = ProviderPropertiesManagedApplication.DeserializeProviderPropertiesManagedApplication(property.Value);
+                    managedApplication = ProviderPropertiesManagedApplication.DeserializeProviderPropertiesManagedApplication(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targets"u8))
@@ -78,7 +195,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<TargetDescription> array = new List<TargetDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetDescription.DeserializeTargetDescription(item));
+                        array.Add(TargetDescription.DeserializeTargetDescription(item, options));
                     }
                     targets = array;
                     continue;
@@ -92,7 +209,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<SkuDescription> array = new List<SkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDescription.DeserializeSkuDescription(item));
+                        array.Add(SkuDescription.DeserializeSkuDescription(item, options));
                     }
                     skus = array;
                     continue;
@@ -106,7 +223,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuotaDimension> array = new List<QuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        array.Add(QuotaDimension.DeserializeQuotaDimension(item, options));
                     }
                     quotaDimensions = array;
                     continue;
@@ -120,13 +237,60 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<PricingDimension> array = new List<PricingDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDimension.DeserializePricingDimension(item));
+                        array.Add(PricingDimension.DeserializePricingDimension(item, options));
                     }
                     pricingDimensions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProviderProperties(description.Value, providerType.Value, company.Value, defaultEndpoint.Value, aad.Value, managedApplication.Value, Optional.ToList(targets), Optional.ToList(skus), Optional.ToList(quotaDimensions), Optional.ToList(pricingDimensions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProviderProperties(
+                description.Value,
+                providerType.Value,
+                company.Value,
+                defaultEndpoint.Value,
+                aad.Value,
+                managedApplication.Value,
+                targets ?? new ChangeTrackingList<TargetDescription>(),
+                skus ?? new ChangeTrackingList<SkuDescription>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDimensions ?? new ChangeTrackingList<PricingDimension>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProviderProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProviderProperties IPersistableModel<ProviderProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProviderProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProviderProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EffectiveRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EffectiveRoute>> value = default;
+            IReadOnlyList<EffectiveRoute> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveRoute> array = new List<EffectiveRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveRoute.DeserializeEffectiveRoute(item));
+                        array.Add(EffectiveRoute.DeserializeEffectiveRoute(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRouteListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EffectiveRouteListResult(value ?? new ChangeTrackingList<EffectiveRoute>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRouteListResult>.Write(ModelReaderWriterOptions options)

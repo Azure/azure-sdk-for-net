@@ -442,7 +442,10 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<SearchServiceResource>> UpdateAsync(SearchServicePatch patch, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceResource.Update");
             scope.Start();
@@ -485,7 +488,10 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<SearchServiceResource> Update(SearchServicePatch patch, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceResource.Update");
             scope.Start();
@@ -667,7 +673,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<SearchServiceQueryKey>> CreateQueryKeyAsync(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.CreateQueryKey");
             scope.Start();
@@ -707,7 +720,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<SearchServiceQueryKey> CreateQueryKey(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.CreateQueryKey");
             scope.Start();
@@ -747,7 +767,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _queryKeysRestClient.CreateListBySearchServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _queryKeysRestClient.CreateListBySearchServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SearchServiceQueryKey.DeserializeSearchServiceQueryKey(e), _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -774,7 +794,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _queryKeysRestClient.CreateListBySearchServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _queryKeysRestClient.CreateListBySearchServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SearchServiceQueryKey.DeserializeSearchServiceQueryKey(e), _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -801,7 +821,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response> DeleteQueryKeyAsync(string key, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
+            }
 
             using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.DeleteQueryKey");
             scope.Start();
@@ -841,7 +868,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response DeleteQueryKey(string key, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
+            }
 
             using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.DeleteQueryKey");
             scope.Start();
@@ -880,7 +914,7 @@ namespace Azure.ResourceManager.Search
         public virtual AsyncPageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResourcesAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListSupportedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -906,7 +940,7 @@ namespace Azure.ResourceManager.Search
         public virtual Pageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResources(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListSupportedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -936,8 +970,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SearchServiceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceResource.AddTag");
             scope.Start();
@@ -998,8 +1038,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SearchServiceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceResource.AddTag");
             scope.Start();
@@ -1059,7 +1105,10 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SearchServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceResource.SetTags");
             scope.Start();
@@ -1116,7 +1165,10 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SearchServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceResource.SetTags");
             scope.Start();
@@ -1173,7 +1225,10 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SearchServiceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceResource.RemoveTag");
             scope.Start();
@@ -1233,7 +1288,10 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SearchServiceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceResource.RemoveTag");
             scope.Start();

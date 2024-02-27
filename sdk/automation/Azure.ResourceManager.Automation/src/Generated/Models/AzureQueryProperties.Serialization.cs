@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Scope))
+            if (!(Scope is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TagSettings))
+            if (TagSettings != null)
             {
                 writer.WritePropertyName("tagSettings"u8);
                 writer.WriteObjectValue(TagSettings);
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IList<string>> scope = default;
-            Optional<IList<AzureLocation>> locations = default;
+            IList<string> scope = default;
+            IList<AzureLocation> locations = default;
             Optional<QueryTagSettingsProperties> tagSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value);
+                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureQueryProperties(Optional.ToList(scope), Optional.ToList(locations), tagSettings.Value, serializedAdditionalRawData);
+            return new AzureQueryProperties(scope ?? new ChangeTrackingList<string>(), locations ?? new ChangeTrackingList<AzureLocation>(), tagSettings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureQueryProperties>.Write(ModelReaderWriterOptions options)

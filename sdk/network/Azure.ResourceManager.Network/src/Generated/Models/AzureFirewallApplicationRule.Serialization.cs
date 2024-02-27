@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(SourceAddresses))
+            if (!(SourceAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Protocols))
+            if (!(Protocols is ChangeTrackingList<AzureFirewallApplicationRuleProtocol> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TargetFqdns))
+            if (!(TargetFqdns is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetFqdns"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FqdnTags))
+            if (!(FqdnTags is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("fqdnTags"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIPGroups))
+            if (!(SourceIPGroups is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<AzureFirewallApplicationRuleProtocol>> protocols = default;
-            Optional<IList<string>> targetFqdns = default;
-            Optional<IList<string>> fqdnTags = default;
-            Optional<IList<string>> sourceIPGroups = default;
+            IList<string> sourceAddresses = default;
+            IList<AzureFirewallApplicationRuleProtocol> protocols = default;
+            IList<string> targetFqdns = default;
+            IList<string> fqdnTags = default;
+            IList<string> sourceIPGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureFirewallApplicationRuleProtocol> array = new List<AzureFirewallApplicationRuleProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallApplicationRuleProtocol.DeserializeAzureFirewallApplicationRuleProtocol(item));
+                        array.Add(AzureFirewallApplicationRuleProtocol.DeserializeAzureFirewallApplicationRuleProtocol(item, options));
                     }
                     protocols = array;
                     continue;
@@ -221,7 +221,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallApplicationRule(name.Value, description.Value, Optional.ToList(sourceAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups), serializedAdditionalRawData);
+            return new AzureFirewallApplicationRule(
+                name.Value,
+                description.Value,
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<AzureFirewallApplicationRuleProtocol>(),
+                targetFqdns ?? new ChangeTrackingList<string>(),
+                fqdnTags ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallApplicationRule>.Write(ModelReaderWriterOptions options)

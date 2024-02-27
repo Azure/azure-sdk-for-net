@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsRegionEndpointEnabled))
+            if (IsRegionEndpointEnabled.HasValue)
             {
                 writer.WritePropertyName("regionEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsRegionEndpointEnabled.Value);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> regionEndpointEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryReplicationPatch(Optional.ToDictionary(tags), Optional.ToNullable(regionEndpointEnabled), serializedAdditionalRawData);
+            return new ContainerRegistryReplicationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(regionEndpointEnabled), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryReplicationPatch>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExitCode))
+            if (options.Format != "W" && ExitCode.HasValue)
             {
                 writer.WritePropertyName("exitCode"u8);
                 writer.WriteNumberValue(ExitCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishOn))
+            if (options.Format != "W" && FinishOn.HasValue)
             {
                 writer.WritePropertyName("finishTime"u8);
                 writer.WriteStringValue(FinishOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailStatus))
+            if (options.Format != "W" && DetailStatus != null)
             {
                 writer.WritePropertyName("detailStatus"u8);
                 writer.WriteStringValue(DetailStatus);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerState(state.Value, Optional.ToNullable(startTime), Optional.ToNullable(exitCode), Optional.ToNullable(finishTime), detailStatus.Value, serializedAdditionalRawData);
+            return new ContainerState(
+                state.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(exitCode),
+                Optional.ToNullable(finishTime),
+                detailStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerState>.Write(ModelReaderWriterOptions options)

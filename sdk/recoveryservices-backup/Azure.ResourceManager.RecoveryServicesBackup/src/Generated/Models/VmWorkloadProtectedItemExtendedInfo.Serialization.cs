@@ -6,56 +6,95 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadProtectedItemExtendedInfo : IUtf8JsonSerializable
+    public partial class VmWorkloadProtectedItemExtendedInfo : IUtf8JsonSerializable, IJsonModel<VmWorkloadProtectedItemExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadProtectedItemExtendedInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VmWorkloadProtectedItemExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(OldestRecoverOn))
+            if (OldestRecoverOn.HasValue)
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPointInVault))
+            if (OldestRecoveryPointInVault.HasValue)
             {
                 writer.WritePropertyName("oldestRecoveryPointInVault"u8);
                 writer.WriteStringValue(OldestRecoveryPointInVault.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPointInArchive))
+            if (OldestRecoveryPointInArchive.HasValue)
             {
                 writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(OldestRecoveryPointInArchive.Value, "O");
             }
-            if (Optional.IsDefined(NewestRecoveryPointInArchive))
+            if (NewestRecoveryPointInArchive.HasValue)
             {
                 writer.WritePropertyName("newestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(NewestRecoveryPointInArchive.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointCount))
+            if (RecoveryPointCount.HasValue)
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(PolicyState))
+            if (PolicyState != null)
             {
                 writer.WritePropertyName("policyState"u8);
                 writer.WriteStringValue(PolicyState);
             }
-            if (Optional.IsDefined(RecoveryModel))
+            if (RecoveryModel != null)
             {
                 writer.WritePropertyName("recoveryModel"u8);
                 writer.WriteStringValue(RecoveryModel);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadProtectedItemExtendedInfo DeserializeVmWorkloadProtectedItemExtendedInfo(JsonElement element)
+        VmWorkloadProtectedItemExtendedInfo IJsonModel<VmWorkloadProtectedItemExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadProtectedItemExtendedInfo(document.RootElement, options);
+        }
+
+        internal static VmWorkloadProtectedItemExtendedInfo DeserializeVmWorkloadProtectedItemExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +106,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> recoveryPointCount = default;
             Optional<string> policyState = default;
             Optional<string> recoveryModel = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oldestRecoveryPoint"u8))
@@ -124,8 +165,52 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryModel = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmWorkloadProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(oldestRecoveryPointInVault), Optional.ToNullable(oldestRecoveryPointInArchive), Optional.ToNullable(newestRecoveryPointInArchive), Optional.ToNullable(recoveryPointCount), policyState.Value, recoveryModel.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VmWorkloadProtectedItemExtendedInfo(
+                Optional.ToNullable(oldestRecoveryPoint),
+                Optional.ToNullable(oldestRecoveryPointInVault),
+                Optional.ToNullable(oldestRecoveryPointInArchive),
+                Optional.ToNullable(newestRecoveryPointInArchive),
+                Optional.ToNullable(recoveryPointCount),
+                policyState.Value,
+                recoveryModel.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VmWorkloadProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VmWorkloadProtectedItemExtendedInfo IPersistableModel<VmWorkloadProtectedItemExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVmWorkloadProtectedItemExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VmWorkloadProtectedItemExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

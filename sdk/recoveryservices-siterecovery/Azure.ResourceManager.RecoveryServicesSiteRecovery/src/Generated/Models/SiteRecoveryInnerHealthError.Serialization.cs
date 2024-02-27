@@ -6,15 +6,130 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryInnerHealthError
+    public partial class SiteRecoveryInnerHealthError : IUtf8JsonSerializable, IJsonModel<SiteRecoveryInnerHealthError>
     {
-        internal static SiteRecoveryInnerHealthError DeserializeSiteRecoveryInnerHealthError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryInnerHealthError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryInnerHealthError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (ErrorSource != null)
+            {
+                writer.WritePropertyName("errorSource"u8);
+                writer.WriteStringValue(ErrorSource);
+            }
+            if (ErrorType != null)
+            {
+                writer.WritePropertyName("errorType"u8);
+                writer.WriteStringValue(ErrorType);
+            }
+            if (ErrorLevel != null)
+            {
+                writer.WritePropertyName("errorLevel"u8);
+                writer.WriteStringValue(ErrorLevel);
+            }
+            if (ErrorCategory != null)
+            {
+                writer.WritePropertyName("errorCategory"u8);
+                writer.WriteStringValue(ErrorCategory);
+            }
+            if (ErrorCode != null)
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (SummaryMessage != null)
+            {
+                writer.WritePropertyName("summaryMessage"u8);
+                writer.WriteStringValue(SummaryMessage);
+            }
+            if (ErrorMessage != null)
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (PossibleCauses != null)
+            {
+                writer.WritePropertyName("possibleCauses"u8);
+                writer.WriteStringValue(PossibleCauses);
+            }
+            if (RecommendedAction != null)
+            {
+                writer.WritePropertyName("recommendedAction"u8);
+                writer.WriteStringValue(RecommendedAction);
+            }
+            if (CreatedOn.HasValue)
+            {
+                writer.WritePropertyName("creationTimeUtc"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (RecoveryProviderErrorMessage != null)
+            {
+                writer.WritePropertyName("recoveryProviderErrorMessage"u8);
+                writer.WriteStringValue(RecoveryProviderErrorMessage);
+            }
+            if (EntityId != null)
+            {
+                writer.WritePropertyName("entityId"u8);
+                writer.WriteStringValue(EntityId);
+            }
+            if (ErrorId != null)
+            {
+                writer.WritePropertyName("errorId"u8);
+                writer.WriteStringValue(ErrorId);
+            }
+            if (CustomerResolvability.HasValue)
+            {
+                writer.WritePropertyName("customerResolvability"u8);
+                writer.WriteStringValue(CustomerResolvability.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryInnerHealthError IJsonModel<SiteRecoveryInnerHealthError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryInnerHealthError(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryInnerHealthError DeserializeSiteRecoveryInnerHealthError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +148,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> entityId = default;
             Optional<string> errorId = default;
             Optional<HealthErrorCustomerResolvability> customerResolvability = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorSource"u8))
@@ -113,8 +230,59 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customerResolvability = new HealthErrorCustomerResolvability(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryInnerHealthError(errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryInnerHealthError(
+                errorSource.Value,
+                errorType.Value,
+                errorLevel.Value,
+                errorCategory.Value,
+                errorCode.Value,
+                summaryMessage.Value,
+                errorMessage.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                Optional.ToNullable(creationTimeUtc),
+                recoveryProviderErrorMessage.Value,
+                entityId.Value,
+                errorId.Value,
+                Optional.ToNullable(customerResolvability),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryInnerHealthError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryInnerHealthError IPersistableModel<SiteRecoveryInnerHealthError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryInnerHealthError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryInnerHealthError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

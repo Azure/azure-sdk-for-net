@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -25,7 +24,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineTopology"/> is null. </exception>
         public PipelineTopologySetRequest(PipelineTopology pipelineTopology)
         {
-            Argument.AssertNotNull(pipelineTopology, nameof(pipelineTopology));
+            if (pipelineTopology == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineTopology));
+            }
 
             PipelineTopology = pipelineTopology;
             MethodName = "pipelineTopologySet";

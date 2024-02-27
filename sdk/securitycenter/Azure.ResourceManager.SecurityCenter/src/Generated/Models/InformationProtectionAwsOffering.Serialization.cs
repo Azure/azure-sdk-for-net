@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InformationProtection))
+            if (InformationProtection != null)
             {
                 writer.WritePropertyName("informationProtection"u8);
                 writer.WriteObjectValue(InformationProtection);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value);
+                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

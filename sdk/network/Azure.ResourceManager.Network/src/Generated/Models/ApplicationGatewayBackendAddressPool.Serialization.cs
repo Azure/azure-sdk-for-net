@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackendIPConfigurations))
+            if (options.Format != "W" && !(BackendIPConfigurations is ChangeTrackingList<NetworkInterfaceIPConfigurationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backendIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackendAddresses))
+            if (!(BackendAddresses is ChangeTrackingList<ApplicationGatewayBackendAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("backendAddresses"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
-            Optional<IList<ApplicationGatewayBackendAddress>> backendAddresses = default;
+            IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations = default;
+            IList<ApplicationGatewayBackendAddress> backendAddresses = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item, options));
                             }
                             backendIPConfigurations = array;
                             continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayBackendAddress> array = new List<ApplicationGatewayBackendAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayBackendAddress.DeserializeApplicationGatewayBackendAddress(item));
+                                array.Add(ApplicationGatewayBackendAddress.DeserializeApplicationGatewayBackendAddress(item, options));
                             }
                             backendAddresses = array;
                             continue;
@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendAddressPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(backendIPConfigurations), Optional.ToList(backendAddresses), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendAddressPool(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
+                backendAddresses ?? new ChangeTrackingList<ApplicationGatewayBackendAddress>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendAddressPool>.Write(ModelReaderWriterOptions options)

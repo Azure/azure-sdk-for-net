@@ -1,10 +1,17 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.11.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+- `AzurePowerShellCredential` now handles the case where it falls back to legacy powershell without relying on the error message string.
+
+### Other Changes
+
+## 1.11.0-beta.1 (2024-02-06)
 
 ### Bugs Fixed
 - Claims from the `TokenRequestContext` are now correctly sent through to MSAL in `ConfidentialClient` credentials. [#40451](https://github.com/Azure/azure-sdk-for-net/issues/40451).

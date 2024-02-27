@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(SourceInfo))
+            if (SourceInfo != null)
             {
                 writer.WritePropertyName("sourceInfo"u8);
                 writer.WriteStringValue(SourceInfo);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<DscReportResourceNavigation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -46,37 +46,37 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ModuleName))
+            if (ModuleName != null)
             {
                 writer.WritePropertyName("moduleName"u8);
                 writer.WriteStringValue(ModuleName);
             }
-            if (Optional.IsDefined(ModuleVersion))
+            if (ModuleVersion != null)
             {
                 writer.WritePropertyName("moduleVersion"u8);
                 writer.WriteStringValue(ModuleVersion);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(DurationInSeconds))
+            if (DurationInSeconds.HasValue)
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             Optional<string> resourceId = default;
             Optional<string> sourceInfo = default;
-            Optional<IReadOnlyList<DscReportResourceNavigation>> dependsOn = default;
+            IReadOnlyList<DscReportResourceNavigation> dependsOn = default;
             Optional<string> moduleName = default;
             Optional<string> moduleVersion = default;
             Optional<string> resourceName = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportResourceNavigation> array = new List<DscReportResourceNavigation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item));
+                        array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -206,7 +206,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportResource(resourceId.Value, sourceInfo.Value, Optional.ToList(dependsOn), moduleName.Value, moduleVersion.Value, resourceName.Value, error.Value, status.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(startDate), serializedAdditionalRawData);
+            return new DscReportResource(
+                resourceId.Value,
+                sourceInfo.Value,
+                dependsOn ?? new ChangeTrackingList<DscReportResourceNavigation>(),
+                moduleName.Value,
+                moduleVersion.Value,
+                resourceName.Value,
+                error.Value,
+                status.Value,
+                Optional.ToNullable(durationInSeconds),
+                Optional.ToNullable(startDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportResource>.Write(ModelReaderWriterOptions options)

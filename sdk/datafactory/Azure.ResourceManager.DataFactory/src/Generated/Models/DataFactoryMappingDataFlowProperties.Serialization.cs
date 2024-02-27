@@ -6,25 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryMappingDataFlowProperties : IUtf8JsonSerializable
+    public partial class DataFactoryMappingDataFlowProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryMappingDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryMappingDataFlowProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryMappingDataFlowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryMappingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -46,14 +55,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<DataFlowSource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -63,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sinks))
+            if (!(Sinks is ChangeTrackingList<DataFlowSink> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
@@ -73,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Transformations))
+            if (!(Transformations is ChangeTrackingList<DataFlowTransformation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("transformations"u8);
                 writer.WriteStartArray();
@@ -83,12 +92,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Script))
+            if (Script != null)
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (Optional.IsCollectionDefined(ScriptLines))
+            if (!(ScriptLines is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("scriptLines"u8);
                 writer.WriteStartArray();
@@ -99,24 +108,55 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryMappingDataFlowProperties DeserializeDataFactoryMappingDataFlowProperties(JsonElement element)
+        DataFactoryMappingDataFlowProperties IJsonModel<DataFactoryMappingDataFlowProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryMappingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryMappingDataFlowProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryMappingDataFlowProperties DeserializeDataFactoryMappingDataFlowProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
             Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFlowFolder> folder = default;
-            Optional<IList<DataFlowSource>> sources = default;
-            Optional<IList<DataFlowSink>> sinks = default;
-            Optional<IList<DataFlowTransformation>> transformations = default;
+            IList<DataFlowSource> sources = default;
+            IList<DataFlowSink> sinks = default;
+            IList<DataFlowTransformation> transformations = default;
             Optional<string> script = default;
-            Optional<IList<string>> scriptLines = default;
+            IList<string> scriptLines = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -156,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -177,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowSource> array = new List<DataFlowSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowSource.DeserializeDataFlowSource(item));
+                                array.Add(DataFlowSource.DeserializeDataFlowSource(item, options));
                             }
                             sources = array;
                             continue;
@@ -191,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowSink> array = new List<DataFlowSink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowSink.DeserializeDataFlowSink(item));
+                                array.Add(DataFlowSink.DeserializeDataFlowSink(item, options));
                             }
                             sinks = array;
                             continue;
@@ -205,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowTransformation> array = new List<DataFlowTransformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item));
+                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item, options));
                             }
                             transformations = array;
                             continue;
@@ -232,8 +272,54 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFactoryMappingDataFlowProperties(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFactoryMappingDataFlowProperties(
+                type,
+                description.Value,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder.Value,
+                serializedAdditionalRawData,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<DataFlowTransformation>(),
+                script.Value,
+                scriptLines ?? new ChangeTrackingList<string>());
         }
+
+        BinaryData IPersistableModel<DataFactoryMappingDataFlowProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryMappingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryMappingDataFlowProperties IPersistableModel<DataFactoryMappingDataFlowProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryMappingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryMappingDataFlowProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryMappingDataFlowProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

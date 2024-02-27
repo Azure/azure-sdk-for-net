@@ -5,37 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class WebApplicationCustomRule : IUtf8JsonSerializable
+    public partial class WebApplicationCustomRule : IUtf8JsonSerializable, IJsonModel<WebApplicationCustomRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationCustomRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebApplicationCustomRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationCustomRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(RateLimitDurationInMinutes))
+            if (RateLimitDurationInMinutes.HasValue)
             {
                 writer.WritePropertyName("rateLimitDurationInMinutes"u8);
                 writer.WriteNumberValue(RateLimitDurationInMinutes.Value);
             }
-            if (Optional.IsDefined(RateLimitThreshold))
+            if (RateLimitThreshold.HasValue)
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -49,11 +59,40 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebApplicationCustomRule DeserializeWebApplicationCustomRule(JsonElement element)
+        WebApplicationCustomRule IJsonModel<WebApplicationCustomRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationCustomRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebApplicationCustomRule(document.RootElement, options);
+        }
+
+        internal static WebApplicationCustomRule DeserializeWebApplicationCustomRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +105,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<int> rateLimitThreshold = default;
             IList<WebApplicationRuleMatchCondition> matchConditions = default;
             RuleMatchActionType action = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -115,7 +156,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<WebApplicationRuleMatchCondition> array = new List<WebApplicationRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebApplicationRuleMatchCondition.DeserializeWebApplicationRuleMatchCondition(item));
+                        array.Add(WebApplicationRuleMatchCondition.DeserializeWebApplicationRuleMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -125,8 +166,53 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     action = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebApplicationCustomRule(name.Value, priority, Optional.ToNullable(enabledState), ruleType, Optional.ToNullable(rateLimitDurationInMinutes), Optional.ToNullable(rateLimitThreshold), matchConditions, action);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebApplicationCustomRule(
+                name.Value,
+                priority,
+                Optional.ToNullable(enabledState),
+                ruleType,
+                Optional.ToNullable(rateLimitDurationInMinutes),
+                Optional.ToNullable(rateLimitThreshold),
+                matchConditions,
+                action,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebApplicationCustomRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationCustomRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebApplicationCustomRule IPersistableModel<WebApplicationCustomRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationCustomRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebApplicationCustomRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebApplicationCustomRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

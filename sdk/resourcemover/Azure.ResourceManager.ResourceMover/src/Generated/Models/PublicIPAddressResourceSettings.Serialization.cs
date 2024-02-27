@@ -5,18 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class PublicIPAddressResourceSettings : IUtf8JsonSerializable
+    public partial class PublicIPAddressResourceSettings : IUtf8JsonSerializable, IJsonModel<PublicIPAddressResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicIPAddressResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PublicIPAddressResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -27,53 +37,82 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DomainNameLabel))
+            if (DomainNameLabel != null)
             {
                 writer.WritePropertyName("domainNameLabel"u8);
                 writer.WriteStringValue(DomainNameLabel);
             }
-            if (Optional.IsDefined(Fqdn))
+            if (Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(PublicIPAllocationMethod))
+            if (PublicIPAllocationMethod != null)
             {
                 writer.WritePropertyName("publicIpAllocationMethod"u8);
                 writer.WriteStringValue(PublicIPAllocationMethod);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(Zones))
+            if (Zones != null)
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(TargetResourceName))
+            if (TargetResourceName != null)
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Optional.IsDefined(TargetResourceGroupName))
+            if (TargetResourceGroupName != null)
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PublicIPAddressResourceSettings DeserializePublicIPAddressResourceSettings(JsonElement element)
+        PublicIPAddressResourceSettings IJsonModel<PublicIPAddressResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePublicIPAddressResourceSettings(document.RootElement, options);
+        }
+
+        internal static PublicIPAddressResourceSettings DeserializePublicIPAddressResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> domainNameLabel = default;
             Optional<string> fqdn = default;
             Optional<string> publicIPAllocationMethod = default;
@@ -82,6 +121,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string resourceType = default;
             Optional<string> targetResourceName = default;
             Optional<string> targetResourceGroupName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -138,8 +179,54 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetResourceGroupName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PublicIPAddressResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PublicIPAddressResourceSettings(
+                resourceType,
+                targetResourceName.Value,
+                targetResourceGroupName.Value,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                domainNameLabel.Value,
+                fqdn.Value,
+                publicIPAllocationMethod.Value,
+                sku.Value,
+                zones.Value);
         }
+
+        BinaryData IPersistableModel<PublicIPAddressResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PublicIPAddressResourceSettings IPersistableModel<PublicIPAddressResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePublicIPAddressResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PublicIPAddressResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxScore))
+            if (options.Format != "W" && MaxScore.HasValue)
             {
                 writer.WritePropertyName("maxScore"u8);
                 writer.WriteNumberValue(MaxScore.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Source))
+            if (options.Format != "W" && Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
+            if (options.Format != "W" && !(AssessmentDefinitions is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assessmentDefinitions"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             Optional<int> maxScore = default;
             Optional<SecureScoreControlDefinitionSource> source = default;
-            Optional<IReadOnlyList<SubResource>> assessmentDefinitions = default;
+            IReadOnlyList<SubResource> assessmentDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            source = SecureScoreControlDefinitionSource.DeserializeSecureScoreControlDefinitionSource(property0.Value);
+                            source = SecureScoreControlDefinitionSource.DeserializeSecureScoreControlDefinitionSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("assessmentDefinitions"u8))
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreControlDefinitionItem(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(maxScore), source.Value, Optional.ToList(assessmentDefinitions), serializedAdditionalRawData);
+            return new SecureScoreControlDefinitionItem(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(maxScore),
+                source.Value,
+                assessmentDefinitions ?? new ChangeTrackingList<SubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreControlDefinitionItem>.Write(ModelReaderWriterOptions options)

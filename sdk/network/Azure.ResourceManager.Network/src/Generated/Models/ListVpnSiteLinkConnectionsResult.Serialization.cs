@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<VpnSiteLinkConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VpnSiteLinkConnectionData>> value = default;
+            IReadOnlyList<VpnSiteLinkConnectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnSiteLinkConnectionData> array = new List<VpnSiteLinkConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(item));
+                        array.Add(VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListVpnSiteLinkConnectionsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListVpnSiteLinkConnectionsResult(value ?? new ChangeTrackingList<VpnSiteLinkConnectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListVpnSiteLinkConnectionsResult>.Write(ModelReaderWriterOptions options)

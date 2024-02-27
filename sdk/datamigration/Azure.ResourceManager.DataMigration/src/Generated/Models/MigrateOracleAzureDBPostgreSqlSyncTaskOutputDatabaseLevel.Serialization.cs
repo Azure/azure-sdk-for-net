@@ -26,82 +26,82 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationState))
+            if (options.Format != "W" && MigrationState.HasValue)
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IncomingChanges))
+            if (options.Format != "W" && IncomingChanges.HasValue)
             {
                 writer.WritePropertyName("incomingChanges"u8);
                 writer.WriteNumberValue(IncomingChanges.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AppliedChanges))
+            if (options.Format != "W" && AppliedChanges.HasValue)
             {
                 writer.WritePropertyName("appliedChanges"u8);
                 writer.WriteNumberValue(AppliedChanges.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CdcInsertCounter))
+            if (options.Format != "W" && CdcInsertCounter.HasValue)
             {
                 writer.WritePropertyName("cdcInsertCounter"u8);
                 writer.WriteNumberValue(CdcInsertCounter.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CdcDeleteCounter))
+            if (options.Format != "W" && CdcDeleteCounter.HasValue)
             {
                 writer.WritePropertyName("cdcDeleteCounter"u8);
                 writer.WriteNumberValue(CdcDeleteCounter.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CdcUpdateCounter))
+            if (options.Format != "W" && CdcUpdateCounter.HasValue)
             {
                 writer.WritePropertyName("cdcUpdateCounter"u8);
                 writer.WriteNumberValue(CdcUpdateCounter.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadCompletedTables))
+            if (options.Format != "W" && FullLoadCompletedTables.HasValue)
             {
                 writer.WritePropertyName("fullLoadCompletedTables"u8);
                 writer.WriteNumberValue(FullLoadCompletedTables.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadLoadingTables))
+            if (options.Format != "W" && FullLoadLoadingTables.HasValue)
             {
                 writer.WritePropertyName("fullLoadLoadingTables"u8);
                 writer.WriteNumberValue(FullLoadLoadingTables.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadQueuedTables))
+            if (options.Format != "W" && FullLoadQueuedTables.HasValue)
             {
                 writer.WritePropertyName("fullLoadQueuedTables"u8);
                 writer.WriteNumberValue(FullLoadQueuedTables.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadErroredTables))
+            if (options.Format != "W" && FullLoadErroredTables.HasValue)
             {
                 writer.WritePropertyName("fullLoadErroredTables"u8);
                 writer.WriteNumberValue(FullLoadErroredTables.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InitializationCompleted))
+            if (options.Format != "W" && InitializationCompleted.HasValue)
             {
                 writer.WritePropertyName("initializationCompleted"u8);
                 writer.WriteBooleanValue(InitializationCompleted.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Latency))
+            if (options.Format != "W" && Latency.HasValue)
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(Latency.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -314,7 +314,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(migrationState), Optional.ToNullable(incomingChanges), Optional.ToNullable(appliedChanges), Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(fullLoadCompletedTables), Optional.ToNullable(fullLoadLoadingTables), Optional.ToNullable(fullLoadQueuedTables), Optional.ToNullable(fullLoadErroredTables), Optional.ToNullable(initializationCompleted), Optional.ToNullable(latency));
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName.Value,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                Optional.ToNullable(migrationState),
+                Optional.ToNullable(incomingChanges),
+                Optional.ToNullable(appliedChanges),
+                Optional.ToNullable(cdcInsertCounter),
+                Optional.ToNullable(cdcDeleteCounter),
+                Optional.ToNullable(cdcUpdateCounter),
+                Optional.ToNullable(fullLoadCompletedTables),
+                Optional.ToNullable(fullLoadLoadingTables),
+                Optional.ToNullable(fullLoadQueuedTables),
+                Optional.ToNullable(fullLoadErroredTables),
+                Optional.ToNullable(initializationCompleted),
+                Optional.ToNullable(latency));
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

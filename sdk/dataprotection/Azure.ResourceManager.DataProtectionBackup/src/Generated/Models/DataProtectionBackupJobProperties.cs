@@ -16,6 +16,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> AzureBackup Job Class. </summary>
     public partial class DataProtectionBackupJobProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobProperties"/>. </summary>
         /// <param name="activityId"> Job Activity Id. </param>
         /// <param name="backupInstanceFriendlyName"> Name of the Backup Instance. </param>
@@ -37,19 +69,58 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="activityId"/>, <paramref name="backupInstanceFriendlyName"/>, <paramref name="dataSourceId"/>, <paramref name="dataSourceName"/>, <paramref name="dataSourceType"/>, <paramref name="operation"/>, <paramref name="operationCategory"/>, <paramref name="sourceResourceGroup"/>, <paramref name="sourceSubscriptionId"/>, <paramref name="status"/>, <paramref name="subscriptionId"/>, <paramref name="supportedActions"/> or <paramref name="vaultName"/> is null. </exception>
         public DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceType, bool isUserTriggered, string operation, string operationCategory, bool isProgressEnabled, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IEnumerable<string> supportedActions, string vaultName)
         {
-            Argument.AssertNotNull(activityId, nameof(activityId));
-            Argument.AssertNotNull(backupInstanceFriendlyName, nameof(backupInstanceFriendlyName));
-            Argument.AssertNotNull(dataSourceId, nameof(dataSourceId));
-            Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
-            Argument.AssertNotNull(dataSourceType, nameof(dataSourceType));
-            Argument.AssertNotNull(operation, nameof(operation));
-            Argument.AssertNotNull(operationCategory, nameof(operationCategory));
-            Argument.AssertNotNull(sourceResourceGroup, nameof(sourceResourceGroup));
-            Argument.AssertNotNull(sourceSubscriptionId, nameof(sourceSubscriptionId));
-            Argument.AssertNotNull(status, nameof(status));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(supportedActions, nameof(supportedActions));
-            Argument.AssertNotNull(vaultName, nameof(vaultName));
+            if (activityId == null)
+            {
+                throw new ArgumentNullException(nameof(activityId));
+            }
+            if (backupInstanceFriendlyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceFriendlyName));
+            }
+            if (dataSourceId == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceId));
+            }
+            if (dataSourceName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceName));
+            }
+            if (dataSourceType == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceType));
+            }
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+            if (operationCategory == null)
+            {
+                throw new ArgumentNullException(nameof(operationCategory));
+            }
+            if (sourceResourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(sourceResourceGroup));
+            }
+            if (sourceSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceSubscriptionId));
+            }
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (supportedActions == null)
+            {
+                throw new ArgumentNullException(nameof(supportedActions));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
 
             ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -103,7 +174,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="eTag"></param>
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
-        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -136,6 +208,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ETag = eTag;
             SourceDataStoreName = sourceDataStoreName;
             DestinationDataStoreName = destinationDataStoreName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupJobProperties()
+        {
         }
 
         /// <summary> Job Activity Id. </summary>

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllocationMethod))
+            if (AllocationMethod.HasValue)
             {
                 writer.WritePropertyName("allocationMethod"u8);
                 writer.WriteStringValue(AllocationMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Gateway))
+            if (!(Gateway is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStartArray();
@@ -51,27 +51,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(SubnetMask))
+            if (SubnetMask != null)
             {
                 writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryWinsServer))
+            if (options.Format != "W" && PrimaryWinsServer != null)
             {
                 writer.WritePropertyName("primaryWinsServer"u8);
                 writer.WriteStringValue(PrimaryWinsServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryWinsServer))
+            if (options.Format != "W" && SecondaryWinsServer != null)
             {
                 writer.WritePropertyName("secondaryWinsServer"u8);
                 writer.WriteStringValue(SecondaryWinsServer);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddressInfo))
+            if (options.Format != "W" && !(IPAddressInfo is ChangeTrackingList<NicIPAddressSettings> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipAddressInfo"u8);
                 writer.WriteStartArray();
@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 return null;
             }
             Optional<IPAddressAllocationMethod> allocationMethod = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<IList<string>> gateway = default;
+            IList<string> dnsServers = default;
+            IList<string> gateway = default;
             Optional<string> ipAddress = default;
             Optional<string> subnetMask = default;
             Optional<string> primaryWinsServer = default;
             Optional<string> secondaryWinsServer = default;
-            Optional<IReadOnlyList<NicIPAddressSettings>> ipAddressInfo = default;
+            IReadOnlyList<NicIPAddressSettings> ipAddressInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<NicIPAddressSettings> array = new List<NicIPAddressSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicIPAddressSettings.DeserializeNicIPAddressSettings(item));
+                        array.Add(NicIPAddressSettings.DeserializeNicIPAddressSettings(item, options));
                     }
                     ipAddressInfo = array;
                     continue;
@@ -208,7 +208,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicIPSettings(Optional.ToNullable(allocationMethod), Optional.ToList(dnsServers), Optional.ToList(gateway), ipAddress.Value, subnetMask.Value, primaryWinsServer.Value, secondaryWinsServer.Value, Optional.ToList(ipAddressInfo), serializedAdditionalRawData);
+            return new NicIPSettings(
+                Optional.ToNullable(allocationMethod),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                gateway ?? new ChangeTrackingList<string>(),
+                ipAddress.Value,
+                subnetMask.Value,
+                primaryWinsServer.Value,
+                secondaryWinsServer.Value,
+                ipAddressInfo ?? new ChangeTrackingList<NicIPAddressSettings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicIPSettings>.Write(ModelReaderWriterOptions options)

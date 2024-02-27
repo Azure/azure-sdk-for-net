@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Terms))
+            if (Terms != null)
             {
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
-            if (Optional.IsDefined(IsSubscriptionRequired))
+            if (IsSubscriptionRequired.HasValue)
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(IsApprovalRequired))
+            if (IsApprovalRequired.HasValue)
             {
                 writer.WritePropertyName("approvalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
-            if (Optional.IsDefined(SubscriptionsLimit))
+            if (SubscriptionsLimit.HasValue)
             {
                 writer.WritePropertyName("subscriptionsLimit"u8);
                 writer.WriteNumberValue(SubscriptionsLimit.Value);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementProductPatch(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state), displayName.Value, serializedAdditionalRawData);
+            return new ApiManagementProductPatch(
+                description.Value,
+                terms.Value,
+                Optional.ToNullable(subscriptionRequired),
+                Optional.ToNullable(approvalRequired),
+                Optional.ToNullable(subscriptionsLimit),
+                Optional.ToNullable(state),
+                displayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementProductPatch>.Write(ModelReaderWriterOptions options)

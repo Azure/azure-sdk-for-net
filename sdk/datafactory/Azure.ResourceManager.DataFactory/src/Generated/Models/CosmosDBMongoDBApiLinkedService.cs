@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         public CosmosDBMongoDBApiLinkedService(DataFactoryElement<string> connectionString, DataFactoryElement<string> database)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-            Argument.AssertNotNull(database, nameof(database));
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+            if (database == null)
+            {
+                throw new ArgumentNullException(nameof(database));
+            }
 
             ConnectionString = connectionString;
             Database = database;
@@ -45,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ConnectionString = connectionString;
             Database = database;
             LinkedServiceType = linkedServiceType ?? "CosmosDbMongoDbApi";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiLinkedService"/> for deserialization. </summary>
+        internal CosmosDBMongoDBApiLinkedService()
+        {
         }
 
         /// <summary> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>

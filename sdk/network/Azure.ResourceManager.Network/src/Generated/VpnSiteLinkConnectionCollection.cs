@@ -85,7 +85,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response<VpnSiteLinkConnectionResource>> GetAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
+            if (linkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(linkConnectionName));
+            }
+            if (linkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkConnectionName));
+            }
 
             using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Get");
             scope.Start();
@@ -130,7 +137,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<VpnSiteLinkConnectionResource> Get(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
+            if (linkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(linkConnectionName));
+            }
+            if (linkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkConnectionName));
+            }
 
             using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Get");
             scope.Start();
@@ -235,7 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
+            if (linkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(linkConnectionName));
+            }
+            if (linkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkConnectionName));
+            }
 
             using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
             scope.Start();
@@ -278,7 +299,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
+            if (linkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(linkConnectionName));
+            }
+            if (linkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkConnectionName));
+            }
 
             using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
             scope.Start();
@@ -321,7 +349,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<VpnSiteLinkConnectionResource>> GetIfExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
+            if (linkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(linkConnectionName));
+            }
+            if (linkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkConnectionName));
+            }
 
             using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExists");
             scope.Start();
@@ -366,7 +401,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual NullableResponse<VpnSiteLinkConnectionResource> GetIfExists(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
+            if (linkConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(linkConnectionName));
+            }
+            if (linkConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkConnectionName));
+            }
 
             using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExists");
             scope.Start();

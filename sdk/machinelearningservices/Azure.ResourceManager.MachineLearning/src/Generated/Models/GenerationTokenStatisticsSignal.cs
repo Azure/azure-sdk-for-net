@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -21,7 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricThresholds"/> is null. </exception>
         public GenerationTokenStatisticsSignal(IEnumerable<GenerationTokenStatisticsMetricThreshold> metricThresholds, double samplingRate)
         {
-            Argument.AssertNotNull(metricThresholds, nameof(metricThresholds));
+            if (metricThresholds == null)
+            {
+                throw new ArgumentNullException(nameof(metricThresholds));
+            }
 
             MetricThresholds = metricThresholds.ToList();
             SamplingRate = samplingRate;
@@ -32,6 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metricThresholds"> [Required] Gets or sets the metrics to calculate and the corresponding thresholds. </param>
         /// <param name="productionData">
         /// Gets or sets the target data for computing metrics.
@@ -39,12 +42,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
         /// </param>
         /// <param name="samplingRate"> [Required] The sample rate of the target data, should be greater than 0 and at most 1. </param>
-        internal GenerationTokenStatisticsSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IList<GenerationTokenStatisticsMetricThreshold> metricThresholds, MonitoringInputDataBase productionData, double samplingRate) : base(mode, properties, signalType)
+        internal GenerationTokenStatisticsSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<GenerationTokenStatisticsMetricThreshold> metricThresholds, MonitoringInputDataBase productionData, double samplingRate) : base(mode, properties, signalType, serializedAdditionalRawData)
         {
             MetricThresholds = metricThresholds;
             ProductionData = productionData;
             SamplingRate = samplingRate;
             SignalType = signalType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerationTokenStatisticsSignal"/> for deserialization. </summary>
+        internal GenerationTokenStatisticsSignal()
+        {
         }
 
         /// <summary> [Required] Gets or sets the metrics to calculate and the corresponding thresholds. </summary>

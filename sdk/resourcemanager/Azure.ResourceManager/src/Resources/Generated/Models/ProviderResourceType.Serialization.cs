@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocationMappings))
+            if (!(LocationMappings is ChangeTrackingList<ProviderExtendedLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locationMappings"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Aliases))
+            if (!(Aliases is ChangeTrackingList<ResourceTypeAlias> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (!(ApiVersions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultApiVersion))
+            if (options.Format != "W" && DefaultApiVersion != null)
             {
                 writer.WritePropertyName("defaultApiVersion"u8);
                 writer.WriteStringValue(DefaultApiVersion);
             }
-            if (Optional.IsCollectionDefined(ZoneMappings))
+            if (!(ZoneMappings is ChangeTrackingList<ZoneMapping> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("zoneMappings"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiProfiles))
+            if (options.Format != "W" && !(ApiProfiles is ChangeTrackingList<ApiProfile> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("apiProfiles"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Capabilities))
+            if (Capabilities != null)
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStringValue(Capabilities);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -151,15 +151,15 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
-            Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<ProviderExtendedLocation> locationMappings = default;
+            IReadOnlyList<ResourceTypeAlias> aliases = default;
+            IReadOnlyList<string> apiVersions = default;
             Optional<string> defaultApiVersion = default;
-            Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
-            Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
+            IReadOnlyList<ZoneMapping> zoneMappings = default;
+            IReadOnlyList<ApiProfile> apiProfiles = default;
             Optional<string> capabilities = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ProviderExtendedLocation> array = new List<ProviderExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item));
+                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item, options));
                     }
                     locationMappings = array;
                     continue;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options));
                     }
                     aliases = array;
                     continue;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ZoneMapping> array = new List<ZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ZoneMapping.DeserializeZoneMapping(item));
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options));
                     }
                     zoneMappings = array;
                     continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ApiProfile> array = new List<ApiProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiProfile.DeserializeApiProfile(item));
+                        array.Add(ApiProfile.DeserializeApiProfile(item, options));
                     }
                     apiProfiles = array;
                     continue;
@@ -283,7 +283,18 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new ProviderResourceType(
+                resourceType.Value,
+                locations ?? new ChangeTrackingList<string>(),
+                locationMappings ?? new ChangeTrackingList<ProviderExtendedLocation>(),
+                aliases ?? new ChangeTrackingList<ResourceTypeAlias>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                defaultApiVersion.Value,
+                zoneMappings ?? new ChangeTrackingList<ZoneMapping>(),
+                apiProfiles ?? new ChangeTrackingList<ApiProfile>(),
+                capabilities.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)

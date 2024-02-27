@@ -6,16 +6,237 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyState
+    public partial class PolicyState : IUtf8JsonSerializable, IJsonModel<PolicyState>
     {
-        internal static PolicyState DeserializePolicyState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PolicyState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyState)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (ODataId != null)
+            {
+                writer.WritePropertyName("@odata.id"u8);
+                writer.WriteStringValue(ODataId);
+            }
+            if (ODataContext != null)
+            {
+                writer.WritePropertyName("@odata.context"u8);
+                writer.WriteStringValue(ODataContext);
+            }
+            if (Timestamp.HasValue)
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (ResourceId != null)
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (PolicyAssignmentId != null)
+            {
+                writer.WritePropertyName("policyAssignmentId"u8);
+                writer.WriteStringValue(PolicyAssignmentId);
+            }
+            if (PolicyDefinitionId != null)
+            {
+                writer.WritePropertyName("policyDefinitionId"u8);
+                writer.WriteStringValue(PolicyDefinitionId);
+            }
+            if (EffectiveParameters != null)
+            {
+                writer.WritePropertyName("effectiveParameters"u8);
+                writer.WriteStringValue(EffectiveParameters);
+            }
+            if (IsCompliant.HasValue)
+            {
+                writer.WritePropertyName("isCompliant"u8);
+                writer.WriteBooleanValue(IsCompliant.Value);
+            }
+            if (SubscriptionId != null)
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (ResourceTypeString != null)
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceTypeString);
+            }
+            if (ResourceLocation.HasValue)
+            {
+                writer.WritePropertyName("resourceLocation"u8);
+                writer.WriteStringValue(ResourceLocation.Value);
+            }
+            if (ResourceGroup != null)
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
+            if (ResourceTags != null)
+            {
+                writer.WritePropertyName("resourceTags"u8);
+                writer.WriteStringValue(ResourceTags);
+            }
+            if (PolicyAssignmentName != null)
+            {
+                writer.WritePropertyName("policyAssignmentName"u8);
+                writer.WriteStringValue(PolicyAssignmentName);
+            }
+            if (PolicyAssignmentOwner != null)
+            {
+                writer.WritePropertyName("policyAssignmentOwner"u8);
+                writer.WriteStringValue(PolicyAssignmentOwner);
+            }
+            if (PolicyAssignmentParameters != null)
+            {
+                writer.WritePropertyName("policyAssignmentParameters"u8);
+                writer.WriteStringValue(PolicyAssignmentParameters);
+            }
+            if (PolicyAssignmentScope != null)
+            {
+                writer.WritePropertyName("policyAssignmentScope"u8);
+                writer.WriteStringValue(PolicyAssignmentScope);
+            }
+            if (PolicyDefinitionName != null)
+            {
+                writer.WritePropertyName("policyDefinitionName"u8);
+                writer.WriteStringValue(PolicyDefinitionName);
+            }
+            if (PolicyDefinitionAction != null)
+            {
+                writer.WritePropertyName("policyDefinitionAction"u8);
+                writer.WriteStringValue(PolicyDefinitionAction);
+            }
+            if (PolicyDefinitionCategory != null)
+            {
+                writer.WritePropertyName("policyDefinitionCategory"u8);
+                writer.WriteStringValue(PolicyDefinitionCategory);
+            }
+            if (PolicySetDefinitionId != null)
+            {
+                writer.WritePropertyName("policySetDefinitionId"u8);
+                writer.WriteStringValue(PolicySetDefinitionId);
+            }
+            if (PolicySetDefinitionName != null)
+            {
+                writer.WritePropertyName("policySetDefinitionName"u8);
+                writer.WriteStringValue(PolicySetDefinitionName);
+            }
+            if (PolicySetDefinitionOwner != null)
+            {
+                writer.WritePropertyName("policySetDefinitionOwner"u8);
+                writer.WriteStringValue(PolicySetDefinitionOwner);
+            }
+            if (PolicySetDefinitionCategory != null)
+            {
+                writer.WritePropertyName("policySetDefinitionCategory"u8);
+                writer.WriteStringValue(PolicySetDefinitionCategory);
+            }
+            if (PolicySetDefinitionParameters != null)
+            {
+                writer.WritePropertyName("policySetDefinitionParameters"u8);
+                writer.WriteStringValue(PolicySetDefinitionParameters);
+            }
+            if (ManagementGroupIds != null)
+            {
+                writer.WritePropertyName("managementGroupIds"u8);
+                writer.WriteStringValue(ManagementGroupIds);
+            }
+            if (PolicyDefinitionReferenceId != null)
+            {
+                writer.WritePropertyName("policyDefinitionReferenceId"u8);
+                writer.WriteStringValue(PolicyDefinitionReferenceId);
+            }
+            if (ComplianceState != null)
+            {
+                writer.WritePropertyName("complianceState"u8);
+                writer.WriteStringValue(ComplianceState);
+            }
+            if (PolicyEvaluationDetails != null)
+            {
+                writer.WritePropertyName("policyEvaluationDetails"u8);
+                writer.WriteObjectValue(PolicyEvaluationDetails);
+            }
+            if (!(PolicyDefinitionGroupNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("policyDefinitionGroupNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyDefinitionGroupNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(Components is ChangeTrackingList<ComponentStateDetails> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("components"u8);
+                writer.WriteStartArray();
+                foreach (var item in Components)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && PolicyDefinitionVersion != null)
+            {
+                writer.WritePropertyName("policyDefinitionVersion"u8);
+                writer.WriteStringValue(PolicyDefinitionVersion);
+            }
+            if (options.Format != "W" && PolicySetDefinitionVersion != null)
+            {
+                writer.WritePropertyName("policySetDefinitionVersion"u8);
+                writer.WriteStringValue(PolicySetDefinitionVersion);
+            }
+            if (options.Format != "W" && PolicyAssignmentVersion != null)
+            {
+                writer.WritePropertyName("policyAssignmentVersion"u8);
+                writer.WriteStringValue(PolicyAssignmentVersion);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyState IJsonModel<PolicyState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyState)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyState(document.RootElement, options);
+        }
+
+        internal static PolicyState DeserializePolicyState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,8 +270,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> policyDefinitionReferenceId = default;
             Optional<string> complianceState = default;
             Optional<PolicyEvaluationDetails> policyEvaluationDetails = default;
-            Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
-            Optional<IReadOnlyList<ComponentStateDetails>> components = default;
+            IReadOnlyList<string> policyDefinitionGroupNames = default;
+            IReadOnlyList<ComponentStateDetails> components = default;
             Optional<string> policyDefinitionVersion = default;
             Optional<string> policySetDefinitionVersion = default;
             Optional<string> policyAssignmentVersion = default;
@@ -232,7 +453,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyEvaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value);
+                    policyEvaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyDefinitionGroupNames"u8))
@@ -258,7 +479,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComponentStateDetails> array = new List<ComponentStateDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentStateDetails.DeserializeComponentStateDetails(item));
+                        array.Add(ComponentStateDetails.DeserializeComponentStateDetails(item, options));
                     }
                     components = array;
                     continue;
@@ -281,7 +502,73 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolicyState(odataId.Value, odataContext.Value, Optional.ToNullable(timestamp), resourceId.Value, policyAssignmentId.Value, policyDefinitionId.Value, effectiveParameters.Value, Optional.ToNullable(isCompliant), subscriptionId.Value, resourceType.Value, Optional.ToNullable(resourceLocation), resourceGroup.Value, resourceTags.Value, policyAssignmentName.Value, policyAssignmentOwner.Value, policyAssignmentParameters.Value, policyAssignmentScope.Value, policyDefinitionName.Value, policyDefinitionAction.Value, policyDefinitionCategory.Value, policySetDefinitionId.Value, policySetDefinitionName.Value, policySetDefinitionOwner.Value, policySetDefinitionCategory.Value, policySetDefinitionParameters.Value, managementGroupIds.Value, policyDefinitionReferenceId.Value, complianceState.Value, policyEvaluationDetails.Value, Optional.ToList(policyDefinitionGroupNames), Optional.ToList(components), policyDefinitionVersion.Value, policySetDefinitionVersion.Value, policyAssignmentVersion.Value, additionalProperties);
+            return new PolicyState(
+                odataId.Value,
+                odataContext.Value,
+                Optional.ToNullable(timestamp),
+                resourceId.Value,
+                policyAssignmentId.Value,
+                policyDefinitionId.Value,
+                effectiveParameters.Value,
+                Optional.ToNullable(isCompliant),
+                subscriptionId.Value,
+                resourceType.Value,
+                Optional.ToNullable(resourceLocation),
+                resourceGroup.Value,
+                resourceTags.Value,
+                policyAssignmentName.Value,
+                policyAssignmentOwner.Value,
+                policyAssignmentParameters.Value,
+                policyAssignmentScope.Value,
+                policyDefinitionName.Value,
+                policyDefinitionAction.Value,
+                policyDefinitionCategory.Value,
+                policySetDefinitionId.Value,
+                policySetDefinitionName.Value,
+                policySetDefinitionOwner.Value,
+                policySetDefinitionCategory.Value,
+                policySetDefinitionParameters.Value,
+                managementGroupIds.Value,
+                policyDefinitionReferenceId.Value,
+                complianceState.Value,
+                policyEvaluationDetails.Value,
+                policyDefinitionGroupNames ?? new ChangeTrackingList<string>(),
+                components ?? new ChangeTrackingList<ComponentStateDetails>(),
+                policyDefinitionVersion.Value,
+                policySetDefinitionVersion.Value,
+                policyAssignmentVersion.Value,
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<PolicyState>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyState)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PolicyState IPersistableModel<PolicyState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicyState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyState)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

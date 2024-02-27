@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAddon(document.RootElement, options);
+            return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, options);
         }
 
         internal static UnknownAddon DeserializeUnknownAddon(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAddon(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownAddon(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeRoleAddonData>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAddon(document.RootElement, options);
+                        return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeRoleAddonData)} does not support '{options.Format}' format.");

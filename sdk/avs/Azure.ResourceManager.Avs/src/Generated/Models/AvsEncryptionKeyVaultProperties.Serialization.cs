@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyName))
+            if (KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(AutoDetectedKeyVersion))
+            if (options.Format != "W" && AutoDetectedKeyVersion != null)
             {
                 writer.WritePropertyName("autoDetectedKeyVersion"u8);
                 writer.WriteStringValue(AutoDetectedKeyVersion);
             }
-            if (Optional.IsDefined(KeyVaultUri))
+            if (KeyVaultUri != null)
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyState))
+            if (options.Format != "W" && KeyState.HasValue)
             {
                 writer.WritePropertyName("keyState"u8);
                 writer.WriteStringValue(KeyState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionType))
+            if (options.Format != "W" && VersionType.HasValue)
             {
                 writer.WritePropertyName("versionType"u8);
                 writer.WriteStringValue(VersionType.Value.ToString());
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsEncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, autoDetectedKeyVersion.Value, keyVaultUrl.Value, Optional.ToNullable(keyState), Optional.ToNullable(versionType), serializedAdditionalRawData);
+            return new AvsEncryptionKeyVaultProperties(
+                keyName.Value,
+                keyVersion.Value,
+                autoDetectedKeyVersion.Value,
+                keyVaultUrl.Value,
+                Optional.ToNullable(keyState),
+                Optional.ToNullable(versionType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsEncryptionKeyVaultProperties>.Write(ModelReaderWriterOptions options)

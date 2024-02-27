@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageGrain))
+            if (UsageGrain.HasValue)
             {
                 writer.WritePropertyName("usageGrain"u8);
                 writer.WriteStringValue(UsageGrain.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Charges))
+            if (options.Format != "W" && !(Charges is ChangeTrackingList<decimal> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("charges"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             Optional<BenefitRecommendationUsageGrain> usageGrain = default;
-            Optional<IReadOnlyList<decimal>> charges = default;
+            IReadOnlyList<decimal> charges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationUsageDetails(Optional.ToNullable(usageGrain), Optional.ToList(charges), serializedAdditionalRawData);
+            return new RecommendationUsageDetails(Optional.ToNullable(usageGrain), charges ?? new ChangeTrackingList<decimal>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationUsageDetails>.Write(ModelReaderWriterOptions options)

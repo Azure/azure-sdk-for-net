@@ -86,7 +86,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteProviderPortResource>> GetAsync(string providerport, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+            if (providerport == null)
+            {
+                throw new ArgumentNullException(nameof(providerport));
+            }
+            if (providerport.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerport));
+            }
 
             using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("ExpressRouteProviderPortCollection.Get");
             scope.Start();
@@ -131,7 +138,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
         public virtual Response<ExpressRouteProviderPortResource> Get(string providerport, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+            if (providerport == null)
+            {
+                throw new ArgumentNullException(nameof(providerport));
+            }
+            if (providerport.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerport));
+            }
 
             using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("ExpressRouteProviderPortCollection.Get");
             scope.Start();
@@ -236,7 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string providerport, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+            if (providerport == null)
+            {
+                throw new ArgumentNullException(nameof(providerport));
+            }
+            if (providerport.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerport));
+            }
 
             using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("ExpressRouteProviderPortCollection.Exists");
             scope.Start();
@@ -279,7 +300,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
         public virtual Response<bool> Exists(string providerport, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+            if (providerport == null)
+            {
+                throw new ArgumentNullException(nameof(providerport));
+            }
+            if (providerport.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerport));
+            }
 
             using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("ExpressRouteProviderPortCollection.Exists");
             scope.Start();
@@ -322,7 +350,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRouteProviderPortResource>> GetIfExistsAsync(string providerport, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+            if (providerport == null)
+            {
+                throw new ArgumentNullException(nameof(providerport));
+            }
+            if (providerport.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerport));
+            }
 
             using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("ExpressRouteProviderPortCollection.GetIfExists");
             scope.Start();
@@ -367,7 +402,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
         public virtual NullableResponse<ExpressRouteProviderPortResource> GetIfExists(string providerport, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+            if (providerport == null)
+            {
+                throw new ArgumentNullException(nameof(providerport));
+            }
+            if (providerport.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerport));
+            }
 
             using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("ExpressRouteProviderPortCollection.GetIfExists");
             scope.Start();

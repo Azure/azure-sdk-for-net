@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public BmcKeySetTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task BmcKeySet()
         {
             string bmcKeySetName = Recording.GenerateAssetName("bmckeyset");

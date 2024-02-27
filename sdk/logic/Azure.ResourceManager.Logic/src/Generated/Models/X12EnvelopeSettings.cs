@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The X12 agreement envelope settings. </summary>
     public partial class X12EnvelopeSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="X12EnvelopeSettings"/>. </summary>
         /// <param name="controlStandardsId"> The controls standards id. </param>
         /// <param name="useControlStandardsIdAsRepetitionCharacter"> The value indicating whether to use control standards id as repetition character. </param>
@@ -38,11 +70,26 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="senderApplicationId"/>, <paramref name="receiverApplicationId"/>, <paramref name="controlVersionNumber"/>, <paramref name="groupHeaderAgencyCode"/> or <paramref name="groupHeaderVersion"/> is null. </exception>
         public X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator)
         {
-            Argument.AssertNotNull(senderApplicationId, nameof(senderApplicationId));
-            Argument.AssertNotNull(receiverApplicationId, nameof(receiverApplicationId));
-            Argument.AssertNotNull(controlVersionNumber, nameof(controlVersionNumber));
-            Argument.AssertNotNull(groupHeaderAgencyCode, nameof(groupHeaderAgencyCode));
-            Argument.AssertNotNull(groupHeaderVersion, nameof(groupHeaderVersion));
+            if (senderApplicationId == null)
+            {
+                throw new ArgumentNullException(nameof(senderApplicationId));
+            }
+            if (receiverApplicationId == null)
+            {
+                throw new ArgumentNullException(nameof(receiverApplicationId));
+            }
+            if (controlVersionNumber == null)
+            {
+                throw new ArgumentNullException(nameof(controlVersionNumber));
+            }
+            if (groupHeaderAgencyCode == null)
+            {
+                throw new ArgumentNullException(nameof(groupHeaderAgencyCode));
+            }
+            if (groupHeaderVersion == null)
+            {
+                throw new ArgumentNullException(nameof(groupHeaderVersion));
+            }
 
             ControlStandardsId = controlStandardsId;
             UseControlStandardsIdAsRepetitionCharacter = useControlStandardsIdAsRepetitionCharacter;
@@ -92,7 +139,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="groupHeaderDateFormat"> The group header date format. </param>
         /// <param name="groupHeaderTimeFormat"> The group header time format. </param>
         /// <param name="usageIndicator"> The usage indicator. </param>
-        internal X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, string functionalGroupId, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, string transactionSetControlNumberPrefix, string transactionSetControlNumberSuffix, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, string functionalGroupId, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, string transactionSetControlNumberPrefix, string transactionSetControlNumberSuffix, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ControlStandardsId = controlStandardsId;
             UseControlStandardsIdAsRepetitionCharacter = useControlStandardsIdAsRepetitionCharacter;
@@ -118,6 +166,12 @@ namespace Azure.ResourceManager.Logic.Models
             GroupHeaderDateFormat = groupHeaderDateFormat;
             GroupHeaderTimeFormat = groupHeaderTimeFormat;
             UsageIndicator = usageIndicator;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeSettings"/> for deserialization. </summary>
+        internal X12EnvelopeSettings()
+        {
         }
 
         /// <summary> The controls standards id. </summary>

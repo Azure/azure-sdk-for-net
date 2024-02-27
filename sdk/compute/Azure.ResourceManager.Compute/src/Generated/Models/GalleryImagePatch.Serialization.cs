@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,79 +53,79 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Eula))
+            if (Eula != null)
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (Optional.IsDefined(PrivacyStatementUri))
+            if (PrivacyStatementUri != null)
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ReleaseNoteUri))
+            if (ReleaseNoteUri != null)
             {
                 writer.WritePropertyName("releaseNoteUri"u8);
                 writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OSState))
+            if (OSState.HasValue)
             {
                 writer.WritePropertyName("osState"u8);
                 writer.WriteStringValue(OSState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (HyperVGeneration.HasValue)
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(EndOfLifeOn))
+            if (EndOfLifeOn.HasValue)
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Optional.IsDefined(Identifier))
+            if (Identifier != null)
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteObjectValue(Identifier);
             }
-            if (Optional.IsDefined(Recommended))
+            if (Recommended != null)
             {
                 writer.WritePropertyName("recommended"u8);
                 writer.WriteObjectValue(Recommended);
             }
-            if (Optional.IsDefined(Disallowed))
+            if (Disallowed != null)
             {
                 writer.WritePropertyName("disallowed"u8);
                 writer.WriteObjectValue(Disallowed);
             }
-            if (Optional.IsDefined(PurchasePlan))
+            if (PurchasePlan != null)
             {
                 writer.WritePropertyName("purchasePlan"u8);
                 writer.WriteObjectValue(PurchasePlan);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (!(Features is ChangeTrackingList<GalleryImageFeature> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Architecture))
+            if (Architecture.HasValue)
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<Disallowed> disallowed = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
             Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<IList<GalleryImageFeature>> features = default;
+            IList<GalleryImageFeature> features = default;
             Optional<ArchitectureType> architecture = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value);
+                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("recommended"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            recommended = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value);
+                            recommended = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disallowed"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            disallowed = Disallowed.DeserializeDisallowed(property0.Value);
+                            disallowed = Disallowed.DeserializeDisallowed(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("purchasePlan"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            purchasePlan = ImagePurchasePlan.DeserializeImagePurchasePlan(property0.Value);
+                            purchasePlan = ImagePurchasePlan.DeserializeImagePurchasePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<GalleryImageFeature> array = new List<GalleryImageFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GalleryImageFeature.DeserializeGalleryImageFeature(item));
+                                array.Add(GalleryImageFeature.DeserializeGalleryImageFeature(item, options));
                             }
                             features = array;
                             continue;
@@ -391,7 +391,28 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImagePatch(id, name, type, systemData.Value, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features), Optional.ToNullable(architecture), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryImagePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                eula.Value,
+                privacyStatementUri.Value,
+                releaseNoteUri.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(osState),
+                Optional.ToNullable(hyperVGeneration),
+                Optional.ToNullable(endOfLifeDate),
+                identifier.Value,
+                recommended.Value,
+                disallowed.Value,
+                purchasePlan.Value,
+                Optional.ToNullable(provisioningState),
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                Optional.ToNullable(architecture),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImagePatch>.Write(ModelReaderWriterOptions options)

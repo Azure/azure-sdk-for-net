@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Virtual network function network function definition version properties. </summary>
@@ -22,12 +25,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="description"> The network function definition version description. </param>
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
         /// <param name="networkFunctionType"> The network function type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkFunctionTemplate">
         /// Virtual network function template.
         /// Please note <see cref="VirtualNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureCoreNetworkFunctionTemplate"/> and <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>.
         /// </param>
-        internal VirtualNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, VirtualNetworkFunctionTemplate networkFunctionTemplate) : base(provisioningState, versionState, description, deployParameters, networkFunctionType)
+        internal VirtualNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, IDictionary<string, BinaryData> serializedAdditionalRawData, VirtualNetworkFunctionTemplate networkFunctionTemplate) : base(provisioningState, versionState, description, deployParameters, networkFunctionType, serializedAdditionalRawData)
         {
             NetworkFunctionTemplate = networkFunctionTemplate;
             NetworkFunctionType = networkFunctionType;

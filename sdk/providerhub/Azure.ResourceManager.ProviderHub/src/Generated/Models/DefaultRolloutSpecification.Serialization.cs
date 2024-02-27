@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,47 +14,55 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class DefaultRolloutSpecification : IUtf8JsonSerializable
+    public partial class DefaultRolloutSpecification : IUtf8JsonSerializable, IJsonModel<DefaultRolloutSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultRolloutSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefaultRolloutSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Canary))
+            if (Canary != null)
             {
                 writer.WritePropertyName("canary"u8);
                 writer.WriteObjectValue(Canary);
             }
-            if (Optional.IsDefined(LowTraffic))
+            if (LowTraffic != null)
             {
                 writer.WritePropertyName("lowTraffic"u8);
                 writer.WriteObjectValue(LowTraffic);
             }
-            if (Optional.IsDefined(MediumTraffic))
+            if (MediumTraffic != null)
             {
                 writer.WritePropertyName("mediumTraffic"u8);
                 writer.WriteObjectValue(MediumTraffic);
             }
-            if (Optional.IsDefined(HighTraffic))
+            if (HighTraffic != null)
             {
                 writer.WritePropertyName("highTraffic"u8);
                 writer.WriteObjectValue(HighTraffic);
             }
-            if (Optional.IsDefined(RestOfTheWorldGroupOne))
+            if (RestOfTheWorldGroupOne != null)
             {
                 writer.WritePropertyName("restOfTheWorldGroupOne"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupOne);
             }
-            if (Optional.IsDefined(RestOfTheWorldGroupTwo))
+            if (RestOfTheWorldGroupTwo != null)
             {
                 writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupTwo);
             }
-            if (Optional.IsDefined(ProviderRegistration))
+            if (ProviderRegistration != null)
             {
                 writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
-            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
+            if (!(ResourceTypeRegistrations is ChangeTrackingList<ResourceTypeRegistrationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
@@ -62,11 +72,40 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefaultRolloutSpecification DeserializeDefaultRolloutSpecification(JsonElement element)
+        DefaultRolloutSpecification IJsonModel<DefaultRolloutSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefaultRolloutSpecification(document.RootElement, options);
+        }
+
+        internal static DefaultRolloutSpecification DeserializeDefaultRolloutSpecification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,7 +117,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupOne = default;
             Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupTwo = default;
             Optional<ProviderRegistrationData> providerRegistration = default;
-            Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
+            IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canary"u8))
@@ -87,7 +128,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(property.Value);
+                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lowTraffic"u8))
@@ -96,7 +137,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mediumTraffic"u8))
@@ -105,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("highTraffic"u8))
@@ -114,7 +155,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restOfTheWorldGroupOne"u8))
@@ -123,7 +164,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restOfTheWorldGroupTwo"u8))
@@ -132,7 +173,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
@@ -141,7 +182,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceTypeRegistrations"u8))
@@ -153,13 +194,58 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item, options));
                     }
                     resourceTypeRegistrations = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefaultRolloutSpecification(canary.Value, lowTraffic.Value, mediumTraffic.Value, highTraffic.Value, restOfTheWorldGroupOne.Value, restOfTheWorldGroupTwo.Value, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DefaultRolloutSpecification(
+                canary.Value,
+                lowTraffic.Value,
+                mediumTraffic.Value,
+                highTraffic.Value,
+                restOfTheWorldGroupOne.Value,
+                restOfTheWorldGroupTwo.Value,
+                providerRegistration.Value,
+                resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefaultRolloutSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DefaultRolloutSpecification IPersistableModel<DefaultRolloutSpecification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefaultRolloutSpecification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefaultRolloutSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

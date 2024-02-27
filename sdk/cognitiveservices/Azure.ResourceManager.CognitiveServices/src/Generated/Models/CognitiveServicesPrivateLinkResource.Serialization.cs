@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    properties = CognitiveServicesPrivateLinkResourceProperties.DeserializeCognitiveServicesPrivateLinkResourceProperties(property.Value);
+                    properties = CognitiveServicesPrivateLinkResourceProperties.DeserializeCognitiveServicesPrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesPrivateLinkResource(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new CognitiveServicesPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesPrivateLinkResource>.Write(ModelReaderWriterOptions options)

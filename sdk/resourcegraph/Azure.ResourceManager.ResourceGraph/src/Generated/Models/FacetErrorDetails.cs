@@ -20,8 +20,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal FacetErrorDetails(string code, string message)
         {
-            Argument.AssertNotNull(code, nameof(code));
-            Argument.AssertNotNull(message, nameof(message));
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Code = code;
             Message = message;
@@ -37,6 +43,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Code = code;
             Message = message;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FacetErrorDetails"/> for deserialization. </summary>
+        internal FacetErrorDetails()
+        {
         }
 
         /// <summary> Error code identifying the specific error. </summary>

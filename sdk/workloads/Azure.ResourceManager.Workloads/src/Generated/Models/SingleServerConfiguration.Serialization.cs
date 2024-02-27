@@ -5,22 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SingleServerConfiguration : IUtf8JsonSerializable
+    public partial class SingleServerConfiguration : IUtf8JsonSerializable, IJsonModel<SingleServerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleServerConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SingleServerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkConfiguration))
+            if (NetworkConfiguration != null)
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (Optional.IsDefined(DatabaseType))
+            if (DatabaseType.HasValue)
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
@@ -29,12 +40,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
             writer.WriteObjectValue(VirtualMachineConfiguration);
-            if (Optional.IsDefined(DBDiskConfiguration))
+            if (DBDiskConfiguration != null)
             {
                 writer.WritePropertyName("dbDiskConfiguration"u8);
                 writer.WriteObjectValue(DBDiskConfiguration);
             }
-            if (Optional.IsDefined(CustomResourceNames))
+            if (CustomResourceNames != null)
             {
                 writer.WritePropertyName("customResourceNames"u8);
                 writer.WriteObjectValue(CustomResourceNames);
@@ -43,11 +54,40 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("appResourceGroup"u8);
             writer.WriteStringValue(AppResourceGroup);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element)
+        SingleServerConfiguration IJsonModel<SingleServerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSingleServerConfiguration(document.RootElement, options);
+        }
+
+        internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +100,8 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SingleServerCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkConfiguration"u8))
@@ -68,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value);
+                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databaseType"u8))
@@ -87,7 +129,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dbDiskConfiguration"u8))
@@ -96,7 +138,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value);
+                    dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customResourceNames"u8))
@@ -105,7 +147,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(property.Value);
+                    customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentType"u8))
@@ -118,8 +160,53 @@ namespace Azure.ResourceManager.Workloads.Models
                     appResourceGroup = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SingleServerConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, dbDiskConfiguration.Value, customResourceNames.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SingleServerConfiguration(
+                deploymentType,
+                appResourceGroup,
+                serializedAdditionalRawData,
+                networkConfiguration.Value,
+                Optional.ToNullable(databaseType),
+                subnetId,
+                virtualMachineConfiguration,
+                dbDiskConfiguration.Value,
+                customResourceNames.Value);
         }
+
+        BinaryData IPersistableModel<SingleServerConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SingleServerConfiguration IPersistableModel<SingleServerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSingleServerConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SingleServerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

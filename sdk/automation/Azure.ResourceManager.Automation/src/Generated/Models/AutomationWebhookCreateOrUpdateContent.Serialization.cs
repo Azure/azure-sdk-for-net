@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Runbook))
+            if (Runbook != null)
             {
                 writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
-            if (Optional.IsDefined(RunOn))
+            if (RunOn != null)
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<bool> isEnabled = default;
             Optional<Uri> uri = default;
             Optional<DateTimeOffset> expiryTime = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            IDictionary<string, string> parameters = default;
             Optional<RunbookAssociationProperty> runbook = default;
             Optional<string> runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runOn"u8))
@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookCreateOrUpdateContent(name, Optional.ToNullable(isEnabled), uri.Value, Optional.ToNullable(expiryTime), Optional.ToDictionary(parameters), runbook.Value, runOn.Value, serializedAdditionalRawData);
+            return new AutomationWebhookCreateOrUpdateContent(
+                name,
+                Optional.ToNullable(isEnabled),
+                uri.Value,
+                Optional.ToNullable(expiryTime),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                runbook.Value,
+                runOn.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

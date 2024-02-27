@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(SendingMetrics))
+            if (SendingMetrics.HasValue)
             {
                 writer.WritePropertyName("sendingMetrics"u8);
                 writer.WriteBooleanValue(SendingMetrics.Value);
             }
-            if (Optional.IsDefined(ReasonForMetricsStatus))
+            if (ReasonForMetricsStatus != null)
             {
                 writer.WritePropertyName("reasonForMetricsStatus"u8);
                 writer.WriteStringValue(ReasonForMetricsStatus);
             }
-            if (Optional.IsDefined(SendingLogs))
+            if (SendingLogs.HasValue)
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteBooleanValue(SendingLogs.Value);
             }
-            if (Optional.IsDefined(ReasonForLogsStatus))
+            if (ReasonForLogsStatus != null)
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoredResourceContent(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, serializedAdditionalRawData);
+            return new MonitoredResourceContent(
+                id.Value,
+                Optional.ToNullable(sendingMetrics),
+                reasonForMetricsStatus.Value,
+                Optional.ToNullable(sendingLogs),
+                reasonForLogsStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoredResourceContent>.Write(ModelReaderWriterOptions options)

@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (DefaultLanguageCode != null)
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(MinPrecision))
+            if (MinPrecision.HasValue)
             {
                 if (MinPrecision != null)
                 {
@@ -40,12 +40,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("minimumPrecision");
                 }
             }
-            if (Optional.IsDefined(MaskingMode))
+            if (MaskingMode.HasValue)
             {
                 writer.WritePropertyName("maskingMode"u8);
                 writer.WriteStringValue(MaskingMode.Value.ToString());
             }
-            if (Optional.IsDefined(Mask))
+            if (Mask != null)
             {
                 if (Mask != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maskingCharacter");
                 }
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (ModelVersion != null)
             {
                 if (ModelVersion != null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("modelVersion");
                 }
             }
-            if (Optional.IsCollectionDefined(PiiCategories))
+            if (!(PiiCategories is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Domain))
+            if (Domain != null)
             {
                 if (Domain != null)
                 {
@@ -93,17 +93,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
             Optional<string> maskingCharacter = default;
             Optional<string> modelVersion = default;
-            Optional<IList<string>> piiCategories = default;
+            IList<string> piiCategories = default;
             Optional<string> domain = default;
             string odataType = default;
             Optional<string> name = default;
@@ -260,7 +260,20 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
+            return new PiiDetectionSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                defaultLanguageCode.Value,
+                Optional.ToNullable(minimumPrecision),
+                Optional.ToNullable(maskingMode),
+                maskingCharacter.Value,
+                modelVersion.Value,
+                piiCategories ?? new ChangeTrackingList<string>(),
+                domain.Value);
         }
     }
 }

@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected PipelineActivity(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             DependsOn = new ChangeTrackingList<PipelineActivityDependency>();
@@ -50,6 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependsOn = dependsOn;
             UserProperties = userProperties;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineActivity"/> for deserialization. </summary>
+        internal PipelineActivity()
+        {
         }
 
         /// <summary> Activity name. </summary>

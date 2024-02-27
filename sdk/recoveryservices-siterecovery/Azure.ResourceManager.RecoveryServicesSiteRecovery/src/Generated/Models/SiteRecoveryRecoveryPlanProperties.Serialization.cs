@@ -6,16 +6,160 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryRecoveryPlanProperties
+    public partial class SiteRecoveryRecoveryPlanProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryRecoveryPlanProperties>
     {
-        internal static SiteRecoveryRecoveryPlanProperties DeserializeSiteRecoveryRecoveryPlanProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryRecoveryPlanProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryRecoveryPlanProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (FriendlyName != null)
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (PrimaryFabricId != null)
+            {
+                writer.WritePropertyName("primaryFabricId"u8);
+                writer.WriteStringValue(PrimaryFabricId);
+            }
+            if (PrimaryFabricFriendlyName != null)
+            {
+                writer.WritePropertyName("primaryFabricFriendlyName"u8);
+                writer.WriteStringValue(PrimaryFabricFriendlyName);
+            }
+            if (RecoveryFabricId != null)
+            {
+                writer.WritePropertyName("recoveryFabricId"u8);
+                writer.WriteStringValue(RecoveryFabricId);
+            }
+            if (RecoveryFabricFriendlyName != null)
+            {
+                writer.WritePropertyName("recoveryFabricFriendlyName"u8);
+                writer.WriteStringValue(RecoveryFabricFriendlyName);
+            }
+            if (FailoverDeploymentModel != null)
+            {
+                writer.WritePropertyName("failoverDeploymentModel"u8);
+                writer.WriteStringValue(FailoverDeploymentModel);
+            }
+            if (!(ReplicationProviders is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("replicationProviders"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReplicationProviders)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(AllowedOperations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("allowedOperations"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedOperations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (LastPlannedFailoverOn.HasValue)
+            {
+                writer.WritePropertyName("lastPlannedFailoverTime"u8);
+                writer.WriteStringValue(LastPlannedFailoverOn.Value, "O");
+            }
+            if (LastUnplannedFailoverOn.HasValue)
+            {
+                writer.WritePropertyName("lastUnplannedFailoverTime"u8);
+                writer.WriteStringValue(LastUnplannedFailoverOn.Value, "O");
+            }
+            if (LastTestFailoverOn.HasValue)
+            {
+                writer.WritePropertyName("lastTestFailoverTime"u8);
+                writer.WriteStringValue(LastTestFailoverOn.Value, "O");
+            }
+            if (CurrentScenario != null)
+            {
+                writer.WritePropertyName("currentScenario"u8);
+                writer.WriteObjectValue(CurrentScenario);
+            }
+            if (CurrentScenarioStatus != null)
+            {
+                writer.WritePropertyName("currentScenarioStatus"u8);
+                writer.WriteStringValue(CurrentScenarioStatus);
+            }
+            if (CurrentScenarioStatusDescription != null)
+            {
+                writer.WritePropertyName("currentScenarioStatusDescription"u8);
+                writer.WriteStringValue(CurrentScenarioStatusDescription);
+            }
+            if (!(Groups is ChangeTrackingList<SiteRecoveryPlanGroup> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("groups"u8);
+                writer.WriteStartArray();
+                foreach (var item in Groups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificDetails> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("providerSpecificDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProviderSpecificDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryRecoveryPlanProperties IJsonModel<SiteRecoveryRecoveryPlanProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryRecoveryPlanProperties(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryRecoveryPlanProperties DeserializeSiteRecoveryRecoveryPlanProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,16 +170,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> recoveryFabricId = default;
             Optional<string> recoveryFabricFriendlyName = default;
             Optional<string> failoverDeploymentModel = default;
-            Optional<IReadOnlyList<string>> replicationProviders = default;
-            Optional<IReadOnlyList<string>> allowedOperations = default;
+            IReadOnlyList<string> replicationProviders = default;
+            IReadOnlyList<string> allowedOperations = default;
             Optional<DateTimeOffset> lastPlannedFailoverTime = default;
             Optional<DateTimeOffset> lastUnplannedFailoverTime = default;
             Optional<DateTimeOffset> lastTestFailoverTime = default;
             Optional<CurrentScenarioDetails> currentScenario = default;
             Optional<string> currentScenarioStatus = default;
             Optional<string> currentScenarioStatusDescription = default;
-            Optional<IReadOnlyList<SiteRecoveryPlanGroup>> groups = default;
-            Optional<IReadOnlyList<RecoveryPlanProviderSpecificDetails>> providerSpecificDetails = default;
+            IReadOnlyList<SiteRecoveryPlanGroup> groups = default;
+            IReadOnlyList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -137,7 +283,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value);
+                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currentScenarioStatus"u8))
@@ -159,7 +305,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryPlanGroup> array = new List<SiteRecoveryPlanGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item));
+                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item, options));
                     }
                     groups = array;
                     continue;
@@ -173,13 +319,66 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanProviderSpecificDetails> array = new List<RecoveryPlanProviderSpecificDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanProviderSpecificDetails.DeserializeRecoveryPlanProviderSpecificDetails(item));
+                        array.Add(RecoveryPlanProviderSpecificDetails.DeserializeRecoveryPlanProviderSpecificDetails(item, options));
                     }
                     providerSpecificDetails = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryRecoveryPlanProperties(friendlyName.Value, primaryFabricId.Value, primaryFabricFriendlyName.Value, recoveryFabricId.Value, recoveryFabricFriendlyName.Value, failoverDeploymentModel.Value, Optional.ToList(replicationProviders), Optional.ToList(allowedOperations), Optional.ToNullable(lastPlannedFailoverTime), Optional.ToNullable(lastUnplannedFailoverTime), Optional.ToNullable(lastTestFailoverTime), currentScenario.Value, currentScenarioStatus.Value, currentScenarioStatusDescription.Value, Optional.ToList(groups), Optional.ToList(providerSpecificDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryRecoveryPlanProperties(
+                friendlyName.Value,
+                primaryFabricId.Value,
+                primaryFabricFriendlyName.Value,
+                recoveryFabricId.Value,
+                recoveryFabricFriendlyName.Value,
+                failoverDeploymentModel.Value,
+                replicationProviders ?? new ChangeTrackingList<string>(),
+                allowedOperations ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(lastPlannedFailoverTime),
+                Optional.ToNullable(lastUnplannedFailoverTime),
+                Optional.ToNullable(lastTestFailoverTime),
+                currentScenario.Value,
+                currentScenarioStatus.Value,
+                currentScenarioStatusDescription.Value,
+                groups ?? new ChangeTrackingList<SiteRecoveryPlanGroup>(),
+                providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryRecoveryPlanProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryRecoveryPlanProperties IPersistableModel<SiteRecoveryRecoveryPlanProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryRecoveryPlanProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryRecoveryPlanProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

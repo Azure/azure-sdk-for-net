@@ -6,47 +6,61 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class WebHookEventSubscriptionDestination : IUtf8JsonSerializable
+    public partial class WebHookEventSubscriptionDestination : IUtf8JsonSerializable, IJsonModel<WebHookEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebHookEventSubscriptionDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebHookEventSubscriptionDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(MaxEventsPerBatch))
+            if (options.Format != "W" && BaseEndpoint != null)
+            {
+                writer.WritePropertyName("endpointBaseUrl"u8);
+                writer.WriteStringValue(BaseEndpoint.AbsoluteUri);
+            }
+            if (MaxEventsPerBatch.HasValue)
             {
                 writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
-            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
+            if (PreferredBatchSizeInKilobytes.HasValue)
             {
                 writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
+            if (AzureActiveDirectoryTenantId.HasValue)
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
-            if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
+            if (UriOrAzureActiveDirectoryApplicationId != null)
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
+            if (!(DeliveryAttributeMappings is ChangeTrackingList<DeliveryAttributeMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
@@ -56,17 +70,46 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (MinimumTlsVersionAllowed.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element)
+        WebHookEventSubscriptionDestination IJsonModel<WebHookEventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebHookEventSubscriptionDestination(document.RootElement, options);
+        }
+
+        internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,8 +121,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<int> preferredBatchSizeInKilobytes = default;
             Optional<Guid> azureActiveDirectoryTenantId = default;
             Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
-            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -155,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item));
+                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item, options));
                             }
                             deliveryAttributeMappings = array;
                             continue;
@@ -172,8 +217,54 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings), Optional.ToNullable(minimumTlsVersionAllowed));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebHookEventSubscriptionDestination(
+                endpointType,
+                serializedAdditionalRawData,
+                endpointUri.Value,
+                endpointBaseUri.Value,
+                Optional.ToNullable(maxEventsPerBatch),
+                Optional.ToNullable(preferredBatchSizeInKilobytes),
+                Optional.ToNullable(azureActiveDirectoryTenantId),
+                azureActiveDirectoryApplicationIdOrUri.Value,
+                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(),
+                Optional.ToNullable(minimumTlsVersionAllowed));
         }
+
+        BinaryData IPersistableModel<WebHookEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebHookEventSubscriptionDestination IPersistableModel<WebHookEventSubscriptionDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebHookEventSubscriptionDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebHookEventSubscriptionDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

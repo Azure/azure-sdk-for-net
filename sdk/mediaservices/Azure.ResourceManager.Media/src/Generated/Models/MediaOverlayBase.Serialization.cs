@@ -5,50 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaOverlayBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownOverlay))]
+    public partial class MediaOverlayBase : IUtf8JsonSerializable, IJsonModel<MediaOverlayBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaOverlayBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaOverlayBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaOverlayBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaOverlayBase)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("inputLabel"u8);
             writer.WriteStringValue(InputLabel);
-            if (Optional.IsDefined(Start))
+            if (Start.HasValue)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start.Value, "P");
             }
-            if (Optional.IsDefined(End))
+            if (End.HasValue)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End.Value, "P");
             }
-            if (Optional.IsDefined(FadeInDuration))
+            if (FadeInDuration.HasValue)
             {
                 writer.WritePropertyName("fadeInDuration"u8);
                 writer.WriteStringValue(FadeInDuration.Value, "P");
             }
-            if (Optional.IsDefined(FadeOutDuration))
+            if (FadeOutDuration.HasValue)
             {
                 writer.WritePropertyName("fadeOutDuration"u8);
                 writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
-            if (Optional.IsDefined(AudioGainLevel))
+            if (AudioGainLevel.HasValue)
             {
                 writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaOverlayBase DeserializeMediaOverlayBase(JsonElement element)
+        MediaOverlayBase IJsonModel<MediaOverlayBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaOverlayBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaOverlayBase)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaOverlayBase(document.RootElement, options);
+        }
+
+        internal static MediaOverlayBase DeserializeMediaOverlayBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,11 +97,42 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AudioOverlay": return AudioOverlay.DeserializeAudioOverlay(element);
-                    case "#Microsoft.Media.VideoOverlay": return VideoOverlay.DeserializeVideoOverlay(element);
+                    case "#Microsoft.Media.AudioOverlay": return AudioOverlay.DeserializeAudioOverlay(element, options);
+                    case "#Microsoft.Media.VideoOverlay": return VideoOverlay.DeserializeVideoOverlay(element, options);
                 }
             }
-            return UnknownOverlay.DeserializeUnknownOverlay(element);
+            return UnknownOverlay.DeserializeUnknownOverlay(element, options);
         }
+
+        BinaryData IPersistableModel<MediaOverlayBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaOverlayBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MediaOverlayBase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MediaOverlayBase IPersistableModel<MediaOverlayBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaOverlayBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMediaOverlayBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MediaOverlayBase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaOverlayBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

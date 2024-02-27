@@ -5,43 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class TextTrack : IUtf8JsonSerializable
+    public partial class TextTrack : IUtf8JsonSerializable, IJsonModel<TextTrack>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextTrack>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TextTrack>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TextTrack>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TextTrack)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(PlayerVisibility))
+            if (options.Format != "W" && LanguageCode != null)
+            {
+                writer.WritePropertyName("languageCode"u8);
+                writer.WriteStringValue(LanguageCode);
+            }
+            if (PlayerVisibility.HasValue)
             {
                 writer.WritePropertyName("playerVisibility"u8);
                 writer.WriteStringValue(PlayerVisibility.Value.ToString());
             }
-            if (Optional.IsDefined(HlsSettings))
+            if (HlsSettings != null)
             {
                 writer.WritePropertyName("hlsSettings"u8);
                 writer.WriteObjectValue(HlsSettings);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TextTrack DeserializeTextTrack(JsonElement element)
+        TextTrack IJsonModel<TextTrack>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TextTrack>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TextTrack)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextTrack(document.RootElement, options);
+        }
+
+        internal static TextTrack DeserializeTextTrack(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +97,8 @@ namespace Azure.ResourceManager.Media.Models
             Optional<PlayerVisibility> playerVisibility = default;
             Optional<HlsSettings> hlsSettings = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -84,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -92,8 +139,51 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TextTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, Optional.ToNullable(playerVisibility), hlsSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TextTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName.Value,
+                displayName.Value,
+                languageCode.Value,
+                Optional.ToNullable(playerVisibility),
+                hlsSettings.Value);
         }
+
+        BinaryData IPersistableModel<TextTrack>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextTrack>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TextTrack)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TextTrack IPersistableModel<TextTrack>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TextTrack>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTextTrack(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextTrack)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TextTrack>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

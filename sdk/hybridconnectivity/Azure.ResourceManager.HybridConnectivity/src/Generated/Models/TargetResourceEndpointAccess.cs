@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> The endpoint access for the target resource. </summary>
     public partial class TargetResourceEndpointAccess
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TargetResourceEndpointAccess"/>. </summary>
         internal TargetResourceEndpointAccess()
         {
@@ -21,13 +56,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>
         /// <param name="accessKey"> Access key for hybrid connection. </param>
         /// <param name="expiresOn"> The expiration of access key in unix time. </param>
-        internal TargetResourceEndpointAccess(string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetResourceEndpointAccess(string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NamespaceName = namespaceName;
             NamespaceNameSuffix = namespaceNameSuffix;
             HybridConnectionName = hybridConnectionName;
             AccessKey = accessKey;
             ExpiresOn = expiresOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The namespace name. </summary>

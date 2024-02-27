@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfigurationType"u8);
             writer.WriteStringValue(TransferConfigurationType.ToSerialString());
-            if (Optional.IsDefined(TransferFilterDetails))
+            if (TransferFilterDetails != null)
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
                 writer.WriteObjectValue(TransferFilterDetails);
             }
-            if (Optional.IsDefined(TransferAllDetails))
+            if (TransferAllDetails != null)
             {
                 writer.WritePropertyName("transferAllDetails"u8);
                 writer.WriteObjectValue(TransferAllDetails);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value);
+                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transferAllDetails"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value);
+                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

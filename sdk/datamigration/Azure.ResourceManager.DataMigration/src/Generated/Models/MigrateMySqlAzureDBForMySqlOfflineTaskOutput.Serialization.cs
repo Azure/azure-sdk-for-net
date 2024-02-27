@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputError.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(element);
-                    case "MigrationLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(element);
-                    case "TableLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(element);
+                    case "DatabaseLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputError.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(element, options);
+                    case "MigrationLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(element, options);
+                    case "TableLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(element, options);
                 }
             }
-            return UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput.DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(element);
+            return UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput.DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserDefinedResources))
+            if (UserDefinedResources != null)
             {
                 writer.WritePropertyName("userDefinedResources"u8);
                 writer.WriteObjectValue(UserDefinedResources);
             }
-            if (Optional.IsCollectionDefined(RecommendationsConfiguration))
+            if (!(RecommendationsConfiguration is ChangeTrackingList<RecommendationConfigurationProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("recommendationsConfiguration"u8);
                 writer.WriteStartArray();
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<UserDefinedResourcesProperties> userDefinedResources = default;
-            Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;
+            IList<RecommendationConfigurationProperties> recommendationsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value);
+                            userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("recommendationsConfiguration"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<RecommendationConfigurationProperties> array = new List<RecommendationConfigurationProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item));
+                                array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item, options));
                             }
                             recommendationsConfiguration = array;
                             continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, userDefinedResources.Value, Optional.ToList(recommendationsConfiguration));
+            return new IotSecuritySolutionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, userDefinedResources.Value, recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>());
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionPatch>.Write(ModelReaderWriterOptions options)

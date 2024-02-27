@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(IsUnique))
+            if (IsUnique.HasValue)
             {
                 writer.WritePropertyName("isUnique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBShardKeyField> array = new List<MongoDBShardKeyField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBShardKeyField.DeserializeMongoDBShardKeyField(item));
+                        array.Add(MongoDBShardKeyField.DeserializeMongoDBShardKeyField(item, options));
                     }
                     fields = array;
                     continue;

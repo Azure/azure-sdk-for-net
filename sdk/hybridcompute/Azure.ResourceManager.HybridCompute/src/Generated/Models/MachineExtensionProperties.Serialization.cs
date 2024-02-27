@@ -6,48 +6,57 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineExtensionProperties : IUtf8JsonSerializable
+    public partial class MachineExtensionProperties : IUtf8JsonSerializable, IJsonModel<MachineExtensionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineExtensionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(MachineExtensionPropertiesType))
+            if (MachineExtensionPropertiesType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MachineExtensionPropertiesType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (TypeHandlerVersion != null)
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (EnableAutomaticUpgrade.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (AutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsCollectionDefined(Settings))
+            if (!(Settings is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -70,7 +79,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProtectedSettings))
+            if (!(ProtectedSettings is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedSettings"u8);
                 writer.WriteStartObject();
@@ -93,16 +102,50 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && ProvisioningState != null)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element)
+        MachineExtensionProperties IJsonModel<MachineExtensionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineExtensionProperties(document.RootElement, options);
+        }
+
+        internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,10 +156,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> typeHandlerVersion = default;
             Optional<bool> enableAutomaticUpgrade = default;
             Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<IDictionary<string, BinaryData>> settings = default;
-            Optional<IDictionary<string, BinaryData>> protectedSettings = default;
+            IDictionary<string, BinaryData> settings = default;
+            IDictionary<string, BinaryData> protectedSettings = default;
             Optional<string> provisioningState = default;
             Optional<MachineExtensionInstanceView> instanceView = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forceUpdateTag"u8))
@@ -210,11 +255,58 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value);
+                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToDictionary(settings), Optional.ToDictionary(protectedSettings), provisioningState.Value, instanceView.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineExtensionProperties(
+                forceUpdateTag.Value,
+                publisher.Value,
+                type.Value,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(enableAutomaticUpgrade),
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                provisioningState.Value,
+                instanceView.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineExtensionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineExtensionProperties IPersistableModel<MachineExtensionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineExtensionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineExtensionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineExtensionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FeatureName))
+            if (options.Format != "W" && FeatureName != null)
             {
                 writer.WritePropertyName("FeatureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId != null)
             {
                 writer.WritePropertyName("MeterId"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterRateFrequency))
+            if (options.Format != "W" && MeterRateFrequency != null)
             {
                 writer.WritePropertyName("MeterRateFrequency"u8);
                 writer.WriteStringValue(MeterRateFrequency);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("ResouceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsHidden))
+            if (options.Format != "W" && IsHidden.HasValue)
             {
                 writer.WritePropertyName("IsHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<ApplicationInsightsComponentFeatureCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Capabilities"u8);
                 writer.WriteStartArray();
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Title))
+            if (options.Format != "W" && Title != null)
             {
                 writer.WritePropertyName("Title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsMainFeature))
+            if (options.Format != "W" && IsMainFeature.HasValue)
             {
                 writer.WritePropertyName("IsMainFeature"u8);
                 writer.WriteBooleanValue(IsMainFeature.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedAddonFeatures))
+            if (options.Format != "W" && SupportedAddonFeatures != null)
             {
                 writer.WritePropertyName("SupportedAddonFeatures"u8);
                 writer.WriteStringValue(SupportedAddonFeatures);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> meterRateFrequency = default;
             Optional<string> resouceId = default;
             Optional<bool> isHidden = default;
-            Optional<IReadOnlyList<ApplicationInsightsComponentFeatureCapability>> capabilities = default;
+            IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities = default;
             Optional<string> title = default;
             Optional<bool> isMainFeature = default;
             Optional<string> supportedAddonFeatures = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentFeatureCapability> array = new List<ApplicationInsightsComponentFeatureCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentFeatureCapability.DeserializeApplicationInsightsComponentFeatureCapability(item));
+                        array.Add(ApplicationInsightsComponentFeatureCapability.DeserializeApplicationInsightsComponentFeatureCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -195,7 +195,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFeature(featureName.Value, meterId.Value, meterRateFrequency.Value, resouceId.Value, Optional.ToNullable(isHidden), Optional.ToList(capabilities), title.Value, Optional.ToNullable(isMainFeature), supportedAddonFeatures.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFeature(
+                featureName.Value,
+                meterId.Value,
+                meterRateFrequency.Value,
+                resouceId.Value,
+                Optional.ToNullable(isHidden),
+                capabilities ?? new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>(),
+                title.Value,
+                Optional.ToNullable(isMainFeature),
+                supportedAddonFeatures.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFeature>.Write(ModelReaderWriterOptions options)

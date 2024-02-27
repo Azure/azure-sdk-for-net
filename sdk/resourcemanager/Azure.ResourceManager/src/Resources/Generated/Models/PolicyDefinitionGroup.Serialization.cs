@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AdditionalMetadataId))
+            if (AdditionalMetadataId != null)
             {
                 writer.WritePropertyName("additionalMetadataId"u8);
                 writer.WriteStringValue(AdditionalMetadataId);
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionGroup(name, displayName.Value, category.Value, description.Value, additionalMetadataId.Value, serializedAdditionalRawData);
+            return new PolicyDefinitionGroup(
+                name,
+                displayName.Value,
+                category.Value,
+                description.Value,
+                additionalMetadataId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionGroup>.Write(ModelReaderWriterOptions options)

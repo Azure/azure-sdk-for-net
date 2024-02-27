@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TotalIngressBytesTransferred))
+            if (options.Format != "W" && TotalIngressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("totalIngressBytesTransferred"u8);
                 writer.WriteNumberValue(TotalIngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalEgressBytesTransferred))
+            if (options.Format != "W" && TotalEgressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("totalEgressBytesTransferred"u8);
                 writer.WriteNumberValue(TotalEgressBytesTransferred.Value);
             }
-            if (Optional.IsDefined(VpnClientConnectionsCount))
+            if (VpnClientConnectionsCount.HasValue)
             {
                 writer.WritePropertyName("vpnClientConnectionsCount"u8);
                 writer.WriteNumberValue(VpnClientConnectionsCount.Value);
             }
-            if (Optional.IsCollectionDefined(AllocatedIPAddresses))
+            if (!(AllocatedIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allocatedIpAddresses"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> totalIngressBytesTransferred = default;
             Optional<long> totalEgressBytesTransferred = default;
             Optional<int> vpnClientConnectionsCount = default;
-            Optional<IReadOnlyList<string>> allocatedIPAddresses = default;
+            IReadOnlyList<string> allocatedIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIPAddresses), serializedAdditionalRawData);
+            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), allocatedIPAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealth>.Write(ModelReaderWriterOptions options)

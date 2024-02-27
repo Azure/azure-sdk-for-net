@@ -20,16 +20,16 @@ namespace Azure.Containers.ContainerRegistry
                 return null;
             }
             Optional<string> mediaType = default;
-            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
+            IReadOnlyList<ManifestListAttributes> manifests = default;
             Optional<OciDescriptor> config = default;
-            Optional<IReadOnlyList<OciDescriptor>> layers = default;
+            IReadOnlyList<OciDescriptor> layers = default;
             Optional<OciAnnotations> annotations = default;
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
-            Optional<IReadOnlyList<FsLayer>> fsLayers = default;
-            Optional<IReadOnlyList<History>> history = default;
-            Optional<IReadOnlyList<ImageSignature>> signatures = default;
+            IReadOnlyList<FsLayer> fsLayers = default;
+            IReadOnlyList<History> history = default;
+            IReadOnlyList<ImageSignature> signatures = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -152,7 +152,19 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestWrapper(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new ManifestWrapper(
+                Optional.ToNullable(schemaVersion),
+                mediaType.Value,
+                manifests ?? new ChangeTrackingList<ManifestListAttributes>(),
+                config.Value,
+                layers ?? new ChangeTrackingList<OciDescriptor>(),
+                annotations.Value,
+                architecture.Value,
+                name.Value,
+                tag.Value,
+                fsLayers ?? new ChangeTrackingList<FsLayer>(),
+                history ?? new ChangeTrackingList<History>(),
+                signatures ?? new ChangeTrackingList<ImageSignature>());
         }
     }
 }

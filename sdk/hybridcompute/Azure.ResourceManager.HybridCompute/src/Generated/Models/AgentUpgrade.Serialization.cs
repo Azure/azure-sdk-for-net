@@ -6,36 +6,95 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class AgentUpgrade : IUtf8JsonSerializable
+    public partial class AgentUpgrade : IUtf8JsonSerializable, IJsonModel<AgentUpgrade>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentUpgrade>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AgentUpgrade>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(DesiredVersion))
+            if (DesiredVersion != null)
             {
                 writer.WritePropertyName("desiredVersion"u8);
                 writer.WriteStringValue(DesiredVersion);
             }
-            if (Optional.IsDefined(CorrelationId))
+            if (CorrelationId.HasValue)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
+            if (IsAutomaticUpgradeEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
+            if (options.Format != "W" && LastAttemptDesiredVersion != null)
+            {
+                writer.WritePropertyName("lastAttemptDesiredVersion"u8);
+                writer.WriteStringValue(LastAttemptDesiredVersion);
+            }
+            if (options.Format != "W" && LastAttemptedOn.HasValue)
+            {
+                writer.WritePropertyName("lastAttemptTimestamp"u8);
+                writer.WriteStringValue(LastAttemptedOn.Value, "O");
+            }
+            if (options.Format != "W" && LastAttemptStatus.HasValue)
+            {
+                writer.WritePropertyName("lastAttemptStatus"u8);
+                writer.WriteStringValue(LastAttemptStatus.Value.ToString());
+            }
+            if (options.Format != "W" && LastAttemptMessage != null)
+            {
+                writer.WritePropertyName("lastAttemptMessage"u8);
+                writer.WriteStringValue(LastAttemptMessage);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AgentUpgrade DeserializeAgentUpgrade(JsonElement element)
+        AgentUpgrade IJsonModel<AgentUpgrade>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentUpgrade(document.RootElement, options);
+        }
+
+        internal static AgentUpgrade DeserializeAgentUpgrade(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +106,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<DateTimeOffset> lastAttemptTimestamp = default;
             Optional<LastAttemptStatusEnum> lastAttemptStatus = default;
             Optional<string> lastAttemptMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredVersion"u8))
@@ -100,8 +161,52 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     lastAttemptMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentUpgrade(desiredVersion.Value, Optional.ToNullable(correlationId), Optional.ToNullable(enableAutomaticUpgrade), lastAttemptDesiredVersion.Value, Optional.ToNullable(lastAttemptTimestamp), Optional.ToNullable(lastAttemptStatus), lastAttemptMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AgentUpgrade(
+                desiredVersion.Value,
+                Optional.ToNullable(correlationId),
+                Optional.ToNullable(enableAutomaticUpgrade),
+                lastAttemptDesiredVersion.Value,
+                Optional.ToNullable(lastAttemptTimestamp),
+                Optional.ToNullable(lastAttemptStatus),
+                lastAttemptMessage.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgentUpgrade>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AgentUpgrade IPersistableModel<AgentUpgrade>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAgentUpgrade(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AgentUpgrade>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

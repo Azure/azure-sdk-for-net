@@ -135,7 +135,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("MockableIotHubSubscriptionResource.CheckIotHubNameAvailability");
             scope.Start();
@@ -177,7 +180,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("MockableIotHubSubscriptionResource.CheckIotHubNameAvailability");
             scope.Start();
@@ -215,7 +221,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         public virtual AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(e), ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +246,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         public virtual Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(e), ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
         }
     }
 }

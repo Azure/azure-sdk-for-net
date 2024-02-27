@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual async Task<Response<SiteConfigAppsettingResource>> GetAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
+            if (appSettingKey == null)
+            {
+                throw new ArgumentNullException(nameof(appSettingKey));
+            }
+            if (appSettingKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(appSettingKey));
+            }
 
             using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual Response<SiteConfigAppsettingResource> Get(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
+            if (appSettingKey == null)
+            {
+                throw new ArgumentNullException(nameof(appSettingKey));
+            }
+            if (appSettingKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(appSettingKey));
+            }
 
             using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
+            if (appSettingKey == null)
+            {
+                throw new ArgumentNullException(nameof(appSettingKey));
+            }
+            if (appSettingKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(appSettingKey));
+            }
 
             using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual Response<bool> Exists(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
+            if (appSettingKey == null)
+            {
+                throw new ArgumentNullException(nameof(appSettingKey));
+            }
+            if (appSettingKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(appSettingKey));
+            }
 
             using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteConfigAppsettingResource>> GetIfExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
+            if (appSettingKey == null)
+            {
+                throw new ArgumentNullException(nameof(appSettingKey));
+            }
+            if (appSettingKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(appSettingKey));
+            }
 
             using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual NullableResponse<SiteConfigAppsettingResource> GetIfExists(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
+            if (appSettingKey == null)
+            {
+                throw new ArgumentNullException(nameof(appSettingKey));
+            }
+            if (appSettingKey.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(appSettingKey));
+            }
 
             using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExists");
             scope.Start();

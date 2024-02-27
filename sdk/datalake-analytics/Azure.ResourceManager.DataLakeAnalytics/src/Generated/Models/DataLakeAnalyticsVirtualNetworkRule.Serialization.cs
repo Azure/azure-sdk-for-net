@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubnetId))
+            if (options.Format != "W" && SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualNetworkRuleState))
+            if (options.Format != "W" && VirtualNetworkRuleState.HasValue)
             {
                 writer.WritePropertyName("virtualNetworkRuleState"u8);
                 writer.WriteStringValue(VirtualNetworkRuleState.Value.ToSerialString());
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsVirtualNetworkRule(id, name, type, systemData.Value, subnetId.Value, Optional.ToNullable(virtualNetworkRuleState), serializedAdditionalRawData);
+            return new DataLakeAnalyticsVirtualNetworkRule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                subnetId.Value,
+                Optional.ToNullable(virtualNetworkRuleState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

@@ -21,8 +21,14 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="activeKeyName"/> is null. </exception>
         public StorageAccountCreateParameters(string resourceId, string activeKeyName, bool autoRegenerateKey)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(activeKeyName, nameof(activeKeyName));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (activeKeyName == null)
+            {
+                throw new ArgumentNullException(nameof(activeKeyName));
+            }
 
             ResourceId = resourceId;
             ActiveKeyName = activeKeyName;

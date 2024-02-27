@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryStringCachingBehavior))
+            if (QueryStringCachingBehavior.HasValue)
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(QueryParameters))
+            if (QueryParameters != null)
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (Optional.IsDefined(IsCompressionEnabled))
+            if (IsCompressionEnabled.HasValue)
             {
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteStringValue(IsCompressionEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(CacheBehavior))
+            if (CacheBehavior.HasValue)
             {
                 writer.WritePropertyName("cacheBehavior"u8);
                 writer.WriteStringValue(CacheBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(CacheDuration))
+            if (CacheDuration.HasValue)
             {
                 if (CacheDuration != null)
                 {
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(cacheBehavior), Optional.ToNullable(cacheDuration), serializedAdditionalRawData);
+            return new CacheConfiguration(
+                Optional.ToNullable(queryStringCachingBehavior),
+                queryParameters.Value,
+                Optional.ToNullable(isCompressionEnabled),
+                Optional.ToNullable(cacheBehavior),
+                Optional.ToNullable(cacheDuration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CacheConfiguration>.Write(ModelReaderWriterOptions options)

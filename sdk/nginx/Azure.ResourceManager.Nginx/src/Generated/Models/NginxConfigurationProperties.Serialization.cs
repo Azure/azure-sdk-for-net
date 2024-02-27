@@ -5,18 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxConfigurationProperties : IUtf8JsonSerializable
+    public partial class NginxConfigurationProperties : IUtf8JsonSerializable, IJsonModel<NginxConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxConfigurationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NginxConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Files))
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (!(Files is ChangeTrackingList<NginxConfigurationFile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -26,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProtectedFiles))
+            if (!(ProtectedFiles is ChangeTrackingList<NginxConfigurationFile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedFiles"u8);
                 writer.WriteStartArray();
@@ -36,30 +51,61 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Package))
+            if (Package != null)
             {
                 writer.WritePropertyName("package"u8);
                 writer.WriteObjectValue(Package);
             }
-            if (Optional.IsDefined(RootFile))
+            if (RootFile != null)
             {
                 writer.WritePropertyName("rootFile"u8);
                 writer.WriteStringValue(RootFile);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NginxConfigurationProperties DeserializeNginxConfigurationProperties(JsonElement element)
+        NginxConfigurationProperties IJsonModel<NginxConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNginxConfigurationProperties(document.RootElement, options);
+        }
+
+        internal static NginxConfigurationProperties DeserializeNginxConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<NginxProvisioningState> provisioningState = default;
-            Optional<IList<NginxConfigurationFile>> files = default;
-            Optional<IList<NginxConfigurationFile>> protectedFiles = default;
+            IList<NginxConfigurationFile> files = default;
+            IList<NginxConfigurationFile> protectedFiles = default;
             Optional<NginxConfigurationPackage> package = default;
             Optional<string> rootFile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -80,7 +126,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
                     }
                     files = array;
                     continue;
@@ -94,7 +140,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
                     }
                     protectedFiles = array;
                     continue;
@@ -105,7 +151,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value);
+                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rootFile"u8))
@@ -113,8 +159,50 @@ namespace Azure.ResourceManager.Nginx.Models
                     rootFile = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), Optional.ToList(files), Optional.ToList(protectedFiles), package.Value, rootFile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NginxConfigurationProperties(
+                Optional.ToNullable(provisioningState),
+                files ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                package.Value,
+                rootFile.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NginxConfigurationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NginxConfigurationProperties IPersistableModel<NginxConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNginxConfigurationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NginxConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

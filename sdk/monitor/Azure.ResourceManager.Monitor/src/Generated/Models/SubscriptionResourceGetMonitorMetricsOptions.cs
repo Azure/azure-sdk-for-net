@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -18,9 +17,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         public SubscriptionResourceGetMonitorMetricsOptions(string region)
         {
-            Argument.AssertNotNull(region, nameof(region));
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
 
             Region = region;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetMonitorMetricsOptions()
+        {
         }
 
         /// <summary> The region where the metrics you want reside. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -14,61 +15,256 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsMailMessageEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsMailMessageEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsMailMessageEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsMailMessageEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInsightsMailMessageEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BodyFingerprintBin1))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("additionalData"u8);
+                writer.WriteStartObject();
+                foreach (var item in AdditionalData)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && FriendlyName != null)
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (options.Format != "W" && !(FileEntityIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("fileEntityIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in FileEntityIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Recipient != null)
+            {
+                writer.WritePropertyName("recipient"u8);
+                writer.WriteStringValue(Recipient);
+            }
+            if (options.Format != "W" && !(Uris is ChangeTrackingList<Uri> collection1 && collection1.IsUndefined))
+            {
+                writer.WritePropertyName("urls"u8);
+                writer.WriteStartArray();
+                foreach (var item in Uris)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.AbsoluteUri);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && !(Threats is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("threats"u8);
+                writer.WriteStartArray();
+                foreach (var item in Threats)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && P1Sender != null)
+            {
+                writer.WritePropertyName("p1Sender"u8);
+                writer.WriteStringValue(P1Sender);
+            }
+            if (options.Format != "W" && P1SenderDisplayName != null)
+            {
+                writer.WritePropertyName("p1SenderDisplayName"u8);
+                writer.WriteStringValue(P1SenderDisplayName);
+            }
+            if (options.Format != "W" && P1SenderDomain != null)
+            {
+                writer.WritePropertyName("p1SenderDomain"u8);
+                writer.WriteStringValue(P1SenderDomain);
+            }
+            if (options.Format != "W" && SenderIP != null)
+            {
+                writer.WritePropertyName("senderIP"u8);
+                writer.WriteStringValue(SenderIP.ToString());
+            }
+            if (options.Format != "W" && P2Sender != null)
+            {
+                writer.WritePropertyName("p2Sender"u8);
+                writer.WriteStringValue(P2Sender);
+            }
+            if (options.Format != "W" && P2SenderDisplayName != null)
+            {
+                writer.WritePropertyName("p2SenderDisplayName"u8);
+                writer.WriteStringValue(P2SenderDisplayName);
+            }
+            if (options.Format != "W" && P2SenderDomain != null)
+            {
+                writer.WritePropertyName("p2SenderDomain"u8);
+                writer.WriteStringValue(P2SenderDomain);
+            }
+            if (options.Format != "W" && ReceiveOn.HasValue)
+            {
+                writer.WritePropertyName("receiveDate"u8);
+                writer.WriteStringValue(ReceiveOn.Value, "O");
+            }
+            if (options.Format != "W" && NetworkMessageId.HasValue)
+            {
+                writer.WritePropertyName("networkMessageId"u8);
+                writer.WriteStringValue(NetworkMessageId.Value);
+            }
+            if (options.Format != "W" && InternetMessageId != null)
+            {
+                writer.WritePropertyName("internetMessageId"u8);
+                writer.WriteStringValue(InternetMessageId);
+            }
+            if (options.Format != "W" && Subject != null)
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (options.Format != "W" && Language != null)
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
+            if (options.Format != "W" && !(ThreatDetectionMethods is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            {
+                writer.WritePropertyName("threatDetectionMethods"u8);
+                writer.WriteStartArray();
+                foreach (var item in ThreatDetectionMethods)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (BodyFingerprintBin1.HasValue)
             {
                 writer.WritePropertyName("bodyFingerprintBin1"u8);
                 writer.WriteNumberValue(BodyFingerprintBin1.Value);
             }
-            if (Optional.IsDefined(BodyFingerprintBin2))
+            if (BodyFingerprintBin2.HasValue)
             {
                 writer.WritePropertyName("bodyFingerprintBin2"u8);
                 writer.WriteNumberValue(BodyFingerprintBin2.Value);
             }
-            if (Optional.IsDefined(BodyFingerprintBin3))
+            if (BodyFingerprintBin3.HasValue)
             {
                 writer.WritePropertyName("bodyFingerprintBin3"u8);
                 writer.WriteNumberValue(BodyFingerprintBin3.Value);
             }
-            if (Optional.IsDefined(BodyFingerprintBin4))
+            if (BodyFingerprintBin4.HasValue)
             {
                 writer.WritePropertyName("bodyFingerprintBin4"u8);
                 writer.WriteNumberValue(BodyFingerprintBin4.Value);
             }
-            if (Optional.IsDefined(BodyFingerprintBin5))
+            if (BodyFingerprintBin5.HasValue)
             {
                 writer.WritePropertyName("bodyFingerprintBin5"u8);
                 writer.WriteNumberValue(BodyFingerprintBin5.Value);
             }
-            if (Optional.IsDefined(AntispamDirection))
+            if (AntispamDirection.HasValue)
             {
                 writer.WritePropertyName("antispamDirection"u8);
                 writer.WriteStringValue(AntispamDirection.Value.ToString());
             }
-            if (Optional.IsDefined(DeliveryAction))
+            if (DeliveryAction.HasValue)
             {
                 writer.WritePropertyName("deliveryAction"u8);
                 writer.WriteStringValue(DeliveryAction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DeliveryLocation))
+            if (DeliveryLocation.HasValue)
             {
                 writer.WritePropertyName("deliveryLocation"u8);
                 writer.WriteStringValue(DeliveryLocation.Value.ToSerialString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsMailMessageEntity DeserializeSecurityInsightsMailMessageEntity(JsonElement element)
+        SecurityInsightsMailMessageEntity IJsonModel<SecurityInsightsMailMessageEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsMailMessageEntity(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsMailMessageEntity DeserializeSecurityInsightsMailMessageEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,12 +274,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
-            Optional<IReadOnlyList<string>> fileEntityIds = default;
+            IReadOnlyList<string> fileEntityIds = default;
             Optional<string> recipient = default;
-            Optional<IReadOnlyList<Uri>> urls = default;
-            Optional<IReadOnlyList<string>> threats = default;
+            IReadOnlyList<Uri> urls = default;
+            IReadOnlyList<string> threats = default;
             Optional<string> p1Sender = default;
             Optional<string> p1SenderDisplayName = default;
             Optional<string> p1SenderDomain = default;
@@ -96,7 +292,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> internetMessageId = default;
             Optional<string> subject = default;
             Optional<string> language = default;
-            Optional<IReadOnlyList<string>> threatDetectionMethods = default;
+            IReadOnlyList<string> threatDetectionMethods = default;
             Optional<int> bodyFingerprintBin1 = default;
             Optional<int> bodyFingerprintBin2 = default;
             Optional<int> bodyFingerprintBin3 = default;
@@ -105,6 +301,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<AntispamMailDirection> antispamDirection = default;
             Optional<SecurityInsightsMailMessageDeliveryAction> deliveryAction = default;
             Optional<SecurityInsightsMailMessageDeliveryLocation> deliveryLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -386,8 +584,77 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(fileEntityIds), recipient.Value, Optional.ToList(urls), Optional.ToList(threats), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Optional.ToNullable(receiveDate), Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, Optional.ToList(threatDetectionMethods), Optional.ToNullable(bodyFingerprintBin1), Optional.ToNullable(bodyFingerprintBin2), Optional.ToNullable(bodyFingerprintBin3), Optional.ToNullable(bodyFingerprintBin4), Optional.ToNullable(bodyFingerprintBin5), Optional.ToNullable(antispamDirection), Optional.ToNullable(deliveryAction), Optional.ToNullable(deliveryLocation));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityInsightsMailMessageEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                fileEntityIds ?? new ChangeTrackingList<string>(),
+                recipient.Value,
+                urls ?? new ChangeTrackingList<Uri>(),
+                threats ?? new ChangeTrackingList<string>(),
+                p1Sender.Value,
+                p1SenderDisplayName.Value,
+                p1SenderDomain.Value,
+                senderIP.Value,
+                p2Sender.Value,
+                p2SenderDisplayName.Value,
+                p2SenderDomain.Value,
+                Optional.ToNullable(receiveDate),
+                Optional.ToNullable(networkMessageId),
+                internetMessageId.Value,
+                subject.Value,
+                language.Value,
+                threatDetectionMethods ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(bodyFingerprintBin1),
+                Optional.ToNullable(bodyFingerprintBin2),
+                Optional.ToNullable(bodyFingerprintBin3),
+                Optional.ToNullable(bodyFingerprintBin4),
+                Optional.ToNullable(bodyFingerprintBin5),
+                Optional.ToNullable(antispamDirection),
+                Optional.ToNullable(deliveryAction),
+                Optional.ToNullable(deliveryLocation));
         }
+
+        BinaryData IPersistableModel<SecurityInsightsMailMessageEntity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsMailMessageEntity IPersistableModel<SecurityInsightsMailMessageEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsMailMessageEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsMailMessageEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

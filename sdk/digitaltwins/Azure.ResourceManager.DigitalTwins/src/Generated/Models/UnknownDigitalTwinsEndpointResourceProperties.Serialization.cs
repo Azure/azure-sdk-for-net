@@ -6,24 +6,58 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    internal partial class UnknownDigitalTwinsEndpointResourceProperties : IUtf8JsonSerializable
+    internal partial class UnknownDigitalTwinsEndpointResourceProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsEndpointResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsEndpointResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DigitalTwinsEndpointResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEndpointResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(AuthenticationType))
+            if (options.Format != "W" && ProvisioningState.HasValue)
+            {
+                if (ProvisioningState != null)
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("provisioningState");
+                }
+            }
+            if (options.Format != "W" && CreatedOn.HasValue)
+            {
+                if (CreatedOn != null)
+                {
+                    writer.WritePropertyName("createdTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("createdTime");
+                }
+            }
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(DeadLetterSecret))
+            if (DeadLetterSecret != null)
             {
                 if (DeadLetterSecret != null)
                 {
@@ -35,7 +69,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterSecret");
                 }
             }
-            if (Optional.IsDefined(DeadLetterUri))
+            if (DeadLetterUri != null)
             {
                 if (DeadLetterUri != null)
                 {
@@ -47,7 +81,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterUri");
                 }
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -59,11 +93,40 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("identity");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDigitalTwinsEndpointResourceProperties DeserializeUnknownDigitalTwinsEndpointResourceProperties(JsonElement element)
+        DigitalTwinsEndpointResourceProperties IJsonModel<DigitalTwinsEndpointResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEndpointResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsEndpointResourceProperties(document.RootElement, options);
+        }
+
+        internal static UnknownDigitalTwinsEndpointResourceProperties DeserializeUnknownDigitalTwinsEndpointResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +138,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -138,11 +203,55 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownDigitalTwinsEndpointResourceProperties(
+                endpointType,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(authenticationType),
+                deadLetterSecret.Value,
+                deadLetterUri.Value,
+                identity.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DigitalTwinsEndpointResourceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEndpointResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DigitalTwinsEndpointResourceProperties IPersistableModel<DigitalTwinsEndpointResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEndpointResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDigitalTwinsEndpointResourceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DigitalTwinsEndpointResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

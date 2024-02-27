@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DscMetaConfiguration))
+            if (DscMetaConfiguration != null)
             {
                 writer.WritePropertyName("dscMetaConfiguration"u8);
                 writer.WriteStringValue(DscMetaConfiguration);
             }
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(Keys))
+            if (Keys != null)
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteObjectValue(Keys);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value);
+                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

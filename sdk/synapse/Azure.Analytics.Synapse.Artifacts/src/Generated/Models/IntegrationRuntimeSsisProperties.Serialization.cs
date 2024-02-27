@@ -19,32 +19,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogInfo))
+            if (CatalogInfo != null)
             {
                 writer.WritePropertyName("catalogInfo"u8);
                 writer.WriteObjectValue(CatalogInfo);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(CustomSetupScriptProperties))
+            if (CustomSetupScriptProperties != null)
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
                 writer.WriteObjectValue(CustomSetupScriptProperties);
             }
-            if (Optional.IsDefined(DataProxyProperties))
+            if (DataProxyProperties != null)
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
                 writer.WriteObjectValue(DataProxyProperties);
             }
-            if (Optional.IsDefined(Edition))
+            if (Edition.HasValue)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
+            if (!(ExpressCustomSetupProperties is ChangeTrackingList<CustomSetupBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
             Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
             Optional<IntegrationRuntimeEdition> edition = default;
-            Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
+            IList<CustomSetupBase> expressCustomSetupProperties = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo.Value,
+                Optional.ToNullable(licenseType),
+                customSetupScriptProperties.Value,
+                dataProxyProperties.Value,
+                Optional.ToNullable(edition),
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                additionalProperties);
         }
 
         internal partial class IntegrationRuntimeSsisPropertiesConverter : JsonConverter<IntegrationRuntimeSsisProperties>

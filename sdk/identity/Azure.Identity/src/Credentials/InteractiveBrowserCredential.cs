@@ -31,6 +31,7 @@ namespace Azure.Identity
         internal AuthenticationRecord Record { get; private set; }
         internal string DefaultScope { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
+        internal bool UseOperatingSystemAccount { get; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
@@ -95,6 +96,7 @@ namespace Azure.Identity
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             Record = (options as InteractiveBrowserCredentialOptions)?.AuthenticationRecord;
             BrowserCustomization = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomization;
+            UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseOperatingSystemAccount ?? false;
         }
 
         /// <summary>
@@ -228,13 +230,23 @@ namespace Azure.Identity
                 Exception inner = null;
 
                 var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, requestContext, AdditionallyAllowedTenantIds);
-                if (Record is not null)
+                if (Record is not null || UseOperatingSystemAccount)
                 {
                     try
                     {
-                        AuthenticationResult result = await Client
-                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
+                        AuthenticationResult result;
+                        if (Record is null)
+                        {
+                            result = await Client
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, PublicClientApplication.OperatingSystemAccount, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                             .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            result = await Client
+                                .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
+                                .ConfigureAwait(false);
+                        }
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }

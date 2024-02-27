@@ -6,85 +6,149 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ProcessThreadInfo : IUtf8JsonSerializable
+    public partial class ProcessThreadInfo : IUtf8JsonSerializable, IJsonModel<ProcessThreadInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessThreadInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProcessThreadInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && SystemData != null)
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Href))
+            if (options.Format != "W" && Identifier.HasValue)
+            {
+                writer.WritePropertyName("identifier"u8);
+                writer.WriteNumberValue(Identifier.Value);
+            }
+            if (Href != null)
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Optional.IsDefined(Process))
+            if (Process != null)
             {
                 writer.WritePropertyName("process"u8);
                 writer.WriteStringValue(Process);
             }
-            if (Optional.IsDefined(StartAddress))
+            if (StartAddress != null)
             {
                 writer.WritePropertyName("start_address"u8);
                 writer.WriteStringValue(StartAddress);
             }
-            if (Optional.IsDefined(CurrentPriority))
+            if (CurrentPriority.HasValue)
             {
                 writer.WritePropertyName("current_priority"u8);
                 writer.WriteNumberValue(CurrentPriority.Value);
             }
-            if (Optional.IsDefined(PriorityLevel))
+            if (PriorityLevel != null)
             {
                 writer.WritePropertyName("priority_level"u8);
                 writer.WriteStringValue(PriorityLevel);
             }
-            if (Optional.IsDefined(BasePriority))
+            if (BasePriority.HasValue)
             {
                 writer.WritePropertyName("base_priority"u8);
                 writer.WriteNumberValue(BasePriority.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(TotalProcessorTime))
+            if (TotalProcessorTime != null)
             {
                 writer.WritePropertyName("total_processor_time"u8);
                 writer.WriteStringValue(TotalProcessorTime);
             }
-            if (Optional.IsDefined(UserProcessorTime))
+            if (UserProcessorTime != null)
             {
                 writer.WritePropertyName("user_processor_time"u8);
                 writer.WriteStringValue(UserProcessorTime);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(WaitReason))
+            if (WaitReason != null)
             {
                 writer.WritePropertyName("wait_reason"u8);
                 writer.WriteStringValue(WaitReason);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProcessThreadInfo DeserializeProcessThreadInfo(JsonElement element)
+        ProcessThreadInfo IJsonModel<ProcessThreadInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProcessThreadInfo(document.RootElement, options);
+        }
+
+        internal static ProcessThreadInfo DeserializeProcessThreadInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,6 +170,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> userProcessorTime = default;
             Optional<string> state = default;
             Optional<string> waitReason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -225,8 +291,62 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProcessThreadInfo(id, name, type, systemData.Value, Optional.ToNullable(identifier), href.Value, process.Value, startAddress.Value, Optional.ToNullable(currentPriority), priorityLevel.Value, Optional.ToNullable(basePriority), Optional.ToNullable(startTime), totalProcessorTime.Value, userProcessorTime.Value, state.Value, waitReason.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProcessThreadInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(identifier),
+                href.Value,
+                process.Value,
+                startAddress.Value,
+                Optional.ToNullable(currentPriority),
+                priorityLevel.Value,
+                Optional.ToNullable(basePriority),
+                Optional.ToNullable(startTime),
+                totalProcessorTime.Value,
+                userProcessorTime.Value,
+                state.Value,
+                waitReason.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProcessThreadInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProcessThreadInfo IPersistableModel<ProcessThreadInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProcessThreadInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProcessThreadInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

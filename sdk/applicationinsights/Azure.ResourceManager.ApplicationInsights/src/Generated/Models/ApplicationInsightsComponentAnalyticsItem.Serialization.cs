@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("Content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("Version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope.HasValue)
             {
                 writer.WritePropertyName("Scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (Optional.IsDefined(ItemType))
+            if (ItemType.HasValue)
             {
                 writer.WritePropertyName("Type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            if (options.Format != "W" && TimeCreated != null)
             {
                 writer.WritePropertyName("TimeCreated"u8);
                 writer.WriteStringValue(TimeCreated);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeModified))
+            if (options.Format != "W" && TimeModified != null)
             {
                 writer.WritePropertyName("TimeModified"u8);
                 writer.WriteStringValue(TimeModified);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    properties = ApplicationInsightsComponentAnalyticsItemProperties.DeserializeApplicationInsightsComponentAnalyticsItemProperties(property.Value);
+                    properties = ApplicationInsightsComponentAnalyticsItemProperties.DeserializeApplicationInsightsComponentAnalyticsItemProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentAnalyticsItem(id.Value, name.Value, content.Value, version.Value, Optional.ToNullable(scope), Optional.ToNullable(type), timeCreated.Value, timeModified.Value, properties.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentAnalyticsItem(
+                id.Value,
+                name.Value,
+                content.Value,
+                version.Value,
+                Optional.ToNullable(scope),
+                Optional.ToNullable(type),
+                timeCreated.Value,
+                timeModified.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.Write(ModelReaderWriterOptions options)

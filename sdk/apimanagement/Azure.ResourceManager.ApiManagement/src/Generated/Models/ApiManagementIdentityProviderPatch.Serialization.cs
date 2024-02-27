@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityProviderType))
+            if (IdentityProviderType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
-            if (Optional.IsDefined(SignInTenant))
+            if (SignInTenant != null)
             {
                 writer.WritePropertyName("signinTenant"u8);
                 writer.WriteStringValue(SignInTenant);
             }
-            if (Optional.IsCollectionDefined(AllowedTenants))
+            if (!(AllowedTenants is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedTenants"u8);
                 writer.WriteStartArray();
@@ -48,37 +48,37 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Authority))
+            if (Authority != null)
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(SignUpPolicyName))
+            if (SignUpPolicyName != null)
             {
                 writer.WritePropertyName("signupPolicyName"u8);
                 writer.WriteStringValue(SignUpPolicyName);
             }
-            if (Optional.IsDefined(SignInPolicyName))
+            if (SignInPolicyName != null)
             {
                 writer.WritePropertyName("signinPolicyName"u8);
                 writer.WriteStringValue(SignInPolicyName);
             }
-            if (Optional.IsDefined(ProfileEditingPolicyName))
+            if (ProfileEditingPolicyName != null)
             {
                 writer.WritePropertyName("profileEditingPolicyName"u8);
                 writer.WriteStringValue(ProfileEditingPolicyName);
             }
-            if (Optional.IsDefined(PasswordResetPolicyName))
+            if (PasswordResetPolicyName != null)
             {
                 writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             Optional<IdentityProviderType> type = default;
             Optional<string> signinTenant = default;
-            Optional<IList<string>> allowedTenants = default;
+            IList<string> allowedTenants = default;
             Optional<string> authority = default;
             Optional<string> signupPolicyName = default;
             Optional<string> signinPolicyName = default;
@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementIdentityProviderPatch(Optional.ToNullable(type), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementIdentityProviderPatch(
+                Optional.ToNullable(type),
+                signinTenant.Value,
+                allowedTenants ?? new ChangeTrackingList<string>(),
+                authority.Value,
+                signupPolicyName.Value,
+                signinPolicyName.Value,
+                profileEditingPolicyName.Value,
+                passwordResetPolicyName.Value,
+                clientId.Value,
+                clientSecret.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementIdentityProviderPatch>.Write(ModelReaderWriterOptions options)

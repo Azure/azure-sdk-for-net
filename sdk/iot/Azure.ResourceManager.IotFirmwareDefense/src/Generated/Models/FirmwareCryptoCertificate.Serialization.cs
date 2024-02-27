@@ -6,16 +6,310 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareCryptoCertificate
+    public partial class FirmwareCryptoCertificate : IUtf8JsonSerializable, IJsonModel<FirmwareCryptoCertificate>
     {
-        internal static FirmwareCryptoCertificate DeserializeFirmwareCryptoCertificate(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareCryptoCertificate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FirmwareCryptoCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirmwareCryptoCertificate)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (CryptoCertId != null)
+            {
+                if (CryptoCertId != null)
+                {
+                    writer.WritePropertyName("cryptoCertId"u8);
+                    writer.WriteStringValue(CryptoCertId);
+                }
+                else
+                {
+                    writer.WriteNull("cryptoCertId");
+                }
+            }
+            if (Name != null)
+            {
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name");
+                }
+            }
+            if (Subject != null)
+            {
+                if (Subject != null)
+                {
+                    writer.WritePropertyName("subject"u8);
+                    writer.WriteObjectValue(Subject);
+                }
+                else
+                {
+                    writer.WriteNull("subject");
+                }
+            }
+            if (Issuer != null)
+            {
+                if (Issuer != null)
+                {
+                    writer.WritePropertyName("issuer"u8);
+                    writer.WriteObjectValue(Issuer);
+                }
+                else
+                {
+                    writer.WriteNull("issuer");
+                }
+            }
+            if (IssuedOn.HasValue)
+            {
+                if (IssuedOn != null)
+                {
+                    writer.WritePropertyName("issuedDate"u8);
+                    writer.WriteStringValue(IssuedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("issuedDate");
+                }
+            }
+            if (ExpireOn.HasValue)
+            {
+                if (ExpireOn != null)
+                {
+                    writer.WritePropertyName("expirationDate"u8);
+                    writer.WriteStringValue(ExpireOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("expirationDate");
+                }
+            }
+            if (Role != null)
+            {
+                if (Role != null)
+                {
+                    writer.WritePropertyName("role"u8);
+                    writer.WriteStringValue(Role);
+                }
+                else
+                {
+                    writer.WriteNull("role");
+                }
+            }
+            if (SignatureAlgorithm != null)
+            {
+                if (SignatureAlgorithm != null)
+                {
+                    writer.WritePropertyName("signatureAlgorithm"u8);
+                    writer.WriteStringValue(SignatureAlgorithm);
+                }
+                else
+                {
+                    writer.WriteNull("signatureAlgorithm");
+                }
+            }
+            if (KeySize.HasValue)
+            {
+                if (KeySize != null)
+                {
+                    writer.WritePropertyName("keySize"u8);
+                    writer.WriteNumberValue(KeySize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("keySize");
+                }
+            }
+            if (KeyAlgorithm != null)
+            {
+                if (KeyAlgorithm != null)
+                {
+                    writer.WritePropertyName("keyAlgorithm"u8);
+                    writer.WriteStringValue(KeyAlgorithm);
+                }
+                else
+                {
+                    writer.WriteNull("keyAlgorithm");
+                }
+            }
+            if (Encoding != null)
+            {
+                if (Encoding != null)
+                {
+                    writer.WritePropertyName("encoding"u8);
+                    writer.WriteStringValue(Encoding);
+                }
+                else
+                {
+                    writer.WriteNull("encoding");
+                }
+            }
+            if (SerialNumber != null)
+            {
+                if (SerialNumber != null)
+                {
+                    writer.WritePropertyName("serialNumber"u8);
+                    writer.WriteStringValue(SerialNumber);
+                }
+                else
+                {
+                    writer.WriteNull("serialNumber");
+                }
+            }
+            if (Fingerprint != null)
+            {
+                if (Fingerprint != null)
+                {
+                    writer.WritePropertyName("fingerprint"u8);
+                    writer.WriteStringValue(Fingerprint);
+                }
+                else
+                {
+                    writer.WriteNull("fingerprint");
+                }
+            }
+            if (!(Usage is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                if (Usage != null)
+                {
+                    writer.WritePropertyName("usage"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Usage)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("usage");
+                }
+            }
+            if (options.Format != "W" && !(FilePaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            {
+                if (FilePaths != null)
+                {
+                    writer.WritePropertyName("filePaths"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in FilePaths)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("filePaths");
+                }
+            }
+            if (PairedKey != null)
+            {
+                if (PairedKey != null)
+                {
+                    writer.WritePropertyName("pairedKey"u8);
+                    writer.WriteObjectValue(PairedKey);
+                }
+                else
+                {
+                    writer.WriteNull("pairedKey");
+                }
+            }
+            if (IsExpired.HasValue)
+            {
+                if (IsExpired != null)
+                {
+                    writer.WritePropertyName("isExpired"u8);
+                    writer.WriteStringValue(IsExpired.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("isExpired");
+                }
+            }
+            if (IsSelfSigned.HasValue)
+            {
+                if (IsSelfSigned != null)
+                {
+                    writer.WritePropertyName("isSelfSigned"u8);
+                    writer.WriteStringValue(IsSelfSigned.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("isSelfSigned");
+                }
+            }
+            if (IsWeakSignature.HasValue)
+            {
+                if (IsWeakSignature != null)
+                {
+                    writer.WritePropertyName("isWeakSignature"u8);
+                    writer.WriteStringValue(IsWeakSignature.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("isWeakSignature");
+                }
+            }
+            if (IsShortKeySize.HasValue)
+            {
+                if (IsShortKeySize != null)
+                {
+                    writer.WritePropertyName("isShortKeySize"u8);
+                    writer.WriteStringValue(IsShortKeySize.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("isShortKeySize");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        FirmwareCryptoCertificate IJsonModel<FirmwareCryptoCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirmwareCryptoCertificate)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirmwareCryptoCertificate(document.RootElement, options);
+        }
+
+        internal static FirmwareCryptoCertificate DeserializeFirmwareCryptoCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,13 +327,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> encoding = default;
             Optional<string> serialNumber = default;
             Optional<string> fingerprint = default;
-            Optional<IReadOnlyList<string>> usage = default;
-            Optional<IReadOnlyList<string>> filePaths = default;
+            IReadOnlyList<string> usage = default;
+            IReadOnlyList<string> filePaths = default;
             Optional<PairedKey> pairedKey = default;
             Optional<IsExpired?> isExpired = default;
             Optional<IsSelfSigned?> isSelfSigned = default;
             Optional<IsWeakSignature?> isWeakSignature = default;
             Optional<IsShortKeySize?> isShortKeySize = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cryptoCertId"u8))
@@ -69,7 +365,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         subject = null;
                         continue;
                     }
-                    subject = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value);
+                    subject = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("issuer"u8))
@@ -79,7 +375,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         issuer = null;
                         continue;
                     }
-                    issuer = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value);
+                    issuer = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("issuedDate"u8))
@@ -207,7 +503,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         pairedKey = null;
                         continue;
                     }
-                    pairedKey = PairedKey.DeserializePairedKey(property.Value);
+                    pairedKey = PairedKey.DeserializePairedKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isExpired"u8))
@@ -250,8 +546,65 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     isShortKeySize = new IsShortKeySize(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FirmwareCryptoCertificate(cryptoCertId.Value, name.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FirmwareCryptoCertificate(
+                cryptoCertId.Value,
+                name.Value,
+                subject.Value,
+                issuer.Value,
+                Optional.ToNullable(issuedDate),
+                Optional.ToNullable(expirationDate),
+                role.Value,
+                signatureAlgorithm.Value,
+                Optional.ToNullable(keySize),
+                keyAlgorithm.Value,
+                encoding.Value,
+                serialNumber.Value,
+                fingerprint.Value,
+                usage ?? new ChangeTrackingList<string>(),
+                filePaths ?? new ChangeTrackingList<string>(),
+                pairedKey.Value,
+                Optional.ToNullable(isExpired),
+                Optional.ToNullable(isSelfSigned),
+                Optional.ToNullable(isWeakSignature),
+                Optional.ToNullable(isShortKeySize),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FirmwareCryptoCertificate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FirmwareCryptoCertificate)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FirmwareCryptoCertificate IPersistableModel<FirmwareCryptoCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFirmwareCryptoCertificate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FirmwareCryptoCertificate)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FirmwareCryptoCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

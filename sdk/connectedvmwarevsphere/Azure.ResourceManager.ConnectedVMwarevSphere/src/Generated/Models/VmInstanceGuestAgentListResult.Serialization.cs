@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VmInstanceGuestAgentData> array = new List<VmInstanceGuestAgentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmInstanceGuestAgentData.DeserializeVmInstanceGuestAgentData(item));
+                        array.Add(VmInstanceGuestAgentData.DeserializeVmInstanceGuestAgentData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<FirewallPolicyRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("ruleCollectionType"u8);
             writer.WriteStringValue(RuleCollectionType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<FirewallPolicyNatRuleCollectionAction> action = default;
-            Optional<IList<FirewallPolicyRule>> rules = default;
+            IList<FirewallPolicyRule> rules = default;
             FirewallPolicyRuleCollectionType ruleCollectionType = default;
             Optional<string> name = default;
             Optional<int> priority = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    action = FirewallPolicyNatRuleCollectionAction.DeserializeFirewallPolicyNatRuleCollectionAction(property.Value);
+                    action = FirewallPolicyNatRuleCollectionAction.DeserializeFirewallPolicyNatRuleCollectionAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rules"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyRule> array = new List<FirewallPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyRule.DeserializeFirewallPolicyRule(item));
+                        array.Add(FirewallPolicyRule.DeserializeFirewallPolicyRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyNatRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority), serializedAdditionalRawData, action.Value, Optional.ToList(rules));
+            return new FirewallPolicyNatRuleCollectionInfo(
+                ruleCollectionType,
+                name.Value,
+                Optional.ToNullable(priority),
+                serializedAdditionalRawData,
+                action.Value,
+                rules ?? new ChangeTrackingList<FirewallPolicyRule>());
         }
 
         BinaryData IPersistableModel<FirewallPolicyNatRuleCollectionInfo>.Write(ModelReaderWriterOptions options)

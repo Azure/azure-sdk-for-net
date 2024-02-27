@@ -198,7 +198,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.Update");
             scope.Start();
@@ -240,7 +243,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<HostingEnvironmentWorkerPoolResource> Update(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.Update");
             scope.Start();
@@ -280,11 +286,18 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ResourceMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitionsAsync(string instance, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+            if (instance.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceMetricDefinition.DeserializeResourceMetricDefinition(e), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -311,11 +324,18 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ResourceMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitions(string instance, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+            if (instance.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceMetricDefinition.DeserializeResourceMetricDefinition(e), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -345,7 +365,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceMetricDefinition.DeserializeResourceMetricDefinition(e), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -375,7 +395,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceMetricDefinition.DeserializeResourceMetricDefinition(e), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +425,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo(e), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -435,7 +455,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo(e), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -465,7 +485,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceUsage.DeserializeAppServiceUsage, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceUsage.DeserializeAppServiceUsage(e), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -495,7 +515,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceUsage.DeserializeAppServiceUsage, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceUsage.DeserializeAppServiceUsage(e), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

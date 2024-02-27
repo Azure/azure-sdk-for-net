@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HttpProtocolConfiguration))
+            if (HttpProtocolConfiguration != null)
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
                 writer.WriteObjectValue(HttpProtocolConfiguration);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    httpConfiguration = NetworkHttpConfiguration.DeserializeNetworkHttpConfiguration(property.Value);
+                    httpConfiguration = NetworkHttpConfiguration.DeserializeNetworkHttpConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

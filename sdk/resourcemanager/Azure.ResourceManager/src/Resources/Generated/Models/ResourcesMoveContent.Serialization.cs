@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetResourceGroupId))
+            if (TargetResourceGroupId != null)
             {
                 writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IList<string>> resources = default;
+            IList<string> resources = default;
             Optional<ResourceIdentifier> targetResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesMoveContent(Optional.ToList(resources), targetResourceGroup.Value, serializedAdditionalRawData);
+            return new ResourcesMoveContent(resources ?? new ChangeTrackingList<string>(), targetResourceGroup.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesMoveContent>.Write(ModelReaderWriterOptions options)

@@ -6,18 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspaceFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspaceFeatures>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsWorkspaceFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDataExportEnabled))
+            if (IsDataExportEnabled.HasValue)
             {
                 if (IsDataExportEnabled != null)
                 {
@@ -29,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableDataExport");
                 }
             }
-            if (Optional.IsDefined(ImmediatePurgeDataOn30Days))
+            if (ImmediatePurgeDataOn30Days.HasValue)
             {
                 if (ImmediatePurgeDataOn30Days != null)
                 {
@@ -41,7 +50,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("immediatePurgeDataOn30Days");
                 }
             }
-            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
+            if (IsLogAccessUsingOnlyResourcePermissionsEnabled.HasValue)
             {
                 if (IsLogAccessUsingOnlyResourcePermissionsEnabled != null)
                 {
@@ -53,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableLogAccessUsingOnlyResourcePermissions");
                 }
             }
-            if (Optional.IsDefined(ClusterResourceId))
+            if (ClusterResourceId != null)
             {
                 if (ClusterResourceId != null)
                 {
@@ -65,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("clusterResourceId");
                 }
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (IsLocalAuthDisabled.HasValue)
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -92,8 +101,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element)
+        OperationalInsightsWorkspaceFeatures IJsonModel<OperationalInsightsWorkspaceFeatures>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -160,7 +183,44 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspaceFeatures(Optional.ToNullable(enableDataExport), Optional.ToNullable(immediatePurgeDataOn30Days), Optional.ToNullable(enableLogAccessUsingOnlyResourcePermissions), clusterResourceId.Value, Optional.ToNullable(disableLocalAuth), additionalProperties);
+            return new OperationalInsightsWorkspaceFeatures(
+                Optional.ToNullable(enableDataExport),
+                Optional.ToNullable(immediatePurgeDataOn30Days),
+                Optional.ToNullable(enableLogAccessUsingOnlyResourcePermissions),
+                clusterResourceId.Value,
+                Optional.ToNullable(disableLocalAuth),
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsWorkspaceFeatures>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsWorkspaceFeatures IPersistableModel<OperationalInsightsWorkspaceFeatures>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsWorkspaceFeatures>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

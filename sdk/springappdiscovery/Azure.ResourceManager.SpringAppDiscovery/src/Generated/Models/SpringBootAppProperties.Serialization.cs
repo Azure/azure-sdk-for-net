@@ -6,38 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
-    public partial class SpringBootAppProperties : IUtf8JsonSerializable
+    public partial class SpringBootAppProperties : IUtf8JsonSerializable, IJsonModel<SpringBootAppProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootAppProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SpringBootAppProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppName))
+            if (AppName != null)
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (Optional.IsDefined(ArtifactName))
+            if (ArtifactName != null)
             {
                 writer.WritePropertyName("artifactName"u8);
                 writer.WriteStringValue(ArtifactName);
             }
-            if (Optional.IsDefined(AppPort))
+            if (AppPort.HasValue)
             {
                 writer.WritePropertyName("appPort"u8);
                 writer.WriteNumberValue(AppPort.Value);
             }
-            if (Optional.IsDefined(AppType))
+            if (AppType != null)
             {
                 writer.WritePropertyName("appType"u8);
                 writer.WriteStringValue(AppType);
             }
-            if (Optional.IsCollectionDefined(ApplicationConfigurations))
+            if (!(ApplicationConfigurations is ChangeTrackingList<SpringBootAppApplicationConfigurationsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applicationConfigurations"u8);
                 writer.WriteStartArray();
@@ -47,7 +56,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BindingPorts))
+            if (!(BindingPorts is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bindingPorts"u8);
                 writer.WriteStartArray();
@@ -57,12 +66,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BuildJdkVersion))
+            if (BuildJdkVersion != null)
             {
                 writer.WritePropertyName("buildJdkVersion"u8);
                 writer.WriteStringValue(BuildJdkVersion);
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -72,12 +81,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Checksum))
+            if (Checksum != null)
             {
                 writer.WritePropertyName("checksum"u8);
                 writer.WriteStringValue(Checksum);
             }
-            if (Optional.IsCollectionDefined(Dependencies))
+            if (!(Dependencies is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("dependencies"u8);
                 writer.WriteStartArray();
@@ -87,7 +96,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Environments))
+            if (!(Environments is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("environments"u8);
                 writer.WriteStartArray();
@@ -97,22 +106,22 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (Optional.IsDefined(JarFileLocation))
+            if (JarFileLocation != null)
             {
                 writer.WritePropertyName("jarFileLocation"u8);
                 writer.WriteStringValue(JarFileLocation);
             }
-            if (Optional.IsDefined(JvmMemoryInMB))
+            if (JvmMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("jvmMemoryInMB"u8);
                 writer.WriteNumberValue(JvmMemoryInMB.Value);
             }
-            if (Optional.IsCollectionDefined(JvmOptions))
+            if (!(JvmOptions is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("jvmOptions"u8);
                 writer.WriteStartArray();
@@ -122,7 +131,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Miscs))
+            if (!(Miscs is ChangeTrackingList<SpringBootAppMiscsItem> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("miscs"u8);
                 writer.WriteStartArray();
@@ -132,7 +141,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Instances))
+            if (!(Instances is ChangeTrackingList<SpringBootAppInstancesItem> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -142,12 +151,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RuntimeJdkVersion))
+            if (RuntimeJdkVersion != null)
             {
                 writer.WritePropertyName("runtimeJdkVersion"u8);
                 writer.WriteStringValue(RuntimeJdkVersion);
             }
-            if (Optional.IsCollectionDefined(Servers))
+            if (!(Servers is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();
@@ -157,7 +166,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MachineArmIds))
+            if (!(MachineArmIds is ChangeTrackingList<ResourceIdentifier> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("machineArmIds"u8);
                 writer.WriteStartArray();
@@ -172,17 +181,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SiteName))
+            if (SiteName != null)
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (Optional.IsDefined(SpringBootVersion))
+            if (SpringBootVersion != null)
             {
                 writer.WritePropertyName("springBootVersion"u8);
                 writer.WriteStringValue(SpringBootVersion);
             }
-            if (Optional.IsCollectionDefined(StaticContentLocations))
+            if (!(StaticContentLocations is ChangeTrackingList<string> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("staticContentLocations"u8);
                 writer.WriteStartArray();
@@ -192,7 +201,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConnectionStrings))
+            if (!(ConnectionStrings is ChangeTrackingList<string> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("connectionStrings"u8);
                 writer.WriteStartArray();
@@ -202,22 +211,22 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection11 && collection11.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -227,11 +236,40 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpringBootAppProperties DeserializeSpringBootAppProperties(JsonElement element)
+        SpringBootAppProperties IJsonModel<SpringBootAppProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpringBootAppProperties(document.RootElement, options);
+        }
+
+        internal static SpringBootAppProperties DeserializeSpringBootAppProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -240,30 +278,32 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Optional<string> artifactName = default;
             Optional<int> appPort = default;
             Optional<string> appType = default;
-            Optional<IList<SpringBootAppApplicationConfigurationsItem>> applicationConfigurations = default;
-            Optional<IList<int>> bindingPorts = default;
+            IList<SpringBootAppApplicationConfigurationsItem> applicationConfigurations = default;
+            IList<int> bindingPorts = default;
             Optional<string> buildJdkVersion = default;
-            Optional<IList<string>> certificates = default;
+            IList<string> certificates = default;
             Optional<string> checksum = default;
-            Optional<IList<string>> dependencies = default;
-            Optional<IList<string>> environments = default;
+            IList<string> dependencies = default;
+            IList<string> environments = default;
             Optional<int> instanceCount = default;
             Optional<string> jarFileLocation = default;
             Optional<int> jvmMemoryInMB = default;
-            Optional<IList<string>> jvmOptions = default;
-            Optional<IList<SpringBootAppMiscsItem>> miscs = default;
-            Optional<IList<SpringBootAppInstancesItem>> instances = default;
+            IList<string> jvmOptions = default;
+            IList<SpringBootAppMiscsItem> miscs = default;
+            IList<SpringBootAppInstancesItem> instances = default;
             Optional<string> runtimeJdkVersion = default;
-            Optional<IList<string>> servers = default;
-            Optional<IList<ResourceIdentifier>> machineArmIds = default;
+            IList<string> servers = default;
+            IList<ResourceIdentifier> machineArmIds = default;
             Optional<string> siteName = default;
             Optional<string> springBootVersion = default;
-            Optional<IList<string>> staticContentLocations = default;
-            Optional<IList<string>> connectionStrings = default;
+            IList<string> staticContentLocations = default;
+            IList<string> connectionStrings = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
-            Optional<IList<SpringBootSiteError>> errors = default;
+            IList<SpringBootSiteError> errors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appName"u8))
@@ -299,7 +339,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppApplicationConfigurationsItem> array = new List<SpringBootAppApplicationConfigurationsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppApplicationConfigurationsItem.DeserializeSpringBootAppApplicationConfigurationsItem(item));
+                        array.Add(SpringBootAppApplicationConfigurationsItem.DeserializeSpringBootAppApplicationConfigurationsItem(item, options));
                     }
                     applicationConfigurations = array;
                     continue;
@@ -416,7 +456,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppMiscsItem> array = new List<SpringBootAppMiscsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppMiscsItem.DeserializeSpringBootAppMiscsItem(item));
+                        array.Add(SpringBootAppMiscsItem.DeserializeSpringBootAppMiscsItem(item, options));
                     }
                     miscs = array;
                     continue;
@@ -430,7 +470,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppInstancesItem> array = new List<SpringBootAppInstancesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppInstancesItem.DeserializeSpringBootAppInstancesItem(item));
+                        array.Add(SpringBootAppInstancesItem.DeserializeSpringBootAppInstancesItem(item, options));
                     }
                     instances = array;
                     continue;
@@ -549,13 +589,78 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteError> array = new List<SpringBootSiteError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item, options));
                     }
                     errors = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SpringBootAppProperties(appName.Value, artifactName.Value, Optional.ToNullable(appPort), appType.Value, Optional.ToList(applicationConfigurations), Optional.ToList(bindingPorts), buildJdkVersion.Value, Optional.ToList(certificates), checksum.Value, Optional.ToList(dependencies), Optional.ToList(environments), Optional.ToNullable(instanceCount), jarFileLocation.Value, Optional.ToNullable(jvmMemoryInMB), Optional.ToList(jvmOptions), Optional.ToList(miscs), Optional.ToList(instances), runtimeJdkVersion.Value, Optional.ToList(servers), Optional.ToList(machineArmIds), siteName.Value, springBootVersion.Value, Optional.ToList(staticContentLocations), Optional.ToList(connectionStrings), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), Optional.ToList(errors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SpringBootAppProperties(
+                appName.Value,
+                artifactName.Value,
+                Optional.ToNullable(appPort),
+                appType.Value,
+                applicationConfigurations ?? new ChangeTrackingList<SpringBootAppApplicationConfigurationsItem>(),
+                bindingPorts ?? new ChangeTrackingList<int>(),
+                buildJdkVersion.Value,
+                certificates ?? new ChangeTrackingList<string>(),
+                checksum.Value,
+                dependencies ?? new ChangeTrackingList<string>(),
+                environments ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(instanceCount),
+                jarFileLocation.Value,
+                Optional.ToNullable(jvmMemoryInMB),
+                jvmOptions ?? new ChangeTrackingList<string>(),
+                miscs ?? new ChangeTrackingList<SpringBootAppMiscsItem>(),
+                instances ?? new ChangeTrackingList<SpringBootAppInstancesItem>(),
+                runtimeJdkVersion.Value,
+                servers ?? new ChangeTrackingList<string>(),
+                machineArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                siteName.Value,
+                springBootVersion.Value,
+                staticContentLocations ?? new ChangeTrackingList<string>(),
+                connectionStrings ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(lastUpdatedTime),
+                Optional.ToNullable(provisioningState),
+                errors ?? new ChangeTrackingList<SpringBootSiteError>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SpringBootAppProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SpringBootAppProperties IPersistableModel<SpringBootAppProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSpringBootAppProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SpringBootAppProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

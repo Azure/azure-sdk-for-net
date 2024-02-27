@@ -26,59 +26,59 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetComputerId))
+            if (options.Format != "W" && TargetComputerId != null)
             {
                 writer.WritePropertyName("targetComputer"u8);
                 writer.WriteStringValue(TargetComputerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetComputerType))
+            if (options.Format != "W" && TargetComputerType != null)
             {
                 writer.WritePropertyName("targetComputerType"u8);
                 writer.WriteStringValue(TargetComputerType);
             }
-            if (Optional.IsDefined(SoftwareUpdateConfiguration))
+            if (SoftwareUpdateConfiguration != null)
             {
                 writer.WritePropertyName("softwareUpdateConfiguration"u8);
                 writer.WriteObjectValue(SoftwareUpdateConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            if (options.Format != "W" && CorrelationId.HasValue)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceComputerId))
+            if (options.Format != "W" && SourceComputerId.HasValue)
             {
                 writer.WritePropertyName("sourceComputerId"u8);
                 writer.WriteStringValue(SourceComputerId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -90,37 +90,37 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfiguredDuration))
+            if (options.Format != "W" && ConfiguredDuration.HasValue)
             {
                 writer.WritePropertyName("configuredDuration"u8);
                 writer.WriteStringValue(ConfiguredDuration.Value, "P");
             }
-            if (Optional.IsDefined(Job))
+            if (Job != null)
             {
                 writer.WritePropertyName("job"u8);
                 writer.WriteObjectValue(Job);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (options.Format != "W" && CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
+            if (options.Format != "W" && LastModifiedBy != null)
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value);
+                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            job = JobNavigation.DeserializeJobNavigation(property0.Value);
+                            job = JobNavigation.DeserializeJobNavigation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
                             continue;
                         }
                     }
@@ -343,7 +343,26 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationMachineRun(
+                name.Value,
+                id.Value,
+                targetComputer.Value,
+                targetComputerType.Value,
+                softwareUpdateConfiguration.Value,
+                status.Value,
+                osType.Value,
+                Optional.ToNullable(correlationId),
+                Optional.ToNullable(sourceComputerId),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(configuredDuration),
+                job.Value,
+                Optional.ToNullable(creationTime),
+                createdBy.Value,
+                Optional.ToNullable(lastModifiedTime),
+                lastModifiedBy.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationMachineRun>.Write(ModelReaderWriterOptions options)

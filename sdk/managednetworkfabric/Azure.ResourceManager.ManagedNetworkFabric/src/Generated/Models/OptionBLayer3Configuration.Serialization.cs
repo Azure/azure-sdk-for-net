@@ -5,51 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class OptionBLayer3Configuration : IUtf8JsonSerializable
+    public partial class OptionBLayer3Configuration : IUtf8JsonSerializable, IJsonModel<OptionBLayer3Configuration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OptionBLayer3Configuration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OptionBLayer3Configuration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn.HasValue)
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsDefined(VlanId))
+            if (VlanId.HasValue)
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            if (options.Format != "W" && FabricAsn.HasValue)
+            {
+                writer.WritePropertyName("fabricASN"u8);
+                writer.WriteNumberValue(FabricAsn.Value);
+            }
+            if (PrimaryIPv4Prefix != null)
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            if (PrimaryIPv6Prefix != null)
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            if (SecondaryIPv4Prefix != null)
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            if (SecondaryIPv6Prefix != null)
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OptionBLayer3Configuration DeserializeOptionBLayer3Configuration(JsonElement element)
+        OptionBLayer3Configuration IJsonModel<OptionBLayer3Configuration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOptionBLayer3Configuration(document.RootElement, options);
+        }
+
+        internal static OptionBLayer3Configuration DeserializeOptionBLayer3Configuration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +106,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<string> primaryIPv6Prefix = default;
             Optional<string> secondaryIPv4Prefix = default;
             Optional<string> secondaryIPv6Prefix = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("peerASN"u8))
@@ -110,8 +157,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     secondaryIPv6Prefix = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OptionBLayer3Configuration(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(peerAsn), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OptionBLayer3Configuration(
+                primaryIPv4Prefix.Value,
+                primaryIPv6Prefix.Value,
+                secondaryIPv4Prefix.Value,
+                secondaryIPv6Prefix.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(peerAsn),
+                Optional.ToNullable(vlanId),
+                Optional.ToNullable(fabricAsn));
         }
+
+        BinaryData IPersistableModel<OptionBLayer3Configuration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OptionBLayer3Configuration IPersistableModel<OptionBLayer3Configuration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOptionBLayer3Configuration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OptionBLayer3Configuration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

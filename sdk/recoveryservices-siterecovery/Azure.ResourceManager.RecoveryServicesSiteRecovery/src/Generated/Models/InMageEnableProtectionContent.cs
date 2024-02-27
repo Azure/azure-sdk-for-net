@@ -23,10 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="masterTargetId"/>, <paramref name="retentionDrive"/>, <paramref name="multiVmGroupId"/> or <paramref name="multiVmGroupName"/> is null. </exception>
         public InMageEnableProtectionContent(string masterTargetId, Guid processServerId, string retentionDrive, string multiVmGroupId, string multiVmGroupName)
         {
-            Argument.AssertNotNull(masterTargetId, nameof(masterTargetId));
-            Argument.AssertNotNull(retentionDrive, nameof(retentionDrive));
-            Argument.AssertNotNull(multiVmGroupId, nameof(multiVmGroupId));
-            Argument.AssertNotNull(multiVmGroupName, nameof(multiVmGroupName));
+            if (masterTargetId == null)
+            {
+                throw new ArgumentNullException(nameof(masterTargetId));
+            }
+            if (retentionDrive == null)
+            {
+                throw new ArgumentNullException(nameof(retentionDrive));
+            }
+            if (multiVmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(multiVmGroupId));
+            }
+            if (multiVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(multiVmGroupName));
+            }
 
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;
@@ -39,6 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageEnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmFriendlyName"> The VM Name. </param>
         /// <param name="masterTargetId"> The Master Target Id. </param>
         /// <param name="processServerId"> The Process Server Id. </param>
@@ -49,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="datastoreName"> The target datastore name. </param>
         /// <param name="diskExclusionContent"> The enable disk exclusion input. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
-        internal InMageEnableProtectionContent(string instanceType, string vmFriendlyName, string masterTargetId, Guid processServerId, string retentionDrive, string runAsAccountId, string multiVmGroupId, string multiVmGroupName, string datastoreName, InMageDiskExclusionContent diskExclusionContent, IList<string> disksToInclude) : base(instanceType)
+        internal InMageEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string vmFriendlyName, string masterTargetId, Guid processServerId, string retentionDrive, string runAsAccountId, string multiVmGroupId, string multiVmGroupName, string datastoreName, InMageDiskExclusionContent diskExclusionContent, IList<string> disksToInclude) : base(instanceType, serializedAdditionalRawData)
         {
             VmFriendlyName = vmFriendlyName;
             MasterTargetId = masterTargetId;
@@ -62,6 +75,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskExclusionContent = diskExclusionContent;
             DisksToInclude = disksToInclude;
             InstanceType = instanceType ?? "InMage";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageEnableProtectionContent"/> for deserialization. </summary>
+        internal InMageEnableProtectionContent()
+        {
         }
 
         /// <summary> The VM Name. </summary>

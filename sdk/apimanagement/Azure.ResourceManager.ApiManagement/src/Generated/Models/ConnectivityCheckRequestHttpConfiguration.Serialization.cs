@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Method))
+            if (Method.HasValue)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ValidStatusCodes))
+            if (!(ValidStatusCodes is ChangeTrackingList<long> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validStatusCodes"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<HttpHeaderConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             Optional<HttpMethodConfiguration> method = default;
-            Optional<IList<long>> validStatusCodes = default;
-            Optional<IList<HttpHeaderConfiguration>> headers = default;
+            IList<long> validStatusCodes = default;
+            IList<HttpHeaderConfiguration> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<HttpHeaderConfiguration> array = new List<HttpHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeaderConfiguration.DeserializeHttpHeaderConfiguration(item));
+                        array.Add(HttpHeaderConfiguration.DeserializeHttpHeaderConfiguration(item, options));
                     }
                     headers = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckRequestHttpConfiguration(Optional.ToNullable(method), Optional.ToList(validStatusCodes), Optional.ToList(headers), serializedAdditionalRawData);
+            return new ConnectivityCheckRequestHttpConfiguration(Optional.ToNullable(method), validStatusCodes ?? new ChangeTrackingList<long>(), headers ?? new ChangeTrackingList<HttpHeaderConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckRequestHttpConfiguration>.Write(ModelReaderWriterOptions options)

@@ -5,15 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlPerformanceTierServiceLevelObjectives
+    public partial class MySqlPerformanceTierServiceLevelObjectives : IUtf8JsonSerializable, IJsonModel<MySqlPerformanceTierServiceLevelObjectives>
     {
-        internal static MySqlPerformanceTierServiceLevelObjectives DeserializeMySqlPerformanceTierServiceLevelObjectives(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlPerformanceTierServiceLevelObjectives>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlPerformanceTierServiceLevelObjectives>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Id != null)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Edition != null)
+            {
+                writer.WritePropertyName("edition"u8);
+                writer.WriteStringValue(Edition);
+            }
+            if (VCores.HasValue)
+            {
+                writer.WritePropertyName("vCore"u8);
+                writer.WriteNumberValue(VCores.Value);
+            }
+            if (HardwareGeneration != null)
+            {
+                writer.WritePropertyName("hardwareGeneration"u8);
+                writer.WriteStringValue(HardwareGeneration);
+            }
+            if (MaxBackupRetentionDays.HasValue)
+            {
+                writer.WritePropertyName("maxBackupRetentionDays"u8);
+                writer.WriteNumberValue(MaxBackupRetentionDays.Value);
+            }
+            if (MinBackupRetentionDays.HasValue)
+            {
+                writer.WritePropertyName("minBackupRetentionDays"u8);
+                writer.WriteNumberValue(MinBackupRetentionDays.Value);
+            }
+            if (MaxStorageInMB.HasValue)
+            {
+                writer.WritePropertyName("maxStorageMB"u8);
+                writer.WriteNumberValue(MaxStorageInMB.Value);
+            }
+            if (MinStorageInMB.HasValue)
+            {
+                writer.WritePropertyName("minStorageMB"u8);
+                writer.WriteNumberValue(MinStorageInMB.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MySqlPerformanceTierServiceLevelObjectives IJsonModel<MySqlPerformanceTierServiceLevelObjectives>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlPerformanceTierServiceLevelObjectives(document.RootElement, options);
+        }
+
+        internal static MySqlPerformanceTierServiceLevelObjectives DeserializeMySqlPerformanceTierServiceLevelObjectives(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +112,8 @@ namespace Azure.ResourceManager.MySql.Models
             Optional<int> minBackupRetentionDays = default;
             Optional<int> maxStorageMB = default;
             Optional<int> minStorageMB = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -88,8 +176,53 @@ namespace Azure.ResourceManager.MySql.Models
                     minStorageMB = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlPerformanceTierServiceLevelObjectives(id.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minStorageMB));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MySqlPerformanceTierServiceLevelObjectives(
+                id.Value,
+                edition.Value,
+                Optional.ToNullable(vCore),
+                hardwareGeneration.Value,
+                Optional.ToNullable(maxBackupRetentionDays),
+                Optional.ToNullable(minBackupRetentionDays),
+                Optional.ToNullable(maxStorageMB),
+                Optional.ToNullable(minStorageMB),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MySqlPerformanceTierServiceLevelObjectives IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlPerformanceTierServiceLevelObjectives(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPAddresses))
+            if (options.Format != "W" && !(PublicIPAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIPAddresses))
+            if (options.Format != "W" && !(PrivateIPAddresses is ChangeTrackingList<IPAddress> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
@@ -71,27 +71,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicIPAddressId))
+            if (PublicIPAddressId != null)
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(VirtualNetworkConfiguration))
+            if (VirtualNetworkConfiguration != null)
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayRegionalUri))
+            if (options.Format != "W" && GatewayRegionalUri != null)
             {
                 writer.WritePropertyName("gatewayRegionalUrl"u8);
                 writer.WriteStringValue(GatewayRegionalUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DisableGateway))
+            if (DisableGateway.HasValue)
             {
                 writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PlatformVersion))
+            if (options.Format != "W" && PlatformVersion.HasValue)
             {
                 writer.WritePropertyName("platformVersion"u8);
                 writer.WriteStringValue(PlatformVersion.Value.ToString());
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             AzureLocation location = default;
             ApiManagementServiceSkuProperties sku = default;
-            Optional<IList<string>> zones = default;
-            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
-            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
+            IList<string> zones = default;
+            IReadOnlyList<IPAddress> publicIPAddresses = default;
+            IReadOnlyList<IPAddress> privateIPAddresses = default;
             Optional<ResourceIdentifier> publicIPAddressId = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             Optional<Uri> gatewayRegionalUri = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value);
+                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property.Value);
+                    virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gatewayRegionalUrl"u8))
@@ -265,7 +265,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion), serializedAdditionalRawData);
+            return new AdditionalLocation(
+                location,
+                sku,
+                zones ?? new ChangeTrackingList<string>(),
+                publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                publicIPAddressId.Value,
+                virtualNetworkConfiguration.Value,
+                gatewayRegionalUri.Value,
+                Optional.ToNullable(disableGateway),
+                Optional.ToNullable(platformVersion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalLocation>.Write(ModelReaderWriterOptions options)

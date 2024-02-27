@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (options.Format != "W" && Optional.IsDefined(Size))
+            if (options.Format != "W" && Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && Optional.IsDefined(Family))
+            if (options.Format != "W" && Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Optional.IsDefined(Capacity))
+            if (options.Format != "W" && Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
+            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
+            if (options.Format != "W" && !(Costs is ChangeTrackingList<ResourceSkuCosts> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<ResourceSkuCapabilities> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
+            if (options.Format != "W" && !(Restrictions is ChangeTrackingList<ResourceSkuRestrictions> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> family = default;
             Optional<string> kind = default;
             Optional<ResourceSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
-            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
-            Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<string> apiVersions = default;
+            IReadOnlyList<ResourceSkuCosts> costs = default;
+            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
+            IReadOnlyList<ResourceSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value);
+                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuCosts> array = new List<ResourceSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item));
+                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item, options));
                     }
                     costs = array;
                     continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
+                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
+                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new ResourceSku(
+                resourceType.Value,
+                name.Value,
+                tier.Value,
+                size.Value,
+                family.Value,
+                kind.Value,
+                capacity.Value,
+                locations ?? new ChangeTrackingList<string>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ResourceSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSku>.Write(ModelReaderWriterOptions options)

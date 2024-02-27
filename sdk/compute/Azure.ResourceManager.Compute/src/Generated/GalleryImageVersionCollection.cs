@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GalleryImageVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryImageVersionName, GalleryImageVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _galleryImageVersionClientDiagnostics.CreateScope("GalleryImageVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GalleryImageVersionResource> CreateOrUpdate(WaitUntil waitUntil, string galleryImageVersionName, GalleryImageVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _galleryImageVersionClientDiagnostics.CreateScope("GalleryImageVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual async Task<Response<GalleryImageVersionResource>> GetAsync(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageVersionName));
+            }
 
             using var scope = _galleryImageVersionClientDiagnostics.CreateScope("GalleryImageVersionCollection.Get");
             scope.Start();
@@ -211,7 +238,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +253,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual Response<GalleryImageVersionResource> Get(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageVersionName));
+            }
 
             using var scope = _galleryImageVersionClientDiagnostics.CreateScope("GalleryImageVersionCollection.Get");
             scope.Start();
@@ -257,7 +291,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +321,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,7 +351,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageVersionName));
+            }
 
             using var scope = _galleryImageVersionClientDiagnostics.CreateScope("GalleryImageVersionCollection.Exists");
             scope.Start();
@@ -361,7 +402,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,7 +417,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageVersionName));
+            }
 
             using var scope = _galleryImageVersionClientDiagnostics.CreateScope("GalleryImageVersionCollection.Exists");
             scope.Start();
@@ -405,7 +453,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual async Task<NullableResponse<GalleryImageVersionResource>> GetIfExistsAsync(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageVersionName));
+            }
 
             using var scope = _galleryImageVersionClientDiagnostics.CreateScope("GalleryImageVersionCollection.GetIfExists");
             scope.Start();
@@ -451,7 +506,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual NullableResponse<GalleryImageVersionResource> GetIfExists(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageVersionName));
+            }
 
             using var scope = _galleryImageVersionClientDiagnostics.CreateScope("GalleryImageVersionCollection.GetIfExists");
             scope.Start();

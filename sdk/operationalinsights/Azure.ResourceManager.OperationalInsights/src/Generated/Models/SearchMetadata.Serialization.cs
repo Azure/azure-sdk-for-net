@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +14,148 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    internal partial class SearchMetadata
+    internal partial class SearchMetadata : IUtf8JsonSerializable, IJsonModel<SearchMetadata>
     {
-        internal static SearchMetadata DeserializeSearchMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SearchMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (SearchId != null)
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(SearchId);
+            }
+            if (ResultType != null)
+            {
+                writer.WritePropertyName("resultType"u8);
+                writer.WriteStringValue(ResultType);
+            }
+            if (Total.HasValue)
+            {
+                writer.WritePropertyName("total"u8);
+                writer.WriteNumberValue(Total.Value);
+            }
+            if (Top.HasValue)
+            {
+                writer.WritePropertyName("top"u8);
+                writer.WriteNumberValue(Top.Value);
+            }
+            if (Id != null)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (!(CoreSummaries is ChangeTrackingList<OperationalInsightsSearchCoreSummary> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("coreSummaries"u8);
+                writer.WriteStartArray();
+                foreach (var item in CoreSummaries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Status != null)
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (StartOn.HasValue)
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (LastUpdated.HasValue)
+            {
+                writer.WritePropertyName("lastUpdated"u8);
+                writer.WriteStringValue(LastUpdated.Value, "O");
+            }
+            if (ETag.HasValue)
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (!(Sort is ChangeTrackingList<SearchSort> collection0 && collection0.IsUndefined))
+            {
+                writer.WritePropertyName("sort"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sort)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (RequestTime.HasValue)
+            {
+                writer.WritePropertyName("requestTime"u8);
+                writer.WriteNumberValue(RequestTime.Value);
+            }
+            if (AggregatedValueField != null)
+            {
+                writer.WritePropertyName("aggregatedValueField"u8);
+                writer.WriteStringValue(AggregatedValueField);
+            }
+            if (AggregatedGroupingFields != null)
+            {
+                writer.WritePropertyName("aggregatedGroupingFields"u8);
+                writer.WriteStringValue(AggregatedGroupingFields);
+            }
+            if (Sum.HasValue)
+            {
+                writer.WritePropertyName("sum"u8);
+                writer.WriteNumberValue(Sum.Value);
+            }
+            if (Max.HasValue)
+            {
+                writer.WritePropertyName("max"u8);
+                writer.WriteNumberValue(Max.Value);
+            }
+            if (Schema != null)
+            {
+                writer.WritePropertyName("schema"u8);
+                writer.WriteObjectValue(Schema);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SearchMetadata IJsonModel<SearchMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchMetadata(document.RootElement, options);
+        }
+
+        internal static SearchMetadata DeserializeSearchMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,18 +165,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<long> total = default;
             Optional<long> top = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<OperationalInsightsSearchCoreSummary>> coreSummaries = default;
+            IReadOnlyList<OperationalInsightsSearchCoreSummary> coreSummaries = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<ETag> eTag = default;
-            Optional<IReadOnlyList<SearchSort>> sort = default;
+            IReadOnlyList<SearchSort> sort = default;
             Optional<long> requestTime = default;
             Optional<string> aggregatedValueField = default;
             Optional<string> aggregatedGroupingFields = default;
             Optional<long> sum = default;
             Optional<long> max = default;
             Optional<SearchMetadataSchema> schema = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestId"u8))
@@ -82,7 +223,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsSearchCoreSummary> array = new List<OperationalInsightsSearchCoreSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsSearchCoreSummary.DeserializeOperationalInsightsSearchCoreSummary(item));
+                        array.Add(OperationalInsightsSearchCoreSummary.DeserializeOperationalInsightsSearchCoreSummary(item, options));
                     }
                     coreSummaries = array;
                     continue;
@@ -128,7 +269,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<SearchSort> array = new List<SearchSort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchSort.DeserializeSearchSort(item));
+                        array.Add(SearchSort.DeserializeSearchSort(item, options));
                     }
                     sort = array;
                     continue;
@@ -176,11 +317,65 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    schema = SearchMetadataSchema.DeserializeSearchMetadataSchema(property.Value);
+                    schema = SearchMetadataSchema.DeserializeSearchMetadataSchema(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchMetadata(requestId.Value, resultType.Value, Optional.ToNullable(total), Optional.ToNullable(top), id.Value, Optional.ToList(coreSummaries), status.Value, Optional.ToNullable(startTime), Optional.ToNullable(lastUpdated), Optional.ToNullable(eTag), Optional.ToList(sort), Optional.ToNullable(requestTime), aggregatedValueField.Value, aggregatedGroupingFields.Value, Optional.ToNullable(sum), Optional.ToNullable(max), schema.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchMetadata(
+                requestId.Value,
+                resultType.Value,
+                Optional.ToNullable(total),
+                Optional.ToNullable(top),
+                id.Value,
+                coreSummaries ?? new ChangeTrackingList<OperationalInsightsSearchCoreSummary>(),
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(eTag),
+                sort ?? new ChangeTrackingList<SearchSort>(),
+                Optional.ToNullable(requestTime),
+                aggregatedValueField.Value,
+                aggregatedGroupingFields.Value,
+                Optional.ToNullable(sum),
+                Optional.ToNullable(max),
+                schema.Value,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SearchMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SearchMetadata IPersistableModel<SearchMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSearchMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

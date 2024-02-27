@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,47 +39,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxSizeBytes))
+            if (MaxSizeBytes.HasValue)
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Optional.IsDefined(Collation))
+            if (Collation != null)
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(SourceDatabaseId))
+            if (SourceDatabaseId != null)
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RecoverableDatabaseId))
+            if (RecoverableDatabaseId != null)
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (RestorePointInTime != null)
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(CreationDate))
+            if (CreationDate.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreationDate.Value, "O");
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             Optional<Sku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             string location = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -224,7 +224,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, Optional.ToNullable(createMode), Optional.ToNullable(creationDate));
+            return new SqlPool(
+                id.Value,
+                name.Value,
+                type.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                Optional.ToNullable(maxSizeBytes),
+                collation.Value,
+                sourceDatabaseId.Value,
+                recoverableDatabaseId.Value,
+                provisioningState.Value,
+                status.Value,
+                restorePointInTime.Value,
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(creationDate));
         }
 
         internal partial class SqlPoolConverter : JsonConverter<SqlPool>

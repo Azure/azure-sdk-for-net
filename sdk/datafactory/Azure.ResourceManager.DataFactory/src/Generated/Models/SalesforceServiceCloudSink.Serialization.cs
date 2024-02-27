@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,54 +14,62 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SalesforceServiceCloudSink : IUtf8JsonSerializable
+    public partial class SalesforceServiceCloudSink : IUtf8JsonSerializable, IJsonModel<SalesforceServiceCloudSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceServiceCloudSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SalesforceServiceCloudSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SalesforceServiceCloudSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(WriteBehavior))
+            if (WriteBehavior.HasValue)
             {
                 writer.WritePropertyName("writeBehavior"u8);
                 writer.WriteStringValue(WriteBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(ExternalIdFieldName))
+            if (ExternalIdFieldName != null)
             {
                 writer.WritePropertyName("externalIdFieldName"u8);
                 JsonSerializer.Serialize(writer, ExternalIdFieldName);
             }
-            if (Optional.IsDefined(IgnoreNullValues))
+            if (IgnoreNullValues != null)
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
                 JsonSerializer.Serialize(writer, IgnoreNullValues);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -80,8 +89,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SalesforceServiceCloudSink DeserializeSalesforceServiceCloudSink(JsonElement element)
+        SalesforceServiceCloudSink IJsonModel<SalesforceServiceCloudSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SalesforceServiceCloudSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSalesforceServiceCloudSink(document.RootElement, options);
+        }
+
+        internal static SalesforceServiceCloudSink DeserializeSalesforceServiceCloudSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -189,7 +212,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceServiceCloudSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, Optional.ToNullable(writeBehavior), externalIdFieldName.Value, ignoreNullValues.Value);
+            return new SalesforceServiceCloudSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                Optional.ToNullable(writeBehavior),
+                externalIdFieldName.Value,
+                ignoreNullValues.Value);
         }
+
+        BinaryData IPersistableModel<SalesforceServiceCloudSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SalesforceServiceCloudSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SalesforceServiceCloudSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SalesforceServiceCloudSink IPersistableModel<SalesforceServiceCloudSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SalesforceServiceCloudSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSalesforceServiceCloudSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SalesforceServiceCloudSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SalesforceServiceCloudSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

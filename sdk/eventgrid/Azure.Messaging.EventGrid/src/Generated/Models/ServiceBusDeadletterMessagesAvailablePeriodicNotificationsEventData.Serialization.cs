@@ -60,7 +60,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value);
+            return new ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(
+                namespaceName.Value,
+                requestUri.Value,
+                entityType.Value,
+                queueName.Value,
+                topicName.Value,
+                subscriptionName.Value);
         }
 
         internal partial class ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventDataConverter : JsonConverter<ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData>

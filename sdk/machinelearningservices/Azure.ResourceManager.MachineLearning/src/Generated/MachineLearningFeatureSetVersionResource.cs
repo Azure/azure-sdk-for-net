@@ -353,7 +353,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningFeatureSetVersionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningFeatureSetVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics.CreateScope("MachineLearningFeatureSetVersionResource.Update");
             scope.Start();
@@ -399,7 +402,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningFeatureSetVersionResource> Update(WaitUntil waitUntil, MachineLearningFeatureSetVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics.CreateScope("MachineLearningFeatureSetVersionResource.Update");
             scope.Start();
@@ -445,7 +451,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningFeatureSetJob>> BackfillAsync(WaitUntil waitUntil, FeatureSetVersionBackfillContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics.CreateScope("MachineLearningFeatureSetVersionResource.Backfill");
             scope.Start();
@@ -491,7 +500,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MachineLearningFeatureSetJob> Backfill(WaitUntil waitUntil, FeatureSetVersionBackfillContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics.CreateScope("MachineLearningFeatureSetVersionResource.Backfill");
             scope.Start();
@@ -541,7 +553,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob, _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(e), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -575,7 +587,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob, _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(e), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
         }
     }
 }

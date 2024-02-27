@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userAssignedIdentity"/> is null. </exception>
         public SearchIndexerDataUserAssignedIdentity(string userAssignedIdentity)
         {
-            Argument.AssertNotNull(userAssignedIdentity, nameof(userAssignedIdentity));
+            if (userAssignedIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(userAssignedIdentity));
+            }
 
             UserAssignedIdentity = userAssignedIdentity;
             ODataType = "#Microsoft.Azure.Search.DataUserAssignedIdentity";

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationState))
+            if (options.Format != "W" && MigrationState != null)
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SqlDataCopyErrors))
+            if (options.Format != "W" && !(SqlDataCopyErrors is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sqlDataCopyErrors"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ListOfCopyProgressDetails))
+            if (options.Format != "W" && !(ListOfCopyProgressDetails is ChangeTrackingList<CopyProgressDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("listOfCopyProgressDetails"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> migrationState = default;
-            Optional<IReadOnlyList<string>> sqlDataCopyErrors = default;
-            Optional<IReadOnlyList<CopyProgressDetails>> listOfCopyProgressDetails = default;
+            IReadOnlyList<string> sqlDataCopyErrors = default;
+            IReadOnlyList<CopyProgressDetails> listOfCopyProgressDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CopyProgressDetails> array = new List<CopyProgressDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CopyProgressDetails.DeserializeCopyProgressDetails(item));
+                        array.Add(CopyProgressDetails.DeserializeCopyProgressDetails(item, options));
                     }
                     listOfCopyProgressDetails = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBMigrationStatusDetails(migrationState.Value, Optional.ToList(sqlDataCopyErrors), Optional.ToList(listOfCopyProgressDetails), serializedAdditionalRawData);
+            return new SqlDBMigrationStatusDetails(migrationState.Value, sqlDataCopyErrors ?? new ChangeTrackingList<string>(), listOfCopyProgressDetails ?? new ChangeTrackingList<CopyProgressDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDBMigrationStatusDetails>.Write(ModelReaderWriterOptions options)

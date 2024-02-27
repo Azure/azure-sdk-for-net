@@ -5,17 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricAccessControlListPatch : IUtf8JsonSerializable
+    public partial class NetworkFabricAccessControlListPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricAccessControlListPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricAccessControlListPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkFabricAccessControlListPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,22 +39,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationType))
+            if (ConfigurationType.HasValue)
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (Optional.IsDefined(AclsUri))
+            if (AclsUri != null)
             {
                 writer.WritePropertyName("aclsUrl"u8);
                 writer.WriteStringValue(AclsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DefaultAction))
+            if (DefaultAction.HasValue)
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MatchConfigurations))
+            if (!(MatchConfigurations is ChangeTrackingList<AccessControlListMatchConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("matchConfigurations"u8);
                 writer.WriteStartArray();
@@ -53,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
+            if (!(DynamicMatchConfigurations is ChangeTrackingList<CommonDynamicMatchConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dynamicMatchConfigurations"u8);
                 writer.WriteStartArray();
@@ -63,13 +74,193 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        NetworkFabricAccessControlListPatch IJsonModel<NetworkFabricAccessControlListPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricAccessControlListPatch(document.RootElement, options);
+        }
+
+        internal static NetworkFabricAccessControlListPatch DeserializeNetworkFabricAccessControlListPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            Optional<NetworkFabricConfigurationType> configurationType = default;
+            Optional<Uri> aclsUrl = default;
+            Optional<CommunityActionType> defaultAction = default;
+            IList<AccessControlListMatchConfiguration> matchConfigurations = default;
+            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
+            Optional<string> annotation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("configurationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("aclsUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            aclsUrl = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultAction"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultAction = new CommunityActionType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("matchConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AccessControlListMatchConfiguration> array = new List<AccessControlListMatchConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AccessControlListMatchConfiguration.DeserializeAccessControlListMatchConfiguration(item, options));
+                            }
+                            matchConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("dynamicMatchConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
+                            }
+                            dynamicMatchConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkFabricAccessControlListPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(configurationType),
+                aclsUrl.Value,
+                Optional.ToNullable(defaultAction),
+                matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
+                annotation.Value);
+        }
+
+        BinaryData IPersistableModel<NetworkFabricAccessControlListPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkFabricAccessControlListPatch IPersistableModel<NetworkFabricAccessControlListPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkFabricAccessControlListPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkFabricAccessControlListPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
