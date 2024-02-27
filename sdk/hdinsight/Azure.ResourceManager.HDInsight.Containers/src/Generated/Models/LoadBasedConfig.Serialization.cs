@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             int minNodes = default;
             int maxNodes = default;
-            Optional<int> pollInterval = default;
-            Optional<int> cooldownPeriod = default;
+            int? pollInterval = default;
+            int? cooldownPeriod = default;
             IList<ScalingRule> scalingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new LoadBasedConfig(
                 minNodes,
                 maxNodes,
-                Optional.ToNullable(pollInterval),
-                Optional.ToNullable(cooldownPeriod),
+                pollInterval,
+                cooldownPeriod,
                 scalingRules,
                 serializedAdditionalRawData);
         }

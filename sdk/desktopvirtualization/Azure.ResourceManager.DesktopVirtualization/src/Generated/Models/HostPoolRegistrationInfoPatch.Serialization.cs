@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;
+            DateTimeOffset? expirationTime = default;
+            HostPoolRegistrationTokenOperation? registrationTokenOperation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostPoolRegistrationInfoPatch(Optional.ToNullable(expirationTime), Optional.ToNullable(registrationTokenOperation), serializedAdditionalRawData);
+            return new HostPoolRegistrationInfoPatch(expirationTime, registrationTokenOperation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostPoolRegistrationInfoPatch>.Write(ModelReaderWriterOptions options)

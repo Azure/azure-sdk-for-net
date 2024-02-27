@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<WritableSubResource> dnsResolverOutboundEndpoints = default;
-            Optional<DnsResolverProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            DnsResolverProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.DnsResolver
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
+                etag,
                 dnsResolverOutboundEndpoints,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceGuid),
+                provisioningState,
+                resourceGuid,
                 serializedAdditionalRawData);
         }
 

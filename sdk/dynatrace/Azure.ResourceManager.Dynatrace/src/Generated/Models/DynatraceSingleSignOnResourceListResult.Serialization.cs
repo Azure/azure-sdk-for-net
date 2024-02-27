@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 return null;
             }
             IReadOnlyList<DynatraceSingleSignOnData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceSingleSignOnResourceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DynatraceSingleSignOnResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceSingleSignOnResourceListResult>.Write(ModelReaderWriterOptions options)

@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorRedirectType> redirectType = default;
-            Optional<FrontDoorRedirectProtocol> redirectProtocol = default;
-            Optional<string> customHost = default;
-            Optional<string> customPath = default;
-            Optional<string> customFragment = default;
-            Optional<string> customQueryString = default;
+            FrontDoorRedirectType? redirectType = default;
+            FrontDoorRedirectProtocol? redirectProtocol = default;
+            string customHost = default;
+            string customPath = default;
+            string customFragment = default;
+            string customQueryString = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new RedirectConfiguration(
                 odataType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(redirectType),
-                Optional.ToNullable(redirectProtocol),
-                customHost.Value,
-                customPath.Value,
-                customFragment.Value,
-                customQueryString.Value);
+                redirectType,
+                redirectProtocol,
+                customHost,
+                customPath,
+                customFragment,
+                customQueryString);
         }
 
         BinaryData IPersistableModel<RedirectConfiguration>.Write(ModelReaderWriterOptions options)

@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> completedTime = default;
-            Optional<ContainerServiceFleetUpdateState> state = default;
-            Optional<ResponseError> error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? completedTime = default;
+            ContainerServiceFleetUpdateState? state = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateStatus(Optional.ToNullable(startTime), Optional.ToNullable(completedTime), Optional.ToNullable(state), error.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateStatus(startTime, completedTime, state, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateStatus>.Write(ModelReaderWriterOptions options)

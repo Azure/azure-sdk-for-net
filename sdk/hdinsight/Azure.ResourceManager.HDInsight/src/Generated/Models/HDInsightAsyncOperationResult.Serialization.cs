@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightAsyncOperationState> status = default;
-            Optional<ResponseError> error = default;
+            HDInsightAsyncOperationState? status = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAsyncOperationResult(Optional.ToNullable(status), error.Value, serializedAdditionalRawData);
+            return new HDInsightAsyncOperationResult(status, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAsyncOperationResult>.Write(ModelReaderWriterOptions options)

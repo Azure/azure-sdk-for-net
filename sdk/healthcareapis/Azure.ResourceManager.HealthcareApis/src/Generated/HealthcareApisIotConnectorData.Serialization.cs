@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<HealthcareApisIotConnectorEventHubIngestionConfiguration> ingestionEndpointConfiguration = default;
-            Optional<HealthcareApisIotMappingProperties> deviceMapping = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
+            HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration = default;
+            HealthcareApisIotMappingProperties deviceMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                ingestionEndpointConfiguration.Value,
-                deviceMapping.Value,
+                provisioningState,
+                ingestionEndpointConfiguration,
+                deviceMapping,
                 identity,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData);
         }
 

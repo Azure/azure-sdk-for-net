@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabScheduleData> labVmsShutdown = default;
-            Optional<DevTestLabScheduleData> labVmsStartup = default;
+            SystemData systemData = default;
+            DevTestLabScheduleData labVmsShutdown = default;
+            DevTestLabScheduleData labVmsStartup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                labVmsShutdown.Value,
-                labVmsStartup.Value,
+                labVmsShutdown,
+                labVmsStartup,
                 serializedAdditionalRawData);
         }
 

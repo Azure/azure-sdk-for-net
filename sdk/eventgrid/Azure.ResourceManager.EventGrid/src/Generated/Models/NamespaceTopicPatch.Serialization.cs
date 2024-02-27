@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> eventRetentionInDays = default;
+            int? eventRetentionInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceTopicPatch(Optional.ToNullable(eventRetentionInDays), serializedAdditionalRawData);
+            return new NamespaceTopicPatch(eventRetentionInDays, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceTopicPatch>.Write(ModelReaderWriterOptions options)

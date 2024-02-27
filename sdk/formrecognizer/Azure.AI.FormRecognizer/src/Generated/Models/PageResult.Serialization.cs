@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             int page = default;
-            Optional<int?> clusterId = default;
+            int? clusterId = default;
             IReadOnlyList<KeyValuePair> keyValuePairs = default;
             IReadOnlyList<DataTable> tables = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new PageResult(page, Optional.ToNullable(clusterId), keyValuePairs ?? new ChangeTrackingList<KeyValuePair>(), tables ?? new ChangeTrackingList<DataTable>());
+            return new PageResult(page, clusterId, keyValuePairs ?? new ChangeTrackingList<KeyValuePair>(), tables ?? new ChangeTrackingList<DataTable>());
         }
     }
 }

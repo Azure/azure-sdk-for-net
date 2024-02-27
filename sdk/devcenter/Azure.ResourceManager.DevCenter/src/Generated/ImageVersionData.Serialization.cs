@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<bool> excludeFromLatest = default;
-            Optional<int> osDiskImageSizeInGb = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string name0 = default;
+            DateTimeOffset? publishedDate = default;
+            bool? excludeFromLatest = default;
+            int? osDiskImageSizeInGb = default;
+            DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.DevCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                name0.Value,
-                Optional.ToNullable(publishedDate),
-                Optional.ToNullable(excludeFromLatest),
-                Optional.ToNullable(osDiskImageSizeInGb),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                name0,
+                publishedDate,
+                excludeFromLatest,
+                osDiskImageSizeInGb,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

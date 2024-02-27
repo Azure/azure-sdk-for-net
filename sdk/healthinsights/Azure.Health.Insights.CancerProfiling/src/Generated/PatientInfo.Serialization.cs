@@ -85,8 +85,8 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 return null;
             }
-            Optional<PatientInfoSex> sex = default;
-            Optional<DateTimeOffset> birthDate = default;
+            PatientInfoSex? sex = default;
+            DateTimeOffset? birthDate = default;
             IList<ClinicalCodedElement> clinicalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientInfo(Optional.ToNullable(sex), Optional.ToNullable(birthDate), clinicalInfo ?? new ChangeTrackingList<ClinicalCodedElement>(), serializedAdditionalRawData);
+            return new PatientInfo(sex, birthDate, clinicalInfo ?? new ChangeTrackingList<ClinicalCodedElement>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientInfo>.Write(ModelReaderWriterOptions options)

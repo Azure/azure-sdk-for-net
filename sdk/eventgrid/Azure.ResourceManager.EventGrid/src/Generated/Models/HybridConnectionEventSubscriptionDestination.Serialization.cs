@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>());
+            return new HybridConnectionEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId, deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>());
         }
 
         BinaryData IPersistableModel<HybridConnectionEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

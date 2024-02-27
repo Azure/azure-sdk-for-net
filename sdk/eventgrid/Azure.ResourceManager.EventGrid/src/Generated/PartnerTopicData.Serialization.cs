@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> partnerRegistrationImmutableId = default;
-            Optional<string> source = default;
-            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
-            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
-            Optional<PartnerTopicProvisioningState> provisioningState = default;
-            Optional<PartnerTopicActivationState> activationState = default;
-            Optional<string> partnerTopicFriendlyDescription = default;
-            Optional<string> messageForActivation = default;
+            SystemData systemData = default;
+            Guid? partnerRegistrationImmutableId = default;
+            string source = default;
+            PartnerTopicEventTypeInfo eventTypeInfo = default;
+            DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
+            PartnerTopicProvisioningState? provisioningState = default;
+            PartnerTopicActivationState? activationState = default;
+            string partnerTopicFriendlyDescription = default;
+            string messageForActivation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,18 +300,18 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(partnerRegistrationImmutableId),
-                source.Value,
-                eventTypeInfo.Value,
-                Optional.ToNullable(expirationTimeIfNotActivatedUtc),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(activationState),
-                partnerTopicFriendlyDescription.Value,
-                messageForActivation.Value,
+                partnerRegistrationImmutableId,
+                source,
+                eventTypeInfo,
+                expirationTimeIfNotActivatedUtc,
+                provisioningState,
+                activationState,
+                partnerTopicFriendlyDescription,
+                messageForActivation,
                 serializedAdditionalRawData);
         }
 

@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
             IReadOnlyList<DevCenterHealthCheck> healthChecks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.DevCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(endDateTime),
+                systemData,
+                startDateTime,
+                endDateTime,
                 healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>(),
                 serializedAdditionalRawData);
         }

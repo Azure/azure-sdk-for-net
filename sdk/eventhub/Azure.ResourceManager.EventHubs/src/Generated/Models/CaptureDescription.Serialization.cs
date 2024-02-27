@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<EncodingCaptureDescription> encoding = default;
-            Optional<int> intervalInSeconds = default;
-            Optional<int> sizeLimitInBytes = default;
-            Optional<EventHubDestination> destination = default;
-            Optional<bool> skipEmptyArchives = default;
+            bool? enabled = default;
+            EncodingCaptureDescription? encoding = default;
+            int? intervalInSeconds = default;
+            int? sizeLimitInBytes = default;
+            EventHubDestination destination = default;
+            bool? skipEmptyArchives = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CaptureDescription(
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(encoding),
-                Optional.ToNullable(intervalInSeconds),
-                Optional.ToNullable(sizeLimitInBytes),
-                destination.Value,
-                Optional.ToNullable(skipEmptyArchives),
+                enabled,
+                encoding,
+                intervalInSeconds,
+                sizeLimitInBytes,
+                destination,
+                skipEmptyArchives,
                 serializedAdditionalRawData);
         }
 

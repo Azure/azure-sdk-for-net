@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> deploymentId = default;
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> elasticsearchRegion = default;
-            Optional<Uri> elasticsearchServiceUrl = default;
-            Optional<Uri> kibanaServiceUrl = default;
-            Optional<Uri> kibanaSsoUrl = default;
+            string name = default;
+            string deploymentId = default;
+            string azureSubscriptionId = default;
+            string elasticsearchRegion = default;
+            Uri elasticsearchServiceUrl = default;
+            Uri kibanaServiceUrl = default;
+            Uri kibanaSsoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.Elastic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ElasticCloudDeployment(
-                name.Value,
-                deploymentId.Value,
-                azureSubscriptionId.Value,
-                elasticsearchRegion.Value,
-                elasticsearchServiceUrl.Value,
-                kibanaServiceUrl.Value,
-                kibanaSsoUrl.Value,
+                name,
+                deploymentId,
+                azureSubscriptionId,
+                elasticsearchRegion,
+                elasticsearchServiceUrl,
+                kibanaServiceUrl,
+                kibanaSsoUrl,
                 serializedAdditionalRawData);
         }
 

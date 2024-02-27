@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> leasedByLabVmId = default;
+            ResourceIdentifier leasedByLabVmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabDiskDetachContent(leasedByLabVmId.Value, serializedAdditionalRawData);
+            return new DevTestLabDiskDetachContent(leasedByLabVmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabDiskDetachContent>.Write(ModelReaderWriterOptions options)
