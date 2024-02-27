@@ -11,25 +11,32 @@ using Azure.Core.Pipeline;
 namespace Azure.Core
 {
     /// <summary>
-    /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
+    /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/>
+    /// or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Request : PipelineRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        private RequestMethod _method;
         private RequestUriBuilder? _uriBuilder;
         private RequestContent? _content;
 
         private string? _clientRequestId;
 
         /// <summary>
+        /// Creates a new instance of <see cref="Request"/>.
+        /// </summary>
+        protected Request()
+        {
+            MethodCore = RequestMethod.Get.Method;
+        }
+
+        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
         public new virtual RequestMethod Method
         {
-            // TODO
-            get => _method;
+            get => RequestMethod.Parse(MethodCore);
             set => MethodCore = value.Method;
         }
 
@@ -77,16 +84,14 @@ namespace Azure.Core
         #region Overrides for "Core" methods from the PipelineRequest Template pattern
 
         /// <summary>
-        /// TBD.
+        /// Gets or sets the value of <see cref="PipelineRequest.Method"/> on
+        /// the base <see cref="PipelineRequest"/> type.
         /// </summary>
-        protected override string MethodCore
-        {
-            get => _method.Method;
-            set => _method = RequestMethod.Parse(value);
-        }
+        protected override string MethodCore { get; set; }
 
         /// <summary>
-        /// TBD.
+        /// Gets or sets the value of <see cref="PipelineRequest.Uri"/> on
+        /// the base <see cref="PipelineRequest"/> type.
         /// </summary>
         protected override Uri? UriCore
         {
@@ -105,7 +110,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// TBD.
+        /// Gets or sets the value of <see cref="PipelineRequest.Content"/> on
+        /// the base <see cref="PipelineRequest"/> type.
         /// </summary>
         protected override BinaryContent? ContentCore
         {
@@ -114,13 +120,15 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// TBD.
+        /// Gets the value of <see cref="PipelineRequest.Headers"/> on
+        /// the base <see cref="PipelineRequest"/> type.
         /// </summary>
         protected override PipelineRequestHeaders HeadersCore
-            => new AzureCoreRequestHeaders(Headers);
+            => new RequestHeadersAdapter(Headers);
 
         #endregion
 
+        #region Abstract header methods
         /// <summary>
         /// Adds a header value to the header collection.
         /// </summary>
@@ -173,18 +181,23 @@ namespace Azure.Core
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+        #endregion
 
         /// <summary>
-        /// Backwards adapter to RequestHeaders to implement GetHeadersCore.
+        /// This adapter adapts the Azure.Core <see cref="RequestHeaders"/>
+        /// type to the System.ClientModel <see cref="PipelineRequestHeaders"/>
+        /// interface, so that it can <see cref="Request"/> can implement the
+        /// <see cref="HeadersCore"/> property inherited from
+        /// <see cref="PipelineRequest"/>.
         /// </summary>
-        private sealed class AzureCoreRequestHeaders : PipelineRequestHeaders
+        private sealed class RequestHeadersAdapter : PipelineRequestHeaders
         {
             /// <summary>
             /// Headers on the Azure.Core.Request type to adapt to.
             /// </summary>
             private readonly RequestHeaders _headers;
 
-            public AzureCoreRequestHeaders(RequestHeaders headers)
+            public RequestHeadersAdapter(RequestHeaders headers)
                 => _headers = headers;
 
             public override void Add(string name, string value)

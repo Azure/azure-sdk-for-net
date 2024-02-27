@@ -335,8 +335,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// This adapter adapts the ClientModel BinaryContent type to the
-        /// Azure.Core RequestContent interface, so that it can be used as
+        /// This adapter adapts the System.ClientModel BinaryContent type to
+        /// the Azure.Core RequestContent interface, so that it can be used as
         /// though it were a RequestContent in Azure.Core.
         /// </summary>
         private sealed class BinaryContentAdapter : RequestContent
