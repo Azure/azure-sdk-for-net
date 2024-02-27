@@ -6,15 +6,14 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Developer.Signing.Tests.Samples
 {
-    public partial class DeveloperSigningSample : SamplesBase<DevSigningTestEnvironment>
+    public partial class DeveloperSigningSample : SamplesBase<DevSigningClientTestEnvironment>
     {
         public void CreateClients(string region)
         {
             #region Snippet:Azure_Developer_Signing_CreateCertificateProfileClient_Scenario
 
             var credential = new DefaultAzureCredential();
-            var signClient = new SigningClient(credential);
-            var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
+            CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 
             #endregion Snippet:Azure_Developer_Signing_CreateCertificateProfileClient_Scenario
         }
