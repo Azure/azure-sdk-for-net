@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreateRecoveryPlanProperties(primaryFabricId, recoveryFabricId, Optional.ToNullable(failoverDeploymentModel), groups, providerSpecificContent ?? new ChangeTrackingList<RecoveryPlanProviderSpecificContent>(), serializedAdditionalRawData);
+            return new SiteRecoveryCreateRecoveryPlanProperties(
+                primaryFabricId,
+                recoveryFabricId,
+                Optional.ToNullable(failoverDeploymentModel),
+                groups,
+                providerSpecificContent ?? new ChangeTrackingList<RecoveryPlanProviderSpecificContent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateRecoveryPlanProperties>.Write(ModelReaderWriterOptions options)

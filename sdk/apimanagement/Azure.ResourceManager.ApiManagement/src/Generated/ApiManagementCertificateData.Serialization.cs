@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementCertificateData(id, name, type, systemData.Value, subject.Value, thumbprint.Value, Optional.ToNullable(expirationDate), keyVault.Value, serializedAdditionalRawData);
+            return new ApiManagementCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                subject.Value,
+                thumbprint.Value,
+                Optional.ToNullable(expirationDate),
+                keyVault.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementCertificateData>.Write(ModelReaderWriterOptions options)

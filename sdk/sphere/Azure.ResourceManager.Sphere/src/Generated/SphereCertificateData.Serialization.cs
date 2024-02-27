@@ -232,7 +232,19 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereCertificateData(id, name, type, systemData.Value, certificate.Value, Optional.ToNullable(status), subject.Value, thumbprint.Value, Optional.ToNullable(expiryUtc), Optional.ToNullable(notBeforeUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                certificate.Value,
+                Optional.ToNullable(status),
+                subject.Value,
+                thumbprint.Value,
+                Optional.ToNullable(expiryUtc),
+                Optional.ToNullable(notBeforeUtc),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereCertificateData>.Write(ModelReaderWriterOptions options)

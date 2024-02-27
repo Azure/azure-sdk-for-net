@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupJobExtendedInfo(additionalDetails ?? new ChangeTrackingDictionary<string, string>(), backupInstanceState.Value, Optional.ToNullable(dataTransferredInBytes), recoveryDestination.Value, sourceRecoverPoint.Value, subTasks ?? new ChangeTrackingList<BackupJobSubTask>(), targetRecoverPoint.Value, warningDetails ?? new ChangeTrackingList<UserFacingWarningDetail>(), serializedAdditionalRawData);
+            return new BackupJobExtendedInfo(
+                additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
+                backupInstanceState.Value,
+                Optional.ToNullable(dataTransferredInBytes),
+                recoveryDestination.Value,
+                sourceRecoverPoint.Value,
+                subTasks ?? new ChangeTrackingList<BackupJobSubTask>(),
+                targetRecoverPoint.Value,
+                warningDetails ?? new ChangeTrackingList<UserFacingWarningDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

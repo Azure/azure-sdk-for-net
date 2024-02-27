@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringExchangeConnection(Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, Optional.ToNullable(connectionIdentifier), errorMessage.Value, serializedAdditionalRawData);
+            return new PeeringExchangeConnection(
+                Optional.ToNullable(peeringDBFacilityId),
+                Optional.ToNullable(connectionState),
+                bgpSession.Value,
+                Optional.ToNullable(connectionIdentifier),
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringExchangeConnection>.Write(ModelReaderWriterOptions options)

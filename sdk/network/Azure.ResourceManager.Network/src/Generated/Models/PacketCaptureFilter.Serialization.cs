@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureFilter(Optional.ToNullable(protocol), localIPAddress.Value, remoteIPAddress.Value, localPort.Value, remotePort.Value, serializedAdditionalRawData);
+            return new PacketCaptureFilter(
+                Optional.ToNullable(protocol),
+                localIPAddress.Value,
+                remoteIPAddress.Value,
+                localPort.Value,
+                remotePort.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureFilter>.Write(ModelReaderWriterOptions options)

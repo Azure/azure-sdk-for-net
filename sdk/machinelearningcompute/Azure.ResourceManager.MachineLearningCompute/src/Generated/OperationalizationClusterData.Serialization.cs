@@ -344,7 +344,25 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalizationClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), Optional.ToNullable(provisioningState), provisioningErrors ?? new ChangeTrackingList<ErrorResponseWrapper>(), Optional.ToNullable(clusterType), storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, globalServiceConfiguration.Value, serializedAdditionalRawData);
+            return new OperationalizationClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(modifiedOn),
+                Optional.ToNullable(provisioningState),
+                provisioningErrors ?? new ChangeTrackingList<ErrorResponseWrapper>(),
+                Optional.ToNullable(clusterType),
+                storageAccount.Value,
+                containerRegistry.Value,
+                containerService.Value,
+                appInsights.Value,
+                globalServiceConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalizationClusterData>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalSpacecraftLink(name, centerFrequencyMHz, bandwidthMHz, direction, polarization, authorizations ?? new ChangeTrackingList<AuthorizedGroundStation>(), serializedAdditionalRawData);
+            return new OrbitalSpacecraftLink(
+                name,
+                centerFrequencyMHz,
+                bandwidthMHz,
+                direction,
+                polarization,
+                authorizations ?? new ChangeTrackingList<AuthorizedGroundStation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalSpacecraftLink>.Write(ModelReaderWriterOptions options)

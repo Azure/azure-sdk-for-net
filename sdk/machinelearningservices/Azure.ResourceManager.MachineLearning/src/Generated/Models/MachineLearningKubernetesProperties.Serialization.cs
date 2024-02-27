@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(), serializedAdditionalRawData);
+            return new MachineLearningKubernetesProperties(
+                relayConnectionString.Value,
+                serviceBusConnectionString.Value,
+                extensionPrincipalId.Value,
+                extensionInstanceReleaseTrain.Value,
+                vcName.Value,
+                @namespace.Value,
+                defaultInstanceType.Value,
+                instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningKubernetesProperties>.Write(ModelReaderWriterOptions options)

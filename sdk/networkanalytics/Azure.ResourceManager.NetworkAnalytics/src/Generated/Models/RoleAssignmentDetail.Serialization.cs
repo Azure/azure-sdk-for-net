@@ -140,7 +140,15 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentDetail(roleId, principalId, userName, dataTypeScope, principalType, role, roleAssignmentId, serializedAdditionalRawData);
+            return new RoleAssignmentDetail(
+                roleId,
+                principalId,
+                userName,
+                dataTypeScope,
+                principalType,
+                role,
+                roleAssignmentId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentDetail>.Write(ModelReaderWriterOptions options)

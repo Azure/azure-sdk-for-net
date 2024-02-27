@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentScriptPropertiesBase(containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, serializedAdditionalRawData);
+            return new ArmDeploymentScriptPropertiesBase(
+                containerSettings.Value,
+                storageAccountSettings.Value,
+                Optional.ToNullable(cleanupPreference),
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                outputs.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentScriptPropertiesBase>.Write(ModelReaderWriterOptions options)

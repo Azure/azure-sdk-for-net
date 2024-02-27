@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value, serializedAdditionalRawData, name.Value, Optional.ToNullable(type));
+            return new PostgreSqlFlexibleServerNameAvailabilityResult(
+                Optional.ToNullable(nameAvailable),
+                Optional.ToNullable(reason),
+                message.Value,
+                serializedAdditionalRawData,
+                name.Value,
+                Optional.ToNullable(type));
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

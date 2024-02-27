@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchResizeOperationStatus(Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(resizeTimeout), Optional.ToNullable(nodeDeallocationOption), Optional.ToNullable(startTime), errors ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
+            return new BatchResizeOperationStatus(
+                Optional.ToNullable(targetDedicatedNodes),
+                Optional.ToNullable(targetLowPriorityNodes),
+                Optional.ToNullable(resizeTimeout),
+                Optional.ToNullable(nodeDeallocationOption),
+                Optional.ToNullable(startTime),
+                errors ?? new ChangeTrackingList<ResponseError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchResizeOperationStatus>.Write(ModelReaderWriterOptions options)

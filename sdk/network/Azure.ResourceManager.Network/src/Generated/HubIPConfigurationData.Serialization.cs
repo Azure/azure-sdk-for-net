@@ -218,7 +218,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new HubIPConfigurationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                privateIPAddress.Value,
+                Optional.ToNullable(privateIPAllocationMethod),
+                subnet.Value,
+                publicIPAddress.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<HubIPConfigurationData>.Write(ModelReaderWriterOptions options)

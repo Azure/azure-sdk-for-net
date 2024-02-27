@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevOpsRepositoryData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DevOpsRepositoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsRepositoryData>.Write(ModelReaderWriterOptions options)

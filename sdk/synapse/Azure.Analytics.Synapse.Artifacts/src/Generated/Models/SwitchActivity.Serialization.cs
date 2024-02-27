@@ -220,7 +220,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SwitchActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, @on, cases ?? new ChangeTrackingList<SwitchCase>(), defaultActivities ?? new ChangeTrackingList<Activity>());
+            return new SwitchActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                @on,
+                cases ?? new ChangeTrackingList<SwitchCase>(),
+                defaultActivities ?? new ChangeTrackingList<Activity>());
         }
 
         internal partial class SwitchActivityConverter : JsonConverter<SwitchActivity>

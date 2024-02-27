@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), skuCapacity.Value, locations ?? new ChangeTrackingList<AzureLocation>(), capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(), serializedAdditionalRawData);
+            return new AppServiceSkuDescription(
+                name.Value,
+                tier.Value,
+                size.Value,
+                family.Value,
+                Optional.ToNullable(capacity),
+                skuCapacity.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceSkuDescription>.Write(ModelReaderWriterOptions options)

@@ -97,7 +97,14 @@ namespace Azure.Storage.Blobs.Models
                 }
                 cors = array;
             }
-            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
+            return new BlobServiceProperties(
+                logging,
+                hourMetrics,
+                minuteMetrics,
+                cors,
+                defaultServiceVersion,
+                deleteRetentionPolicy,
+                staticWebsite);
         }
     }
 }

@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineImageReference(id.Value, offer.Value, publisher.Value, sku.Value, version.Value, exactVersion.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineImageReference(
+                id.Value,
+                offer.Value,
+                publisher.Value,
+                sku.Value,
+                version.Value,
+                exactVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineImageReference>.Write(ModelReaderWriterOptions options)

@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourcePrecedence(Optional.ToNullable(precedence), name.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id), dataSourceReferenceId.Value, serializedAdditionalRawData);
+            return new DataSourcePrecedence(
+                Optional.ToNullable(precedence),
+                name.Value,
+                Optional.ToNullable(dataSourceType),
+                Optional.ToNullable(status),
+                Optional.ToNullable(id),
+                dataSourceReferenceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourcePrecedence>.Write(ModelReaderWriterOptions options)

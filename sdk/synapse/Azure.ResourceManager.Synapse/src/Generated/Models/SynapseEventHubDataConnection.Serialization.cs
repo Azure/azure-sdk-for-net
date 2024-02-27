@@ -294,7 +294,23 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEventHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), eventSystemProperties ?? new ChangeTrackingList<string>(), Optional.ToNullable(compression), Optional.ToNullable(provisioningState), managedIdentityResourceId.Value);
+            return new SynapseEventHubDataConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                eventHubResourceId.Value,
+                consumerGroup.Value,
+                tableName.Value,
+                mappingRuleName.Value,
+                Optional.ToNullable(dataFormat),
+                eventSystemProperties ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(compression),
+                Optional.ToNullable(provisioningState),
+                managedIdentityResourceId.Value);
         }
 
         BinaryData IPersistableModel<SynapseEventHubDataConnection>.Write(ModelReaderWriterOptions options)

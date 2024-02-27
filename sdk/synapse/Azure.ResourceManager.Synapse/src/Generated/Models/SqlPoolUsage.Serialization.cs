@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlPoolUsage(name.Value, resourceName.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, Optional.ToNullable(nextResetTime), serializedAdditionalRawData);
+            return new SqlPoolUsage(
+                name.Value,
+                resourceName.Value,
+                displayName.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                unit.Value,
+                Optional.ToNullable(nextResetTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlPoolUsage>.Write(ModelReaderWriterOptions options)

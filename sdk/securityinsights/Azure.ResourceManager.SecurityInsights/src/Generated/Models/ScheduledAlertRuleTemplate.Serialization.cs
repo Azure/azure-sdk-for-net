@@ -481,7 +481,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), techniques ?? new ChangeTrackingList<string>(), version.Value, eventGroupingSettings.Value, customDetails ?? new ChangeTrackingDictionary<string, string>(), entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(), alertDetailsOverride.Value);
+            return new ScheduledAlertRuleTemplate(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(alertRulesCreatedByTemplateCount),
+                Optional.ToNullable(createdDateUTC),
+                Optional.ToNullable(lastUpdatedDateUTC),
+                description.Value,
+                displayName.Value,
+                requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(),
+                Optional.ToNullable(status),
+                query.Value,
+                Optional.ToNullable(queryFrequency),
+                Optional.ToNullable(queryPeriod),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(triggerOperator),
+                Optional.ToNullable(triggerThreshold),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                version.Value,
+                eventGroupingSettings.Value,
+                customDetails ?? new ChangeTrackingDictionary<string, string>(),
+                entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(),
+                alertDetailsOverride.Value);
         }
 
         BinaryData IPersistableModel<ScheduledAlertRuleTemplate>.Write(ModelReaderWriterOptions options)

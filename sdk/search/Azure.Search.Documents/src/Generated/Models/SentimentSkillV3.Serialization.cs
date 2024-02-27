@@ -166,7 +166,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SentimentSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(includeOpinionMining), modelVersion.Value);
+            return new SentimentSkillV3(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                defaultLanguageCode.Value,
+                Optional.ToNullable(includeOpinionMining),
+                modelVersion.Value);
         }
     }
 }

@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2UpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, recoveryAzureV1ResourceGroupId.Value, recoveryAzureV2ResourceGroupId.Value, useManagedDisks.Value, targetProximityPlacementGroupId.Value, targetAvailabilityZone.Value, targetVmTags ?? new ChangeTrackingDictionary<string, string>(), targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetNicTags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(sqlServerLicenseType), vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
+            return new InMageAzureV2UpdateReplicationProtectedItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryAzureV1ResourceGroupId.Value,
+                recoveryAzureV2ResourceGroupId.Value,
+                useManagedDisks.Value,
+                targetProximityPlacementGroupId.Value,
+                targetAvailabilityZone.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(sqlServerLicenseType),
+                vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
         }
 
         BinaryData IPersistableModel<InMageAzureV2UpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

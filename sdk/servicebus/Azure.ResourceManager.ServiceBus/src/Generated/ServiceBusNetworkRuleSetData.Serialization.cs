@@ -249,7 +249,18 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), virtualNetworkRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>(), ipRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusNetworkRuleSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(trustedServiceAccessEnabled),
+                Optional.ToNullable(defaultAction),
+                virtualNetworkRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>(),
+                ipRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNetworkRuleSetData>.Write(ModelReaderWriterOptions options)

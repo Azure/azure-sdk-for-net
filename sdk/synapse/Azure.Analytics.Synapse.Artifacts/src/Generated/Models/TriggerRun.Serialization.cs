@@ -103,7 +103,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, properties ?? new ChangeTrackingDictionary<string, string>(), triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(), additionalProperties);
+            return new TriggerRun(
+                triggerRunId.Value,
+                triggerName.Value,
+                triggerType.Value,
+                Optional.ToNullable(triggerRunTimestamp),
+                Optional.ToNullable(status),
+                message.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
+                additionalProperties);
         }
 
         internal partial class TriggerRunConverter : JsonConverter<TriggerRun>

@@ -218,7 +218,17 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(provisioningState), devCenterUri.Value, serializedAdditionalRawData);
+            return new DevCenterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(provisioningState),
+                devCenterUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterData>.Write(ModelReaderWriterOptions options)

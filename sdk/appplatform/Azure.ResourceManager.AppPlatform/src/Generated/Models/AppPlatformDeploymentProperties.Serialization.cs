@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(active), instances ?? new ChangeTrackingList<AppPlatformDeploymentInstance>(), serializedAdditionalRawData);
+            return new AppPlatformDeploymentProperties(
+                source.Value,
+                deploymentSettings.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                Optional.ToNullable(active),
+                instances ?? new ChangeTrackingList<AppPlatformDeploymentInstance>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentProperties>.Write(ModelReaderWriterOptions options)

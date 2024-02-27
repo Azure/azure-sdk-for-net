@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), connectionProfile.Value, claimedByUserId.Value, Optional.ToNullable(vmType), serializedAdditionalRawData);
+            return new LabVirtualMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                connectionProfile.Value,
+                claimedByUserId.Value,
+                Optional.ToNullable(vmType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineData>.Write(ModelReaderWriterOptions options)

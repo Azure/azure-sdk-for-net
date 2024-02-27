@@ -525,7 +525,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceUpdateSummary(id, name, type, systemData.Value, deviceVersionNumber.Value, friendlyDeviceVersionName.Value, Optional.ToNullable(deviceLastScannedDateTime), Optional.ToNullable(lastCompletedScanJobDateTime), Optional.ToNullable(lastSuccessfulScanJobTime), Optional.ToNullable(lastCompletedDownloadJobDateTime), lastCompletedDownloadJobId.Value, Optional.ToNullable(lastDownloadJobStatus), Optional.ToNullable(lastSuccessfulInstallJobDateTime), Optional.ToNullable(lastCompletedInstallJobDateTime), lastCompletedInstallJobId.Value, Optional.ToNullable(lastInstallJobStatus), Optional.ToNullable(totalNumberOfUpdatesAvailable), Optional.ToNullable(totalNumberOfUpdatesPendingDownload), Optional.ToNullable(totalNumberOfUpdatesPendingInstall), Optional.ToNullable(rebootBehavior), Optional.ToNullable(ongoingUpdateOperation), inProgressDownloadJobId.Value, inProgressInstallJobId.Value, Optional.ToNullable(inProgressDownloadJobStartedDateTime), Optional.ToNullable(inProgressInstallJobStartedDateTime), updateTitles ?? new ChangeTrackingList<string>(), updates ?? new ChangeTrackingList<DataBoxEdgeUpdateDetails>(), Optional.ToNullable(totalUpdateSizeInBytes), Optional.ToNullable(totalTimeInMinutes), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceUpdateSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deviceVersionNumber.Value,
+                friendlyDeviceVersionName.Value,
+                Optional.ToNullable(deviceLastScannedDateTime),
+                Optional.ToNullable(lastCompletedScanJobDateTime),
+                Optional.ToNullable(lastSuccessfulScanJobTime),
+                Optional.ToNullable(lastCompletedDownloadJobDateTime),
+                lastCompletedDownloadJobId.Value,
+                Optional.ToNullable(lastDownloadJobStatus),
+                Optional.ToNullable(lastSuccessfulInstallJobDateTime),
+                Optional.ToNullable(lastCompletedInstallJobDateTime),
+                lastCompletedInstallJobId.Value,
+                Optional.ToNullable(lastInstallJobStatus),
+                Optional.ToNullable(totalNumberOfUpdatesAvailable),
+                Optional.ToNullable(totalNumberOfUpdatesPendingDownload),
+                Optional.ToNullable(totalNumberOfUpdatesPendingInstall),
+                Optional.ToNullable(rebootBehavior),
+                Optional.ToNullable(ongoingUpdateOperation),
+                inProgressDownloadJobId.Value,
+                inProgressInstallJobId.Value,
+                Optional.ToNullable(inProgressDownloadJobStartedDateTime),
+                Optional.ToNullable(inProgressInstallJobStartedDateTime),
+                updateTitles ?? new ChangeTrackingList<string>(),
+                updates ?? new ChangeTrackingList<DataBoxEdgeUpdateDetails>(),
+                Optional.ToNullable(totalUpdateSizeInBytes),
+                Optional.ToNullable(totalTimeInMinutes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceUpdateSummary>.Write(ModelReaderWriterOptions options)

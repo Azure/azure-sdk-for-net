@@ -206,7 +206,23 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12AcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, functionalAcknowledgementVersion.Value, batchFunctionalAcknowledgements, needImplementationAcknowledgement, implementationAcknowledgementVersion.Value, batchImplementationAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber, serializedAdditionalRawData);
+            return new X12AcknowledgementSettings(
+                needTechnicalAcknowledgement,
+                batchTechnicalAcknowledgements,
+                needFunctionalAcknowledgement,
+                functionalAcknowledgementVersion.Value,
+                batchFunctionalAcknowledgements,
+                needImplementationAcknowledgement,
+                implementationAcknowledgementVersion.Value,
+                batchImplementationAcknowledgements,
+                needLoopForValidMessages,
+                sendSynchronousAcknowledgement,
+                acknowledgementControlNumberPrefix.Value,
+                acknowledgementControlNumberSuffix.Value,
+                acknowledgementControlNumberLowerBound,
+                acknowledgementControlNumberUpperBound,
+                rolloverAcknowledgementControlNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12AcknowledgementSettings>.Write(ModelReaderWriterOptions options)

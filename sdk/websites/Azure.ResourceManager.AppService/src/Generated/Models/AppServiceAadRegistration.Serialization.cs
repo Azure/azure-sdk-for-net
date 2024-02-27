@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadRegistration(openIdIssuer.Value, clientId.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, clientSecretCertificateSubjectAlternativeName.Value, clientSecretCertificateIssuer.Value, serializedAdditionalRawData);
+            return new AppServiceAadRegistration(
+                openIdIssuer.Value,
+                clientId.Value,
+                clientSecretSettingName.Value,
+                clientSecretCertificateThumbprint.Value,
+                clientSecretCertificateSubjectAlternativeName.Value,
+                clientSecretCertificateIssuer.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadRegistration>.Write(ModelReaderWriterOptions options)

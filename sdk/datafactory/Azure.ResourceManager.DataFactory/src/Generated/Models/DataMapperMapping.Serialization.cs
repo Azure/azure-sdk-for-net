@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMapperMapping(targetEntityName.Value, sourceEntityName.Value, sourceConnectionReference.Value, attributeMappingInfo.Value, sourceDenormalizeInfo.Value, serializedAdditionalRawData);
+            return new DataMapperMapping(
+                targetEntityName.Value,
+                sourceEntityName.Value,
+                sourceConnectionReference.Value,
+                attributeMappingInfo.Value,
+                sourceDenormalizeInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMapperMapping>.Write(ModelReaderWriterOptions options)

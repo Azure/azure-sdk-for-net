@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapInstallWithoutOSConfigSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, bomUrl, sapBitsStorageAccountId, softwareVersion, highAvailabilitySoftwareConfiguration.Value);
+            return new SapInstallWithoutOSConfigSoftwareConfiguration(
+                softwareInstallationType,
+                serializedAdditionalRawData,
+                bomUrl,
+                sapBitsStorageAccountId,
+                softwareVersion,
+                highAvailabilitySoftwareConfiguration.Value);
         }
 
         BinaryData IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

@@ -337,7 +337,26 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value, serializedAdditionalRawData);
+            return new VirtualApplicationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                objectId.Value,
+                description.Value,
+                friendlyName.Value,
+                filePath.Value,
+                msixPackageFamilyName.Value,
+                msixPackageApplicationId.Value,
+                Optional.ToNullable(applicationType),
+                commandLineSetting,
+                commandLineArguments.Value,
+                Optional.ToNullable(showInPortal),
+                iconPath.Value,
+                Optional.ToNullable(iconIndex),
+                iconHash.Value,
+                iconContent.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationData>.Write(ModelReaderWriterOptions options)

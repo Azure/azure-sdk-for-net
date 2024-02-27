@@ -178,7 +178,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, source.Value, provisioningState.Value, restorePointGroupId.Value, restorePoints ?? new ChangeTrackingList<RestorePointData>());
+            return new RestorePointGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                source.Value,
+                provisioningState.Value,
+                restorePointGroupId.Value,
+                restorePoints ?? new ChangeTrackingList<RestorePointData>());
         }
 
         BinaryData IPersistableModel<RestorePointGroupPatch>.Write(ModelReaderWriterOptions options)

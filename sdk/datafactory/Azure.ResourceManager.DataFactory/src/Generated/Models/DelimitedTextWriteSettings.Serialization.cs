@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextWriteSettings(type, additionalProperties, quoteAllText.Value, fileExtension, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new DelimitedTextWriteSettings(
+                type,
+                additionalProperties,
+                quoteAllText.Value,
+                fileExtension,
+                maxRowsPerFile.Value,
+                fileNamePrefix.Value);
         }
 
         BinaryData IPersistableModel<DelimitedTextWriteSettings>.Write(ModelReaderWriterOptions options)

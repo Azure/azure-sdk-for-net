@@ -125,7 +125,13 @@ namespace Azure.ResourceManager.Chaos.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ChaosTargetQuerySelector(type, id, filter.Value, additionalProperties, queryString, subscriptionIds);
+            return new ChaosTargetQuerySelector(
+                type,
+                id,
+                filter.Value,
+                additionalProperties,
+                queryString,
+                subscriptionIds);
         }
 
         BinaryData IPersistableModel<ChaosTargetQuerySelector>.Write(ModelReaderWriterOptions options)

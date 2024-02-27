@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRUsage(id.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, unit.Value, serializedAdditionalRawData);
+            return new SignalRUsage(
+                id.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                unit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRUsage>.Write(ModelReaderWriterOptions options)

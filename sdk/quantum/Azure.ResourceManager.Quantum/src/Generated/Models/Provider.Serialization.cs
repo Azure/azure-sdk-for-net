@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Provider(providerId.Value, providerSku.Value, instanceUri.Value, applicationName.Value, Optional.ToNullable(provisioningState), resourceUsageId.Value, serializedAdditionalRawData);
+            return new Provider(
+                providerId.Value,
+                providerSku.Value,
+                instanceUri.Value,
+                applicationName.Value,
+                Optional.ToNullable(provisioningState),
+                resourceUsageId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Provider>.Write(ModelReaderWriterOptions options)

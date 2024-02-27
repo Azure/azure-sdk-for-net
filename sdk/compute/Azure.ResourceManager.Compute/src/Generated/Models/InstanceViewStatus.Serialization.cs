@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time), serializedAdditionalRawData);
+            return new InstanceViewStatus(
+                code.Value,
+                Optional.ToNullable(level),
+                displayStatus.Value,
+                message.Value,
+                Optional.ToNullable(time),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstanceViewStatus>.Write(ModelReaderWriterOptions options)

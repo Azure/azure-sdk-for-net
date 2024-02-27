@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesSkuAvailabilityList(kind.Value, type.Value, skuName.Value, Optional.ToNullable(skuAvailable), reason.Value, message.Value, serializedAdditionalRawData);
+            return new CognitiveServicesSkuAvailabilityList(
+                kind.Value,
+                type.Value,
+                skuName.Value,
+                Optional.ToNullable(skuAvailable),
+                reason.Value,
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesSkuAvailabilityList>.Write(ModelReaderWriterOptions options)

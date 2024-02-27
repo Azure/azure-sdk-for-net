@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastDefinition(type, timeframe, timePeriod.Value, dataset, Optional.ToNullable(includeActualCost), Optional.ToNullable(includeFreshPartialCost), serializedAdditionalRawData);
+            return new ForecastDefinition(
+                type,
+                timeframe,
+                timePeriod.Value,
+                dataset,
+                Optional.ToNullable(includeActualCost),
+                Optional.ToNullable(includeFreshPartialCost),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastDefinition>.Write(ModelReaderWriterOptions options)

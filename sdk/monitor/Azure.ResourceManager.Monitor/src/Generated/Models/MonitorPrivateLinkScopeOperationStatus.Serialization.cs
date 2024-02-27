@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkScopeOperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value, serializedAdditionalRawData);
+            return new MonitorPrivateLinkScopeOperationStatus(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                status.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkScopeOperationStatus>.Write(ModelReaderWriterOptions options)

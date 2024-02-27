@@ -318,7 +318,23 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinuousWebJobData(id, name, type, systemData.Value, Optional.ToNullable(status), detailedStatus.Value, logUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), settings ?? new ChangeTrackingDictionary<string, BinaryData>(), kind.Value, serializedAdditionalRawData);
+            return new ContinuousWebJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(status),
+                detailedStatus.Value,
+                logUrl.Value,
+                runCommand.Value,
+                url.Value,
+                extraInfoUrl.Value,
+                Optional.ToNullable(webJobType),
+                error.Value,
+                Optional.ToNullable(usingSdk),
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContinuousWebJobData>.Write(ModelReaderWriterOptions options)

@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupProtectedItemData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new BackupProtectedItemData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupProtectedItemData>.Write(ModelReaderWriterOptions options)

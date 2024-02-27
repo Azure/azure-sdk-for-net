@@ -224,7 +224,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPool(id.Value, name.Value, type.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, Optional.ToNullable(createMode), Optional.ToNullable(creationDate));
+            return new SqlPool(
+                id.Value,
+                name.Value,
+                type.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                Optional.ToNullable(maxSizeBytes),
+                collation.Value,
+                sourceDatabaseId.Value,
+                recoverableDatabaseId.Value,
+                provisioningState.Value,
+                status.Value,
+                restorePointInTime.Value,
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(creationDate));
         }
 
         internal partial class SqlPoolConverter : JsonConverter<SqlPool>

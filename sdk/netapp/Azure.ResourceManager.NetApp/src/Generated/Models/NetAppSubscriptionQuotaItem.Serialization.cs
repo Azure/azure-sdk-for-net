@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppSubscriptionQuotaItem(id, name, type, systemData.Value, Optional.ToNullable(current), Optional.ToNullable(@default), serializedAdditionalRawData);
+            return new NetAppSubscriptionQuotaItem(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(current),
+                Optional.ToNullable(@default),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppSubscriptionQuotaItem>.Write(ModelReaderWriterOptions options)

@@ -234,7 +234,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRoutePortsLocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, address.Value, contact.Value, availableBandwidths ?? new ChangeTrackingList<ExpressRoutePortsLocationBandwidths>(), Optional.ToNullable(provisioningState));
+            return new ExpressRoutePortsLocationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                address.Value,
+                contact.Value,
+                availableBandwidths ?? new ChangeTrackingList<ExpressRoutePortsLocationBandwidths>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ExpressRoutePortsLocationData>.Write(ModelReaderWriterOptions options)

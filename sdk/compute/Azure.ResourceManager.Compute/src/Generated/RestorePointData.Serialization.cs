@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointData(id, name, type, systemData.Value, excludeDisks ?? new ChangeTrackingList<WritableSubResource>(), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), Optional.ToNullable(timeCreated), sourceRestorePoint, instanceView.Value, serializedAdditionalRawData);
+            return new RestorePointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                excludeDisks ?? new ChangeTrackingList<WritableSubResource>(),
+                sourceMetadata.Value,
+                provisioningState.Value,
+                Optional.ToNullable(consistencyMode),
+                Optional.ToNullable(timeCreated),
+                sourceRestorePoint,
+                instanceView.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointData>.Write(ModelReaderWriterOptions options)

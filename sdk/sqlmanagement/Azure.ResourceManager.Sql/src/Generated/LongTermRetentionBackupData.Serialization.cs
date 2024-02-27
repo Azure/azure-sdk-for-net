@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(isBackupImmutable), Optional.ToNullable(backupStorageAccessTier), serializedAdditionalRawData);
+            return new LongTermRetentionBackupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverName.Value,
+                Optional.ToNullable(serverCreateTime),
+                databaseName.Value,
+                Optional.ToNullable(databaseDeletionTime),
+                Optional.ToNullable(backupTime),
+                Optional.ToNullable(backupExpirationTime),
+                Optional.ToNullable(backupStorageRedundancy),
+                Optional.ToNullable(requestedBackupStorageRedundancy),
+                Optional.ToNullable(isBackupImmutable),
+                Optional.ToNullable(backupStorageAccessTier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionBackupData>.Write(ModelReaderWriterOptions options)

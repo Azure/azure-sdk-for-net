@@ -320,7 +320,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, allocationTags ?? new ChangeTrackingDictionary<string, string>());
+            return new IPAllocationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                subnet,
+                virtualNetwork,
+                Optional.ToNullable(type0),
+                prefix.Value,
+                Optional.ToNullable(prefixLength),
+                Optional.ToNullable(prefixType),
+                ipamAllocationId.Value,
+                allocationTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<IPAllocationData>.Write(ModelReaderWriterOptions options)

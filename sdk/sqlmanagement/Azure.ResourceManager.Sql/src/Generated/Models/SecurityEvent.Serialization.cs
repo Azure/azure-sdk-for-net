@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value, serializedAdditionalRawData);
+            return new SecurityEvent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(eventTime),
+                Optional.ToNullable(securityEventType),
+                subscription.Value,
+                server.Value,
+                database.Value,
+                clientIP.Value,
+                applicationName.Value,
+                principalName.Value,
+                securityEventSqlInjectionAdditionalProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityEvent>.Write(ModelReaderWriterOptions options)

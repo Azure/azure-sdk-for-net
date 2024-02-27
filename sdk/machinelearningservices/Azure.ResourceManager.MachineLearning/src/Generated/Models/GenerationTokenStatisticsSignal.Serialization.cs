@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationTokenStatisticsSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, metricThresholds, productionData.Value, samplingRate);
+            return new GenerationTokenStatisticsSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData.Value,
+                samplingRate);
         }
 
         BinaryData IPersistableModel<GenerationTokenStatisticsSignal>.Write(ModelReaderWriterOptions options)

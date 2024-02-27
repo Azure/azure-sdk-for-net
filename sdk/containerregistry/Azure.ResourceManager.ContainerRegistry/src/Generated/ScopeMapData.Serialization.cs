@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopeMapData(id, name, type, systemData.Value, description.Value, type0.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), actions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ScopeMapData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                type0.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(provisioningState),
+                actions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopeMapData>.Write(ModelReaderWriterOptions options)

@@ -313,7 +313,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsHostEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, azureId.Value, dnsDomain.Value, hostName.Value, Optional.ToNullable(isDomainJoined), netBiosName.Value, ntDomain.Value, omsAgentId.Value, Optional.ToNullable(osFamily), osVersion.Value);
+            return new SecurityInsightsHostEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                azureId.Value,
+                dnsDomain.Value,
+                hostName.Value,
+                Optional.ToNullable(isDomainJoined),
+                netBiosName.Value,
+                ntDomain.Value,
+                omsAgentId.Value,
+                Optional.ToNullable(osFamily),
+                osVersion.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsHostEntity>.Write(ModelReaderWriterOptions options)

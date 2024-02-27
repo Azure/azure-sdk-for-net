@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageProperties(Optional.ToNullable(provisioningState), offeringType.Value, storageType.Value, generation.Value, Optional.ToNullable(hardwareType), workloadType.Value, storageBillingProperties.Value, serializedAdditionalRawData);
+            return new LargeInstanceStorageProperties(
+                Optional.ToNullable(provisioningState),
+                offeringType.Value,
+                storageType.Value,
+                generation.Value,
+                Optional.ToNullable(hardwareType),
+                workloadType.Value,
+                storageBillingProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageProperties>.Write(ModelReaderWriterOptions options)

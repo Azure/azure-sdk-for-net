@@ -328,7 +328,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSparkSessionOptions(tags ?? new ChangeTrackingDictionary<string, string>(), kind.Value, proxyUser.Value, name.Value, jars ?? new ChangeTrackingList<string>(), pyFiles ?? new ChangeTrackingList<string>(), files ?? new ChangeTrackingList<string>(), archives ?? new ChangeTrackingList<string>(), queue.Value, conf ?? new ChangeTrackingDictionary<string, string>(), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), Optional.ToNullable(isQueueable), Optional.ToNullable(heartbeatTimeoutInSecond));
+            return new RunNotebookSparkSessionOptions(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind.Value,
+                proxyUser.Value,
+                name.Value,
+                jars ?? new ChangeTrackingList<string>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                queue.Value,
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                driverMemory.Value,
+                Optional.ToNullable(driverCores),
+                executorMemory.Value,
+                Optional.ToNullable(executorCores),
+                Optional.ToNullable(numExecutors),
+                Optional.ToNullable(isQueueable),
+                Optional.ToNullable(heartbeatTimeoutInSecond));
         }
 
         internal partial class RunNotebookSparkSessionOptionsConverter : JsonConverter<RunNotebookSparkSessionOptions>

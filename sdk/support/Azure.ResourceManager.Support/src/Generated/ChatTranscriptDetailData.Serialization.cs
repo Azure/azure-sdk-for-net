@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatTranscriptDetailData(id, name, type, systemData.Value, messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>(), Optional.ToNullable(startTime), serializedAdditionalRawData);
+            return new ChatTranscriptDetailData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>(),
+                Optional.ToNullable(startTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptDetailData>.Write(ModelReaderWriterOptions options)

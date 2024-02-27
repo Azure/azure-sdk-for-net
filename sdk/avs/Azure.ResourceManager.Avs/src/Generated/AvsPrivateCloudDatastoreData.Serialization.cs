@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudDatastoreData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), netAppVolume, diskPoolVolume.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new AvsPrivateCloudDatastoreData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                netAppVolume,
+                diskPoolVolume.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudDatastoreData>.Write(ModelReaderWriterOptions options)

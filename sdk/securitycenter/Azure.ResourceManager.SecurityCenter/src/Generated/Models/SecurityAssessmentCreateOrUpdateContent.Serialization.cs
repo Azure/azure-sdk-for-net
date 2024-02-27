@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentCreateOrUpdateContent(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, additionalData ?? new ChangeTrackingDictionary<string, string>(), links.Value, metadata.Value, partnersData.Value, status.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceDetails.Value,
+                displayName.Value,
+                additionalData ?? new ChangeTrackingDictionary<string, string>(),
+                links.Value,
+                metadata.Value,
+                partnersData.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

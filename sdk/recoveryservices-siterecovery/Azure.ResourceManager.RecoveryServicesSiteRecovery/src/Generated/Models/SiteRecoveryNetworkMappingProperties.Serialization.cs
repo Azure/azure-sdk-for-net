@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryNetworkMappingProperties(state.Value, primaryNetworkFriendlyName.Value, primaryNetworkId.Value, primaryFabricFriendlyName.Value, recoveryNetworkFriendlyName.Value, recoveryNetworkId.Value, recoveryFabricArmId.Value, recoveryFabricFriendlyName.Value, fabricSpecificSettings.Value, serializedAdditionalRawData);
+            return new SiteRecoveryNetworkMappingProperties(
+                state.Value,
+                primaryNetworkFriendlyName.Value,
+                primaryNetworkId.Value,
+                primaryFabricFriendlyName.Value,
+                recoveryNetworkFriendlyName.Value,
+                recoveryNetworkId.Value,
+                recoveryFabricArmId.Value,
+                recoveryFabricFriendlyName.Value,
+                fabricSpecificSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryNetworkMappingProperties>.Write(ModelReaderWriterOptions options)

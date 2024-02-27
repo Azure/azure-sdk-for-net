@@ -282,7 +282,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryDockerBuildContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, serializedAdditionalRawData, imageNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath, target.Value, arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
+            return new ContainerRegistryDockerBuildContent(
+                type,
+                Optional.ToNullable(isArchiveEnabled),
+                agentPoolName.Value,
+                logTemplate.Value,
+                serializedAdditionalRawData,
+                imageNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isPushEnabled),
+                Optional.ToNullable(noCache),
+                dockerFilePath,
+                target.Value,
+                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                Optional.ToNullable(timeout),
+                platform,
+                agentConfiguration.Value,
+                sourceLocation.Value,
+                credentials.Value);
         }
 
         BinaryData IPersistableModel<ContainerRegistryDockerBuildContent>.Write(ModelReaderWriterOptions options)

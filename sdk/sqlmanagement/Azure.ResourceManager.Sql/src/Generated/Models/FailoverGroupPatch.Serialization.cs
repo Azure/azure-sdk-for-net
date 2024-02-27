@@ -207,7 +207,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), readWriteEndpoint.Value, readOnlyEndpoint.Value, databases ?? new ChangeTrackingList<ResourceIdentifier>(), partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(), serializedAdditionalRawData);
+            return new FailoverGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                readWriteEndpoint.Value,
+                readOnlyEndpoint.Value,
+                databases ?? new ChangeTrackingList<ResourceIdentifier>(),
+                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupPatch>.Write(ModelReaderWriterOptions options)

@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentWhatIfProperties(template.Value, templateLink.Value, parameters.Value, parametersLink.Value, mode, debugSetting.Value, onErrorDeployment.Value, expressionEvaluationOptions.Value, serializedAdditionalRawData, whatIfSettings.Value);
+            return new ArmDeploymentWhatIfProperties(
+                template.Value,
+                templateLink.Value,
+                parameters.Value,
+                parametersLink.Value,
+                mode,
+                debugSetting.Value,
+                onErrorDeployment.Value,
+                expressionEvaluationOptions.Value,
+                serializedAdditionalRawData,
+                whatIfSettings.Value);
         }
 
         BinaryData IPersistableModel<ArmDeploymentWhatIfProperties>.Write(ModelReaderWriterOptions options)

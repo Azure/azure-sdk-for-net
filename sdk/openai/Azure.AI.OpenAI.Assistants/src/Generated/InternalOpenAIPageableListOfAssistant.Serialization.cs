@@ -125,7 +125,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalOpenAIPageableListOfAssistant(@object, data, firstId, lastId, hasMore, serializedAdditionalRawData);
+            return new InternalOpenAIPageableListOfAssistant(
+                @object,
+                data,
+                firstId,
+                lastId,
+                hasMore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternalOpenAIPageableListOfAssistant>.Write(ModelReaderWriterOptions options)

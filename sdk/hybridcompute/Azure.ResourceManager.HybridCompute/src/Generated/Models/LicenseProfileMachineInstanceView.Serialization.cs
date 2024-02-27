@@ -260,7 +260,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileMachineInstanceView(Optional.ToNullable(licenseStatus), licenseChannel.Value, esuProfile.Value, Optional.ToNullable(subscriptionStatus), Optional.ToNullable(productType), Optional.ToNullable(billingStartDate), Optional.ToNullable(enrollmentDate), Optional.ToNullable(disenrollmentDate), productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>(), Optional.ToNullable(softwareAssuranceCustomer), serializedAdditionalRawData);
+            return new LicenseProfileMachineInstanceView(
+                Optional.ToNullable(licenseStatus),
+                licenseChannel.Value,
+                esuProfile.Value,
+                Optional.ToNullable(subscriptionStatus),
+                Optional.ToNullable(productType),
+                Optional.ToNullable(billingStartDate),
+                Optional.ToNullable(enrollmentDate),
+                Optional.ToNullable(disenrollmentDate),
+                productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>(),
+                Optional.ToNullable(softwareAssuranceCustomer),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LicenseProfileMachineInstanceView>.Write(ModelReaderWriterOptions options)

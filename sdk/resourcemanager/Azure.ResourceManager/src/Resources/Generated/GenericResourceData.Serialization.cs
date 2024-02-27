@@ -303,7 +303,24 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, serializedAdditionalRawData, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
+            return new GenericResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                serializedAdditionalRawData,
+                plan,
+                properties.Value,
+                kind.Value,
+                managedBy.Value,
+                sku.Value,
+                identity,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                provisioningState.Value);
         }
 
         BinaryData IPersistableModel<GenericResourceData>.Write(ModelReaderWriterOptions options)

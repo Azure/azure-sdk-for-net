@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteError(Optional.ToNullable(id), code.Value, summaryMessage.Value, runAsAccountId.Value, message.Value, possibleCauses.Value, recommendedAction.Value, severity.Value, Optional.ToNullable(updatedTimeStamp), serializedAdditionalRawData);
+            return new SpringBootSiteError(
+                Optional.ToNullable(id),
+                code.Value,
+                summaryMessage.Value,
+                runAsAccountId.Value,
+                message.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                severity.Value,
+                Optional.ToNullable(updatedTimeStamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteError>.Write(ModelReaderWriterOptions options)

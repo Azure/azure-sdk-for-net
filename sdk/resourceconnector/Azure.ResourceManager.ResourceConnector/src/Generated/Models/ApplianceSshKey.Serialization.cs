@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSshKey(certificate.Value, Optional.ToNullable(creationTimeStamp), Optional.ToNullable(expirationTimeStamp), privateKey.Value, publicKey.Value, serializedAdditionalRawData);
+            return new ApplianceSshKey(
+                certificate.Value,
+                Optional.ToNullable(creationTimeStamp),
+                Optional.ToNullable(expirationTimeStamp),
+                privateKey.Value,
+                publicKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSshKey>.Write(ModelReaderWriterOptions options)

@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupRule(name, objectType, serializedAdditionalRawData, backupParameters.Value, dataStore, trigger);
+            return new DataProtectionBackupRule(
+                name,
+                objectType,
+                serializedAdditionalRawData,
+                backupParameters.Value,
+                dataStore,
+                trigger);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupRule>.Write(ModelReaderWriterOptions options)

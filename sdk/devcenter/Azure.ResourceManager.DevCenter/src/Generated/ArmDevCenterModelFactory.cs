@@ -33,7 +33,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevCenterData(id, name, resourceType, systemData, tags, location, identity, provisioningState, devCenterUri, serializedAdditionalRawData: null);
+            return new DevCenterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                devCenterUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterProjectData"/>. </summary>
@@ -53,7 +63,19 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevCenterProjectData(id, name, resourceType, systemData, tags, location, devCenterId, description, maxDevBoxesPerUser, provisioningState, devCenterUri, serializedAdditionalRawData: null);
+            return new DevCenterProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                devCenterId,
+                description,
+                maxDevBoxesPerUser,
+                provisioningState,
+                devCenterUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.AttachedNetworkConnectionData"/>. </summary>
@@ -69,7 +91,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <returns> A new <see cref="DevCenter.AttachedNetworkConnectionData"/> instance for mocking. </returns>
         public static AttachedNetworkConnectionData AttachedNetworkConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterProvisioningState? provisioningState = null, ResourceIdentifier networkConnectionId = null, AzureLocation? networkConnectionLocation = null, DevCenterHealthCheckStatus? healthCheckStatus = null, DomainJoinType? domainJoinType = null)
         {
-            return new AttachedNetworkConnectionData(id, name, resourceType, systemData, provisioningState, networkConnectionId, networkConnectionLocation, healthCheckStatus, domainJoinType, serializedAdditionalRawData: null);
+            return new AttachedNetworkConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                networkConnectionId,
+                networkConnectionLocation,
+                healthCheckStatus,
+                domainJoinType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterGalleryData"/>. </summary>
@@ -82,7 +114,14 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <returns> A new <see cref="DevCenter.DevCenterGalleryData"/> instance for mocking. </returns>
         public static DevCenterGalleryData DevCenterGalleryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterProvisioningState? provisioningState = null, ResourceIdentifier galleryResourceId = null)
         {
-            return new DevCenterGalleryData(id, name, resourceType, systemData, provisioningState, galleryResourceId, serializedAdditionalRawData: null);
+            return new DevCenterGalleryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                galleryResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterImageData"/>. </summary>
@@ -100,7 +139,19 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <returns> A new <see cref="DevCenter.DevCenterImageData"/> instance for mocking. </returns>
         public static DevCenterImageData DevCenterImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string publisher = null, string offer = null, string sku = null, RecommendedMachineConfiguration recommendedMachineConfiguration = null, DevCenterProvisioningState? provisioningState = null, DevCenterHibernateSupport? hibernateSupport = null)
         {
-            return new DevCenterImageData(id, name, resourceType, systemData, description, publisher, offer, sku, recommendedMachineConfiguration, provisioningState, hibernateSupport, serializedAdditionalRawData: null);
+            return new DevCenterImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                publisher,
+                offer,
+                sku,
+                recommendedMachineConfiguration,
+                provisioningState,
+                hibernateSupport,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecommendedMachineConfiguration"/>. </summary>
@@ -134,7 +185,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <returns> A new <see cref="DevCenter.ImageVersionData"/> instance for mocking. </returns>
         public static ImageVersionData ImageVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string namePropertiesName = null, DateTimeOffset? publishedOn = null, bool? isExcludedFromLatest = null, int? osDiskImageSizeInGB = null, DevCenterProvisioningState? provisioningState = null)
         {
-            return new ImageVersionData(id, name, resourceType, systemData, namePropertiesName, publishedOn, isExcludedFromLatest, osDiskImageSizeInGB, provisioningState, serializedAdditionalRawData: null);
+            return new ImageVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                namePropertiesName,
+                publishedOn,
+                isExcludedFromLatest,
+                osDiskImageSizeInGB,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterCatalogData"/>. </summary>
@@ -150,7 +211,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <returns> A new <see cref="DevCenter.DevCenterCatalogData"/> instance for mocking. </returns>
         public static DevCenterCatalogData DevCenterCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterGitCatalog gitHub = null, DevCenterGitCatalog adoGit = null, DevCenterProvisioningState? provisioningState = null, DevCenterCatalogSyncState? syncState = null, DateTimeOffset? lastSyncOn = null)
         {
-            return new DevCenterCatalogData(id, name, resourceType, systemData, gitHub, adoGit, provisioningState, syncState, lastSyncOn, serializedAdditionalRawData: null);
+            return new DevCenterCatalogData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                gitHub,
+                adoGit,
+                provisioningState,
+                syncState,
+                lastSyncOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterEnvironmentTypeData"/>. </summary>
@@ -165,7 +236,14 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevCenterEnvironmentTypeData(id, name, resourceType, systemData, tags, provisioningState, serializedAdditionalRawData: null);
+            return new DevCenterEnvironmentTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.AllowedEnvironmentTypeData"/>. </summary>
@@ -177,7 +255,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <returns> A new <see cref="DevCenter.AllowedEnvironmentTypeData"/> instance for mocking. </returns>
         public static AllowedEnvironmentTypeData AllowedEnvironmentTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterProvisioningState? provisioningState = null)
         {
-            return new AllowedEnvironmentTypeData(id, name, resourceType, systemData, provisioningState, serializedAdditionalRawData: null);
+            return new AllowedEnvironmentTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterProjectEnvironmentData"/>. </summary>
@@ -200,7 +284,20 @@ namespace Azure.ResourceManager.DevCenter.Models
             roles ??= new Dictionary<string, DevCenterEnvironmentRole>();
             userRoleAssignments ??= new Dictionary<string, DevCenterUserRoleAssignments>();
 
-            return new DevCenterProjectEnvironmentData(id, name, resourceType, systemData, tags, location, identity, deploymentTargetId, status, roles != null ? new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles, serializedAdditionalRawData: null) : null, userRoleAssignments, provisioningState, serializedAdditionalRawData: null);
+            return new DevCenterProjectEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                deploymentTargetId,
+                status,
+                roles != null ? new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles, serializedAdditionalRawData: null) : null,
+                userRoleAssignments,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironmentRole"/>. </summary>
@@ -232,7 +329,22 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevBoxDefinitionData(id, name, resourceType, systemData, tags, location, imageReference, sku, osStorageType, hibernateSupport, provisioningState, imageValidationStatus, imageValidationErrorDetails, activeImageReference, serializedAdditionalRawData: null);
+            return new DevBoxDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                imageReference,
+                sku,
+                osStorageType,
+                hibernateSupport,
+                provisioningState,
+                imageValidationStatus,
+                imageValidationErrorDetails,
+                activeImageReference,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ImageValidationErrorDetails"/>. </summary>
@@ -269,7 +381,18 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             operations ??= new List<OperationStatusResult>();
 
-            return new DevCenterOperationStatus(id, name, status, percentComplete, startOn, endOn, operations?.ToList(), error, resourceId, properties, serializedAdditionalRawData: null);
+            return new DevCenterOperationStatus(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                resourceId,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterUsage"/>. </summary>
@@ -317,7 +440,16 @@ namespace Azure.ResourceManager.DevCenter.Models
             locations ??= new List<string>();
             capabilities ??= new List<DevCenterCapability>();
 
-            return new DevCenterSkuDetails(name, tier, size, family, capacity, serializedAdditionalRawData: null, resourceType, locations?.ToList(), capabilities?.ToList());
+            return new DevCenterSkuDetails(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData: null,
+                resourceType,
+                locations?.ToList(),
+                capabilities?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterCapability"/>. </summary>
@@ -350,7 +482,22 @@ namespace Azure.ResourceManager.DevCenter.Models
             tags ??= new Dictionary<string, string>();
             healthStatusDetails ??= new List<DevCenterHealthStatusDetail>();
 
-            return new DevCenterPoolData(id, name, resourceType, systemData, tags, location, devBoxDefinitionName, networkConnectionName, licenseType, localAdministrator, stopOnDisconnect, healthStatus, healthStatusDetails?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new DevCenterPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                devBoxDefinitionName,
+                networkConnectionName,
+                licenseType,
+                localAdministrator,
+                stopOnDisconnect,
+                healthStatus,
+                healthStatusDetails?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterHealthStatusDetail"/>. </summary>
@@ -376,7 +523,18 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <returns> A new <see cref="DevCenter.DevCenterScheduleData"/> instance for mocking. </returns>
         public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterScheduledType? scheduledType = null, DevCenterScheduledFrequency? frequency = null, string time = null, string timeZone = null, DevCenterScheduleEnableStatus? state = null, DevCenterProvisioningState? provisioningState = null)
         {
-            return new DevCenterScheduleData(id, name, resourceType, systemData, scheduledType, frequency, time, timeZone, state, provisioningState, serializedAdditionalRawData: null);
+            return new DevCenterScheduleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scheduledType,
+                frequency,
+                time,
+                timeZone,
+                state,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.DevCenterNetworkConnectionData"/>. </summary>
@@ -400,7 +558,23 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevCenterNetworkConnectionData(id, name, resourceType, systemData, tags, location, subnetId, domainName, organizationUnit, domainUsername, domainPassword, provisioningState, healthCheckStatus, networkingResourceGroupName, domainJoinType, serializedAdditionalRawData: null);
+            return new DevCenterNetworkConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                subnetId,
+                domainName,
+                organizationUnit,
+                domainUsername,
+                domainPassword,
+                provisioningState,
+                healthCheckStatus,
+                networkingResourceGroupName,
+                domainJoinType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenter.HealthCheckStatusDetailData"/>. </summary>
@@ -416,7 +590,15 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             healthChecks ??= new List<DevCenterHealthCheck>();
 
-            return new HealthCheckStatusDetailData(id, name, resourceType, systemData, startOn, endOn, healthChecks?.ToList(), serializedAdditionalRawData: null);
+            return new HealthCheckStatusDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                healthChecks?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterHealthCheck"/>. </summary>
@@ -430,7 +612,15 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <returns> A new <see cref="Models.DevCenterHealthCheck"/> instance for mocking. </returns>
         public static DevCenterHealthCheck DevCenterHealthCheck(DevCenterHealthCheckStatus? status = null, string displayName = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string errorType = null, string recommendedAction = null, string additionalDetails = null)
         {
-            return new DevCenterHealthCheck(status, displayName, startOn, endOn, errorType, recommendedAction, additionalDetails, serializedAdditionalRawData: null);
+            return new DevCenterHealthCheck(
+                status,
+                displayName,
+                startOn,
+                endOn,
+                errorType,
+                recommendedAction,
+                additionalDetails,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OutboundEnvironmentEndpoint"/>. </summary>

@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicResourceMonitorResult(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, serializedAdditionalRawData);
+            return new NewRelicResourceMonitorResult(
+                id.Value,
+                Optional.ToNullable(sendingMetrics),
+                reasonForMetricsStatus.Value,
+                Optional.ToNullable(sendingLogs),
+                reasonForLogsStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicResourceMonitorResult>.Write(ModelReaderWriterOptions options)

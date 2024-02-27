@@ -294,7 +294,23 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountProperties(accountStatus.Value, cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, ingestionStorage.Value, Optional.ToNullable(managedEventHubState), managedResourceGroupName.Value, managedResources.Value, Optional.ToNullable(managedResourcesPublicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new PurviewAccountProperties(
+                accountStatus.Value,
+                cloudConnectors.Value,
+                Optional.ToNullable(createdAt),
+                createdBy.Value,
+                createdByObjectId.Value,
+                endpoints.Value,
+                friendlyName.Value,
+                ingestionStorage.Value,
+                Optional.ToNullable(managedEventHubState),
+                managedResourceGroupName.Value,
+                managedResources.Value,
+                Optional.ToNullable(managedResourcesPublicNetworkAccess),
+                privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(publicNetworkAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountProperties>.Write(ModelReaderWriterOptions options)

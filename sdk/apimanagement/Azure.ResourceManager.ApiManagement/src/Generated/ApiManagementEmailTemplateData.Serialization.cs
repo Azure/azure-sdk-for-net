@@ -223,7 +223,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementEmailTemplateData(id, name, type, systemData.Value, subject.Value, body.Value, title.Value, description.Value, Optional.ToNullable(isDefault), parameters ?? new ChangeTrackingList<EmailTemplateParametersContractProperties>(), serializedAdditionalRawData);
+            return new ApiManagementEmailTemplateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                subject.Value,
+                body.Value,
+                title.Value,
+                description.Value,
+                Optional.ToNullable(isDefault),
+                parameters ?? new ChangeTrackingList<EmailTemplateParametersContractProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementEmailTemplateData>.Write(ModelReaderWriterOptions options)

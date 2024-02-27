@@ -449,7 +449,32 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterProperties(clusterVersion.Value, clusterHdpVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterId.Value, clusterDefinition, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdDate), clusterState.Value, quotaInfo.Value, errors ?? new ChangeTrackingList<ResponseError>(), connectivityEndpoints ?? new ChangeTrackingList<ConnectivityEndpoint>(), diskEncryptionProperties.Value, encryptionInTransitProperties.Value, storageProfile.Value, minSupportedTlsVersion.Value, excludedServicesConfig.Value, networkProperties.Value, computeIsolationProperties.Value, privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(), privateEndpointConnections ?? new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new HDInsightClusterProperties(
+                clusterVersion.Value,
+                clusterHdpVersion.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(tier),
+                clusterId.Value,
+                clusterDefinition,
+                kafkaRestProperties.Value,
+                securityProfile.Value,
+                computeProfile.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(createdDate),
+                clusterState.Value,
+                quotaInfo.Value,
+                errors ?? new ChangeTrackingList<ResponseError>(),
+                connectivityEndpoints ?? new ChangeTrackingList<ConnectivityEndpoint>(),
+                diskEncryptionProperties.Value,
+                encryptionInTransitProperties.Value,
+                storageProfile.Value,
+                minSupportedTlsVersion.Value,
+                excludedServicesConfig.Value,
+                networkProperties.Value,
+                computeIsolationProperties.Value,
+                privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(),
+                privateEndpointConnections ?? new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterProperties>.Write(ModelReaderWriterOptions options)

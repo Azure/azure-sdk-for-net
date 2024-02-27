@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, friendlyName.Value, applicationGroupReferences ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new VirtualWorkspacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                friendlyName.Value,
+                applicationGroupReferences ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(publicNetworkAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWorkspacePatch>.Write(ModelReaderWriterOptions options)

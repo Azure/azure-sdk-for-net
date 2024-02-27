@@ -250,7 +250,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareInventoryData(id, name, type, systemData.Value, deviceId.Value, osPlatform.Value, vendor.Value, softwareName.Value, version.Value, Optional.ToNullable(endOfSupportStatus), endOfSupportDate.Value, Optional.ToNullable(numberOfKnownVulnerabilities), Optional.ToNullable(firstSeenAt), serializedAdditionalRawData);
+            return new SoftwareInventoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deviceId.Value,
+                osPlatform.Value,
+                vendor.Value,
+                softwareName.Value,
+                version.Value,
+                Optional.ToNullable(endOfSupportStatus),
+                endOfSupportDate.Value,
+                Optional.ToNullable(numberOfKnownVulnerabilities),
+                Optional.ToNullable(firstSeenAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareInventoryData>.Write(ModelReaderWriterOptions options)

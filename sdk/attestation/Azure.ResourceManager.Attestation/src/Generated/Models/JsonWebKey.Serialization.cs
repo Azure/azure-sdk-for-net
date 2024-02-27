@@ -272,7 +272,25 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, x5c ?? new ChangeTrackingList<string>(), y.Value, serializedAdditionalRawData);
+            return new JsonWebKey(
+                alg.Value,
+                crv.Value,
+                d.Value,
+                dp.Value,
+                dq.Value,
+                e.Value,
+                k.Value,
+                kid.Value,
+                kty,
+                n.Value,
+                p.Value,
+                q.Value,
+                qi.Value,
+                use.Value,
+                x.Value,
+                x5c ?? new ChangeTrackingList<string>(),
+                y.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonWebKey>.Write(ModelReaderWriterOptions options)

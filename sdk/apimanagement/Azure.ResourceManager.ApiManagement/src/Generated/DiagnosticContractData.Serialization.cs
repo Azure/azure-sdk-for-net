@@ -285,7 +285,22 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat), Optional.ToNullable(metrics), serializedAdditionalRawData);
+            return new DiagnosticContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(alwaysLog),
+                loggerId.Value,
+                sampling.Value,
+                frontend.Value,
+                backend.Value,
+                Optional.ToNullable(logClientIP),
+                Optional.ToNullable(httpCorrelationProtocol),
+                Optional.ToNullable(verbosity),
+                Optional.ToNullable(operationNameFormat),
+                Optional.ToNullable(metrics),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticContractData>.Write(ModelReaderWriterOptions options)

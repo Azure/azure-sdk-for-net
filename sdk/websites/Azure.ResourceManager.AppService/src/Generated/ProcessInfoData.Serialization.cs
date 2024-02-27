@@ -697,7 +697,49 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessInfoData(id, name, type, systemData.Value, Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Optional.ToNullable(isProfileRunning), Optional.ToNullable(isIisProfileRunning), Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, children ?? new ChangeTrackingList<string>(), threads ?? new ChangeTrackingList<ProcessThreadInfo>(), openFileHandles ?? new ChangeTrackingList<string>(), modules ?? new ChangeTrackingList<ProcessModuleInfoData>(), fileName.Value, commandLine.Value, userName.Value, Optional.ToNullable(handleCount), Optional.ToNullable(moduleCount), Optional.ToNullable(threadCount), Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Optional.ToNullable(workingSet), Optional.ToNullable(peakWorkingSet), Optional.ToNullable(privateMemory), Optional.ToNullable(virtualMemory), Optional.ToNullable(peakVirtualMemory), Optional.ToNullable(pagedSystemMemory), Optional.ToNullable(nonPagedSystemMemory), Optional.ToNullable(pagedMemory), Optional.ToNullable(peakPagedMemory), Optional.ToNullable(timeStamp), environmentVariables ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(isScmSite), Optional.ToNullable(isWebjob), description.Value, kind.Value, serializedAdditionalRawData);
+            return new ProcessInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(identifier),
+                deploymentName.Value,
+                href.Value,
+                minidump.Value,
+                Optional.ToNullable(isProfileRunning),
+                Optional.ToNullable(isIisProfileRunning),
+                Optional.ToNullable(iisProfileTimeoutInSeconds),
+                parent.Value,
+                children ?? new ChangeTrackingList<string>(),
+                threads ?? new ChangeTrackingList<ProcessThreadInfo>(),
+                openFileHandles ?? new ChangeTrackingList<string>(),
+                modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
+                fileName.Value,
+                commandLine.Value,
+                userName.Value,
+                Optional.ToNullable(handleCount),
+                Optional.ToNullable(moduleCount),
+                Optional.ToNullable(threadCount),
+                Optional.ToNullable(startTime),
+                totalCpuTime.Value,
+                userCpuTime.Value,
+                privilegedCpuTime.Value,
+                Optional.ToNullable(workingSet),
+                Optional.ToNullable(peakWorkingSet),
+                Optional.ToNullable(privateMemory),
+                Optional.ToNullable(virtualMemory),
+                Optional.ToNullable(peakVirtualMemory),
+                Optional.ToNullable(pagedSystemMemory),
+                Optional.ToNullable(nonPagedSystemMemory),
+                Optional.ToNullable(pagedMemory),
+                Optional.ToNullable(peakPagedMemory),
+                Optional.ToNullable(timeStamp),
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(isScmSite),
+                Optional.ToNullable(isWebjob),
+                description.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcessInfoData>.Write(ModelReaderWriterOptions options)

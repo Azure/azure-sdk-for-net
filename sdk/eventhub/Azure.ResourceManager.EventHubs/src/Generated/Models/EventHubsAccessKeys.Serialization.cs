@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, aliasPrimaryConnectionString.Value, aliasSecondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
+            return new EventHubsAccessKeys(
+                primaryConnectionString.Value,
+                secondaryConnectionString.Value,
+                aliasPrimaryConnectionString.Value,
+                aliasSecondaryConnectionString.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                keyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsAccessKeys>.Write(ModelReaderWriterOptions options)

@@ -146,7 +146,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>(), serializedAdditionalRawData);
+            return new DocumentFieldSchema(
+                type,
+                description.Value,
+                example.Value,
+                items.Value,
+                properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentFieldSchema>.Write(ModelReaderWriterOptions options)

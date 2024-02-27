@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactStorePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(storeType), Optional.ToNullable(replicationStrategy), managedResourceGroupConfiguration.Value, storageResourceId.Value, serializedAdditionalRawData);
+            return new ArtifactStorePropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(storeType),
+                Optional.ToNullable(replicationStrategy),
+                managedResourceGroupConfiguration.Value,
+                storageResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactStorePropertiesFormat>.Write(ModelReaderWriterOptions options)

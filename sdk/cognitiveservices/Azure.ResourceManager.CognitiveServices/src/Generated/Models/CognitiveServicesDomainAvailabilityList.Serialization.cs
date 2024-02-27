@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesDomainAvailabilityList(Optional.ToNullable(isSubdomainAvailable), reason.Value, subdomainName.Value, type.Value, kind.Value, serializedAdditionalRawData);
+            return new CognitiveServicesDomainAvailabilityList(
+                Optional.ToNullable(isSubdomainAvailable),
+                reason.Value,
+                subdomainName.Value,
+                type.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesDomainAvailabilityList>.Write(ModelReaderWriterOptions options)

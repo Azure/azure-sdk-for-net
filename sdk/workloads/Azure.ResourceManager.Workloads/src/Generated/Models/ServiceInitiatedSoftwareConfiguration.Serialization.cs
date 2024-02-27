@@ -137,7 +137,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceInitiatedSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, bomUrl, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration.Value);
+            return new ServiceInitiatedSoftwareConfiguration(
+                softwareInstallationType,
+                serializedAdditionalRawData,
+                bomUrl,
+                softwareVersion,
+                sapBitsStorageAccountId,
+                sapFqdn,
+                sshPrivateKey,
+                highAvailabilitySoftwareConfiguration.Value);
         }
 
         BinaryData IPersistableModel<ServiceInitiatedSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

@@ -239,7 +239,19 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointCloudTieringStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(health), Optional.ToNullable(healthLastUpdatedTimestamp), Optional.ToNullable(lastCloudTieringResult), Optional.ToNullable(lastSuccessTimestamp), spaceSavings.Value, cachePerformance.Value, filesNotTiering.Value, volumeFreeSpacePolicyStatus.Value, datePolicyStatus.Value, lowDiskMode.Value, serializedAdditionalRawData);
+            return new ServerEndpointCloudTieringStatus(
+                Optional.ToNullable(lastUpdatedTimestamp),
+                Optional.ToNullable(health),
+                Optional.ToNullable(healthLastUpdatedTimestamp),
+                Optional.ToNullable(lastCloudTieringResult),
+                Optional.ToNullable(lastSuccessTimestamp),
+                spaceSavings.Value,
+                cachePerformance.Value,
+                filesNotTiering.Value,
+                volumeFreeSpacePolicyStatus.Value,
+                datePolicyStatus.Value,
+                lowDiskMode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointCloudTieringStatus>.Write(ModelReaderWriterOptions options)

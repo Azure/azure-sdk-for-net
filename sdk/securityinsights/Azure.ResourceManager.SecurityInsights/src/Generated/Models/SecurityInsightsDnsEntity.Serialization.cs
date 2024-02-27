@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsDnsEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, dnsServerIPEntityId.Value, domainName.Value, hostIPAddressEntityId.Value, ipAddressEntityIds ?? new ChangeTrackingList<string>());
+            return new SecurityInsightsDnsEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                dnsServerIPEntityId.Value,
+                domainName.Value,
+                hostIPAddressEntityId.Value,
+                ipAddressEntityIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsDnsEntity>.Write(ModelReaderWriterOptions options)

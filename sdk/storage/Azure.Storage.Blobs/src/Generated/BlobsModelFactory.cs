@@ -46,7 +46,14 @@ namespace Azure.Storage.Blobs.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value);
+            return new UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
+                signedService,
+                signedVersion,
+                value);
         }
     }
 }

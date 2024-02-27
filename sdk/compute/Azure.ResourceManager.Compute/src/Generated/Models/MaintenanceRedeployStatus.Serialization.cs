@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceRedeployStatus(Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Optional.ToNullable(preMaintenanceWindowStartTime), Optional.ToNullable(preMaintenanceWindowEndTime), Optional.ToNullable(maintenanceWindowStartTime), Optional.ToNullable(maintenanceWindowEndTime), Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value, serializedAdditionalRawData);
+            return new MaintenanceRedeployStatus(
+                Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed),
+                Optional.ToNullable(preMaintenanceWindowStartTime),
+                Optional.ToNullable(preMaintenanceWindowEndTime),
+                Optional.ToNullable(maintenanceWindowStartTime),
+                Optional.ToNullable(maintenanceWindowEndTime),
+                Optional.ToNullable(lastOperationResultCode),
+                lastOperationMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceRedeployStatus>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivitySettingData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SensitivitySettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivitySettingData>.Write(ModelReaderWriterOptions options)

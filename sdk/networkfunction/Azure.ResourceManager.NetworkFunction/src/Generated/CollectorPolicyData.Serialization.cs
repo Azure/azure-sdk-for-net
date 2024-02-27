@@ -244,7 +244,18 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectorPolicyData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), ingestionPolicy.Value, emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CollectorPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                ingestionPolicy.Value,
+                emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options)

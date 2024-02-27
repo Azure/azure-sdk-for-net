@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppIngressSettings(Optional.ToNullable(readTimeoutInSeconds), Optional.ToNullable(sendTimeoutInSeconds), Optional.ToNullable(sessionAffinity), Optional.ToNullable(sessionCookieMaxAge), Optional.ToNullable(backendProtocol), clientAuth.Value, serializedAdditionalRawData);
+            return new AppIngressSettings(
+                Optional.ToNullable(readTimeoutInSeconds),
+                Optional.ToNullable(sendTimeoutInSeconds),
+                Optional.ToNullable(sessionAffinity),
+                Optional.ToNullable(sessionCookieMaxAge),
+                Optional.ToNullable(backendProtocol),
+                clientAuth.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppIngressSettings>.Write(ModelReaderWriterOptions options)

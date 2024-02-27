@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementBackendPatch(title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, uri.Value, Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new ApiManagementBackendPatch(
+                title.Value,
+                description.Value,
+                resourceId.Value,
+                properties.Value,
+                credentials.Value,
+                proxy.Value,
+                tls.Value,
+                uri.Value,
+                Optional.ToNullable(protocol),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementBackendPatch>.Write(ModelReaderWriterOptions options)

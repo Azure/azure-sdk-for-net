@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsLinkedServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), resourceId.Value, writeAccessResourceId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new OperationalInsightsLinkedServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                resourceId.Value,
+                writeAccessResourceId.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsLinkedServiceData>.Write(ModelReaderWriterOptions options)

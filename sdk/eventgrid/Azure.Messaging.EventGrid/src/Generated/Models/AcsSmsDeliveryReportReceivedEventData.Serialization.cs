@@ -86,7 +86,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsSmsDeliveryReportReceivedEventData(messageId.Value, @from.Value, to.Value, deliveryStatus.Value, deliveryStatusDetails.Value, deliveryAttempts ?? new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>(), Optional.ToNullable(receivedTimestamp), tag.Value);
+            return new AcsSmsDeliveryReportReceivedEventData(
+                messageId.Value,
+                @from.Value,
+                to.Value,
+                deliveryStatus.Value,
+                deliveryStatusDetails.Value,
+                deliveryAttempts ?? new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>(),
+                Optional.ToNullable(receivedTimestamp),
+                tag.Value);
         }
 
         internal partial class AcsSmsDeliveryReportReceivedEventDataConverter : JsonConverter<AcsSmsDeliveryReportReceivedEventData>

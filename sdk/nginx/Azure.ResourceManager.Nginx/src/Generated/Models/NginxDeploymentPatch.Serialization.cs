@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new NginxDeploymentPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                Optional.ToNullable(location),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentPatch>.Write(ModelReaderWriterOptions options)

@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableCognitiveServicesSku(resourceType.Value, name.Value, tier.Value, kind.Value, locations ?? new ChangeTrackingList<AzureLocation>(), restrictions ?? new ChangeTrackingList<CognitiveServicesSkuRestrictions>(), serializedAdditionalRawData);
+            return new AvailableCognitiveServicesSku(
+                resourceType.Value,
+                name.Value,
+                tier.Value,
+                kind.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                restrictions ?? new ChangeTrackingList<CognitiveServicesSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableCognitiveServicesSku>.Write(ModelReaderWriterOptions options)

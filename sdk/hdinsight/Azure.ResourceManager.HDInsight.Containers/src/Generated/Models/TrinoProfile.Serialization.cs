@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoProfile(catalogOptions.Value, coordinator.Value, userPluginsSpec.Value, userTelemetrySpec.Value, worker.Value, serializedAdditionalRawData);
+            return new TrinoProfile(
+                catalogOptions.Value,
+                coordinator.Value,
+                userPluginsSpec.Value,
+                userTelemetrySpec.Value,
+                worker.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoProfile>.Write(ModelReaderWriterOptions options)

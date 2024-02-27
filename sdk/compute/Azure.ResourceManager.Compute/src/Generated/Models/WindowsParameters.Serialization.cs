@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsParameters(classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForWindows>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), kbNumbersToExclude ?? new ChangeTrackingList<string>(), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+            return new WindowsParameters(
+                classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForWindows>(),
+                kbNumbersToInclude ?? new ChangeTrackingList<string>(),
+                kbNumbersToExclude ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(excludeKbsRequiringReboot),
+                Optional.ToNullable(maxPatchPublishDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsParameters>.Write(ModelReaderWriterOptions options)

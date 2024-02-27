@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateDownloadProgress(Optional.ToNullable(downloadPhase), Optional.ToNullable(percentComplete), Optional.ToNullable(totalBytesToDownload), Optional.ToNullable(totalBytesDownloaded), Optional.ToNullable(numberOfUpdatesToDownload), Optional.ToNullable(numberOfUpdatesDownloaded), serializedAdditionalRawData);
+            return new UpdateDownloadProgress(
+                Optional.ToNullable(downloadPhase),
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(totalBytesToDownload),
+                Optional.ToNullable(totalBytesDownloaded),
+                Optional.ToNullable(numberOfUpdatesToDownload),
+                Optional.ToNullable(numberOfUpdatesDownloaded),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateDownloadProgress>.Write(ModelReaderWriterOptions options)

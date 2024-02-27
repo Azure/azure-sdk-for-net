@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficAnalyticsConfigurationProperties(Optional.ToNullable(enabled), workspaceId.Value, workspaceRegion.Value, workspaceResourceId.Value, Optional.ToNullable(trafficAnalyticsInterval), serializedAdditionalRawData);
+            return new TrafficAnalyticsConfigurationProperties(
+                Optional.ToNullable(enabled),
+                workspaceId.Value,
+                workspaceRegion.Value,
+                workspaceResourceId.Value,
+                Optional.ToNullable(trafficAnalyticsInterval),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficAnalyticsConfigurationProperties>.Write(ModelReaderWriterOptions options)

@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsSentinelOnboardingStateData(id, name, type, systemData.Value, Optional.ToNullable(customerManagedKey), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsSentinelOnboardingStateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(customerManagedKey),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Write(ModelReaderWriterOptions options)

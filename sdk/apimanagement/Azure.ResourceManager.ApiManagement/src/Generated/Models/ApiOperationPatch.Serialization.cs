@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiOperationPatch(templateParameters ?? new ChangeTrackingList<ParameterContract>(), description.Value, request.Value, responses ?? new ChangeTrackingList<ResponseContract>(), policies.Value, displayName.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
+            return new ApiOperationPatch(
+                templateParameters ?? new ChangeTrackingList<ParameterContract>(),
+                description.Value,
+                request.Value,
+                responses ?? new ChangeTrackingList<ResponseContract>(),
+                policies.Value,
+                displayName.Value,
+                method.Value,
+                uriTemplate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiOperationPatch>.Write(ModelReaderWriterOptions options)

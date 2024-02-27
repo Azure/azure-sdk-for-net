@@ -305,7 +305,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, locations ?? new ChangeTrackingList<AzureLocation>(), locationInfo ?? new ChangeTrackingList<ApiManagementSkuLocationInfo>(), apiVersions ?? new ChangeTrackingList<string>(), costs ?? new ChangeTrackingList<ApiManagementSkuCosts>(), capabilities ?? new ChangeTrackingList<ApiManagementSkuCapabilities>(), restrictions ?? new ChangeTrackingList<ApiManagementSkuRestrictions>(), serializedAdditionalRawData);
+            return new ApiManagementSku(
+                resourceType.Value,
+                name.Value,
+                tier.Value,
+                size.Value,
+                family.Value,
+                kind.Value,
+                capacity.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<ApiManagementSkuLocationInfo>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ApiManagementSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ApiManagementSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ApiManagementSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSku>.Write(ModelReaderWriterOptions options)

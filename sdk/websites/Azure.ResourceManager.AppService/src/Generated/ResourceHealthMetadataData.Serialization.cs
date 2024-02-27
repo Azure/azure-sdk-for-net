@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthMetadataData(id, name, type, systemData.Value, category.Value, Optional.ToNullable(signalAvailability), kind.Value, serializedAdditionalRawData);
+            return new ResourceHealthMetadataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                category.Value,
+                Optional.ToNullable(signalAvailability),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthMetadataData>.Write(ModelReaderWriterOptions options)

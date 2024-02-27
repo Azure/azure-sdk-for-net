@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecordSet(recordType.Value, recordSetName.Value, fqdn.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(ttl), ipAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new RecordSet(
+                recordType.Value,
+                recordSetName.Value,
+                fqdn.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(ttl),
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecordSet>.Write(ModelReaderWriterOptions options)

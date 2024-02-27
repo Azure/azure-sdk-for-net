@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(backupItemType), backupItems ?? new ChangeTrackingList<string>(), policyName.Value, lastBackupStatus.Value, serializedAdditionalRawData);
+            return new MabContainerExtendedInfo(
+                Optional.ToNullable(lastRefreshedAt),
+                Optional.ToNullable(backupItemType),
+                backupItems ?? new ChangeTrackingList<string>(),
+                policyName.Value,
+                lastBackupStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabContainerExtendedInfo>.Write(ModelReaderWriterOptions options)

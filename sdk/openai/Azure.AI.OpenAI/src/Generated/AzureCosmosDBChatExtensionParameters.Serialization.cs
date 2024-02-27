@@ -193,7 +193,18 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCosmosDBChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, databaseName, containerName, indexName, fieldsMapping, embeddingDependency.Value, serializedAdditionalRawData);
+            return new AzureCosmosDBChatExtensionParameters(
+                authentication.Value,
+                Optional.ToNullable(topNDocuments),
+                Optional.ToNullable(inScope),
+                Optional.ToNullable(strictness),
+                roleInformation.Value,
+                databaseName,
+                containerName,
+                indexName,
+                fieldsMapping,
+                embeddingDependency.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCosmosDBChatExtensionParameters>.Write(ModelReaderWriterOptions options)

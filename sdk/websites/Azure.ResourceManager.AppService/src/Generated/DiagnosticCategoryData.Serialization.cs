@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticCategoryData(id, name, type, systemData.Value, description.Value, kind.Value, serializedAdditionalRawData);
+            return new DiagnosticCategoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticCategoryData>.Write(ModelReaderWriterOptions options)

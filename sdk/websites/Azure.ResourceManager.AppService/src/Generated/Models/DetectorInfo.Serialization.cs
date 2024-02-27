@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorInfo(id.Value, name.Value, description.Value, author.Value, category.Value, supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>(), analysisType ?? new ChangeTrackingList<string>(), Optional.ToNullable(type), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new DetectorInfo(
+                id.Value,
+                name.Value,
+                description.Value,
+                author.Value,
+                category.Value,
+                supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>(),
+                analysisType ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(type),
+                Optional.ToNullable(score),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorInfo>.Write(ModelReaderWriterOptions options)

@@ -390,7 +390,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, workspace.Value, displayName.Value, Optional.ToNullable(status), export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(), disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(), iotHubs ?? new ChangeTrackingList<string>(), userDefinedResources.Value, autoDiscoveredResources ?? new ChangeTrackingList<string>(), recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(), Optional.ToNullable(unmaskedIPLoggingStatus), additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>(), serializedAdditionalRawData);
+            return new IotSecuritySolutionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                workspace.Value,
+                displayName.Value,
+                Optional.ToNullable(status),
+                export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(),
+                disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(),
+                iotHubs ?? new ChangeTrackingList<string>(),
+                userDefinedResources.Value,
+                autoDiscoveredResources ?? new ChangeTrackingList<string>(),
+                recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(),
+                Optional.ToNullable(unmaskedIPLoggingStatus),
+                additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionData>.Write(ModelReaderWriterOptions options)

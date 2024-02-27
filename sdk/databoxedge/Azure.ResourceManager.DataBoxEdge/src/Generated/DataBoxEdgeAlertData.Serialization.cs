@@ -243,7 +243,19 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeAlertData(id, name, type, systemData.Value, title.Value, alertType.Value, Optional.ToNullable(appearedAtDateTime), recommendation.Value, Optional.ToNullable(severity), errorDetails.Value, detailedInformation ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DataBoxEdgeAlertData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                title.Value,
+                alertType.Value,
+                Optional.ToNullable(appearedAtDateTime),
+                recommendation.Value,
+                Optional.ToNullable(severity),
+                errorDetails.Value,
+                detailedInformation ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeAlertData>.Write(ModelReaderWriterOptions options)

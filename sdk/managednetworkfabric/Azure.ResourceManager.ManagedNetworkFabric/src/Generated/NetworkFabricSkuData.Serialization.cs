@@ -235,7 +235,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricSkuData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(maxComputeRacks), Optional.ToNullable(maximumServerCount), supportedVersions ?? new ChangeTrackingList<string>(), details.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricSkuData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(type0),
+                Optional.ToNullable(maxComputeRacks),
+                Optional.ToNullable(maximumServerCount),
+                supportedVersions ?? new ChangeTrackingList<string>(),
+                details.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricSkuData>.Write(ModelReaderWriterOptions options)

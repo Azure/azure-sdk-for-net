@@ -172,7 +172,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzStackHciFabricModelCustomProperties(instanceType, serializedAdditionalRawData, azStackHciSiteId, applianceName ?? new ChangeTrackingList<string>(), cluster, fabricResourceId.Value, fabricContainerId.Value, migrationSolutionId, migrationHubUri.Value);
+            return new AzStackHciFabricModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                azStackHciSiteId,
+                applianceName ?? new ChangeTrackingList<string>(),
+                cluster,
+                fabricResourceId.Value,
+                fabricContainerId.Value,
+                migrationSolutionId,
+                migrationHubUri.Value);
         }
 
         BinaryData IPersistableModel<AzStackHciFabricModelCustomProperties>.Write(ModelReaderWriterOptions options)

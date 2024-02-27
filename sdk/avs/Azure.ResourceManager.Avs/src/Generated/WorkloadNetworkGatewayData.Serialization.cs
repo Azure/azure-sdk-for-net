@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkGatewayData(id, name, type, systemData.Value, displayName.Value, path.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkGatewayData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                path.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkGatewayData>.Write(ModelReaderWriterOptions options)

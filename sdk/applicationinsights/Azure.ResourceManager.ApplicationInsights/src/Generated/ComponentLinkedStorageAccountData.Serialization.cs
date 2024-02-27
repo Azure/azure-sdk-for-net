@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentLinkedStorageAccountData(id, name, type, systemData.Value, linkedStorageAccount.Value, serializedAdditionalRawData);
+            return new ComponentLinkedStorageAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                linkedStorageAccount.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentLinkedStorageAccountData>.Write(ModelReaderWriterOptions options)

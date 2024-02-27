@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCapabilities(resourceType.Value, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value, serializedAdditionalRawData);
+            return new ContainerCapabilities(
+                resourceType.Value,
+                osType.Value,
+                Optional.ToNullable(location),
+                ipAddressType.Value,
+                gpu.Value,
+                capabilities.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCapabilities>.Write(ModelReaderWriterOptions options)

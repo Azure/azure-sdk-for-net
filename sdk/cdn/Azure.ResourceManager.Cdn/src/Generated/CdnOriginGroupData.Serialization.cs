@@ -264,7 +264,18 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnOriginGroupData(id, name, type, systemData.Value, healthProbeSettings.Value, origins ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CdnOriginGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                healthProbeSettings.Value,
+                origins ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes),
+                responseBasedOriginErrorDetectionSettings.Value,
+                Optional.ToNullable(resourceState),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnOriginGroupData>.Write(ModelReaderWriterOptions options)

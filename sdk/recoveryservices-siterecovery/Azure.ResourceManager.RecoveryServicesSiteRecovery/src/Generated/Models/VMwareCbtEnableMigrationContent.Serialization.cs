@@ -441,7 +441,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtEnableMigrationContent(instanceType, serializedAdditionalRawData, vmwareMachineId, disksToInclude, Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), performSqlBulkRegistration.Value, dataMoverRunAsAccountId, snapshotRunAsAccountId, targetVmName.Value, targetVmSize.Value, targetResourceGroupId, targetNetworkId, testNetworkId.Value, targetSubnetName.Value, testSubnetName.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, confidentialVmKeyVaultId.Value, targetVmSecurityProfile.Value, targetBootDiagnosticsStorageAccountId.Value, performAutoResync.Value, targetVmTags ?? new ChangeTrackingDictionary<string, string>(), seedDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetNicTags ?? new ChangeTrackingDictionary<string, string>());
+            return new VMwareCbtEnableMigrationContent(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareMachineId,
+                disksToInclude,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(sqlServerLicenseType),
+                performSqlBulkRegistration.Value,
+                dataMoverRunAsAccountId,
+                snapshotRunAsAccountId,
+                targetVmName.Value,
+                targetVmSize.Value,
+                targetResourceGroupId,
+                targetNetworkId,
+                testNetworkId.Value,
+                targetSubnetName.Value,
+                testSubnetName.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                confidentialVmKeyVaultId.Value,
+                targetVmSecurityProfile.Value,
+                targetBootDiagnosticsStorageAccountId.Value,
+                performAutoResync.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<VMwareCbtEnableMigrationContent>.Write(ModelReaderWriterOptions options)

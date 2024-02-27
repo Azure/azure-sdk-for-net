@@ -223,7 +223,19 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayServiceConnectionEntityData(id, name, type, systemData.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value, kind.Value, serializedAdditionalRawData);
+            return new RelayServiceConnectionEntityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                entityName.Value,
+                entityConnectionString.Value,
+                resourceConnectionString.Value,
+                hostname.Value,
+                Optional.ToNullable(port),
+                biztalkUri.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayServiceConnectionEntityData>.Write(ModelReaderWriterOptions options)

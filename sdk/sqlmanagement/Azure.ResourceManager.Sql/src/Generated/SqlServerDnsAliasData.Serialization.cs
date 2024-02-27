@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerDnsAliasData(id, name, type, systemData.Value, azureDnsRecord.Value, serializedAdditionalRawData);
+            return new SqlServerDnsAliasData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                azureDnsRecord.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerDnsAliasData>.Write(ModelReaderWriterOptions options)

@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCredentials(clientId.Value, clientSecret.Value, Optional.ToNullable(tenantId), kind.Value, subscriptionId.Value, serializedAdditionalRawData);
+            return new ContainerAppCredentials(
+                clientId.Value,
+                clientSecret.Value,
+                Optional.ToNullable(tenantId),
+                kind.Value,
+                subscriptionId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCredentials>.Write(ModelReaderWriterOptions options)

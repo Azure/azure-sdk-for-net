@@ -231,7 +231,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionBackupOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value, serializedAdditionalRawData);
+            return new LongTermRetentionBackupOperationResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(requestId),
+                operationType.Value,
+                fromBackupResourceId.Value,
+                toBackupResourceId.Value,
+                Optional.ToNullable(targetBackupStorageRedundancy),
+                status.Value,
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionBackupOperationResult>.Write(ModelReaderWriterOptions options)

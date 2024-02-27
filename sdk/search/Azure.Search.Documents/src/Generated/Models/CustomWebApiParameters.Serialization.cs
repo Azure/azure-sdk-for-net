@@ -142,7 +142,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomWebApiParameters(uri.Value, httpHeaders ?? new ChangeTrackingDictionary<string, string>(), httpMethod.Value, Optional.ToNullable(timeout), authResourceId.Value, authIdentity.Value);
+            return new CustomWebApiParameters(
+                uri.Value,
+                httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                httpMethod.Value,
+                Optional.ToNullable(timeout),
+                authResourceId.Value,
+                authIdentity.Value);
         }
     }
 }

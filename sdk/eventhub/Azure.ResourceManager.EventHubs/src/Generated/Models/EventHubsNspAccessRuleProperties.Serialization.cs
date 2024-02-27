@@ -190,7 +190,13 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), addressPrefixes ?? new ChangeTrackingList<string>(), subscriptions ?? new ChangeTrackingList<SubResource>(), networkSecurityPerimeters ?? new ChangeTrackingList<EventHubsNetworkSecurityPerimeter>(), fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new EventHubsNspAccessRuleProperties(
+                Optional.ToNullable(direction),
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                subscriptions ?? new ChangeTrackingList<SubResource>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<EventHubsNetworkSecurityPerimeter>(),
+                fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNspAccessRuleProperties>.Write(ModelReaderWriterOptions options)

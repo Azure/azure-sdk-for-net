@@ -238,7 +238,19 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, dependsOn ?? new ChangeTrackingList<string>(), template, resourceGroup.Value, parameters);
+            return new TemplateArtifact(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                displayName.Value,
+                description.Value,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                template,
+                resourceGroup.Value,
+                parameters);
         }
 
         BinaryData IPersistableModel<TemplateArtifact>.Write(ModelReaderWriterOptions options)

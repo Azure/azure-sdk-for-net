@@ -404,7 +404,26 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), gatewayLoadBalancer, virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>(), applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(), loadBalancerBackendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(), loadBalancerInboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
+            return new NetworkInterfaceIPConfigurationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                gatewayLoadBalancer,
+                virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
+                loadBalancerInboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(),
+                privateIPAddress.Value,
+                Optional.ToNullable(privateIPAllocationMethod),
+                Optional.ToNullable(privateIPAddressVersion),
+                subnet.Value,
+                Optional.ToNullable(primary),
+                publicIPAddress.Value,
+                applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
+                Optional.ToNullable(provisioningState),
+                privateLinkConnectionProperties.Value);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options)

@@ -166,7 +166,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowOutputParameterInfo(Optional.ToNullable(type), value.Value, metadata.Value, description.Value, serializedAdditionalRawData, error.Value);
+            return new LogicWorkflowOutputParameterInfo(
+                Optional.ToNullable(type),
+                value.Value,
+                metadata.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                error.Value);
         }
 
         BinaryData IPersistableModel<LogicWorkflowOutputParameterInfo>.Write(ModelReaderWriterOptions options)

@@ -189,7 +189,13 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationAssignmentFilter(resourceTypes ?? new ChangeTrackingList<ResourceType>(), resourceGroups ?? new ChangeTrackingList<string>(), osTypes ?? new ChangeTrackingList<string>(), locations ?? new ChangeTrackingList<AzureLocation>(), tagSettings.Value, serializedAdditionalRawData);
+            return new MaintenanceConfigurationAssignmentFilter(
+                resourceTypes ?? new ChangeTrackingList<ResourceType>(),
+                resourceGroups ?? new ChangeTrackingList<string>(),
+                osTypes ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                tagSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationAssignmentFilter>.Write(ModelReaderWriterOptions options)

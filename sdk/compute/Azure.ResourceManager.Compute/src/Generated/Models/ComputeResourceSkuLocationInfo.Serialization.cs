@@ -176,7 +176,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSkuLocationInfo(Optional.ToNullable(location), zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<ComputeResourceSkuZoneDetails>(), extendedLocations ?? new ChangeTrackingList<string>(), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ComputeResourceSkuLocationInfo(
+                Optional.ToNullable(location),
+                zones ?? new ChangeTrackingList<string>(),
+                zoneDetails ?? new ChangeTrackingList<ComputeResourceSkuZoneDetails>(),
+                extendedLocations ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSkuLocationInfo>.Write(ModelReaderWriterOptions options)

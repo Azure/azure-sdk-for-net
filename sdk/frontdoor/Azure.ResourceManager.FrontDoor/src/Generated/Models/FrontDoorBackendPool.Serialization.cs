@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, backends ?? new ChangeTrackingList<FrontDoorBackend>(), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState));
+            return new FrontDoorBackendPool(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                backends ?? new ChangeTrackingList<FrontDoorBackend>(),
+                loadBalancingSettings,
+                healthProbeSettings,
+                Optional.ToNullable(resourceState));
         }
 
         BinaryData IPersistableModel<FrontDoorBackendPool>.Write(ModelReaderWriterOptions options)

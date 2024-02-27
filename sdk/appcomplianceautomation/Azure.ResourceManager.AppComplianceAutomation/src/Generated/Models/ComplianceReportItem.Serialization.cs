@@ -225,7 +225,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value, serializedAdditionalRawData);
+            return new ComplianceReportItem(
+                categoryName.Value,
+                controlId.Value,
+                controlName.Value,
+                Optional.ToNullable(controlType),
+                Optional.ToNullable(complianceState),
+                policyId.Value,
+                policyDisplayName.Value,
+                policyDescription.Value,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                resourceType.Value,
+                resourceId.Value,
+                statusChangeDate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceReportItem>.Write(ModelReaderWriterOptions options)

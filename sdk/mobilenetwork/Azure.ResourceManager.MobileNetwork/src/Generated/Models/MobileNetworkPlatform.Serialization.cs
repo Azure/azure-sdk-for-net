@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPlatform(Optional.ToNullable(platformType), Optional.ToNullable(versionState), minimumPlatformSoftwareVersion.Value, maximumPlatformSoftwareVersion.Value, Optional.ToNullable(recommendedVersion), Optional.ToNullable(obsoleteVersion), serializedAdditionalRawData);
+            return new MobileNetworkPlatform(
+                Optional.ToNullable(platformType),
+                Optional.ToNullable(versionState),
+                minimumPlatformSoftwareVersion.Value,
+                maximumPlatformSoftwareVersion.Value,
+                Optional.ToNullable(recommendedVersion),
+                Optional.ToNullable(obsoleteVersion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPlatform>.Write(ModelReaderWriterOptions options)

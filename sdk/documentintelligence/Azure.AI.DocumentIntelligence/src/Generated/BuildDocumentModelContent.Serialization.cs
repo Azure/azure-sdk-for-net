@@ -158,7 +158,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildDocumentModelContent(modelId, description.Value, buildMode, azureBlobSource.Value, azureBlobFileListSource.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new BuildDocumentModelContent(
+                modelId,
+                description.Value,
+                buildMode,
+                azureBlobSource.Value,
+                azureBlobFileListSource.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildDocumentModelContent>.Write(ModelReaderWriterOptions options)

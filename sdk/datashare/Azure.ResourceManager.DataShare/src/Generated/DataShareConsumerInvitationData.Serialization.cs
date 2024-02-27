@@ -325,7 +325,27 @@ namespace Azure.ResourceManager.DataShare
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareConsumerInvitationData(id, name, type, systemData.Value, Optional.ToNullable(dataSetCount), description.Value, Optional.ToNullable(expirationDate), invitationId, Optional.ToNullable(invitationStatus), Optional.ToNullable(location), providerEmail.Value, providerName.Value, providerTenantName.Value, Optional.ToNullable(respondedAt), Optional.ToNullable(sentAt), shareName.Value, termsOfUse.Value, userEmail.Value, userName.Value, serializedAdditionalRawData);
+            return new DataShareConsumerInvitationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(dataSetCount),
+                description.Value,
+                Optional.ToNullable(expirationDate),
+                invitationId,
+                Optional.ToNullable(invitationStatus),
+                Optional.ToNullable(location),
+                providerEmail.Value,
+                providerName.Value,
+                providerTenantName.Value,
+                Optional.ToNullable(respondedAt),
+                Optional.ToNullable(sentAt),
+                shareName.Value,
+                termsOfUse.Value,
+                userEmail.Value,
+                userName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareConsumerInvitationData>.Write(ModelReaderWriterOptions options)

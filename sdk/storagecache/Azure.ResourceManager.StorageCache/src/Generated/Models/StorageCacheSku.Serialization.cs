@@ -196,7 +196,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheSku(resourceType.Value, capabilities ?? new ChangeTrackingList<StorageCacheSkuCapability>(), locations ?? new ChangeTrackingList<string>(), locationInfo ?? new ChangeTrackingList<StorageCacheSkuLocationInfo>(), name.Value, restrictions ?? new ChangeTrackingList<StorageCacheRestriction>(), serializedAdditionalRawData);
+            return new StorageCacheSku(
+                resourceType.Value,
+                capabilities ?? new ChangeTrackingList<StorageCacheSkuCapability>(),
+                locations ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<StorageCacheSkuLocationInfo>(),
+                name.Value,
+                restrictions ?? new ChangeTrackingList<StorageCacheRestriction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheSku>.Write(ModelReaderWriterOptions options)

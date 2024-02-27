@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMigrationServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, integrationRuntimeState.Value, serializedAdditionalRawData);
+            return new SqlMigrationServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                integrationRuntimeState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMigrationServiceData>.Write(ModelReaderWriterOptions options)

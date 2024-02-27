@@ -268,7 +268,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegressionTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode), serializedAdditionalRawData, allowedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>(), blockedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>());
+            return new RegressionTrainingSettings(
+                Optional.ToNullable(enableDnnTraining),
+                Optional.ToNullable(enableModelExplainability),
+                Optional.ToNullable(enableOnnxCompatibleModels),
+                Optional.ToNullable(enableStackEnsemble),
+                Optional.ToNullable(enableVoteEnsemble),
+                Optional.ToNullable(ensembleModelDownloadTimeout),
+                stackEnsembleSettings.Value,
+                Optional.ToNullable(trainingMode),
+                serializedAdditionalRawData,
+                allowedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>(),
+                blockedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>());
         }
 
         BinaryData IPersistableModel<RegressionTrainingSettings>.Write(ModelReaderWriterOptions options)

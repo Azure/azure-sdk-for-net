@@ -239,7 +239,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceSecurityGroupData(id, name, type, systemData.Value, thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>(), timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>(), allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>(), denylistRules ?? new ChangeTrackingList<DenylistCustomAlertRule>(), serializedAdditionalRawData);
+            return new DeviceSecurityGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>(),
+                timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>(),
+                allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>(),
+                denylistRules ?? new ChangeTrackingList<DenylistCustomAlertRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceSecurityGroupData>.Write(ModelReaderWriterOptions options)

@@ -239,7 +239,18 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubTestSendResult(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(success), Optional.ToNullable(failure), results.Value, sku.Value, serializedAdditionalRawData);
+            return new NotificationHubTestSendResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(success),
+                Optional.ToNullable(failure),
+                results.Value,
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubTestSendResult>.Write(ModelReaderWriterOptions options)

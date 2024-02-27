@@ -277,7 +277,20 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, permissions ?? new ChangeTrackingList<DenyAssignmentPermission>(), scope.Value, Optional.ToNullable(doNotApplyToChildScopes), principals ?? new ChangeTrackingList<RoleManagementPrincipal>(), excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(), Optional.ToNullable(isSystemProtected), serializedAdditionalRawData);
+            return new DenyAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                denyAssignmentName.Value,
+                description.Value,
+                permissions ?? new ChangeTrackingList<DenyAssignmentPermission>(),
+                scope.Value,
+                Optional.ToNullable(doNotApplyToChildScopes),
+                principals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
+                excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
+                Optional.ToNullable(isSystemProtected),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DenyAssignmentData>.Write(ModelReaderWriterOptions options)

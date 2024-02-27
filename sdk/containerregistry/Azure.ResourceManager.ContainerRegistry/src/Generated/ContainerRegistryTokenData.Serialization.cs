@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenData(id, name, type, systemData.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), scopeMapId.Value, credentials.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ContainerRegistryTokenData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(provisioningState),
+                scopeMapId.Value,
+                credentials.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenData>.Write(ModelReaderWriterOptions options)

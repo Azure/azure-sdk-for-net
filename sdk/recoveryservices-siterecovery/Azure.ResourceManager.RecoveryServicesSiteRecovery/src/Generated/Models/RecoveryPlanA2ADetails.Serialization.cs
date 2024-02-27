@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanA2ADetails(instanceType, serializedAdditionalRawData, primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value);
+            return new RecoveryPlanA2ADetails(
+                instanceType,
+                serializedAdditionalRawData,
+                primaryZone.Value,
+                recoveryZone.Value,
+                primaryExtendedLocation.Value,
+                recoveryExtendedLocation.Value);
         }
 
         BinaryData IPersistableModel<RecoveryPlanA2ADetails>.Write(ModelReaderWriterOptions options)

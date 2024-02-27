@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentStatusResult(code, cause.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(firstEvaluationDate), Optional.ToNullable(statusChangeDate));
+            return new SecurityAssessmentStatusResult(
+                code,
+                cause.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(firstEvaluationDate),
+                Optional.ToNullable(statusChangeDate));
         }
 
         BinaryData IPersistableModel<SecurityAssessmentStatusResult>.Write(ModelReaderWriterOptions options)

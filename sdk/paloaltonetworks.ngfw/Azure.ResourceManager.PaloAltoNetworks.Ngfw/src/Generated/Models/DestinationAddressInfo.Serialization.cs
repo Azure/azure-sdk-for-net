@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DestinationAddressInfo(cidrs ?? new ChangeTrackingList<string>(), countries ?? new ChangeTrackingList<string>(), feeds ?? new ChangeTrackingList<string>(), prefixLists ?? new ChangeTrackingList<string>(), fqdnLists ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DestinationAddressInfo(
+                cidrs ?? new ChangeTrackingList<string>(),
+                countries ?? new ChangeTrackingList<string>(),
+                feeds ?? new ChangeTrackingList<string>(),
+                prefixLists ?? new ChangeTrackingList<string>(),
+                fqdnLists ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DestinationAddressInfo>.Write(ModelReaderWriterOptions options)

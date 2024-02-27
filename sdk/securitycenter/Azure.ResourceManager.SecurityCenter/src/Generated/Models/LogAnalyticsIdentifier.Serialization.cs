@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsIdentifier(type, serializedAdditionalRawData, Optional.ToNullable(workspaceId), workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Optional.ToNullable(agentId));
+            return new LogAnalyticsIdentifier(
+                type,
+                serializedAdditionalRawData,
+                Optional.ToNullable(workspaceId),
+                workspaceSubscriptionId.Value,
+                workspaceResourceGroup.Value,
+                Optional.ToNullable(agentId));
         }
 
         BinaryData IPersistableModel<LogAnalyticsIdentifier>.Write(ModelReaderWriterOptions options)

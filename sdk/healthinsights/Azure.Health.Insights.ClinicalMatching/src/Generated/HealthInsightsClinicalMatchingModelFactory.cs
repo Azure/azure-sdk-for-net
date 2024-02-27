@@ -37,7 +37,14 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <returns> A new <see cref="ClinicalMatching.PatientDocument"/> instance for mocking. </returns>
         public static PatientDocument PatientDocument(DocumentType type = default, ClinicalDocumentType? clinicalType = null, string id = null, string language = null, DateTimeOffset? createdDateTime = null, DocumentContent content = null)
         {
-            return new PatientDocument(type, clinicalType, id, language, createdDateTime, content, serializedAdditionalRawData: null);
+            return new PatientDocument(
+                type,
+                clinicalType,
+                id,
+                language,
+                createdDateTime,
+                content,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.TrialMatcherModelConfiguration"/>. </summary>
@@ -115,7 +122,16 @@ namespace Azure.Health.Insights.ClinicalMatching
         {
             evidence ??= new List<TrialMatcherInferenceEvidence>();
 
-            return new TrialMatcherInference(type, value, description, confidenceScore, evidence?.ToList(), id, source, metadata, serializedAdditionalRawData: null);
+            return new TrialMatcherInference(
+                type,
+                value,
+                description,
+                confidenceScore,
+                evidence?.ToList(),
+                id,
+                source,
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.TrialMatcherInferenceEvidence"/>. </summary>
@@ -153,7 +169,14 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <returns> A new <see cref="ClinicalMatching.ExtendedClinicalCodedElement"/> instance for mocking. </returns>
         public static ExtendedClinicalCodedElement ExtendedClinicalCodedElement(string system = null, string code = null, string name = null, string value = null, string semanticType = null, string category = null)
         {
-            return new ExtendedClinicalCodedElement(system, code, name, value, semanticType, category, serializedAdditionalRawData: null);
+            return new ExtendedClinicalCodedElement(
+                system,
+                code,
+                name,
+                value,
+                semanticType,
+                category,
+                serializedAdditionalRawData: null);
         }
     }
 }

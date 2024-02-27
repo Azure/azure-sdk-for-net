@@ -383,7 +383,23 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnEndpointPatch(tags ?? new ChangeTrackingDictionary<string, string>(), originPath.Value, contentTypesToCompress ?? new ChangeTrackingList<string>(), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, geoFilters ?? new ChangeTrackingList<GeoFilter>(), defaultOriginGroup.Value, uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, serializedAdditionalRawData);
+            return new CdnEndpointPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                originPath.Value,
+                contentTypesToCompress ?? new ChangeTrackingList<string>(),
+                originHostHeader.Value,
+                Optional.ToNullable(isCompressionEnabled),
+                Optional.ToNullable(isHttpAllowed),
+                Optional.ToNullable(isHttpsAllowed),
+                Optional.ToNullable(queryStringCachingBehavior),
+                Optional.ToNullable(optimizationType),
+                probePath.Value,
+                geoFilters ?? new ChangeTrackingList<GeoFilter>(),
+                defaultOriginGroup.Value,
+                uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
+                deliveryPolicy.Value,
+                webApplicationFirewallPolicyLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnEndpointPatch>.Write(ModelReaderWriterOptions options)

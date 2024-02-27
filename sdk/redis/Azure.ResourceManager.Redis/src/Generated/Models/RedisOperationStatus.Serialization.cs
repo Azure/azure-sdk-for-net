@@ -252,7 +252,17 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisOperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), operations ?? new ChangeTrackingList<OperationStatusResult>(), error.Value, properties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new RedisOperationStatus(
+                id.Value,
+                name.Value,
+                status,
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                error.Value,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisOperationStatus>.Write(ModelReaderWriterOptions options)

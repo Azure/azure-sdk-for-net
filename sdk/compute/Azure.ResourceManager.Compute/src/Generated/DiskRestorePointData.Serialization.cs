@@ -382,7 +382,29 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, Optional.ToNullable(sourceResourceLocation), securityProfile.Value, serializedAdditionalRawData);
+            return new DiskRestorePointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(timeCreated),
+                sourceResourceId.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(hyperVGeneration),
+                purchasePlan.Value,
+                supportedCapabilities.Value,
+                familyId.Value,
+                sourceUniqueId.Value,
+                encryption.Value,
+                Optional.ToNullable(supportsHibernation),
+                Optional.ToNullable(networkAccessPolicy),
+                Optional.ToNullable(publicNetworkAccess),
+                diskAccessId.Value,
+                Optional.ToNullable(completionPercent),
+                replicationState.Value,
+                Optional.ToNullable(sourceResourceLocation),
+                securityProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskRestorePointData>.Write(ModelReaderWriterOptions options)

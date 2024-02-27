@@ -213,7 +213,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoverableDatabaseData(id, name, type, systemData.Value, edition.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(lastAvailableBackupDate), keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(), serializedAdditionalRawData);
+            return new RecoverableDatabaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                edition.Value,
+                serviceLevelObjective.Value,
+                elasticPoolName.Value,
+                Optional.ToNullable(lastAvailableBackupDate),
+                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoverableDatabaseData>.Write(ModelReaderWriterOptions options)

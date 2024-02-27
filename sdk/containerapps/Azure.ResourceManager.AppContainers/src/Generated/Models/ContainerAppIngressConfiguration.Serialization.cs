@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>(), customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>(), Optional.ToNullable(allowInsecure), ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>(), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value, serializedAdditionalRawData);
+            return new ContainerAppIngressConfiguration(
+                fqdn.Value,
+                Optional.ToNullable(external),
+                Optional.ToNullable(targetPort),
+                Optional.ToNullable(exposedPort),
+                Optional.ToNullable(transport),
+                traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>(),
+                customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>(),
+                Optional.ToNullable(allowInsecure),
+                ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>(),
+                stickySessions.Value,
+                Optional.ToNullable(clientCertificateMode),
+                corsPolicy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIngressConfiguration>.Write(ModelReaderWriterOptions options)

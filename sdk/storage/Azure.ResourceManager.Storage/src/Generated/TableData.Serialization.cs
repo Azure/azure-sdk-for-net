@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableData(id, name, type, systemData.Value, tableName.Value, signedIdentifiers ?? new ChangeTrackingList<StorageTableSignedIdentifier>(), serializedAdditionalRawData);
+            return new TableData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tableName.Value,
+                signedIdentifiers ?? new ChangeTrackingList<StorageTableSignedIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableData>.Write(ModelReaderWriterOptions options)

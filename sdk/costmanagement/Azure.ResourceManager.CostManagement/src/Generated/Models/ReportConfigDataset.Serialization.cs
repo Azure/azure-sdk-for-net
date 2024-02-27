@@ -195,7 +195,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportConfigDataset(Optional.ToNullable(granularity), configuration.Value, aggregation ?? new ChangeTrackingDictionary<string, ReportConfigAggregation>(), grouping ?? new ChangeTrackingList<ReportConfigGrouping>(), sorting ?? new ChangeTrackingList<ReportConfigSorting>(), filter.Value, serializedAdditionalRawData);
+            return new ReportConfigDataset(
+                Optional.ToNullable(granularity),
+                configuration.Value,
+                aggregation ?? new ChangeTrackingDictionary<string, ReportConfigAggregation>(),
+                grouping ?? new ChangeTrackingList<ReportConfigGrouping>(),
+                sorting ?? new ChangeTrackingList<ReportConfigSorting>(),
+                filter.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportConfigDataset>.Write(ModelReaderWriterOptions options)

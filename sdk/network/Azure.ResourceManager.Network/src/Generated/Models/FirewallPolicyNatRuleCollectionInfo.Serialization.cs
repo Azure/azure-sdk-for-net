@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyNatRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority), serializedAdditionalRawData, action.Value, rules ?? new ChangeTrackingList<FirewallPolicyRule>());
+            return new FirewallPolicyNatRuleCollectionInfo(
+                ruleCollectionType,
+                name.Value,
+                Optional.ToNullable(priority),
+                serializedAdditionalRawData,
+                action.Value,
+                rules ?? new ChangeTrackingList<FirewallPolicyRule>());
         }
 
         BinaryData IPersistableModel<FirewallPolicyNatRuleCollectionInfo>.Write(ModelReaderWriterOptions options)

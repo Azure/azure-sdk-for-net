@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdConnectConfig(authorizationEndpoint.Value, tokenEndpoint.Value, issuer.Value, certificationUri.Value, wellKnownOpenIdConfiguration.Value, serializedAdditionalRawData);
+            return new OpenIdConnectConfig(
+                authorizationEndpoint.Value,
+                tokenEndpoint.Value,
+                issuer.Value,
+                certificationUri.Value,
+                wellKnownOpenIdConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenIdConnectConfig>.Write(ModelReaderWriterOptions options)

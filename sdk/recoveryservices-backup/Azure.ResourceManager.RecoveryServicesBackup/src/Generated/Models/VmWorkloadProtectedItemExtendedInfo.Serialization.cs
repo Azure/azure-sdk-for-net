@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(oldestRecoveryPointInVault), Optional.ToNullable(oldestRecoveryPointInArchive), Optional.ToNullable(newestRecoveryPointInArchive), Optional.ToNullable(recoveryPointCount), policyState.Value, recoveryModel.Value, serializedAdditionalRawData);
+            return new VmWorkloadProtectedItemExtendedInfo(
+                Optional.ToNullable(oldestRecoveryPoint),
+                Optional.ToNullable(oldestRecoveryPointInVault),
+                Optional.ToNullable(oldestRecoveryPointInArchive),
+                Optional.ToNullable(newestRecoveryPointInArchive),
+                Optional.ToNullable(recoveryPointCount),
+                policyState.Value,
+                recoveryModel.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmWorkloadProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)

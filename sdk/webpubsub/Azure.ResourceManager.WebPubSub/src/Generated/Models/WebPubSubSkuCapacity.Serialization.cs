@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), allowedValues ?? new ChangeTrackingList<int>(), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new WebPubSubSkuCapacity(
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(@default),
+                allowedValues ?? new ChangeTrackingList<int>(),
+                Optional.ToNullable(scaleType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubSkuCapacity>.Write(ModelReaderWriterOptions options)

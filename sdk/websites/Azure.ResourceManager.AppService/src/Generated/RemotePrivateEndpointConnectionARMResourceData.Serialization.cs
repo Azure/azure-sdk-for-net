@@ -230,7 +230,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemotePrivateEndpointConnectionARMResourceData(id, name, type, systemData.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, ipAddresses ?? new ChangeTrackingList<IPAddress>(), kind.Value, serializedAdditionalRawData);
+            return new RemotePrivateEndpointConnectionARMResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provisioningState.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Write(ModelReaderWriterOptions options)

@@ -186,7 +186,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheNetworkSettings(Optional.ToNullable(mtu), utilityAddresses ?? new ChangeTrackingList<IPAddress>(), dnsServers ?? new ChangeTrackingList<IPAddress>(), dnsSearchDomain.Value, ntpServer.Value, serializedAdditionalRawData);
+            return new StorageCacheNetworkSettings(
+                Optional.ToNullable(mtu),
+                utilityAddresses ?? new ChangeTrackingList<IPAddress>(),
+                dnsServers ?? new ChangeTrackingList<IPAddress>(),
+                dnsSearchDomain.Value,
+                ntpServer.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheNetworkSettings>.Write(ModelReaderWriterOptions options)

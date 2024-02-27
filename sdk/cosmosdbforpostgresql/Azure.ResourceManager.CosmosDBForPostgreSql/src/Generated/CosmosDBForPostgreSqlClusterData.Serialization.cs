@@ -557,7 +557,40 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), serverNames ?? new ChangeTrackingList<CosmosDBForPostgreSqlServerNameItem>(), sourceResourceId.Value, Optional.ToNullable(sourceLocation), Optional.ToNullable(pointInTimeUTC), readReplicas ?? new ChangeTrackingList<string>(), Optional.ToNullable(earliestRestoreTime), privateEndpointConnections ?? new ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>(), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                administratorLogin.Value,
+                administratorLoginPassword.Value,
+                provisioningState.Value,
+                state.Value,
+                postgresqlVersion.Value,
+                citusVersion.Value,
+                maintenanceWindow.Value,
+                preferredPrimaryZone.Value,
+                Optional.ToNullable(enableShardsOnCoordinator),
+                Optional.ToNullable(enableHa),
+                coordinatorServerEdition.Value,
+                Optional.ToNullable(coordinatorStorageQuotaInMb),
+                Optional.ToNullable(coordinatorVCores),
+                Optional.ToNullable(coordinatorEnablePublicIPAccess),
+                nodeServerEdition.Value,
+                Optional.ToNullable(nodeCount),
+                Optional.ToNullable(nodeStorageQuotaInMb),
+                Optional.ToNullable(nodeVCores),
+                Optional.ToNullable(nodeEnablePublicIPAccess),
+                serverNames ?? new ChangeTrackingList<CosmosDBForPostgreSqlServerNameItem>(),
+                sourceResourceId.Value,
+                Optional.ToNullable(sourceLocation),
+                Optional.ToNullable(pointInTimeUTC),
+                readReplicas ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(earliestRestoreTime),
+                privateEndpointConnections ?? new ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterData>.Write(ModelReaderWriterOptions options)

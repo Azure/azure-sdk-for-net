@@ -170,7 +170,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BlobTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<object>(), additionalProperties, pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(), folderPath, maxConcurrency, linkedService);
+            return new BlobTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                folderPath,
+                maxConcurrency,
+                linkedService);
         }
 
         internal partial class BlobTriggerConverter : JsonConverter<BlobTrigger>

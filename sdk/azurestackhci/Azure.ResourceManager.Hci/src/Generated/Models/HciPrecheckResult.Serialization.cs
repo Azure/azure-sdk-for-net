@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value, serializedAdditionalRawData);
+            return new HciPrecheckResult(
+                name.Value,
+                tags.Value,
+                title.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(severity),
+                description.Value,
+                remediation.Value,
+                targetResourceId.Value,
+                targetResourceName.Value,
+                Optional.ToNullable(timestamp),
+                additionalData.Value,
+                healthCheckSource.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciPrecheckResult>.Write(ModelReaderWriterOptions options)

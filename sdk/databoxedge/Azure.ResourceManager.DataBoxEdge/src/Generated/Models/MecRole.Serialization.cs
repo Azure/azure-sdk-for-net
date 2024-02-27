@@ -198,7 +198,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MecRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, connectionString.Value, controllerEndpoint.Value, resourceUniqueId.Value, Optional.ToNullable(roleStatus));
+            return new MecRole(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                connectionString.Value,
+                controllerEndpoint.Value,
+                resourceUniqueId.Value,
+                Optional.ToNullable(roleStatus));
         }
 
         BinaryData IPersistableModel<MecRole>.Write(ModelReaderWriterOptions options)

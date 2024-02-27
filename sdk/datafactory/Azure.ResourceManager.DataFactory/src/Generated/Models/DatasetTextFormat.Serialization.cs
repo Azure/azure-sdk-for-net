@@ -242,7 +242,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetTextFormat(type, serializer.Value, deserializer.Value, additionalProperties, columnDelimiter.Value, rowDelimiter.Value, escapeChar.Value, quoteChar.Value, nullValue.Value, encodingName.Value, treatEmptyAsNull.Value, skipLineCount.Value, firstRowAsHeader.Value);
+            return new DatasetTextFormat(
+                type,
+                serializer.Value,
+                deserializer.Value,
+                additionalProperties,
+                columnDelimiter.Value,
+                rowDelimiter.Value,
+                escapeChar.Value,
+                quoteChar.Value,
+                nullValue.Value,
+                encodingName.Value,
+                treatEmptyAsNull.Value,
+                skipLineCount.Value,
+                firstRowAsHeader.Value);
         }
 
         BinaryData IPersistableModel<DatasetTextFormat>.Write(ModelReaderWriterOptions options)

@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreVirtualNetworkRuleData(id, name, type, systemData.Value, subnetId.Value, serializedAdditionalRawData);
+            return new DataLakeStoreVirtualNetworkRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                subnetId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options)

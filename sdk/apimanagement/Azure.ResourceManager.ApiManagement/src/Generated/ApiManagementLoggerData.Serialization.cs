@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementLoggerData(id, name, type, systemData.Value, Optional.ToNullable(loggerType), description.Value, credentials ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(isBuffered), resourceId.Value, serializedAdditionalRawData);
+            return new ApiManagementLoggerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(loggerType),
+                description.Value,
+                credentials ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(isBuffered),
+                resourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementLoggerData>.Write(ModelReaderWriterOptions options)

@@ -223,7 +223,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExternalNetworkOptionAProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, serializedAdditionalRawData, Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), bfdConfiguration.Value, ingressAclId.Value, egressAclId.Value);
+            return new ExternalNetworkOptionAProperties(
+                primaryIPv4Prefix.Value,
+                primaryIPv6Prefix.Value,
+                secondaryIPv4Prefix.Value,
+                secondaryIPv6Prefix.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(mtu),
+                Optional.ToNullable(vlanId),
+                Optional.ToNullable(fabricAsn),
+                Optional.ToNullable(peerAsn),
+                bfdConfiguration.Value,
+                ingressAclId.Value,
+                egressAclId.Value);
         }
 
         BinaryData IPersistableModel<ExternalNetworkOptionAProperties>.Write(ModelReaderWriterOptions options)

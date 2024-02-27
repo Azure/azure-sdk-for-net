@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword, Optional.ToNullable(catalogPricingTier), dualStandbyPairName.Value, additionalProperties);
+            return new IntegrationRuntimeSsisCatalogInfo(
+                catalogServerEndpoint.Value,
+                catalogAdminUserName.Value,
+                catalogAdminPassword,
+                Optional.ToNullable(catalogPricingTier),
+                dualStandbyPairName.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeSsisCatalogInfo>.Write(ModelReaderWriterOptions options)

@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectLineSpeechChannelProperties(cognitiveServiceResourceId.Value, cognitiveServiceRegion.Value, cognitiveServiceSubscriptionKey.Value, Optional.ToNullable(isEnabled), customVoiceDeploymentId.Value, customSpeechModelId.Value, Optional.ToNullable(isDefaultBotForCogSvcAccount), serializedAdditionalRawData);
+            return new DirectLineSpeechChannelProperties(
+                cognitiveServiceResourceId.Value,
+                cognitiveServiceRegion.Value,
+                cognitiveServiceSubscriptionKey.Value,
+                Optional.ToNullable(isEnabled),
+                customVoiceDeploymentId.Value,
+                customSpeechModelId.Value,
+                Optional.ToNullable(isDefaultBotForCogSvcAccount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectLineSpeechChannelProperties>.Write(ModelReaderWriterOptions options)

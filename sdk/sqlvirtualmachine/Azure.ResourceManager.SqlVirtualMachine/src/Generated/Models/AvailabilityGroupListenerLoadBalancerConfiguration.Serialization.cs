@@ -171,7 +171,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), sqlVmInstances ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new AvailabilityGroupListenerLoadBalancerConfiguration(
+                privateIPAddress.Value,
+                publicIPAddressResourceId.Value,
+                loadBalancerResourceId.Value,
+                Optional.ToNullable(probePort),
+                sqlVmInstances ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)

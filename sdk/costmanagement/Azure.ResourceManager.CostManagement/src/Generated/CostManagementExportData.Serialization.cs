@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.CostManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementExportData(id, name, type, systemData.Value, Optional.ToNullable(format), deliveryInfo.Value, definition.Value, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), schedule.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new CostManagementExportData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(format),
+                deliveryInfo.Value,
+                definition.Value,
+                runHistory.Value,
+                Optional.ToNullable(partitionData),
+                Optional.ToNullable(nextRunTimeEstimate),
+                schedule.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementExportData>.Write(ModelReaderWriterOptions options)

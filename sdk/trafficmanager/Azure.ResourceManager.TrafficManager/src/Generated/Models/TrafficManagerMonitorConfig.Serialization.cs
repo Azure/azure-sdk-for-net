@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerMonitorConfig(Optional.ToNullable(profileMonitorStatus), Optional.ToNullable(protocol), Optional.ToNullable(port), path.Value, Optional.ToNullable(intervalInSeconds), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(toleratedNumberOfFailures), customHeaders ?? new ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>(), expectedStatusCodeRanges ?? new ChangeTrackingList<ExpectedStatusCodeRangeInfo>(), serializedAdditionalRawData);
+            return new TrafficManagerMonitorConfig(
+                Optional.ToNullable(profileMonitorStatus),
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(port),
+                path.Value,
+                Optional.ToNullable(intervalInSeconds),
+                Optional.ToNullable(timeoutInSeconds),
+                Optional.ToNullable(toleratedNumberOfFailures),
+                customHeaders ?? new ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>(),
+                expectedStatusCodeRanges ?? new ChangeTrackingList<ExpectedStatusCodeRangeInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerMonitorConfig>.Write(ModelReaderWriterOptions options)

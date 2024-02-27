@@ -122,7 +122,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisTypedOperationBase(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value);
+            return new SpatialAnalysisTypedOperationBase(
+                type,
+                debug.Value,
+                calibrationConfiguration.Value,
+                cameraConfiguration.Value,
+                cameraCalibratorNodeConfiguration.Value,
+                detectorNodeConfiguration.Value,
+                trackerNodeConfiguration.Value,
+                enableFaceMaskClassifier.Value);
         }
     }
 }

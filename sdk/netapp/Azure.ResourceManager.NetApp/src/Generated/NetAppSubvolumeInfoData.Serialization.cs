@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppSubvolumeInfoData(id, name, type, systemData.Value, path.Value, Optional.ToNullable(size), parentPath.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new NetAppSubvolumeInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                path.Value,
+                Optional.ToNullable(size),
+                parentPath.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppSubvolumeInfoData>.Write(ModelReaderWriterOptions options)

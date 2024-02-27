@@ -293,7 +293,22 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, contentKeys ?? new ChangeTrackingList<StreamingLocatorContentKey>(), alternativeMediaId.Value, filters ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new StreamingLocatorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                assetName.Value,
+                Optional.ToNullable(created),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(streamingLocatorId),
+                streamingPolicyName.Value,
+                defaultContentKeyPolicyName.Value,
+                contentKeys ?? new ChangeTrackingList<StreamingLocatorContentKey>(),
+                alternativeMediaId.Value,
+                filters ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options)

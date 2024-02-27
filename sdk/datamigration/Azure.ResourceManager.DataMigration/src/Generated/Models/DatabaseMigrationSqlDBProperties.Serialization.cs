@@ -311,7 +311,26 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseMigrationSqlDBProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData, migrationStatusDetails.Value, targetSqlConnection.Value, offlineConfiguration.Value, tableList ?? new ChangeTrackingList<string>());
+            return new DatabaseMigrationSqlDBProperties(
+                kind,
+                scope.Value,
+                provisioningState.Value,
+                migrationStatus.Value,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                sourceSqlConnection.Value,
+                sourceDatabaseName.Value,
+                sourceServerName.Value,
+                migrationService.Value,
+                migrationOperationId.Value,
+                migrationFailureError.Value,
+                targetDatabaseCollation.Value,
+                provisioningError.Value,
+                serializedAdditionalRawData,
+                migrationStatusDetails.Value,
+                targetSqlConnection.Value,
+                offlineConfiguration.Value,
+                tableList ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DatabaseMigrationSqlDBProperties>.Write(ModelReaderWriterOptions options)

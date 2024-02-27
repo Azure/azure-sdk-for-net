@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(), secretStoreComponent.Value, metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(), scopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ContainerAppDaprComponentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                componentType.Value,
+                version.Value,
+                Optional.ToNullable(ignoreErrors),
+                initTimeout.Value,
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                secretStoreComponent.Value,
+                metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options)

@@ -275,7 +275,21 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultPatchProperties(Optional.ToNullable(tenantId), sku.Value, accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>(), Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, publicNetworkAccess.Value, serializedAdditionalRawData);
+            return new KeyVaultPatchProperties(
+                Optional.ToNullable(tenantId),
+                sku.Value,
+                accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>(),
+                Optional.ToNullable(enabledForDeployment),
+                Optional.ToNullable(enabledForDiskEncryption),
+                Optional.ToNullable(enabledForTemplateDeployment),
+                Optional.ToNullable(enableSoftDelete),
+                Optional.ToNullable(enableRbacAuthorization),
+                Optional.ToNullable(softDeleteRetentionInDays),
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(enablePurgeProtection),
+                networkAcls.Value,
+                publicNetworkAccess.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultPatchProperties>.Write(ModelReaderWriterOptions options)

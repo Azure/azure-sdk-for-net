@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData);
+            return new UnknownReservationRecommendation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationRecommendation>.Write(ModelReaderWriterOptions options)

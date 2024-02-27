@@ -357,7 +357,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(), dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(), validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value, serializedAdditionalRawData);
+            return new MasterTargetServer(
+                id.Value,
+                ipAddress.Value,
+                name.Value,
+                osType.Value,
+                agentVersion.Value,
+                Optional.ToNullable(lastHeartbeat),
+                versionStatus.Value,
+                retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(),
+                dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(diskCount),
+                osVersion.Value,
+                Optional.ToNullable(agentExpireOn),
+                marsAgentVersion.Value,
+                Optional.ToNullable(marsAgentExpireOn),
+                agentVersionDetails.Value,
+                marsAgentVersionDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options)

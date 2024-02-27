@@ -141,7 +141,16 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultCertificateSource(typeName, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion.Value, updateRule, deleteRule, serializedAdditionalRawData);
+            return new KeyVaultCertificateSource(
+                typeName,
+                subscriptionId,
+                resourceGroupName,
+                vaultName,
+                secretName,
+                secretVersion.Value,
+                updateRule,
+                deleteRule,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultCertificateSource>.Write(ModelReaderWriterOptions options)

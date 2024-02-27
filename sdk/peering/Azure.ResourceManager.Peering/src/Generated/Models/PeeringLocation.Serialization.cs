@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringLocation(id, name, type, systemData.Value, Optional.ToNullable(kind), direct.Value, exchange.Value, peeringLocation.Value, country.Value, Optional.ToNullable(azureRegion), serializedAdditionalRawData);
+            return new PeeringLocation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(kind),
+                direct.Value,
+                exchange.Value,
+                peeringLocation.Value,
+                country.Value,
+                Optional.ToNullable(azureRegion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringLocation>.Write(ModelReaderWriterOptions options)

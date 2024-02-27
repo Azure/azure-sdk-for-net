@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunEntityInfo(name.Value, id.Value, invokedByType.Value, pipelineName.Value, Optional.ToNullable(pipelineRunId), serializedAdditionalRawData);
+            return new DataFactoryPipelineRunEntityInfo(
+                name.Value,
+                id.Value,
+                invokedByType.Value,
+                pipelineName.Value,
+                Optional.ToNullable(pipelineRunId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineRunEntityInfo>.Write(ModelReaderWriterOptions options)

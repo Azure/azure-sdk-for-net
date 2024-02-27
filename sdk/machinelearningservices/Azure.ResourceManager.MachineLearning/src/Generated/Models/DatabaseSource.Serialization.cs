@@ -230,7 +230,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseSource(connection.Value, sourceType, serializedAdditionalRawData, query.Value, storedProcedure.Value, storedProcedureParams ?? new ChangeTrackingList<IDictionary<string, string>>(), tableName.Value);
+            return new DatabaseSource(
+                connection.Value,
+                sourceType,
+                serializedAdditionalRawData,
+                query.Value,
+                storedProcedure.Value,
+                storedProcedureParams ?? new ChangeTrackingList<IDictionary<string, string>>(),
+                tableName.Value);
         }
 
         BinaryData IPersistableModel<DatabaseSource>.Write(ModelReaderWriterOptions options)

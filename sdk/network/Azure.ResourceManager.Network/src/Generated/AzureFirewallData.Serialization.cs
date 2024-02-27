@@ -470,7 +470,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(etag), applicationRuleCollections ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>(), natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>(), networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>(), ipConfigurations ?? new ChangeTrackingList<AzureFirewallIPConfiguration>(), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(), sku.Value, additionalProperties ?? new ChangeTrackingDictionary<string, string>());
+            return new AzureFirewallData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(etag),
+                applicationRuleCollections ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>(),
+                natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>(),
+                networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>(),
+                ipConfigurations ?? new ChangeTrackingList<AzureFirewallIPConfiguration>(),
+                managementIPConfiguration.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(threatIntelMode),
+                virtualHub,
+                firewallPolicy,
+                hubIPAddresses.Value,
+                ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(),
+                sku.Value,
+                additionalProperties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options)

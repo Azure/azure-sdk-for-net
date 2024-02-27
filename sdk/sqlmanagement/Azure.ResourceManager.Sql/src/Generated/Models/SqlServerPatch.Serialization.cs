@@ -363,7 +363,26 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
+            return new SqlServerPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administratorLogin.Value,
+                administratorLoginPassword.Value,
+                version.Value,
+                state.Value,
+                fullyQualifiedDomainName.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(),
+                Optional.ToNullable(minimalTlsVersion),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(workspaceFeature),
+                primaryUserAssignedIdentityId.Value,
+                Optional.ToNullable(federatedClientId),
+                keyId.Value,
+                administrators.Value,
+                Optional.ToNullable(restrictOutboundNetworkAccess),
+                Optional.ToNullable(isIPv6Enabled),
+                Optional.ToNullable(externalGovernanceStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerPatch>.Write(ModelReaderWriterOptions options)

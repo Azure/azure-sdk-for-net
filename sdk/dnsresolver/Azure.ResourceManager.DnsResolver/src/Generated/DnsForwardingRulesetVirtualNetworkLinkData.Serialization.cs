@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.DnsResolver
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, metadata ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DnsForwardingRulesetVirtualNetworkLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                virtualNetwork,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options)

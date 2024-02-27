@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkScopedResourceData(id, name, type, systemData.Value, linkedResourceId.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new MonitorPrivateLinkScopedResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                linkedResourceId.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkScopedResourceData>.Write(ModelReaderWriterOptions options)

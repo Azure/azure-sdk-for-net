@@ -265,7 +265,24 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCenterAddressLocationResult(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), Optional.ToNullable(dataCenterAzureLocation), serializedAdditionalRawData, contactPersonName.Value, company.Value, street1.Value, street2.Value, street3.Value, city.Value, state.Value, zip.Value, country.Value, phone.Value, phoneExtension.Value, addressType.Value, additionalShippingInformation.Value);
+            return new DataCenterAddressLocationResult(
+                dataCenterAddressType,
+                supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(dataCenterAzureLocation),
+                serializedAdditionalRawData,
+                contactPersonName.Value,
+                company.Value,
+                street1.Value,
+                street2.Value,
+                street3.Value,
+                city.Value,
+                state.Value,
+                zip.Value,
+                country.Value,
+                phone.Value,
+                phoneExtension.Value,
+                addressType.Value,
+                additionalShippingInformation.Value);
         }
 
         BinaryData IPersistableModel<DataCenterAddressLocationResult>.Write(ModelReaderWriterOptions options)

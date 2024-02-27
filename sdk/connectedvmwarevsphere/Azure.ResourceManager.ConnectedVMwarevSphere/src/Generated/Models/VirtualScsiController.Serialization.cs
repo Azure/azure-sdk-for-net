@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualScsiController(Optional.ToNullable(type), Optional.ToNullable(controllerKey), Optional.ToNullable(busNumber), Optional.ToNullable(scsiCtlrUnitNumber), Optional.ToNullable(sharing), serializedAdditionalRawData);
+            return new VirtualScsiController(
+                Optional.ToNullable(type),
+                Optional.ToNullable(controllerKey),
+                Optional.ToNullable(busNumber),
+                Optional.ToNullable(scsiCtlrUnitNumber),
+                Optional.ToNullable(sharing),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualScsiController>.Write(ModelReaderWriterOptions options)

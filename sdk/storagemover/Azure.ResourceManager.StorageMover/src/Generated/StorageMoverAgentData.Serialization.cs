@@ -293,7 +293,24 @@ namespace Azure.ResourceManager.StorageMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMoverAgentData(id, name, type, systemData.Value, description.Value, agentVersion.Value, arcResourceId, arcVmUuid, Optional.ToNullable(agentStatus), Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Optional.ToNullable(memoryInMB), Optional.ToNullable(numberOfCores), Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new StorageMoverAgentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                agentVersion.Value,
+                arcResourceId,
+                arcVmUuid,
+                Optional.ToNullable(agentStatus),
+                Optional.ToNullable(lastStatusUpdate),
+                localIPAddress.Value,
+                Optional.ToNullable(memoryInMB),
+                Optional.ToNullable(numberOfCores),
+                Optional.ToNullable(uptimeInSeconds),
+                errorDetails.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverAgentData>.Write(ModelReaderWriterOptions options)

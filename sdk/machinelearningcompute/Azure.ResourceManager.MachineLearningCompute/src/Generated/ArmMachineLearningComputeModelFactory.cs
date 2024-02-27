@@ -41,7 +41,25 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             tags ??= new Dictionary<string, string>();
             provisioningErrors ??= new List<ErrorResponseWrapper>();
 
-            return new OperationalizationClusterData(id, name, resourceType, systemData, tags, location, description, createdOn, modifiedOn, provisioningState, provisioningErrors?.ToList(), clusterType, storageAccountResourceId != null ? new StorageAccountProperties(storageAccountResourceId, serializedAdditionalRawData: null) : null, containerRegistryResourceId != null ? new ContainerRegistryProperties(containerRegistryResourceId, serializedAdditionalRawData: null) : null, containerService, appInsightsResourceId != null ? new AppInsightsProperties(appInsightsResourceId, serializedAdditionalRawData: null) : null, globalServiceConfiguration, serializedAdditionalRawData: null);
+            return new OperationalizationClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                description,
+                createdOn,
+                modifiedOn,
+                provisioningState,
+                provisioningErrors?.ToList(),
+                clusterType,
+                storageAccountResourceId != null ? new StorageAccountProperties(storageAccountResourceId, serializedAdditionalRawData: null) : null,
+                containerRegistryResourceId != null ? new ContainerRegistryProperties(containerRegistryResourceId, serializedAdditionalRawData: null) : null,
+                containerService,
+                appInsightsResourceId != null ? new AppInsightsProperties(appInsightsResourceId, serializedAdditionalRawData: null) : null,
+                globalServiceConfiguration,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorResponseWrapper"/>. </summary>
@@ -86,7 +104,15 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         {
             systemServices ??= new List<SystemService>();
 
-            return new AcsClusterProperties(clusterFqdn, orchestratorType, orchestratorServicePrincipal != null ? new KubernetesClusterProperties(orchestratorServicePrincipal, serializedAdditionalRawData: null) : null, systemServices?.ToList(), masterCount, agentCount, agentVmSize, serializedAdditionalRawData: null);
+            return new AcsClusterProperties(
+                clusterFqdn,
+                orchestratorType,
+                orchestratorServicePrincipal != null ? new KubernetesClusterProperties(orchestratorServicePrincipal, serializedAdditionalRawData: null) : null,
+                systemServices?.ToList(),
+                masterCount,
+                agentCount,
+                agentVmSize,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SystemService"/>. </summary>
@@ -109,7 +135,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <returns> A new <see cref="Models.OperationalizationClusterCredentials"/> instance for mocking. </returns>
         public static OperationalizationClusterCredentials OperationalizationClusterCredentials(StorageAccountCredentials storageAccount = null, ContainerRegistryCredentials containerRegistry = null, ContainerServiceCredentials containerService = null, AppInsightsCredentials appInsights = null, ServiceAuthConfiguration serviceAuthConfiguration = null, SslConfiguration sslConfiguration = null)
         {
-            return new OperationalizationClusterCredentials(storageAccount, containerRegistry, containerService, appInsights, serviceAuthConfiguration, sslConfiguration, serializedAdditionalRawData: null);
+            return new OperationalizationClusterCredentials(
+                storageAccount,
+                containerRegistry,
+                containerService,
+                appInsights,
+                serviceAuthConfiguration,
+                sslConfiguration,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountCredentials"/>. </summary>

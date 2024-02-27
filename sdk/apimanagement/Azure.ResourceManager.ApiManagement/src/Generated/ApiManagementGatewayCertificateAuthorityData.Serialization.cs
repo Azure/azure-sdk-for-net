@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGatewayCertificateAuthorityData(id, name, type, systemData.Value, Optional.ToNullable(isTrusted), serializedAdditionalRawData);
+            return new ApiManagementGatewayCertificateAuthorityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isTrusted),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.Write(ModelReaderWriterOptions options)

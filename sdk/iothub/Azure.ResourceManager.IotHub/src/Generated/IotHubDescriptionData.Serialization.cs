@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.IotHub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubDescriptionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), properties.Value, sku, identity, serializedAdditionalRawData);
+            return new IotHubDescriptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                properties.Value,
+                sku,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubDescriptionData>.Write(ModelReaderWriterOptions options)

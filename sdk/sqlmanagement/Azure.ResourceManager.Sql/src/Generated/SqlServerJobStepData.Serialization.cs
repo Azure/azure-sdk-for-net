@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobStepData(id, name, type, systemData.Value, Optional.ToNullable(stepId), targetGroup.Value, credential.Value, action.Value, output.Value, executionOptions.Value, serializedAdditionalRawData);
+            return new SqlServerJobStepData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(stepId),
+                targetGroup.Value,
+                credential.Value,
+                action.Value,
+                output.Value,
+                executionOptions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobStepData>.Write(ModelReaderWriterOptions options)

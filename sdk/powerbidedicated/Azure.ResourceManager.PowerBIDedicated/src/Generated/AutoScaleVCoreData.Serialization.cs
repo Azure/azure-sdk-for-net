@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleVCoreData(id.Value, name.Value, type.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), systemData.Value, serializedAdditionalRawData, sku, Optional.ToNullable(capacityLimit), capacityObjectId.Value, Optional.ToNullable(provisioningState));
+            return new AutoScaleVCoreData(
+                id.Value,
+                name.Value,
+                type.Value,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                systemData.Value,
+                serializedAdditionalRawData,
+                sku,
+                Optional.ToNullable(capacityLimit),
+                capacityObjectId.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options)

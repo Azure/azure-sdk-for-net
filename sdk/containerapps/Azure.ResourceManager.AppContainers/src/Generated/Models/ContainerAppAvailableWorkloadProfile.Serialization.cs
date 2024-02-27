@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAvailableWorkloadProfile(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new ContainerAppAvailableWorkloadProfile(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAvailableWorkloadProfile>.Write(ModelReaderWriterOptions options)

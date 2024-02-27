@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetadata(resourceId.Value, source.Value, action ?? new ChangeTrackingDictionary<string, BinaryData>(), singular.Value, plural.Value, serializedAdditionalRawData);
+            return new ResourceMetadata(
+                resourceId.Value,
+                source.Value,
+                action ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                singular.Value,
+                plural.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetadata>.Write(ModelReaderWriterOptions options)

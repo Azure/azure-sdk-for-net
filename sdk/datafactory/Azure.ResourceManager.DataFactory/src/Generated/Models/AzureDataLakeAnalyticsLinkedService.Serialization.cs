@@ -290,7 +290,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeAnalyticsLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, accountName, servicePrincipalId.Value, servicePrincipalKey, tenant, subscriptionId.Value, resourceGroupName.Value, dataLakeAnalyticsUri.Value, encryptedCredential.Value);
+            return new AzureDataLakeAnalyticsLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                accountName,
+                servicePrincipalId.Value,
+                servicePrincipalKey,
+                tenant,
+                subscriptionId.Value,
+                resourceGroupName.Value,
+                dataLakeAnalyticsUri.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<AzureDataLakeAnalyticsLinkedService>.Write(ModelReaderWriterOptions options)

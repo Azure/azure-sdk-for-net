@@ -172,7 +172,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkRequest(name.Value, file.Value, className.Value, args ?? new ChangeTrackingList<string>(), jars ?? new ChangeTrackingList<string>(), pyFiles ?? new ChangeTrackingList<string>(), files ?? new ChangeTrackingList<string>(), archives ?? new ChangeTrackingList<string>(), conf ?? new ChangeTrackingDictionary<string, string>(), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors));
+            return new SparkRequest(
+                name.Value,
+                file.Value,
+                className.Value,
+                args ?? new ChangeTrackingList<string>(),
+                jars ?? new ChangeTrackingList<string>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                driverMemory.Value,
+                Optional.ToNullable(driverCores),
+                executorMemory.Value,
+                Optional.ToNullable(executorCores),
+                Optional.ToNullable(numExecutors));
         }
     }
 }

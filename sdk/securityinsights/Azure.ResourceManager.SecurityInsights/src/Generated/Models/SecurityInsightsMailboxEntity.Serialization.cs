@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsMailboxEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, mailboxPrimaryAddress.Value, displayName.Value, upn.Value, Optional.ToNullable(externalDirectoryObjectId));
+            return new SecurityInsightsMailboxEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                mailboxPrimaryAddress.Value,
+                displayName.Value,
+                upn.Value,
+                Optional.ToNullable(externalDirectoryObjectId));
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailboxEntity>.Write(ModelReaderWriterOptions options)

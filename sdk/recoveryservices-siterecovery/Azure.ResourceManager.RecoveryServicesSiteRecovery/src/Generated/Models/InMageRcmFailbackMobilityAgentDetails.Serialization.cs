@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackMobilityAgentDetails(version.Value, latestVersion.Value, driverVersion.Value, latestUpgradableVersionWithoutReboot.Value, Optional.ToNullable(agentVersionExpireOn), Optional.ToNullable(driverVersionExpireOn), Optional.ToNullable(lastHeartbeatUtc), reasonsBlockingUpgrade ?? new ChangeTrackingList<AgentUpgradeBlockedReason>(), isUpgradeable.Value, serializedAdditionalRawData);
+            return new InMageRcmFailbackMobilityAgentDetails(
+                version.Value,
+                latestVersion.Value,
+                driverVersion.Value,
+                latestUpgradableVersionWithoutReboot.Value,
+                Optional.ToNullable(agentVersionExpireOn),
+                Optional.ToNullable(driverVersionExpireOn),
+                Optional.ToNullable(lastHeartbeatUtc),
+                reasonsBlockingUpgrade ?? new ChangeTrackingList<AgentUpgradeBlockedReason>(),
+                isUpgradeable.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackMobilityAgentDetails>.Write(ModelReaderWriterOptions options)

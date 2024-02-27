@@ -197,7 +197,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatasetExportSummary(Optional.ToNullable(endDateTime), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startDateTime), serializedAdditionalRawData, labeledAssetName.Value);
+            return new DatasetExportSummary(
+                Optional.ToNullable(endDateTime),
+                Optional.ToNullable(exportedRowCount),
+                format,
+                labelingJobId.Value,
+                Optional.ToNullable(startDateTime),
+                serializedAdditionalRawData,
+                labeledAssetName.Value);
         }
 
         BinaryData IPersistableModel<DatasetExportSummary>.Write(ModelReaderWriterOptions options)

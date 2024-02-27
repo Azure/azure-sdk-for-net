@@ -350,7 +350,28 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthAvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, recommendedActions ?? new ChangeTrackingList<ResourceHealthRecommendedAction>(), serviceImpactingEvents ?? new ChangeTrackingList<ServiceImpactingEvent>(), serializedAdditionalRawData);
+            return new ResourceHealthAvailabilityStatusProperties(
+                Optional.ToNullable(availabilityState),
+                title.Value,
+                summary.Value,
+                detailedStatus.Value,
+                reasonType.Value,
+                context.Value,
+                category.Value,
+                articleId.Value,
+                Optional.ToNullable(rootCauseAttributionTime),
+                healthEventType.Value,
+                healthEventCause.Value,
+                healthEventCategory.Value,
+                healthEventId.Value,
+                Optional.ToNullable(resolutionETA),
+                Optional.ToNullable(occuredTime),
+                Optional.ToNullable(reasonChronicity),
+                Optional.ToNullable(reportedTime),
+                recentlyResolved.Value,
+                recommendedActions ?? new ChangeTrackingList<ResourceHealthRecommendedAction>(),
+                serviceImpactingEvents ?? new ChangeTrackingList<ServiceImpactingEvent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthAvailabilityStatusProperties>.Write(ModelReaderWriterOptions options)

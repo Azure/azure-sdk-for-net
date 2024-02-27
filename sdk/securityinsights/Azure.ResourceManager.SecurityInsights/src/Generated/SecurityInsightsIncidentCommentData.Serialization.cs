@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentCommentData(id, name, type, systemData.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), message.Value, author.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentCommentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdTimeUtc),
+                Optional.ToNullable(lastModifiedTimeUtc),
+                message.Value,
+                author.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentCommentData>.Write(ModelReaderWriterOptions options)

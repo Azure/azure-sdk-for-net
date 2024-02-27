@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationSummary(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(warningCount), Optional.ToNullable(noBenefitCount), serializedAdditionalRawData);
+            return new ReservationSummary(
+                Optional.ToNullable(succeededCount),
+                Optional.ToNullable(failedCount),
+                Optional.ToNullable(expiringCount),
+                Optional.ToNullable(expiredCount),
+                Optional.ToNullable(pendingCount),
+                Optional.ToNullable(cancelledCount),
+                Optional.ToNullable(processingCount),
+                Optional.ToNullable(warningCount),
+                Optional.ToNullable(noBenefitCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationSummary>.Write(ModelReaderWriterOptions options)

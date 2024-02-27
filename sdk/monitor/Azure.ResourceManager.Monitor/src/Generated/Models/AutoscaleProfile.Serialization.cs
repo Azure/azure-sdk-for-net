@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleProfile(name, capacity, rules, fixedDate.Value, recurrence.Value, serializedAdditionalRawData);
+            return new AutoscaleProfile(
+                name,
+                capacity,
+                rules,
+                fixedDate.Value,
+                recurrence.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleProfile>.Write(ModelReaderWriterOptions options)

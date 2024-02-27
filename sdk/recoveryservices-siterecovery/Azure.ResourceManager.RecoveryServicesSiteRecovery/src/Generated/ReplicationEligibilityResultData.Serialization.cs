@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationEligibilityResultData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ReplicationEligibilityResultData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationEligibilityResultData>.Write(ModelReaderWriterOptions options)

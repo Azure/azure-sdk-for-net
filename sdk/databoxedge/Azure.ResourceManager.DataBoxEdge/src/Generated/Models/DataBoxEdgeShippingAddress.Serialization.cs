@@ -148,7 +148,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeShippingAddress(addressLine1.Value, addressLine2.Value, addressLine3.Value, postalCode.Value, city.Value, state.Value, country, serializedAdditionalRawData);
+            return new DataBoxEdgeShippingAddress(
+                addressLine1.Value,
+                addressLine2.Value,
+                addressLine3.Value,
+                postalCode.Value,
+                city.Value,
+                state.Value,
+                country,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeShippingAddress>.Write(ModelReaderWriterOptions options)

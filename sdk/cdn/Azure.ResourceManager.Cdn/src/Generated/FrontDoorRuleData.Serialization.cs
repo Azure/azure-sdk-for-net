@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRuleData(id, name, type, systemData.Value, ruleSetName.Value, Optional.ToNullable(order), conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions ?? new ChangeTrackingList<DeliveryRuleAction>(), Optional.ToNullable(matchProcessingBehavior), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                ruleSetName.Value,
+                Optional.ToNullable(order),
+                conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
+                actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
+                Optional.ToNullable(matchProcessingBehavior),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deploymentStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRuleData>.Write(ModelReaderWriterOptions options)

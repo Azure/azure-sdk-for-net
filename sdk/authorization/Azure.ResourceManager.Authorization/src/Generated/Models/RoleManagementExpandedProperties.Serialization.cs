@@ -253,7 +253,18 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementExpandedProperties(Optional.ToNullable(id), displayName.Value, email.Value, Optional.ToNullable(type), id0.Value, displayName0.Value, Optional.ToNullable(type0), id1.Value, displayName1.Value, Optional.ToNullable(type1), serializedAdditionalRawData);
+            return new RoleManagementExpandedProperties(
+                Optional.ToNullable(id),
+                displayName.Value,
+                email.Value,
+                Optional.ToNullable(type),
+                id0.Value,
+                displayName0.Value,
+                Optional.ToNullable(type0),
+                id1.Value,
+                displayName1.Value,
+                Optional.ToNullable(type1),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementExpandedProperties>.Write(ModelReaderWriterOptions options)

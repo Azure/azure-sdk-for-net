@@ -198,7 +198,16 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateDetectionOptions(series, Optional.ToNullable(granularity), Optional.ToNullable(customInterval), Optional.ToNullable(period), Optional.ToNullable(maxAnomalyRatio), Optional.ToNullable(sensitivity), Optional.ToNullable(imputeMode), Optional.ToNullable(imputeFixedValue), serializedAdditionalRawData);
+            return new UnivariateDetectionOptions(
+                series,
+                Optional.ToNullable(granularity),
+                Optional.ToNullable(customInterval),
+                Optional.ToNullable(period),
+                Optional.ToNullable(maxAnomalyRatio),
+                Optional.ToNullable(sensitivity),
+                Optional.ToNullable(imputeMode),
+                Optional.ToNullable(imputeFixedValue),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateDetectionOptions>.Write(ModelReaderWriterOptions options)

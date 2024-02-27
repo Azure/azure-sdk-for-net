@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerSupportPackageContent(id, name, type, systemData.Value, Optional.ToNullable(minimumTimeStamp), Optional.ToNullable(maximumTimeStamp), include.Value, serializedAdditionalRawData);
+            return new TriggerSupportPackageContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(minimumTimeStamp),
+                Optional.ToNullable(maximumTimeStamp),
+                include.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerSupportPackageContent>.Write(ModelReaderWriterOptions options)

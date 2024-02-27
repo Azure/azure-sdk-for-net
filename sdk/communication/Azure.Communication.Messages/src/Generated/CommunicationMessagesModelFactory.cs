@@ -79,7 +79,13 @@ namespace Azure.Communication.Messages
         {
             to ??= new List<string>();
 
-            return new MediaNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Image, serializedAdditionalRawData: null, content, mediaUri);
+            return new MediaNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Image,
+                serializedAdditionalRawData: null,
+                content,
+                mediaUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.TemplateNotificationContent"/>. </summary>
@@ -133,7 +139,13 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateImage"/> instance for mocking. </returns>
         public static MessageTemplateImage MessageTemplateImage(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
-            return new MessageTemplateImage(name, "image", serializedAdditionalRawData: null, uri, caption, fileName);
+            return new MessageTemplateImage(
+                name,
+                "image",
+                serializedAdditionalRawData: null,
+                uri,
+                caption,
+                fileName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateDocument"/>. </summary>
@@ -144,7 +156,13 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateDocument"/> instance for mocking. </returns>
         public static MessageTemplateDocument MessageTemplateDocument(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
-            return new MessageTemplateDocument(name, "document", serializedAdditionalRawData: null, uri, caption, fileName);
+            return new MessageTemplateDocument(
+                name,
+                "document",
+                serializedAdditionalRawData: null,
+                uri,
+                caption,
+                fileName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateVideo"/>. </summary>
@@ -155,7 +173,13 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateVideo"/> instance for mocking. </returns>
         public static MessageTemplateVideo MessageTemplateVideo(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
-            return new MessageTemplateVideo(name, "video", serializedAdditionalRawData: null, uri, caption, fileName);
+            return new MessageTemplateVideo(
+                name,
+                "video",
+                serializedAdditionalRawData: null,
+                uri,
+                caption,
+                fileName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateQuickAction"/>. </summary>
@@ -176,7 +200,13 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
         public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, BinaryData content = null)
         {
-            return new WhatsAppMessageTemplateItem(name, language, status, CommunicationMessagesChannel.WhatsApp, serializedAdditionalRawData: null, content);
+            return new WhatsAppMessageTemplateItem(
+                name,
+                language,
+                status,
+                CommunicationMessagesChannel.WhatsApp,
+                serializedAdditionalRawData: null,
+                content);
         }
     }
 }

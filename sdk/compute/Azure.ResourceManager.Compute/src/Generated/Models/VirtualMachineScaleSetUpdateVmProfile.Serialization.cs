@@ -231,7 +231,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, billingProfile.Value, scheduledEventsProfile.Value, userData.Value, hardwareProfile.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetUpdateVmProfile(
+                osProfile.Value,
+                storageProfile.Value,
+                networkProfile.Value,
+                securityProfile.Value,
+                diagnosticsProfile.Value,
+                extensionProfile.Value,
+                licenseType.Value,
+                billingProfile.Value,
+                scheduledEventsProfile.Value,
+                userData.Value,
+                hardwareProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateVmProfile>.Write(ModelReaderWriterOptions options)

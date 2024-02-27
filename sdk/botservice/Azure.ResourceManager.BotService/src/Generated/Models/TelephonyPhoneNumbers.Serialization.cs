@@ -280,7 +280,18 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TelephonyPhoneNumbers(id.Value, phoneNumber.Value, acsEndpoint.Value, acsSecret.Value, acsResourceId.Value, cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, cognitiveServiceResourceId.Value, defaultLocale.Value, offerType.Value, serializedAdditionalRawData);
+            return new TelephonyPhoneNumbers(
+                id.Value,
+                phoneNumber.Value,
+                acsEndpoint.Value,
+                acsSecret.Value,
+                acsResourceId.Value,
+                cognitiveServiceSubscriptionKey.Value,
+                cognitiveServiceRegion.Value,
+                cognitiveServiceResourceId.Value,
+                defaultLocale.Value,
+                offerType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TelephonyPhoneNumbers>.Write(ModelReaderWriterOptions options)

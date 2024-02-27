@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicalDatabaseTransparentDataEncryptionData(id, name, type, systemData.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new LogicalDatabaseTransparentDataEncryptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options)

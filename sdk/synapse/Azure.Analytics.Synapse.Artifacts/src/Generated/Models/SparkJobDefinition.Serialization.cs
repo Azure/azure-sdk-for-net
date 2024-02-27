@@ -127,7 +127,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobDefinition(description.Value, targetBigDataPool, targetSparkConfiguration.Value, requiredSparkVersion.Value, language.Value, jobProperties, folder.Value, additionalProperties);
+            return new SparkJobDefinition(
+                description.Value,
+                targetBigDataPool,
+                targetSparkConfiguration.Value,
+                requiredSparkVersion.Value,
+                language.Value,
+                jobProperties,
+                folder.Value,
+                additionalProperties);
         }
 
         internal partial class SparkJobDefinitionConverter : JsonConverter<SparkJobDefinition>
