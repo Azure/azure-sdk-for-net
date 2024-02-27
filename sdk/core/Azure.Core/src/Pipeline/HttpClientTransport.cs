@@ -61,7 +61,7 @@ namespace Azure.Core.Pipeline
 
         /// <inheritdoc />
         public sealed override Request CreateRequest()
-            => new PipelineRequest();
+            => new HttpClientTransportRequest();
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
@@ -138,7 +138,7 @@ namespace Azure.Core.Pipeline
                 throw new RequestFailedException(e.Message, e);
             }
 
-            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
+            message.Response = new HttpClientTransportResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
