@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<TimeSpan> freeTrialRemainingTime = default;
             Optional<DateTimeOffset> enablementTime = default;
             Optional<bool> deprecated = default;
-            Optional<IReadOnlyList<string>> replacedBy = default;
-            Optional<IList<PlanExtension>> extensions = default;
+            IReadOnlyList<string> replacedBy = default;
+            IList<PlanExtension> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterPricingData(id, name, type, systemData.Value, Optional.ToNullable(pricingTier), subPlan.Value, Optional.ToNullable(freeTrialRemainingTime), Optional.ToNullable(enablementTime), Optional.ToNullable(deprecated), Optional.ToList(replacedBy), Optional.ToList(extensions), serializedAdditionalRawData);
+            return new SecurityCenterPricingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(pricingTier),
+                subPlan.Value,
+                Optional.ToNullable(freeTrialRemainingTime),
+                Optional.ToNullable(enablementTime),
+                Optional.ToNullable(deprecated),
+                replacedBy ?? new ChangeTrackingList<string>(),
+                extensions ?? new ChangeTrackingList<PlanExtension>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterPricingData>.Write(ModelReaderWriterOptions options)

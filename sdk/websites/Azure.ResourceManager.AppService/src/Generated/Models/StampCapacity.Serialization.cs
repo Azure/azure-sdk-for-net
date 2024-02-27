@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StampCapacity(name.Value, Optional.ToNullable(availableCapacity), Optional.ToNullable(totalCapacity), unit.Value, Optional.ToNullable(computeMode), Optional.ToNullable(workerSize), Optional.ToNullable(workerSizeId), Optional.ToNullable(excludeFromCapacityAllocation), Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Optional.ToNullable(isLinux), serializedAdditionalRawData);
+            return new StampCapacity(
+                name.Value,
+                Optional.ToNullable(availableCapacity),
+                Optional.ToNullable(totalCapacity),
+                unit.Value,
+                Optional.ToNullable(computeMode),
+                Optional.ToNullable(workerSize),
+                Optional.ToNullable(workerSizeId),
+                Optional.ToNullable(excludeFromCapacityAllocation),
+                Optional.ToNullable(isApplicableForAllComputeModes),
+                siteMode.Value,
+                Optional.ToNullable(isLinux),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StampCapacity>.Write(ModelReaderWriterOptions options)

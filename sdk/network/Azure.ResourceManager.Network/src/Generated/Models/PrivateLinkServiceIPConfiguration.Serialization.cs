@@ -233,7 +233,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkServiceIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, Optional.ToNullable(primary), Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAddressVersion));
+            return new PrivateLinkServiceIPConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                privateIPAddress.Value,
+                Optional.ToNullable(privateIPAllocationMethod),
+                subnet.Value,
+                Optional.ToNullable(primary),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(privateIPAddressVersion));
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceIPConfiguration>.Write(ModelReaderWriterOptions options)

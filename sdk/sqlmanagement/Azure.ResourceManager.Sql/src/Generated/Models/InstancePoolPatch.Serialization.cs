@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<SqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ResourceIdentifier> subnetId = default;
             Optional<int> vCores = default;
             Optional<InstancePoolLicenseType> licenseType = default;
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolPatch(sku.Value, Optional.ToDictionary(tags), subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType), dnsZone.Value, maintenanceConfigurationId.Value, serializedAdditionalRawData);
+            return new InstancePoolPatch(
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                subnetId.Value,
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(licenseType),
+                dnsZone.Value,
+                maintenanceConfigurationId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolPatch>.Write(ModelReaderWriterOptions options)

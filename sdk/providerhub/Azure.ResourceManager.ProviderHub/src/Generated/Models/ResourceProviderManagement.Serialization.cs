@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> schemaOwners = default;
-            Optional<IList<string>> manifestOwners = default;
+            IList<string> schemaOwners = default;
+            IList<string> manifestOwners = default;
             Optional<string> incidentRoutingService = default;
             Optional<string> incidentRoutingTeam = default;
             Optional<string> incidentContactEmail = default;
-            Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
+            IList<ServiceTreeInfo> serviceTreeInfos = default;
             Optional<ResourceAccessPolicy> resourceAccessPolicy = default;
-            Optional<IList<BinaryData>> resourceAccessRoles = default;
+            IList<BinaryData> resourceAccessRoles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderManagement(Optional.ToList(schemaOwners), Optional.ToList(manifestOwners), incidentRoutingService.Value, incidentRoutingTeam.Value, incidentContactEmail.Value, Optional.ToList(serviceTreeInfos), Optional.ToNullable(resourceAccessPolicy), Optional.ToList(resourceAccessRoles), serializedAdditionalRawData);
+            return new ResourceProviderManagement(
+                schemaOwners ?? new ChangeTrackingList<string>(),
+                manifestOwners ?? new ChangeTrackingList<string>(),
+                incidentRoutingService.Value,
+                incidentRoutingTeam.Value,
+                incidentContactEmail.Value,
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                Optional.ToNullable(resourceAccessPolicy),
+                resourceAccessRoles ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderManagement>.Write(ModelReaderWriterOptions options)

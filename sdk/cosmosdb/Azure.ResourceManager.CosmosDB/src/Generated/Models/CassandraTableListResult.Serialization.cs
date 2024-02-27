@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CassandraTableData>> value = default;
+            IReadOnlyList<CassandraTableData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraTableListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CassandraTableListResult(value ?? new ChangeTrackingList<CassandraTableData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraTableListResult>.Write(ModelReaderWriterOptions options)

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Purview.Models
             Optional<string> managedResourceGroupName = default;
             Optional<PurviewManagedResource> managedResources = default;
             Optional<ManagedResourcesPublicNetworkAccess> managedResourcesPublicNetworkAccess = default;
-            Optional<IReadOnlyList<PurviewPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<PurviewProvisioningState> provisioningState = default;
             Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -294,7 +294,23 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountProperties(accountStatus.Value, cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, ingestionStorage.Value, Optional.ToNullable(managedEventHubState), managedResourceGroupName.Value, managedResources.Value, Optional.ToNullable(managedResourcesPublicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new PurviewAccountProperties(
+                accountStatus.Value,
+                cloudConnectors.Value,
+                Optional.ToNullable(createdAt),
+                createdBy.Value,
+                createdByObjectId.Value,
+                endpoints.Value,
+                friendlyName.Value,
+                ingestionStorage.Value,
+                Optional.ToNullable(managedEventHubState),
+                managedResourceGroupName.Value,
+                managedResources.Value,
+                Optional.ToNullable(managedResourcesPublicNetworkAccess),
+                privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(publicNetworkAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountProperties>.Write(ModelReaderWriterOptions options)

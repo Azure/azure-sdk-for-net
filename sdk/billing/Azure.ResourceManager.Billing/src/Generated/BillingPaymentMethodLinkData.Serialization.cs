@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Billing
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPaymentMethodLinkData(id, name, type, systemData.Value, paymentMethod.Value, serializedAdditionalRawData);
+            return new BillingPaymentMethodLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                paymentMethod.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPaymentMethodLinkData>.Write(ModelReaderWriterOptions options)

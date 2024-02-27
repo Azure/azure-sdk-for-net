@@ -271,15 +271,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> applicationInsights = default;
-            Optional<IDictionary<string, BinaryData>> containerRegistry = default;
-            Optional<IDictionary<string, BinaryData>> dnsResolution = default;
-            Optional<IDictionary<string, BinaryData>> keyVault = default;
-            Optional<IDictionary<string, BinaryData>> nsg = default;
-            Optional<IDictionary<string, BinaryData>> others = default;
-            Optional<IDictionary<string, BinaryData>> resourceLock = default;
-            Optional<IDictionary<string, BinaryData>> storageAccount = default;
-            Optional<IDictionary<string, BinaryData>> udr = default;
+            IDictionary<string, BinaryData> applicationInsights = default;
+            IDictionary<string, BinaryData> containerRegistry = default;
+            IDictionary<string, BinaryData> dnsResolution = default;
+            IDictionary<string, BinaryData> keyVault = default;
+            IDictionary<string, BinaryData> nsg = default;
+            IDictionary<string, BinaryData> others = default;
+            IDictionary<string, BinaryData> resourceLock = default;
+            IDictionary<string, BinaryData> storageAccount = default;
+            IDictionary<string, BinaryData> udr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -479,7 +479,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceDiagnoseProperties(Optional.ToDictionary(applicationInsights), Optional.ToDictionary(containerRegistry), Optional.ToDictionary(dnsResolution), Optional.ToDictionary(keyVault), Optional.ToDictionary(nsg), Optional.ToDictionary(others), Optional.ToDictionary(resourceLock), Optional.ToDictionary(storageAccount), Optional.ToDictionary(udr), serializedAdditionalRawData);
+            return new MachineLearningWorkspaceDiagnoseProperties(
+                applicationInsights ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                containerRegistry ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                dnsResolution ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                keyVault ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                nsg ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                others ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                resourceLock ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                storageAccount ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                udr ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceDiagnoseProperties>.Write(ModelReaderWriterOptions options)

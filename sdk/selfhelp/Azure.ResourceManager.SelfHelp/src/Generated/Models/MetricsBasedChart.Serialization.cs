@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsBasedChart(name.Value, Optional.ToNullable(aggregationType), Optional.ToNullable(timeSpanDuration), title.Value, filterGroup.Value, replacementKey.Value, serializedAdditionalRawData);
+            return new MetricsBasedChart(
+                name.Value,
+                Optional.ToNullable(aggregationType),
+                Optional.ToNullable(timeSpanDuration),
+                title.Value,
+                filterGroup.Value,
+                replacementKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsBasedChart>.Write(ModelReaderWriterOptions options)

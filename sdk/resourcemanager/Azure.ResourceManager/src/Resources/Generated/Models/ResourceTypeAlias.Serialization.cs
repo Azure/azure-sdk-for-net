@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<ResourceTypeAliasPath>> paths = default;
+            IReadOnlyList<ResourceTypeAliasPath> paths = default;
             Optional<ResourceTypeAliasType> type = default;
             Optional<string> defaultPath = default;
             Optional<ResourceTypeAliasPattern> defaultPattern = default;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAlias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value, serializedAdditionalRawData);
+            return new ResourceTypeAlias(
+                name.Value,
+                paths ?? new ChangeTrackingList<ResourceTypeAliasPath>(),
+                Optional.ToNullable(type),
+                defaultPath.Value,
+                defaultPattern.Value,
+                defaultMetadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAlias>.Write(ModelReaderWriterOptions options)

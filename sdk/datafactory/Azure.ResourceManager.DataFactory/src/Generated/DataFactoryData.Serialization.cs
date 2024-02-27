@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory
             Optional<string> version = default;
             Optional<DataFactoryPurviewConfiguration> purviewConfiguration = default;
             Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Optional<IDictionary<string, DataFactoryGlobalParameterProperties>> globalParameters = default;
+            IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default;
             Optional<DataFactoryEncryptionConfiguration> encryption = default;
             Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -323,7 +323,24 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
+            return new DataFactoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState.Value,
+                Optional.ToNullable(createTime),
+                version.Value,
+                purviewConfiguration.Value,
+                repoConfiguration.Value,
+                globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
+                encryption.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(eTag),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryData>.Write(ModelReaderWriterOptions options)

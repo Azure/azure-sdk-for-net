@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationScheduleCreateOrUpdateContent(name, description.Value, startTime, Optional.ToNullable(expiryTime), interval.Value, frequency, timeZone.Value, advancedSchedule.Value, serializedAdditionalRawData);
+            return new AutomationScheduleCreateOrUpdateContent(
+                name,
+                description.Value,
+                startTime,
+                Optional.ToNullable(expiryTime),
+                interval.Value,
+                frequency,
+                timeZone.Value,
+                advancedSchedule.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationScheduleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

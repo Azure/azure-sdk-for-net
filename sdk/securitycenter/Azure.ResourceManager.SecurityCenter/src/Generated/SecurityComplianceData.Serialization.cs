@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> assessmentTimestampUtcDate = default;
             Optional<int> resourceCount = default;
-            Optional<IReadOnlyList<ComplianceSegment>> assessmentResult = default;
+            IReadOnlyList<ComplianceSegment> assessmentResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityComplianceData(id, name, type, systemData.Value, Optional.ToNullable(assessmentTimestampUtcDate), Optional.ToNullable(resourceCount), Optional.ToList(assessmentResult), serializedAdditionalRawData);
+            return new SecurityComplianceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(assessmentTimestampUtcDate),
+                Optional.ToNullable(resourceCount),
+                assessmentResult ?? new ChangeTrackingList<ComplianceSegment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityComplianceData>.Write(ModelReaderWriterOptions options)

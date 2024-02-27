@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> excludeFromLatest = default;
             Optional<SharedGalleryImageVersionStorageProfile> storageProfile = default;
             Optional<string> disclaimer = default;
-            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
+            IReadOnlyDictionary<string, string> artifactTags = default;
             Optional<string> uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -254,7 +254,18 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageVersionData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(excludeFromLatest), storageProfile.Value, disclaimer.Value, Optional.ToDictionary(artifactTags));
+            return new CommunityGalleryImageVersionData(
+                name.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(type),
+                uniqueId.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(publishedDate),
+                Optional.ToNullable(endOfLifeDate),
+                Optional.ToNullable(excludeFromLatest),
+                storageProfile.Value,
+                disclaimer.Value,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageVersionData>.Write(ModelReaderWriterOptions options)

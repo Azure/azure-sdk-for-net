@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<FrontDoorBackend>> backends = default;
+            IList<FrontDoorBackend> backends = default;
             Optional<WritableSubResource> loadBalancingSettings = default;
             Optional<WritableSubResource> healthProbeSettings = default;
             Optional<FrontDoorResourceState> resourceState = default;
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState));
+            return new FrontDoorBackendPool(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                backends ?? new ChangeTrackingList<FrontDoorBackend>(),
+                loadBalancingSettings,
+                healthProbeSettings,
+                Optional.ToNullable(resourceState));
         }
 
         BinaryData IPersistableModel<FrontDoorBackendPool>.Write(ModelReaderWriterOptions options)

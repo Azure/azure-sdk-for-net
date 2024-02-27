@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Dynatrace
             Optional<DynatraceSingleSignOnState> singleSignOnState = default;
             Optional<Guid> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
-            Optional<IList<string>> aadDomains = default;
+            IList<string> aadDomains = default;
             Optional<DynatraceProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -224,7 +224,17 @@ namespace Azure.ResourceManager.Dynatrace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceSingleSignOnData(id, name, type, systemData.Value, Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DynatraceSingleSignOnData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(singleSignOnState),
+                Optional.ToNullable(enterpriseAppId),
+                singleSignOnUrl.Value,
+                aadDomains ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceSingleSignOnData>.Write(ModelReaderWriterOptions options)

@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductGroupData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type0), externalId.Value, serializedAdditionalRawData);
+            return new ProductGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(builtIn),
+                Optional.ToNullable(type0),
+                externalId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductGroupData>.Write(ModelReaderWriterOptions options)

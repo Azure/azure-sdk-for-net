@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WebPubSubSharedPrivateLinkData>> value = default;
+            IReadOnlyList<WebPubSubSharedPrivateLinkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedPrivateLinkResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SharedPrivateLinkResourceList(value ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedPrivateLinkResourceList>.Write(ModelReaderWriterOptions options)

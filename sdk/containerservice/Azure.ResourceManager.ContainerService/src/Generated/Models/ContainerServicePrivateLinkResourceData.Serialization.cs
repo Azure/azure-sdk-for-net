@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
+            IList<string> requiredMembers = default;
             Optional<ResourceIdentifier> privateLinkServiceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateLinkResourceData(id.Value, name.Value, Optional.ToNullable(type), groupId.Value, Optional.ToList(requiredMembers), privateLinkServiceId.Value, serializedAdditionalRawData);
+            return new ContainerServicePrivateLinkResourceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                privateLinkServiceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

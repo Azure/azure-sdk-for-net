@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> dataFactoryName = default;
             Optional<IntegrationRuntimeState> state = default;
             Optional<DateTimeOffset> createTime = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeNode>> nodes = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeError>> otherErrors = default;
+            IReadOnlyList<ManagedIntegrationRuntimeNode> nodes = default;
+            IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors = default;
             Optional<ManagedIntegrationRuntimeOperationResult> lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToList(nodes), Optional.ToList(otherErrors), lastOperation.Value);
+            return new ManagedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName.Value,
+                Optional.ToNullable(state),
+                additionalProperties,
+                Optional.ToNullable(createTime),
+                nodes ?? new ChangeTrackingList<ManagedIntegrationRuntimeNode>(),
+                otherErrors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>(),
+                lastOperation.Value);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

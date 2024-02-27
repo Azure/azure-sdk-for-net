@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<string> description = default;
             Optional<string> body = default;
             Optional<LogAnalyticsQueryRelatedMetadata> related = default;
-            Optional<IDictionary<string, IList<string>>> tags = default;
+            IDictionary<string, IList<string>> tags = default;
             Optional<BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -313,7 +313,22 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQueryData(id, name, type, systemData.Value, Optional.ToNullable(id0), displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new LogAnalyticsQueryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(id0),
+                displayName.Value,
+                Optional.ToNullable(timeCreated),
+                Optional.ToNullable(timeModified),
+                author.Value,
+                description.Value,
+                body.Value,
+                related.Value,
+                tags ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQueryData>.Write(ModelReaderWriterOptions options)

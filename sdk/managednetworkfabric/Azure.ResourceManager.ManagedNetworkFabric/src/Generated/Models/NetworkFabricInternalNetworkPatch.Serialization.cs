@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<string> annotation = default;
             Optional<int> mtu = default;
-            Optional<IList<ConnectedSubnet>> connectedIPv4Subnets = default;
-            Optional<IList<ConnectedSubnet>> connectedIPv6Subnets = default;
+            IList<ConnectedSubnet> connectedIPv4Subnets = default;
+            IList<ConnectedSubnet> connectedIPv6Subnets = default;
             Optional<ResourceIdentifier> importRoutePolicyId = default;
             Optional<ResourceIdentifier> exportRoutePolicyId = default;
             Optional<ImportRoutePolicy> importRoutePolicy = default;
@@ -300,7 +300,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricInternalNetworkPatch(annotation.Value, Optional.ToNullable(mtu), Optional.ToList(connectedIPv4Subnets), Optional.ToList(connectedIPv6Subnets), importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, ingressAclId.Value, egressAclId.Value, Optional.ToNullable(isMonitoringEnabled), bgpConfiguration.Value, staticRouteConfiguration.Value, serializedAdditionalRawData);
+            return new NetworkFabricInternalNetworkPatch(
+                annotation.Value,
+                Optional.ToNullable(mtu),
+                connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                importRoutePolicyId.Value,
+                exportRoutePolicyId.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                ingressAclId.Value,
+                egressAclId.Value,
+                Optional.ToNullable(isMonitoringEnabled),
+                bgpConfiguration.Value,
+                staticRouteConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricInternalNetworkPatch>.Write(ModelReaderWriterOptions options)

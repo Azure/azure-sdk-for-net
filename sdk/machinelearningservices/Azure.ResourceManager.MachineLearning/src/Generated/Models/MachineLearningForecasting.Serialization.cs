@@ -271,12 +271,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ForecastingSettings> forecastingSettings = default;
             Optional<ForecastingPrimaryMetric> primaryMetric = default;
             Optional<ForecastingTrainingSettings> trainingSettings = default;
-            Optional<IList<string>> cvSplitColumnNames = default;
+            IList<string> cvSplitColumnNames = default;
             Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<TableFixedParameters> fixedParameters = default;
             Optional<TableVerticalLimitSettings> limitSettings = default;
             Optional<NCrossValidations> nCrossValidations = default;
-            Optional<IList<TableParameterSubspace>> searchSpace = default;
+            IList<TableParameterSubspace> searchSpace = default;
             Optional<TableSweepSettings> sweepSettings = default;
             Optional<MachineLearningTableJobInput> testData = default;
             Optional<double?> testDataSize = default;
@@ -485,7 +485,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningForecasting(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, forecastingSettings.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, nCrossValidations.Value, Optional.ToList(searchSpace), sweepSettings.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new MachineLearningForecasting(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                forecastingSettings.Value,
+                Optional.ToNullable(primaryMetric),
+                trainingSettings.Value,
+                cvSplitColumnNames ?? new ChangeTrackingList<string>(),
+                featurizationSettings.Value,
+                fixedParameters.Value,
+                limitSettings.Value,
+                nCrossValidations.Value,
+                searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
+                sweepSettings.Value,
+                testData.Value,
+                Optional.ToNullable(testDataSize),
+                validationData.Value,
+                Optional.ToNullable(validationDataSize),
+                weightColumnName.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningForecasting>.Write(ModelReaderWriterOptions options)

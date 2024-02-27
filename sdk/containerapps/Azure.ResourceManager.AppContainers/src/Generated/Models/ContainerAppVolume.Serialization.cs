@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> name = default;
             Optional<ContainerAppStorageType> storageType = default;
             Optional<string> storageName = default;
-            Optional<IList<SecretVolumeItem>> secrets = default;
+            IList<SecretVolumeItem> secrets = default;
             Optional<string> mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVolume(name.Value, Optional.ToNullable(storageType), storageName.Value, Optional.ToList(secrets), mountOptions.Value, serializedAdditionalRawData);
+            return new ContainerAppVolume(
+                name.Value,
+                Optional.ToNullable(storageType),
+                storageName.Value,
+                secrets ?? new ChangeTrackingList<SecretVolumeItem>(),
+                mountOptions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVolume>.Write(ModelReaderWriterOptions options)

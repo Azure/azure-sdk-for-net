@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 return null;
             }
             Optional<string> data = default;
-            Optional<IList<string>> protectedFiles = default;
+            IList<string> protectedFiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationPackage(data.Value, Optional.ToList(protectedFiles), serializedAdditionalRawData);
+            return new NginxConfigurationPackage(data.Value, protectedFiles ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationPackage>.Write(ModelReaderWriterOptions options)

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<long> protectedItemCount = default;
             Optional<string> agentVersion = default;
             Optional<MabContainerExtendedInfo> extendedInfo = default;
-            Optional<IList<MabContainerHealthDetails>> mabContainerHealthDetails = default;
+            IList<MabContainerHealthDetails> mabContainerHealthDetails = default;
             Optional<string> containerHealthState = default;
             Optional<string> friendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -248,7 +248,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, Optional.ToNullable(canReRegister), Optional.ToNullable(containerId), Optional.ToNullable(protectedItemCount), agentVersion.Value, extendedInfo.Value, Optional.ToList(mabContainerHealthDetails), containerHealthState.Value);
+            return new MabContainer(
+                friendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                registrationStatus.Value,
+                healthStatus.Value,
+                containerType,
+                protectableObjectType.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(canReRegister),
+                Optional.ToNullable(containerId),
+                Optional.ToNullable(protectedItemCount),
+                agentVersion.Value,
+                extendedInfo.Value,
+                mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>(),
+                containerHealthState.Value);
         }
 
         BinaryData IPersistableModel<MabContainer>.Write(ModelReaderWriterOptions options)

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<ApplianceResourceDetails> cpuDetails = default;
             Optional<ApplianceResourceDetails> ramDetails = default;
-            Optional<IReadOnlyList<DataStoreUtilizationDetails>> datastoreSnapshot = default;
+            IReadOnlyList<DataStoreUtilizationDetails> datastoreSnapshot = default;
             Optional<ApplianceResourceDetails> disksReplicationDetails = default;
             Optional<ApplianceResourceDetails> esxiNfcBuffer = default;
             Optional<ApplianceResourceDetails> networkBandwidth = default;
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceMonitoringDetails(cpuDetails.Value, ramDetails.Value, Optional.ToList(datastoreSnapshot), disksReplicationDetails.Value, esxiNfcBuffer.Value, networkBandwidth.Value, serializedAdditionalRawData);
+            return new ApplianceMonitoringDetails(
+                cpuDetails.Value,
+                ramDetails.Value,
+                datastoreSnapshot ?? new ChangeTrackingList<DataStoreUtilizationDetails>(),
+                disksReplicationDetails.Value,
+                esxiNfcBuffer.Value,
+                networkBandwidth.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceMonitoringDetails>.Write(ModelReaderWriterOptions options)

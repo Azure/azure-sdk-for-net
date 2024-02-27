@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Blueprint
             Optional<string> timeCreated = default;
             Optional<string> timeStarted = default;
             Optional<string> timeFinished = default;
-            Optional<IList<AssignmentDeploymentJob>> deployments = default;
+            IList<AssignmentDeploymentJob> deployments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Blueprint
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentOperationData(id, name, type, systemData.Value, blueprintVersion.Value, assignmentState.Value, timeCreated.Value, timeStarted.Value, timeFinished.Value, Optional.ToList(deployments), serializedAdditionalRawData);
+            return new AssignmentOperationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                blueprintVersion.Value,
+                assignmentState.Value,
+                timeCreated.Value,
+                timeStarted.Value,
+                timeFinished.Value,
+                deployments ?? new ChangeTrackingList<AssignmentDeploymentJob>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentOperationData>.Write(ModelReaderWriterOptions options)

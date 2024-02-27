@@ -101,7 +101,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LibraryInfo(name.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type.Value, provisioningStatus.Value, creatorId.Value);
+            return new LibraryInfo(
+                name.Value,
+                path.Value,
+                containerName.Value,
+                Optional.ToNullable(uploadedTimestamp),
+                type.Value,
+                provisioningStatus.Value,
+                creatorId.Value);
         }
 
         internal partial class LibraryInfoConverter : JsonConverter<LibraryInfo>

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -318,7 +318,24 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountSchemaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, schemaType, targetNamespace.Value, documentName.Value, fileName.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, Optional.ToNullable(contentType), contentLink.Value, serializedAdditionalRawData);
+            return new IntegrationAccountSchemaData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                schemaType,
+                targetNamespace.Value,
+                documentName.Value,
+                fileName.Value,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                metadata.Value,
+                content.Value,
+                Optional.ToNullable(contentType),
+                contentLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountSchemaData>.Write(ModelReaderWriterOptions options)

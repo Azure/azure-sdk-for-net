@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<DateTimeOffset> lastReplicatedTime = default;
-            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
+            IReadOnlyList<VmNicDetails> vmNics = default;
             Optional<string> vmId = default;
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
             Optional<InitialReplicationDetails> initialReplicationDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> vmDiskDetails = default;
+            IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaBaseReplicationDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(lastReplicatedTime), Optional.ToList(vmNics), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmDiskDetails));
+            return new HyperVReplicaBaseReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(lastReplicatedTime),
+                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                vmId.Value,
+                vmProtectionState.Value,
+                vmProtectionStateDescription.Value,
+                initialReplicationDetails.Value,
+                vmDiskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaBaseReplicationDetails>.Write(ModelReaderWriterOptions options)

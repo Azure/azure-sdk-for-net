@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> id = default;
             Optional<IPAddress> address = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<string>> nextHopIds = default;
-            Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            IReadOnlyList<string> nextHopIds = default;
+            IReadOnlyList<ConnectivityIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(issues), serializedAdditionalRawData);
+            return new ConnectivityHop(
+                type.Value,
+                id.Value,
+                address.Value,
+                resourceId.Value,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityHop>.Write(ModelReaderWriterOptions options)

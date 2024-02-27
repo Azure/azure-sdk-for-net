@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiVersionSetPatch(description.Value, versionQueryName.Value, versionHeaderName.Value, displayName.Value, Optional.ToNullable(versioningScheme), serializedAdditionalRawData);
+            return new ApiVersionSetPatch(
+                description.Value,
+                versionQueryName.Value,
+                versionHeaderName.Value,
+                displayName.Value,
+                Optional.ToNullable(versioningScheme),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiVersionSetPatch>.Write(ModelReaderWriterOptions options)

@@ -57,7 +57,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new Entity(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new Entity(
+                text,
+                category,
+                subcategory.Value,
+                offset,
+                length,
+                confidenceScore);
         }
     }
 }

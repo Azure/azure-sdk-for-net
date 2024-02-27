@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> dataFactoryName = default;
             Optional<SynapseIntegrationRuntimeState> state = default;
             Optional<DateTimeOffset> createTime = default;
-            Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeNode>> nodes = default;
-            Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeError>> otherErrors = default;
+            IReadOnlyList<SynapseManagedIntegrationRuntimeNode> nodes = default;
+            IReadOnlyList<SynapseManagedIntegrationRuntimeError> otherErrors = default;
             Optional<SynapseManagedIntegrationRuntimeOperationResult> lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToList(nodes), Optional.ToList(otherErrors), lastOperation.Value);
+            return new SynapseManagedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName.Value,
+                Optional.ToNullable(state),
+                additionalProperties,
+                Optional.ToNullable(createTime),
+                nodes ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeNode>(),
+                otherErrors ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>(),
+                lastOperation.Value);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

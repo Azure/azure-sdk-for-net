@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.TrafficManager
             Optional<TrafficRoutingMethod> trafficRoutingMethod = default;
             Optional<TrafficManagerDnsConfig> dnsConfig = default;
             Optional<TrafficManagerMonitorConfig> monitorConfig = default;
-            Optional<IList<TrafficManagerEndpointData>> endpoints = default;
+            IList<TrafficManagerEndpointData> endpoints = default;
             Optional<TrafficViewEnrollmentStatus> trafficViewEnrollmentStatus = default;
-            Optional<IList<AllowedEndpointRecordType>> allowedEndpointRecordTypes = default;
+            IList<AllowedEndpointRecordType> allowedEndpointRecordTypes = default;
             Optional<long?> maxReturn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -320,7 +320,21 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerProfileData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(location), Optional.ToNullable(profileStatus), Optional.ToNullable(trafficRoutingMethod), dnsConfig.Value, monitorConfig.Value, Optional.ToList(endpoints), Optional.ToNullable(trafficViewEnrollmentStatus), Optional.ToList(allowedEndpointRecordTypes), Optional.ToNullable(maxReturn));
+            return new TrafficManagerProfileData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                Optional.ToNullable(profileStatus),
+                Optional.ToNullable(trafficRoutingMethod),
+                dnsConfig.Value,
+                monitorConfig.Value,
+                endpoints ?? new ChangeTrackingList<TrafficManagerEndpointData>(),
+                Optional.ToNullable(trafficViewEnrollmentStatus),
+                allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>(),
+                Optional.ToNullable(maxReturn));
         }
 
         BinaryData IPersistableModel<TrafficManagerProfileData>.Write(ModelReaderWriterOptions options)

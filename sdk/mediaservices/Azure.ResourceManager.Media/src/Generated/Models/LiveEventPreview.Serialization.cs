@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<LiveEventEndpoint>> endpoints = default;
+            IList<LiveEventEndpoint> endpoints = default;
             Optional<LiveEventPreviewAccessControl> accessControl = default;
             Optional<string> previewLocator = default;
             Optional<string> streamingPolicyName = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventPreview(Optional.ToList(endpoints), accessControl.Value, previewLocator.Value, streamingPolicyName.Value, alternativeMediaId.Value, serializedAdditionalRawData);
+            return new LiveEventPreview(
+                endpoints ?? new ChangeTrackingList<LiveEventEndpoint>(),
+                accessControl.Value,
+                previewLocator.Value,
+                streamingPolicyName.Value,
+                alternativeMediaId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventPreview>.Write(ModelReaderWriterOptions options)

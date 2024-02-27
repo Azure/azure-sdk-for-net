@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdentityProviderContent(tenantId, applicationId, objectId, audience, aadAuthority, serializedAdditionalRawData);
+            return new IdentityProviderContent(
+                tenantId,
+                applicationId,
+                objectId,
+                audience,
+                aadAuthority,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityProviderContent>.Write(ModelReaderWriterOptions options)

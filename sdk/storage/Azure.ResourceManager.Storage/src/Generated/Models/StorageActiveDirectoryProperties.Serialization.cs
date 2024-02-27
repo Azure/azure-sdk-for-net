@@ -160,7 +160,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageActiveDirectoryProperties(domainName, netBiosDomainName.Value, forestName.Value, domainGuid, domainSid.Value, azureStorageSid.Value, samAccountName.Value, Optional.ToNullable(accountType), serializedAdditionalRawData);
+            return new StorageActiveDirectoryProperties(
+                domainName,
+                netBiosDomainName.Value,
+                forestName.Value,
+                domainGuid,
+                domainSid.Value,
+                azureStorageSid.Value,
+                samAccountName.Value,
+                Optional.ToNullable(accountType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageActiveDirectoryProperties>.Write(ModelReaderWriterOptions options)

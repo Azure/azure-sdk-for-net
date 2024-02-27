@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<SqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<long> maxSizeBytes = default;
             Optional<double> minCapacity = default;
             Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
@@ -265,7 +265,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPatch(sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone), serializedAdditionalRawData);
+            return new ElasticPoolPatch(
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(maxSizeBytes),
+                Optional.ToNullable(minCapacity),
+                perDatabaseSettings.Value,
+                Optional.ToNullable(zoneRedundant),
+                Optional.ToNullable(licenseType),
+                maintenanceConfigurationId.Value,
+                Optional.ToNullable(highAvailabilityReplicaCount),
+                Optional.ToNullable(preferredEnclaveType),
+                Optional.ToNullable(availabilityZone),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPatch>.Write(ModelReaderWriterOptions options)

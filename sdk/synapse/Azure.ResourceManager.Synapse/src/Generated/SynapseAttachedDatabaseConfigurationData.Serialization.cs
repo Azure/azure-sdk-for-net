@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<ResourceProvisioningState> provisioningState = default;
             Optional<string> databaseName = default;
             Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
+            IReadOnlyList<string> attachedDatabaseNames = default;
             Optional<SynapseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
             Optional<SynapseTableLevelSharingProperties> tableLevelSharingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, serializedAdditionalRawData);
+            return new SynapseAttachedDatabaseConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(provisioningState),
+                databaseName.Value,
+                clusterResourceId.Value,
+                attachedDatabaseNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(defaultPrincipalsModificationKind),
+                tableLevelSharingProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options)

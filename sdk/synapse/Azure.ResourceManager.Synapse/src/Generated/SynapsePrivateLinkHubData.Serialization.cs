@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubBasic>> privateEndpointConnections = default;
+            IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubBasic> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapsePrivateLinkHubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new SynapsePrivateLinkHubData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionForPrivateLinkHubBasic>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapsePrivateLinkHubData>.Write(ModelReaderWriterOptions options)

@@ -19,16 +19,16 @@ namespace Microsoft.Azure.Batch.Protocol
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("BatchServiceClient", "Account", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Application", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Certificate", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "ComputeNode", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "ComputeNodeExtension", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "File", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Job", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "JobSchedule", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Pool", "2023-11-01.18.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Task", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Account", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Application", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Certificate", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "ComputeNode", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "ComputeNodeExtension", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "File", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Job", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "JobSchedule", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Pool", "2024-02-01.19.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Task", "2024-02-01.19.0"),
               }.AsEnumerable();
           }
       }

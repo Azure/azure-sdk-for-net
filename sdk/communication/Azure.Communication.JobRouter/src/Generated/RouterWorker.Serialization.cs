@@ -184,13 +184,13 @@ namespace Azure.Communication.JobRouter
             ETag etag = default;
             string id = default;
             Optional<RouterWorkerState> state = default;
-            Optional<IList<string>> queues = default;
+            IList<string> queues = default;
             Optional<int> capacity = default;
-            Optional<IDictionary<string, BinaryData>> labels = default;
-            Optional<IDictionary<string, BinaryData>> tags = default;
-            Optional<IList<RouterChannel>> channels = default;
-            Optional<IReadOnlyList<RouterJobOffer>> offers = default;
-            Optional<IReadOnlyList<RouterWorkerAssignment>> assignedJobs = default;
+            IDictionary<string, BinaryData> labels = default;
+            IDictionary<string, BinaryData> tags = default;
+            IList<RouterChannel> channels = default;
+            IReadOnlyList<RouterJobOffer> offers = default;
+            IReadOnlyList<RouterWorkerAssignment> assignedJobs = default;
             Optional<double> loadRatio = default;
             Optional<bool> availableForOffers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -347,7 +347,20 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterWorker(etag, id, Optional.ToNullable(state), Optional.ToList(queues), Optional.ToNullable(capacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToList(channels), Optional.ToList(offers), Optional.ToList(assignedJobs), Optional.ToNullable(loadRatio), Optional.ToNullable(availableForOffers), serializedAdditionalRawData);
+            return new RouterWorker(
+                etag,
+                id,
+                Optional.ToNullable(state),
+                queues ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(capacity),
+                labels ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                tags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                channels ?? new ChangeTrackingList<RouterChannel>(),
+                offers ?? new ChangeTrackingList<RouterJobOffer>(),
+                assignedJobs ?? new ChangeTrackingList<RouterWorkerAssignment>(),
+                Optional.ToNullable(loadRatio),
+                Optional.ToNullable(availableForOffers),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterWorker>.Write(ModelReaderWriterOptions options)

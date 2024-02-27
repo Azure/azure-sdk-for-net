@@ -204,13 +204,13 @@ namespace Azure.ResourceManager.AlertsManagement
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
             Optional<string> lastModifiedUserName = default;
-            Optional<IList<SmartGroupAggregatedProperty>> resources = default;
-            Optional<IList<SmartGroupAggregatedProperty>> resourceTypes = default;
-            Optional<IList<SmartGroupAggregatedProperty>> resourceGroups = default;
-            Optional<IList<SmartGroupAggregatedProperty>> monitorServices = default;
-            Optional<IList<SmartGroupAggregatedProperty>> monitorConditions = default;
-            Optional<IList<SmartGroupAggregatedProperty>> alertStates = default;
-            Optional<IList<SmartGroupAggregatedProperty>> alertSeverities = default;
+            IList<SmartGroupAggregatedProperty> resources = default;
+            IList<SmartGroupAggregatedProperty> resourceTypes = default;
+            IList<SmartGroupAggregatedProperty> resourceGroups = default;
+            IList<SmartGroupAggregatedProperty> monitorServices = default;
+            IList<SmartGroupAggregatedProperty> monitorConditions = default;
+            IList<SmartGroupAggregatedProperty> alertStates = default;
+            IList<SmartGroupAggregatedProperty> alertSeverities = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -411,7 +411,26 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmartGroupData(id, name, type, systemData.Value, Optional.ToNullable(alertsCount), Optional.ToNullable(smartGroupState), Optional.ToNullable(severity), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), lastModifiedUserName.Value, Optional.ToList(resources), Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(monitorServices), Optional.ToList(monitorConditions), Optional.ToList(alertStates), Optional.ToList(alertSeverities), nextLink.Value, serializedAdditionalRawData);
+            return new SmartGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(alertsCount),
+                Optional.ToNullable(smartGroupState),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(lastModifiedDateTime),
+                lastModifiedUserName.Value,
+                resources ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                resourceTypes ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                resourceGroups ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                monitorServices ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                monitorConditions ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                alertStates ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                alertSeverities ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                nextLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmartGroupData>.Write(ModelReaderWriterOptions options)

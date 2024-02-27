@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCapacity(Optional.ToNullable(availableApplianceStorageGB), Optional.ToNullable(availableCoreCount), Optional.ToNullable(availableHostStorageGB), Optional.ToNullable(availableMemoryGB), Optional.ToNullable(totalApplianceStorageGB), Optional.ToNullable(totalCoreCount), Optional.ToNullable(totalHostStorageGB), Optional.ToNullable(totalMemoryGB), serializedAdditionalRawData);
+            return new ClusterCapacity(
+                Optional.ToNullable(availableApplianceStorageGB),
+                Optional.ToNullable(availableCoreCount),
+                Optional.ToNullable(availableHostStorageGB),
+                Optional.ToNullable(availableMemoryGB),
+                Optional.ToNullable(totalApplianceStorageGB),
+                Optional.ToNullable(totalCoreCount),
+                Optional.ToNullable(totalHostStorageGB),
+                Optional.ToNullable(totalMemoryGB),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCapacity>.Write(ModelReaderWriterOptions options)

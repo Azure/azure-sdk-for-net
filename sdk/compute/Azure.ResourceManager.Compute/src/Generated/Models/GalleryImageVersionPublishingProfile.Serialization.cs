@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<TargetRegion>> targetRegions = default;
+            IList<TargetRegion> targetRegions = default;
             Optional<int> replicaCount = default;
             Optional<bool> excludeFromLatest = default;
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<ImageStorageAccountType> storageAccountType = default;
             Optional<GalleryReplicationMode> replicationMode = default;
-            Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
+            IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), serializedAdditionalRawData);
+            return new GalleryImageVersionPublishingProfile(
+                targetRegions ?? new ChangeTrackingList<TargetRegion>(),
+                Optional.ToNullable(replicaCount),
+                Optional.ToNullable(excludeFromLatest),
+                Optional.ToNullable(publishedDate),
+                Optional.ToNullable(endOfLifeDate),
+                Optional.ToNullable(storageAccountType),
+                Optional.ToNullable(replicationMode),
+                targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionPublishingProfile>.Write(ModelReaderWriterOptions options)

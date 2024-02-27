@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
+            IReadOnlyList<WritableSubResource> loadBalancingRules = default;
             Optional<ProbeProtocol> protocol = default;
             Optional<int> port = default;
             Optional<int> intervalInSeconds = default;
@@ -274,7 +274,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProbeData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(loadBalancingRules), Optional.ToNullable(protocol), Optional.ToNullable(port), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(numberOfProbes), Optional.ToNullable(probeThreshold), requestPath.Value, Optional.ToNullable(provisioningState));
+            return new ProbeData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(port),
+                Optional.ToNullable(intervalInSeconds),
+                Optional.ToNullable(numberOfProbes),
+                Optional.ToNullable(probeThreshold),
+                requestPath.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options)

@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<IList<TelephonyPhoneNumbers>> phoneNumbers = default;
-            Optional<IList<TelephonyChannelResourceApiConfiguration>> apiConfigurations = default;
+            IList<TelephonyPhoneNumbers> phoneNumbers = default;
+            IList<TelephonyChannelResourceApiConfiguration> apiConfigurations = default;
             Optional<string> cognitiveServiceSubscriptionKey = default;
             Optional<string> cognitiveServiceRegion = default;
             Optional<string> defaultLocale = default;
@@ -231,7 +231,15 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TelephonyChannelProperties(Optional.ToList(phoneNumbers), Optional.ToList(apiConfigurations), cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, defaultLocale.Value, premiumSku.Value, Optional.ToNullable(isEnabled), serializedAdditionalRawData);
+            return new TelephonyChannelProperties(
+                phoneNumbers ?? new ChangeTrackingList<TelephonyPhoneNumbers>(),
+                apiConfigurations ?? new ChangeTrackingList<TelephonyChannelResourceApiConfiguration>(),
+                cognitiveServiceSubscriptionKey.Value,
+                cognitiveServiceRegion.Value,
+                defaultLocale.Value,
+                premiumSku.Value,
+                Optional.ToNullable(isEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TelephonyChannelProperties>.Write(ModelReaderWriterOptions options)

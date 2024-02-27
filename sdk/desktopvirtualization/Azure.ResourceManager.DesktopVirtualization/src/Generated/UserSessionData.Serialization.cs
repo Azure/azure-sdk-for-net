@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserSessionData(id, name, type, systemData.Value, objectId.Value, userPrincipalName.Value, Optional.ToNullable(applicationType), Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new UserSessionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                objectId.Value,
+                userPrincipalName.Value,
+                Optional.ToNullable(applicationType),
+                Optional.ToNullable(sessionState),
+                activeDirectoryUserName.Value,
+                Optional.ToNullable(createTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserSessionData>.Write(ModelReaderWriterOptions options)

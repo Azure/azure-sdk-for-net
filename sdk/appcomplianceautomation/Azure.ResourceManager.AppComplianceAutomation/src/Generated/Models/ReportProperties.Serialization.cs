@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             DateTimeOffset triggerTime = default;
             Optional<DateTimeOffset> nextTriggerTime = default;
             Optional<DateTimeOffset> lastTriggerTime = default;
-            Optional<IReadOnlyList<string>> subscriptions = default;
+            IReadOnlyList<string> subscriptions = default;
             IList<ResourceMetadata> resources = default;
             Optional<ReportComplianceStatus> complianceStatus = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -256,7 +256,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportProperties(id.Value, Optional.ToNullable(status), Optional.ToNullable(tenantId), reportName.Value, offerGuid.Value, timeZone, triggerTime, Optional.ToNullable(nextTriggerTime), Optional.ToNullable(lastTriggerTime), Optional.ToList(subscriptions), resources, complianceStatus.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ReportProperties(
+                id.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(tenantId),
+                reportName.Value,
+                offerGuid.Value,
+                timeZone,
+                triggerTime,
+                Optional.ToNullable(nextTriggerTime),
+                Optional.ToNullable(lastTriggerTime),
+                subscriptions ?? new ChangeTrackingList<string>(),
+                resources,
+                complianceStatus.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportProperties>.Write(ModelReaderWriterOptions options)

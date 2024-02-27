@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> groupId = default;
             Optional<string> rpGroupType = default;
             string instanceType = "RecoveryPlanGroupTaskDetails";
-            Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanGroupTaskDetails(instanceType, Optional.ToList(childTasks), serializedAdditionalRawData, name.Value, groupId.Value, rpGroupType.Value);
+            return new RecoveryPlanGroupTaskDetails(
+                instanceType,
+                childTasks ?? new ChangeTrackingList<AsrTask>(),
+                serializedAdditionalRawData,
+                name.Value,
+                groupId.Value,
+                rpGroupType.Value);
         }
 
         BinaryData IPersistableModel<RecoveryPlanGroupTaskDetails>.Write(ModelReaderWriterOptions options)

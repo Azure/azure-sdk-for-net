@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEnvironmentVersionData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new MachineLearningEnvironmentVersionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEnvironmentVersionData>.Write(ModelReaderWriterOptions options)

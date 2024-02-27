@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> link = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> allowDelete = default;
-            Optional<IList<AzureLocation>> locations = default;
+            IList<AzureLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAssociationLink(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(linkedResourceType), link.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(allowDelete), Optional.ToList(locations));
+            return new ServiceAssociationLink(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(linkedResourceType),
+                link.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(allowDelete),
+                locations ?? new ChangeTrackingList<AzureLocation>());
         }
 
         BinaryData IPersistableModel<ServiceAssociationLink>.Write(ModelReaderWriterOptions options)

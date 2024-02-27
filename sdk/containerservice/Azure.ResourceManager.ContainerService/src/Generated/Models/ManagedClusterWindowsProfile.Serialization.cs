@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCsiProxy), gmsaProfile.Value, serializedAdditionalRawData);
+            return new ManagedClusterWindowsProfile(
+                adminUsername,
+                adminPassword.Value,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(enableCsiProxy),
+                gmsaProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterWindowsProfile>.Write(ModelReaderWriterOptions options)

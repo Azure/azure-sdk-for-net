@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryRequestOptions(skipToken.Value, Optional.ToNullable(top), Optional.ToNullable(skip), Optional.ToNullable(resultFormat), Optional.ToNullable(allowPartialScopes), Optional.ToNullable(authorizationScopeFilter), serializedAdditionalRawData);
+            return new ResourceQueryRequestOptions(
+                skipToken.Value,
+                Optional.ToNullable(top),
+                Optional.ToNullable(skip),
+                Optional.ToNullable(resultFormat),
+                Optional.ToNullable(allowPartialScopes),
+                Optional.ToNullable(authorizationScopeFilter),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryRequestOptions>.Write(ModelReaderWriterOptions options)

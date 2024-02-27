@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LatencyMetric(name.Value, Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aValue), Optional.ToNullable(bValue), Optional.ToNullable(delta), Optional.ToNullable(deltaPercent), Optional.ToNullable(acLower95CI), Optional.ToNullable(ahUpper95CI), Optional.ToNullable(bcLower95CI), Optional.ToNullable(bUpper95CI), serializedAdditionalRawData);
+            return new LatencyMetric(
+                name.Value,
+                Optional.ToNullable(endDateTimeUtc),
+                Optional.ToNullable(aValue),
+                Optional.ToNullable(bValue),
+                Optional.ToNullable(delta),
+                Optional.ToNullable(deltaPercent),
+                Optional.ToNullable(acLower95CI),
+                Optional.ToNullable(ahUpper95CI),
+                Optional.ToNullable(bcLower95CI),
+                Optional.ToNullable(bUpper95CI),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LatencyMetric>.Write(ModelReaderWriterOptions options)

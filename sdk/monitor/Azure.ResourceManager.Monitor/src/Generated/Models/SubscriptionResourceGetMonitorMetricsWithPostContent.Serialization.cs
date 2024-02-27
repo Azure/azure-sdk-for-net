@@ -230,7 +230,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionResourceGetMonitorMetricsWithPostContent(Optional.ToNullable(timespan), Optional.ToNullable(interval), metricNames.Value, aggregation.Value, filter.Value, Optional.ToNullable(top), orderBy.Value, rollUpBy.Value, Optional.ToNullable(resultType), metricNamespace.Value, Optional.ToNullable(autoAdjustTimegrain), Optional.ToNullable(validateDimensions), serializedAdditionalRawData);
+            return new SubscriptionResourceGetMonitorMetricsWithPostContent(
+                Optional.ToNullable(timespan),
+                Optional.ToNullable(interval),
+                metricNames.Value,
+                aggregation.Value,
+                filter.Value,
+                Optional.ToNullable(top),
+                orderBy.Value,
+                rollUpBy.Value,
+                Optional.ToNullable(resultType),
+                metricNamespace.Value,
+                Optional.ToNullable(autoAdjustTimegrain),
+                Optional.ToNullable(validateDimensions),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionResourceGetMonitorMetricsWithPostContent>.Write(ModelReaderWriterOptions options)

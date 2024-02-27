@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllowedEnvironmentTypeData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AllowedEnvironmentTypeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllowedEnvironmentTypeData>.Write(ModelReaderWriterOptions options)

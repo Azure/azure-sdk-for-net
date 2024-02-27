@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> id = default;
             Optional<string> sourceServerBrandVersion = default;
             Optional<ServerProperties> serverProperties = default;
-            Optional<IReadOnlyList<string>> databases = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IReadOnlyList<string> databases = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceNonSqlTaskOutput(id.Value, sourceServerBrandVersion.Value, serverProperties.Value, Optional.ToList(databases), Optional.ToList(validationErrors), serializedAdditionalRawData);
+            return new ConnectToSourceNonSqlTaskOutput(
+                id.Value,
+                sourceServerBrandVersion.Value,
+                serverProperties.Value,
+                databases ?? new ChangeTrackingList<string>(),
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourceNonSqlTaskOutput>.Write(ModelReaderWriterOptions options)

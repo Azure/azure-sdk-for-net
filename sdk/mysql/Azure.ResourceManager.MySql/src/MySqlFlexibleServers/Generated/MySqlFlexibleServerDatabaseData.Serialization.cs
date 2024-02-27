@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerDatabaseData(id, name, type, systemData.Value, charset.Value, collation.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerDatabaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                charset.Value,
+                collation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerDatabaseData>.Write(ModelReaderWriterOptions options)

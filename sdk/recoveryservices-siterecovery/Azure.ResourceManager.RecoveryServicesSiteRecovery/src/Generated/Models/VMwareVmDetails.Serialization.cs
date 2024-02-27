@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> poweredOn = default;
             Optional<string> vCenterInfrastructureId = default;
             Optional<string> discoveryType = default;
-            Optional<IReadOnlyList<InMageDiskDetails>> diskDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
+            IReadOnlyList<InMageDiskDetails> diskDetails = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -225,7 +225,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmDetails(instanceType, serializedAdditionalRawData, agentGeneratedId.Value, agentInstalled.Value, osType.Value, agentVersion.Value, ipAddress.Value, poweredOn.Value, vCenterInfrastructureId.Value, discoveryType.Value, Optional.ToList(diskDetails), Optional.ToList(validationErrors));
+            return new VMwareVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                agentGeneratedId.Value,
+                agentInstalled.Value,
+                osType.Value,
+                agentVersion.Value,
+                ipAddress.Value,
+                poweredOn.Value,
+                vCenterInfrastructureId.Value,
+                discoveryType.Value,
+                diskDetails ?? new ChangeTrackingList<InMageDiskDetails>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>());
         }
 
         BinaryData IPersistableModel<VMwareVmDetails>.Write(ModelReaderWriterOptions options)

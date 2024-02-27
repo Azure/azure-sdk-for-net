@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Avs
             Optional<string> displayName = default;
             Optional<string> connectedGateway = default;
             Optional<WorkloadNetworkSegmentSubnet> subnet = default;
-            Optional<IReadOnlyList<WorkloadNetworkSegmentPortVif>> portVif = default;
+            IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif = default;
             Optional<WorkloadNetworkSegmentStatus> status = default;
             Optional<WorkloadNetworkSegmentProvisioningState> provisioningState = default;
             Optional<long> revision = default;
@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkSegmentData(id, name, type, systemData.Value, displayName.Value, connectedGateway.Value, subnet.Value, Optional.ToList(portVif), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkSegmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                connectedGateway.Value,
+                subnet.Value,
+                portVif ?? new ChangeTrackingList<WorkloadNetworkSegmentPortVif>(),
+                Optional.ToNullable(status),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkSegmentData>.Write(ModelReaderWriterOptions options)

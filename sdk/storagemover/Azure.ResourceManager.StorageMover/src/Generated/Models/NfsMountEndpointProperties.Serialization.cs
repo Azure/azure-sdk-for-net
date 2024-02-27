@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, host, Optional.ToNullable(nfsVersion), export);
+            return new NfsMountEndpointProperties(
+                endpointType,
+                description.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData,
+                host,
+                Optional.ToNullable(nfsVersion),
+                export);
         }
 
         BinaryData IPersistableModel<NfsMountEndpointProperties>.Write(ModelReaderWriterOptions options)

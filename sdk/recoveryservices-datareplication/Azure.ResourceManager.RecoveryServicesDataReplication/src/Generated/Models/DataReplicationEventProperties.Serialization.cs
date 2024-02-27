@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> severity = default;
             Optional<string> description = default;
             Optional<string> correlationId = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             EventModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -203,7 +203,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationEventProperties(Optional.ToNullable(resourceType), resourceName.Value, eventType.Value, eventName.Value, Optional.ToNullable(timeOfOccurrence), severity.Value, description.Value, correlationId.Value, Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationEventProperties(
+                Optional.ToNullable(resourceType),
+                resourceName.Value,
+                eventType.Value,
+                eventName.Value,
+                Optional.ToNullable(timeOfOccurrence),
+                severity.Value,
+                description.Value,
+                correlationId.Value,
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationEventProperties>.Write(ModelReaderWriterOptions options)

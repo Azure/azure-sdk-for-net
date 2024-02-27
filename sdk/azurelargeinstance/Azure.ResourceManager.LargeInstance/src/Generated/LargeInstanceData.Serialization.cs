@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -307,7 +307,24 @@ namespace Azure.ResourceManager.LargeInstance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceData(id, name, type, systemData.Value, hardwareProfile.Value, storageProfile.Value, osProfile.Value, networkProfile.Value, azureLargeInstanceId.Value, Optional.ToNullable(powerState), proximityPlacementGroup.Value, hwRevision.Value, partnerNodeId.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(tags), location, serializedAdditionalRawData);
+            return new LargeInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                hardwareProfile.Value,
+                storageProfile.Value,
+                osProfile.Value,
+                networkProfile.Value,
+                azureLargeInstanceId.Value,
+                Optional.ToNullable(powerState),
+                proximityPlacementGroup.Value,
+                hwRevision.Value,
+                partnerNodeId.Value,
+                Optional.ToNullable(provisioningState),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceData>.Write(ModelReaderWriterOptions options)

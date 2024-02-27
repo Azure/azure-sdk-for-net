@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> country = default;
             Optional<string> countryCode = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> domains = default;
+            IReadOnlyList<string> domains = default;
             Optional<string> defaultDomain = default;
             Optional<string> tenantType = default;
             Optional<Uri> tenantBrandingLogoUrl = default;
@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantData(id.Value, Optional.ToNullable(tenantId), Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains), defaultDomain.Value, tenantType.Value, tenantBrandingLogoUrl.Value, serializedAdditionalRawData);
+            return new TenantData(
+                id.Value,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(tenantCategory),
+                country.Value,
+                countryCode.Value,
+                displayName.Value,
+                domains ?? new ChangeTrackingList<string>(),
+                defaultDomain.Value,
+                tenantType.Value,
+                tenantBrandingLogoUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantData>.Write(ModelReaderWriterOptions options)

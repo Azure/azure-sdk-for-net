@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningRemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
             Optional<MachineLearningAllocationState> allocationState = default;
             Optional<DateTimeOffset> allocationStateTransitionTime = default;
-            Optional<IReadOnlyList<MachineLearningError>> errors = default;
+            IReadOnlyList<MachineLearningError> errors = default;
             Optional<int?> currentNodeCount = default;
             Optional<int?> targetNodeCount = default;
             Optional<MachineLearningNodeStateCounts> nodeStateCounts = default;
@@ -414,7 +414,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value, serializedAdditionalRawData);
+            return new AmlComputeProperties(
+                Optional.ToNullable(osType),
+                vmSize.Value,
+                Optional.ToNullable(vmPriority),
+                virtualMachineImage.Value,
+                Optional.ToNullable(isolatedNetwork),
+                scaleSettings.Value,
+                userAccountCredentials.Value,
+                subnet.Value,
+                Optional.ToNullable(remoteLoginPortPublicAccess),
+                Optional.ToNullable(allocationState),
+                Optional.ToNullable(allocationStateTransitionTime),
+                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                Optional.ToNullable(currentNodeCount),
+                Optional.ToNullable(targetNodeCount),
+                nodeStateCounts.Value,
+                Optional.ToNullable(enableNodePublicIP),
+                propertyBag.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlComputeProperties>.Write(ModelReaderWriterOptions options)

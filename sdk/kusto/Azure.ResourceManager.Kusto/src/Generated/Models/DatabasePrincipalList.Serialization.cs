@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IList<KustoDatabasePrincipal>> value = default;
+            IList<KustoDatabasePrincipal> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabasePrincipalList(Optional.ToList(value), serializedAdditionalRawData);
+            return new DatabasePrincipalList(value ?? new ChangeTrackingList<KustoDatabasePrincipal>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabasePrincipalList>.Write(ModelReaderWriterOptions options)

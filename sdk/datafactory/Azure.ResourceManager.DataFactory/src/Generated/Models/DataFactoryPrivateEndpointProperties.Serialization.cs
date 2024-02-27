@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<ConnectionStateProperties> connectionState = default;
-            Optional<IList<string>> fqdns = default;
+            IList<string> fqdns = default;
             Optional<string> groupId = default;
             Optional<bool> isReserved = default;
             Optional<ResourceIdentifier> privateLinkResourceId = default;
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPrivateEndpointProperties(connectionState.Value, Optional.ToList(fqdns), groupId.Value, Optional.ToNullable(isReserved), privateLinkResourceId.Value, provisioningState.Value, additionalProperties);
+            return new DataFactoryPrivateEndpointProperties(
+                connectionState.Value,
+                fqdns ?? new ChangeTrackingList<string>(),
+                groupId.Value,
+                Optional.ToNullable(isReserved),
+                privateLinkResourceId.Value,
+                provisioningState.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateEndpointProperties>.Write(ModelReaderWriterOptions options)

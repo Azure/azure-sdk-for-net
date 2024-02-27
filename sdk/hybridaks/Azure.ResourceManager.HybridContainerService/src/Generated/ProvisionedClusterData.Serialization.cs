@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterData(id, name, type, systemData.Value, properties.Value, extendedLocation.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                extendedLocation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterData>.Write(ModelReaderWriterOptions options)

@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
             Optional<int> port = default;
             string server = default;
-            Optional<IList<IPAddress>> fqdnAndIPAddressList = default;
+            IList<IPAddress> fqdnAndIPAddressList = default;
             Optional<ResourceIdentifier> machineArmId = default;
             Optional<int> totalApps = default;
             Optional<int> springBootApps = default;
-            Optional<IList<SpringBootSiteError>> errors = default;
+            IList<SpringBootSiteError> errors = default;
             Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,7 +220,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootServerProperties(Optional.ToNullable(port), server, Optional.ToList(fqdnAndIPAddressList), machineArmId.Value, Optional.ToNullable(totalApps), Optional.ToNullable(springBootApps), Optional.ToList(errors), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootServerProperties(
+                Optional.ToNullable(port),
+                server,
+                fqdnAndIPAddressList ?? new ChangeTrackingList<IPAddress>(),
+                machineArmId.Value,
+                Optional.ToNullable(totalApps),
+                Optional.ToNullable(springBootApps),
+                errors ?? new ChangeTrackingList<SpringBootSiteError>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootServerProperties>.Write(ModelReaderWriterOptions options)

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -217,7 +217,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(size), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), serializedAdditionalRawData);
+            return new CapacityPoolPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(size),
+                Optional.ToNullable(qosType),
+                Optional.ToNullable(coolAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityPoolPatch>.Write(ModelReaderWriterOptions options)

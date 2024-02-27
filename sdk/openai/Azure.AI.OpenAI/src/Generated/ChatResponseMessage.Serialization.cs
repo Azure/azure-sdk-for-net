@@ -98,7 +98,7 @@ namespace Azure.AI.OpenAI
             }
             ChatRole role = default;
             string content = default;
-            Optional<IReadOnlyList<ChatCompletionsToolCall>> toolCalls = default;
+            IReadOnlyList<ChatCompletionsToolCall> toolCalls = default;
             Optional<FunctionCall> functionCall = default;
             Optional<AzureChatExtensionsMessageContext> context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatResponseMessage(role, content, Optional.ToList(toolCalls), functionCall.Value, context.Value, serializedAdditionalRawData);
+            return new ChatResponseMessage(
+                role,
+                content,
+                toolCalls ?? new ChangeTrackingList<ChatCompletionsToolCall>(),
+                functionCall.Value,
+                context.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatResponseMessage>.Write(ModelReaderWriterOptions options)

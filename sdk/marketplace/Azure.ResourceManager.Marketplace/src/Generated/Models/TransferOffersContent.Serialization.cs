@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IList<string>> targetCollections = default;
+            IList<string> targetCollections = default;
             Optional<string> operation = default;
-            Optional<IList<string>> offerIdsList = default;
+            IList<string> offerIdsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferOffersContent(Optional.ToList(targetCollections), operation.Value, Optional.ToList(offerIdsList), serializedAdditionalRawData);
+            return new TransferOffersContent(targetCollections ?? new ChangeTrackingList<string>(), operation.Value, offerIdsList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferOffersContent>.Write(ModelReaderWriterOptions options)

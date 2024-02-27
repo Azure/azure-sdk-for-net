@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightPrivateLinkConfiguration(id.Value, name, Optional.ToNullable(type), groupId, Optional.ToNullable(provisioningState), ipConfigurations, serializedAdditionalRawData);
+            return new HDInsightPrivateLinkConfiguration(
+                id.Value,
+                name,
+                Optional.ToNullable(type),
+                groupId,
+                Optional.ToNullable(provisioningState),
+                ipConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightPrivateLinkConfiguration>.Write(ModelReaderWriterOptions options)

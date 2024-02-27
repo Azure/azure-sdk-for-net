@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> sslProfile = default;
             Optional<bool> requireServerNameIndication = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
+            IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
             Optional<WritableSubResource> firewallPolicy = default;
-            Optional<IList<string>> hostNames = default;
+            IList<string> hostNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -328,7 +328,23 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
+            return new ApplicationGatewayHttpListener(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                frontendIPConfiguration,
+                frontendPort,
+                Optional.ToNullable(protocol),
+                hostName.Value,
+                sslCertificate,
+                sslProfile,
+                Optional.ToNullable(requireServerNameIndication),
+                Optional.ToNullable(provisioningState),
+                customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
+                firewallPolicy,
+                hostNames ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayHttpListener>.Write(ModelReaderWriterOptions options)

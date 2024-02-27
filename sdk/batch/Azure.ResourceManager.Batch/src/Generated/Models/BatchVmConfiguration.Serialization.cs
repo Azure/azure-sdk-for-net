@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Batch.Models
             BatchImageReference imageReference = default;
             string nodeAgentSkuId = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;
-            Optional<IList<BatchVmDataDisk>> dataDisks = default;
+            IList<BatchVmDataDisk> dataDisks = default;
             Optional<string> licenseType = default;
             Optional<BatchVmContainerConfiguration> containerConfiguration = default;
             Optional<DiskEncryptionConfiguration> diskEncryptionConfiguration = default;
             Optional<NodePlacementConfiguration> nodePlacementConfiguration = default;
-            Optional<IList<BatchVmExtension>> extensions = default;
+            IList<BatchVmExtension> extensions = default;
             Optional<BatchOSDisk> osDisk = default;
             Optional<BatchSecurityProfile> securityProfile = default;
             Optional<WritableSubResource> serviceArtifactReference = default;
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value, securityProfile.Value, serviceArtifactReference, serializedAdditionalRawData);
+            return new BatchVmConfiguration(
+                imageReference,
+                nodeAgentSkuId,
+                windowsConfiguration.Value,
+                dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>(),
+                licenseType.Value,
+                containerConfiguration.Value,
+                diskEncryptionConfiguration.Value,
+                nodePlacementConfiguration.Value,
+                extensions ?? new ChangeTrackingList<BatchVmExtension>(),
+                osDisk.Value,
+                securityProfile.Value,
+                serviceArtifactReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmConfiguration>.Write(ModelReaderWriterOptions options)

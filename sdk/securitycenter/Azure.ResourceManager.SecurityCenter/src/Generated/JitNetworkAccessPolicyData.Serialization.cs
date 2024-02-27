@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default;
-            Optional<IList<JitNetworkAccessRequestInfo>> requests = default;
+            IList<JitNetworkAccessRequestInfo> requests = default;
             Optional<string> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPolicyData(id, name, type, systemData.Value, virtualMachines, Optional.ToList(requests), provisioningState.Value, kind.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new JitNetworkAccessPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                virtualMachines,
+                requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(),
+                provisioningState.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPolicyData>.Write(ModelReaderWriterOptions options)

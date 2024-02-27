@@ -196,7 +196,17 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageAnalysisResult(captionResult.Value, denseCaptionsResult.Value, metadata, modelVersion, objectsResult.Value, peopleResult.Value, readResult.Value, smartCropsResult.Value, tagsResult.Value, serializedAdditionalRawData);
+            return new ImageAnalysisResult(
+                captionResult.Value,
+                denseCaptionsResult.Value,
+                metadata,
+                modelVersion,
+                objectsResult.Value,
+                peopleResult.Value,
+                readResult.Value,
+                smartCropsResult.Value,
+                tagsResult.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageAnalysisResult>.Write(ModelReaderWriterOptions options)

@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> reportFormatVersion = default;
             Optional<string> configurationVersion = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<DscReportError>> errors = default;
-            Optional<IReadOnlyList<DscReportResource>> resources = default;
+            IReadOnlyList<DscReportError> errors = default;
+            IReadOnlyList<DscReportResource> resources = default;
             Optional<DscMetaConfiguration> metaConfiguration = default;
             Optional<string> hostName = default;
-            Optional<IReadOnlyList<string>> ipV4Addresses = default;
-            Optional<IReadOnlyList<string>> ipV6Addresses = default;
+            IReadOnlyList<string> ipV4Addresses = default;
+            IReadOnlyList<string> ipV6Addresses = default;
             Optional<int> numberOfResources = default;
             Optional<string> rawErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -375,7 +375,27 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeReport(Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(startTime), type.Value, reportId.Value, status.Value, refreshMode.Value, rebootRequested.Value, reportFormatVersion.Value, configurationVersion.Value, id.Value, Optional.ToList(errors), Optional.ToList(resources), metaConfiguration.Value, hostName.Value, Optional.ToList(ipV4Addresses), Optional.ToList(ipV6Addresses), Optional.ToNullable(numberOfResources), rawErrors.Value, serializedAdditionalRawData);
+            return new DscNodeReport(
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(startTime),
+                type.Value,
+                reportId.Value,
+                status.Value,
+                refreshMode.Value,
+                rebootRequested.Value,
+                reportFormatVersion.Value,
+                configurationVersion.Value,
+                id.Value,
+                errors ?? new ChangeTrackingList<DscReportError>(),
+                resources ?? new ChangeTrackingList<DscReportResource>(),
+                metaConfiguration.Value,
+                hostName.Value,
+                ipV4Addresses ?? new ChangeTrackingList<string>(),
+                ipV6Addresses ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(numberOfResources),
+                rawErrors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeReport>.Write(ModelReaderWriterOptions options)

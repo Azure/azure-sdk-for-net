@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -236,19 +236,19 @@ namespace Azure.ResourceManager.ContainerInstance
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             IList<ContainerInstanceContainer> containers = default;
-            Optional<IList<ContainerGroupImageRegistryCredential>> imageRegistryCredentials = default;
+            IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
             Optional<ContainerGroupRestartPolicy> restartPolicy = default;
             Optional<ContainerGroupIPAddress> ipAddress = default;
             ContainerInstanceOperatingSystemType osType = default;
-            Optional<IList<ContainerVolume>> volumes = default;
+            IList<ContainerVolume> volumes = default;
             Optional<ContainerGroupInstanceView> instanceView = default;
             Optional<ContainerGroupDiagnostics> diagnostics = default;
-            Optional<IList<ContainerGroupSubnetId>> subnetIds = default;
+            IList<ContainerGroupSubnetId> subnetIds = default;
             Optional<ContainerGroupDnsConfiguration> dnsConfig = default;
             Optional<ContainerGroupSku> sku = default;
             Optional<ContainerGroupEncryptionProperties> encryptionProperties = default;
-            Optional<IList<InitContainerDefinitionContent>> initContainers = default;
-            Optional<IList<DeploymentExtensionSpec>> extensions = default;
+            IList<InitContainerDefinitionContent> initContainers = default;
+            IList<DeploymentExtensionSpec> extensions = default;
             Optional<ConfidentialComputeProperties> confidentialComputeProperties = default;
             Optional<ContainerGroupPriority> priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -510,7 +510,33 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers), Optional.ToList(extensions), confidentialComputeProperties.Value, Optional.ToNullable(priority), serializedAdditionalRawData);
+            return new ContainerGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                provisioningState.Value,
+                containers,
+                imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
+                Optional.ToNullable(restartPolicy),
+                ipAddress.Value,
+                osType,
+                volumes ?? new ChangeTrackingList<ContainerVolume>(),
+                instanceView.Value,
+                diagnostics.Value,
+                subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(),
+                dnsConfig.Value,
+                Optional.ToNullable(sku),
+                encryptionProperties.Value,
+                initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
+                extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
+                confidentialComputeProperties.Value,
+                Optional.ToNullable(priority),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupData>.Write(ModelReaderWriterOptions options)

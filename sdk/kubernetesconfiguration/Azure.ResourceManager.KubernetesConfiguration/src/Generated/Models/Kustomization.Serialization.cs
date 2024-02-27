@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             Optional<string> name = default;
             Optional<string> path = default;
-            Optional<IList<string>> dependsOn = default;
+            IList<string> dependsOn = default;
             Optional<long?> timeoutInSeconds = default;
             Optional<long?> syncIntervalInSeconds = default;
             Optional<long?> retryIntervalInSeconds = default;
@@ -228,7 +228,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Kustomization(name.Value, path.Value, Optional.ToList(dependsOn), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(prune), Optional.ToNullable(force), serializedAdditionalRawData);
+            return new Kustomization(
+                name.Value,
+                path.Value,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(timeoutInSeconds),
+                Optional.ToNullable(syncIntervalInSeconds),
+                Optional.ToNullable(retryIntervalInSeconds),
+                Optional.ToNullable(prune),
+                Optional.ToNullable(force),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Kustomization>.Write(ModelReaderWriterOptions options)

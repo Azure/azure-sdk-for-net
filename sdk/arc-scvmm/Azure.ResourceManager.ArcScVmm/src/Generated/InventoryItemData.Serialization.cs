@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InventoryItemData(id, name, type, systemData.Value, properties, kind.Value, serializedAdditionalRawData);
+            return new InventoryItemData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InventoryItemData>.Write(ModelReaderWriterOptions options)

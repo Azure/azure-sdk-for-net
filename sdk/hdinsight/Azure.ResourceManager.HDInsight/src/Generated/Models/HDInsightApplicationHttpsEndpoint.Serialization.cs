@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<string>> accessModes = default;
+            IList<string> accessModes = default;
             Optional<string> location = default;
             Optional<int> destinationPort = default;
             Optional<int> publicPort = default;
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationHttpsEndpoint(Optional.ToList(accessModes), location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value, subDomainSuffix.Value, Optional.ToNullable(disableGatewayAuth), serializedAdditionalRawData);
+            return new HDInsightApplicationHttpsEndpoint(
+                accessModes ?? new ChangeTrackingList<string>(),
+                location.Value,
+                Optional.ToNullable(destinationPort),
+                Optional.ToNullable(publicPort),
+                privateIPAddress.Value,
+                subDomainSuffix.Value,
+                Optional.ToNullable(disableGatewayAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationHttpsEndpoint>.Write(ModelReaderWriterOptions options)

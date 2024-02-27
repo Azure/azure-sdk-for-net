@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), status.Value, scriptFileUri.Value, serializedAdditionalRawData);
+            return new FrontDoorExperimentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description.Value,
+                endpointA.Value,
+                endpointB.Value,
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(resourceState),
+                status.Value,
+                scriptFileUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorExperimentData>.Write(ModelReaderWriterOptions options)

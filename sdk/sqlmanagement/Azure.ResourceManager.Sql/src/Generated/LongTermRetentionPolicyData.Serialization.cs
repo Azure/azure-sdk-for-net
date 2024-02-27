@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(makeBackupsImmutable), Optional.ToNullable(backupStorageAccessTier), weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Optional.ToNullable(weekOfYear), serializedAdditionalRawData);
+            return new LongTermRetentionPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(makeBackupsImmutable),
+                Optional.ToNullable(backupStorageAccessTier),
+                weeklyRetention.Value,
+                monthlyRetention.Value,
+                yearlyRetention.Value,
+                Optional.ToNullable(weekOfYear),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionPolicyData>.Write(ModelReaderWriterOptions options)

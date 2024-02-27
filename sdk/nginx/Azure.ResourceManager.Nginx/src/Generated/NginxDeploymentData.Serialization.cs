@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Nginx
             Optional<ManagedServiceIdentity> identity = default;
             Optional<NginxDeploymentProperties> properties = default;
             Optional<NginxResourceSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Nginx
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value, sku.Value, serializedAdditionalRawData);
+            return new NginxDeploymentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                properties.Value,
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentData>.Write(ModelReaderWriterOptions options)

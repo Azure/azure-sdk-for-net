@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeStartStopRecurrenceSchedule(Optional.ToNullable(frequency), Optional.ToNullable(interval), startTime.Value, timeZone.Value, schedule.Value, serializedAdditionalRawData);
+            return new ComputeStartStopRecurrenceSchedule(
+                Optional.ToNullable(frequency),
+                Optional.ToNullable(interval),
+                startTime.Value,
+                timeZone.Value,
+                schedule.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeStartStopRecurrenceSchedule>.Write(ModelReaderWriterOptions options)

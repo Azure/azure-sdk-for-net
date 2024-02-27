@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<DateTimeOffset> updatedAtUtc = default;
             Optional<DateTimeOffset> createdAtUtc = default;
             Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> groupProperties = default;
+            IDictionary<string, string> groupProperties = default;
             Optional<EventHubsSchemaCompatibility> schemaCompatibility = default;
             Optional<EventHubsSchemaType> schemaType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsSchemaGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(updatedAtUtc),
+                Optional.ToNullable(createdAtUtc),
+                Optional.ToNullable(eTag),
+                groupProperties ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(schemaCompatibility),
+                Optional.ToNullable(schemaType),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsSchemaGroupData>.Write(ModelReaderWriterOptions options)

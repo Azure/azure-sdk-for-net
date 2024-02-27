@@ -146,7 +146,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranslationOptions(file, filename.Value, Optional.ToNullable(responseFormat), prompt.Value, Optional.ToNullable(temperature), model.Value, serializedAdditionalRawData);
+            return new AudioTranslationOptions(
+                file,
+                filename.Value,
+                Optional.ToNullable(responseFormat),
+                prompt.Value,
+                Optional.ToNullable(temperature),
+                model.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranslationOptions>.Write(ModelReaderWriterOptions options)

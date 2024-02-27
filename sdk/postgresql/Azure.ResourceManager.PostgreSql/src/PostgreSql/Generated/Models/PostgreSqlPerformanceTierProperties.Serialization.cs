@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             Optional<int> minLargeStorageMB = default;
             Optional<int> maxLargeStorageMB = default;
             Optional<int> minStorageMB = default;
-            Optional<IReadOnlyList<PostgreSqlPerformanceTierServiceLevelObjectives>> serviceLevelObjectives = default;
+            IReadOnlyList<PostgreSqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlPerformanceTierProperties(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), Optional.ToList(serviceLevelObjectives), serializedAdditionalRawData);
+            return new PostgreSqlPerformanceTierProperties(
+                id.Value,
+                Optional.ToNullable(maxBackupRetentionDays),
+                Optional.ToNullable(minBackupRetentionDays),
+                Optional.ToNullable(maxStorageMB),
+                Optional.ToNullable(minLargeStorageMB),
+                Optional.ToNullable(maxLargeStorageMB),
+                Optional.ToNullable(minStorageMB),
+                serviceLevelObjectives ?? new ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlPerformanceTierProperties>.Write(ModelReaderWriterOptions options)

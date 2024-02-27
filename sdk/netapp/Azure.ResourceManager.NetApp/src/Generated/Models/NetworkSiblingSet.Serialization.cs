@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> networkSiblingSetStateId = default;
             Optional<NetAppNetworkFeature> networkFeatures = default;
             Optional<NetworkSiblingSetProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<NicInfo>> nicInfoList = default;
+            IReadOnlyList<NicInfo> nicInfoList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSiblingSet(networkSiblingSetId.Value, subnetId.Value, networkSiblingSetStateId.Value, Optional.ToNullable(networkFeatures), Optional.ToNullable(provisioningState), Optional.ToList(nicInfoList), serializedAdditionalRawData);
+            return new NetworkSiblingSet(
+                networkSiblingSetId.Value,
+                subnetId.Value,
+                networkSiblingSetStateId.Value,
+                Optional.ToNullable(networkFeatures),
+                Optional.ToNullable(provisioningState),
+                nicInfoList ?? new ChangeTrackingList<NicInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSiblingSet>.Write(ModelReaderWriterOptions options)

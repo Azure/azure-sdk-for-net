@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<GuestConfigurationAssignmentType?> assignmentType = default;
             Optional<string> assignmentSource = default;
             Optional<string> contentType = default;
-            Optional<IList<GuestConfigurationParameter>> configurationParameter = default;
-            Optional<IList<GuestConfigurationParameter>> configurationProtectedParameter = default;
+            IList<GuestConfigurationParameter> configurationParameter = default;
+            IList<GuestConfigurationParameter> configurationProtectedParameter = default;
             Optional<LcmConfigurationSetting> configurationSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -287,7 +287,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationNavigation(Optional.ToNullable(kind), name.Value, version.Value, contentUri.Value, contentHash.Value, Optional.ToNullable(assignmentType), assignmentSource.Value, contentType.Value, Optional.ToList(configurationParameter), Optional.ToList(configurationProtectedParameter), configurationSetting.Value, serializedAdditionalRawData);
+            return new GuestConfigurationNavigation(
+                Optional.ToNullable(kind),
+                name.Value,
+                version.Value,
+                contentUri.Value,
+                contentHash.Value,
+                Optional.ToNullable(assignmentType),
+                assignmentSource.Value,
+                contentType.Value,
+                configurationParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationSetting.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationNavigation>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackupEngineData>> value = default;
+            IReadOnlyList<BackupEngineData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupEngineBaseResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BackupEngineBaseResourceList(value ?? new ChangeTrackingList<BackupEngineData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupEngineBaseResourceList>.Write(ModelReaderWriterOptions options)

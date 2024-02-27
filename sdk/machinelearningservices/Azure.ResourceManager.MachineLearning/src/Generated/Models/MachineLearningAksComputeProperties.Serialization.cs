@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> clusterFqdn = default;
-            Optional<IReadOnlyList<MachineLearningComputeSystemService>> systemServices = default;
+            IReadOnlyList<MachineLearningComputeSystemService> systemServices = default;
             Optional<int?> agentCount = default;
             Optional<string> agentVmSize = default;
             Optional<MachineLearningClusterPurpose> clusterPurpose = default;
@@ -275,7 +275,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningAksComputeProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value, serializedAdditionalRawData);
+            return new MachineLearningAksComputeProperties(
+                clusterFqdn.Value,
+                systemServices ?? new ChangeTrackingList<MachineLearningComputeSystemService>(),
+                Optional.ToNullable(agentCount),
+                agentVmSize.Value,
+                Optional.ToNullable(clusterPurpose),
+                sslConfiguration.Value,
+                aksNetworkingConfiguration.Value,
+                Optional.ToNullable(loadBalancerType),
+                loadBalancerSubnet.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningAksComputeProperties>.Write(ModelReaderWriterOptions options)

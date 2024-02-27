@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceHealthMetadataEntityData>> value = default;
+            IReadOnlyList<ResourceHealthMetadataEntityData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetadataEntityListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MetadataEntityListResult(value ?? new ChangeTrackingList<ResourceHealthMetadataEntityData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetadataEntityListResult>.Write(ModelReaderWriterOptions options)

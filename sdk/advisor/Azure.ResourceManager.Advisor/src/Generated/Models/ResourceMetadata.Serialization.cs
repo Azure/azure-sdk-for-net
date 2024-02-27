@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Advisor.Models
             }
             Optional<string> resourceId = default;
             Optional<string> source = default;
-            Optional<IDictionary<string, BinaryData>> action = default;
+            IDictionary<string, BinaryData> action = default;
             Optional<string> singular = default;
             Optional<string> plural = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetadata(resourceId.Value, source.Value, Optional.ToDictionary(action), singular.Value, plural.Value, serializedAdditionalRawData);
+            return new ResourceMetadata(
+                resourceId.Value,
+                source.Value,
+                action ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                singular.Value,
+                plural.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetadata>.Write(ModelReaderWriterOptions options)

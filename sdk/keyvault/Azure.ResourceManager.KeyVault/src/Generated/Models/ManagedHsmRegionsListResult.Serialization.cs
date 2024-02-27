@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedHsmGeoReplicatedRegion>> value = default;
+            IReadOnlyList<ManagedHsmGeoReplicatedRegion> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmRegionsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedHsmRegionsListResult(value ?? new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmRegionsListResult>.Write(ModelReaderWriterOptions options)

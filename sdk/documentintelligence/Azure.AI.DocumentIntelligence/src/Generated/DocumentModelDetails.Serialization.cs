@@ -126,11 +126,11 @@ namespace Azure.AI.DocumentIntelligence
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<DocumentBuildMode> buildMode = default;
             Optional<AzureBlobContentSource> azureBlobSource = default;
             Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
-            Optional<IReadOnlyDictionary<string, DocumentTypeDetails>> docTypes = default;
+            IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,18 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags), Optional.ToNullable(buildMode), azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(docTypes), serializedAdditionalRawData);
+            return new DocumentModelDetails(
+                modelId,
+                description.Value,
+                createdDateTime,
+                Optional.ToNullable(expirationDateTime),
+                apiVersion.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(buildMode),
+                azureBlobSource.Value,
+                azureBlobFileListSource.Value,
+                docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentModelDetails>.Write(ModelReaderWriterOptions options)
@@ -258,6 +269,14 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         string IPersistableModel<DocumentModelDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentModelDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentModelDetails(document.RootElement);
+        }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()

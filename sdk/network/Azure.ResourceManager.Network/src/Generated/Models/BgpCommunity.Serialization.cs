@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> serviceSupportedRegion = default;
             Optional<string> communityName = default;
             Optional<string> communityValue = default;
-            Optional<IList<string>> communityPrefixes = default;
+            IList<string> communityPrefixes = default;
             Optional<bool> isAuthorizedToUse = default;
             Optional<string> serviceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpCommunity(serviceSupportedRegion.Value, communityName.Value, communityValue.Value, Optional.ToList(communityPrefixes), Optional.ToNullable(isAuthorizedToUse), serviceGroup.Value, serializedAdditionalRawData);
+            return new BgpCommunity(
+                serviceSupportedRegion.Value,
+                communityName.Value,
+                communityValue.Value,
+                communityPrefixes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isAuthorizedToUse),
+                serviceGroup.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpCommunity>.Write(ModelReaderWriterOptions options)

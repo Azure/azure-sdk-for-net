@@ -313,7 +313,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize), serializedAdditionalRawData);
+            return new RequestReportRecordContract(
+                apiId.Value,
+                operationId.Value,
+                productId.Value,
+                userId.Value,
+                Optional.ToNullable(method),
+                uri.Value,
+                ipAddress.Value,
+                backendResponseCode.Value,
+                Optional.ToNullable(responseCode),
+                Optional.ToNullable(responseSize),
+                Optional.ToNullable(timestamp),
+                cache.Value,
+                Optional.ToNullable(apiTime),
+                Optional.ToNullable(serviceTime),
+                apiRegion.Value,
+                subscriptionId.Value,
+                requestId.Value,
+                Optional.ToNullable(requestSize),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestReportRecordContract>.Write(ModelReaderWriterOptions options)

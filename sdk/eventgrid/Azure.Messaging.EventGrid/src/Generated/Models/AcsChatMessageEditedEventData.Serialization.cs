@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             Optional<string> messageBody = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             Optional<DateTimeOffset> editTime = default;
             Optional<string> messageId = default;
             Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
@@ -126,7 +126,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatMessageEditedEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToDictionary(metadata), Optional.ToNullable(editTime));
+            return new AcsChatMessageEditedEventData(
+                recipientCommunicationIdentifier.Value,
+                transactionId.Value,
+                threadId.Value,
+                messageId.Value,
+                senderCommunicationIdentifier.Value,
+                senderDisplayName.Value,
+                Optional.ToNullable(composeTime),
+                type.Value,
+                Optional.ToNullable(version),
+                messageBody.Value,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(editTime));
         }
 
         internal partial class AcsChatMessageEditedEventDataConverter : JsonConverter<AcsChatMessageEditedEventData>

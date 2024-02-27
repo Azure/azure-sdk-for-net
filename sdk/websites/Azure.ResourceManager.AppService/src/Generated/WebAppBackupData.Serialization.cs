@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
             Optional<long> sizeInBytes = default;
             Optional<DateTimeOffset> created = default;
             Optional<string> log = default;
-            Optional<IReadOnlyList<AppServiceDatabaseBackupSetting>> databases = default;
+            IReadOnlyList<AppServiceDatabaseBackupSetting> databases = default;
             Optional<bool> scheduled = default;
             Optional<DateTimeOffset> lastRestoreTimeStamp = default;
             Optional<DateTimeOffset> finishedTimeStamp = default;
@@ -354,7 +354,27 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppBackupData(id, name, type, systemData.Value, Optional.ToNullable(id0), storageAccountUrl.Value, blobName.Value, name0.Value, Optional.ToNullable(status), Optional.ToNullable(sizeInBytes), Optional.ToNullable(created), log.Value, Optional.ToList(databases), Optional.ToNullable(scheduled), Optional.ToNullable(lastRestoreTimeStamp), Optional.ToNullable(finishedTimeStamp), correlationId.Value, Optional.ToNullable(websiteSizeInBytes), kind.Value, serializedAdditionalRawData);
+            return new WebAppBackupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(id0),
+                storageAccountUrl.Value,
+                blobName.Value,
+                name0.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(sizeInBytes),
+                Optional.ToNullable(created),
+                log.Value,
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
+                Optional.ToNullable(scheduled),
+                Optional.ToNullable(lastRestoreTimeStamp),
+                Optional.ToNullable(finishedTimeStamp),
+                correlationId.Value,
+                Optional.ToNullable(websiteSizeInBytes),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppBackupData>.Write(ModelReaderWriterOptions options)

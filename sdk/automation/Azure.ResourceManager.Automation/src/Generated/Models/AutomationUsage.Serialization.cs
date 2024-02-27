@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationUsage(id.Value, name.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), throttleStatus.Value, serializedAdditionalRawData);
+            return new AutomationUsage(
+                id.Value,
+                name.Value,
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                throttleStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationUsage>.Write(ModelReaderWriterOptions options)

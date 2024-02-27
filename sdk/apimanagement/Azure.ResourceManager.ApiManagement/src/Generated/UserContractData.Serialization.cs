@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<SystemData> systemData = default;
             Optional<ApiManagementUserState> state = default;
             Optional<string> note = default;
-            Optional<IList<UserIdentityContract>> identities = default;
+            IList<UserIdentityContract> identities = default;
             Optional<string> firstName = default;
             Optional<string> lastName = default;
             Optional<string> email = default;
             Optional<DateTimeOffset> registrationDate = default;
-            Optional<IReadOnlyList<GroupContractProperties>> groups = default;
+            IReadOnlyList<GroupContractProperties> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserContractData(id, name, type, systemData.Value, Optional.ToNullable(state), note.Value, Optional.ToList(identities), firstName.Value, lastName.Value, email.Value, Optional.ToNullable(registrationDate), Optional.ToList(groups), serializedAdditionalRawData);
+            return new UserContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                note.Value,
+                identities ?? new ChangeTrackingList<UserIdentityContract>(),
+                firstName.Value,
+                lastName.Value,
+                email.Value,
+                Optional.ToNullable(registrationDate),
+                groups ?? new ChangeTrackingList<GroupContractProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserContractData>.Write(ModelReaderWriterOptions options)

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<ResourceIdentifier> id = default;
             Optional<AzureLocation?> location = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> groupIds = default;
             Optional<RegistryPrivateEndpoint> privateEndpoint = default;
             Optional<RegistryPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;
@@ -237,7 +237,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistryPrivateEndpointConnection(id.Value, Optional.ToNullable(location), Optional.ToList(groupIds), privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new RegistryPrivateEndpointConnection(
+                id.Value,
+                Optional.ToNullable(location),
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint.Value,
+                privateLinkServiceConnectionState.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistryPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

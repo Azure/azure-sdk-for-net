@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.LabServices
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<LabConnectionProfile> defaultConnectionProfile = default;
             Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
             Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<AzureLocation>> allowedRegions = default;
+            IList<AzureLocation> allowedRegions = default;
             Optional<ResourceIdentifier> sharedGalleryId = default;
             Optional<LabPlanSupportInfo> supportInfo = default;
             Optional<Uri> linkedLmsInstance = default;
@@ -318,7 +318,23 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LabPlanData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                defaultConnectionProfile.Value,
+                defaultAutoShutdownProfile.Value,
+                defaultNetworkProfile.Value,
+                allowedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                sharedGalleryId.Value,
+                supportInfo.Value,
+                linkedLmsInstance.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabPlanData>.Write(ModelReaderWriterOptions options)

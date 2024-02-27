@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
             Optional<string> allowedValues = default;
             Optional<bool> requiresRestart = default;
-            Optional<IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>> serverRoleGroupConfigurations = default;
+            IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations = default;
             Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -231,7 +231,18 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlConfigurationData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(dataType), allowedValues.Value, Optional.ToNullable(requiresRestart), Optional.ToList(serverRoleGroupConfigurations), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(dataType),
+                allowedValues.Value,
+                Optional.ToNullable(requiresRestart),
+                serverRoleGroupConfigurations ?? new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlConfigurationData>.Write(ModelReaderWriterOptions options)

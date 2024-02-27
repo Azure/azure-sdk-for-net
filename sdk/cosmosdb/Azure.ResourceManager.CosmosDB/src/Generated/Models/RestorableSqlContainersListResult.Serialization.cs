@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableSqlContainer>> value = default;
+            IReadOnlyList<RestorableSqlContainer> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableSqlContainersListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RestorableSqlContainersListResult(value ?? new ChangeTrackingList<RestorableSqlContainer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableSqlContainersListResult>.Write(ModelReaderWriterOptions options)

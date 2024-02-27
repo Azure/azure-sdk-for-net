@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             Optional<RoutingEndpoints> endpoints = default;
-            Optional<IList<RoutingRuleProperties>> routes = default;
+            IList<RoutingRuleProperties> routes = default;
             Optional<IotHubFallbackRouteProperties> fallbackRoute = default;
-            Optional<IList<IotHubEnrichmentProperties>> enrichments = default;
+            IList<IotHubEnrichmentProperties> enrichments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubRoutingProperties(endpoints.Value, Optional.ToList(routes), fallbackRoute.Value, Optional.ToList(enrichments), serializedAdditionalRawData);
+            return new IotHubRoutingProperties(endpoints.Value, routes ?? new ChangeTrackingList<RoutingRuleProperties>(), fallbackRoute.Value, enrichments ?? new ChangeTrackingList<IotHubEnrichmentProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubRoutingProperties>.Write(ModelReaderWriterOptions options)

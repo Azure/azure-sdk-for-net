@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> functionName = default;
             Optional<string> expression = default;
             Optional<MapperAttributeReference> attributeReference = default;
-            Optional<IList<MapperAttributeReference>> attributeReferences = default;
+            IList<MapperAttributeReference> attributeReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperAttributeMapping(name.Value, Optional.ToNullable(type), functionName.Value, expression.Value, attributeReference.Value, Optional.ToList(attributeReferences), serializedAdditionalRawData);
+            return new MapperAttributeMapping(
+                name.Value,
+                Optional.ToNullable(type),
+                functionName.Value,
+                expression.Value,
+                attributeReference.Value,
+                attributeReferences ?? new ChangeTrackingList<MapperAttributeReference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperAttributeMapping>.Write(ModelReaderWriterOptions options)

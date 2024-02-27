@@ -172,7 +172,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationCustomRule(name.Value, priority, Optional.ToNullable(enabledState), ruleType, Optional.ToNullable(rateLimitDurationInMinutes), Optional.ToNullable(rateLimitThreshold), matchConditions, action, serializedAdditionalRawData);
+            return new WebApplicationCustomRule(
+                name.Value,
+                priority,
+                Optional.ToNullable(enabledState),
+                ruleType,
+                Optional.ToNullable(rateLimitDurationInMinutes),
+                Optional.ToNullable(rateLimitThreshold),
+                matchConditions,
+                action,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationCustomRule>.Write(ModelReaderWriterOptions options)

@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.OperationalInsights
                 return null;
             }
             Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<string>> containers = default;
-            Optional<IList<string>> tables = default;
+            IList<string> containers = default;
+            IList<string> tables = default;
             Optional<OperationalInsightsStorageAccount> storageAccount = default;
             Optional<StorageInsightStatus> status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -261,7 +261,18 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageInsightData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), Optional.ToList(containers), Optional.ToList(tables), storageAccount.Value, status.Value, serializedAdditionalRawData);
+            return new StorageInsightData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(eTag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                containers ?? new ChangeTrackingList<string>(),
+                tables ?? new ChangeTrackingList<string>(),
+                storageAccount.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageInsightData>.Write(ModelReaderWriterOptions options)

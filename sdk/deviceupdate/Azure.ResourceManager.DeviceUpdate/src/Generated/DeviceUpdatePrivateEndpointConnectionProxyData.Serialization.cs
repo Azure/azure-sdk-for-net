@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointConnectionProxyData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), eTag.Value, remotePrivateEndpoint.Value, status.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointConnectionProxyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                eTag.Value,
+                remotePrivateEndpoint.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options)

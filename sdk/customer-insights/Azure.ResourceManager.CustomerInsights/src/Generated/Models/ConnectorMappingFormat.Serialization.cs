@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingFormat(formatType, columnDelimiter.Value, acceptLanguage.Value, quoteCharacter.Value, quoteEscapeCharacter.Value, arraySeparator.Value, serializedAdditionalRawData);
+            return new ConnectorMappingFormat(
+                formatType,
+                columnDelimiter.Value,
+                acceptLanguage.Value,
+                quoteCharacter.Value,
+                quoteEscapeCharacter.Value,
+                arraySeparator.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingFormat>.Write(ModelReaderWriterOptions options)

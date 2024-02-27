@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkloadGroupData(id, name, type, systemData.Value, Optional.ToNullable(minResourcePercent), Optional.ToNullable(maxResourcePercent), Optional.ToNullable(minResourcePercentPerRequest), Optional.ToNullable(maxResourcePercentPerRequest), importance.Value, Optional.ToNullable(queryExecutionTimeout), serializedAdditionalRawData);
+            return new SynapseWorkloadGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(minResourcePercent),
+                Optional.ToNullable(maxResourcePercent),
+                Optional.ToNullable(minResourcePercentPerRequest),
+                Optional.ToNullable(maxResourcePercentPerRequest),
+                importance.Value,
+                Optional.ToNullable(queryExecutionTimeout),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkloadGroupData>.Write(ModelReaderWriterOptions options)

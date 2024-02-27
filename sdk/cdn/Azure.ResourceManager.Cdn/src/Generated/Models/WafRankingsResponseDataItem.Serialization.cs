@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> groupValues = default;
-            Optional<IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>> metrics = default;
+            IReadOnlyList<string> groupValues = default;
+            IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafRankingsResponseDataItem(Optional.ToList(groupValues), Optional.ToList(metrics), serializedAdditionalRawData);
+            return new WafRankingsResponseDataItem(groupValues ?? new ChangeTrackingList<string>(), metrics ?? new ChangeTrackingList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafRankingsResponseDataItem>.Write(ModelReaderWriterOptions options)

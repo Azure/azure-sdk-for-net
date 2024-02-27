@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LedgerDigestUploadData(id, name, type, systemData.Value, digestStorageEndpoint.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new LedgerDigestUploadData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                digestStorageEndpoint.Value,
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LedgerDigestUploadData>.Write(ModelReaderWriterOptions options)

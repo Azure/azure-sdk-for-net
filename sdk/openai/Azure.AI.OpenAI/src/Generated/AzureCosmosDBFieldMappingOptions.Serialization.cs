@@ -155,7 +155,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCosmosDBFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, contentFields, contentFieldsSeparator.Value, vectorFields, serializedAdditionalRawData);
+            return new AzureCosmosDBFieldMappingOptions(
+                titleField.Value,
+                urlField.Value,
+                filepathField.Value,
+                contentFields,
+                contentFieldsSeparator.Value,
+                vectorFields,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCosmosDBFieldMappingOptions>.Write(ModelReaderWriterOptions options)

@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, folderPath.Value, Optional.ToNullable(autoSync), Optional.ToNullable(publishRunbook), Optional.ToNullable(sourceType), description.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), serializedAdditionalRawData);
+            return new AutomationSourceControlData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                repoUrl.Value,
+                branch.Value,
+                folderPath.Value,
+                Optional.ToNullable(autoSync),
+                Optional.ToNullable(publishRunbook),
+                Optional.ToNullable(sourceType),
+                description.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationSourceControlData>.Write(ModelReaderWriterOptions options)

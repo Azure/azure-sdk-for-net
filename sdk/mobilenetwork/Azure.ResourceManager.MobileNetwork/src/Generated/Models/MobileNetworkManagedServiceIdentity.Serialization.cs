@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             MobileNetworkManagedServiceIdentityType type = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkManagedServiceIdentity(type, Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new MobileNetworkManagedServiceIdentity(type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkManagedServiceIdentity>.Write(ModelReaderWriterOptions options)

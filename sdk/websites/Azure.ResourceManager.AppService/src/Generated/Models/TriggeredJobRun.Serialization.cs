@@ -223,7 +223,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value, serializedAdditionalRawData);
+            return new TriggeredJobRun(
+                webJobId.Value,
+                webJobName.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(duration),
+                outputUrl.Value,
+                errorUrl.Value,
+                url.Value,
+                jobName.Value,
+                trigger.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggeredJobRun>.Write(ModelReaderWriterOptions options)

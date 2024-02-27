@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<bool> lowercase = default;
             Optional<string> pattern = default;
             Optional<string> flags = default;
-            Optional<IList<string>> stopwords = default;
+            IList<string> stopwords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, flags.Value, Optional.ToList(stopwords));
+            return new PatternAnalyzer(
+                odataType,
+                name,
+                Optional.ToNullable(lowercase),
+                pattern.Value,
+                flags.Value,
+                stopwords ?? new ChangeTrackingList<string>());
         }
     }
 }

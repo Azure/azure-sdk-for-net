@@ -213,18 +213,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> initialCassandraAdminPassword = default;
             Optional<CassandraDataCenterSeedNode> prometheusEndpoint = default;
             Optional<bool> repairEnabled = default;
-            Optional<IList<CassandraCertificate>> clientCertificates = default;
-            Optional<IList<CassandraCertificate>> externalGossipCertificates = default;
-            Optional<IReadOnlyList<CassandraCertificate>> gossipCertificates = default;
-            Optional<IList<CassandraDataCenterSeedNode>> externalSeedNodes = default;
-            Optional<IReadOnlyList<CassandraDataCenterSeedNode>> seedNodes = default;
+            IList<CassandraCertificate> clientCertificates = default;
+            IList<CassandraCertificate> externalGossipCertificates = default;
+            IReadOnlyList<CassandraCertificate> gossipCertificates = default;
+            IList<CassandraDataCenterSeedNode> externalSeedNodes = default;
+            IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
             Optional<int> hoursBetweenBackups = default;
             Optional<bool> deallocated = default;
             Optional<bool> cassandraAuditLoggingEnabled = default;
             Optional<CassandraClusterType> clusterType = default;
             Optional<CassandraError> provisionError = default;
-            Optional<IList<string>> extensions = default;
-            Optional<IList<CassandraClusterBackupSchedule>> backupSchedules = default;
+            IList<string> extensions = default;
+            IList<CassandraClusterBackupSchedule> backupSchedules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -443,7 +443,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled), Optional.ToNullable(clusterType), provisionError.Value, Optional.ToList(extensions), Optional.ToList(backupSchedules), serializedAdditionalRawData);
+            return new CassandraClusterProperties(
+                Optional.ToNullable(provisioningState),
+                restoreFromBackupId.Value,
+                delegatedManagementSubnetId.Value,
+                cassandraVersion.Value,
+                clusterNameOverride.Value,
+                Optional.ToNullable(authenticationMethod),
+                initialCassandraAdminPassword.Value,
+                prometheusEndpoint.Value,
+                Optional.ToNullable(repairEnabled),
+                clientCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
+                externalGossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
+                gossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
+                externalSeedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
+                seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
+                Optional.ToNullable(hoursBetweenBackups),
+                Optional.ToNullable(deallocated),
+                Optional.ToNullable(cassandraAuditLoggingEnabled),
+                Optional.ToNullable(clusterType),
+                provisionError.Value,
+                extensions ?? new ChangeTrackingList<string>(),
+                backupSchedules ?? new ChangeTrackingList<CassandraClusterBackupSchedule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterProperties>.Write(ModelReaderWriterOptions options)

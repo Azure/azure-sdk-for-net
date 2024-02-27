@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             Optional<DataProtectionBackupProvisioningState> provisioningState = default;
             Optional<bool> allowAutoApprovals = default;
-            Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;
-            Optional<IList<string>> vaultCriticalOperationExclusionList = default;
+            IReadOnlyList<ResourceGuardOperationDetails> resourceGuardOperations = default;
+            IList<string> vaultCriticalOperationExclusionList = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(allowAutoApprovals), Optional.ToList(resourceGuardOperations), Optional.ToList(vaultCriticalOperationExclusionList), description.Value, serializedAdditionalRawData);
+            return new ResourceGuardProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(allowAutoApprovals),
+                resourceGuardOperations ?? new ChangeTrackingList<ResourceGuardOperationDetails>(),
+                vaultCriticalOperationExclusionList ?? new ChangeTrackingList<string>(),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardProperties>.Write(ModelReaderWriterOptions options)

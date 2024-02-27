@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteFunctionOverview(id, name, type, systemData.Value, functionName.Value, Optional.ToNullable(triggerType), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteFunctionOverview(
+                id,
+                name,
+                type,
+                systemData.Value,
+                functionName.Value,
+                Optional.ToNullable(triggerType),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteFunctionOverview>.Write(ModelReaderWriterOptions options)

@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServicesCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
+            return new DeviceProvisioningServicesCertificateProperties(
+                subject.Value,
+                Optional.ToNullable(expiry),
+                thumbprint.Value,
+                Optional.ToNullable(isVerified),
+                certificate.Value,
+                Optional.ToNullable(created),
+                Optional.ToNullable(updated),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServicesCertificateProperties>.Write(ModelReaderWriterOptions options)

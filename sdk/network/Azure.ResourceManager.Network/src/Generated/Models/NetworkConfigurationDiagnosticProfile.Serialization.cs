@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfigurationDiagnosticProfile(direction, protocol, source, destination, destinationPort, serializedAdditionalRawData);
+            return new NetworkConfigurationDiagnosticProfile(
+                direction,
+                protocol,
+                source,
+                destination,
+                destinationPort,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfigurationDiagnosticProfile>.Write(ModelReaderWriterOptions options)

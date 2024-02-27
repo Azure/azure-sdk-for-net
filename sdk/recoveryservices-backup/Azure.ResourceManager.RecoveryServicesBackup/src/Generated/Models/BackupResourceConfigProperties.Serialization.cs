@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(crossRegionRestoreFlag), Optional.ToNullable(dedupState), Optional.ToNullable(xcoolState), serializedAdditionalRawData);
+            return new BackupResourceConfigProperties(
+                Optional.ToNullable(storageModelType),
+                Optional.ToNullable(storageType),
+                Optional.ToNullable(storageTypeState),
+                Optional.ToNullable(crossRegionRestoreFlag),
+                Optional.ToNullable(dedupState),
+                Optional.ToNullable(xcoolState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceConfigProperties>.Write(ModelReaderWriterOptions options)

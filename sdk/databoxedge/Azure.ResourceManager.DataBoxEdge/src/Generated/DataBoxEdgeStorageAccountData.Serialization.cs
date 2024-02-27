@@ -214,7 +214,18 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeStorageAccountData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(storageAccountStatus), dataPolicy, storageAccountCredentialId.Value, blobEndpoint.Value, Optional.ToNullable(containerCount), serializedAdditionalRawData);
+            return new DataBoxEdgeStorageAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(storageAccountStatus),
+                dataPolicy,
+                storageAccountCredentialId.Value,
+                blobEndpoint.Value,
+                Optional.ToNullable(containerCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeStorageAccountData>.Write(ModelReaderWriterOptions options)

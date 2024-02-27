@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> gpu = default;
             Optional<MachineLearningNetwork> network = default;
             Optional<MachineLearningComputeInstanceEnvironmentInfo> environment = default;
-            Optional<IReadOnlyList<BinaryData>> services = default;
+            IReadOnlyList<BinaryData> services = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceContainer(name.Value, Optional.ToNullable(autosave), gpu.Value, Optional.ToNullable(network), environment.Value, Optional.ToList(services), serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceContainer(
+                name.Value,
+                Optional.ToNullable(autosave),
+                gpu.Value,
+                Optional.ToNullable(network),
+                environment.Value,
+                services ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceContainer>.Write(ModelReaderWriterOptions options)

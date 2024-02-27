@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.DataBoxEdge
             DataBoxEdgeShareMonitoringStatus monitoringStatus = default;
             Optional<DataBoxEdgeStorageContainerInfo> azureContainerInfo = default;
             ShareAccessProtocol accessProtocol = default;
-            Optional<IList<UserAccessRight>> userAccessRights = default;
-            Optional<IList<ClientAccessRight>> clientAccessRights = default;
+            IList<UserAccessRight> userAccessRights = default;
+            IList<ClientAccessRight> clientAccessRights = default;
             Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
-            Optional<IReadOnlyList<DataBoxEdgeMountPointMap>> shareMappings = default;
+            IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings = default;
             Optional<DataBoxEdgeDataPolicy> dataPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -294,7 +294,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeShareData(id, name, type, systemData.Value, description.Value, shareStatus, monitoringStatus, azureContainerInfo.Value, accessProtocol, Optional.ToList(userAccessRights), Optional.ToList(clientAccessRights), refreshDetails.Value, Optional.ToList(shareMappings), Optional.ToNullable(dataPolicy), serializedAdditionalRawData);
+            return new DataBoxEdgeShareData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                shareStatus,
+                monitoringStatus,
+                azureContainerInfo.Value,
+                accessProtocol,
+                userAccessRights ?? new ChangeTrackingList<UserAccessRight>(),
+                clientAccessRights ?? new ChangeTrackingList<ClientAccessRight>(),
+                refreshDetails.Value,
+                shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
+                Optional.ToNullable(dataPolicy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeShareData>.Write(ModelReaderWriterOptions options)

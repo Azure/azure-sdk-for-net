@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> annotation = default;
             Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
             Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricL3IsolationDomainPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(redistributeConnectedSubnets), Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, connectedSubnetRoutePolicy.Value);
+            return new NetworkFabricL3IsolationDomainPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                annotation.Value,
+                Optional.ToNullable(redistributeConnectedSubnets),
+                Optional.ToNullable(redistributeStaticRoutes),
+                aggregateRouteConfiguration.Value,
+                connectedSubnetRoutePolicy.Value);
         }
 
         BinaryData IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Write(ModelReaderWriterOptions options)

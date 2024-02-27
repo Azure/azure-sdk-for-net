@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> description = default;
             Optional<string> remediationDescription = default;
-            Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
+            IList<SecurityAssessmentResourceCategory> categories = default;
             SecurityAssessmentSeverity severity = default;
             Optional<SecurityAssessmentUserImpact> userImpact = default;
             Optional<ImplementationEffort> implementationEffort = default;
-            Optional<IList<SecurityThreat>> threats = default;
+            IList<SecurityThreat> threats = default;
             Optional<bool> preview = default;
             SecurityAssessmentType assessmentType = default;
             Optional<SecurityAssessmentMetadataPartner> partnerData = default;
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), assessmentType, partnerData.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentMetadataProperties(
+                displayName,
+                policyDefinitionId.Value,
+                description.Value,
+                remediationDescription.Value,
+                categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
+                severity,
+                Optional.ToNullable(userImpact),
+                Optional.ToNullable(implementationEffort),
+                threats ?? new ChangeTrackingList<SecurityThreat>(),
+                Optional.ToNullable(preview),
+                assessmentType,
+                partnerData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentMetadataProperties>.Write(ModelReaderWriterOptions options)

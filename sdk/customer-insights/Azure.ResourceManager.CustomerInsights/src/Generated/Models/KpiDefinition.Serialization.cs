@@ -185,21 +185,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string entityTypeName = default;
             Optional<Guid> tenantId = default;
             Optional<string> kpiName = default;
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> description = default;
+            IReadOnlyDictionary<string, string> displayName = default;
+            IReadOnlyDictionary<string, string> description = default;
             CalculationWindowType calculationWindow = default;
             Optional<string> calculationWindowFieldName = default;
             KpiFunction function = default;
             string expression = default;
             Optional<string> unit = default;
             Optional<string> filter = default;
-            Optional<IReadOnlyList<string>> groupBy = default;
-            Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
-            Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
+            IReadOnlyList<string> groupBy = default;
+            IReadOnlyList<KpiGroupByMetadata> groupByMetadata = default;
+            IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<KpiThresholds> thresHolds = default;
-            Optional<IReadOnlyList<KpiAlias>> aliases = default;
-            Optional<IReadOnlyList<KpiExtract>> extracts = default;
+            IReadOnlyList<KpiAlias> aliases = default;
+            IReadOnlyList<KpiExtract> extracts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -380,7 +380,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts), serializedAdditionalRawData);
+            return new KpiDefinition(
+                entityType,
+                entityTypeName,
+                Optional.ToNullable(tenantId),
+                kpiName.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                calculationWindow,
+                calculationWindowFieldName.Value,
+                function,
+                expression,
+                unit.Value,
+                filter.Value,
+                groupBy ?? new ChangeTrackingList<string>(),
+                groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
+                participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
+                Optional.ToNullable(provisioningState),
+                thresHolds.Value,
+                aliases ?? new ChangeTrackingList<KpiAlias>(),
+                extracts ?? new ChangeTrackingList<KpiExtract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiDefinition>.Write(ModelReaderWriterOptions options)

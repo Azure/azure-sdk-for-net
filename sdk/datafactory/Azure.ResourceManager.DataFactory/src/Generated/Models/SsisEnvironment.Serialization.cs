@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<long> folderId = default;
-            Optional<IReadOnlyList<SsisVariable>> variables = default;
+            IReadOnlyList<SsisVariable> variables = default;
             SsisObjectMetadataType type = default;
             Optional<long> id = default;
             Optional<string> name = default;
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisEnvironment(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToList(variables));
+            return new SsisEnvironment(
+                type,
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(folderId),
+                variables ?? new ChangeTrackingList<SsisVariable>());
         }
 
         BinaryData IPersistableModel<SsisEnvironment>.Write(ModelReaderWriterOptions options)

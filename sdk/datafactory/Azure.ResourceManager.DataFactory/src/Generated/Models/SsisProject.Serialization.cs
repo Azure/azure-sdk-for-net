@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<long> folderId = default;
             Optional<long> version = default;
-            Optional<IReadOnlyList<SsisEnvironmentReference>> environmentRefs = default;
-            Optional<IReadOnlyList<SsisParameterInfo>> parameters = default;
+            IReadOnlyList<SsisEnvironmentReference> environmentRefs = default;
+            IReadOnlyList<SsisParameterInfo> parameters = default;
             SsisObjectMetadataType type = default;
             Optional<long> id = default;
             Optional<string> name = default;
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisProject(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToNullable(version), Optional.ToList(environmentRefs), Optional.ToList(parameters));
+            return new SsisProject(
+                type,
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(folderId),
+                Optional.ToNullable(version),
+                environmentRefs ?? new ChangeTrackingList<SsisEnvironmentReference>(),
+                parameters ?? new ChangeTrackingList<SsisParameterInfo>());
         }
 
         BinaryData IPersistableModel<SsisProject>.Write(ModelReaderWriterOptions options)

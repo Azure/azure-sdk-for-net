@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInstanceProbe(probeAction.Value, disableProbe, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), serializedAdditionalRawData);
+            return new AppInstanceProbe(
+                probeAction.Value,
+                disableProbe,
+                Optional.ToNullable(initialDelaySeconds),
+                Optional.ToNullable(periodSeconds),
+                Optional.ToNullable(timeoutSeconds),
+                Optional.ToNullable(failureThreshold),
+                Optional.ToNullable(successThreshold),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppInstanceProbe>.Write(ModelReaderWriterOptions options)

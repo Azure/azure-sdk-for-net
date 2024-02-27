@@ -295,7 +295,23 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeExportPolicyRule(Optional.ToNullable(ruleIndex), Optional.ToNullable(unixReadOnly), Optional.ToNullable(unixReadWrite), Optional.ToNullable(kerberos5ReadOnly), Optional.ToNullable(kerberos5ReadWrite), Optional.ToNullable(kerberos5iReadOnly), Optional.ToNullable(kerberos5iReadWrite), Optional.ToNullable(kerberos5pReadOnly), Optional.ToNullable(kerberos5pReadWrite), Optional.ToNullable(cifs), Optional.ToNullable(nfsv3), Optional.ToNullable(nfsv41), allowedClients.Value, Optional.ToNullable(hasRootAccess), Optional.ToNullable(chownMode), serializedAdditionalRawData);
+            return new NetAppVolumeExportPolicyRule(
+                Optional.ToNullable(ruleIndex),
+                Optional.ToNullable(unixReadOnly),
+                Optional.ToNullable(unixReadWrite),
+                Optional.ToNullable(kerberos5ReadOnly),
+                Optional.ToNullable(kerberos5ReadWrite),
+                Optional.ToNullable(kerberos5iReadOnly),
+                Optional.ToNullable(kerberos5iReadWrite),
+                Optional.ToNullable(kerberos5pReadOnly),
+                Optional.ToNullable(kerberos5pReadWrite),
+                Optional.ToNullable(cifs),
+                Optional.ToNullable(nfsv3),
+                Optional.ToNullable(nfsv41),
+                allowedClients.Value,
+                Optional.ToNullable(hasRootAccess),
+                Optional.ToNullable(chownMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeExportPolicyRule>.Write(ModelReaderWriterOptions options)

@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkItemConfiguration(connectorId.Value, configDisplayName.Value, Optional.ToNullable(isDefault), id.Value, configProperties.Value, serializedAdditionalRawData);
+            return new WorkItemConfiguration(
+                connectorId.Value,
+                configDisplayName.Value,
+                Optional.ToNullable(isDefault),
+                id.Value,
+                configProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkItemConfiguration>.Write(ModelReaderWriterOptions options)

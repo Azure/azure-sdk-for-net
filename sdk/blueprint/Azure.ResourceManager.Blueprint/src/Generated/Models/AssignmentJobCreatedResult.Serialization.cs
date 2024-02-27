@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentJobCreatedResult(id, name, type, systemData.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new AssignmentJobCreatedResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentJobCreatedResult>.Write(ModelReaderWriterOptions options)

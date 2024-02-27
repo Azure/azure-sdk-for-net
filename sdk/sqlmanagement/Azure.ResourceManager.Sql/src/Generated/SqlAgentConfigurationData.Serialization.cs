@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAgentConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new SqlAgentConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAgentConfigurationData>.Write(ModelReaderWriterOptions options)

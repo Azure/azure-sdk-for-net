@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsEntity>.Write(ModelReaderWriterOptions options)

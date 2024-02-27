@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonExportProperties(Optional.ToNullable(format), deliveryInfo, definition, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), serializedAdditionalRawData);
+            return new CommonExportProperties(
+                Optional.ToNullable(format),
+                deliveryInfo,
+                definition,
+                runHistory.Value,
+                Optional.ToNullable(partitionData),
+                Optional.ToNullable(nextRunTimeEstimate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonExportProperties>.Write(ModelReaderWriterOptions options)

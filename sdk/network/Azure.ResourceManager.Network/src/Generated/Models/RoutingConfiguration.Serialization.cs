@@ -150,7 +150,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingConfiguration(associatedRouteTable, propagatedRouteTables.Value, vnetRoutes.Value, inboundRouteMap, outboundRouteMap, serializedAdditionalRawData);
+            return new RoutingConfiguration(
+                associatedRouteTable,
+                propagatedRouteTables.Value,
+                vnetRoutes.Value,
+                inboundRouteMap,
+                outboundRouteMap,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingConfiguration>.Write(ModelReaderWriterOptions options)

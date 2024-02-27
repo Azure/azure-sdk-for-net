@@ -182,7 +182,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceGeoRegion(id, name, type, systemData.Value, description.Value, displayName.Value, orgDomain.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceGeoRegion(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                displayName.Value,
+                orgDomain.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceGeoRegion>.Write(ModelReaderWriterOptions options)

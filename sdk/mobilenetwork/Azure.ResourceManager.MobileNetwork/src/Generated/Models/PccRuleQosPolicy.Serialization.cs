@@ -157,7 +157,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PccRuleQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate, serializedAdditionalRawData, guaranteedBitRate.Value);
+            return new PccRuleQosPolicy(
+                Optional.ToNullable(_5qi),
+                Optional.ToNullable(allocationAndRetentionPriorityLevel),
+                Optional.ToNullable(preemptionCapability),
+                Optional.ToNullable(preemptionVulnerability),
+                maximumBitRate,
+                serializedAdditionalRawData,
+                guaranteedBitRate.Value);
         }
 
         BinaryData IPersistableModel<PccRuleQosPolicy>.Write(ModelReaderWriterOptions options)

@@ -240,7 +240,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJob(id, name, type, systemData.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), serializedAdditionalRawData);
+            return new SourceControlSyncJob(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sourceControlSyncJobId.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(syncType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJob>.Write(ModelReaderWriterOptions options)

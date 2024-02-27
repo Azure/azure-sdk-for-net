@@ -73,7 +73,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new DocumentSentiment(id, sentiment, statistics.Value, confidenceScores, sentences, warnings);
+            return new DocumentSentiment(
+                id,
+                sentiment,
+                statistics.Value,
+                confidenceScores,
+                sentences,
+                warnings);
         }
     }
 }

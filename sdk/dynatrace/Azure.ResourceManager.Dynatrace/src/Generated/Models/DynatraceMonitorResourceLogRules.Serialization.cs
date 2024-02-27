@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<AadLogsSendingStatus> sendAadLogs = default;
             Optional<SubscriptionLogsSendingStatus> sendSubscriptionLogs = default;
             Optional<ActivityLogsSendingStatus> sendActivityLogs = default;
-            Optional<IList<DynatraceMonitorResourceFilteringTag>> filteringTags = default;
+            IList<DynatraceMonitorResourceFilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitorResourceLogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), Optional.ToList(filteringTags), serializedAdditionalRawData);
+            return new DynatraceMonitorResourceLogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorResourceLogRules>.Write(ModelReaderWriterOptions options)

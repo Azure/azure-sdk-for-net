@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LabVirtualMachineImageData>> value = default;
+            IReadOnlyList<LabVirtualMachineImageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PagedImages(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PagedImages(value ?? new ChangeTrackingList<LabVirtualMachineImageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PagedImages>.Write(ModelReaderWriterOptions options)

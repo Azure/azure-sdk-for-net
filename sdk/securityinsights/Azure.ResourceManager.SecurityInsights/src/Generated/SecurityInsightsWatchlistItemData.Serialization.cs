@@ -311,7 +311,23 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsWatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isDeleted), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, itemsKeyValue.Value, entityMapping.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsWatchlistItemData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                watchlistItemType.Value,
+                watchlistItemId.Value,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(isDeleted),
+                Optional.ToNullable(created),
+                Optional.ToNullable(updated),
+                createdBy.Value,
+                updatedBy.Value,
+                itemsKeyValue.Value,
+                entityMapping.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsWatchlistItemData>.Write(ModelReaderWriterOptions options)

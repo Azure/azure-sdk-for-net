@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> dnsServerIPEntityId = default;
             Optional<string> domainName = default;
             Optional<string> hostIPAddressEntityId = default;
-            Optional<IReadOnlyList<string>> ipAddressEntityIds = default;
+            IReadOnlyList<string> ipAddressEntityIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsDnsEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, dnsServerIPEntityId.Value, domainName.Value, hostIPAddressEntityId.Value, Optional.ToList(ipAddressEntityIds));
+            return new SecurityInsightsDnsEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                dnsServerIPEntityId.Value,
+                domainName.Value,
+                hostIPAddressEntityId.Value,
+                ipAddressEntityIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsDnsEntity>.Write(ModelReaderWriterOptions options)

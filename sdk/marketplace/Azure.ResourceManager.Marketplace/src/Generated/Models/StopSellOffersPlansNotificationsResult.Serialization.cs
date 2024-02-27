@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<bool> isEntire = default;
             Optional<long> messageCode = default;
             Optional<Uri> icon = default;
-            Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            IReadOnlyList<PlanNotificationDetails> plans = default;
             Optional<bool> publicContext = default;
-            Optional<IReadOnlyList<string>> subscriptionsIds = default;
+            IReadOnlyList<string> subscriptionsIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StopSellOffersPlansNotificationsResult(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), Optional.ToNullable(publicContext), Optional.ToList(subscriptionsIds), serializedAdditionalRawData);
+            return new StopSellOffersPlansNotificationsResult(
+                offerId.Value,
+                displayName.Value,
+                Optional.ToNullable(isEntire),
+                Optional.ToNullable(messageCode),
+                icon.Value,
+                plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
+                Optional.ToNullable(publicContext),
+                subscriptionsIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StopSellOffersPlansNotificationsResult>.Write(ModelReaderWriterOptions options)

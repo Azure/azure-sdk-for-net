@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapsePrivateEndpointConnectionForPrivateLinkHubData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SynapsePrivateEndpointConnectionForPrivateLinkHubData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Write(ModelReaderWriterOptions options)

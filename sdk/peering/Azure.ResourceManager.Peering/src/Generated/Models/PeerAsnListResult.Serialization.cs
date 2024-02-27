@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeerAsnData>> value = default;
+            IReadOnlyList<PeerAsnData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeerAsnListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeerAsnListResult(value ?? new ChangeTrackingList<PeerAsnData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeerAsnListResult>.Write(ModelReaderWriterOptions options)

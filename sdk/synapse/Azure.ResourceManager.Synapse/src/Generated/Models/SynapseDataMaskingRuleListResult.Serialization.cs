@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseDataMaskingRuleData>> value = default;
+            IReadOnlyList<SynapseDataMaskingRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataMaskingRuleListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseDataMaskingRuleListResult(value ?? new ChangeTrackingList<SynapseDataMaskingRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataMaskingRuleListResult>.Write(ModelReaderWriterOptions options)

@@ -191,18 +191,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             WebActivityMethod method = default;
             DataFactoryElement<string> url = default;
-            Optional<IDictionary<string, DataFactoryElement<string>>> headers = default;
+            IDictionary<string, DataFactoryElement<string>> headers = default;
             Optional<DataFactoryElement<string>> body = default;
             Optional<WebActivityAuthentication> authentication = default;
             Optional<bool> disableCertValidation = default;
             Optional<DataFactoryElement<string>> httpRequestTimeout = default;
             Optional<bool> turnOffAsync = default;
-            Optional<IList<DatasetReference>> datasets = default;
-            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
+            IList<DatasetReference> datasets = default;
+            IList<DataFactoryLinkedServiceReference> linkedServices = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -415,7 +415,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, method, url, Optional.ToDictionary(headers), body.Value, authentication.Value, Optional.ToNullable(disableCertValidation), httpRequestTimeout.Value, Optional.ToNullable(turnOffAsync), Optional.ToList(datasets), Optional.ToList(linkedServices), connectVia.Value);
+            return new WebActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                method,
+                url,
+                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                body.Value,
+                authentication.Value,
+                Optional.ToNullable(disableCertValidation),
+                httpRequestTimeout.Value,
+                Optional.ToNullable(turnOffAsync),
+                datasets ?? new ChangeTrackingList<DatasetReference>(),
+                linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                connectVia.Value);
         }
 
         BinaryData IPersistableModel<WebActivity>.Write(ModelReaderWriterOptions options)

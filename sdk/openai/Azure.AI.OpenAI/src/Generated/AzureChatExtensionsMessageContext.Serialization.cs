@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChatResponseMessage>> messages = default;
+            IReadOnlyList<ChatResponseMessage> messages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureChatExtensionsMessageContext(Optional.ToList(messages), serializedAdditionalRawData);
+            return new AzureChatExtensionsMessageContext(messages ?? new ChangeTrackingList<ChatResponseMessage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureChatExtensionsMessageContext>.Write(ModelReaderWriterOptions options)

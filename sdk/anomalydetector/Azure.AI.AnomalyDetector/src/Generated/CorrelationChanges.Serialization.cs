@@ -75,7 +75,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> changedVariables = default;
+            IReadOnlyList<string> changedVariables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CorrelationChanges(Optional.ToList(changedVariables), serializedAdditionalRawData);
+            return new CorrelationChanges(changedVariables ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CorrelationChanges>.Write(ModelReaderWriterOptions options)

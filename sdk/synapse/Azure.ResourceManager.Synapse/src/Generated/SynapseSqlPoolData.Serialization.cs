@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Synapse
                 return null;
             }
             Optional<SynapseSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -333,7 +333,26 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSqlPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(createMode), Optional.ToNullable(creationDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(sourceDatabaseDeletionDate), serializedAdditionalRawData);
+            return new SynapseSqlPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                Optional.ToNullable(maxSizeBytes),
+                collation.Value,
+                sourceDatabaseId.Value,
+                recoverableDatabaseId.Value,
+                provisioningState.Value,
+                status.Value,
+                Optional.ToNullable(restorePointInTime),
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(storageAccountType),
+                Optional.ToNullable(sourceDatabaseDeletionDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSqlPoolData>.Write(ModelReaderWriterOptions options)

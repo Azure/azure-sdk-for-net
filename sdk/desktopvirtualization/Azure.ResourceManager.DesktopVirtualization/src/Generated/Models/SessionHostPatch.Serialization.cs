@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostPatch(id, name, type, systemData.Value, Optional.ToNullable(allowNewSession), assignedUser.Value, friendlyName.Value, serializedAdditionalRawData);
+            return new SessionHostPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(allowNewSession),
+                assignedUser.Value,
+                friendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostPatch>.Write(ModelReaderWriterOptions options)

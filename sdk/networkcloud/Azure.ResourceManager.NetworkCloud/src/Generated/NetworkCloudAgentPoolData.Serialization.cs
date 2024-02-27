@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -193,15 +193,15 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<AdministratorConfiguration> administratorConfiguration = default;
             Optional<NetworkCloudAgentConfiguration> agentOptions = default;
             Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<IList<string>> availabilityZones = default;
+            IList<string> availabilityZones = default;
             long count = default;
             Optional<AgentPoolDetailedStatus> detailedStatus = default;
             Optional<string> detailedStatusMessage = default;
             Optional<string> kubernetesVersion = default;
-            Optional<IList<KubernetesLabel>> labels = default;
+            IList<KubernetesLabel> labels = default;
             NetworkCloudAgentPoolMode mode = default;
             Optional<AgentPoolProvisioningState> provisioningState = default;
-            Optional<IList<KubernetesLabel>> taints = default;
+            IList<KubernetesLabel> taints = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -399,7 +399,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, kubernetesVersion.Value, Optional.ToList(labels), mode, Optional.ToNullable(provisioningState), Optional.ToList(taints), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
+            return new NetworkCloudAgentPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                administratorConfiguration.Value,
+                agentOptions.Value,
+                attachedNetworkConfiguration.Value,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                count,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                kubernetesVersion.Value,
+                labels ?? new ChangeTrackingList<KubernetesLabel>(),
+                mode,
+                Optional.ToNullable(provisioningState),
+                taints ?? new ChangeTrackingList<KubernetesLabel>(),
+                upgradeSettings.Value,
+                vmSkuName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentPoolData>.Write(ModelReaderWriterOptions options)

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             Optional<string> filePath = default;
@@ -276,7 +276,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationPatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, filePath.Value, Optional.ToNullable(commandLineSetting), commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), serializedAdditionalRawData);
+            return new VirtualApplicationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                friendlyName.Value,
+                filePath.Value,
+                Optional.ToNullable(commandLineSetting),
+                commandLineArguments.Value,
+                Optional.ToNullable(showInPortal),
+                iconPath.Value,
+                Optional.ToNullable(iconIndex),
+                msixPackageFamilyName.Value,
+                msixPackageApplicationId.Value,
+                Optional.ToNullable(applicationType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationPatch>.Write(ModelReaderWriterOptions options)

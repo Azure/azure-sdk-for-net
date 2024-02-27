@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.GuestConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentData(id.Value, name.Value, Optional.ToNullable(location), Optional.ToNullable(type), systemData, serializedAdditionalRawData, properties.Value);
+            return new GuestConfigurationAssignmentData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(type),
+                systemData,
+                serializedAdditionalRawData,
+                properties.Value);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentData>.Write(ModelReaderWriterOptions options)

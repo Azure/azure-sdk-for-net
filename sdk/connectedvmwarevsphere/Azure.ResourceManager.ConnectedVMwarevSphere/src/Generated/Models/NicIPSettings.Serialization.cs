@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 return null;
             }
             Optional<IPAddressAllocationMethod> allocationMethod = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<IList<string>> gateway = default;
+            IList<string> dnsServers = default;
+            IList<string> gateway = default;
             Optional<string> ipAddress = default;
             Optional<string> subnetMask = default;
             Optional<string> primaryWinsServer = default;
             Optional<string> secondaryWinsServer = default;
-            Optional<IReadOnlyList<NicIPAddressSettings>> ipAddressInfo = default;
+            IReadOnlyList<NicIPAddressSettings> ipAddressInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicIPSettings(Optional.ToNullable(allocationMethod), Optional.ToList(dnsServers), Optional.ToList(gateway), ipAddress.Value, subnetMask.Value, primaryWinsServer.Value, secondaryWinsServer.Value, Optional.ToList(ipAddressInfo), serializedAdditionalRawData);
+            return new NicIPSettings(
+                Optional.ToNullable(allocationMethod),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                gateway ?? new ChangeTrackingList<string>(),
+                ipAddress.Value,
+                subnetMask.Value,
+                primaryWinsServer.Value,
+                secondaryWinsServer.Value,
+                ipAddressInfo ?? new ChangeTrackingList<NicIPAddressSettings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicIPSettings>.Write(ModelReaderWriterOptions options)

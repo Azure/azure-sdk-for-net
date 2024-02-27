@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             Optional<string> id = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<ResourceType>> resourceTypes = default;
+            IReadOnlyList<ResourceType> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetadataSupportedValueDetail(id.Value, displayName.Value, Optional.ToList(resourceTypes), serializedAdditionalRawData);
+            return new MetadataSupportedValueDetail(id.Value, displayName.Value, resourceTypes ?? new ChangeTrackingList<ResourceType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetadataSupportedValueDetail>.Write(ModelReaderWriterOptions options)

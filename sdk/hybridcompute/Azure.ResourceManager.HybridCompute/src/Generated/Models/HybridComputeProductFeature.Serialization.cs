@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeProductFeature(name.Value, Optional.ToNullable(subscriptionStatus), Optional.ToNullable(billingStartDate), Optional.ToNullable(enrollmentDate), Optional.ToNullable(disenrollmentDate), serializedAdditionalRawData);
+            return new HybridComputeProductFeature(
+                name.Value,
+                Optional.ToNullable(subscriptionStatus),
+                Optional.ToNullable(billingStartDate),
+                Optional.ToNullable(enrollmentDate),
+                Optional.ToNullable(disenrollmentDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeProductFeature>.Write(ModelReaderWriterOptions options)

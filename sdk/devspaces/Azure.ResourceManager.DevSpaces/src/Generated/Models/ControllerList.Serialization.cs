@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ControllerData>> value = default;
+            IReadOnlyList<ControllerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ControllerList(value ?? new ChangeTrackingList<ControllerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerList>.Write(ModelReaderWriterOptions options)

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MaterializedViewsBuilderRegionalService>> locations = default;
+            IReadOnlyList<MaterializedViewsBuilderRegionalService> locations = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<CosmosDBServiceSize> instanceSize = default;
             Optional<int> instanceCount = default;
@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MaterializedViewsBuilderServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, Optional.ToList(locations));
+            return new MaterializedViewsBuilderServiceProperties(
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(instanceSize),
+                Optional.ToNullable(instanceCount),
+                serviceType,
+                Optional.ToNullable(status),
+                additionalProperties,
+                locations ?? new ChangeTrackingList<MaterializedViewsBuilderRegionalService>());
         }
 
         BinaryData IPersistableModel<MaterializedViewsBuilderServiceProperties>.Write(ModelReaderWriterOptions options)

@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerAadAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, sid.Value, Optional.ToNullable(tenantId), identityResourceId.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerAadAdministratorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(administratorType),
+                login.Value,
+                sid.Value,
+                Optional.ToNullable(tenantId),
+                identityResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerAadAdministratorData>.Write(ModelReaderWriterOptions options)

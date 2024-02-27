@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int number = default;
             Optional<string> allowedSourceAddressPrefix = default;
-            Optional<IList<string>> allowedSourceAddressPrefixes = default;
+            IList<string> allowedSourceAddressPrefixes = default;
             DateTimeOffset endTimeUtc = default;
             JitNetworkAccessPortStatus status = default;
             JitNetworkAccessPortStatusReason statusReason = default;
@@ -157,7 +157,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessRequestPort(number, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), endTimeUtc, status, statusReason, Optional.ToNullable(mappedPort), serializedAdditionalRawData);
+            return new JitNetworkAccessRequestPort(
+                number,
+                allowedSourceAddressPrefix.Value,
+                allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                endTimeUtc,
+                status,
+                statusReason,
+                Optional.ToNullable(mappedPort),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessRequestPort>.Write(ModelReaderWriterOptions options)

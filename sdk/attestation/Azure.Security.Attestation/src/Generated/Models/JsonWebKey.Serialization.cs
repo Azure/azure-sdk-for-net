@@ -127,7 +127,7 @@ namespace Azure.Security.Attestation
             Optional<string> qi = default;
             Optional<string> use = default;
             Optional<string> x = default;
-            Optional<IList<string>> x5c = default;
+            IList<string> x5c = default;
             Optional<string> y = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -226,7 +226,24 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value);
+            return new JsonWebKey(
+                alg.Value,
+                crv.Value,
+                d.Value,
+                dp.Value,
+                dq.Value,
+                e.Value,
+                k.Value,
+                kid.Value,
+                kty,
+                n.Value,
+                p.Value,
+                q.Value,
+                qi.Value,
+                use.Value,
+                x.Value,
+                x5c ?? new ChangeTrackingList<string>(),
+                y.Value);
         }
     }
 }

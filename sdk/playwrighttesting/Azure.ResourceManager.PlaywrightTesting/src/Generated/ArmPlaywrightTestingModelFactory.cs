@@ -33,7 +33,19 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PlaywrightTestingAccountData(id, name, resourceType, systemData, tags, location, dashboardUri, regionalAffinity, scalableExecution, reporting, provisioningState, serializedAdditionalRawData: null);
+            return new PlaywrightTestingAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                dashboardUri,
+                regionalAffinity,
+                scalableExecution,
+                reporting,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.PlaywrightTestingQuotaData"/>. </summary>
@@ -46,7 +58,14 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <returns> A new <see cref="PlaywrightTesting.PlaywrightTestingQuotaData"/> instance for mocking. </returns>
         public static PlaywrightTestingQuotaData PlaywrightTestingQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FreeTrialProperties freeTrial = null, PlaywrightTestingProvisioningState? provisioningState = null)
         {
-            return new PlaywrightTestingQuotaData(id, name, resourceType, systemData, freeTrial, provisioningState, serializedAdditionalRawData: null);
+            return new PlaywrightTestingQuotaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                freeTrial,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

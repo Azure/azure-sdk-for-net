@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasCreateOrUpdateContent(displayName.Value, Optional.ToNullable(workload), billingScope.Value, subscriptionId.Value, resellerId.Value, additionalProperties.Value, serializedAdditionalRawData);
+            return new SubscriptionAliasCreateOrUpdateContent(
+                displayName.Value,
+                Optional.ToNullable(workload),
+                billingScope.Value,
+                subscriptionId.Value,
+                resellerId.Value,
+                additionalProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

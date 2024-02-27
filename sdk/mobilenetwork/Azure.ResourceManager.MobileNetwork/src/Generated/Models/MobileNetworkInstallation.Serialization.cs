@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<DesiredInstallationState> desiredState = default;
             Optional<MobileNetworkInstallationState> state = default;
             Optional<MobileNetworkReinstallRequired> reinstallRequired = default;
-            Optional<IReadOnlyList<MobileNetworkInstallationReason>> reasons = default;
+            IReadOnlyList<MobileNetworkInstallationReason> reasons = default;
             Optional<SubResource> operation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkInstallation(Optional.ToNullable(desiredState), Optional.ToNullable(state), Optional.ToNullable(reinstallRequired), Optional.ToList(reasons), operation, serializedAdditionalRawData);
+            return new MobileNetworkInstallation(
+                Optional.ToNullable(desiredState),
+                Optional.ToNullable(state),
+                Optional.ToNullable(reinstallRequired),
+                reasons ?? new ChangeTrackingList<MobileNetworkInstallationReason>(),
+                operation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkInstallation>.Write(ModelReaderWriterOptions options)

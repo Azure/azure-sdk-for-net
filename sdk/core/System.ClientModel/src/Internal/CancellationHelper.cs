@@ -15,7 +15,7 @@ internal static class CancellationHelper
     /// <summary>Determines whether to wrap an <see cref="Exception"/> in a cancellation exception.</summary>
     /// <param name="exception">The exception.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> that may have triggered the exception.</param>
-    /// <returns>true if the exception should be wrapped; otherwise, false.</returns>
+    /// <returns><c>true</c> if the exception should be wrapped; otherwise, <c>false</c>.</returns>
     internal static bool ShouldWrapInOperationCanceledException(Exception exception, CancellationToken cancellationToken) =>
         !(exception is OperationCanceledException) && cancellationToken.IsCancellationRequested;
 

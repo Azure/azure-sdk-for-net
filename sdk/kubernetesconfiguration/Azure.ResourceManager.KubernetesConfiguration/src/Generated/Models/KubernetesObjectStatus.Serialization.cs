@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> kind = default;
             Optional<KubernetesFluxComplianceState> complianceState = default;
             Optional<KubernetesObjectReference> appliedBy = default;
-            Optional<IReadOnlyList<KubernetesObjectStatusCondition>> statusConditions = default;
+            IReadOnlyList<KubernetesObjectStatusCondition> statusConditions = default;
             Optional<HelmReleaseProperties> helmReleaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesObjectStatus(name.Value, @namespace.Value, kind.Value, Optional.ToNullable(complianceState), appliedBy.Value, Optional.ToList(statusConditions), helmReleaseProperties.Value, serializedAdditionalRawData);
+            return new KubernetesObjectStatus(
+                name.Value,
+                @namespace.Value,
+                kind.Value,
+                Optional.ToNullable(complianceState),
+                appliedBy.Value,
+                statusConditions ?? new ChangeTrackingList<KubernetesObjectStatusCondition>(),
+                helmReleaseProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesObjectStatus>.Write(ModelReaderWriterOptions options)

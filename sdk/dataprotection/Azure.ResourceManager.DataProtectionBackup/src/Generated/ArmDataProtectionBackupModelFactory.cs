@@ -34,7 +34,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataProtectionBackupVaultData(id, name, resourceType, systemData, tags, location, properties, identity, eTag, serializedAdditionalRawData: null);
+            return new DataProtectionBackupVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupVaultProperties"/>. </summary>
@@ -54,7 +64,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             storageSettings ??= new List<DataProtectionBackupStorageSetting>();
             replicatedRegions ??= new List<AzureLocation>();
 
-            return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings?.ToList(), isVaultProtectedByResourceGuard, featureSettings, secureScore, replicatedRegions?.ToList(), serializedAdditionalRawData: null);
+            return new DataProtectionBackupVaultProperties(
+                alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                provisioningState,
+                resourceMoveState,
+                resourceMoveDetails,
+                securitySettings,
+                storageSettings?.ToList(),
+                isVaultProtectedByResourceGuard,
+                featureSettings,
+                secureScore,
+                replicatedRegions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupVaultResourceMoveDetails"/>. </summary>
@@ -66,7 +87,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupVaultResourceMoveDetails"/> instance for mocking. </returns>
         public static BackupVaultResourceMoveDetails BackupVaultResourceMoveDetails(string operationId = null, DateTimeOffset? startOn = null, DateTimeOffset? completeOn = null, string sourceResourcePath = null, string targetResourcePath = null)
         {
-            return new BackupVaultResourceMoveDetails(operationId, startOn, completeOn, sourceResourcePath, targetResourcePath, serializedAdditionalRawData: null);
+            return new BackupVaultResourceMoveDetails(
+                operationId,
+                startOn,
+                completeOn,
+                sourceResourcePath,
+                targetResourcePath,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupNameAvailabilityResult"/>. </summary>
@@ -92,7 +119,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupPolicyData"/> instance for mocking. </returns>
         public static DataProtectionBackupPolicyData DataProtectionBackupPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataProtectionBackupPolicyPropertiesBase properties = null)
         {
-            return new DataProtectionBackupPolicyData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DataProtectionBackupPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackup.DataProtectionBackupInstanceData"/>. </summary>
@@ -107,7 +140,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataProtectionBackupInstanceData(id, name, resourceType, systemData, properties, tags, serializedAdditionalRawData: null);
+            return new DataProtectionBackupInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupInstanceProperties"/>. </summary>
@@ -133,7 +173,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.DataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
         public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, DataProtectionIdentityDetails identityDetails = null, string objectType = null)
         {
-            return new DataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType, serializedAdditionalRawData: null);
+            return new DataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                protectionStatus,
+                currentProtectionState,
+                protectionErrorDetails,
+                provisioningState,
+                dataSourceAuthCredentials,
+                validationType,
+                identityDetails,
+                objectType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupInstancePolicyInfo"/>. </summary>
@@ -176,7 +229,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/> instance for mocking. </returns>
         public static DataProtectionBackupRecoveryPointData DataProtectionBackupRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataProtectionBackupRecoveryPointProperties properties = null)
         {
-            return new DataProtectionBackupRecoveryPointData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DataProtectionBackupRecoveryPointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRestoreContent"/>. </summary>
@@ -195,7 +254,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupRestoreContent"/> instance for mocking. </returns>
         public static BackupRestoreContent BackupRestoreContent(string objectType = null, RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null)
         {
-            return new UnknownAzureBackupRestoreRequest(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData: null);
+            return new UnknownAzureBackupRestoreRequest(
+                objectType,
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId,
+                identityDetails,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestoreTargetInfoBase"/>. </summary>
@@ -217,7 +282,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupJobData"/> instance for mocking. </returns>
         public static DataProtectionBackupJobData DataProtectionBackupJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataProtectionBackupJobProperties properties = null)
         {
-            return new DataProtectionBackupJobData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DataProtectionBackupJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupJobProperties"/>. </summary>
@@ -258,7 +329,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             errorDetails ??= new List<ResponseError>();
             supportedActions ??= new List<string>();
 
-            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName, dataSourceType, duration, endOn, errorDetails?.ToList(), extendedInfo, isUserTriggered, operation, operationCategory, policyId, policyName, isProgressEnabled, progressUri, rehydrationPriority, restoreType, sourceResourceGroup, sourceSubscriptionId, startOn, status, subscriptionId, supportedActions?.ToList(), vaultName, eTag, sourceDataStoreName, destinationDataStoreName, serializedAdditionalRawData: null);
+            return new DataProtectionBackupJobProperties(
+                activityId,
+                backupInstanceFriendlyName,
+                backupInstanceId,
+                dataSourceId,
+                dataSourceLocation,
+                dataSourceName,
+                dataSourceSetName,
+                dataSourceType,
+                duration,
+                endOn,
+                errorDetails?.ToList(),
+                extendedInfo,
+                isUserTriggered,
+                operation,
+                operationCategory,
+                policyId,
+                policyName,
+                isProgressEnabled,
+                progressUri,
+                rehydrationPriority,
+                restoreType,
+                sourceResourceGroup,
+                sourceSubscriptionId,
+                startOn,
+                status,
+                subscriptionId,
+                supportedActions?.ToList(),
+                vaultName,
+                eTag,
+                sourceDataStoreName,
+                destinationDataStoreName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupJobExtendedInfo"/>. </summary>
@@ -277,7 +380,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             subTasks ??= new List<BackupJobSubTask>();
             warningDetails ??= new List<UserFacingWarningDetail>();
 
-            return new BackupJobExtendedInfo(additionalDetails, backupInstanceState, dataTransferredInBytes, recoveryDestination, sourceRecoverPoint, subTasks?.ToList(), targetRecoverPoint, warningDetails?.ToList(), serializedAdditionalRawData: null);
+            return new BackupJobExtendedInfo(
+                additionalDetails,
+                backupInstanceState,
+                dataTransferredInBytes,
+                recoveryDestination,
+                sourceRecoverPoint,
+                subTasks?.ToList(),
+                targetRecoverPoint,
+                warningDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestoreJobRecoveryPointDetails"/>. </summary>
@@ -300,7 +412,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             additionalDetails ??= new Dictionary<string, string>();
 
-            return new BackupJobSubTask(additionalDetails, taskId, taskName, taskProgress, taskStatus, serializedAdditionalRawData: null);
+            return new BackupJobSubTask(
+                additionalDetails,
+                taskId,
+                taskName,
+                taskProgress,
+                taskStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserFacingWarningDetail"/>. </summary>
@@ -341,7 +459,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeResult"/> instance for mocking. </returns>
         public static BackupFindRestorableTimeRangeResult BackupFindRestorableTimeRangeResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BackupFindRestorableTimeRangeResultProperties properties = null)
         {
-            return new BackupFindRestorableTimeRangeResult(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new BackupFindRestorableTimeRangeResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackup.DeletedDataProtectionBackupInstanceData"/>. </summary>
@@ -353,7 +477,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="DataProtectionBackup.DeletedDataProtectionBackupInstanceData"/> instance for mocking. </returns>
         public static DeletedDataProtectionBackupInstanceData DeletedDataProtectionBackupInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeletedDataProtectionBackupInstanceProperties properties = null)
         {
-            return new DeletedDataProtectionBackupInstanceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DeletedDataProtectionBackupInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeletedDataProtectionBackupInstanceProperties"/>. </summary>
@@ -380,7 +510,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.DeletedDataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
         public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, DataProtectionIdentityDetails identityDetails = null, string objectType = null, BackupInstanceDeletionInfo deletionInfo = null)
         {
-            return new DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType, serializedAdditionalRawData: null, deletionInfo);
+            return new DeletedDataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                protectionStatus,
+                currentProtectionState,
+                protectionErrorDetails,
+                provisioningState,
+                dataSourceAuthCredentials,
+                validationType,
+                identityDetails,
+                objectType,
+                serializedAdditionalRawData: null,
+                deletionInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupInstanceDeletionInfo"/>. </summary>
@@ -408,7 +552,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ResourceGuardData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new ResourceGuardData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceGuardProperties"/>. </summary>
@@ -423,7 +576,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             resourceGuardOperations ??= new List<ResourceGuardOperationDetails>();
             vaultCriticalOperationExclusionList ??= new List<string>();
 
-            return new ResourceGuardProperties(provisioningState, isAutoApprovalsAllowed, resourceGuardOperations?.ToList(), vaultCriticalOperationExclusionList?.ToList(), description, serializedAdditionalRawData: null);
+            return new ResourceGuardProperties(
+                provisioningState,
+                isAutoApprovalsAllowed,
+                resourceGuardOperations?.ToList(),
+                vaultCriticalOperationExclusionList?.ToList(),
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceGuardOperationDetails"/>. </summary>
@@ -455,7 +614,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="DataProtectionBackup.ResourceGuardProxyBaseResourceData"/> instance for mocking. </returns>
         public static ResourceGuardProxyBaseResourceData ResourceGuardProxyBaseResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceGuardProxyBase properties = null)
         {
-            return new ResourceGuardProxyBaseResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new ResourceGuardProxyBaseResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionUnlockDeleteResult"/>. </summary>
@@ -493,7 +658,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             recoveryPointDataStoresDetails ??= new List<RecoveryPointDataStoreDetail>();
 
-            return new DataProtectionBackupDiscreteRecoveryPointProperties("AzureBackupDiscreteRecoveryPoint", serializedAdditionalRawData: null, friendlyName, recoveryPointDataStoresDetails?.ToList(), recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn, recoveryPointState);
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(
+                "AzureBackupDiscreteRecoveryPoint",
+                serializedAdditionalRawData: null,
+                friendlyName,
+                recoveryPointDataStoresDetails?.ToList(),
+                recoverOn,
+                policyName,
+                policyVersion,
+                recoveryPointId,
+                recoveryPointType,
+                retentionTagName,
+                retentionTagVersion,
+                expireOn,
+                recoveryPointState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryPointDataStoreDetail"/>. </summary>
@@ -509,7 +687,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.RecoveryPointDataStoreDetail"/> instance for mocking. </returns>
         public static RecoveryPointDataStoreDetail RecoveryPointDataStoreDetail(DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, Guid? recoveryPointDataStoreId = null, string metadata = null, string state = null, string recoveryPointDataStoreType = null, bool? isVisible = null, DateTimeOffset? rehydrationExpireOn = null, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus = null)
         {
-            return new RecoveryPointDataStoreDetail(createdOn, expireOn, recoveryPointDataStoreId, metadata, state, recoveryPointDataStoreType, isVisible, rehydrationExpireOn, rehydrationStatus, serializedAdditionalRawData: null);
+            return new RecoveryPointDataStoreDetail(
+                createdOn,
+                expireOn,
+                recoveryPointDataStoreId,
+                metadata,
+                state,
+                recoveryPointDataStoreType,
+                isVisible,
+                rehydrationExpireOn,
+                rehydrationStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRecoveryPointBasedRestoreContent"/>. </summary>
@@ -528,7 +716,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupRecoveryPointBasedRestoreContent"/> instance for mocking. </returns>
         public static BackupRecoveryPointBasedRestoreContent BackupRecoveryPointBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null, string recoveryPointId = null)
         {
-            return new BackupRecoveryPointBasedRestoreContent("AzureBackupRecoveryPointBasedRestoreRequest", restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData: null, recoveryPointId);
+            return new BackupRecoveryPointBasedRestoreContent(
+                "AzureBackupRecoveryPointBasedRestoreRequest",
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId,
+                identityDetails,
+                serializedAdditionalRawData: null,
+                recoveryPointId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRestoreWithRehydrationContent"/>. </summary>
@@ -549,7 +744,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupRestoreWithRehydrationContent"/> instance for mocking. </returns>
         public static BackupRestoreWithRehydrationContent BackupRestoreWithRehydrationContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null, string recoveryPointId = null, BackupRehydrationPriority rehydrationPriority = default, TimeSpan rehydrationRetentionDuration = default)
         {
-            return new BackupRestoreWithRehydrationContent("AzureBackupRestoreWithRehydrationRequest", restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData: null, recoveryPointId, rehydrationPriority, rehydrationRetentionDuration);
+            return new BackupRestoreWithRehydrationContent(
+                "AzureBackupRestoreWithRehydrationRequest",
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId,
+                identityDetails,
+                serializedAdditionalRawData: null,
+                recoveryPointId,
+                rehydrationPriority,
+                rehydrationRetentionDuration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/>. </summary>
@@ -568,7 +772,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/> instance for mocking. </returns>
         public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null, DateTimeOffset recoverOn = default)
         {
-            return new BackupRecoveryTimeBasedRestoreContent("AzureBackupRecoveryTimeBasedRestoreRequest", restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData: null, recoverOn);
+            return new BackupRecoveryTimeBasedRestoreContent(
+                "AzureBackupRecoveryTimeBasedRestoreRequest",
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId,
+                identityDetails,
+                serializedAdditionalRawData: null,
+                recoverOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupFeatureValidationResult"/>. </summary>
@@ -614,7 +825,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             restoreCriteria ??= new List<ItemLevelRestoreCriteria>();
 
-            return new ItemLevelRestoreTargetInfo("ItemLevelRestoreTargetInfo", recoverySetting, restoreLocation, serializedAdditionalRawData: null, restoreCriteria?.ToList(), datasourceInfo, datasourceSetInfo, datasourceAuthCredentials);
+            return new ItemLevelRestoreTargetInfo(
+                "ItemLevelRestoreTargetInfo",
+                recoverySetting,
+                restoreLocation,
+                serializedAdditionalRawData: null,
+                restoreCriteria?.ToList(),
+                datasourceInfo,
+                datasourceSetInfo,
+                datasourceAuthCredentials);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ItemPathBasedRestoreCriteria"/>. </summary>
@@ -651,7 +870,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             namespaceMappings ??= new Dictionary<string, string>();
             restoreHookReferences ??= new List<NamespacedName>();
 
-            return new KubernetesClusterRestoreCriteria("KubernetesClusterRestoreCriteria", serializedAdditionalRawData: null, isClusterScopeResourcesIncluded, includedNamespaces?.ToList(), excludedNamespaces?.ToList(), includedResourceTypes?.ToList(), excludedResourceTypes?.ToList(), labelSelectors?.ToList(), persistentVolumeRestoreMode, conflictPolicy, namespaceMappings, restoreHookReferences?.ToList());
+            return new KubernetesClusterRestoreCriteria(
+                "KubernetesClusterRestoreCriteria",
+                serializedAdditionalRawData: null,
+                isClusterScopeResourcesIncluded,
+                includedNamespaces?.ToList(),
+                excludedNamespaces?.ToList(),
+                includedResourceTypes?.ToList(),
+                excludedResourceTypes?.ToList(),
+                labelSelectors?.ToList(),
+                persistentVolumeRestoreMode,
+                conflictPolicy,
+                namespaceMappings,
+                restoreHookReferences?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>. </summary>
@@ -678,7 +909,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             namespaceMappings ??= new Dictionary<string, string>();
             restoreHookReferences ??= new List<NamespacedName>();
 
-            return new KubernetesClusterVaultTierRestoreCriteria("KubernetesClusterVaultTierRestoreCriteria", serializedAdditionalRawData: null, includeClusterScopeResources, includedNamespaces?.ToList(), excludedNamespaces?.ToList(), includedResourceTypes?.ToList(), excludedResourceTypes?.ToList(), labelSelectors?.ToList(), persistentVolumeRestoreMode, conflictPolicy, namespaceMappings, restoreHookReferences?.ToList(), stagingResourceGroupId, stagingStorageAccountId);
+            return new KubernetesClusterVaultTierRestoreCriteria(
+                "KubernetesClusterVaultTierRestoreCriteria",
+                serializedAdditionalRawData: null,
+                includeClusterScopeResources,
+                includedNamespaces?.ToList(),
+                excludedNamespaces?.ToList(),
+                includedResourceTypes?.ToList(),
+                excludedResourceTypes?.ToList(),
+                labelSelectors?.ToList(),
+                persistentVolumeRestoreMode,
+                conflictPolicy,
+                namespaceMappings,
+                restoreHookReferences?.ToList(),
+                stagingResourceGroupId,
+                stagingStorageAccountId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestoreFilesTargetInfo"/>. </summary>
@@ -725,7 +970,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.RestoreTargetInfo"/> instance for mocking. </returns>
         public static RestoreTargetInfo RestoreTargetInfo(RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null)
         {
-            return new RestoreTargetInfo("RestoreTargetInfo", recoverySetting, restoreLocation, serializedAdditionalRawData: null, dataSourceInfo, dataSourceSetInfo, dataSourceAuthCredentials);
+            return new RestoreTargetInfo(
+                "RestoreTargetInfo",
+                recoverySetting,
+                restoreLocation,
+                serializedAdditionalRawData: null,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                dataSourceAuthCredentials);
         }
     }
 }

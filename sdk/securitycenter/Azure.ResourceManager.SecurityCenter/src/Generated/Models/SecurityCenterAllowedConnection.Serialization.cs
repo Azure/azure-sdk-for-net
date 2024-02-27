@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> calculatedDateTime = default;
-            Optional<IReadOnlyList<ConnectableResourceInfo>> connectableResources = default;
+            IReadOnlyList<ConnectableResourceInfo> connectableResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterAllowedConnection(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(connectableResources), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecurityCenterAllowedConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(calculatedDateTime),
+                connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterAllowedConnection>.Write(ModelReaderWriterOptions options)

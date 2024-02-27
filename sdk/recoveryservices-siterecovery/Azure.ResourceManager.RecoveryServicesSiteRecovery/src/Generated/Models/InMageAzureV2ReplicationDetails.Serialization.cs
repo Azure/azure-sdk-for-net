@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> multiVmGroupId = default;
             Optional<string> multiVmGroupName = default;
             Optional<string> multiVmSyncStatus = default;
-            Optional<IReadOnlyList<InMageAzureV2ProtectedDiskDetails>> protectedDisks = default;
+            IReadOnlyList<InMageAzureV2ProtectedDiskDetails> protectedDisks = default;
             Optional<string> diskResized = default;
             Optional<string> masterTargetId = default;
             Optional<int> sourceVmCpuCount = default;
@@ -515,18 +515,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> osType = default;
             Optional<string> vhdName = default;
             Optional<string> osDiskId = default;
-            Optional<IReadOnlyList<SiteRecoveryVmDiskDetails>> azureVmDiskDetails = default;
+            IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails = default;
             Optional<string> recoveryAzureVmName = default;
             Optional<string> recoveryAzureVmSize = default;
             Optional<string> recoveryAzureStorageAccount = default;
             Optional<ResourceIdentifier> recoveryAzureLogStorageAccountId = default;
-            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
+            IReadOnlyList<VmNicDetails> vmNics = default;
             Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
             Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
             Optional<string> selectedSourceNicId = default;
             Optional<string> discoveryType = default;
             Optional<string> enableRdpOnTargetOption = default;
-            Optional<IReadOnlyList<string>> datastores = default;
+            IReadOnlyList<string> datastores = default;
             Optional<string> targetVmId = default;
             Optional<ResourceIdentifier> recoveryAzureResourceGroupId = default;
             Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
@@ -535,26 +535,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> useManagedDisks = default;
             Optional<string> licenseType = default;
             Optional<string> sqlServerLicenseType = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
             Optional<DateTimeOffset> lastRpoCalculatedTime = default;
             Optional<DateTimeOffset> lastUpdateReceivedTime = default;
             Optional<string> replicaId = default;
             Optional<string> osVersion = default;
-            Optional<IReadOnlyList<InMageAzureV2ManagedDiskDetails>> protectedManagedDisks = default;
+            IReadOnlyList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = default;
             Optional<DateTimeOffset> lastRecoveryPointReceived = default;
             Optional<string> firmwareType = default;
             Optional<string> azureVmGeneration = default;
             Optional<bool> isAdditionalStatsAvailable = default;
             Optional<long> totalDataTransferred = default;
             Optional<string> totalProgressHealth = default;
-            Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
-            Optional<IReadOnlyDictionary<string, string>> seedManagedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
-            Optional<IReadOnlyList<InMageAzureV2SwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
+            IReadOnlyDictionary<string, string> targetVmTags = default;
+            IReadOnlyDictionary<string, string> seedManagedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetManagedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetNicTags = default;
+            IReadOnlyList<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = default;
             Optional<InMageAzureV2SwitchProviderDetails> switchProviderDetails = default;
-            Optional<IReadOnlyList<string>> supportedOSVersions = default;
-            Optional<IReadOnlyList<OSUpgradeSupportedVersions>> allAvailableOSUpgradeConfigurations = default;
+            IReadOnlyList<string> supportedOSVersions = default;
+            IReadOnlyList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = default;
             Optional<string> osName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -1127,7 +1127,79 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ReplicationDetails(instanceType, serializedAdditionalRawData, infrastructureVmId.Value, vCenterInfrastructureId.Value, protectionStage.Value, vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(rpoInSeconds), Optional.ToNullable(compressedDataRateInMB), Optional.ToNullable(uncompressedDataRateInMB), ipAddress.Value, agentVersion.Value, Optional.ToNullable(agentExpireOn), isAgentUpdateRequired.Value, isRebootAfterUpdateRequired.Value, Optional.ToNullable(lastHeartbeat), Optional.ToNullable(processServerId), processServerName.Value, multiVmGroupId.Value, multiVmGroupName.Value, multiVmSyncStatus.Value, Optional.ToList(protectedDisks), diskResized.Value, masterTargetId.Value, Optional.ToNullable(sourceVmCpuCount), Optional.ToNullable(sourceVmRamSizeInMB), osType.Value, vhdName.Value, osDiskId.Value, Optional.ToList(azureVmDiskDetails), recoveryAzureVmName.Value, recoveryAzureVmSize.Value, recoveryAzureStorageAccount.Value, recoveryAzureLogStorageAccountId.Value, Optional.ToList(vmNics), selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, selectedSourceNicId.Value, discoveryType.Value, enableRdpOnTargetOption.Value, Optional.ToList(datastores), targetVmId.Value, recoveryAzureResourceGroupId.Value, recoveryAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, useManagedDisks.Value, licenseType.Value, sqlServerLicenseType.Value, Optional.ToList(validationErrors), Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(lastUpdateReceivedTime), replicaId.Value, osVersion.Value, Optional.ToList(protectedManagedDisks), Optional.ToNullable(lastRecoveryPointReceived), firmwareType.Value, azureVmGeneration.Value, Optional.ToNullable(isAdditionalStatsAvailable), Optional.ToNullable(totalDataTransferred), totalProgressHealth.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), Optional.ToList(switchProviderBlockingErrorDetails), switchProviderDetails.Value, Optional.ToList(supportedOSVersions), Optional.ToList(allAvailableOSUpgradeConfigurations), osName.Value);
+            return new InMageAzureV2ReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                infrastructureVmId.Value,
+                vCenterInfrastructureId.Value,
+                protectionStage.Value,
+                vmId.Value,
+                vmProtectionState.Value,
+                vmProtectionStateDescription.Value,
+                Optional.ToNullable(resyncProgressPercentage),
+                Optional.ToNullable(rpoInSeconds),
+                Optional.ToNullable(compressedDataRateInMB),
+                Optional.ToNullable(uncompressedDataRateInMB),
+                ipAddress.Value,
+                agentVersion.Value,
+                Optional.ToNullable(agentExpireOn),
+                isAgentUpdateRequired.Value,
+                isRebootAfterUpdateRequired.Value,
+                Optional.ToNullable(lastHeartbeat),
+                Optional.ToNullable(processServerId),
+                processServerName.Value,
+                multiVmGroupId.Value,
+                multiVmGroupName.Value,
+                multiVmSyncStatus.Value,
+                protectedDisks ?? new ChangeTrackingList<InMageAzureV2ProtectedDiskDetails>(),
+                diskResized.Value,
+                masterTargetId.Value,
+                Optional.ToNullable(sourceVmCpuCount),
+                Optional.ToNullable(sourceVmRamSizeInMB),
+                osType.Value,
+                vhdName.Value,
+                osDiskId.Value,
+                azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>(),
+                recoveryAzureVmName.Value,
+                recoveryAzureVmSize.Value,
+                recoveryAzureStorageAccount.Value,
+                recoveryAzureLogStorageAccountId.Value,
+                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                selectedRecoveryAzureNetworkId.Value,
+                selectedTfoAzureNetworkId.Value,
+                selectedSourceNicId.Value,
+                discoveryType.Value,
+                enableRdpOnTargetOption.Value,
+                datastores ?? new ChangeTrackingList<string>(),
+                targetVmId.Value,
+                recoveryAzureResourceGroupId.Value,
+                recoveryAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                useManagedDisks.Value,
+                licenseType.Value,
+                sqlServerLicenseType.Value,
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(lastRpoCalculatedTime),
+                Optional.ToNullable(lastUpdateReceivedTime),
+                replicaId.Value,
+                osVersion.Value,
+                protectedManagedDisks ?? new ChangeTrackingList<InMageAzureV2ManagedDiskDetails>(),
+                Optional.ToNullable(lastRecoveryPointReceived),
+                firmwareType.Value,
+                azureVmGeneration.Value,
+                Optional.ToNullable(isAdditionalStatsAvailable),
+                Optional.ToNullable(totalDataTransferred),
+                totalProgressHealth.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageAzureV2SwitchProviderBlockingErrorDetails>(),
+                switchProviderDetails.Value,
+                supportedOSVersions ?? new ChangeTrackingList<string>(),
+                allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>(),
+                osName.Value);
         }
 
         BinaryData IPersistableModel<InMageAzureV2ReplicationDetails>.Write(ModelReaderWriterOptions options)

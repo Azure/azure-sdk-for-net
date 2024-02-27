@@ -26,7 +26,13 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogAgreementResourceProperties"/> instance for mocking. </returns>
         public static DatadogAgreementResourceProperties DatadogAgreementResourceProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
         {
-            return new DatadogAgreementResourceProperties(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DatadogAgreementResourceProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogHost"/>. </summary>
@@ -72,7 +78,13 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.MonitoredResourceContent"/> instance for mocking. </returns>
         public static MonitoredResourceContent MonitoredResourceContent(string id = null, bool? sendingMetrics = null, string reasonForMetricsStatus = null, bool? sendingLogs = null, string reasonForLogsStatus = null)
         {
-            return new MonitoredResourceContent(id, sendingMetrics, reasonForMetricsStatus, sendingLogs, reasonForLogsStatus, serializedAdditionalRawData: null);
+            return new MonitoredResourceContent(
+                id,
+                sendingMetrics,
+                reasonForMetricsStatus,
+                sendingLogs,
+                reasonForLogsStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Datadog.DatadogMonitorResourceData"/>. </summary>
@@ -90,7 +102,17 @@ namespace Azure.ResourceManager.Datadog.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DatadogMonitorResourceData(id, name, resourceType, systemData, tags, location, skuName != null ? new ResourceSku(skuName, serializedAdditionalRawData: null) : null, properties, identity, serializedAdditionalRawData: null);
+            return new DatadogMonitorResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName != null ? new ResourceSku(skuName, serializedAdditionalRawData: null) : null,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorProperties"/>. </summary>
@@ -104,7 +126,15 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
         public static MonitorProperties MonitorProperties(ProvisioningState? provisioningState = null, MonitoringStatus? monitoringStatus = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, DatadogOrganizationProperties datadogOrganizationProperties = null, UserInfo userInfo = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null)
         {
-            return new MonitorProperties(provisioningState, monitoringStatus, marketplaceSubscriptionStatus, datadogOrganizationProperties, userInfo, liftrResourceCategory, liftrResourcePreference, serializedAdditionalRawData: null);
+            return new MonitorProperties(
+                provisioningState,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                datadogOrganizationProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogOrganizationProperties"/>. </summary>
@@ -119,7 +149,16 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogOrganizationProperties"/> instance for mocking. </returns>
         public static DatadogOrganizationProperties DatadogOrganizationProperties(string name = null, string id = null, string linkingAuthCode = null, string linkingClientId = null, Uri redirectUri = null, string apiKey = null, string applicationKey = null, string enterpriseAppId = null)
         {
-            return new DatadogOrganizationProperties(name, id, linkingAuthCode, linkingClientId, redirectUri, apiKey, applicationKey, enterpriseAppId, serializedAdditionalRawData: null);
+            return new DatadogOrganizationProperties(
+                name,
+                id,
+                linkingAuthCode,
+                linkingClientId,
+                redirectUri,
+                apiKey,
+                applicationKey,
+                enterpriseAppId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogSetPasswordLink"/>. </summary>
@@ -139,7 +178,13 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Datadog.MonitoringTagRuleData"/> instance for mocking. </returns>
         public static MonitoringTagRuleData MonitoringTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoringTagRulesProperties properties = null)
         {
-            return new MonitoringTagRuleData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new MonitoringTagRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRulesProperties"/>. </summary>
@@ -163,7 +208,13 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Datadog.DatadogSingleSignOnResourceData"/> instance for mocking. </returns>
         public static DatadogSingleSignOnResourceData DatadogSingleSignOnResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogSingleSignOnProperties properties = null)
         {
-            return new DatadogSingleSignOnResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DatadogSingleSignOnResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogSingleSignOnProperties"/>. </summary>

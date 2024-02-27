@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyDefinitionData>> value = default;
+            IReadOnlyList<PolicyDefinitionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PolicyDefinitionListResult(value ?? new ChangeTrackingList<PolicyDefinitionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionListResult>.Write(ModelReaderWriterOptions options)

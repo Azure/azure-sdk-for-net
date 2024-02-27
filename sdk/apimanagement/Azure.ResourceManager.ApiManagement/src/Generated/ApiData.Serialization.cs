@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> displayName = default;
             Optional<Uri> serviceUri = default;
             Optional<string> path = default;
-            Optional<IList<ApiOperationInvokableProtocol>> protocols = default;
+            IList<ApiOperationInvokableProtocol> protocols = default;
             Optional<ApiVersionSetContractDetails> apiVersionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -436,7 +436,33 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiData(id, name, type, systemData.Value, description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type0), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUri.Value, path.Value, Optional.ToList(protocols), apiVersionSet.Value, serializedAdditionalRawData);
+            return new ApiData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                authenticationSettings.Value,
+                subscriptionKeyParameterNames.Value,
+                Optional.ToNullable(type0),
+                apiRevision.Value,
+                apiVersion.Value,
+                Optional.ToNullable(isCurrent),
+                Optional.ToNullable(isOnline),
+                apiRevisionDescription.Value,
+                apiVersionDescription.Value,
+                apiVersionSetId.Value,
+                Optional.ToNullable(subscriptionRequired),
+                termsOfServiceUri.Value,
+                contact.Value,
+                license.Value,
+                sourceApiId.Value,
+                displayName.Value,
+                serviceUri.Value,
+                path.Value,
+                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(),
+                apiVersionSet.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiData>.Write(ModelReaderWriterOptions options)

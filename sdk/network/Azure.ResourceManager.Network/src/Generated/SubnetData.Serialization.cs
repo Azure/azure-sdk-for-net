@@ -250,24 +250,24 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<string> addressPrefix = default;
-            Optional<IList<string>> addressPrefixes = default;
+            IList<string> addressPrefixes = default;
             Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
             Optional<RouteTableData> routeTable = default;
             Optional<WritableSubResource> natGateway = default;
-            Optional<IList<ServiceEndpointProperties>> serviceEndpoints = default;
-            Optional<IList<ServiceEndpointPolicyData>> serviceEndpointPolicies = default;
-            Optional<IReadOnlyList<PrivateEndpointData>> privateEndpoints = default;
-            Optional<IReadOnlyList<NetworkIPConfiguration>> ipConfigurations = default;
-            Optional<IReadOnlyList<NetworkIPConfigurationProfile>> ipConfigurationProfiles = default;
-            Optional<IList<WritableSubResource>> ipAllocations = default;
-            Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
-            Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
-            Optional<IList<ServiceDelegation>> delegations = default;
+            IList<ServiceEndpointProperties> serviceEndpoints = default;
+            IList<ServiceEndpointPolicyData> serviceEndpointPolicies = default;
+            IReadOnlyList<PrivateEndpointData> privateEndpoints = default;
+            IReadOnlyList<NetworkIPConfiguration> ipConfigurations = default;
+            IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles = default;
+            IList<WritableSubResource> ipAllocations = default;
+            IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks = default;
+            IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks = default;
+            IList<ServiceDelegation> delegations = default;
             Optional<string> purpose = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
             Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
-            Optional<IList<ApplicationGatewayIPConfiguration>> applicationGatewayIPConfigurations = default;
+            IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = default;
             Optional<bool> defaultOutboundAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -550,7 +550,32 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIPConfigurations), Optional.ToNullable(defaultOutboundAccess));
+            return new SubnetData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                addressPrefix.Value,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                networkSecurityGroup.Value,
+                routeTable.Value,
+                natGateway,
+                serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointProperties>(),
+                serviceEndpointPolicies ?? new ChangeTrackingList<ServiceEndpointPolicyData>(),
+                privateEndpoints ?? new ChangeTrackingList<PrivateEndpointData>(),
+                ipConfigurations ?? new ChangeTrackingList<NetworkIPConfiguration>(),
+                ipConfigurationProfiles ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(),
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
+                resourceNavigationLinks ?? new ChangeTrackingList<ResourceNavigationLink>(),
+                serviceAssociationLinks ?? new ChangeTrackingList<ServiceAssociationLink>(),
+                delegations ?? new ChangeTrackingList<ServiceDelegation>(),
+                purpose.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(privateEndpointNetworkPolicies),
+                Optional.ToNullable(privateLinkServiceNetworkPolicies),
+                applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
+                Optional.ToNullable(defaultOutboundAccess));
         }
 
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)

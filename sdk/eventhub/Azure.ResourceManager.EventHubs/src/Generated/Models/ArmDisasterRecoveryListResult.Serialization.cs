@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubsDisasterRecoveryData>> value = default;
+            IReadOnlyList<EventHubsDisasterRecoveryData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDisasterRecoveryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArmDisasterRecoveryListResult(value ?? new ChangeTrackingList<EventHubsDisasterRecoveryData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDisasterRecoveryListResult>.Write(ModelReaderWriterOptions options)

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> databaseName = default;
-            Optional<IReadOnlyList<string>> collectionNames = default;
+            IReadOnlyList<string> collectionNames = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableSqlResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(collectionNames), serializedAdditionalRawData);
+            return new RestorableSqlResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                databaseName.Value,
+                collectionNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableSqlResourceData>.Write(ModelReaderWriterOptions options)

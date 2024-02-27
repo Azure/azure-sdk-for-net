@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MonitoringInputDataBase> productionData = default;
             double samplingRate = default;
             Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationTokenStatisticsSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThresholds, productionData.Value, samplingRate);
+            return new GenerationTokenStatisticsSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData.Value,
+                samplingRate);
         }
 
         BinaryData IPersistableModel<GenerationTokenStatisticsSignal>.Write(ModelReaderWriterOptions options)

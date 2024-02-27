@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<bool> honorSessionTimeToLive = default;
             Optional<string> sessionId = default;
             Optional<string> sparkPool = default;
-            Optional<IReadOnlyDictionary<string, RunNotebookParameter>> parameters = default;
+            IReadOnlyDictionary<string, RunNotebookParameter> parameters = default;
             Optional<NotebookResource> notebookContent = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,7 +100,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSnapshot(exitValue.Value, id, notebook, sessionOptions.Value, Optional.ToNullable(honorSessionTimeToLive), sessionId.Value, sparkPool.Value, Optional.ToDictionary(parameters), notebookContent.Value);
+            return new RunNotebookSnapshot(
+                exitValue.Value,
+                id,
+                notebook,
+                sessionOptions.Value,
+                Optional.ToNullable(honorSessionTimeToLive),
+                sessionId.Value,
+                sparkPool.Value,
+                parameters ?? new ChangeTrackingDictionary<string, RunNotebookParameter>(),
+                notebookContent.Value);
         }
 
         internal partial class RunNotebookSnapshotConverter : JsonConverter<RunNotebookSnapshot>

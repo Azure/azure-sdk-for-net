@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkGroupStaticMemberData(id, name, type, systemData.Value, resourceId.Value, region.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new NetworkGroupStaticMemberData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceId.Value,
+                region.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkGroupStaticMemberData>.Write(ModelReaderWriterOptions options)

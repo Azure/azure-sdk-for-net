@@ -62,7 +62,13 @@ namespace Azure.AI.FormRecognizer.Training
                     continue;
                 }
             }
-            return new CustomFormModelInfo(modelId, status, createdDateTime, lastUpdatedDateTime, modelName.Value, attributes.Value);
+            return new CustomFormModelInfo(
+                modelId,
+                status,
+                createdDateTime,
+                lastUpdatedDateTime,
+                modelName.Value,
+                attributes.Value);
         }
     }
 }

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<long> errorCount = default;
             Optional<string> errorPrefix = default;
             Optional<string> resultPrefix = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
             Optional<DateTimeOffset> lastStorageUpdate = default;
             Optional<string> objectSummary = default;
             Optional<string> id = default;
@@ -304,7 +304,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), Optional.ToNullable(stage), statusMessage.Value, message.Value, Optional.ToNullable(numberOfObjects), Optional.ToNullable(numberOfObjectsCompleted), Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Optional.ToList(exceptionsAndWarnings), Optional.ToNullable(lastStorageUpdate), objectSummary.Value);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName.Value,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                Optional.ToNullable(state),
+                Optional.ToNullable(stage),
+                statusMessage.Value,
+                message.Value,
+                Optional.ToNullable(numberOfObjects),
+                Optional.ToNullable(numberOfObjectsCompleted),
+                Optional.ToNullable(errorCount),
+                errorPrefix.Value,
+                resultPrefix.Value,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
+                Optional.ToNullable(lastStorageUpdate),
+                objectSummary.Value);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

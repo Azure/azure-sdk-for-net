@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableDataBoxEdgeSku>> value = default;
+            IReadOnlyList<AvailableDataBoxEdgeSku> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableDataBoxEdgeSkuList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableDataBoxEdgeSkuList(value ?? new ChangeTrackingList<AvailableDataBoxEdgeSku>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableDataBoxEdgeSkuList>.Write(ModelReaderWriterOptions options)

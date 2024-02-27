@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlimPolicyMetadata(id, name, type, systemData.Value, metadataId.Value, category.Value, title.Value, owner.Value, additionalContentUrl.Value, metadata.Value, serializedAdditionalRawData);
+            return new SlimPolicyMetadata(
+                id,
+                name,
+                type,
+                systemData.Value,
+                metadataId.Value,
+                category.Value,
+                title.Value,
+                owner.Value,
+                additionalContentUrl.Value,
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlimPolicyMetadata>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementContentItem>> value = default;
+            IReadOnlyList<ApiManagementContentItem> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentItemListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContentItemListResult(value ?? new ChangeTrackingList<ApiManagementContentItem>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentItemListResult>.Write(ModelReaderWriterOptions options)

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -224,7 +224,17 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountSessionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), content.Value, serializedAdditionalRawData);
+            return new IntegrationAccountSessionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                content.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountSessionData>.Write(ModelReaderWriterOptions options)

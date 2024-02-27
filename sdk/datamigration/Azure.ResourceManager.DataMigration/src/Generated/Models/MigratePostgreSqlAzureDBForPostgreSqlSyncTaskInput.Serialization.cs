@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(selectedDatabases, targetConnectionInfo, sourceConnectionInfo, encryptedKeyForSecureFields.Value, Optional.ToNullable(startedOn), serializedAdditionalRawData);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(
+                selectedDatabases,
+                targetConnectionInfo,
+                sourceConnectionInfo,
+                encryptedKeyForSecureFields.Value,
+                Optional.ToNullable(startedOn),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput>.Write(ModelReaderWriterOptions options)

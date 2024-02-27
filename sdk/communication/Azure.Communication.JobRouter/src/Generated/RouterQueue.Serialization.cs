@@ -110,7 +110,7 @@ namespace Azure.Communication.JobRouter
             string id = default;
             Optional<string> name = default;
             Optional<string> distributionPolicyId = default;
-            Optional<IDictionary<string, object>> labels = default;
+            IDictionary<string, object> labels = default;
             Optional<string> exceptionPolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -168,7 +168,14 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterQueue(etag, id, name.Value, distributionPolicyId.Value, Optional.ToDictionary(labels), exceptionPolicyId.Value, serializedAdditionalRawData);
+            return new RouterQueue(
+                etag,
+                id,
+                name.Value,
+                distributionPolicyId.Value,
+                labels ?? new ChangeTrackingDictionary<string, object>(),
+                exceptionPolicyId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterQueue>.Write(ModelReaderWriterOptions options)

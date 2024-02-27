@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
+            IList<JobSupportedAction> actionsInfo = default;
             Optional<string> containerName = default;
             Optional<TimeSpan> duration = default;
-            Optional<IList<IaasVmErrorInfo>> errorDetails = default;
+            IList<IaasVmErrorInfo> errorDetails = default;
             Optional<string> virtualMachineVersion = default;
             Optional<IaasVmBackupJobExtendedInfo> extendedInfo = default;
             Optional<string> entityFriendlyName = default;
@@ -273,7 +273,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupJobV2(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToList(actionsInfo), containerName.Value, Optional.ToNullable(duration), Optional.ToList(errorDetails), virtualMachineVersion.Value, extendedInfo.Value);
+            return new IaasVmBackupJobV2(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                containerName.Value,
+                Optional.ToNullable(duration),
+                errorDetails ?? new ChangeTrackingList<IaasVmErrorInfo>(),
+                virtualMachineVersion.Value,
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<IaasVmBackupJobV2>.Write(ModelReaderWriterOptions options)

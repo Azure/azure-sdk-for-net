@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<string> status = default;
             Optional<Uri> sourceAzureFileShareUri = default;
             Optional<string> failedFileList = default;
-            Optional<IList<RestoreFileSpec>> restoreFileSpec = default;
+            IList<RestoreFileSpec> restoreFileSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostRestoreContent(partition.Value, replicaGroup.Value, requestId.Value, azureFileShareUri.Value, status.Value, sourceAzureFileShareUri.Value, failedFileList.Value, Optional.ToList(restoreFileSpec), serializedAdditionalRawData);
+            return new PostRestoreContent(
+                partition.Value,
+                replicaGroup.Value,
+                requestId.Value,
+                azureFileShareUri.Value,
+                status.Value,
+                sourceAzureFileShareUri.Value,
+                failedFileList.Value,
+                restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostRestoreContent>.Write(ModelReaderWriterOptions options)

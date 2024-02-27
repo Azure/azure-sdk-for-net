@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             Optional<string> label = default;
             Optional<string> policyName = default;
-            Optional<IList<MediaTrackSelection>> tracks = default;
+            IList<MediaTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyContentKey(label.Value, policyName.Value, Optional.ToList(tracks), serializedAdditionalRawData);
+            return new StreamingPolicyContentKey(label.Value, policyName.Value, tracks ?? new ChangeTrackingList<MediaTrackSelection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyContentKey>.Write(ModelReaderWriterOptions options)

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             Optional<NewRelicObservabilitySendMetricsStatus> sendMetrics = default;
-            Optional<IList<NewRelicObservabilityFilteringTag>> filteringTags = default;
+            IList<NewRelicObservabilityFilteringTag> filteringTags = default;
             Optional<string> userEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityMetricRules(Optional.ToNullable(sendMetrics), Optional.ToList(filteringTags), userEmail.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityMetricRules(Optional.ToNullable(sendMetrics), filteringTags ?? new ChangeTrackingList<NewRelicObservabilityFilteringTag>(), userEmail.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityMetricRules>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<ResourceIdentifier>> ipExtendedCommunityIds = default;
+            IList<ResourceIdentifier> ipExtendedCommunityIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPExtendedCommunityIdList(Optional.ToList(ipExtendedCommunityIds), serializedAdditionalRawData);
+            return new IPExtendedCommunityIdList(ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPExtendedCommunityIdList>.Write(ModelReaderWriterOptions options)

@@ -179,16 +179,16 @@ namespace Azure.ResourceManager.ServiceFabric
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> placementConstraints = default;
-            Optional<IList<ServiceCorrelationDescription>> correlationScheme = default;
-            Optional<IList<ServiceLoadMetricDescription>> serviceLoadMetrics = default;
-            Optional<IList<ServicePlacementPolicyDescription>> servicePlacementPolicies = default;
+            IList<ServiceCorrelationDescription> correlationScheme = default;
+            IList<ServiceLoadMetricDescription> serviceLoadMetrics = default;
+            IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default;
             Optional<ApplicationMoveCost> defaultMoveCost = default;
             Optional<string> provisioningState = default;
             Optional<ApplicationServiceKind> serviceKind = default;
@@ -368,7 +368,26 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), provisioningState.Value, Optional.ToNullable(serviceKind), serviceTypeName.Value, partitionDescription.Value, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                placementConstraints.Value,
+                correlationScheme ?? new ChangeTrackingList<ServiceCorrelationDescription>(),
+                serviceLoadMetrics ?? new ChangeTrackingList<ServiceLoadMetricDescription>(),
+                servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>(),
+                Optional.ToNullable(defaultMoveCost),
+                provisioningState.Value,
+                Optional.ToNullable(serviceKind),
+                serviceTypeName.Value,
+                partitionDescription.Value,
+                Optional.ToNullable(servicePackageActivationMode),
+                serviceDnsName.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricServiceData>.Write(ModelReaderWriterOptions options)

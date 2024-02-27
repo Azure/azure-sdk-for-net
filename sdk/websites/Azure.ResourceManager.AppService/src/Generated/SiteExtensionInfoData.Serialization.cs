@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
             Optional<Uri> iconUrl = default;
             Optional<Uri> licenseUrl = default;
             Optional<Uri> feedUrl = default;
-            Optional<IList<string>> authors = default;
+            IList<string> authors = default;
             Optional<string> installerCommandLineParams = default;
             Optional<DateTimeOffset> publishedDateTime = default;
             Optional<int> downloadCount = default;
@@ -424,7 +424,33 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteExtensionInfoData(id, name, type, systemData.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteExtensionInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                extensionId.Value,
+                title.Value,
+                Optional.ToNullable(extensionType),
+                summary.Value,
+                description.Value,
+                version.Value,
+                extensionUrl.Value,
+                projectUrl.Value,
+                iconUrl.Value,
+                licenseUrl.Value,
+                feedUrl.Value,
+                authors ?? new ChangeTrackingList<string>(),
+                installerCommandLineParams.Value,
+                Optional.ToNullable(publishedDateTime),
+                Optional.ToNullable(downloadCount),
+                Optional.ToNullable(localIsLatestVersion),
+                localPath.Value,
+                Optional.ToNullable(installedDateTime),
+                provisioningState.Value,
+                comment.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteExtensionInfoData>.Write(ModelReaderWriterOptions options)

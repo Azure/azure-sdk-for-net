@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> stateName = default;
-            Optional<IReadOnlyList<string>> providers = default;
-            Optional<IReadOnlyList<AvailableProvidersListCity>> cities = default;
+            IReadOnlyList<string> providers = default;
+            IReadOnlyList<AvailableProvidersListCity> cities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListState(stateName.Value, Optional.ToList(providers), Optional.ToList(cities), serializedAdditionalRawData);
+            return new AvailableProvidersListState(stateName.Value, providers ?? new ChangeTrackingList<string>(), cities ?? new ChangeTrackingList<AvailableProvidersListCity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListState>.Write(ModelReaderWriterOptions options)

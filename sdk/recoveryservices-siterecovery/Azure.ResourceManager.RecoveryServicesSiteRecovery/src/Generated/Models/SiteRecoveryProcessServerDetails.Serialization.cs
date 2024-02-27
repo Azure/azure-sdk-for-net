@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> biosId = default;
             Optional<ResourceIdentifier> fabricObjectId = default;
             Optional<string> fqdn = default;
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
+            IReadOnlyList<IPAddress> ipAddresses = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> lastHeartbeatUtc = default;
             Optional<long> totalMemoryInBytes = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<RcmComponentStatus> memoryUsageStatus = default;
             Optional<RcmComponentStatus> processorUsageStatus = default;
             Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             Optional<int> protectedItemCount = default;
             Optional<SiteRecoveryProtectionHealth> historicHealth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -522,7 +522,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Optional.ToList(ipAddresses), version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), Optional.ToNullable(usedMemoryInBytes), Optional.ToNullable(memoryUsagePercentage), Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), Optional.ToNullable(usedSpaceInBytes), Optional.ToNullable(freeSpacePercentage), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInBytes), Optional.ToNullable(processorUsagePercentage), Optional.ToNullable(throughputStatus), Optional.ToNullable(systemLoad), Optional.ToNullable(systemLoadStatus), Optional.ToNullable(diskUsageStatus), Optional.ToNullable(memoryUsageStatus), Optional.ToNullable(processorUsageStatus), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToNullable(historicHealth), serializedAdditionalRawData);
+            return new SiteRecoveryProcessServerDetails(
+                id.Value,
+                name.Value,
+                biosId.Value,
+                fabricObjectId.Value,
+                fqdn.Value,
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                version.Value,
+                Optional.ToNullable(lastHeartbeatUtc),
+                Optional.ToNullable(totalMemoryInBytes),
+                Optional.ToNullable(availableMemoryInBytes),
+                Optional.ToNullable(usedMemoryInBytes),
+                Optional.ToNullable(memoryUsagePercentage),
+                Optional.ToNullable(totalSpaceInBytes),
+                Optional.ToNullable(availableSpaceInBytes),
+                Optional.ToNullable(usedSpaceInBytes),
+                Optional.ToNullable(freeSpacePercentage),
+                Optional.ToNullable(throughputUploadPendingDataInBytes),
+                Optional.ToNullable(throughputInBytes),
+                Optional.ToNullable(processorUsagePercentage),
+                Optional.ToNullable(throughputStatus),
+                Optional.ToNullable(systemLoad),
+                Optional.ToNullable(systemLoadStatus),
+                Optional.ToNullable(diskUsageStatus),
+                Optional.ToNullable(memoryUsageStatus),
+                Optional.ToNullable(processorUsageStatus),
+                Optional.ToNullable(health),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(protectedItemCount),
+                Optional.ToNullable(historicHealth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProcessServerDetails>.Write(ModelReaderWriterOptions options)

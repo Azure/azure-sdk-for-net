@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<ReportProperties> reportProperties = default;
             Optional<SystemData> reportSystemData = default;
-            Optional<IReadOnlyList<ComplianceResult>> complianceResults = default;
+            IReadOnlyList<ComplianceResult> complianceResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotProperties(id.Value, snapshotName.Value, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), reportProperties.Value, reportSystemData, Optional.ToList(complianceResults), serializedAdditionalRawData);
+            return new SnapshotProperties(
+                id.Value,
+                snapshotName.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(provisioningState),
+                reportProperties.Value,
+                reportSystemData,
+                complianceResults ?? new ChangeTrackingList<ComplianceResult>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotProperties>.Write(ModelReaderWriterOptions options)

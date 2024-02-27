@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Communication
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, serializedAdditionalRawData);
+            return new EmailServiceResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                dataLocation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmailServiceResourceData>.Write(ModelReaderWriterOptions options)

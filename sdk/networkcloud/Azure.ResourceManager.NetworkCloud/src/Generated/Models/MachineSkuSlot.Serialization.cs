@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<BootstrapProtocol> bootstrapProtocol = default;
             Optional<long> cpuCores = default;
             Optional<long> cpuSockets = default;
-            Optional<IReadOnlyList<MachineDisk>> disks = default;
+            IReadOnlyList<MachineDisk> disks = default;
             Optional<string> generation = default;
             Optional<string> hardwareVersion = default;
             Optional<long> memoryCapacityGB = default;
             Optional<string> model = default;
-            Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
+            IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces = default;
             Optional<long> totalThreads = default;
             Optional<string> vendor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value, serializedAdditionalRawData);
+            return new MachineSkuSlot(
+                Optional.ToNullable(rackSlot),
+                Optional.ToNullable(bootstrapProtocol),
+                Optional.ToNullable(cpuCores),
+                Optional.ToNullable(cpuSockets),
+                disks ?? new ChangeTrackingList<MachineDisk>(),
+                generation.Value,
+                hardwareVersion.Value,
+                Optional.ToNullable(memoryCapacityGB),
+                model.Value,
+                networkInterfaces ?? new ChangeTrackingList<NetworkCloudNetworkInterface>(),
+                Optional.ToNullable(totalThreads),
+                vendor.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineSkuSlot>.Write(ModelReaderWriterOptions options)

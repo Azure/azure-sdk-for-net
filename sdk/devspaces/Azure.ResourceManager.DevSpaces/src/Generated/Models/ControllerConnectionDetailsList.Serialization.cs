@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ControllerConnectionDetails>> connectionDetailsList = default;
+            IReadOnlyList<ControllerConnectionDetails> connectionDetailsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerConnectionDetailsList(Optional.ToList(connectionDetailsList), serializedAdditionalRawData);
+            return new ControllerConnectionDetailsList(connectionDetailsList ?? new ChangeTrackingList<ControllerConnectionDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerConnectionDetailsList>.Write(ModelReaderWriterOptions options)

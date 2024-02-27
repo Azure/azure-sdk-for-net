@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Hci
             Optional<Guid> arcServicePrincipalObjectId = default;
             Optional<Guid> arcApplicationObjectId = default;
             Optional<ArcSettingAggregateState> aggregateState = default;
-            Optional<IReadOnlyList<PerNodeArcState>> perNodeDetails = default;
+            IReadOnlyList<PerNodeArcState> perNodeDetails = default;
             Optional<BinaryData> connectivityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -287,7 +287,21 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcSettingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value, serializedAdditionalRawData);
+            return new ArcSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                arcInstanceResourceGroup.Value,
+                Optional.ToNullable(arcApplicationClientId),
+                Optional.ToNullable(arcApplicationTenantId),
+                Optional.ToNullable(arcServicePrincipalObjectId),
+                Optional.ToNullable(arcApplicationObjectId),
+                Optional.ToNullable(aggregateState),
+                perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>(),
+                connectivityProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options)

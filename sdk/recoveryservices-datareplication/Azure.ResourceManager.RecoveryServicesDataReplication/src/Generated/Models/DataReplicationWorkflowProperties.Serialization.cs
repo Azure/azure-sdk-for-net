@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> replicationProviderId = default;
             Optional<string> sourceFabricProviderId = default;
             Optional<string> targetFabricProviderId = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
+            IReadOnlyList<string> allowedActions = default;
             Optional<string> activityId = default;
-            Optional<IReadOnlyList<DataReplicationTask>> tasks = default;
-            Optional<IReadOnlyList<DataReplicationErrorInfo>> errors = default;
+            IReadOnlyList<DataReplicationTask> tasks = default;
+            IReadOnlyList<DataReplicationErrorInfo> errors = default;
             WorkflowModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -316,7 +316,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationWorkflowProperties(displayName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), objectId.Value, objectName.Value, objectInternalId.Value, objectInternalName.Value, Optional.ToNullable(objectType), replicationProviderId.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, Optional.ToList(allowedActions), activityId.Value, Optional.ToList(tasks), Optional.ToList(errors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationWorkflowProperties(
+                displayName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                objectId.Value,
+                objectName.Value,
+                objectInternalId.Value,
+                objectInternalName.Value,
+                Optional.ToNullable(objectType),
+                replicationProviderId.Value,
+                sourceFabricProviderId.Value,
+                targetFabricProviderId.Value,
+                allowedActions ?? new ChangeTrackingList<string>(),
+                activityId.Value,
+                tasks ?? new ChangeTrackingList<DataReplicationTask>(),
+                errors ?? new ChangeTrackingList<DataReplicationErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationWorkflowProperties>.Write(ModelReaderWriterOptions options)

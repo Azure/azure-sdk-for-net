@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportResourceData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new ReportResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportResourceData>.Write(ModelReaderWriterOptions options)

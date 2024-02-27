@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
             SignalRFeatureFlag flag = default;
             string value = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRFeature(flag, value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new SignalRFeature(flag, value, properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRFeature>.Write(ModelReaderWriterOptions options)

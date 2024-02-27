@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesSku(name.Value, tier.Value, size.Value, family.Value, model.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new ResourcesSku(
+                name.Value,
+                tier.Value,
+                size.Value,
+                family.Value,
+                model.Value,
+                Optional.ToNullable(capacity),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesSku>.Write(ModelReaderWriterOptions options)

@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IList<string>> prefixMatch = default;
+            IList<string> prefixMatch = default;
             IList<string> blobTypes = default;
-            Optional<IList<ManagementPolicyTagFilter>> blobIndexMatch = default;
+            IList<ManagementPolicyTagFilter> blobIndexMatch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyFilter(Optional.ToList(prefixMatch), blobTypes, Optional.ToList(blobIndexMatch), serializedAdditionalRawData);
+            return new ManagementPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), blobTypes, blobIndexMatch ?? new ChangeTrackingList<ManagementPolicyTagFilter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyFilter>.Write(ModelReaderWriterOptions options)

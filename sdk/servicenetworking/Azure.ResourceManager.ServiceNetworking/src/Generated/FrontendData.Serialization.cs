@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, fqdn.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FrontendData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                fqdn.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontendData>.Write(ModelReaderWriterOptions options)

@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSProfileForVmInstance(computerName.Value, adminUsername.Value, adminPassword.Value, guestId.Value, Optional.ToNullable(osType), osSku.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value, serializedAdditionalRawData);
+            return new OSProfileForVmInstance(
+                computerName.Value,
+                adminUsername.Value,
+                adminPassword.Value,
+                guestId.Value,
+                Optional.ToNullable(osType),
+                osSku.Value,
+                toolsRunningStatus.Value,
+                toolsVersionStatus.Value,
+                toolsVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSProfileForVmInstance>.Write(ModelReaderWriterOptions options)

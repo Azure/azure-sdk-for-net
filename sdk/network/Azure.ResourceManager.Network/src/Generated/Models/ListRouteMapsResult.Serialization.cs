@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RouteMapData>> value = default;
+            IReadOnlyList<RouteMapData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListRouteMapsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListRouteMapsResult(value ?? new ChangeTrackingList<RouteMapData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListRouteMapsResult>.Write(ModelReaderWriterOptions options)

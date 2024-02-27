@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> netPayable = default;
             Optional<PurchasePrice> refundsTotal = default;
             Optional<PurchasePrice> purchasesTotal = default;
-            Optional<IReadOnlyList<ReservationToPurchaseExchange>> reservationsToPurchase = default;
-            Optional<IReadOnlyList<SavingsPlanToPurchaseExchange>> savingsPlansToPurchase = default;
-            Optional<IReadOnlyList<ReservationToReturnForExchange>> reservationsToExchange = default;
+            IReadOnlyList<ReservationToPurchaseExchange> reservationsToPurchase = default;
+            IReadOnlyList<SavingsPlanToPurchaseExchange> savingsPlansToPurchase = default;
+            IReadOnlyList<ReservationToReturnForExchange> reservationsToExchange = default;
             Optional<ExchangePolicyErrors> policyResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value, serializedAdditionalRawData);
+            return new ExchangeResultProperties(
+                Optional.ToNullable(sessionId),
+                netPayable.Value,
+                refundsTotal.Value,
+                purchasesTotal.Value,
+                reservationsToPurchase ?? new ChangeTrackingList<ReservationToPurchaseExchange>(),
+                savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseExchange>(),
+                reservationsToExchange ?? new ChangeTrackingList<ReservationToReturnForExchange>(),
+                policyResult.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangeResultProperties>.Write(ModelReaderWriterOptions options)

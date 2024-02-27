@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthAvailabilityStatus(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new ResourceHealthAvailabilityStatus(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthAvailabilityStatus>.Write(ModelReaderWriterOptions options)

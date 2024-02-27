@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionMarketplace>> value = default;
+            IReadOnlyList<ConsumptionMarketplace> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplacesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MarketplacesListResult(value ?? new ChangeTrackingList<ConsumptionMarketplace>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplacesListResult>.Write(ModelReaderWriterOptions options)

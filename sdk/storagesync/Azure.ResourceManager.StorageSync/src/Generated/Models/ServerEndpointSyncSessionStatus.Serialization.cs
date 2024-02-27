@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<long> lastSyncPerItemErrorCount = default;
             Optional<long> persistentFilesNotSyncingCount = default;
             Optional<long> transientFilesNotSyncingCount = default;
-            Optional<IReadOnlyList<ServerEndpointFilesNotSyncingError>> filesNotSyncingErrors = default;
+            IReadOnlyList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors = default;
             Optional<ServerEndpointSyncMode> lastSyncMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -204,7 +204,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointSyncSessionStatus(Optional.ToNullable(lastSyncResult), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastSyncSuccessTimestamp), Optional.ToNullable(lastSyncPerItemErrorCount), Optional.ToNullable(persistentFilesNotSyncingCount), Optional.ToNullable(transientFilesNotSyncingCount), Optional.ToList(filesNotSyncingErrors), Optional.ToNullable(lastSyncMode), serializedAdditionalRawData);
+            return new ServerEndpointSyncSessionStatus(
+                Optional.ToNullable(lastSyncResult),
+                Optional.ToNullable(lastSyncTimestamp),
+                Optional.ToNullable(lastSyncSuccessTimestamp),
+                Optional.ToNullable(lastSyncPerItemErrorCount),
+                Optional.ToNullable(persistentFilesNotSyncingCount),
+                Optional.ToNullable(transientFilesNotSyncingCount),
+                filesNotSyncingErrors ?? new ChangeTrackingList<ServerEndpointFilesNotSyncingError>(),
+                Optional.ToNullable(lastSyncMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointSyncSessionStatus>.Write(ModelReaderWriterOptions options)

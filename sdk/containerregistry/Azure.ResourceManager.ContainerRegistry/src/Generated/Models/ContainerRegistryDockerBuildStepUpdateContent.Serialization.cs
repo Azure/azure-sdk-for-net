@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IList<string>> imageNames = default;
+            IList<string> imageNames = default;
             Optional<bool> isPushEnabled = default;
             Optional<bool> noCache = default;
             Optional<string> dockerFilePath = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            IList<ContainerRegistryRunArgument> arguments = default;
             Optional<string> target = default;
             ContainerRegistryTaskStepType type = default;
             Optional<string> contextPath = default;
@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryDockerBuildStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath.Value, Optional.ToList(arguments), target.Value);
+            return new ContainerRegistryDockerBuildStepUpdateContent(
+                type,
+                contextPath.Value,
+                contextAccessToken.Value,
+                serializedAdditionalRawData,
+                imageNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isPushEnabled),
+                Optional.ToNullable(noCache),
+                dockerFilePath.Value,
+                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                target.Value);
         }
 
         BinaryData IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> tableName = default;
             Optional<string> mappingRuleName = default;
             Optional<KustoEventHubDataFormat> dataFormat = default;
-            Optional<IList<string>> eventSystemProperties = default;
+            IList<string> eventSystemProperties = default;
             Optional<EventHubMessagesCompressionType> compression = default;
             Optional<KustoProvisioningState> provisioningState = default;
             Optional<ResourceIdentifier> managedIdentityResourceId = default;
@@ -339,7 +339,26 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoEventHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), Optional.ToNullable(compression), Optional.ToNullable(provisioningState), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate));
+            return new KustoEventHubDataConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                eventHubResourceId.Value,
+                consumerGroup.Value,
+                tableName.Value,
+                mappingRuleName.Value,
+                Optional.ToNullable(dataFormat),
+                eventSystemProperties ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(compression),
+                Optional.ToNullable(provisioningState),
+                managedIdentityResourceId.Value,
+                Optional.ToNullable(managedIdentityObjectId),
+                Optional.ToNullable(databaseRouting),
+                Optional.ToNullable(retrievalStartDate));
         }
 
         BinaryData IPersistableModel<KustoEventHubDataConnection>.Write(ModelReaderWriterOptions options)

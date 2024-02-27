@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             Optional<ContainerAppJwtClaimChecks> jwtClaimChecks = default;
-            Optional<IList<string>> allowedAudiences = default;
+            IList<string> allowedAudiences = default;
             Optional<ContainerAppDefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks.Value, Optional.ToList(allowedAudiences), defaultAuthorizationPolicy.Value, serializedAdditionalRawData);
+            return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks.Value, allowedAudiences ?? new ChangeTrackingList<string>(), defaultAuthorizationPolicy.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryValidationConfiguration>.Write(ModelReaderWriterOptions options)

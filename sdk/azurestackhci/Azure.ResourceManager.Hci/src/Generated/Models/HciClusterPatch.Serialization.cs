@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> cloudManagementEndpoint = default;
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<HciManagedServiceIdentityType> type = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,17 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterPatch(Optional.ToDictionary(tags), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new HciClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                cloudManagementEndpoint.Value,
+                Optional.ToNullable(aadClientId),
+                Optional.ToNullable(aadTenantId),
+                desiredProperties.Value,
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(type),
+                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterPatch>.Write(ModelReaderWriterOptions options)

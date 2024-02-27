@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAddRecoveryServicesProviderProperties(machineName, machineId.Value, biosId.Value, authenticationIdentityContent, resourceAccessIdentityContent, dataPlaneAuthenticationIdentityContent.Value, serializedAdditionalRawData);
+            return new SiteRecoveryAddRecoveryServicesProviderProperties(
+                machineName,
+                machineId.Value,
+                biosId.Value,
+                authenticationIdentityContent,
+                resourceAccessIdentityContent,
+                dataPlaneAuthenticationIdentityContent.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAddRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)

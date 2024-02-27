@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableFpga = default;
             Optional<WritableSubResource> networkSecurityGroup = default;
             Optional<VirtualMachineScaleSetNetworkConfigurationDnsSettings> dnsSettings = default;
-            Optional<IList<VirtualMachineScaleSetUpdateIPConfiguration>> ipConfigurations = default;
+            IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default;
             Optional<bool> enableIPForwarding = default;
             Optional<ComputeDeleteOption> deleteOption = default;
             Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
@@ -291,7 +291,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateNetworkConfiguration(id.Value, serializedAdditionalRawData, name.Value, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            return new VirtualMachineScaleSetUpdateNetworkConfiguration(
+                id.Value,
+                serializedAdditionalRawData,
+                name.Value,
+                Optional.ToNullable(primary),
+                Optional.ToNullable(enableAcceleratedNetworking),
+                Optional.ToNullable(disableTcpStateTracking),
+                Optional.ToNullable(enableFpga),
+                networkSecurityGroup,
+                dnsSettings.Value,
+                ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>(),
+                Optional.ToNullable(enableIPForwarding),
+                Optional.ToNullable(deleteOption),
+                Optional.ToNullable(auxiliaryMode),
+                Optional.ToNullable(auxiliarySku));
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateNetworkConfiguration>.Write(ModelReaderWriterOptions options)

@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Datadog.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<string>> aliases = default;
-            Optional<IReadOnlyList<string>> apps = default;
+            IReadOnlyList<string> aliases = default;
+            IReadOnlyList<string> apps = default;
             Optional<DatadogHostMetadata> meta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHost(name.Value, Optional.ToList(aliases), Optional.ToList(apps), meta.Value, serializedAdditionalRawData);
+            return new DatadogHost(name.Value, aliases ?? new ChangeTrackingList<string>(), apps ?? new ChangeTrackingList<string>(), meta.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHost>.Write(ModelReaderWriterOptions options)

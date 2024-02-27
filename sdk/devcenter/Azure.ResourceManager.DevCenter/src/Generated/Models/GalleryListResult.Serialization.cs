@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevCenterGalleryData>> value = default;
+            IReadOnlyList<DevCenterGalleryData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GalleryListResult(value ?? new ChangeTrackingList<DevCenterGalleryData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryListResult>.Write(ModelReaderWriterOptions options)

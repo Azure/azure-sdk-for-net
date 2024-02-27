@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Media.Models
             string issuer = default;
             string audience = default;
             ContentKeyPolicyRestrictionTokenKey primaryVerificationKey = default;
-            Optional<IList<ContentKeyPolicyRestrictionTokenKey>> alternateVerificationKeys = default;
-            Optional<IList<ContentKeyPolicyTokenClaim>> requiredClaims = default;
+            IList<ContentKeyPolicyRestrictionTokenKey> alternateVerificationKeys = default;
+            IList<ContentKeyPolicyTokenClaim> requiredClaims = default;
             ContentKeyPolicyRestrictionTokenType restrictionTokenType = default;
             Optional<string> openIdConnectDiscoveryDocument = default;
             string odataType = default;
@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyTokenRestriction(odataType, serializedAdditionalRawData, issuer, audience, primaryVerificationKey, Optional.ToList(alternateVerificationKeys), Optional.ToList(requiredClaims), restrictionTokenType, openIdConnectDiscoveryDocument.Value);
+            return new ContentKeyPolicyTokenRestriction(
+                odataType,
+                serializedAdditionalRawData,
+                issuer,
+                audience,
+                primaryVerificationKey,
+                alternateVerificationKeys ?? new ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey>(),
+                requiredClaims ?? new ChangeTrackingList<ContentKeyPolicyTokenClaim>(),
+                restrictionTokenType,
+                openIdConnectDiscoveryDocument.Value);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyTokenRestriction>.Write(ModelReaderWriterOptions options)

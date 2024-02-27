@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -251,7 +251,20 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), clusterType.Value, deploymentId.Value, computeProfile.Value, clusterProfile.Value, status.Value, serializedAdditionalRawData);
+            return new HDInsightClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                clusterType.Value,
+                deploymentId.Value,
+                computeProfile.Value,
+                clusterProfile.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterData>.Write(ModelReaderWriterOptions options)

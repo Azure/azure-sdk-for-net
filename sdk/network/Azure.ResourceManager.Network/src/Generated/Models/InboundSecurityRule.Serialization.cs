@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<InboundSecurityRules>> rules = default;
+            IList<InboundSecurityRules> rules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundSecurityRule(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(rules), Optional.ToNullable(provisioningState));
+            return new InboundSecurityRule(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                rules ?? new ChangeTrackingList<InboundSecurityRules>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<InboundSecurityRule>.Write(ModelReaderWriterOptions options)

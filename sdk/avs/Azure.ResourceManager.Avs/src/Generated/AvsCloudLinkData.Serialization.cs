@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsCloudLinkData(id, name, type, systemData.Value, Optional.ToNullable(status), linkedCloud.Value, serializedAdditionalRawData);
+            return new AvsCloudLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(status),
+                linkedCloud.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsCloudLinkData>.Write(ModelReaderWriterOptions options)

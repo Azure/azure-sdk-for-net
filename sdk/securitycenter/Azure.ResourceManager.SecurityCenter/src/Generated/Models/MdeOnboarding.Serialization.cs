@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MdeOnboarding(id, name, type, systemData.Value, onboardingPackageWindows.Value, onboardingPackageLinux.Value, serializedAdditionalRawData);
+            return new MdeOnboarding(
+                id,
+                name,
+                type,
+                systemData.Value,
+                onboardingPackageWindows.Value,
+                onboardingPackageLinux.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MdeOnboarding>.Write(ModelReaderWriterOptions options)

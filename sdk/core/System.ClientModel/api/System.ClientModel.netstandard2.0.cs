@@ -39,6 +39,7 @@ namespace System.ClientModel
     {
         protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
+        public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -151,8 +152,8 @@ namespace System.ClientModel.Primitives
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.ClientModel.Primitives.PipelineResponse? ExtractResponse() { throw null; }
-        public void SetProperty(System.Type type, object value) { }
-        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
+        public void SetProperty(System.Type key, object value) { }
+        public bool TryGetProperty(System.Type key, out object? value) { throw null; }
     }
     public abstract partial class PipelineMessageClassifier
     {

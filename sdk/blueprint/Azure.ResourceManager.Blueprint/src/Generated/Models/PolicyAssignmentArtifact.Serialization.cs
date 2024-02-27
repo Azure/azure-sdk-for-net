@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            IList<string> dependsOn = default;
             string policyDefinitionId = default;
             IDictionary<string, ParameterValue> parameters = default;
             Optional<string> resourceGroup = default;
@@ -231,7 +231,19 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, Optional.ToList(dependsOn), policyDefinitionId, parameters, resourceGroup.Value);
+            return new PolicyAssignmentArtifact(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                displayName.Value,
+                description.Value,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                policyDefinitionId,
+                parameters,
+                resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentArtifact>.Write(ModelReaderWriterOptions options)

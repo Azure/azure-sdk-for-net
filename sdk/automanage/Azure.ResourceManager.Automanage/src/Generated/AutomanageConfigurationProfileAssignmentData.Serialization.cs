@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.Automanage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfileAssignmentData(id, name, type, systemData.Value, properties.Value, managedBy.Value, serializedAdditionalRawData);
+            return new AutomanageConfigurationProfileAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                managedBy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentData>.Write(ModelReaderWriterOptions options)

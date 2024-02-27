@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             Optional<string> provisioningState = default;
             Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
             Optional<bool> isReserved = default;
-            Optional<IList<string>> fqdns = default;
+            IList<string> fqdns = default;
             Optional<bool> isCompliant = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -132,7 +132,15 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), Optional.ToList(fqdns), Optional.ToNullable(isCompliant));
+            return new ManagedPrivateEndpointProperties(
+                name.Value,
+                privateLinkResourceId.Value,
+                groupId.Value,
+                provisioningState.Value,
+                connectionState.Value,
+                Optional.ToNullable(isReserved),
+                fqdns ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isCompliant));
         }
     }
 }

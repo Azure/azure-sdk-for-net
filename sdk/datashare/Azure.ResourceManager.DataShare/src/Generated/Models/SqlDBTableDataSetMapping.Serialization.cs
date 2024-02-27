@@ -216,7 +216,20 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBTableDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, databaseName, dataSetId, Optional.ToNullable(dataSetMappingStatus), Optional.ToNullable(provisioningState), schemaName, sqlServerResourceId, tableName);
+            return new SqlDBTableDataSetMapping(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                databaseName,
+                dataSetId,
+                Optional.ToNullable(dataSetMappingStatus),
+                Optional.ToNullable(provisioningState),
+                schemaName,
+                sqlServerResourceId,
+                tableName);
         }
 
         BinaryData IPersistableModel<SqlDBTableDataSetMapping>.Write(ModelReaderWriterOptions options)

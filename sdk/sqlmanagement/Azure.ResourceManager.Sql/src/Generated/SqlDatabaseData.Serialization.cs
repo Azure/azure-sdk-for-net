@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> kind = default;
             Optional<string> managedBy = default;
             Optional<DatabaseIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> isLedgerOn = default;
             Optional<bool> isInfraEncryptionEnabled = default;
             Optional<Guid> federatedClientId = default;
-            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            IDictionary<string, SqlDatabaseKey> keys = default;
             Optional<string> encryptionProtector = default;
             Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
             Optional<bool> useFreeLimit = default;
@@ -940,7 +940,66 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(useFreeLimit), Optional.ToNullable(freeLimitExhaustionBehavior), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone), Optional.ToNullable(encryptionProtectorAutoRotation), serializedAdditionalRawData);
+            return new SqlDatabaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                kind.Value,
+                managedBy.Value,
+                identity.Value,
+                Optional.ToNullable(createMode),
+                collation.Value,
+                Optional.ToNullable(maxSizeBytes),
+                Optional.ToNullable(sampleName),
+                elasticPoolId.Value,
+                sourceDatabaseId.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(databaseId),
+                Optional.ToNullable(creationDate),
+                currentServiceObjectiveName.Value,
+                requestedServiceObjectiveName.Value,
+                Optional.ToNullable(defaultSecondaryLocation),
+                failoverGroupId.Value,
+                Optional.ToNullable(restorePointInTime),
+                Optional.ToNullable(sourceDatabaseDeletionDate),
+                recoveryServicesRecoveryPointId.Value,
+                longTermRetentionBackupResourceId.Value,
+                recoverableDatabaseId.Value,
+                restorableDroppedDatabaseId.Value,
+                Optional.ToNullable(catalogCollation),
+                Optional.ToNullable(zoneRedundant),
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(maxLogSizeBytes),
+                Optional.ToNullable(earliestRestoreDate),
+                Optional.ToNullable(readScale),
+                Optional.ToNullable(highAvailabilityReplicaCount),
+                Optional.ToNullable(secondaryType),
+                currentSku.Value,
+                Optional.ToNullable(autoPauseDelay),
+                Optional.ToNullable(currentBackupStorageRedundancy),
+                Optional.ToNullable(requestedBackupStorageRedundancy),
+                Optional.ToNullable(minCapacity),
+                Optional.ToNullable(pausedDate),
+                Optional.ToNullable(resumedDate),
+                maintenanceConfigurationId.Value,
+                Optional.ToNullable(isLedgerOn),
+                Optional.ToNullable(isInfraEncryptionEnabled),
+                Optional.ToNullable(federatedClientId),
+                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
+                encryptionProtector.Value,
+                Optional.ToNullable(preferredEnclaveType),
+                Optional.ToNullable(useFreeLimit),
+                Optional.ToNullable(freeLimitExhaustionBehavior),
+                sourceResourceId.Value,
+                Optional.ToNullable(manualCutover),
+                Optional.ToNullable(performCutover),
+                Optional.ToNullable(availabilityZone),
+                Optional.ToNullable(encryptionProtectorAutoRotation),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseData>.Write(ModelReaderWriterOptions options)

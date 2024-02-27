@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConfigurationOptionAProperties(Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(peerAsn), bfdConfiguration.Value, serializedAdditionalRawData, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            return new VpnConfigurationOptionAProperties(
+                Optional.ToNullable(mtu),
+                Optional.ToNullable(vlanId),
+                Optional.ToNullable(peerAsn),
+                bfdConfiguration.Value,
+                serializedAdditionalRawData,
+                primaryIPv4Prefix.Value,
+                primaryIPv6Prefix.Value,
+                secondaryIPv4Prefix.Value,
+                secondaryIPv6Prefix.Value);
         }
 
         BinaryData IPersistableModel<VpnConfigurationOptionAProperties>.Write(ModelReaderWriterOptions options)

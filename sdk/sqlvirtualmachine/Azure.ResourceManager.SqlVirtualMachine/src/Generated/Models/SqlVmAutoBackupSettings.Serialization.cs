@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<bool> backupSystemDbs = default;
             Optional<SqVmBackupScheduleType> backupScheduleType = default;
             Optional<SqlVmFullBackupFrequency> fullBackupFrequency = default;
-            Optional<IList<SqlVmAutoBackupDayOfWeek>> daysOfWeek = default;
+            IList<SqlVmAutoBackupDayOfWeek> daysOfWeek = default;
             Optional<int> fullBackupStartTime = default;
             Optional<int> fullBackupWindowHours = default;
             Optional<int> logBackupFrequency = default;
@@ -282,7 +282,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmAutoBackupSettings(Optional.ToNullable(enable), Optional.ToNullable(enableEncryption), Optional.ToNullable(retentionPeriod), storageAccountUrl.Value, storageContainerName.Value, storageAccessKey.Value, password.Value, Optional.ToNullable(backupSystemDbs), Optional.ToNullable(backupScheduleType), Optional.ToNullable(fullBackupFrequency), Optional.ToList(daysOfWeek), Optional.ToNullable(fullBackupStartTime), Optional.ToNullable(fullBackupWindowHours), Optional.ToNullable(logBackupFrequency), serializedAdditionalRawData);
+            return new SqlVmAutoBackupSettings(
+                Optional.ToNullable(enable),
+                Optional.ToNullable(enableEncryption),
+                Optional.ToNullable(retentionPeriod),
+                storageAccountUrl.Value,
+                storageContainerName.Value,
+                storageAccessKey.Value,
+                password.Value,
+                Optional.ToNullable(backupSystemDbs),
+                Optional.ToNullable(backupScheduleType),
+                Optional.ToNullable(fullBackupFrequency),
+                daysOfWeek ?? new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>(),
+                Optional.ToNullable(fullBackupStartTime),
+                Optional.ToNullable(fullBackupWindowHours),
+                Optional.ToNullable(logBackupFrequency),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmAutoBackupSettings>.Write(ModelReaderWriterOptions options)

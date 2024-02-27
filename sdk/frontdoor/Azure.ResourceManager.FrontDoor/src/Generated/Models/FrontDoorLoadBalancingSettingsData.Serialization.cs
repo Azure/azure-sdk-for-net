@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorLoadBalancingSettingsData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyMilliseconds), Optional.ToNullable(resourceState));
+            return new FrontDoorLoadBalancingSettingsData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(sampleSize),
+                Optional.ToNullable(successfulSamplesRequired),
+                Optional.ToNullable(additionalLatencyMilliseconds),
+                Optional.ToNullable(resourceState));
         }
 
         BinaryData IPersistableModel<FrontDoorLoadBalancingSettingsData>.Write(ModelReaderWriterOptions options)

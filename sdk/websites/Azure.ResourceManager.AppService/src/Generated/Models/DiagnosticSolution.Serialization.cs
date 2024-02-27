@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<double> order = default;
             Optional<string> description = default;
             Optional<DiagnosticSolutionType> type = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> metadata = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
+            IList<IList<AppServiceNameValuePair>> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSolution(Optional.ToNullable(id), displayName.Value, Optional.ToNullable(order), description.Value, Optional.ToNullable(type), Optional.ToList(data), Optional.ToList(metadata), serializedAdditionalRawData);
+            return new DiagnosticSolution(
+                Optional.ToNullable(id),
+                displayName.Value,
+                Optional.ToNullable(order),
+                description.Value,
+                Optional.ToNullable(type),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                metadata ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSolution>.Write(ModelReaderWriterOptions options)

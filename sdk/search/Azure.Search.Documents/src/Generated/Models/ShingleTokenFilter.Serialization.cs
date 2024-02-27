@@ -125,7 +125,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ShingleTokenFilter(odataType, name, Optional.ToNullable(maxShingleSize), Optional.ToNullable(minShingleSize), Optional.ToNullable(outputUnigrams), Optional.ToNullable(outputUnigramsIfNoShingles), tokenSeparator.Value, filterToken.Value);
+            return new ShingleTokenFilter(
+                odataType,
+                name,
+                Optional.ToNullable(maxShingleSize),
+                Optional.ToNullable(minShingleSize),
+                Optional.ToNullable(outputUnigrams),
+                Optional.ToNullable(outputUnigramsIfNoShingles),
+                tokenSeparator.Value,
+                filterToken.Value);
         }
     }
 }

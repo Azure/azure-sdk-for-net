@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
+            IReadOnlyDictionary<string, string> displayName = default;
             Optional<string> fieldName = default;
             Optional<string> fieldType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiGroupByMetadata(Optional.ToDictionary(displayName), fieldName.Value, fieldType.Value, serializedAdditionalRawData);
+            return new KpiGroupByMetadata(displayName ?? new ChangeTrackingDictionary<string, string>(), fieldName.Value, fieldType.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiGroupByMetadata>.Write(ModelReaderWriterOptions options)

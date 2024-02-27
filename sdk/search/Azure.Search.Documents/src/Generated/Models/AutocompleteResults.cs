@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,14 +15,8 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="AutocompleteResults"/>. </summary>
         /// <param name="results"> The list of returned Autocompleted items. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal AutocompleteResults(IEnumerable<AutocompleteItem> results)
         {
-            if (results == null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
-
             Results = results.ToList();
         }
 

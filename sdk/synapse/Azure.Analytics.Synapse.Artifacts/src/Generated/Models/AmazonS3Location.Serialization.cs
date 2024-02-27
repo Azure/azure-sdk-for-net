@@ -108,7 +108,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3Location(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
+            return new AmazonS3Location(
+                type,
+                folderPath.Value,
+                fileName.Value,
+                additionalProperties,
+                bucketName.Value,
+                version.Value);
         }
 
         internal partial class AmazonS3LocationConverter : JsonConverter<AmazonS3Location>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AssociationType> associationType = default;
             Optional<WritableSubResource> subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociationPatch(Optional.ToDictionary(tags), Optional.ToNullable(associationType), subnet, serializedAdditionalRawData);
+            return new AssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(associationType), subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociationPatch>.Write(ModelReaderWriterOptions options)

@@ -228,7 +228,19 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeviceData(id, name, type, systemData.Value, deviceId.Value, chipSku.Value, lastAvailableOSVersion.Value, lastInstalledOSVersion.Value, Optional.ToNullable(lastOSUpdateUtc), Optional.ToNullable(lastUpdateRequestUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereDeviceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deviceId.Value,
+                chipSku.Value,
+                lastAvailableOSVersion.Value,
+                lastInstalledOSVersion.Value,
+                Optional.ToNullable(lastOSUpdateUtc),
+                Optional.ToNullable(lastUpdateRequestUtc),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeviceData>.Write(ModelReaderWriterOptions options)

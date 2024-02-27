@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeviceGroupPatch(description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), serializedAdditionalRawData);
+            return new SphereDeviceGroupPatch(
+                description.Value,
+                Optional.ToNullable(osFeedType),
+                Optional.ToNullable(updatePolicy),
+                Optional.ToNullable(allowCrashDumpsCollection),
+                Optional.ToNullable(regionalDataBoundary),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeviceGroupPatch>.Write(ModelReaderWriterOptions options)

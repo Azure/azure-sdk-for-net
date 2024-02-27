@@ -159,7 +159,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2EventDetails(instanceType, serializedAdditionalRawData, eventType.Value, category.Value, component.Value, correctiveAction.Value, details.Value, summary.Value, siteName.Value);
+            return new InMageAzureV2EventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                eventType.Value,
+                category.Value,
+                component.Value,
+                correctiveAction.Value,
+                details.Value,
+                summary.Value,
+                siteName.Value);
         }
 
         BinaryData IPersistableModel<InMageAzureV2EventDetails>.Write(ModelReaderWriterOptions options)

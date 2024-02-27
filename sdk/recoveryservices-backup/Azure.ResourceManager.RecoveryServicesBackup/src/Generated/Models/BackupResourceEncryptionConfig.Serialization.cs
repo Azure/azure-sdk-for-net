@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceEncryptionConfig(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), serializedAdditionalRawData);
+            return new BackupResourceEncryptionConfig(
+                Optional.ToNullable(encryptionAtRestType),
+                keyUri.Value,
+                subscriptionId.Value,
+                Optional.ToNullable(lastUpdateStatus),
+                Optional.ToNullable(infrastructureEncryptionState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceEncryptionConfig>.Write(ModelReaderWriterOptions options)

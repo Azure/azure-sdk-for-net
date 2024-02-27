@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<string>> tags = default;
+            IList<string> tags = default;
             Optional<bool> secret = default;
             Optional<string> displayName = default;
             Optional<string> value = default;
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementNamedValueData(id, name, type, systemData.Value, Optional.ToList(tags), Optional.ToNullable(secret), displayName.Value, value.Value, keyVault.Value, serializedAdditionalRawData);
+            return new ApiManagementNamedValueData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(secret),
+                displayName.Value,
+                value.Value,
+                keyVault.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementNamedValueData>.Write(ModelReaderWriterOptions options)

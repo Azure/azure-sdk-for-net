@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             IntegrationServiceErrorCode code = default;
             string message = default;
-            Optional<IReadOnlyList<IntegrationServiceErrorInfo>> details = default;
+            IReadOnlyList<IntegrationServiceErrorInfo> details = default;
             Optional<BinaryData> innerError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceErrorInfo(code, message, Optional.ToList(details), innerError.Value, serializedAdditionalRawData);
+            return new IntegrationServiceErrorInfo(code, message, details ?? new ChangeTrackingList<IntegrationServiceErrorInfo>(), innerError.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceErrorInfo>.Write(ModelReaderWriterOptions options)

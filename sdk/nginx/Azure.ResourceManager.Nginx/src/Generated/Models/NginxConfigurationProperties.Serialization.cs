@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Nginx.Models
                 return null;
             }
             Optional<NginxProvisioningState> provisioningState = default;
-            Optional<IList<NginxConfigurationFile>> files = default;
-            Optional<IList<NginxConfigurationFile>> protectedFiles = default;
+            IList<NginxConfigurationFile> files = default;
+            IList<NginxConfigurationFile> protectedFiles = default;
             Optional<NginxConfigurationPackage> package = default;
             Optional<string> rootFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), Optional.ToList(files), Optional.ToList(protectedFiles), package.Value, rootFile.Value, serializedAdditionalRawData);
+            return new NginxConfigurationProperties(
+                Optional.ToNullable(provisioningState),
+                files ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                package.Value,
+                rootFile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationProperties>.Write(ModelReaderWriterOptions options)

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<AppPlatformConfigurationServiceProvisioningState> provisioningState = default;
             Optional<AppPlatformConfigurationServiceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformConfigurationServiceInstance>> instances = default;
+            IReadOnlyList<AppPlatformConfigurationServiceInstance> instances = default;
             Optional<AppPlatformConfigurationServiceSettings> settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceProperties(Optional.ToNullable(provisioningState), resourceRequests.Value, Optional.ToList(instances), settings.Value, serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceProperties(Optional.ToNullable(provisioningState), resourceRequests.Value, instances ?? new ChangeTrackingList<AppPlatformConfigurationServiceInstance>(), settings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceProperties>.Write(ModelReaderWriterOptions options)

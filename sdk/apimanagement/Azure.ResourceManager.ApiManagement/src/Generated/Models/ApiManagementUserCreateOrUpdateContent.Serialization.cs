@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             Optional<ApiManagementUserState> state = default;
             Optional<string> note = default;
-            Optional<IList<UserIdentityContract>> identities = default;
+            IList<UserIdentityContract> identities = default;
             Optional<string> email = default;
             Optional<string> firstName = default;
             Optional<string> lastName = default;
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementUserCreateOrUpdateContent(Optional.ToNullable(state), note.Value, Optional.ToList(identities), email.Value, firstName.Value, lastName.Value, password.Value, Optional.ToNullable(appType), Optional.ToNullable(confirmation), serializedAdditionalRawData);
+            return new ApiManagementUserCreateOrUpdateContent(
+                Optional.ToNullable(state),
+                note.Value,
+                identities ?? new ChangeTrackingList<UserIdentityContract>(),
+                email.Value,
+                firstName.Value,
+                lastName.Value,
+                password.Value,
+                Optional.ToNullable(appType),
+                Optional.ToNullable(confirmation),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementUserCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

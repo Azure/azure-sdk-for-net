@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> networkZones = default;
             Optional<int> topologyScore = default;
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<TopologySingleResourceParent>> parents = default;
-            Optional<IReadOnlyList<TopologySingleResourceChild>> children = default;
+            IReadOnlyList<TopologySingleResourceParent> parents = default;
+            IReadOnlyList<TopologySingleResourceChild> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologySingleResource(resourceId.Value, severity.Value, Optional.ToNullable(recommendationsExist), networkZones.Value, Optional.ToNullable(topologyScore), Optional.ToNullable(location), Optional.ToList(parents), Optional.ToList(children), serializedAdditionalRawData);
+            return new TopologySingleResource(
+                resourceId.Value,
+                severity.Value,
+                Optional.ToNullable(recommendationsExist),
+                networkZones.Value,
+                Optional.ToNullable(topologyScore),
+                Optional.ToNullable(location),
+                parents ?? new ChangeTrackingList<TopologySingleResourceParent>(),
+                children ?? new ChangeTrackingList<TopologySingleResourceChild>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologySingleResource>.Write(ModelReaderWriterOptions options)

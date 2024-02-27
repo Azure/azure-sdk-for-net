@@ -111,10 +111,10 @@ namespace Azure.AI.DocumentIntelligence
             int rowCount = default;
             int columnCount = default;
             IReadOnlyList<DocumentTableCell> cells = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             Optional<DocumentCaption> caption = default;
-            Optional<IReadOnlyList<DocumentFootnote>> footnotes = default;
+            IReadOnlyList<DocumentFootnote> footnotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,15 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentTable(rowCount, columnCount, cells, Optional.ToList(boundingRegions), spans, caption.Value, Optional.ToList(footnotes), serializedAdditionalRawData);
+            return new DocumentTable(
+                rowCount,
+                columnCount,
+                cells,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans,
+                caption.Value,
+                footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentTable>.Write(ModelReaderWriterOptions options)

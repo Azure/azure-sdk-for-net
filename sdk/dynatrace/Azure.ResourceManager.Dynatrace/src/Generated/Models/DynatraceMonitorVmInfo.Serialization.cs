@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitorVmInfo(resourceId.Value, version.Value, Optional.ToNullable(monitoringType), Optional.ToNullable(autoUpdateSetting), Optional.ToNullable(updateStatus), Optional.ToNullable(availabilityState), Optional.ToNullable(logModule), hostGroup.Value, hostName.Value, serializedAdditionalRawData);
+            return new DynatraceMonitorVmInfo(
+                resourceId.Value,
+                version.Value,
+                Optional.ToNullable(monitoringType),
+                Optional.ToNullable(autoUpdateSetting),
+                Optional.ToNullable(updateStatus),
+                Optional.ToNullable(availabilityState),
+                Optional.ToNullable(logModule),
+                hostGroup.Value,
+                hostName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorVmInfo>.Write(ModelReaderWriterOptions options)

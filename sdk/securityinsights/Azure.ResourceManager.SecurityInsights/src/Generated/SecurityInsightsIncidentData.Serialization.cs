@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<DateTimeOffset> firstActivityTimeUtc = default;
             Optional<Uri> incidentUrl = default;
             Optional<int> incidentNumber = default;
-            Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
+            IList<SecurityInsightsIncidentLabel> labels = default;
             Optional<DateTimeOffset> lastActivityTimeUtc = default;
             Optional<DateTimeOffset> lastModifiedTimeUtc = default;
             Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> relatedAnalyticRuleIds = default;
+            IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds = default;
             Optional<SecurityInsightsIncidentSeverity> severity = default;
             Optional<SecurityInsightsIncidentStatus> status = default;
             Optional<string> title = default;
@@ -430,7 +430,30 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentData(id, name, type, systemData.Value, additionalData.Value, Optional.ToNullable(classification), classificationComment.Value, Optional.ToNullable(classificationReason), Optional.ToNullable(createdTimeUtc), description.Value, Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Optional.ToNullable(incidentNumber), Optional.ToList(labels), Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), owner.Value, Optional.ToList(relatedAnalyticRuleIds), Optional.ToNullable(severity), Optional.ToNullable(status), title.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                additionalData.Value,
+                Optional.ToNullable(classification),
+                classificationComment.Value,
+                Optional.ToNullable(classificationReason),
+                Optional.ToNullable(createdTimeUtc),
+                description.Value,
+                Optional.ToNullable(firstActivityTimeUtc),
+                incidentUrl.Value,
+                Optional.ToNullable(incidentNumber),
+                labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
+                Optional.ToNullable(lastActivityTimeUtc),
+                Optional.ToNullable(lastModifiedTimeUtc),
+                owner.Value,
+                relatedAnalyticRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(status),
+                title.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentData>.Write(ModelReaderWriterOptions options)

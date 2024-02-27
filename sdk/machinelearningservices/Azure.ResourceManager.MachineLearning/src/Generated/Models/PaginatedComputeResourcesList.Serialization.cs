@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningComputeData>> value = default;
+            IReadOnlyList<MachineLearningComputeData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaginatedComputeResourcesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PaginatedComputeResourcesList(value ?? new ChangeTrackingList<MachineLearningComputeData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaginatedComputeResourcesList>.Write(ModelReaderWriterOptions options)

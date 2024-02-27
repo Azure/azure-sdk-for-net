@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<string>> associatedInboundConnections = default;
-            Optional<IList<string>> associatedOutboundConnections = default;
-            Optional<IList<RouteMapRule>> rules = default;
+            IList<string> associatedInboundConnections = default;
+            IList<string> associatedOutboundConnections = default;
+            IList<RouteMapRule> rules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -245,7 +245,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteMapData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToList(associatedInboundConnections), Optional.ToList(associatedOutboundConnections), Optional.ToList(rules), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new RouteMapData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                associatedInboundConnections ?? new ChangeTrackingList<string>(),
+                associatedOutboundConnections ?? new ChangeTrackingList<string>(),
+                rules ?? new ChangeTrackingList<RouteMapRule>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteMapData>.Write(ModelReaderWriterOptions options)

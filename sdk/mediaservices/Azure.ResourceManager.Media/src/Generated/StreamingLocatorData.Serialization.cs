@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.Media
             Optional<Guid> streamingLocatorId = default;
             Optional<string> streamingPolicyName = default;
             Optional<string> defaultContentKeyPolicyName = default;
-            Optional<IList<StreamingLocatorContentKey>> contentKeys = default;
+            IList<StreamingLocatorContentKey> contentKeys = default;
             Optional<string> alternativeMediaId = default;
-            Optional<IList<string>> filters = default;
+            IList<string> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +293,22 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, Optional.ToList(contentKeys), alternativeMediaId.Value, Optional.ToList(filters), serializedAdditionalRawData);
+            return new StreamingLocatorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                assetName.Value,
+                Optional.ToNullable(created),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(streamingLocatorId),
+                streamingPolicyName.Value,
+                defaultContentKeyPolicyName.Value,
+                contentKeys ?? new ChangeTrackingList<StreamingLocatorContentKey>(),
+                alternativeMediaId.Value,
+                filters ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options)

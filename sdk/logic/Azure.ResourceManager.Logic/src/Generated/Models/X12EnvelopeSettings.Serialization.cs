@@ -275,7 +275,32 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12EnvelopeSettings(controlStandardsId, useControlStandardsIdAsRepetitionCharacter, senderApplicationId, receiverApplicationId, controlVersionNumber, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, enableDefaultGroupHeaders, functionalGroupId.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupHeaderAgencyCode, groupHeaderVersion, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, overwriteExistingTransactionSetControlNumber, groupHeaderDateFormat, groupHeaderTimeFormat, usageIndicator, serializedAdditionalRawData);
+            return new X12EnvelopeSettings(
+                controlStandardsId,
+                useControlStandardsIdAsRepetitionCharacter,
+                senderApplicationId,
+                receiverApplicationId,
+                controlVersionNumber,
+                interchangeControlNumberLowerBound,
+                interchangeControlNumberUpperBound,
+                rolloverInterchangeControlNumber,
+                enableDefaultGroupHeaders,
+                functionalGroupId.Value,
+                groupControlNumberLowerBound,
+                groupControlNumberUpperBound,
+                rolloverGroupControlNumber,
+                groupHeaderAgencyCode,
+                groupHeaderVersion,
+                transactionSetControlNumberLowerBound,
+                transactionSetControlNumberUpperBound,
+                rolloverTransactionSetControlNumber,
+                transactionSetControlNumberPrefix.Value,
+                transactionSetControlNumberSuffix.Value,
+                overwriteExistingTransactionSetControlNumber,
+                groupHeaderDateFormat,
+                groupHeaderTimeFormat,
+                usageIndicator,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12EnvelopeSettings>.Write(ModelReaderWriterOptions options)

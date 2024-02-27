@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowStream>> streams = default;
-            Optional<IList<string>> destinations = default;
+            IList<DataFlowStream> streams = default;
+            IList<string> destinations = default;
             Optional<string> transformKql = default;
             Optional<string> outputStream = default;
             Optional<string> builtInTransform = default;
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value, builtInTransform.Value, serializedAdditionalRawData);
+            return new DataFlow(
+                streams ?? new ChangeTrackingList<DataFlowStream>(),
+                destinations ?? new ChangeTrackingList<string>(),
+                transformKql.Value,
+                outputStream.Value,
+                builtInTransform.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlow>.Write(ModelReaderWriterOptions options)

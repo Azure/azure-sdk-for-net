@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
             Optional<ResourceIdentifier> targetNetworkId = default;
             Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<IList<InMageRcmNicContent>> vmNics = default;
+            IList<InMageRcmNicContent> vmNics = default;
             Optional<SiteRecoveryLicenseType> licenseType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToNullable(licenseType));
+            return new InMageRcmUpdateReplicationProtectedItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                targetVmName.Value,
+                targetVmSize.Value,
+                targetResourceGroupId.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                targetBootDiagnosticsStorageAccountId.Value,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                vmNics ?? new ChangeTrackingList<InMageRcmNicContent>(),
+                Optional.ToNullable(licenseType));
         }
 
         BinaryData IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

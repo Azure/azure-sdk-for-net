@@ -285,22 +285,22 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<KillChainIntent> intent = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<IReadOnlyList<SecurityAlertResourceIdentifier>> resourceIdentifiers = default;
-            Optional<IReadOnlyList<string>> remediationSteps = default;
+            IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers = default;
+            IReadOnlyList<string> remediationSteps = default;
             Optional<string> vendorName = default;
             Optional<SecurityAlertStatus> status = default;
-            Optional<IReadOnlyList<IDictionary<string, string>>> extendedLinks = default;
+            IReadOnlyList<IDictionary<string, string>> extendedLinks = default;
             Optional<Uri> alertUri = default;
             Optional<DateTimeOffset> timeGeneratedUtc = default;
             Optional<string> productName = default;
             Optional<DateTimeOffset> processingEndTimeUtc = default;
-            Optional<IReadOnlyList<SecurityAlertEntity>> entities = default;
+            IReadOnlyList<SecurityAlertEntity> entities = default;
             Optional<bool> isIncident = default;
             Optional<string> correlationKey = default;
-            Optional<IDictionary<string, string>> extendedProperties = default;
+            IDictionary<string, string> extendedProperties = default;
             Optional<string> compromisedEntity = default;
-            Optional<IReadOnlyList<string>> techniques = default;
-            Optional<IReadOnlyList<string>> subTechniques = default;
+            IReadOnlyList<string> techniques = default;
+            IReadOnlyList<string> subTechniques = default;
             Optional<SecurityAlertSupportingEvidence> supportingEvidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -598,7 +598,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAlertData(id, name, type, systemData.Value, version.Value, alertType.Value, systemAlertId.Value, productComponentName.Value, alertDisplayName.Value, description.Value, Optional.ToNullable(severity), Optional.ToNullable(intent), Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToList(resourceIdentifiers), Optional.ToList(remediationSteps), vendorName.Value, Optional.ToNullable(status), Optional.ToList(extendedLinks), alertUri.Value, Optional.ToNullable(timeGeneratedUtc), productName.Value, Optional.ToNullable(processingEndTimeUtc), Optional.ToList(entities), Optional.ToNullable(isIncident), correlationKey.Value, Optional.ToDictionary(extendedProperties), compromisedEntity.Value, Optional.ToList(techniques), Optional.ToList(subTechniques), supportingEvidence.Value, serializedAdditionalRawData);
+            return new SecurityAlertData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                version.Value,
+                alertType.Value,
+                systemAlertId.Value,
+                productComponentName.Value,
+                alertDisplayName.Value,
+                description.Value,
+                Optional.ToNullable(severity),
+                Optional.ToNullable(intent),
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(endTimeUtc),
+                resourceIdentifiers ?? new ChangeTrackingList<SecurityAlertResourceIdentifier>(),
+                remediationSteps ?? new ChangeTrackingList<string>(),
+                vendorName.Value,
+                Optional.ToNullable(status),
+                extendedLinks ?? new ChangeTrackingList<IDictionary<string, string>>(),
+                alertUri.Value,
+                Optional.ToNullable(timeGeneratedUtc),
+                productName.Value,
+                Optional.ToNullable(processingEndTimeUtc),
+                entities ?? new ChangeTrackingList<SecurityAlertEntity>(),
+                Optional.ToNullable(isIncident),
+                correlationKey.Value,
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                compromisedEntity.Value,
+                techniques ?? new ChangeTrackingList<string>(),
+                subTechniques ?? new ChangeTrackingList<string>(),
+                supportingEvidence.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAlertData>.Write(ModelReaderWriterOptions options)

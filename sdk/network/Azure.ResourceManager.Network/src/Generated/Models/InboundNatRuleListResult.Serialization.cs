@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InboundNatRuleData>> value = default;
+            IReadOnlyList<InboundNatRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundNatRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InboundNatRuleListResult(value ?? new ChangeTrackingList<InboundNatRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundNatRuleListResult>.Write(ModelReaderWriterOptions options)

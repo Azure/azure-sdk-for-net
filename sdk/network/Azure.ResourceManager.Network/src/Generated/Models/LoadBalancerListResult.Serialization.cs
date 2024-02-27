@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LoadBalancerData>> value = default;
+            IReadOnlyList<LoadBalancerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LoadBalancerListResult(value ?? new ChangeTrackingList<LoadBalancerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerListResult>.Write(ModelReaderWriterOptions options)

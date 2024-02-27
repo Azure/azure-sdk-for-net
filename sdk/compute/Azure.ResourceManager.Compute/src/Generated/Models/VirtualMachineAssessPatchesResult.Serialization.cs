@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> criticalAndSecurityPatchCount = default;
             Optional<int> otherPatchCount = default;
             Optional<DateTimeOffset> startDateTime = default;
-            Optional<IReadOnlyList<VirtualMachineSoftwarePatchProperties>> availablePatches = default;
+            IReadOnlyList<VirtualMachineSoftwarePatchProperties> availablePatches = default;
             Optional<ComputeApiError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineAssessPatchesResult(Optional.ToNullable(status), assessmentActivityId.Value, Optional.ToNullable(rebootPending), Optional.ToNullable(criticalAndSecurityPatchCount), Optional.ToNullable(otherPatchCount), Optional.ToNullable(startDateTime), Optional.ToList(availablePatches), error.Value, serializedAdditionalRawData);
+            return new VirtualMachineAssessPatchesResult(
+                Optional.ToNullable(status),
+                assessmentActivityId.Value,
+                Optional.ToNullable(rebootPending),
+                Optional.ToNullable(criticalAndSecurityPatchCount),
+                Optional.ToNullable(otherPatchCount),
+                Optional.ToNullable(startDateTime),
+                availablePatches ?? new ChangeTrackingList<VirtualMachineSoftwarePatchProperties>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineAssessPatchesResult>.Write(ModelReaderWriterOptions options)

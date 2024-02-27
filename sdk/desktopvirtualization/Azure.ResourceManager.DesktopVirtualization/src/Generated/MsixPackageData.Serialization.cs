@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> packageRelativePath = default;
             Optional<bool> isRegularRegistration = default;
             Optional<bool> isActive = default;
-            Optional<IList<MsixPackageDependencies>> packageDependencies = default;
+            IList<MsixPackageDependencies> packageDependencies = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> lastUpdated = default;
-            Optional<IList<MsixPackageApplications>> packageApplications = default;
+            IList<MsixPackageApplications> packageApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,7 +312,23 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackageData(id, name, type, systemData.Value, imagePath.Value, packageName.Value, packageFamilyName.Value, displayName.Value, packageRelativePath.Value, Optional.ToNullable(isRegularRegistration), Optional.ToNullable(isActive), Optional.ToList(packageDependencies), version.Value, Optional.ToNullable(lastUpdated), Optional.ToList(packageApplications), serializedAdditionalRawData);
+            return new MsixPackageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                imagePath.Value,
+                packageName.Value,
+                packageFamilyName.Value,
+                displayName.Value,
+                packageRelativePath.Value,
+                Optional.ToNullable(isRegularRegistration),
+                Optional.ToNullable(isActive),
+                packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(),
+                version.Value,
+                Optional.ToNullable(lastUpdated),
+                packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackageData>.Write(ModelReaderWriterOptions options)

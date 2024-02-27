@@ -76,7 +76,14 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallTransferAcceptedInternal(operationContext.Value, resultInformation.Value, transferTarget.Value, transferee.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallTransferAcceptedInternal(
+                operationContext.Value,
+                resultInformation.Value,
+                transferTarget.Value,
+                transferee.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value);
         }
     }
 }

@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> supportedGeoBackupRegions = default;
-            Optional<IReadOnlyList<ServerEditionCapabilityV2>> supportedFlexibleServerEditions = default;
-            Optional<IReadOnlyList<ServerVersionCapabilityV2>> supportedServerVersions = default;
+            IReadOnlyList<string> supportedGeoBackupRegions = default;
+            IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions = default;
+            IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServersCapabilityData(id, name, type, systemData.Value, Optional.ToList(supportedGeoBackupRegions), Optional.ToList(supportedFlexibleServerEditions), Optional.ToList(supportedServerVersions), serializedAdditionalRawData);
+            return new MySqlFlexibleServersCapabilityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                supportedGeoBackupRegions ?? new ChangeTrackingList<string>(),
+                supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>(),
+                supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServersCapabilityData>.Write(ModelReaderWriterOptions options)

@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> workspaceId = default;
             Optional<DataFactoryElement<string>> artifactId = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
@@ -304,7 +304,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new LakeHouseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, workspaceId.Value, artifactId.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, encryptedCredential.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential);
+            return new LakeHouseLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                workspaceId.Value,
+                artifactId.Value,
+                servicePrincipalId.Value,
+                servicePrincipalKey,
+                tenant.Value,
+                encryptedCredential.Value,
+                servicePrincipalCredentialType.Value,
+                servicePrincipalCredential);
         }
 
         BinaryData IPersistableModel<LakeHouseLinkedService>.Write(ModelReaderWriterOptions options)

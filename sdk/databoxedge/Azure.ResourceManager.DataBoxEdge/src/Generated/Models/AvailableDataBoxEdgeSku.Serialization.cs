@@ -175,15 +175,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<DataBoxEdgeSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<DataBoxEdgeSkuCost>> costs = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<string> apiVersions = default;
+            IReadOnlyList<DataBoxEdgeSkuLocationInfo> locationInfo = default;
+            IReadOnlyList<DataBoxEdgeSkuCost> costs = default;
             Optional<DataBoxEdgeSkuSignupOption> signupOption = default;
             Optional<DataBoxEdgeSkuVersion> version = default;
             Optional<DataBoxEdgeSkuAvailability> availability = default;
-            Optional<IReadOnlyList<DataBoxEdgeShipmentType>> shipmentTypes = default;
-            Optional<IReadOnlyList<DataBoxEdgeSkuCapability>> capabilities = default;
+            IReadOnlyList<DataBoxEdgeShipmentType> shipmentTypes = default;
+            IReadOnlyList<DataBoxEdgeSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,7 +343,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableDataBoxEdgeSku(resourceType.Value, Optional.ToNullable(name), kind.Value, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(locationInfo), Optional.ToList(costs), Optional.ToNullable(signupOption), Optional.ToNullable(version), Optional.ToNullable(availability), Optional.ToList(shipmentTypes), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new AvailableDataBoxEdgeSku(
+                resourceType.Value,
+                Optional.ToNullable(name),
+                kind.Value,
+                Optional.ToNullable(tier),
+                size.Value,
+                family.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<DataBoxEdgeSkuLocationInfo>(),
+                costs ?? new ChangeTrackingList<DataBoxEdgeSkuCost>(),
+                Optional.ToNullable(signupOption),
+                Optional.ToNullable(version),
+                Optional.ToNullable(availability),
+                shipmentTypes ?? new ChangeTrackingList<DataBoxEdgeShipmentType>(),
+                capabilities ?? new ChangeTrackingList<DataBoxEdgeSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableDataBoxEdgeSku>.Write(ModelReaderWriterOptions options)

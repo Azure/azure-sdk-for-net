@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedServicesMarketplaceRegistrationData>> value = default;
+            IReadOnlyList<ManagedServicesMarketplaceRegistrationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceRegistrationDefinitionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MarketplaceRegistrationDefinitionList(value ?? new ChangeTrackingList<ManagedServicesMarketplaceRegistrationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceRegistrationDefinitionList>.Write(ModelReaderWriterOptions options)

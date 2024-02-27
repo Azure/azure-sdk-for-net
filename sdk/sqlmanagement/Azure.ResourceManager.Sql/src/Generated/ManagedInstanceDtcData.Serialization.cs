@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<bool> dtcEnabled = default;
             Optional<ManagedInstanceDtcSecuritySettings> securitySettings = default;
-            Optional<IList<string>> externalDnsSuffixSearchList = default;
+            IList<string> externalDnsSuffixSearchList = default;
             Optional<string> dtcHostNameDnsSuffix = default;
             Optional<JobExecutionProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceDtcData(id, name, type, systemData.Value, Optional.ToNullable(dtcEnabled), securitySettings.Value, Optional.ToList(externalDnsSuffixSearchList), dtcHostNameDnsSuffix.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ManagedInstanceDtcData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(dtcEnabled),
+                securitySettings.Value,
+                externalDnsSuffixSearchList ?? new ChangeTrackingList<string>(),
+                dtcHostNameDnsSuffix.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcData>.Write(ModelReaderWriterOptions options)

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<Uri> appPackageUrl = default;
-            Optional<IReadOnlyDictionary<string, string>> defaultParameterList = default;
+            IReadOnlyDictionary<string, string> defaultParameterList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +240,18 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricApplicationTypeVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, appPackageUrl.Value, Optional.ToDictionary(defaultParameterList), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricApplicationTypeVersionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                appPackageUrl.Value,
+                defaultParameterList ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricApplicationTypeVersionData>.Write(ModelReaderWriterOptions options)

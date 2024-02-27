@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             Optional<string> immutableSubscriptionId = default;
             Optional<ResourceIdentifier> immutableResourceId = default;
             Optional<string> vnetTrafficTag = default;
-            Optional<IList<DeviceUpdatePrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
-            Optional<IList<DeviceUpdatePrivateLinkServiceConnection>> privateLinkServiceConnections = default;
-            Optional<IList<DeviceUpdatePrivateLinkServiceProxy>> privateLinkServiceProxies = default;
-            Optional<IList<DeviceUpdatePrivateEndpointConnectionDetails>> connectionDetails = default;
+            IList<DeviceUpdatePrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
+            IList<DeviceUpdatePrivateLinkServiceConnection> privateLinkServiceConnections = default;
+            IList<DeviceUpdatePrivateLinkServiceProxy> privateLinkServiceProxies = default;
+            IList<DeviceUpdatePrivateEndpointConnectionDetails> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateRemotePrivateEndpoint(id.Value, Optional.ToNullable(location), immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(privateLinkServiceConnections), Optional.ToList(privateLinkServiceProxies), Optional.ToList(connectionDetails), serializedAdditionalRawData);
+            return new DeviceUpdateRemotePrivateEndpoint(
+                id.Value,
+                Optional.ToNullable(location),
+                immutableSubscriptionId.Value,
+                immutableResourceId.Value,
+                vnetTrafficTag.Value,
+                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection>(),
+                privateLinkServiceConnections ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection>(),
+                privateLinkServiceProxies ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceProxy>(),
+                connectionDetails ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateRemotePrivateEndpoint>.Write(ModelReaderWriterOptions options)

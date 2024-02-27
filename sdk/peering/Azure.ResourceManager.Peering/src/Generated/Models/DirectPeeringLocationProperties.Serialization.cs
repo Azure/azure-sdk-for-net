@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<DirectPeeringFacility>> peeringFacilities = default;
-            Optional<IList<PeeringBandwidthOffer>> bandwidthOffers = default;
+            IList<DirectPeeringFacility> peeringFacilities = default;
+            IList<PeeringBandwidthOffer> bandwidthOffers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectPeeringLocationProperties(Optional.ToList(peeringFacilities), Optional.ToList(bandwidthOffers), serializedAdditionalRawData);
+            return new DirectPeeringLocationProperties(peeringFacilities ?? new ChangeTrackingList<DirectPeeringFacility>(), bandwidthOffers ?? new ChangeTrackingList<PeeringBandwidthOffer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectPeeringLocationProperties>.Write(ModelReaderWriterOptions options)

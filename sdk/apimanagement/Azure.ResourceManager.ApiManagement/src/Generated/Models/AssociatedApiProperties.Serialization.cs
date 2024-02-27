@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> name = default;
             Optional<Uri> serviceUri = default;
             Optional<string> path = default;
-            Optional<IReadOnlyList<ApiOperationInvokableProtocol>> protocols = default;
+            IReadOnlyList<ApiOperationInvokableProtocol> protocols = default;
             Optional<string> description = default;
             Optional<AuthenticationSettingsContract> authenticationSettings = default;
             Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
@@ -352,7 +352,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociatedApiProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, serializedAdditionalRawData, id.Value, name.Value, serviceUri.Value, path.Value, Optional.ToList(protocols));
+            return new AssociatedApiProperties(
+                description.Value,
+                authenticationSettings.Value,
+                subscriptionKeyParameterNames.Value,
+                Optional.ToNullable(type),
+                apiRevision.Value,
+                apiVersion.Value,
+                Optional.ToNullable(isCurrent),
+                Optional.ToNullable(isOnline),
+                apiRevisionDescription.Value,
+                apiVersionDescription.Value,
+                apiVersionSetId.Value,
+                Optional.ToNullable(subscriptionRequired),
+                termsOfServiceUri.Value,
+                contact.Value,
+                license.Value,
+                serializedAdditionalRawData,
+                id.Value,
+                name.Value,
+                serviceUri.Value,
+                path.Value,
+                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>());
         }
 
         BinaryData IPersistableModel<AssociatedApiProperties>.Write(ModelReaderWriterOptions options)

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<ResourceIdentifier> nfviId = default;
             Optional<bool> allowSoftwareUpdate = default;
             NetworkFunctionConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            Optional<IList<string>> roleOverrideValues = default;
+            IList<string> roleOverrideValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownNetworkFunctionPropertiesFormat(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), configurationType, Optional.ToList(roleOverrideValues), serializedAdditionalRawData);
+            return new UnknownNetworkFunctionPropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                publisherName.Value,
+                Optional.ToNullable(publisherScope),
+                networkFunctionDefinitionGroupName.Value,
+                networkFunctionDefinitionVersion.Value,
+                networkFunctionDefinitionOfferingLocation.Value,
+                networkFunctionDefinitionVersionResourceReference.Value,
+                Optional.ToNullable(nfviType),
+                nfviId.Value,
+                Optional.ToNullable(allowSoftwareUpdate),
+                configurationType,
+                roleOverrideValues ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionPropertiesFormat>.Write(ModelReaderWriterOptions options)

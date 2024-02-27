@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             WebApplicationRuleMatchOperator @operator = default;
             Optional<bool> negateCondition = default;
             IList<string> matchValue = default;
-            Optional<IList<WebApplicationRuleMatchTransformType>> transforms = default;
+            IList<WebApplicationRuleMatchTransformType> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms), serializedAdditionalRawData);
+            return new WebApplicationRuleMatchCondition(
+                matchVariable,
+                selector.Value,
+                @operator,
+                Optional.ToNullable(negateCondition),
+                matchValue,
+                transforms ?? new ChangeTrackingList<WebApplicationRuleMatchTransformType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationRuleMatchCondition>.Write(ModelReaderWriterOptions options)

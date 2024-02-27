@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> name = default;
             Optional<SecurityTrafficDirection> direction = default;
             Optional<int> destinationPort = default;
-            Optional<IList<SecurityTransportProtocol>> protocols = default;
-            Optional<IList<string>> ipAddresses = default;
+            IList<SecurityTransportProtocol> protocols = default;
+            IList<string> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedSecurityRule(name.Value, Optional.ToNullable(direction), Optional.ToNullable(destinationPort), Optional.ToList(protocols), Optional.ToList(ipAddresses), serializedAdditionalRawData);
+            return new RecommendedSecurityRule(
+                name.Value,
+                Optional.ToNullable(direction),
+                Optional.ToNullable(destinationPort),
+                protocols ?? new ChangeTrackingList<SecurityTransportProtocol>(),
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedSecurityRule>.Write(ModelReaderWriterOptions options)

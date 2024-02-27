@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<FavoriteType> favoriteType = default;
             Optional<string> sourceType = default;
             Optional<string> timeModified = default;
-            Optional<IList<string>> tags = default;
+            IList<string> tags = default;
             Optional<string> category = default;
             Optional<bool> isGeneratedFromTemplate = default;
             Optional<string> userId = default;
@@ -217,7 +217,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFavorite(name.Value, config.Value, version.Value, favoriteId.Value, Optional.ToNullable(favoriteType), sourceType.Value, timeModified.Value, Optional.ToList(tags), category.Value, Optional.ToNullable(isGeneratedFromTemplate), userId.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFavorite(
+                name.Value,
+                config.Value,
+                version.Value,
+                favoriteId.Value,
+                Optional.ToNullable(favoriteType),
+                sourceType.Value,
+                timeModified.Value,
+                tags ?? new ChangeTrackingList<string>(),
+                category.Value,
+                Optional.ToNullable(isGeneratedFromTemplate),
+                userId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFavorite>.Write(ModelReaderWriterOptions options)

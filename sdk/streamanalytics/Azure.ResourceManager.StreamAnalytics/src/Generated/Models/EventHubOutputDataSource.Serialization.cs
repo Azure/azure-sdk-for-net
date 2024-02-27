@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> eventHubName = default;
             Optional<int> partitionCount = default;
             Optional<string> partitionKey = default;
-            Optional<IList<string>> propertyColumns = default;
+            IList<string> propertyColumns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubOutputDataSource(type, serializedAdditionalRawData, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), eventHubName.Value, Optional.ToNullable(partitionCount), partitionKey.Value, Optional.ToList(propertyColumns));
+            return new EventHubOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                serviceBusNamespace.Value,
+                sharedAccessPolicyName.Value,
+                sharedAccessPolicyKey.Value,
+                Optional.ToNullable(authenticationMode),
+                eventHubName.Value,
+                Optional.ToNullable(partitionCount),
+                partitionKey.Value,
+                propertyColumns ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<EventHubOutputDataSource>.Write(ModelReaderWriterOptions options)

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IReadOnlyList<UpdateHistoryEntry>> updateHistory = default;
+            IReadOnlyList<UpdateHistoryEntry> updateHistory = default;
             Optional<int> immutabilityPeriodSinceCreationInDays = default;
             Optional<ImmutabilityPolicyState> state = default;
             Optional<bool> allowProtectedAppendWrites = default;
@@ -190,7 +190,14 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobContainerImmutabilityPolicy(Optional.ToNullable(etag), Optional.ToList(updateHistory), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll), serializedAdditionalRawData);
+            return new BlobContainerImmutabilityPolicy(
+                Optional.ToNullable(etag),
+                updateHistory ?? new ChangeTrackingList<UpdateHistoryEntry>(),
+                Optional.ToNullable(immutabilityPeriodSinceCreationInDays),
+                Optional.ToNullable(state),
+                Optional.ToNullable(allowProtectedAppendWrites),
+                Optional.ToNullable(allowProtectedAppendWritesAll),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobContainerImmutabilityPolicy>.Write(ModelReaderWriterOptions options)

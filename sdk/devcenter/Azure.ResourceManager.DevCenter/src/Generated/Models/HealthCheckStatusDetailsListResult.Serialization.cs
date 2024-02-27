@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HealthCheckStatusDetailData>> value = default;
+            IReadOnlyList<HealthCheckStatusDetailData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthCheckStatusDetailsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HealthCheckStatusDetailsListResult(value ?? new ChangeTrackingList<HealthCheckStatusDetailData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthCheckStatusDetailsListResult>.Write(ModelReaderWriterOptions options)

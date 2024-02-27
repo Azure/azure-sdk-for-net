@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> ossVersion = default;
             Optional<string> clusterPoolVersion = default;
             Optional<bool> isPreview = default;
-            Optional<IReadOnlyList<ClusterComponentItem>> components = default;
+            IReadOnlyList<ClusterComponentItem> components = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterVersion(id, name, type, systemData.Value, clusterType.Value, clusterVersion.Value, ossVersion.Value, clusterPoolVersion.Value, Optional.ToNullable(isPreview), Optional.ToList(components), serializedAdditionalRawData);
+            return new HDInsightClusterVersion(
+                id,
+                name,
+                type,
+                systemData.Value,
+                clusterType.Value,
+                clusterVersion.Value,
+                ossVersion.Value,
+                clusterPoolVersion.Value,
+                Optional.ToNullable(isPreview),
+                components ?? new ChangeTrackingList<ClusterComponentItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterVersion>.Write(ModelReaderWriterOptions options)

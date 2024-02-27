@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuotaRequestDetailData>> value = default;
+            IReadOnlyList<QuotaRequestDetailData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaRequestDetailsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new QuotaRequestDetailsList(value ?? new ChangeTrackingList<QuotaRequestDetailData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaRequestDetailsList>.Write(ModelReaderWriterOptions options)

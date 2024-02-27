@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerState(state.Value, Optional.ToNullable(startTime), Optional.ToNullable(exitCode), Optional.ToNullable(finishTime), detailStatus.Value, serializedAdditionalRawData);
+            return new ContainerState(
+                state.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(exitCode),
+                Optional.ToNullable(finishTime),
+                detailStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerState>.Write(ModelReaderWriterOptions options)

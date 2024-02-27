@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<int> quantity = default;
             Optional<string> displayName = default;
             Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<IList<string>> appliedScopes = default;
+            IList<string> appliedScopes = default;
             Optional<AppliedScopeProperties> appliedScopeProperties = default;
             Optional<bool> renew = default;
             Optional<PurchaseRequestPropertiesReservedResourceProperties> reservedResourceProperties = default;
@@ -313,7 +313,22 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationPurchaseContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), appliedScopeProperties.Value, Optional.ToNullable(renew), reservedResourceProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationPurchaseContent(
+                sku.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(reservedResourceType),
+                billingScopeId.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(quantity),
+                displayName.Value,
+                Optional.ToNullable(appliedScopeType),
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeProperties.Value,
+                Optional.ToNullable(renew),
+                reservedResourceProperties.Value,
+                Optional.ToNullable(reviewDateTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationPurchaseContent>.Write(ModelReaderWriterOptions options)

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlImageSku), Optional.ToNullable(scaleType), Optional.ToNullable(clusterManagerType), Optional.ToNullable(clusterConfiguration), windowsServerFailoverClusterDomainProfile.Value, serializedAdditionalRawData);
+            return new SqlVmGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                sqlImageOffer.Value,
+                Optional.ToNullable(sqlImageSku),
+                Optional.ToNullable(scaleType),
+                Optional.ToNullable(clusterManagerType),
+                Optional.ToNullable(clusterConfiguration),
+                windowsServerFailoverClusterDomainProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmGroupData>.Write(ModelReaderWriterOptions options)

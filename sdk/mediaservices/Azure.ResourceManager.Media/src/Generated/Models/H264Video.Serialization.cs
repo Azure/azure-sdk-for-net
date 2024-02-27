@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Optional<H264Complexity> complexity = default;
-            Optional<IList<H264Layer>> layers = default;
+            IList<H264Layer> layers = default;
             Optional<H264RateControlMode> rateControlMode = default;
             Optional<bool> sceneChangeDetection = default;
             Optional<TimeSpan> keyFrameInterval = default;
@@ -208,7 +208,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H264Video(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(complexity), Optional.ToList(layers), Optional.ToNullable(rateControlMode), Optional.ToNullable(sceneChangeDetection));
+            return new H264Video(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode),
+                Optional.ToNullable(complexity),
+                layers ?? new ChangeTrackingList<H264Layer>(),
+                Optional.ToNullable(rateControlMode),
+                Optional.ToNullable(sceneChangeDetection));
         }
 
         BinaryData IPersistableModel<H264Video>.Write(ModelReaderWriterOptions options)

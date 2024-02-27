@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
             Optional<AutoExecuteStatusInheritedFrom> autoExecuteStatusInheritedFrom = default;
             Optional<string> recommendationsStatus = default;
             Optional<DateTimeOffset> lastChecked = default;
-            Optional<IReadOnlyList<RecommendedActionData>> recommendedActions = default;
+            IReadOnlyList<RecommendedActionData> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAdvisorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), Optional.ToNullable(advisorStatus), Optional.ToNullable(autoExecuteStatus), Optional.ToNullable(autoExecuteStatusInheritedFrom), recommendationsStatus.Value, Optional.ToNullable(lastChecked), Optional.ToList(recommendedActions), serializedAdditionalRawData);
+            return new SqlAdvisorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(advisorStatus),
+                Optional.ToNullable(autoExecuteStatus),
+                Optional.ToNullable(autoExecuteStatusInheritedFrom),
+                recommendationsStatus.Value,
+                Optional.ToNullable(lastChecked),
+                recommendedActions ?? new ChangeTrackingList<RecommendedActionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAdvisorData>.Write(ModelReaderWriterOptions options)

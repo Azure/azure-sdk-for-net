@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<DesktopVirtualizationDayOfWeek>> daysOfWeek = default;
+            IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
             Optional<ScalingActionTime> rampUpStartTime = default;
             Optional<StartupBehavior> rampUpAutoStartHosts = default;
             Optional<SetStartVmOnConnect> rampUpStartVmOnConnect = default;
@@ -539,7 +539,38 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanPersonalScheduleData(id, name, type, systemData.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpAutoStartHosts), Optional.ToNullable(rampUpStartVmOnConnect), Optional.ToNullable(rampUpActionOnDisconnect), Optional.ToNullable(rampUpMinutesToWaitOnDisconnect), Optional.ToNullable(rampUpActionOnLogoff), Optional.ToNullable(rampUpMinutesToWaitOnLogoff), peakStartTime.Value, Optional.ToNullable(peakStartVmOnConnect), Optional.ToNullable(peakActionOnDisconnect), Optional.ToNullable(peakMinutesToWaitOnDisconnect), Optional.ToNullable(peakActionOnLogoff), Optional.ToNullable(peakMinutesToWaitOnLogoff), rampDownStartTime.Value, Optional.ToNullable(rampDownStartVmOnConnect), Optional.ToNullable(rampDownActionOnDisconnect), Optional.ToNullable(rampDownMinutesToWaitOnDisconnect), Optional.ToNullable(rampDownActionOnLogoff), Optional.ToNullable(rampDownMinutesToWaitOnLogoff), offPeakStartTime.Value, Optional.ToNullable(offPeakStartVmOnConnect), Optional.ToNullable(offPeakActionOnDisconnect), Optional.ToNullable(offPeakMinutesToWaitOnDisconnect), Optional.ToNullable(offPeakActionOnLogoff), Optional.ToNullable(offPeakMinutesToWaitOnLogoff), serializedAdditionalRawData);
+            return new ScalingPlanPersonalScheduleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
+                rampUpStartTime.Value,
+                Optional.ToNullable(rampUpAutoStartHosts),
+                Optional.ToNullable(rampUpStartVmOnConnect),
+                Optional.ToNullable(rampUpActionOnDisconnect),
+                Optional.ToNullable(rampUpMinutesToWaitOnDisconnect),
+                Optional.ToNullable(rampUpActionOnLogoff),
+                Optional.ToNullable(rampUpMinutesToWaitOnLogoff),
+                peakStartTime.Value,
+                Optional.ToNullable(peakStartVmOnConnect),
+                Optional.ToNullable(peakActionOnDisconnect),
+                Optional.ToNullable(peakMinutesToWaitOnDisconnect),
+                Optional.ToNullable(peakActionOnLogoff),
+                Optional.ToNullable(peakMinutesToWaitOnLogoff),
+                rampDownStartTime.Value,
+                Optional.ToNullable(rampDownStartVmOnConnect),
+                Optional.ToNullable(rampDownActionOnDisconnect),
+                Optional.ToNullable(rampDownMinutesToWaitOnDisconnect),
+                Optional.ToNullable(rampDownActionOnLogoff),
+                Optional.ToNullable(rampDownMinutesToWaitOnLogoff),
+                offPeakStartTime.Value,
+                Optional.ToNullable(offPeakStartVmOnConnect),
+                Optional.ToNullable(offPeakActionOnDisconnect),
+                Optional.ToNullable(offPeakMinutesToWaitOnDisconnect),
+                Optional.ToNullable(offPeakActionOnLogoff),
+                Optional.ToNullable(offPeakMinutesToWaitOnLogoff),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanPersonalScheduleData>.Write(ModelReaderWriterOptions options)

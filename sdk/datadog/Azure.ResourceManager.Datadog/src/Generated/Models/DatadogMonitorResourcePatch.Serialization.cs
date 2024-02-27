@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 return null;
             }
             Optional<MonitorUpdateProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ResourceSku> sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogMonitorResourcePatch(properties.Value, Optional.ToDictionary(tags), sku.Value, serializedAdditionalRawData);
+            return new DatadogMonitorResourcePatch(properties.Value, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogMonitorResourcePatch>.Write(ModelReaderWriterOptions options)

@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountKeyVaultProperties(keyname.Value, keyversion.Value, keyvaulturi.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), Optional.ToNullable(currentVersionedKeyExpirationTimestamp), serializedAdditionalRawData);
+            return new StorageAccountKeyVaultProperties(
+                keyname.Value,
+                keyversion.Value,
+                keyvaulturi.Value,
+                currentVersionedKeyIdentifier.Value,
+                Optional.ToNullable(lastKeyRotationTimestamp),
+                Optional.ToNullable(currentVersionedKeyExpirationTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountKeyVaultProperties>.Write(ModelReaderWriterOptions options)

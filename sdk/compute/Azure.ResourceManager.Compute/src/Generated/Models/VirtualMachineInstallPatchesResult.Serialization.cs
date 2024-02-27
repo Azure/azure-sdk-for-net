@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> pendingPatchCount = default;
             Optional<int> installedPatchCount = default;
             Optional<int> failedPatchCount = default;
-            Optional<IReadOnlyList<PatchInstallationDetail>> patches = default;
+            IReadOnlyList<PatchInstallationDetail> patches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<ComputeApiError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToList(patches), Optional.ToNullable(startDateTime), error.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstallPatchesResult(
+                Optional.ToNullable(status),
+                installationActivityId.Value,
+                Optional.ToNullable(rebootStatus),
+                Optional.ToNullable(maintenanceWindowExceeded),
+                Optional.ToNullable(excludedPatchCount),
+                Optional.ToNullable(notSelectedPatchCount),
+                Optional.ToNullable(pendingPatchCount),
+                Optional.ToNullable(installedPatchCount),
+                Optional.ToNullable(failedPatchCount),
+                patches ?? new ChangeTrackingList<PatchInstallationDetail>(),
+                Optional.ToNullable(startDateTime),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)

@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IList<TargetDnsServer>> targetDnsServers = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IList<TargetDnsServer> targetDnsServers = default;
+            IDictionary<string, string> metadata = default;
             Optional<DnsForwardingRuleState> forwardingRuleState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsForwardingRulePatch(Optional.ToList(targetDnsServers), Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), serializedAdditionalRawData);
+            return new DnsForwardingRulePatch(targetDnsServers ?? new ChangeTrackingList<TargetDnsServer>(), metadata ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(forwardingRuleState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsForwardingRulePatch>.Write(ModelReaderWriterOptions options)

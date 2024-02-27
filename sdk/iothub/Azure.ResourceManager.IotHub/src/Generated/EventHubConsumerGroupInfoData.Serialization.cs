@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
+            IReadOnlyDictionary<string, BinaryData> properties = default;
             Optional<ETag?> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -192,7 +192,14 @@ namespace Azure.ResourceManager.IotHub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubConsumerGroupInfoData(id, name, type, systemData.Value, Optional.ToDictionary(properties), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new EventHubConsumerGroupInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubConsumerGroupInfoData>.Write(ModelReaderWriterOptions options)

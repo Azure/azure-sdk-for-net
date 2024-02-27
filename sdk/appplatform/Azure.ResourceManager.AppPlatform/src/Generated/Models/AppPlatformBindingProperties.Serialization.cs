@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> resourceType = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> key = default;
-            Optional<IDictionary<string, BinaryData>> bindingParameters = default;
+            IDictionary<string, BinaryData> bindingParameters = default;
             Optional<string> generatedProperties = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
@@ -208,7 +208,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBindingProperties(resourceName.Value, resourceType.Value, resourceId.Value, key.Value, Optional.ToDictionary(bindingParameters), generatedProperties.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serializedAdditionalRawData);
+            return new AppPlatformBindingProperties(
+                resourceName.Value,
+                resourceType.Value,
+                resourceId.Value,
+                key.Value,
+                bindingParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                generatedProperties.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBindingProperties>.Write(ModelReaderWriterOptions options)

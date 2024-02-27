@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<IPAddressGroup>> ipAddressGroups = default;
+            IList<IPAddressGroup> ipAddressGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeNode(id, name, type, systemData.Value, Optional.ToList(ipAddressGroups), serializedAdditionalRawData);
+            return new EdgeNode(
+                id,
+                name,
+                type,
+                systemData.Value,
+                ipAddressGroups ?? new ChangeTrackingList<IPAddressGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeNode>.Write(ModelReaderWriterOptions options)

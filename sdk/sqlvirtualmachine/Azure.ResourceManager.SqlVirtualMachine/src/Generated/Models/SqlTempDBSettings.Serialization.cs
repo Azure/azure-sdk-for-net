@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<int> dataFileCount = default;
             Optional<bool> persistFolder = default;
             Optional<string> persistFolderPath = default;
-            Optional<IList<int>> luns = default;
+            IList<int> luns = default;
             Optional<string> defaultFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlTempDBSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, Optional.ToList(luns), defaultFilePath.Value, serializedAdditionalRawData);
+            return new SqlTempDBSettings(
+                Optional.ToNullable(dataFileSize),
+                Optional.ToNullable(dataGrowth),
+                Optional.ToNullable(logFileSize),
+                Optional.ToNullable(logGrowth),
+                Optional.ToNullable(dataFileCount),
+                Optional.ToNullable(persistFolder),
+                persistFolderPath.Value,
+                luns ?? new ChangeTrackingList<int>(),
+                defaultFilePath.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlTempDBSettings>.Write(ModelReaderWriterOptions options)

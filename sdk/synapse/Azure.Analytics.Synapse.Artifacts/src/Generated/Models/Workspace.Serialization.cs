@@ -121,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             Optional<ManagedIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             string location = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -132,12 +132,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> provisioningState = default;
             Optional<string> sqlAdministratorLogin = default;
             Optional<VirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IDictionary<string, string>> connectivityEndpoints = default;
+            IDictionary<string, string> connectivityEndpoints = default;
             Optional<string> managedVirtualNetwork = default;
-            Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
+            IList<PrivateEndpointConnection> privateEndpointConnections = default;
             Optional<EncryptionDetails> encryption = default;
             Optional<Guid> workspaceUID = default;
-            Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
+            IReadOnlyDictionary<string, object> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
             Optional<WorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
             Optional<PurviewConfiguration> purviewConfiguration = default;
@@ -342,7 +342,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value);
+            return new Workspace(
+                id.Value,
+                name.Value,
+                type.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity.Value,
+                defaultDataLakeStorage.Value,
+                sqlAdministratorLoginPassword.Value,
+                managedResourceGroupName.Value,
+                provisioningState.Value,
+                sqlAdministratorLogin.Value,
+                virtualNetworkProfile.Value,
+                connectivityEndpoints ?? new ChangeTrackingDictionary<string, string>(),
+                managedVirtualNetwork.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnection>(),
+                encryption.Value,
+                Optional.ToNullable(workspaceUID),
+                extraProperties ?? new ChangeTrackingDictionary<string, object>(),
+                managedVirtualNetworkSettings.Value,
+                workspaceRepositoryConfiguration.Value,
+                purviewConfiguration.Value,
+                adlaResourceId.Value);
         }
 
         internal partial class WorkspaceConverter : JsonConverter<Workspace>

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData>> value = default;
+            IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesResults(Optional.ToList(value), serializedAdditionalRawData);
+            return new RulesResults(value ?? new ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesResults>.Write(ModelReaderWriterOptions options)

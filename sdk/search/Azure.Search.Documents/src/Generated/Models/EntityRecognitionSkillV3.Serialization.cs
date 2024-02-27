@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<string>> categories = default;
+            IList<string> categories = default;
             Optional<string> defaultLanguageCode = default;
             Optional<double?> minimumPrecision = default;
             Optional<string> modelVersion = default;
@@ -199,7 +199,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new EntityRecognitionSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToList(categories), defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), modelVersion.Value);
+            return new EntityRecognitionSkillV3(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                categories ?? new ChangeTrackingList<string>(),
+                defaultLanguageCode.Value,
+                Optional.ToNullable(minimumPrecision),
+                modelVersion.Value);
         }
     }
 }

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<JobExecutionContainer>> containers = default;
-            Optional<IList<JobExecutionContainer>> initContainers = default;
+            IList<JobExecutionContainer> containers = default;
+            IList<JobExecutionContainer> initContainers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobExecutionTemplate(Optional.ToList(containers), Optional.ToList(initContainers), serializedAdditionalRawData);
+            return new ContainerAppJobExecutionTemplate(containers ?? new ChangeTrackingList<JobExecutionContainer>(), initContainers ?? new ChangeTrackingList<JobExecutionContainer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobExecutionTemplate>.Write(ModelReaderWriterOptions options)

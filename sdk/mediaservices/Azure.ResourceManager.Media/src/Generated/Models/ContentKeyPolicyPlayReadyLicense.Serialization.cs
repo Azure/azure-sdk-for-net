@@ -211,7 +211,19 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyPlayReadyLicense(allowTestDevices, Optional.ToNullable(securityLevel), Optional.ToNullable(beginDate), Optional.ToNullable(expirationDate), Optional.ToNullable(relativeBeginDate), Optional.ToNullable(relativeExpirationDate), Optional.ToNullable(gracePeriod), playRight.Value, licenseType, contentKeyLocation, contentType, serializedAdditionalRawData);
+            return new ContentKeyPolicyPlayReadyLicense(
+                allowTestDevices,
+                Optional.ToNullable(securityLevel),
+                Optional.ToNullable(beginDate),
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(relativeBeginDate),
+                Optional.ToNullable(relativeExpirationDate),
+                Optional.ToNullable(gracePeriod),
+                playRight.Value,
+                licenseType,
+                contentKeyLocation,
+                contentType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyLicense>.Write(ModelReaderWriterOptions options)

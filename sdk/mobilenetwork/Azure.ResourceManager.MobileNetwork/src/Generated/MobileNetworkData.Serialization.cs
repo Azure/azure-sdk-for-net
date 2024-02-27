@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), publicLandMobileNetworkIdentifier, serviceKey.Value, serializedAdditionalRawData);
+            return new MobileNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                publicLandMobileNetworkIdentifier,
+                serviceKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkData>.Write(ModelReaderWriterOptions options)

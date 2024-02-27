@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoverySubnetName = default;
             Optional<IPAddress> recoveryStaticIPAddress = default;
             Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
-            Optional<IList<string>> recoveryLBBackendAddressPoolIds = default;
+            IList<string> recoveryLBBackendAddressPoolIds = default;
             Optional<string> tfoSubnetName = default;
             Optional<IPAddress> tfoStaticIPAddress = default;
             Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
-            Optional<IList<string>> tfoLBBackendAddressPoolIds = default;
+            IList<string> tfoLBBackendAddressPoolIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVFailoverIPConfigDetails(ipConfigName.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds), serializedAdditionalRawData);
+            return new HyperVFailoverIPConfigDetails(
+                ipConfigName.Value,
+                Optional.ToNullable(isPrimary),
+                Optional.ToNullable(isSeletedForFailover),
+                recoverySubnetName.Value,
+                recoveryStaticIPAddress.Value,
+                recoveryPublicIPAddressId.Value,
+                recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                tfoSubnetName.Value,
+                tfoStaticIPAddress.Value,
+                tfoPublicIPAddressId.Value,
+                tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVFailoverIPConfigDetails>.Write(ModelReaderWriterOptions options)

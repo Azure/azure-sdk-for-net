@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<ResourceIdentifier> recoveryContainerId = default;
-            Optional<IList<A2AVmDiskDetails>> vmDisks = default;
-            Optional<IList<A2AVmManagedDiskDetails>> vmManagedDisks = default;
+            IList<A2AVmDiskDetails> vmDisks = default;
+            IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
             Optional<ResourceIdentifier> recoveryResourceGroupId = default;
             Optional<string> recoveryCloudServiceId = default;
             Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
@@ -289,7 +289,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ASwitchProtectionContent(instanceType, serializedAdditionalRawData, recoveryContainerId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, policyId.Value, recoveryBootDiagStorageAccountId.Value, recoveryAvailabilityZone.Value, recoveryProximityPlacementGroupId.Value, recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, diskEncryptionInfo.Value);
+            return new A2ASwitchProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryContainerId.Value,
+                vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
+                recoveryResourceGroupId.Value,
+                recoveryCloudServiceId.Value,
+                recoveryAvailabilitySetId.Value,
+                policyId.Value,
+                recoveryBootDiagStorageAccountId.Value,
+                recoveryAvailabilityZone.Value,
+                recoveryProximityPlacementGroupId.Value,
+                recoveryVirtualMachineScaleSetId.Value,
+                recoveryCapacityReservationGroupId.Value,
+                diskEncryptionInfo.Value);
         }
 
         BinaryData IPersistableModel<A2ASwitchProtectionContent>.Write(ModelReaderWriterOptions options)

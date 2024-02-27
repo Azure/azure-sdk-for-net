@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryBaseImageTriggerUpdateContent(Optional.ToNullable(baseImageTriggerType), updateTriggerEndpoint.Value, Optional.ToNullable(updateTriggerPayloadType), Optional.ToNullable(status), name, serializedAdditionalRawData);
+            return new ContainerRegistryBaseImageTriggerUpdateContent(
+                Optional.ToNullable(baseImageTriggerType),
+                updateTriggerEndpoint.Value,
+                Optional.ToNullable(updateTriggerPayloadType),
+                Optional.ToNullable(status),
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>.Write(ModelReaderWriterOptions options)

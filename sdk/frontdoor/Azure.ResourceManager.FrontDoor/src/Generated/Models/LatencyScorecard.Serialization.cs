@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<DateTimeOffset> startDateTimeUtc = default;
             Optional<DateTimeOffset> endDateTimeUtc = default;
             Optional<string> country = default;
-            Optional<IList<LatencyMetric>> latencyMetrics = default;
+            IList<LatencyMetric> latencyMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +301,23 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LatencyScorecard(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, id0.Value, name0.Value, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), country.Value, Optional.ToList(latencyMetrics), serializedAdditionalRawData);
+            return new LatencyScorecard(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                id0.Value,
+                name0.Value,
+                description.Value,
+                endpointA.Value,
+                endpointB.Value,
+                Optional.ToNullable(startDateTimeUtc),
+                Optional.ToNullable(endDateTimeUtc),
+                country.Value,
+                latencyMetrics ?? new ChangeTrackingList<LatencyMetric>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LatencyScorecard>.Write(ModelReaderWriterOptions options)

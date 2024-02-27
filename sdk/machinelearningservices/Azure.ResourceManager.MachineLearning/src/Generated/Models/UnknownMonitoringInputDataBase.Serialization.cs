@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> columns = default;
+            IDictionary<string, string> columns = default;
             Optional<string> dataContext = default;
             MonitoringInputDataType inputDataType = "Unknown";
             JobInputType jobInputType = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMonitoringInputDataBase(Optional.ToDictionary(columns), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData);
+            return new UnknownMonitoringInputDataBase(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext.Value,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringInputDataBase>.Write(ModelReaderWriterOptions options)

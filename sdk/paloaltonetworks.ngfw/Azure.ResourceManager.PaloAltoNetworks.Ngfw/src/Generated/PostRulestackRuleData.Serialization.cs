@@ -215,16 +215,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Optional<FirewallBooleanType> negateSource = default;
             Optional<DestinationAddressInfo> destination = default;
             Optional<FirewallBooleanType> negateDestination = default;
-            Optional<IList<string>> applications = default;
+            IList<string> applications = default;
             Optional<EdlMatchCategory> category = default;
             Optional<string> protocol = default;
-            Optional<IList<string>> protocolPortList = default;
+            IList<string> protocolPortList = default;
             Optional<string> inboundInspectionCertificate = default;
             Optional<string> auditComment = default;
             Optional<RulestackActionType> actionType = default;
             Optional<RulestackStateType> enableLogging = default;
             Optional<DecryptionRuleType> decryptionRuleType = default;
-            Optional<IList<RulestackTagInfo>> tags = default;
+            IList<RulestackTagInfo> tags = default;
             Optional<FirewallProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -447,7 +447,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostRulestackRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), ruleName, Optional.ToNullable(priority), description.Value, Optional.ToNullable(ruleState), source.Value, Optional.ToNullable(negateSource), destination.Value, Optional.ToNullable(negateDestination), Optional.ToList(applications), category.Value, protocol.Value, Optional.ToList(protocolPortList), inboundInspectionCertificate.Value, auditComment.Value, Optional.ToNullable(actionType), Optional.ToNullable(enableLogging), Optional.ToNullable(decryptionRuleType), Optional.ToList(tags), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PostRulestackRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                ruleName,
+                Optional.ToNullable(priority),
+                description.Value,
+                Optional.ToNullable(ruleState),
+                source.Value,
+                Optional.ToNullable(negateSource),
+                destination.Value,
+                Optional.ToNullable(negateDestination),
+                applications ?? new ChangeTrackingList<string>(),
+                category.Value,
+                protocol.Value,
+                protocolPortList ?? new ChangeTrackingList<string>(),
+                inboundInspectionCertificate.Value,
+                auditComment.Value,
+                Optional.ToNullable(actionType),
+                Optional.ToNullable(enableLogging),
+                Optional.ToNullable(decryptionRuleType),
+                tags ?? new ChangeTrackingList<RulestackTagInfo>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostRulestackRuleData>.Write(ModelReaderWriterOptions options)

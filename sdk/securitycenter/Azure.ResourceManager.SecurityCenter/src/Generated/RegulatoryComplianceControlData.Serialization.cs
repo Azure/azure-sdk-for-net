@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegulatoryComplianceControlData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(state), Optional.ToNullable(passedAssessments), Optional.ToNullable(failedAssessments), Optional.ToNullable(skippedAssessments), serializedAdditionalRawData);
+            return new RegulatoryComplianceControlData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(passedAssessments),
+                Optional.ToNullable(failedAssessments),
+                Optional.ToNullable(skippedAssessments),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegulatoryComplianceControlData>.Write(ModelReaderWriterOptions options)

@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReverseShippingDetails(sasKeyForLabel.Value, carrierName.Value, carrierDisplayName.Value, trackingId.Value, trackingUrl.Value, serializedAdditionalRawData);
+            return new ReverseShippingDetails(
+                sasKeyForLabel.Value,
+                carrierName.Value,
+                carrierDisplayName.Value,
+                trackingId.Value,
+                trackingUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReverseShippingDetails>.Write(ModelReaderWriterOptions options)

@@ -76,7 +76,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatParticipantRemovedFromThreadEventData(transactionId.Value, threadId.Value, Optional.ToNullable(time), removedByCommunicationIdentifier.Value, participantRemoved.Value, Optional.ToNullable(version));
+            return new AcsChatParticipantRemovedFromThreadEventData(
+                transactionId.Value,
+                threadId.Value,
+                Optional.ToNullable(time),
+                removedByCommunicationIdentifier.Value,
+                participantRemoved.Value,
+                Optional.ToNullable(version));
         }
 
         internal partial class AcsChatParticipantRemovedFromThreadEventDataConverter : JsonConverter<AcsChatParticipantRemovedFromThreadEventData>

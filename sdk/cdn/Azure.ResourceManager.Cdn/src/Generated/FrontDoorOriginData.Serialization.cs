@@ -347,7 +347,25 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginData(id, name, type, systemData.Value, originGroupName.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(enforceCertificateNameCheck), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorOriginData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                originGroupName.Value,
+                azureOrigin,
+                hostName.Value,
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                originHostHeader.Value,
+                Optional.ToNullable(priority),
+                Optional.ToNullable(weight),
+                sharedPrivateLinkResource.Value,
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(enforceCertificateNameCheck),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deploymentStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginData>.Write(ModelReaderWriterOptions options)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             Optional<string> resourceId = default;
             Optional<string> sourceInfo = default;
-            Optional<IReadOnlyList<DscReportResourceNavigation>> dependsOn = default;
+            IReadOnlyList<DscReportResourceNavigation> dependsOn = default;
             Optional<string> moduleName = default;
             Optional<string> moduleVersion = default;
             Optional<string> resourceName = default;
@@ -206,7 +206,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportResource(resourceId.Value, sourceInfo.Value, Optional.ToList(dependsOn), moduleName.Value, moduleVersion.Value, resourceName.Value, error.Value, status.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(startDate), serializedAdditionalRawData);
+            return new DscReportResource(
+                resourceId.Value,
+                sourceInfo.Value,
+                dependsOn ?? new ChangeTrackingList<DscReportResourceNavigation>(),
+                moduleName.Value,
+                moduleVersion.Value,
+                resourceName.Value,
+                error.Value,
+                status.Value,
+                Optional.ToNullable(durationInSeconds),
+                Optional.ToNullable(startDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportResource>.Write(ModelReaderWriterOptions options)

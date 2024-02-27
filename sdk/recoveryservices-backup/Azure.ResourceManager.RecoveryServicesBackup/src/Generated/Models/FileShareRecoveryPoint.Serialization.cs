@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareRecoveryPoint(objectType, serializedAdditionalRawData, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB), recoveryPointProperties.Value);
+            return new FileShareRecoveryPoint(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointType.Value,
+                Optional.ToNullable(recoveryPointTime),
+                fileShareSnapshotUri.Value,
+                Optional.ToNullable(recoveryPointSizeInGB),
+                recoveryPointProperties.Value);
         }
 
         BinaryData IPersistableModel<FileShareRecoveryPoint>.Write(ModelReaderWriterOptions options)

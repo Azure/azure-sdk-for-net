@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierRecommendationResult(deploymentType, serializedAdditionalRawData, dbVmSku.Value, Optional.ToNullable(databaseInstanceCount), centralServerVmSku.Value, Optional.ToNullable(centralServerInstanceCount), applicationServerVmSku.Value, Optional.ToNullable(applicationServerInstanceCount));
+            return new ThreeTierRecommendationResult(
+                deploymentType,
+                serializedAdditionalRawData,
+                dbVmSku.Value,
+                Optional.ToNullable(databaseInstanceCount),
+                centralServerVmSku.Value,
+                Optional.ToNullable(centralServerInstanceCount),
+                applicationServerVmSku.Value,
+                Optional.ToNullable(applicationServerInstanceCount));
         }
 
         BinaryData IPersistableModel<ThreeTierRecommendationResult>.Write(ModelReaderWriterOptions options)

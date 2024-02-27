@@ -244,8 +244,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DatasetReference>> inputs = default;
-            Optional<IList<DatasetReference>> outputs = default;
+            IList<DatasetReference> inputs = default;
+            IList<DatasetReference> outputs = default;
             Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<PipelineActivityPolicy> policy = default;
             string name = default;
@@ -253,8 +253,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             CopyActivitySource source = default;
             CopySink sink = default;
             Optional<BinaryData> translator = default;
@@ -266,8 +266,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
             Optional<LogStorageSettings> logStorageSettings = default;
             Optional<DataFactoryLogSettings> logSettings = default;
-            Optional<IList<BinaryData>> preserveRules = default;
-            Optional<IList<BinaryData>> preserve = default;
+            IList<BinaryData> preserveRules = default;
+            IList<BinaryData> preserve = default;
             Optional<DataFactoryElement<bool>> validateDataConsistency = default;
             Optional<SkipErrorFile> skipErrorFile = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -547,7 +547,34 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);
+            return new CopyActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                inputs ?? new ChangeTrackingList<DatasetReference>(),
+                outputs ?? new ChangeTrackingList<DatasetReference>(),
+                source,
+                sink,
+                translator.Value,
+                enableStaging.Value,
+                stagingSettings.Value,
+                parallelCopies.Value,
+                dataIntegrationUnits.Value,
+                enableSkipIncompatibleRow.Value,
+                redirectIncompatibleRowSettings.Value,
+                logStorageSettings.Value,
+                logSettings.Value,
+                preserveRules ?? new ChangeTrackingList<BinaryData>(),
+                preserve ?? new ChangeTrackingList<BinaryData>(),
+                validateDataConsistency.Value,
+                skipErrorFile.Value);
         }
 
         BinaryData IPersistableModel<CopyActivity>.Write(ModelReaderWriterOptions options)

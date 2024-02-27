@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> version = default;
             Optional<DateTimeOffset> lastHeartbeatUtc = default;
             Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             Optional<int> protectedItemCount = default;
-            Optional<IReadOnlyList<string>> accessibleDatastores = default;
+            IReadOnlyList<string> accessibleDatastores = default;
             Optional<string> vCenterId = default;
             Optional<DateTimeOffset> lastDiscoveryInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -265,7 +265,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReprotectAgentDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToList(accessibleDatastores), vCenterId.Value, Optional.ToNullable(lastDiscoveryInUtc), serializedAdditionalRawData);
+            return new ReprotectAgentDetails(
+                id.Value,
+                name.Value,
+                biosId.Value,
+                fabricObjectId.Value,
+                fqdn.Value,
+                version.Value,
+                Optional.ToNullable(lastHeartbeatUtc),
+                Optional.ToNullable(health),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(protectedItemCount),
+                accessibleDatastores ?? new ChangeTrackingList<string>(),
+                vCenterId.Value,
+                Optional.ToNullable(lastDiscoveryInUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReprotectAgentDetails>.Write(ModelReaderWriterOptions options)

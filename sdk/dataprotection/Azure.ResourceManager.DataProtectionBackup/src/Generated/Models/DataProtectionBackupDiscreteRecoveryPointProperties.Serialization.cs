@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             Optional<string> friendlyName = default;
-            Optional<IList<RecoveryPointDataStoreDetail>> recoveryPointDataStoresDetails = default;
+            IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default;
             DateTimeOffset recoveryPointTime = default;
             Optional<string> policyName = default;
             Optional<string> policyVersion = default;
@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, serializedAdditionalRawData, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(recoveryPointState));
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(
+                objectType,
+                serializedAdditionalRawData,
+                friendlyName.Value,
+                recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>(),
+                recoveryPointTime,
+                policyName.Value,
+                policyVersion.Value,
+                recoveryPointId.Value,
+                recoveryPointType.Value,
+                retentionTagName.Value,
+                retentionTagVersion.Value,
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(recoveryPointState));
         }
 
         BinaryData IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(ModelReaderWriterOptions options)

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, orderItemDetails, addressDetails, Optional.ToNullable(startTime), orderId, serializedAdditionalRawData);
+            return new EdgeOrderItemData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                orderItemDetails,
+                addressDetails,
+                Optional.ToNullable(startTime),
+                orderId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemData>.Write(ModelReaderWriterOptions options)

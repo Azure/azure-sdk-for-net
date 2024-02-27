@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityConnectorGitLabGroupData>> value = default;
+            IReadOnlyList<SecurityConnectorGitLabGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitLabGroupListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GitLabGroupListResponse(value ?? new ChangeTrackingList<SecurityConnectorGitLabGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitLabGroupListResponse>.Write(ModelReaderWriterOptions options)

@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<string> size = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<KustoPoolSkuLocationInfoItem>> locationInfo = default;
-            Optional<IReadOnlyList<BinaryData>> restrictions = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<KustoPoolSkuLocationInfoItem> locationInfo = default;
+            IReadOnlyList<BinaryData> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoPoolSkuDescription(resourceType.Value, name.Value, size.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new KustoPoolSkuDescription(
+                resourceType.Value,
+                name.Value,
+                size.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<KustoPoolSkuLocationInfoItem>(),
+                restrictions ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoPoolSkuDescription>.Write(ModelReaderWriterOptions options)

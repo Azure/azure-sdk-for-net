@@ -137,7 +137,18 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkSessionState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(idleAt), Optional.ToNullable(deadAt), Optional.ToNullable(shuttingDownAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), Optional.ToNullable(busyAt), Optional.ToNullable(errorAt), currentState.Value, jobCreationRequest.Value);
+            return new SparkSessionState(
+                Optional.ToNullable(notStartedAt),
+                Optional.ToNullable(startingAt),
+                Optional.ToNullable(idleAt),
+                Optional.ToNullable(deadAt),
+                Optional.ToNullable(shuttingDownAt),
+                Optional.ToNullable(killedAt),
+                Optional.ToNullable(recoveringAt),
+                Optional.ToNullable(busyAt),
+                Optional.ToNullable(errorAt),
+                currentState.Value,
+                jobCreationRequest.Value);
         }
     }
 }

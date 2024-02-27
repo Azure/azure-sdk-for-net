@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, apiEndpoint.Value, webEndpoint.Value, provisioningState.Value, Optional.ToNullable(tenantFeatures), hubBillingInfo.Value, serializedAdditionalRawData);
+            return new HubData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                apiEndpoint.Value,
+                webEndpoint.Value,
+                provisioningState.Value,
+                Optional.ToNullable(tenantFeatures),
+                hubBillingInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubData>.Write(ModelReaderWriterOptions options)

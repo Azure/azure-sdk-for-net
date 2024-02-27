@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobStepExecutionOptions(Optional.ToNullable(timeoutSeconds), Optional.ToNullable(retryAttempts), Optional.ToNullable(initialRetryIntervalSeconds), Optional.ToNullable(maximumRetryIntervalSeconds), Optional.ToNullable(retryIntervalBackoffMultiplier), serializedAdditionalRawData);
+            return new JobStepExecutionOptions(
+                Optional.ToNullable(timeoutSeconds),
+                Optional.ToNullable(retryAttempts),
+                Optional.ToNullable(initialRetryIntervalSeconds),
+                Optional.ToNullable(maximumRetryIntervalSeconds),
+                Optional.ToNullable(retryIntervalBackoffMultiplier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobStepExecutionOptions>.Write(ModelReaderWriterOptions options)

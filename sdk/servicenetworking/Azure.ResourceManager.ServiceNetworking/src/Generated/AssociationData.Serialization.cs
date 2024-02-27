@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(associationType), subnet, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AssociationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(associationType),
+                subnet,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociationData>.Write(ModelReaderWriterOptions options)

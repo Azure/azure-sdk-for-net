@@ -150,7 +150,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtContainerMappingContent(instanceType, serializedAdditionalRawData, keyVaultId.Value, keyVaultUri.Value, storageAccountId, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation);
+            return new VMwareCbtContainerMappingContent(
+                instanceType,
+                serializedAdditionalRawData,
+                keyVaultId.Value,
+                keyVaultUri.Value,
+                storageAccountId,
+                storageAccountSasSecretName.Value,
+                serviceBusConnectionStringSecretName.Value,
+                targetLocation);
         }
 
         BinaryData IPersistableModel<VMwareCbtContainerMappingContent>.Write(ModelReaderWriterOptions options)

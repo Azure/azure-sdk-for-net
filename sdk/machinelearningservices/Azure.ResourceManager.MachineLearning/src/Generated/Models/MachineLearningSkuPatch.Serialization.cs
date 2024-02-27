@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSkuPatch(Optional.ToNullable(capacity), family.Value, name.Value, size.Value, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new MachineLearningSkuPatch(
+                Optional.ToNullable(capacity),
+                family.Value,
+                name.Value,
+                size.Value,
+                Optional.ToNullable(tier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuPatch>.Write(ModelReaderWriterOptions options)

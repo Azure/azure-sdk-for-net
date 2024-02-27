@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmAssessmentSchedule(Optional.ToNullable(enable), Optional.ToNullable(weeklyInterval), Optional.ToNullable(monthlyOccurrence), Optional.ToNullable(dayOfWeek), startTime.Value, serializedAdditionalRawData);
+            return new SqlVmAssessmentSchedule(
+                Optional.ToNullable(enable),
+                Optional.ToNullable(weeklyInterval),
+                Optional.ToNullable(monthlyOccurrence),
+                Optional.ToNullable(dayOfWeek),
+                startTime.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmAssessmentSchedule>.Write(ModelReaderWriterOptions options)

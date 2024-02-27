@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlQueryTextData(id, name, type, systemData.Value, queryId.Value, queryText.Value, serializedAdditionalRawData);
+            return new MySqlQueryTextData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                queryId.Value,
+                queryText.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlQueryTextData>.Write(ModelReaderWriterOptions options)

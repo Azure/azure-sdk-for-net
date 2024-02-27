@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.EventHubs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<EventHubsAccessRight>> rights = default;
+            IList<EventHubsAccessRight> rights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsAuthorizationRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                rights ?? new ChangeTrackingList<EventHubsAccessRight>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsAuthorizationRuleData>.Write(ModelReaderWriterOptions options)

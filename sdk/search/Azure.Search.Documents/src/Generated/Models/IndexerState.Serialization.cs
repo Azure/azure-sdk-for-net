@@ -24,8 +24,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> allDocsFinalChangeTrackingState = default;
             Optional<string> resetDocsInitialChangeTrackingState = default;
             Optional<string> resetDocsFinalChangeTrackingState = default;
-            Optional<IReadOnlyList<string>> resetDocumentKeys = default;
-            Optional<IReadOnlyList<string>> resetDatasourceDocumentIds = default;
+            IReadOnlyList<string> resetDocumentKeys = default;
+            IReadOnlyList<string> resetDatasourceDocumentIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -86,7 +86,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerState(Optional.ToNullable(mode), allDocsInitialChangeTrackingState.Value, allDocsFinalChangeTrackingState.Value, resetDocsInitialChangeTrackingState.Value, resetDocsFinalChangeTrackingState.Value, Optional.ToList(resetDocumentKeys), Optional.ToList(resetDatasourceDocumentIds));
+            return new IndexerState(
+                Optional.ToNullable(mode),
+                allDocsInitialChangeTrackingState.Value,
+                allDocsFinalChangeTrackingState.Value,
+                resetDocsInitialChangeTrackingState.Value,
+                resetDocsFinalChangeTrackingState.Value,
+                resetDocumentKeys ?? new ChangeTrackingList<string>(),
+                resetDatasourceDocumentIds ?? new ChangeTrackingList<string>());
         }
     }
 }

@@ -103,7 +103,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new MotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value);
+            return new MotionDetectionProcessor(
+                type,
+                name,
+                inputs,
+                Optional.ToNullable(sensitivity),
+                Optional.ToNullable(outputMotionRegion),
+                eventAggregationWindow.Value);
         }
     }
 }

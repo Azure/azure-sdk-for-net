@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<CloudServiceVaultAndSecretReference> protectedSettingsFromKeyVault = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> provisioningState = default;
-            Optional<IList<string>> rolesAppliedTo = default;
+            IList<string> rolesAppliedTo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceExtension(name.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, protectedSettingsFromKeyVault.Value, forceUpdateTag.Value, provisioningState.Value, Optional.ToList(rolesAppliedTo), serializedAdditionalRawData);
+            return new CloudServiceExtension(
+                name.Value,
+                publisher.Value,
+                type.Value,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                settings.Value,
+                protectedSettings.Value,
+                protectedSettingsFromKeyVault.Value,
+                forceUpdateTag.Value,
+                provisioningState.Value,
+                rolesAppliedTo ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceExtension>.Write(ModelReaderWriterOptions options)

@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.Network.Models
             Optional<EffectiveSecurityRuleProtocol> protocol = default;
             Optional<string> sourcePortRange = default;
             Optional<string> destinationPortRange = default;
-            Optional<IReadOnlyList<string>> sourcePortRanges = default;
-            Optional<IReadOnlyList<string>> destinationPortRanges = default;
+            IReadOnlyList<string> sourcePortRanges = default;
+            IReadOnlyList<string> destinationPortRanges = default;
             Optional<string> sourceAddressPrefix = default;
             Optional<string> destinationAddressPrefix = default;
-            Optional<IReadOnlyList<string>> sourceAddressPrefixes = default;
-            Optional<IReadOnlyList<string>> destinationAddressPrefixes = default;
-            Optional<IReadOnlyList<string>> expandedSourceAddressPrefix = default;
-            Optional<IReadOnlyList<string>> expandedDestinationAddressPrefix = default;
+            IReadOnlyList<string> sourceAddressPrefixes = default;
+            IReadOnlyList<string> destinationAddressPrefixes = default;
+            IReadOnlyList<string> expandedSourceAddressPrefix = default;
+            IReadOnlyList<string> expandedDestinationAddressPrefix = default;
             Optional<SecurityRuleAccess> access = default;
             Optional<int> priority = default;
             Optional<SecurityRuleDirection> direction = default;
@@ -339,7 +339,23 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveNetworkSecurityRule(name.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(destinationAddressPrefixes), Optional.ToList(expandedSourceAddressPrefix), Optional.ToList(expandedDestinationAddressPrefix), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), serializedAdditionalRawData);
+            return new EffectiveNetworkSecurityRule(
+                name.Value,
+                Optional.ToNullable(protocol),
+                sourcePortRange.Value,
+                destinationPortRange.Value,
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                sourceAddressPrefix.Value,
+                destinationAddressPrefix.Value,
+                sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
+                expandedSourceAddressPrefix ?? new ChangeTrackingList<string>(),
+                expandedDestinationAddressPrefix ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(access),
+                Optional.ToNullable(priority),
+                Optional.ToNullable(direction),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveNetworkSecurityRule>.Write(ModelReaderWriterOptions options)

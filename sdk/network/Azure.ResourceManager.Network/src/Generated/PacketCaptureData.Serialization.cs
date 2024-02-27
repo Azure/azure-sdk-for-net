@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
             Optional<long> totalBytesPerSession = default;
             Optional<int> timeLimitInSeconds = default;
             Optional<PacketCaptureStorageLocation> storageLocation = default;
-            Optional<IReadOnlyList<PacketCaptureFilter>> filters = default;
+            IReadOnlyList<PacketCaptureFilter> filters = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -296,7 +296,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(etag), target.Value, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PacketCaptureData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                target.Value,
+                scope.Value,
+                Optional.ToNullable(targetType),
+                Optional.ToNullable(bytesToCapturePerPacket),
+                Optional.ToNullable(totalBytesPerSession),
+                Optional.ToNullable(timeLimitInSeconds),
+                storageLocation.Value,
+                filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureData>.Write(ModelReaderWriterOptions options)

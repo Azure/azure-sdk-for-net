@@ -65,7 +65,49 @@ namespace Azure.ResourceManager.Billing.Models
             billingPolicies ??= new Dictionary<string, string>();
             suspensionReasons ??= new List<string>();
 
-            return new BillingSubscriptionData(id, name, resourceType, systemData, autoRenew, beneficiaryTenantId, billingFrequency, billingProfileId, billingPolicies, billingProfileDisplayName, billingProfileName, consumptionCostCenter, customerId, customerDisplayName, displayName, enrollmentAccountId, enrollmentAccountDisplayName, invoiceSectionId, invoiceSectionDisplayName, invoiceSectionName, lastMonthCharges, monthToDateCharges, nextBillingCycleBillingFrequency != null ? new NextBillingCycleDetails(nextBillingCycleBillingFrequency, serializedAdditionalRawData: null) : null, offerId, productCategory, productType, productTypeId, purchaseOn, quantity, reseller, renewalTermDetails, skuDescription, skuId, status, subscriptionId, suspensionReasons?.ToList(), termDuration, termStartOn, termEndOn, subscriptionEnrollmentAccountStatus, enrollmentAccountStartOn, serializedAdditionalRawData: null);
+            return new BillingSubscriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                autoRenew,
+                beneficiaryTenantId,
+                billingFrequency,
+                billingProfileId,
+                billingPolicies,
+                billingProfileDisplayName,
+                billingProfileName,
+                consumptionCostCenter,
+                customerId,
+                customerDisplayName,
+                displayName,
+                enrollmentAccountId,
+                enrollmentAccountDisplayName,
+                invoiceSectionId,
+                invoiceSectionDisplayName,
+                invoiceSectionName,
+                lastMonthCharges,
+                monthToDateCharges,
+                nextBillingCycleBillingFrequency != null ? new NextBillingCycleDetails(nextBillingCycleBillingFrequency, serializedAdditionalRawData: null) : null,
+                offerId,
+                productCategory,
+                productType,
+                productTypeId,
+                purchaseOn,
+                quantity,
+                reseller,
+                renewalTermDetails,
+                skuDescription,
+                skuId,
+                status,
+                subscriptionId,
+                suspensionReasons?.ToList(),
+                termDuration,
+                termStartOn,
+                termEndOn,
+                subscriptionEnrollmentAccountStatus,
+                enrollmentAccountStartOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BillingAmount"/>. </summary>
@@ -95,7 +137,13 @@ namespace Azure.ResourceManager.Billing.Models
         /// <returns> A new <see cref="Models.SubscriptionRenewalTermDetails"/> instance for mocking. </returns>
         public static SubscriptionRenewalTermDetails SubscriptionRenewalTermDetails(string billingFrequency = null, string productTypeId = null, long? quantity = null, string skuId = null, TimeSpan? termDuration = null)
         {
-            return new SubscriptionRenewalTermDetails(billingFrequency, productTypeId, quantity, skuId, termDuration, serializedAdditionalRawData: null);
+            return new SubscriptionRenewalTermDetails(
+                billingFrequency,
+                productTypeId,
+                quantity,
+                skuId,
+                termDuration,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BillingSubscriptionValidateMoveEligibilityResult"/>. </summary>
@@ -166,7 +214,50 @@ namespace Azure.ResourceManager.Billing.Models
             billingPolicies ??= new Dictionary<string, string>();
             suspensionReasons ??= new List<string>();
 
-            return new BillingSubscriptionAliasData(id, name, resourceType, systemData, autoRenew, beneficiaryTenantId, billingFrequency, billingProfileId, billingPolicies, billingProfileDisplayName, billingProfileName, consumptionCostCenter, customerId, customerDisplayName, displayName, enrollmentAccountId, enrollmentAccountDisplayName, invoiceSectionId, invoiceSectionDisplayName, invoiceSectionName, lastMonthCharges, monthToDateCharges, nextBillingCycleBillingFrequency != null ? new NextBillingCycleDetails(nextBillingCycleBillingFrequency, serializedAdditionalRawData: null) : null, offerId, productCategory, productType, productTypeId, purchaseOn, quantity, reseller, renewalTermDetails, skuDescription, skuId, status, subscriptionId, suspensionReasons?.ToList(), termDuration, termStartOn, termEndOn, subscriptionEnrollmentAccountStatus, enrollmentAccountStartOn, billingSubscriptionId, serializedAdditionalRawData: null);
+            return new BillingSubscriptionAliasData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                autoRenew,
+                beneficiaryTenantId,
+                billingFrequency,
+                billingProfileId,
+                billingPolicies,
+                billingProfileDisplayName,
+                billingProfileName,
+                consumptionCostCenter,
+                customerId,
+                customerDisplayName,
+                displayName,
+                enrollmentAccountId,
+                enrollmentAccountDisplayName,
+                invoiceSectionId,
+                invoiceSectionDisplayName,
+                invoiceSectionName,
+                lastMonthCharges,
+                monthToDateCharges,
+                nextBillingCycleBillingFrequency != null ? new NextBillingCycleDetails(nextBillingCycleBillingFrequency, serializedAdditionalRawData: null) : null,
+                offerId,
+                productCategory,
+                productType,
+                productTypeId,
+                purchaseOn,
+                quantity,
+                reseller,
+                renewalTermDetails,
+                skuDescription,
+                skuId,
+                status,
+                subscriptionId,
+                suspensionReasons?.ToList(),
+                termDuration,
+                termStartOn,
+                termEndOn,
+                subscriptionEnrollmentAccountStatus,
+                enrollmentAccountStartOn,
+                billingSubscriptionId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.BillingPaymentMethodData"/>. </summary>
@@ -187,7 +278,20 @@ namespace Azure.ResourceManager.Billing.Models
         {
             logos ??= new List<PaymentMethodLogo>();
 
-            return new BillingPaymentMethodData(id, name, resourceType, systemData, family, paymentMethodType, accountHolderName, expiration, lastFourDigits, displayName, logos?.ToList(), status, serializedAdditionalRawData: null);
+            return new BillingPaymentMethodData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                family,
+                paymentMethodType,
+                accountHolderName,
+                expiration,
+                lastFourDigits,
+                displayName,
+                logos?.ToList(),
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PaymentMethodLogo"/>. </summary>
@@ -208,7 +312,13 @@ namespace Azure.ResourceManager.Billing.Models
         /// <returns> A new <see cref="Billing.BillingPaymentMethodLinkData"/> instance for mocking. </returns>
         public static BillingPaymentMethodLinkData BillingPaymentMethodLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PaymentMethodProjectionProperties paymentMethod = null)
         {
-            return new BillingPaymentMethodLinkData(id, name, resourceType, systemData, paymentMethod, serializedAdditionalRawData: null);
+            return new BillingPaymentMethodLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                paymentMethod,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PaymentMethodProjectionProperties"/>. </summary>
@@ -226,7 +336,17 @@ namespace Azure.ResourceManager.Billing.Models
         {
             logos ??= new List<PaymentMethodLogo>();
 
-            return new PaymentMethodProjectionProperties(paymentMethodId, family, paymentMethodProjectionPropertiesType, accountHolderName, expiration, lastFourDigits, displayName, logos?.ToList(), status, serializedAdditionalRawData: null);
+            return new PaymentMethodProjectionProperties(
+                paymentMethodId,
+                family,
+                paymentMethodProjectionPropertiesType,
+                accountHolderName,
+                expiration,
+                lastFourDigits,
+                displayName,
+                logos?.ToList(),
+                status,
+                serializedAdditionalRawData: null);
         }
     }
 }

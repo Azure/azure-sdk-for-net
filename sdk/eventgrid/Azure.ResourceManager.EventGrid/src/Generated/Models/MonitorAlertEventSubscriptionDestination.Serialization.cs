@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             EndpointType endpointType = default;
             Optional<MonitorAlertSeverity> severity = default;
             Optional<string> description = default;
-            Optional<IList<ResourceIdentifier>> actionGroups = default;
+            IList<ResourceIdentifier> actionGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorAlertEventSubscriptionDestination(endpointType, serializedAdditionalRawData, Optional.ToNullable(severity), description.Value, Optional.ToList(actionGroups));
+            return new MonitorAlertEventSubscriptionDestination(endpointType, serializedAdditionalRawData, Optional.ToNullable(severity), description.Value, actionGroups ?? new ChangeTrackingList<ResourceIdentifier>());
         }
 
         BinaryData IPersistableModel<MonitorAlertEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

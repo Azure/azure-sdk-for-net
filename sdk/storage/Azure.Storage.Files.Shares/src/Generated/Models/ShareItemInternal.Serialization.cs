@@ -49,7 +49,13 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 metadata = dictionary;
             }
-            return new ShareItemInternal(name, snapshot, deleted, version, properties, metadata);
+            return new ShareItemInternal(
+                name,
+                snapshot,
+                deleted,
+                version,
+                properties,
+                metadata);
         }
     }
 }

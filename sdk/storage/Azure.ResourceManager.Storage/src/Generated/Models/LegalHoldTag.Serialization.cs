@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LegalHoldTag(tag.Value, Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, serializedAdditionalRawData);
+            return new LegalHoldTag(
+                tag.Value,
+                Optional.ToNullable(timestamp),
+                objectIdentifier.Value,
+                Optional.ToNullable(tenantId),
+                upn.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LegalHoldTag>.Write(ModelReaderWriterOptions options)

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IList<WebPubSubRequestType>> allow = default;
-            Optional<IList<WebPubSubRequestType>> deny = default;
+            IList<WebPubSubRequestType> allow = default;
+            IList<WebPubSubRequestType> deny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicNetworkAcls(Optional.ToList(allow), Optional.ToList(deny), serializedAdditionalRawData);
+            return new PublicNetworkAcls(allow ?? new ChangeTrackingList<WebPubSubRequestType>(), deny ?? new ChangeTrackingList<WebPubSubRequestType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublicNetworkAcls>.Write(ModelReaderWriterOptions options)

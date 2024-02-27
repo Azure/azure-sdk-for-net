@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<string> serviceName = default;
-            Optional<IReadOnlyList<string>> actions = default;
+            IReadOnlyList<string> actions = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceDelegation(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
+            return new ServiceDelegation(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                serviceName.Value,
+                actions ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ServiceDelegation>.Write(ModelReaderWriterOptions options)

@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.Cdn
             Optional<SystemData> systemData = default;
             Optional<string> ruleSetName = default;
             Optional<int> order = default;
-            Optional<IList<DeliveryRuleCondition>> conditions = default;
-            Optional<IList<DeliveryRuleAction>> actions = default;
+            IList<DeliveryRuleCondition> conditions = default;
+            IList<DeliveryRuleAction> actions = default;
             Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
             Optional<FrontDoorProvisioningState> provisioningState = default;
             Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRuleData(id, name, type, systemData.Value, ruleSetName.Value, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                ruleSetName.Value,
+                Optional.ToNullable(order),
+                conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
+                actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
+                Optional.ToNullable(matchProcessingBehavior),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deploymentStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRuleData>.Write(ModelReaderWriterOptions options)

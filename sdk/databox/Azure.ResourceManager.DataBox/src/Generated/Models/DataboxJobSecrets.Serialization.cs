@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxSecret>> podSecrets = default;
+            IReadOnlyList<DataBoxSecret> podSecrets = default;
             DataBoxOrderType jobSecretsType = default;
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataboxJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, Optional.ToList(podSecrets));
+            return new DataboxJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, podSecrets ?? new ChangeTrackingList<DataBoxSecret>());
         }
 
         BinaryData IPersistableModel<DataboxJobSecrets>.Write(ModelReaderWriterOptions options)

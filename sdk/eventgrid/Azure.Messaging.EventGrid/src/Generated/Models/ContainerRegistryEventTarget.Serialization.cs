@@ -71,7 +71,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryEventTarget(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToNullable(length), repository.Value, url.Value, tag.Value);
+            return new ContainerRegistryEventTarget(
+                mediaType.Value,
+                Optional.ToNullable(size),
+                digest.Value,
+                Optional.ToNullable(length),
+                repository.Value,
+                url.Value,
+                tag.Value);
         }
     }
 }

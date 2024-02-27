@@ -213,7 +213,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value, serializedAdditionalRawData);
+            return new DataMaskingPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind.Value,
+                Optional.ToNullable(dataMaskingState),
+                exemptPrincipals.Value,
+                applicationPrincipals.Value,
+                maskingLevel.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMaskingPolicyData>.Write(ModelReaderWriterOptions options)

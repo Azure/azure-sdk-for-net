@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> storageEndpoint = default;
             Optional<string> storageAccountAccessKey = default;
             Optional<int> retentionDays = default;
-            Optional<IList<string>> auditActionsAndGroups = default;
+            IList<string> auditActionsAndGroups = default;
             Optional<Guid> storageAccountSubscriptionId = default;
             Optional<bool> isStorageSecondaryKeyInUse = default;
             Optional<bool> isAzureMonitorTargetEnabled = default;
@@ -287,7 +287,22 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseExtendedSqlPoolBlobAuditingPolicyData(id, name, type, systemData.Value, predicateExpression.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), serializedAdditionalRawData);
+            return new SynapseExtendedSqlPoolBlobAuditingPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                predicateExpression.Value,
+                Optional.ToNullable(state),
+                storageEndpoint.Value,
+                storageAccountAccessKey.Value,
+                Optional.ToNullable(retentionDays),
+                auditActionsAndGroups ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(storageAccountSubscriptionId),
+                Optional.ToNullable(isStorageSecondaryKeyInUse),
+                Optional.ToNullable(isAzureMonitorTargetEnabled),
+                Optional.ToNullable(queueDelayMs),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseExtendedSqlPoolBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options)

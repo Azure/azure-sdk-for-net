@@ -104,10 +104,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string file = default;
             Optional<string> className = default;
             Optional<object> conf = default;
-            Optional<IList<string>> args = default;
-            Optional<IList<string>> jars = default;
-            Optional<IList<string>> files = default;
-            Optional<IList<string>> archives = default;
+            IList<string> args = default;
+            IList<string> jars = default;
+            IList<string> files = default;
+            IList<string> archives = default;
             string driverMemory = default;
             int driverCores = default;
             string executorMemory = default;
@@ -225,7 +225,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobProperties(name.Value, file, className.Value, conf.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(files), Optional.ToList(archives), driverMemory, driverCores, executorMemory, executorCores, numExecutors, additionalProperties);
+            return new SparkJobProperties(
+                name.Value,
+                file,
+                className.Value,
+                conf.Value,
+                args ?? new ChangeTrackingList<string>(),
+                jars ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                driverMemory,
+                driverCores,
+                executorMemory,
+                executorCores,
+                numExecutors,
+                additionalProperties);
         }
 
         internal partial class SparkJobPropertiesConverter : JsonConverter<SparkJobProperties>

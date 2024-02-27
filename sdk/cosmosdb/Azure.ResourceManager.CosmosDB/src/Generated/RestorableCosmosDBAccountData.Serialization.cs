@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<DateTimeOffset> oldestRestorableTime = default;
             Optional<DateTimeOffset> deletionTime = default;
             Optional<CosmosDBApiType> apiType = default;
-            Optional<IReadOnlyList<RestorableLocationResourceInfo>> restorableLocations = default;
+            IReadOnlyList<RestorableLocationResourceInfo> restorableLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableCosmosDBAccountData(id, name, type, systemData.Value, Optional.ToNullable(location), accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(oldestRestorableTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations), serializedAdditionalRawData);
+            return new RestorableCosmosDBAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                accountName.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(oldestRestorableTime),
+                Optional.ToNullable(deletionTime),
+                Optional.ToNullable(apiType),
+                restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableCosmosDBAccountData>.Write(ModelReaderWriterOptions options)

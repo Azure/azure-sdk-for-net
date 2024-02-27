@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
             Optional<ResourceGuardProxyProperties> properties = default;
             Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardProxyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ResourceGuardProxyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardProxyData>.Write(ModelReaderWriterOptions options)

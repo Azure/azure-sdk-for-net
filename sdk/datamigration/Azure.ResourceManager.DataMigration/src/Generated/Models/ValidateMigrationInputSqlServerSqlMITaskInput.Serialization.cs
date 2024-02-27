@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Optional<IList<string>> selectedLogins = default;
+            IList<string> selectedLogins = default;
             Optional<FileShare> backupFileShare = default;
             BlobShare backupBlobShare = default;
             Optional<BackupMode> backupMode = default;
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateMigrationInputSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, Optional.ToList(selectedLogins), backupFileShare.Value, backupBlobShare, Optional.ToNullable(backupMode), serializedAdditionalRawData);
+            return new ValidateMigrationInputSqlServerSqlMITaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                selectedDatabases,
+                selectedLogins ?? new ChangeTrackingList<string>(),
+                backupFileShare.Value,
+                backupBlobShare,
+                Optional.ToNullable(backupMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskInput>.Write(ModelReaderWriterOptions options)

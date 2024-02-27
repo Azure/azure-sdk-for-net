@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceImpactingEvent(Optional.ToNullable(eventStartTime), Optional.ToNullable(eventStatusLastModifiedTime), correlationId.Value, status.Value, incidentProperties.Value, serializedAdditionalRawData);
+            return new ServiceImpactingEvent(
+                Optional.ToNullable(eventStartTime),
+                Optional.ToNullable(eventStatusLastModifiedTime),
+                correlationId.Value,
+                status.Value,
+                incidentProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceImpactingEvent>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsComputePolicyData(id, name, type, systemData.Value, Optional.ToNullable(objectId), Optional.ToNullable(objectType), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), serializedAdditionalRawData);
+            return new DataLakeAnalyticsComputePolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(objectId),
+                Optional.ToNullable(objectType),
+                Optional.ToNullable(maxDegreeOfParallelismPerJob),
+                Optional.ToNullable(minPriorityPerJob),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsComputePolicyData>.Write(ModelReaderWriterOptions options)

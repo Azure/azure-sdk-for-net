@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayFirewallMode firewallMode = default;
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<IList<ApplicationGatewayFirewallDisabledRuleGroup>> disabledRuleGroups = default;
+            IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = default;
             Optional<bool> requestBodyCheck = default;
             Optional<int> maxRequestBodySize = default;
             Optional<int> maxRequestBodySizeInKb = default;
             Optional<int> fileUploadLimitInMb = default;
-            Optional<IList<ApplicationGatewayFirewallExclusion>> exclusions = default;
+            IList<ApplicationGatewayFirewallExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayWebApplicationFirewallConfiguration(enabled, firewallMode, ruleSetType, ruleSetVersion, Optional.ToList(disabledRuleGroups), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(maxRequestBodySize), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadLimitInMb), Optional.ToList(exclusions), serializedAdditionalRawData);
+            return new ApplicationGatewayWebApplicationFirewallConfiguration(
+                enabled,
+                firewallMode,
+                ruleSetType,
+                ruleSetVersion,
+                disabledRuleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup>(),
+                Optional.ToNullable(requestBodyCheck),
+                Optional.ToNullable(maxRequestBodySize),
+                Optional.ToNullable(maxRequestBodySizeInKb),
+                Optional.ToNullable(fileUploadLimitInMb),
+                exclusions ?? new ChangeTrackingList<ApplicationGatewayFirewallExclusion>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayWebApplicationFirewallConfiguration>.Write(ModelReaderWriterOptions options)

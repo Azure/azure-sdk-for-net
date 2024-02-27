@@ -84,7 +84,7 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             string id = default;
             Optional<PatientInfo> info = default;
-            Optional<IList<PatientDocument>> data = default;
+            IList<PatientDocument> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientRecord(id, info.Value, Optional.ToList(data), serializedAdditionalRawData);
+            return new PatientRecord(id, info.Value, data ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientRecord>.Write(ModelReaderWriterOptions options)

@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerBackupData(id, name, type, systemData.Value, Optional.ToNullable(backupType), Optional.ToNullable(completedTime), source.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerBackupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(backupType),
+                Optional.ToNullable(completedTime),
+                source.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Write(ModelReaderWriterOptions options)

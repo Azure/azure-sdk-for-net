@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceIdentifierData(id, name, type, systemData.Value, id0.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceIdentifierData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                id0.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceIdentifierData>.Write(ModelReaderWriterOptions options)

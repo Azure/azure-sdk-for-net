@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> name0 = default;
             Optional<string> display = default;
             Optional<string> dependency = default;
-            Optional<IList<StackMajorVersion>> majorVersions = default;
-            Optional<IList<ApplicationStack>> frameworks = default;
-            Optional<IList<ApplicationStack>> isDeprecated = default;
+            IList<StackMajorVersion> majorVersions = default;
+            IList<ApplicationStack> frameworks = default;
+            IList<ApplicationStack> isDeprecated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), kind.Value, serializedAdditionalRawData);
+            return new ApplicationStackResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                name0.Value,
+                display.Value,
+                dependency.Value,
+                majorVersions ?? new ChangeTrackingList<StackMajorVersion>(),
+                frameworks ?? new ChangeTrackingList<ApplicationStack>(),
+                isDeprecated ?? new ChangeTrackingList<ApplicationStack>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationStackResource>.Write(ModelReaderWriterOptions options)

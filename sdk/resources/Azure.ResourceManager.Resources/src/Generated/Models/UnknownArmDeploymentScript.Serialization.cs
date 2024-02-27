@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ScriptType kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownArmDeploymentScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, serializedAdditionalRawData);
+            return new UnknownArmDeploymentScript(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity.Value,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentScriptData>.Write(ModelReaderWriterOptions options)

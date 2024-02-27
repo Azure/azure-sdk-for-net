@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> queueId = default;
             Optional<string> offerId = default;
             Optional<int> jobPriority = default;
-            Optional<IReadOnlyDictionary<string, string>> workerLabels = default;
+            IReadOnlyDictionary<string, string> workerLabels = default;
             Optional<DateTimeOffset> offeredOn = default;
             Optional<DateTimeOffset> expiresOn = default;
-            Optional<IReadOnlyDictionary<string, string>> workerTags = default;
-            Optional<IReadOnlyDictionary<string, string>> jobLabels = default;
-            Optional<IReadOnlyDictionary<string, string>> jobTags = default;
+            IReadOnlyDictionary<string, string> workerTags = default;
+            IReadOnlyDictionary<string, string> jobLabels = default;
+            IReadOnlyDictionary<string, string> jobTags = default;
             Optional<string> workerId = default;
             Optional<string> jobId = default;
             Optional<string> channelReference = default;
@@ -151,7 +151,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerOfferIssuedEventData(jobId.Value, channelReference.Value, channelId.Value, workerId.Value, queueId.Value, offerId.Value, Optional.ToNullable(jobPriority), Optional.ToDictionary(workerLabels), Optional.ToNullable(offeredOn), Optional.ToNullable(expiresOn), Optional.ToDictionary(workerTags), Optional.ToDictionary(jobLabels), Optional.ToDictionary(jobTags));
+            return new AcsRouterWorkerOfferIssuedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                workerId.Value,
+                queueId.Value,
+                offerId.Value,
+                Optional.ToNullable(jobPriority),
+                workerLabels ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(offeredOn),
+                Optional.ToNullable(expiresOn),
+                workerTags ?? new ChangeTrackingDictionary<string, string>(),
+                jobLabels ?? new ChangeTrackingDictionary<string, string>(),
+                jobTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsRouterWorkerOfferIssuedEventDataConverter : JsonConverter<AcsRouterWorkerOfferIssuedEventData>

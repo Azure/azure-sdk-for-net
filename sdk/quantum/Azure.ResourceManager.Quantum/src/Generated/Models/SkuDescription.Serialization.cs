@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<string> description = default;
             Optional<Uri> restrictedAccessUri = default;
             Optional<bool> autoAdd = default;
-            Optional<IReadOnlyList<string>> targets = default;
-            Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
-            Optional<IReadOnlyList<PricingDetail>> pricingDetails = default;
+            IReadOnlyList<string> targets = default;
+            IReadOnlyList<QuotaDimension> quotaDimensions = default;
+            IReadOnlyList<PricingDetail> pricingDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuDescription(id.Value, name.Value, version.Value, description.Value, restrictedAccessUri.Value, Optional.ToNullable(autoAdd), Optional.ToList(targets), Optional.ToList(quotaDimensions), Optional.ToList(pricingDetails), serializedAdditionalRawData);
+            return new SkuDescription(
+                id.Value,
+                name.Value,
+                version.Value,
+                description.Value,
+                restrictedAccessUri.Value,
+                Optional.ToNullable(autoAdd),
+                targets ?? new ChangeTrackingList<string>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDetails ?? new ChangeTrackingList<PricingDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuDescription>.Write(ModelReaderWriterOptions options)

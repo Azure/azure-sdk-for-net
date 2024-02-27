@@ -123,7 +123,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);
+            return new XmlReadSettings(
+                type,
+                additionalProperties,
+                compressionProperties.Value,
+                validationMode.Value,
+                detectDataType.Value,
+                namespaces.Value,
+                namespacePrefixes.Value);
         }
 
         internal partial class XmlReadSettingsConverter : JsonConverter<XmlReadSettings>

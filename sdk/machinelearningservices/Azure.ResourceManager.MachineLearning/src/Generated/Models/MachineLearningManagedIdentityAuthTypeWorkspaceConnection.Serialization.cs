@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, serializedAdditionalRawData, credentials.Value);
+            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(
+                authType,
+                Optional.ToNullable(category),
+                Optional.ToNullable(expiryTime),
+                metadata.Value,
+                target.Value,
+                serializedAdditionalRawData,
+                credentials.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningManagedIdentityAuthTypeWorkspaceConnection>.Write(ModelReaderWriterOptions options)

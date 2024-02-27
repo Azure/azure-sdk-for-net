@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network
             }
             Optional<ETag> etag = default;
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.Network
             Optional<ConnectionMonitorDestination> destination = default;
             Optional<bool> autoStart = default;
             Optional<int> monitoringIntervalInSeconds = default;
-            Optional<IReadOnlyList<ConnectionMonitorEndpoint>> endpoints = default;
-            Optional<IReadOnlyList<ConnectionMonitorTestConfiguration>> testConfigurations = default;
-            Optional<IReadOnlyList<ConnectionMonitorTestGroup>> testGroups = default;
-            Optional<IReadOnlyList<ConnectionMonitorOutput>> outputs = default;
+            IReadOnlyList<ConnectionMonitorEndpoint> endpoints = default;
+            IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations = default;
+            IReadOnlyList<ConnectionMonitorTestGroup> testGroups = default;
+            IReadOnlyList<ConnectionMonitorOutput> outputs = default;
             Optional<string> notes = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> startTime = default;
@@ -423,7 +423,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType), serializedAdditionalRawData);
+            return new ConnectionMonitorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                source.Value,
+                destination.Value,
+                Optional.ToNullable(autoStart),
+                Optional.ToNullable(monitoringIntervalInSeconds),
+                endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
+                testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
+                testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
+                outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
+                notes.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(startTime),
+                monitoringStatus.Value,
+                Optional.ToNullable(connectionMonitorType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorData>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<ManagedServiceIdentity> identity = default;
             Optional<WorkbookSharedTypeKind> kind = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -381,7 +381,27 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, serializedData.Value, version.Value, Optional.ToNullable(timeModified), category.Value, userId.Value, sourceId.Value, storageUri.Value, description.Value, revision.Value, identity, Optional.ToNullable(kind), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new WorkbookData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                displayName.Value,
+                serializedData.Value,
+                version.Value,
+                Optional.ToNullable(timeModified),
+                category.Value,
+                userId.Value,
+                sourceId.Value,
+                storageUri.Value,
+                description.Value,
+                revision.Value,
+                identity,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookData>.Write(ModelReaderWriterOptions options)

@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 return null;
             }
             Optional<HardwareSecurityModulesSku> sku = default;
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -280,7 +280,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHsmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, networkProfile.Value, managementNetworkProfile.Value, stampId.Value, statusMessage.Value, Optional.ToNullable(provisioningState), sku.Value, Optional.ToList(zones), serializedAdditionalRawData);
+            return new DedicatedHsmData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                networkProfile.Value,
+                managementNetworkProfile.Value,
+                stampId.Value,
+                statusMessage.Value,
+                Optional.ToNullable(provisioningState),
+                sku.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHsmData>.Write(ModelReaderWriterOptions options)

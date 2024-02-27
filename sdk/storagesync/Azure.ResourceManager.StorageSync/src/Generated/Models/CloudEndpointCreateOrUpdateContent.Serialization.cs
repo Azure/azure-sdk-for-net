@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), friendlyName.Value, serializedAdditionalRawData);
+            return new CloudEndpointCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                storageAccountResourceId.Value,
+                azureFileShareName.Value,
+                Optional.ToNullable(storageAccountTenantId),
+                friendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

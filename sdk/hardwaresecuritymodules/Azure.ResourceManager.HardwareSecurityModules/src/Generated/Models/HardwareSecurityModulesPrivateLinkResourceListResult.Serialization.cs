@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HardwareSecurityModulesPrivateLinkData>> value = default;
+            IReadOnlyList<HardwareSecurityModulesPrivateLinkData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareSecurityModulesPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HardwareSecurityModulesPrivateLinkData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> vCenterId = default;
             Optional<string> vCenterFqdn = default;
-            Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
+            IReadOnlyList<string> datastores = default;
+            IReadOnlyList<IPAddress> ipAddresses = default;
             Optional<string> vmwareToolsStatus = default;
             Optional<string> powerStatus = default;
             Optional<string> vmFqdn = default;
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Optional.ToList(datastores), Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc), serializedAdditionalRawData);
+            return new InMageRcmDiscoveredProtectedVmDetails(
+                vCenterId.Value,
+                vCenterFqdn.Value,
+                datastores ?? new ChangeTrackingList<string>(),
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                vmwareToolsStatus.Value,
+                powerStatus.Value,
+                vmFqdn.Value,
+                osName.Value,
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                Optional.ToNullable(isDeleted),
+                Optional.ToNullable(lastDiscoveryTimeInUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options)

@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectedItemJobProperties(scenarioName.Value, id.Value, name.Value, displayName.Value, state.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
+            return new ProtectedItemJobProperties(
+                scenarioName.Value,
+                id.Value,
+                name.Value,
+                displayName.Value,
+                state.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectedItemJobProperties>.Write(ModelReaderWriterOptions options)

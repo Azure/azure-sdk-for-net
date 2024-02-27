@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationCustomActionParameter(name, Optional.ToNullable(required), Optional.ToNullable(type), defaultValue.Value, description.Value, serializedAdditionalRawData);
+            return new GalleryApplicationCustomActionParameter(
+                name,
+                Optional.ToNullable(required),
+                Optional.ToNullable(type),
+                defaultValue.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationCustomActionParameter>.Write(ModelReaderWriterOptions options)

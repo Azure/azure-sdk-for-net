@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<IList<AvailabilityGroupReplica>> replicas = default;
+            IList<AvailabilityGroupReplica> replicas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupConfiguration(Optional.ToList(replicas), serializedAdditionalRawData);
+            return new AvailabilityGroupConfiguration(replicas ?? new ChangeTrackingList<AvailabilityGroupReplica>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupConfiguration>.Write(ModelReaderWriterOptions options)

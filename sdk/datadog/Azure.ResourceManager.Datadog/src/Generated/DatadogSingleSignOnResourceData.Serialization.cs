@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Datadog
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogSingleSignOnResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DatadogSingleSignOnResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogSingleSignOnResourceData>.Write(ModelReaderWriterOptions options)

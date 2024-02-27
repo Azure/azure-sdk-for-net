@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EndpointServiceResult>> value = default;
+            IReadOnlyList<EndpointServiceResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointServicesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EndpointServicesListResult(value ?? new ChangeTrackingList<EndpointServiceResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointServicesListResult>.Write(ModelReaderWriterOptions options)

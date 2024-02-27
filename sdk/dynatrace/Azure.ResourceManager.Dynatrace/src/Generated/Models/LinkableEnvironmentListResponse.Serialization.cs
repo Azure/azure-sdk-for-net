@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LinkableEnvironmentResult>> value = default;
+            IReadOnlyList<LinkableEnvironmentResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkableEnvironmentListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LinkableEnvironmentListResponse(value ?? new ChangeTrackingList<LinkableEnvironmentResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkableEnvironmentListResponse>.Write(ModelReaderWriterOptions options)

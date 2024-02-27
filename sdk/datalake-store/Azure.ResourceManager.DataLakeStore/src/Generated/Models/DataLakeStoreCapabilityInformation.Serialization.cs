@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState), serializedAdditionalRawData);
+            return new DataLakeStoreCapabilityInformation(
+                Optional.ToNullable(subscriptionId),
+                Optional.ToNullable(state),
+                Optional.ToNullable(maxAccountCount),
+                Optional.ToNullable(accountCount),
+                Optional.ToNullable(migrationState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreCapabilityInformation>.Write(ModelReaderWriterOptions options)

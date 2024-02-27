@@ -158,7 +158,17 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ModuleIdentity(moduleId.Value, managedBy.Value, deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value);
+            return new ModuleIdentity(
+                moduleId.Value,
+                managedBy.Value,
+                deviceId.Value,
+                generationId.Value,
+                etag.Value,
+                Optional.ToNullable(connectionState),
+                Optional.ToNullable(connectionStateUpdatedTime),
+                Optional.ToNullable(lastActivityTime),
+                Optional.ToNullable(cloudToDeviceMessageCount),
+                authentication.Value);
         }
     }
 }

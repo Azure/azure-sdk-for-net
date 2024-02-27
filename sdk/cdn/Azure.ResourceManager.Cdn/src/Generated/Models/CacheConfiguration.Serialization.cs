@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(cacheBehavior), Optional.ToNullable(cacheDuration), serializedAdditionalRawData);
+            return new CacheConfiguration(
+                Optional.ToNullable(queryStringCachingBehavior),
+                queryParameters.Value,
+                Optional.ToNullable(isCompressionEnabled),
+                Optional.ToNullable(cacheBehavior),
+                Optional.ToNullable(cacheDuration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CacheConfiguration>.Write(ModelReaderWriterOptions options)

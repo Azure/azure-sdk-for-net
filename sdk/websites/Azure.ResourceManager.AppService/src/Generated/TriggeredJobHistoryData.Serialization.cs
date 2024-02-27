@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<TriggeredJobRun>> runs = default;
+            IList<TriggeredJobRun> runs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggeredJobHistoryData(id, name, type, systemData.Value, Optional.ToList(runs), kind.Value, serializedAdditionalRawData);
+            return new TriggeredJobHistoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                runs ?? new ChangeTrackingList<TriggeredJobRun>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggeredJobHistoryData>.Write(ModelReaderWriterOptions options)

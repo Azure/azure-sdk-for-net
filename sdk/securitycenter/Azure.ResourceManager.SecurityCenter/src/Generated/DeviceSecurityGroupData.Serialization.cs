@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<ThresholdCustomAlertRule>> thresholdRules = default;
-            Optional<IList<TimeWindowCustomAlertRule>> timeWindowRules = default;
-            Optional<IList<AllowlistCustomAlertRule>> allowlistRules = default;
-            Optional<IList<DenylistCustomAlertRule>> denylistRules = default;
+            IList<ThresholdCustomAlertRule> thresholdRules = default;
+            IList<TimeWindowCustomAlertRule> timeWindowRules = default;
+            IList<AllowlistCustomAlertRule> allowlistRules = default;
+            IList<DenylistCustomAlertRule> denylistRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +239,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceSecurityGroupData(id, name, type, systemData.Value, Optional.ToList(thresholdRules), Optional.ToList(timeWindowRules), Optional.ToList(allowlistRules), Optional.ToList(denylistRules), serializedAdditionalRawData);
+            return new DeviceSecurityGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>(),
+                timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>(),
+                allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>(),
+                denylistRules ?? new ChangeTrackingList<DenylistCustomAlertRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceSecurityGroupData>.Write(ModelReaderWriterOptions options)

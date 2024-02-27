@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AdaptiveNetworkHardeningData>> value = default;
+            IReadOnlyList<AdaptiveNetworkHardeningData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdaptiveNetworkHardeningsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AdaptiveNetworkHardeningsList(value ?? new ChangeTrackingList<AdaptiveNetworkHardeningData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdaptiveNetworkHardeningsList>.Write(ModelReaderWriterOptions options)

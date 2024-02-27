@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
             Optional<AppPlatformServiceProperties> properties = default;
             Optional<AppPlatformSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceData>.Write(ModelReaderWriterOptions options)
