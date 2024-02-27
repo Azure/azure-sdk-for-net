@@ -109,6 +109,7 @@ namespace Azure.Core.Buffers
             }
             finally
             {
+                await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
                 ArrayPool<byte>.Shared.Return(buffer);
             }
         }
@@ -128,6 +129,7 @@ namespace Azure.Core.Buffers
             }
             finally
             {
+                destination.Flush();
                 ArrayPool<byte>.Shared.Return(buffer);
             }
         }

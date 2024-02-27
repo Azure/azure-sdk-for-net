@@ -55,7 +55,7 @@ namespace Azure.Core.Pipeline
 
             policies ??= Array.Empty<HttpPipelinePolicy>();
 
-            var all = new HttpPipelinePolicy[policies.Length + 1];
+            HttpPipelinePolicy[] all = new HttpPipelinePolicy[policies.Length + 1];
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport,
                 ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
             policies.CopyTo(all, 0);
