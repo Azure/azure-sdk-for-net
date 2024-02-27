@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> addressPrefix = default;
-            Optional<string> nextHopIPAddress = default;
+            string name = default;
+            string addressPrefix = default;
+            string nextHopIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Route(name.Value, addressPrefix.Value, nextHopIPAddress.Value, serializedAdditionalRawData);
+            return new Route(name, addressPrefix, nextHopIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Route>.Write(ModelReaderWriterOptions options)

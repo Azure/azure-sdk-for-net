@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> webChatEmbedCode = default;
+            string webChatEmbedCode = default;
             IList<WebChatSite> sites = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebChatChannelProperties(webChatEmbedCode.Value, sites ?? new ChangeTrackingList<WebChatSite>(), serializedAdditionalRawData);
+            return new WebChatChannelProperties(webChatEmbedCode, sites ?? new ChangeTrackingList<WebChatSite>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebChatChannelProperties>.Write(ModelReaderWriterOptions options)

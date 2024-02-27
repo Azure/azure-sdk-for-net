@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AssessmentSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<string> remediation = default;
-            Optional<IsPass> isPass = default;
-            Optional<string> policyId = default;
+            string name = default;
+            AssessmentSeverity? severity = default;
+            string description = default;
+            string remediation = default;
+            IsPass? isPass = default;
+            string policyId = default;
             IReadOnlyList<AssessmentResourceContent> resourceList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new Assessment(
-                name.Value,
-                Optional.ToNullable(severity),
-                description.Value,
-                remediation.Value,
-                Optional.ToNullable(isPass),
-                policyId.Value,
+                name,
+                severity,
+                description,
+                remediation,
+                isPass,
+                policyId,
                 resourceList ?? new ChangeTrackingList<AssessmentResourceContent>(),
                 serializedAdditionalRawData);
         }

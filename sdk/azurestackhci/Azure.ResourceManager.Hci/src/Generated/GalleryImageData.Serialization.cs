@@ -152,22 +152,22 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
+            ArcVmExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> containerId = default;
-            Optional<string> imagePath = default;
-            Optional<OperatingSystemType> osType = default;
-            Optional<CloudInitDataSource> cloudInitDataSource = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<GalleryImageIdentifier> identifier = default;
-            Optional<GalleryImageVersion> version = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<GalleryImageStatus> status = default;
+            SystemData systemData = default;
+            ResourceIdentifier containerId = default;
+            string imagePath = default;
+            OperatingSystemType? osType = default;
+            CloudInitDataSource? cloudInitDataSource = default;
+            HyperVGeneration? hyperVGeneration = default;
+            GalleryImageIdentifier identifier = default;
+            GalleryImageVersion version = default;
+            ProvisioningStateEnum? provisioningState = default;
+            GalleryImageStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -323,19 +323,19 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
-                containerId.Value,
-                imagePath.Value,
-                Optional.ToNullable(osType),
-                Optional.ToNullable(cloudInitDataSource),
-                Optional.ToNullable(hyperVGeneration),
-                identifier.Value,
-                version.Value,
-                Optional.ToNullable(provisioningState),
-                status.Value,
+                extendedLocation,
+                containerId,
+                imagePath,
+                osType,
+                cloudInitDataSource,
+                hyperVGeneration,
+                identifier,
+                version,
+                provisioningState,
+                status,
                 serializedAdditionalRawData);
         }
 

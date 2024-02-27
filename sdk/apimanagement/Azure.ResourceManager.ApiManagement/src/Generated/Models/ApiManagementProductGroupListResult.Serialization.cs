@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IReadOnlyList<ProductGroupData> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementProductGroupListResult(value ?? new ChangeTrackingList<ProductGroupData>(), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new ApiManagementProductGroupListResult(value ?? new ChangeTrackingList<ProductGroupData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementProductGroupListResult>.Write(ModelReaderWriterOptions options)

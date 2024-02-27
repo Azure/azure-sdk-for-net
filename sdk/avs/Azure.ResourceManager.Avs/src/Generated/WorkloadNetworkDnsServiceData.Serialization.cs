@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<IPAddress> dnsServiceIP = default;
-            Optional<string> defaultDnsZone = default;
+            SystemData systemData = default;
+            string displayName = default;
+            IPAddress dnsServiceIP = default;
+            string defaultDnsZone = default;
             IList<string> fqdnZones = default;
-            Optional<DnsServiceLogLevel> logLevel = default;
-            Optional<DnsServiceStatus> status = default;
-            Optional<WorkloadNetworkDnsServiceProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            DnsServiceLogLevel? logLevel = default;
+            DnsServiceStatus? status = default;
+            WorkloadNetworkDnsServiceProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,15 +266,15 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                dnsServiceIP.Value,
-                defaultDnsZone.Value,
+                systemData,
+                displayName,
+                dnsServiceIP,
+                defaultDnsZone,
                 fqdnZones ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(logLevel),
-                Optional.ToNullable(status),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(revision),
+                logLevel,
+                status,
+                provisioningState,
+                revision,
                 serializedAdditionalRawData);
         }
 

@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
             SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
-            Optional<string> provisioningState = default;
-            Optional<AutomationResponseError> error = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<SoftwareUpdateConfigurationTasks> tasks = default;
+            string provisioningState = default;
+            AutomationResponseError error = default;
+            DateTimeOffset? creationTime = default;
+            string createdBy = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            SoftwareUpdateConfigurationTasks tasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,16 +252,16 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 updateConfiguration,
                 scheduleInfo,
-                provisioningState.Value,
-                error.Value,
-                Optional.ToNullable(creationTime),
-                createdBy.Value,
-                Optional.ToNullable(lastModifiedTime),
-                lastModifiedBy.Value,
-                tasks.Value,
+                provisioningState,
+                error,
+                creationTime,
+                createdBy,
+                lastModifiedTime,
+                lastModifiedBy,
+                tasks,
                 serializedAdditionalRawData);
         }
 

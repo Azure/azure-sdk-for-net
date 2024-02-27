@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<LargeInstanceProvisioningState> provisioningState = default;
-            Optional<string> offeringType = default;
-            Optional<string> storageType = default;
-            Optional<string> generation = default;
-            Optional<LargeInstanceHardwareTypeName> hardwareType = default;
-            Optional<string> workloadType = default;
-            Optional<LargeInstanceStorageBillingProperties> storageBillingProperties = default;
+            LargeInstanceProvisioningState? provisioningState = default;
+            string offeringType = default;
+            string storageType = default;
+            string generation = default;
+            LargeInstanceHardwareTypeName? hardwareType = default;
+            string workloadType = default;
+            LargeInstanceStorageBillingProperties storageBillingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LargeInstanceStorageProperties(
-                Optional.ToNullable(provisioningState),
-                offeringType.Value,
-                storageType.Value,
-                generation.Value,
-                Optional.ToNullable(hardwareType),
-                workloadType.Value,
-                storageBillingProperties.Value,
+                provisioningState,
+                offeringType,
+                storageType,
+                generation,
+                hardwareType,
+                workloadType,
+                storageBillingProperties,
                 serializedAdditionalRawData);
         }
 

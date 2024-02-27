@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<string> terms = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<bool> approvalRequired = default;
-            Optional<int> subscriptionsLimit = default;
-            Optional<ApiManagementProductState> state = default;
+            string description = default;
+            string terms = default;
+            bool? subscriptionRequired = default;
+            bool? approvalRequired = default;
+            int? subscriptionsLimit = default;
+            ApiManagementProductState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AssociatedProductProperties(
-                description.Value,
-                terms.Value,
-                Optional.ToNullable(subscriptionRequired),
-                Optional.ToNullable(approvalRequired),
-                Optional.ToNullable(subscriptionsLimit),
-                Optional.ToNullable(state),
+                description,
+                terms,
+                subscriptionRequired,
+                approvalRequired,
+                subscriptionsLimit,
+                state,
                 serializedAdditionalRawData,
-                id.Value,
+                id,
                 name);
         }
 

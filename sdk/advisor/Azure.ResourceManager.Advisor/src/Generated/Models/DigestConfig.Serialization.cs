@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> actionGroupResourceId = default;
-            Optional<int> frequency = default;
+            string name = default;
+            string actionGroupResourceId = default;
+            int? frequency = default;
             IList<Category> categories = default;
-            Optional<string> language = default;
-            Optional<DigestConfigState> state = default;
+            string language = default;
+            DigestConfigState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.Advisor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DigestConfig(
-                name.Value,
-                actionGroupResourceId.Value,
-                Optional.ToNullable(frequency),
+                name,
+                actionGroupResourceId,
+                frequency,
                 categories ?? new ChangeTrackingList<Category>(),
-                language.Value,
-                Optional.ToNullable(state),
+                language,
+                state,
                 serializedAdditionalRawData);
         }
 

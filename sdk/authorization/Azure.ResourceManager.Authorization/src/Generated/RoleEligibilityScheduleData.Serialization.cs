@@ -162,21 +162,21 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<Guid> principalId = default;
-            Optional<RoleManagementPrincipalType> principalType = default;
-            Optional<ResourceIdentifier> roleEligibilityScheduleRequestId = default;
-            Optional<RoleManagementScheduleMemberType> memberType = default;
-            Optional<RoleManagementScheduleStatus> status = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> updatedOn = default;
-            Optional<RoleManagementExpandedProperties> expandedProperties = default;
+            SystemData systemData = default;
+            string scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            Guid? principalId = default;
+            RoleManagementPrincipalType? principalType = default;
+            ResourceIdentifier roleEligibilityScheduleRequestId = default;
+            RoleManagementScheduleMemberType? memberType = default;
+            RoleManagementScheduleStatus? status = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            RoleManagementExpandedProperties expandedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,21 +341,21 @@ namespace Azure.ResourceManager.Authorization
                 id,
                 name,
                 type,
-                systemData.Value,
-                scope.Value,
-                roleDefinitionId.Value,
-                Optional.ToNullable(principalId),
-                Optional.ToNullable(principalType),
-                roleEligibilityScheduleRequestId.Value,
-                Optional.ToNullable(memberType),
-                Optional.ToNullable(status),
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(endDateTime),
-                condition.Value,
-                conditionVersion.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(updatedOn),
-                expandedProperties.Value,
+                systemData,
+                scope,
+                roleDefinitionId,
+                principalId,
+                principalType,
+                roleEligibilityScheduleRequestId,
+                memberType,
+                status,
+                startDateTime,
+                endDateTime,
+                condition,
+                conditionVersion,
+                createdOn,
+                updatedOn,
+                expandedProperties,
                 serializedAdditionalRawData);
         }
 

@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Advisor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> suppressionId = default;
-            Optional<string> ttl = default;
-            Optional<DateTimeOffset> expirationTimeStamp = default;
+            SystemData systemData = default;
+            string suppressionId = default;
+            string ttl = default;
+            DateTimeOffset? expirationTimeStamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Advisor
                 id,
                 name,
                 type,
-                systemData.Value,
-                suppressionId.Value,
-                ttl.Value,
-                Optional.ToNullable(expirationTimeStamp),
+                systemData,
+                suppressionId,
+                ttl,
+                expirationTimeStamp,
                 serializedAdditionalRawData);
         }
 

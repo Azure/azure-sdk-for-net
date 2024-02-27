@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             ConnectionTypeAssociationProperty connectionType = default;
             IDictionary<string, string> fieldDefinitionValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionCreateOrUpdateContent(name, description.Value, connectionType, fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AutomationConnectionCreateOrUpdateContent(name, description, connectionType, fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

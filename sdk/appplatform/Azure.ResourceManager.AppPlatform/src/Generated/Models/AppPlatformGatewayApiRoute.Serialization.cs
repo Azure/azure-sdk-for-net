@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<Uri> uri = default;
-            Optional<bool> ssoEnabled = default;
-            Optional<bool> tokenRelay = default;
+            string title = default;
+            string description = default;
+            Uri uri = default;
+            bool? ssoEnabled = default;
+            bool? tokenRelay = default;
             IList<string> predicates = default;
             IList<string> filters = default;
-            Optional<int> order = default;
+            int? order = default;
             IList<string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformGatewayApiRoute(
-                title.Value,
-                description.Value,
-                uri.Value,
-                Optional.ToNullable(ssoEnabled),
-                Optional.ToNullable(tokenRelay),
+                title,
+                description,
+                uri,
+                ssoEnabled,
+                tokenRelay,
                 predicates ?? new ChangeTrackingList<string>(),
                 filters ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(order),
+                order,
                 tags ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

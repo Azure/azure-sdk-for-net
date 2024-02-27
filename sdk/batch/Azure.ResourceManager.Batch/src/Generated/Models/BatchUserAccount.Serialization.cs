@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string name = default;
             string password = default;
-            Optional<BatchUserAccountElevationLevel> elevationLevel = default;
-            Optional<BatchLinuxUserConfiguration> linuxUserConfiguration = default;
-            Optional<BatchWindowsUserConfiguration> windowsUserConfiguration = default;
+            BatchUserAccountElevationLevel? elevationLevel = default;
+            BatchLinuxUserConfiguration linuxUserConfiguration = default;
+            BatchWindowsUserConfiguration windowsUserConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchUserAccount(
                 name,
                 password,
-                Optional.ToNullable(elevationLevel),
-                linuxUserConfiguration.Value,
-                windowsUserConfiguration.Value,
+                elevationLevel,
+                linuxUserConfiguration,
+                windowsUserConfiguration,
                 serializedAdditionalRawData);
         }
 

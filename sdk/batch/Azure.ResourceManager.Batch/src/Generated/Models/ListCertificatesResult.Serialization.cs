@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             IReadOnlyList<BatchAccountCertificateData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListCertificatesResult(value ?? new ChangeTrackingList<BatchAccountCertificateData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ListCertificatesResult(value ?? new ChangeTrackingList<BatchAccountCertificateData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListCertificatesResult>.Write(ModelReaderWriterOptions options)

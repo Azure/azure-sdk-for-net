@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<ResourceIdentifier> managementGroupId = default;
-            Optional<ResourceIdentifier> subscriptionId = default;
-            Optional<ResourceIdentifier> resourceGroupId = default;
-            Optional<string> displayName = default;
+            Guid? tenantId = default;
+            ResourceIdentifier managementGroupId = default;
+            ResourceIdentifier subscriptionId = default;
+            ResourceIdentifier resourceGroupId = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BillingBenefitsAppliedScopeProperties(
-                Optional.ToNullable(tenantId),
-                managementGroupId.Value,
-                subscriptionId.Value,
-                resourceGroupId.Value,
-                displayName.Value,
+                tenantId,
+                managementGroupId,
+                subscriptionId,
+                resourceGroupId,
+                displayName,
                 serializedAdditionalRawData);
         }
 

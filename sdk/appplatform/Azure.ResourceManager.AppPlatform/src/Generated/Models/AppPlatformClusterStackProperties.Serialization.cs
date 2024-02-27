@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> version = default;
+            string id = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformClusterStackProperties(id.Value, version.Value, serializedAdditionalRawData);
+            return new AppPlatformClusterStackProperties(id, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformClusterStackProperties>.Write(ModelReaderWriterOptions options)

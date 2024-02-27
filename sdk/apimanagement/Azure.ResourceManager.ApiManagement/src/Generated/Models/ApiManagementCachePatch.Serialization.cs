@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> connectionString = default;
-            Optional<string> useFromLocation = default;
-            Optional<Uri> resourceId = default;
+            string description = default;
+            string connectionString = default;
+            string useFromLocation = default;
+            Uri resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementCachePatch(description.Value, connectionString.Value, useFromLocation.Value, resourceId.Value, serializedAdditionalRawData);
+            return new ApiManagementCachePatch(description, connectionString, useFromLocation, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementCachePatch>.Write(ModelReaderWriterOptions options)

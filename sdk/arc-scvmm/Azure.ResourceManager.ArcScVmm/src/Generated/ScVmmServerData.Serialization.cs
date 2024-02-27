@@ -148,15 +148,15 @@ namespace Azure.ResourceManager.ArcScVmm
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VmmServerPropertiesCredentials> credentials = default;
+            SystemData systemData = default;
+            VmmServerPropertiesCredentials credentials = default;
             string fqdn = default;
-            Optional<int> port = default;
-            Optional<string> connectionStatus = default;
-            Optional<string> errorMessage = default;
-            Optional<string> uuid = default;
-            Optional<string> version = default;
-            Optional<string> provisioningState = default;
+            int? port = default;
+            string connectionStatus = default;
+            string errorMessage = default;
+            string uuid = default;
+            string version = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,18 +279,18 @@ namespace Azure.ResourceManager.ArcScVmm
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                credentials.Value,
+                credentials,
                 fqdn,
-                Optional.ToNullable(port),
-                connectionStatus.Value,
-                errorMessage.Value,
-                uuid.Value,
-                version.Value,
-                provisioningState.Value,
+                port,
+                connectionStatus,
+                errorMessage,
+                uuid,
+                version,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

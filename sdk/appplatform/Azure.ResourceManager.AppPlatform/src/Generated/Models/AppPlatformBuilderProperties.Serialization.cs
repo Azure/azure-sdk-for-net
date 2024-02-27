@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
-            Optional<AppPlatformClusterStackProperties> stack = default;
+            AppPlatformBuilderProvisioningState? provisioningState = default;
+            AppPlatformClusterStackProperties stack = default;
             IList<BuildpacksGroupProperties> buildpackGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuilderProperties(Optional.ToNullable(provisioningState), stack.Value, buildpackGroups ?? new ChangeTrackingList<BuildpacksGroupProperties>(), serializedAdditionalRawData);
+            return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups ?? new ChangeTrackingList<BuildpacksGroupProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuilderProperties>.Write(ModelReaderWriterOptions options)

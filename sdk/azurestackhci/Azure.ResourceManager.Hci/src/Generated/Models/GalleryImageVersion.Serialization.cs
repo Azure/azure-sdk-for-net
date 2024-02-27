@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<GalleryImageVersionStorageProfile> storageProfile = default;
+            string name = default;
+            GalleryImageVersionStorageProfile storageProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersion(name.Value, storageProfile.Value, serializedAdditionalRawData);
+            return new GalleryImageVersion(name, storageProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersion>.Write(ModelReaderWriterOptions options)

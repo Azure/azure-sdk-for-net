@@ -179,20 +179,20 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> originGroupName = default;
-            Optional<WritableSubResource> azureOrigin = default;
-            Optional<string> hostName = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
-            Optional<string> originHostHeader = default;
-            Optional<int?> priority = default;
-            Optional<int?> weight = default;
-            Optional<SharedPrivateLinkResourceProperties> sharedPrivateLinkResource = default;
-            Optional<EnabledState> enabledState = default;
-            Optional<bool> enforceCertificateNameCheck = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            SystemData systemData = default;
+            string originGroupName = default;
+            WritableSubResource azureOrigin = default;
+            string hostName = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            string originHostHeader = default;
+            int? priority = default;
+            int? weight = default;
+            SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default;
+            EnabledState? enabledState = default;
+            bool? enforceCertificateNameCheck = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -351,20 +351,20 @@ namespace Azure.ResourceManager.Cdn
                 id,
                 name,
                 type,
-                systemData.Value,
-                originGroupName.Value,
+                systemData,
+                originGroupName,
                 azureOrigin,
-                hostName.Value,
-                Optional.ToNullable(httpPort),
-                Optional.ToNullable(httpsPort),
-                originHostHeader.Value,
-                Optional.ToNullable(priority),
-                Optional.ToNullable(weight),
-                sharedPrivateLinkResource.Value,
-                Optional.ToNullable(enabledState),
-                Optional.ToNullable(enforceCertificateNameCheck),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(deploymentStatus),
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                enabledState,
+                enforceCertificateNameCheck,
+                provisioningState,
+                deploymentStatus,
                 serializedAdditionalRawData);
         }
 
