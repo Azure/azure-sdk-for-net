@@ -760,7 +760,7 @@
         "FailoverCluterInstanceGuideLineValue",
         "MegabytesOfDataRecievedMissing",
         "MegabytesOfDataRecievedMissingValue",
-        "MegabytesOfDataRecievedOutOfRange"
+        "MegabytesOfDataRecievedOutOfRange",
         "MegabytesOfDataRecievedOutOfRangeValue"
       ]
     },
