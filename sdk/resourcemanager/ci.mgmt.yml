@@ -115,7 +115,6 @@ trigger:
     - sdk/marketplace/Azure.ResourceManager.Marketplace
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
     - sdk/mediaservices/Azure.ResourceManager.Media
-    - sdk/migrationdiscovery/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/monitor/Azure.ResourceManager.Monitor
