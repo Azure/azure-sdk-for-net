@@ -49,7 +49,6 @@ namespace Azure.Core
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
-
                 _uriBuilder = value;
             }
         }
@@ -95,7 +94,16 @@ namespace Azure.Core
         /// </summary>
         protected override Uri? UriCore
         {
+            // The _uriBuilder field on this type is the source of truth for
+            // the type's Uri implementation. Accessing it through the Uri
+            // property allows us to reuse the lazy-instantation implemented
+            // there.
             get => Uri.ToUri();
+
+            // This setter effectively adapts the BCL Uri type to the Azure.Core
+            // RequestUriBuilder interface, in that the only way
+            // RequestUriBuilder provides to fully reset the Uri (i.e. from null)
+            // is to create a new instance of the builder.
             set
             {
                 if (value is null)
