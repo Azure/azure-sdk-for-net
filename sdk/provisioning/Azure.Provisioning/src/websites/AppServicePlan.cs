@@ -39,7 +39,7 @@ namespace Azure.Provisioning.AppService
             var result = base.FindParentInScope(scope);
             if (result is null)
             {
-                result = scope.GetOrAddResourceGroup();
+                result = scope.GetResourceGroup();
             }
             return result;
         }

@@ -11,7 +11,6 @@ using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
 using Azure.Provisioning.ResourceManager;
-using Azure.Provisioning.Resources;
 using Azure.ResourceManager;
 
 namespace Azure.Provisioning
@@ -216,7 +215,7 @@ namespace Azure.Provisioning
 
             stream.WriteLine($"resource {Name} '{ResourceType}@{Version}' = {{");
 
-            if (this.IsChildResource() && this is not DeploymentScript && this is not Subscription)
+            if (this.IsChildResource())
             {
                 stream.WriteLine($"  parent: {Parent!.Name}");
             }

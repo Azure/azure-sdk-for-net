@@ -5,7 +5,7 @@ namespace Azure.Provisioning
         public static T? GetSingleResourceInScope<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
         public static T? GetSingleResource<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
     }
-    public abstract partial class Construct : Azure.Provisioning.IConstruct, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Construct>
+    public abstract partial class Construct : Azure.Provisioning.IConstruct
     {
         protected Construct(Azure.Provisioning.IConstruct? scope, string name, Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.ResourceGroup, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null, Azure.Provisioning.ResourceManager.ResourceGroup? resourceGroup = null) { }
         public Azure.Provisioning.ConstructScope ConstructScope { get { throw null; } }
@@ -20,12 +20,10 @@ namespace Azure.Provisioning
         public void AddParameter(Azure.Provisioning.Parameter parameter) { }
         public void AddResource(Azure.Provisioning.Resource resource) { }
         public System.Collections.Generic.IEnumerable<Azure.Provisioning.IConstruct> GetConstructs(bool recursive = true) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.Provisioning.Resource> GetExistingResources(bool recursive = true) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.Provisioning.Output> GetOutputs(bool recursive = true) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.Provisioning.Parameter> GetParameters(bool recursive = true) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.Provisioning.Resource> GetResources(bool recursive = true) { throw null; }
-        Azure.Provisioning.Construct System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Construct>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Construct>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Construct>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected T UseExistingResource<T>(T? resource, System.Func<T> create) where T : Azure.Provisioning.Resource { throw null; }
     }
     public enum ConstructScope
@@ -49,6 +47,7 @@ namespace Azure.Provisioning
         void AddParameter(Azure.Provisioning.Parameter parameter);
         void AddResource(Azure.Provisioning.Resource resource);
         System.Collections.Generic.IEnumerable<Azure.Provisioning.IConstruct> GetConstructs(bool recursive = true);
+        System.Collections.Generic.IEnumerable<Azure.Provisioning.Resource> GetExistingResources(bool recursive = true);
         System.Collections.Generic.IEnumerable<Azure.Provisioning.Output> GetOutputs(bool recursive = true);
         System.Collections.Generic.IEnumerable<Azure.Provisioning.Parameter> GetParameters(bool recursive = true);
         System.Collections.Generic.IEnumerable<Azure.Provisioning.Resource> GetResources(bool recursive = true);
@@ -146,6 +145,13 @@ namespace Azure.Provisioning.AppService
         Dotnetcore = 1,
     }
 }
+namespace Azure.Provisioning.Authorization
+{
+    public partial class RoleAssignment : Azure.Provisioning.Resource<Azure.ResourceManager.Authorization.RoleAssignmentData>
+    {
+        public RoleAssignment(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource resource, System.Guid roleDefinitionId, System.Guid principalId, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType principalType, Azure.Core.ResourceIdentifier? delegatedManagedIdentityResourceId = null) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Authorization.RoleAssignmentData>)) { }
+    }
+}
 namespace Azure.Provisioning.KeyVaults
 {
     public partial class KeyVault : Azure.Provisioning.Resource<Azure.ResourceManager.KeyVault.KeyVaultData>
@@ -176,8 +182,8 @@ namespace Azure.Provisioning.ResourceManager
     public static partial class ResourceManagerExtensions
     {
         public static Azure.Provisioning.ResourceManager.ResourceGroup AddResourceGroup(this Azure.Provisioning.IConstruct construct) { throw null; }
-        public static Azure.Provisioning.ResourceManager.ResourceGroup GetOrAddResourceGroup(this Azure.Provisioning.IConstruct construct) { throw null; }
         public static Azure.Provisioning.ResourceManager.Subscription GetOrCreateSubscription(this Azure.Provisioning.IConstruct construct, System.Guid? subscriptionId = default(System.Guid?)) { throw null; }
+        public static Azure.Provisioning.ResourceManager.ResourceGroup? GetResourceGroup(this Azure.Provisioning.IConstruct construct) { throw null; }
     }
     public partial class Subscription : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.SubscriptionData>
     {

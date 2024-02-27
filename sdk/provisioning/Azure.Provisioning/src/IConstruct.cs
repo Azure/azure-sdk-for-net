@@ -61,6 +61,11 @@ namespace Azure.Provisioning
         /// <param name="recursive">Include all child constructs.</param>
         public IEnumerable<Resource> GetResources(bool recursive = true);
         /// <summary>
+        /// Gets all existing resources in the construct.
+        /// </summary>
+        /// <param name="recursive">Include all child constructs.</param>
+        public IEnumerable<Resource> GetExistingResources(bool recursive = true);
+        /// <summary>
         /// Gets all child constructs in the construct.
         /// </summary>
         /// <param name="recursive">Include all child constructs.</param>

@@ -13,16 +13,15 @@ namespace Azure.Provisioning
     internal class ModuleInfrastructure
     {
         private readonly Infrastructure _infrastructure;
-        private readonly ModuleConstruct _rootConstruct;
+        private ModuleConstruct? _rootConstruct;
+        private Resource? _rootResource;
 
         public ModuleInfrastructure(Infrastructure infrastructure)
         {
             _infrastructure = infrastructure;
             Dictionary<Resource, List<Resource>> resourceTree = BuildResourceTree();
 
-            ModuleConstruct? root = null;
-            BuildModuleConstructs(_infrastructure.Root, resourceTree, null, ref root);
-            _rootConstruct = root!;
+            BuildModuleConstructs(_rootResource!, resourceTree, null);
 
             AddOutputsToModules();
         }
@@ -32,10 +31,10 @@ namespace Azure.Provisioning
             outputPath ??= $".\\{GetType().Name}";
             outputPath = Path.GetFullPath(outputPath);
 
-            WriteBicepFile(_rootConstruct, outputPath);
+            WriteBicepFile(_rootConstruct!, outputPath);
 
             var queue = new Queue<ModuleConstruct>();
-            queue.Enqueue(_rootConstruct);
+            queue.Enqueue(_rootConstruct!);
             WriteConstructsByLevel(queue, outputPath);
         }
 
@@ -54,12 +53,27 @@ namespace Azure.Provisioning
 
         private Dictionary<Resource, List<Resource>> BuildResourceTree()
         {
-            var resources = _infrastructure.GetResources(true);
+            var resources = _infrastructure.GetResources(true).ToList();
             Dictionary<Resource, List<Resource>> resourceTree = new();
             HashSet<Resource> visited = new();
             foreach (var resource in resources)
             {
                 VisitResource(resource, resourceTree, visited);
+            }
+
+            // prune tenant if there are no children
+            if (resourceTree[_infrastructure.Root].Count == 0)
+            {
+                resourceTree.Remove(_infrastructure.Root);
+            }
+
+            // find the root resource
+            foreach (var resource in resources)
+            {
+                if (resource.Parent == null)
+                {
+                    _rootResource = resource;
+                }
             }
 
             return resourceTree;
@@ -88,7 +102,7 @@ namespace Azure.Provisioning
             }
         }
 
-        private void BuildModuleConstructs(Resource resource, Dictionary<Resource, List<Resource>> resourceTree, ModuleConstruct? parentScope, ref ModuleConstruct? root)
+        private void BuildModuleConstructs(Resource resource, Dictionary<Resource, List<Resource>> resourceTree, ModuleConstruct? parentScope)
         {
             ModuleConstruct? construct = null;
             var moduleResource = new ModuleResource(resource, parentScope);
@@ -99,8 +113,15 @@ namespace Azure.Provisioning
 
                 if (parentScope == null)
                 {
-                    root = construct;
                     construct.IsRoot = true;
+                    _rootConstruct = construct;
+
+                    // If the root is just a regular resource, then this is an anonymous resource group deployment,
+                    // so the resources will be added to the root construct.
+                    if (resource is not ResourceGroup and not Subscription and not Tenant)
+                    {
+                        parentScope = construct;
+                    }
                 }
             }
 
@@ -139,13 +160,17 @@ namespace Azure.Provisioning
 
             foreach (var child in resourceTree[resource])
             {
-                BuildModuleConstructs(child, resourceTree, construct ?? parentScope, ref root);
+                BuildModuleConstructs(child, resourceTree, construct ?? parentScope);
             }
         }
 
         private bool NeedsModuleConstruct(Resource resource, Dictionary<Resource, List<Resource>> resourceTree)
         {
-            if (!(resource is Tenant || resource is Subscription || resource is ResourceGroup))
+            if (_rootResource is not (Tenant or Subscription or ResourceGroup) && _rootConstruct == null)
+            {
+                return true;
+            }
+            if (resource is not (Tenant or Subscription or ResourceGroup))
             {
                 return false;
             }
@@ -187,9 +212,9 @@ namespace Azure.Provisioning
         {
             using var stream = new FileStream(GetFilePath(construct, outputPath), FileMode.Create);
 #if NET6_0_OR_GREATER
-            stream.Write(ModelReaderWriter.Write(construct, new ModelReaderWriterOptions("bicep")));
+            stream.Write(construct.SerializeModule());
 #else
-            BinaryData data = ModelReaderWriter.Write(construct, new ModelReaderWriterOptions("bicep"));
+            BinaryData data = construct.SerializeModule();
             var buffer = data.ToArray();
             stream.Write(buffer, 0, buffer.Length);
 #endif

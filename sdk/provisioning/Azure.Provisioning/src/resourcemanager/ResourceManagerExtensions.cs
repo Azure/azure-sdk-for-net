@@ -27,13 +27,13 @@ namespace Azure.Provisioning.ResourceManager
         }
 
         /// <summary>
-        /// Gets or adds a resource group to the construct.
+        /// Gets the resource group of the construct.
         /// </summary>
         /// <param name="construct">The construct.</param>
         /// <returns>The see <see cref="ResourceGroup"/>.</returns>
-        public static ResourceGroup GetOrAddResourceGroup(this IConstruct construct)
+        public static ResourceGroup? GetResourceGroup(this IConstruct construct)
         {
-            return construct.ResourceGroup ?? construct.GetSingleResource<ResourceGroup>() ?? construct.AddResourceGroup();
+            return construct.ResourceGroup ?? construct.GetSingleResource<ResourceGroup>();
         }
 
         /// <summary>
