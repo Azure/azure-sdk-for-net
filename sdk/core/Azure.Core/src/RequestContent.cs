@@ -21,10 +21,9 @@ namespace Azure.Core
     /// </summary>
     public abstract class RequestContent : BinaryContent
     {
-        private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
-
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
+        private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new("W");
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
@@ -92,7 +91,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IPersistableModel{T}"/>.</returns>
         public static new RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
-            => new AzureBinaryContent(BinaryContent.Create(model, options ?? ModelWriteWireOptions));
+            => new BinaryContentAdapter(BinaryContent.Create(model, options ?? ModelWriteWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -151,28 +150,6 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
-
-        private sealed class AzureBinaryContent : RequestContent
-        {
-            private readonly BinaryContent _content;
-
-            public AzureBinaryContent(BinaryContent content)
-            {
-                _content = content;
-            }
-
-            public override void Dispose()
-                => _content?.Dispose();
-
-            public override bool TryComputeLength(out long length)
-                => _content.TryComputeLength(out length);
-
-            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
-                => _content.WriteTo(stream, cancellationToken);
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
-                => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-        }
 
         private sealed class StreamContent : RequestContent
         {
@@ -355,6 +332,33 @@ namespace Azure.Core
                 _data.WriteTo(stream);
                 return Task.CompletedTask;
             }
+        }
+
+        /// <summary>
+        /// This adapter adapts the System.ClientModel BinaryContent type to
+        /// the Azure.Core RequestContent interface, so that it can be used as
+        /// though it were a RequestContent in Azure.Core.
+        /// </summary>
+        private sealed class BinaryContentAdapter : RequestContent
+        {
+            private readonly BinaryContent _content;
+
+            public BinaryContentAdapter(BinaryContent content)
+            {
+                _content = content;
+            }
+
+            public override void Dispose()
+                => _content?.Dispose();
+
+            public override bool TryComputeLength(out long length)
+                => _content.TryComputeLength(out length);
+
+            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+                => _content.WriteTo(stream, cancellationToken);
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+                => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
     }
 }
