@@ -39,6 +39,11 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("speed"u8);
                 writer.WriteNumberValue(Speed.Value);
             }
+            if (DeploymentName != null)
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,6 +86,7 @@ namespace Azure.AI.OpenAI
             SpeechVoice voice = default;
             Optional<SpeechGenerationResponseFormat> responseFormat = default;
             Optional<float> speed = default;
+            Optional<string> model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,13 +119,18 @@ namespace Azure.AI.OpenAI
                     speed = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("model"u8))
+                {
+                    model = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpeechGenerationOptions(input, voice, Optional.ToNullable(responseFormat), Optional.ToNullable(speed), serializedAdditionalRawData);
+            return new SpeechGenerationOptions(input, voice, Optional.ToNullable(responseFormat), Optional.ToNullable(speed), model.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpeechGenerationOptions>.Write(ModelReaderWriterOptions options)

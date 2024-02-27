@@ -69,6 +69,11 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteNumberValue(LogProbabilityCount.Value);
             }
+            if (Suffix != null)
+            {
+                writer.WritePropertyName("suffix"u8);
+                writer.WriteStringValue(Suffix);
+            }
             if (Echo.HasValue)
             {
                 writer.WritePropertyName("echo"u8);
@@ -155,6 +160,7 @@ namespace Azure.AI.OpenAI
             Optional<string> user = default;
             Optional<int> n = default;
             Optional<int> logprobs = default;
+            Optional<string> suffix = default;
             Optional<bool> echo = default;
             IList<string> stop = default;
             Optional<float> presencePenalty = default;
@@ -231,6 +237,11 @@ namespace Azure.AI.OpenAI
                     logprobs = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("suffix"u8))
+                {
+                    suffix = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("echo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -301,7 +312,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CompletionsOptions(prompt, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), logitBias ?? new ChangeTrackingDictionary<int, int>(), user.Value, Optional.ToNullable(n), Optional.ToNullable(logprobs), Optional.ToNullable(echo), stop ?? new ChangeTrackingList<string>(), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf), Optional.ToNullable(stream), model.Value, serializedAdditionalRawData);
+            return new CompletionsOptions(prompt, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), logitBias ?? new ChangeTrackingDictionary<int, int>(), user.Value, Optional.ToNullable(n), Optional.ToNullable(logprobs), suffix.Value, Optional.ToNullable(echo), stop ?? new ChangeTrackingList<string>(), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf), Optional.ToNullable(stream), model.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompletionsOptions>.Write(ModelReaderWriterOptions options)

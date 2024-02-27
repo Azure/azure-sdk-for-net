@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
         private const string ElasticsearchValue = "elasticsearch";
         private const string PineconeValue = "pinecone";
 
-        /// <summary> Represents the use of Azure Cognitive Search as an Azure OpenAI chat extension. </summary>
+        /// <summary> Represents the use of Azure AI Search as an Azure OpenAI chat extension. </summary>
         public static AzureChatExtensionType AzureSearch { get; } = new AzureChatExtensionType(AzureSearchValue);
         /// <summary> Represents the use of Azure Machine Learning index as an Azure OpenAI chat extension. </summary>
         public static AzureChatExtensionType AzureMachineLearningIndex { get; } = new AzureChatExtensionType(AzureMachineLearningIndexValue);

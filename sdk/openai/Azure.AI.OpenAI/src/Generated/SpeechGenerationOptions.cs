@@ -50,13 +50,15 @@ namespace Azure.AI.OpenAI
         /// <param name="voice"> The voice to use for text-to-speech. </param>
         /// <param name="responseFormat"> The audio output format for the spoken text. By default, the MP3 format will be used. </param>
         /// <param name="speed"> The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the default and higher values corresponding to faster speech. </param>
+        /// <param name="deploymentName"> The model to use for this text-to-speech request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SpeechGenerationOptions(string input, SpeechVoice voice, SpeechGenerationResponseFormat? responseFormat, float? speed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SpeechGenerationOptions(string input, SpeechVoice voice, SpeechGenerationResponseFormat? responseFormat, float? speed, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Input = input;
             Voice = voice;
             ResponseFormat = responseFormat;
             Speed = speed;
+            DeploymentName = deploymentName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }

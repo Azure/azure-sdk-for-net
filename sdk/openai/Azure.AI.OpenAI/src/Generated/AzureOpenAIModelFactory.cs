@@ -427,14 +427,81 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerationData"/>. </summary>
         /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
         /// <param name="base64Data"> The complete data for an image, represented as a base64-encoded string. </param>
+        /// <param name="contentFilterResults"> Information about the content filtering results. </param>
         /// <param name="revisedPrompt">
         /// The final prompt used by the model to generate the image.
         /// Only provided with dall-3-models and only when revisions were made to the prompt.
         /// </param>
+        /// <param name="promptFilterResults">
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if
+        /// it has been detected, as well as the severity level (very_low, low, medium, high-scale
+        /// that determines the intensity and risk level of harmful content) and if it has been
+        /// filtered or not. Information about jailbreak content and profanity, if it has been detected,
+        /// and if it has been filtered or not. And information about customer block list, if it has
+        /// been filtered and its id.
+        /// </param>
         /// <returns> A new <see cref="OpenAI.ImageGenerationData"/> instance for mocking. </returns>
-        public static ImageGenerationData ImageGenerationData(Uri url = null, string base64Data = null, string revisedPrompt = null)
+        public static ImageGenerationData ImageGenerationData(Uri url = null, string base64Data = null, ImageGenerationContentFilterResults contentFilterResults = null, string revisedPrompt = null, ImageGenerationPromptFilterResults promptFilterResults = null)
         {
-            return new ImageGenerationData(url, base64Data, revisedPrompt, serializedAdditionalRawData: null);
+            return new ImageGenerationData(url, base64Data, contentFilterResults, revisedPrompt, promptFilterResults, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerationContentFilterResults"/>. </summary>
+        /// <param name="sexual">
+        /// Describes language related to anatomical organs and genitals, romantic relationships,
+        ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
+        ///  those portrayed as an assault or a forced sexual violent act against one’s will,
+        ///  prostitution, pornography, and abuse.
+        /// </param>
+        /// <param name="violence">
+        /// Describes language related to physical actions intended to hurt, injure, damage, or
+        /// kill someone or something; describes weapons, etc.
+        /// </param>
+        /// <param name="hate">
+        /// Describes language attacks or uses that include pejorative or discriminatory language
+        /// with reference to a person or identity group on the basis of certain differentiating
+        /// attributes of these groups including but not limited to race, ethnicity, nationality,
+        /// gender identity and expression, sexual orientation, religion, immigration status, ability
+        /// status, personal appearance, and body size.
+        /// </param>
+        /// <param name="selfHarm">
+        /// Describes language related to physical actions intended to purposely hurt, injure,
+        /// or damage one’s body, or kill oneself.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ImageGenerationContentFilterResults"/> instance for mocking. </returns>
+        public static ImageGenerationContentFilterResults ImageGenerationContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null)
+        {
+            return new ImageGenerationContentFilterResults(sexual, violence, hate, selfHarm, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerationPromptFilterResults"/>. </summary>
+        /// <param name="sexual">
+        /// Describes language related to anatomical organs and genitals, romantic relationships,
+        ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
+        ///  those portrayed as an assault or a forced sexual violent act against one’s will,
+        ///  prostitution, pornography, and abuse.
+        /// </param>
+        /// <param name="violence">
+        /// Describes language related to physical actions intended to hurt, injure, damage, or
+        /// kill someone or something; describes weapons, etc.
+        /// </param>
+        /// <param name="hate">
+        /// Describes language attacks or uses that include pejorative or discriminatory language
+        /// with reference to a person or identity group on the basis of certain differentiating
+        /// attributes of these groups including but not limited to race, ethnicity, nationality,
+        /// gender identity and expression, sexual orientation, religion, immigration status, ability
+        /// status, personal appearance, and body size.
+        /// </param>
+        /// <param name="selfHarm">
+        /// Describes language related to physical actions intended to purposely hurt, injure,
+        /// or damage one’s body, or kill oneself.
+        /// </param>
+        /// <param name="profanity"> Describes whether profanity was detected. </param>
+        /// <param name="jailbreak"> Whether a jailbreak attempt was detected in the prompt. </param>
+        /// <returns> A new <see cref="OpenAI.ImageGenerationPromptFilterResults"/> instance for mocking. </returns>
+        public static ImageGenerationPromptFilterResults ImageGenerationPromptFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, ContentFilterDetectionResult jailbreak = null)
+        {
+            return new ImageGenerationPromptFilterResults(sexual, violence, hate, selfHarm, profanity, jailbreak, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>

@@ -37,10 +37,20 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("b64_json"u8);
                 writer.WriteStringValue(Base64Data);
             }
+            if (ContentFilterResults != null)
+            {
+                writer.WritePropertyName("content_filter_results"u8);
+                writer.WriteObjectValue(ContentFilterResults);
+            }
             if (RevisedPrompt != null)
             {
                 writer.WritePropertyName("revised_prompt"u8);
                 writer.WriteStringValue(RevisedPrompt);
+            }
+            if (PromptFilterResults != null)
+            {
+                writer.WritePropertyName("prompt_filter_results"u8);
+                writer.WriteObjectValue(PromptFilterResults);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +92,9 @@ namespace Azure.AI.OpenAI
             }
             Optional<Uri> url = default;
             Optional<string> b64Json = default;
+            Optional<ImageGenerationContentFilterResults> contentFilterResults = default;
             Optional<string> revisedPrompt = default;
+            Optional<ImageGenerationPromptFilterResults> promptFilterResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,9 +113,27 @@ namespace Azure.AI.OpenAI
                     b64Json = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("content_filter_results"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    contentFilterResults = ImageGenerationContentFilterResults.DeserializeImageGenerationContentFilterResults(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("revised_prompt"u8))
                 {
                     revisedPrompt = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("prompt_filter_results"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptFilterResults = ImageGenerationPromptFilterResults.DeserializeImageGenerationPromptFilterResults(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +142,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageGenerationData(url.Value, b64Json.Value, revisedPrompt.Value, serializedAdditionalRawData);
+            return new ImageGenerationData(url.Value, b64Json.Value, contentFilterResults.Value, revisedPrompt.Value, promptFilterResults.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageGenerationData>.Write(ModelReaderWriterOptions options)
