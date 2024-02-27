@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<SnapshotStorageAccountType> name = default;
-            Optional<string> tier = default;
+            SnapshotStorageAccountType? name = default;
+            string tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotSku(Optional.ToNullable(name), tier.Value, serializedAdditionalRawData);
+            return new SnapshotSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotSku>.Write(ModelReaderWriterOptions options)

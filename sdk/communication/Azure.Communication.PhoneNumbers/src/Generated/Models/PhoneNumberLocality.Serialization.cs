@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -19,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
                 return null;
             }
             string localizedName = default;
-            Optional<PhoneNumberAdministrativeDivision> administrativeDivision = default;
+            PhoneNumberAdministrativeDivision administrativeDivision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localizedName"u8))
@@ -37,7 +36,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberLocality(localizedName, administrativeDivision.Value);
+            return new PhoneNumberLocality(localizedName, administrativeDivision);
         }
     }
 }

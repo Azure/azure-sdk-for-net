@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            string rid = default;
+            float? ts = default;
+            ETag? etag = default;
             string id = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBTablePropertiesResource(
                 id,
-                restoreParameters.Value,
-                Optional.ToNullable(createMode),
+                restoreParameters,
+                createMode,
                 serializedAdditionalRawData,
-                rid.Value,
-                Optional.ToNullable(ts),
-                Optional.ToNullable(etag));
+                rid,
+                ts,
+                etag);
         }
 
         BinaryData IPersistableModel<CosmosDBTablePropertiesResource>.Write(ModelReaderWriterOptions options)

@@ -246,30 +246,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             IList<DatasetReference> inputs = default;
             IList<DatasetReference> outputs = default;
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             CopyActivitySource source = default;
             CopySink sink = default;
-            Optional<BinaryData> translator = default;
-            Optional<DataFactoryElement<bool>> enableStaging = default;
-            Optional<StagingSettings> stagingSettings = default;
-            Optional<DataFactoryElement<int>> parallelCopies = default;
-            Optional<DataFactoryElement<int>> dataIntegrationUnits = default;
-            Optional<DataFactoryElement<bool>> enableSkipIncompatibleRow = default;
-            Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
-            Optional<LogStorageSettings> logStorageSettings = default;
-            Optional<DataFactoryLogSettings> logSettings = default;
+            BinaryData translator = default;
+            DataFactoryElement<bool> enableStaging = default;
+            StagingSettings stagingSettings = default;
+            DataFactoryElement<int> parallelCopies = default;
+            DataFactoryElement<int> dataIntegrationUnits = default;
+            DataFactoryElement<bool> enableSkipIncompatibleRow = default;
+            RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default;
+            LogStorageSettings logStorageSettings = default;
+            DataFactoryLogSettings logSettings = default;
             IList<BinaryData> preserveRules = default;
             IList<BinaryData> preserve = default;
-            Optional<DataFactoryElement<bool>> validateDataConsistency = default;
-            Optional<SkipErrorFile> skipErrorFile = default;
+            DataFactoryElement<bool> validateDataConsistency = default;
+            SkipErrorFile skipErrorFile = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -550,31 +550,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new CopyActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy.Value,
+                policy,
                 inputs ?? new ChangeTrackingList<DatasetReference>(),
                 outputs ?? new ChangeTrackingList<DatasetReference>(),
                 source,
                 sink,
-                translator.Value,
-                enableStaging.Value,
-                stagingSettings.Value,
-                parallelCopies.Value,
-                dataIntegrationUnits.Value,
-                enableSkipIncompatibleRow.Value,
-                redirectIncompatibleRowSettings.Value,
-                logStorageSettings.Value,
-                logSettings.Value,
+                translator,
+                enableStaging,
+                stagingSettings,
+                parallelCopies,
+                dataIntegrationUnits,
+                enableSkipIncompatibleRow,
+                redirectIncompatibleRowSettings,
+                logStorageSettings,
+                logSettings,
                 preserveRules ?? new ChangeTrackingList<BinaryData>(),
                 preserve ?? new ChangeTrackingList<BinaryData>(),
-                validateDataConsistency.Value,
-                skipErrorFile.Value);
+                validateDataConsistency,
+                skipErrorFile);
         }
 
         BinaryData IPersistableModel<CopyActivity>.Write(ModelReaderWriterOptions options)

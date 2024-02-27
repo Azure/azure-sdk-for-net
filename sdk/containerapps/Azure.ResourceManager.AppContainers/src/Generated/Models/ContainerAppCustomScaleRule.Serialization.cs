@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> type = default;
+            string type = default;
             IDictionary<string, string> metadata = default;
             IList<ContainerAppScaleRuleAuth> auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomScaleRule(type.Value, metadata ?? new ChangeTrackingDictionary<string, string>(), auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
+            return new ContainerAppCustomScaleRule(type, metadata ?? new ChangeTrackingDictionary<string, string>(), auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomScaleRule>.Write(ModelReaderWriterOptions options)

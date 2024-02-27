@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GalleryApplicationVersionPublishingProfile> publishingProfile = default;
-            Optional<GalleryApplicationVersionSafetyProfile> safetyProfile = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<ReplicationStatus> replicationStatus = default;
+            SystemData systemData = default;
+            GalleryApplicationVersionPublishingProfile publishingProfile = default;
+            GalleryApplicationVersionSafetyProfile safetyProfile = default;
+            GalleryProvisioningState? provisioningState = default;
+            ReplicationStatus replicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.Compute.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                publishingProfile.Value,
-                safetyProfile.Value,
-                Optional.ToNullable(provisioningState),
-                replicationStatus.Value,
+                systemData,
+                publishingProfile,
+                safetyProfile,
+                provisioningState,
+                replicationStatus,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

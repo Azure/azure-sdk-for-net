@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<CostManagementUnavailabilityReason> reason = default;
-            Optional<string> message = default;
+            bool? nameAvailable = default;
+            CostManagementUnavailabilityReason? reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value, serializedAdditionalRawData);
+            return new CostManagementNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

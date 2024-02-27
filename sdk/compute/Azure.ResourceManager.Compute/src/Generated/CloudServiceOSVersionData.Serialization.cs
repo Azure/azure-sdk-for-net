@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> family = default;
-            Optional<string> familyLabel = default;
-            Optional<string> version = default;
-            Optional<string> label = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isActive = default;
+            SystemData systemData = default;
+            string family = default;
+            string familyLabel = default;
+            string version = default;
+            string label = default;
+            bool? isDefault = default;
+            bool? isActive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                family.Value,
-                familyLabel.Value,
-                version.Value,
-                label.Value,
-                Optional.ToNullable(isDefault),
-                Optional.ToNullable(isActive),
+                systemData,
+                location,
+                family,
+                familyLabel,
+                version,
+                label,
+                isDefault,
+                isActive,
                 serializedAdditionalRawData);
         }
 

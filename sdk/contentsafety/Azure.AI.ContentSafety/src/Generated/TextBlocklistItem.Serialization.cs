@@ -78,7 +78,7 @@ namespace Azure.AI.ContentSafety
                 return null;
             }
             string blocklistItemId = default;
-            Optional<string> description = default;
+            string description = default;
             string text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TextBlocklistItem(blocklistItemId, description.Value, text, serializedAdditionalRawData);
+            return new TextBlocklistItem(blocklistItemId, description, text, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TextBlocklistItem>.Write(ModelReaderWriterOptions options)

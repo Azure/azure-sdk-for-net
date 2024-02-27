@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             UserArtifactSource source = default;
-            Optional<UserArtifactManagement> manageActions = default;
-            Optional<UserArtifactSettings> settings = default;
+            UserArtifactManagement manageActions = default;
+            UserArtifactSettings settings = default;
             IDictionary<string, string> advancedSettings = default;
-            Optional<bool> enableHealthCheck = default;
+            bool? enableHealthCheck = default;
             IList<GalleryApplicationCustomAction> customActions = default;
             IList<TargetRegion> targetRegions = default;
-            Optional<int> replicaCount = default;
-            Optional<bool> excludeFromLatest = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<GalleryReplicationMode> replicationMode = default;
+            int? replicaCount = default;
+            bool? excludeFromLatest = default;
+            DateTimeOffset? publishedDate = default;
+            DateTimeOffset? endOfLifeDate = default;
+            ImageStorageAccountType? storageAccountType = default;
+            GalleryReplicationMode? replicationMode = default;
             IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -320,19 +320,19 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GalleryApplicationVersionPublishingProfile(
                 targetRegions ?? new ChangeTrackingList<TargetRegion>(),
-                Optional.ToNullable(replicaCount),
-                Optional.ToNullable(excludeFromLatest),
-                Optional.ToNullable(publishedDate),
-                Optional.ToNullable(endOfLifeDate),
-                Optional.ToNullable(storageAccountType),
-                Optional.ToNullable(replicationMode),
+                replicaCount,
+                excludeFromLatest,
+                publishedDate,
+                endOfLifeDate,
+                storageAccountType,
+                replicationMode,
                 targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(),
                 serializedAdditionalRawData,
                 source,
-                manageActions.Value,
-                settings.Value,
+                manageActions,
+                settings,
                 advancedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(enableHealthCheck),
+                enableHealthCheck,
                 customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>());
         }
 

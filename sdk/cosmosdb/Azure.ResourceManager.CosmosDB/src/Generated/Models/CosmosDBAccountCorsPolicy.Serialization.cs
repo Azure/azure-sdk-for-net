@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string allowedOrigins = default;
-            Optional<string> allowedMethods = default;
-            Optional<string> allowedHeaders = default;
-            Optional<string> exposedHeaders = default;
-            Optional<long> maxAgeInSeconds = default;
+            string allowedMethods = default;
+            string allowedHeaders = default;
+            string exposedHeaders = default;
+            long? maxAgeInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBAccountCorsPolicy(
                 allowedOrigins,
-                allowedMethods.Value,
-                allowedHeaders.Value,
-                exposedHeaders.Value,
-                Optional.ToNullable(maxAgeInSeconds),
+                allowedMethods,
+                allowedHeaders,
+                exposedHeaders,
+                maxAgeInSeconds,
                 serializedAdditionalRawData);
         }
 

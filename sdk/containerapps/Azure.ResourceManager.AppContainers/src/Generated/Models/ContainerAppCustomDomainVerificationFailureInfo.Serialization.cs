@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
+            string code = default;
+            string message = default;
+            string target = default;
             IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomDomainVerificationFailureInfo(code.Value, message.Value, target.Value, details ?? new ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>(), serializedAdditionalRawData);
+            return new ContainerAppCustomDomainVerificationFailureInfo(code, message, target, details ?? new ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomDomainVerificationFailureInfo>.Write(ModelReaderWriterOptions options)

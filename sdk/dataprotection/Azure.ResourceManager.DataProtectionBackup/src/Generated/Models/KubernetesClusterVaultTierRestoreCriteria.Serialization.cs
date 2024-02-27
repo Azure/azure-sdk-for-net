@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IList<string> includedResourceTypes = default;
             IList<string> excludedResourceTypes = default;
             IList<string> labelSelectors = default;
-            Optional<PersistentVolumeRestoreMode> persistentVolumeRestoreMode = default;
-            Optional<KubernetesClusterRestoreExistingResourcePolicy> conflictPolicy = default;
+            PersistentVolumeRestoreMode? persistentVolumeRestoreMode = default;
+            KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = default;
             IDictionary<string, string> namespaceMappings = default;
             IList<NamespacedName> restoreHookReferences = default;
-            Optional<ResourceIdentifier> stagingResourceGroupId = default;
-            Optional<ResourceIdentifier> stagingStorageAccountId = default;
+            ResourceIdentifier stagingResourceGroupId = default;
+            ResourceIdentifier stagingStorageAccountId = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -335,12 +335,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 includedResourceTypes ?? new ChangeTrackingList<string>(),
                 excludedResourceTypes ?? new ChangeTrackingList<string>(),
                 labelSelectors ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(persistentVolumeRestoreMode),
-                Optional.ToNullable(conflictPolicy),
+                persistentVolumeRestoreMode,
+                conflictPolicy,
                 namespaceMappings ?? new ChangeTrackingDictionary<string, string>(),
                 restoreHookReferences ?? new ChangeTrackingList<NamespacedName>(),
-                stagingResourceGroupId.Value,
-                stagingStorageAccountId.Value);
+                stagingResourceGroupId,
+                stagingStorageAccountId);
         }
 
         BinaryData IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Write(ModelReaderWriterOptions options)

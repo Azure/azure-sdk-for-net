@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
-            Optional<string> dataWarehouseName = default;
-            Optional<string> schemaName = default;
-            Optional<ResourceIdentifier> sqlServerResourceId = default;
-            Optional<string> tableName = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
+            string dataWarehouseName = default;
+            string schemaName = default;
+            ResourceIdentifier sqlServerResourceId = default;
+            string tableName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.DataShare.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(dataSetId),
-                dataWarehouseName.Value,
-                schemaName.Value,
-                sqlServerResourceId.Value,
-                tableName.Value);
+                dataSetId,
+                dataWarehouseName,
+                schemaName,
+                sqlServerResourceId,
+                tableName);
         }
 
         BinaryData IPersistableModel<SqlDWTableDataSet>.Write(ModelReaderWriterOptions options)

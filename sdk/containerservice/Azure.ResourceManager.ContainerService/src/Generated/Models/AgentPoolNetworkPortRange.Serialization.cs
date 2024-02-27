@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<int> portStart = default;
-            Optional<int> portEnd = default;
-            Optional<AgentPoolNetworkPortProtocol> protocol = default;
+            int? portStart = default;
+            int? portEnd = default;
+            AgentPoolNetworkPortProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolNetworkPortRange(Optional.ToNullable(portStart), Optional.ToNullable(portEnd), Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new AgentPoolNetworkPortRange(portStart, portEnd, protocol, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolNetworkPortRange>.Write(ModelReaderWriterOptions options)

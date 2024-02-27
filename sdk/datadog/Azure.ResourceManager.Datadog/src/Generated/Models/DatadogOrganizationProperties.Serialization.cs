@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> linkingAuthCode = default;
-            Optional<string> linkingClientId = default;
-            Optional<Uri> redirectUri = default;
-            Optional<string> apiKey = default;
-            Optional<string> applicationKey = default;
-            Optional<string> enterpriseAppId = default;
+            string name = default;
+            string id = default;
+            string linkingAuthCode = default;
+            string linkingClientId = default;
+            Uri redirectUri = default;
+            string apiKey = default;
+            string applicationKey = default;
+            string enterpriseAppId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.Datadog.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DatadogOrganizationProperties(
-                name.Value,
-                id.Value,
-                linkingAuthCode.Value,
-                linkingClientId.Value,
-                redirectUri.Value,
-                apiKey.Value,
-                applicationKey.Value,
-                enterpriseAppId.Value,
+                name,
+                id,
+                linkingAuthCode,
+                linkingClientId,
+                redirectUri,
+                apiKey,
+                applicationKey,
+                enterpriseAppId,
                 serializedAdditionalRawData);
         }
 

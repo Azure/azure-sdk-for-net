@@ -178,23 +178,23 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<string> publisher = default;
-            Optional<string> type0 = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<string> provisioningState = default;
-            Optional<VirtualMachineExtensionInstanceView> instanceView = default;
-            Optional<bool> suppressFailures = default;
-            Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
+            SystemData systemData = default;
+            string forceUpdateTag = default;
+            string publisher = default;
+            string type0 = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            bool? enableAutomaticUpgrade = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            string provisioningState = default;
+            VirtualMachineExtensionInstanceView instanceView = default;
+            bool? suppressFailures = default;
+            KeyVaultSecretReference protectedSettingsFromKeyVault = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -357,20 +357,20 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                forceUpdateTag.Value,
-                publisher.Value,
-                type0.Value,
-                typeHandlerVersion.Value,
-                Optional.ToNullable(autoUpgradeMinorVersion),
-                Optional.ToNullable(enableAutomaticUpgrade),
-                settings.Value,
-                protectedSettings.Value,
-                provisioningState.Value,
-                instanceView.Value,
-                Optional.ToNullable(suppressFailures),
-                protectedSettingsFromKeyVault.Value,
+                systemData,
+                location,
+                forceUpdateTag,
+                publisher,
+                type0,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                provisioningState,
+                instanceView,
+                suppressFailures,
+                protectedSettingsFromKeyVault,
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

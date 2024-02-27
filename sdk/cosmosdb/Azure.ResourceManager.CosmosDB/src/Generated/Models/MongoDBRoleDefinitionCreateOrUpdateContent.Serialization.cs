@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> roleName = default;
-            Optional<MongoDBRoleDefinitionType> type = default;
-            Optional<string> databaseName = default;
+            string roleName = default;
+            MongoDBRoleDefinitionType? type = default;
+            string databaseName = default;
             IList<MongoDBPrivilege> privileges = default;
             IList<MongoDBRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MongoDBRoleDefinitionCreateOrUpdateContent(
-                roleName.Value,
-                Optional.ToNullable(type),
-                databaseName.Value,
+                roleName,
+                type,
+                databaseName,
                 privileges ?? new ChangeTrackingList<MongoDBPrivilege>(),
                 roles ?? new ChangeTrackingList<MongoDBRole>(),
                 serializedAdditionalRawData);

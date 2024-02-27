@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 return null;
             }
             string name = default;
-            Optional<Uri> idProvider = default;
+            Uri idProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrustedIdProviderForDataLakeStoreAccountUpdateContent(name, idProvider.Value, serializedAdditionalRawData);
+            return new TrustedIdProviderForDataLakeStoreAccountUpdateContent(name, idProvider, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrustedIdProviderForDataLakeStoreAccountUpdateContent>.Write(ModelReaderWriterOptions options)

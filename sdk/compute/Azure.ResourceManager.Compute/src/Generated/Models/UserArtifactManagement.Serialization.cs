@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string install = default;
             string @remove = default;
-            Optional<string> update = default;
+            string update = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserArtifactManagement(install, @remove, update.Value, serializedAdditionalRawData);
+            return new UserArtifactManagement(install, @remove, update, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserArtifactManagement>.Write(ModelReaderWriterOptions options)

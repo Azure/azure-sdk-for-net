@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxValidationInputDiscriminator validationType = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownValidationInputResponse(validationType, error.Value, serializedAdditionalRawData);
+            return new UnknownValidationInputResponse(validationType, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxValidationInputResult>.Write(ModelReaderWriterOptions options)

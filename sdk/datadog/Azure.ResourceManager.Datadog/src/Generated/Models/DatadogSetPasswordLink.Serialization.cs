@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> setPasswordLink = default;
+            string setPasswordLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogSetPasswordLink(setPasswordLink.Value, serializedAdditionalRawData);
+            return new DatadogSetPasswordLink(setPasswordLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogSetPasswordLink>.Write(ModelReaderWriterOptions options)

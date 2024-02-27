@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> continuationToken = default;
-            Optional<string> parentTriggerName = default;
+            string continuationToken = default;
+            string parentTriggerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerFilterContent(continuationToken.Value, parentTriggerName.Value, serializedAdditionalRawData);
+            return new TriggerFilterContent(continuationToken, parentTriggerName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerFilterContent>.Write(ModelReaderWriterOptions options)

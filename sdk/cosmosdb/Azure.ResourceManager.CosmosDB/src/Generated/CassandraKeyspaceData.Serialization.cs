@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExtendedCassandraKeyspaceResourceInfo> resource = default;
-            Optional<CassandraKeyspacePropertiesConfig> options0 = default;
+            SystemData systemData = default;
+            ExtendedCassandraKeyspaceResourceInfo resource = default;
+            CassandraKeyspacePropertiesConfig options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.CosmosDB
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                resource.Value,
-                options0.Value,
+                resource,
+                options0,
                 identity,
                 serializedAdditionalRawData);
         }

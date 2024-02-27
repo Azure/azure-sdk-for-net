@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFlowReferenceType type = default;
             string referenceName = default;
-            Optional<BinaryData> datasetParameters = default;
+            BinaryData datasetParameters = default;
             IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowReference(type, referenceName, datasetParameters.Value, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalProperties);
+            return new DataFlowReference(type, referenceName, datasetParameters, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFlowReference>.Write(ModelReaderWriterOptions options)

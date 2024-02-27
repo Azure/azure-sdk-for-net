@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<string> scope = default;
-            Optional<Guid> principalId = default;
+            SystemData systemData = default;
+            ResourceIdentifier roleDefinitionId = default;
+            string scope = default;
+            Guid? principalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.CosmosDB
                 id,
                 name,
                 type,
-                systemData.Value,
-                roleDefinitionId.Value,
-                scope.Value,
-                Optional.ToNullable(principalId),
+                systemData,
+                roleDefinitionId,
+                scope,
+                principalId,
                 serializedAdditionalRawData);
         }
 

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> hasRows = default;
-            Optional<string> name = default;
+            bool? hasRows = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseTable(Optional.ToNullable(hasRows), name.Value, serializedAdditionalRawData);
+            return new DatabaseTable(hasRows, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseTable>.Write(ModelReaderWriterOptions options)

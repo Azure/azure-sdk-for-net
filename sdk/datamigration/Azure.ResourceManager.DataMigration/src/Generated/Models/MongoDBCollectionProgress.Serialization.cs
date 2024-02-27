@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
-            Optional<DateTimeOffset> lastEventTime = default;
-            Optional<DateTimeOffset> lastReplayTime = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
+            DateTimeOffset? lastEventTime = default;
+            DateTimeOffset? lastReplayTime = default;
+            string name = default;
+            string qualifiedName = default;
             MongoDBProgressResultType resultType = default;
             MongoDBMigrationState state = default;
             long totalBytes = default;
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 errors,
                 eventsPending,
                 eventsReplayed,
-                Optional.ToNullable(lastEventTime),
-                Optional.ToNullable(lastReplayTime),
-                name.Value,
-                qualifiedName.Value,
+                lastEventTime,
+                lastReplayTime,
+                name,
+                qualifiedName,
                 resultType,
                 state,
                 totalBytes,

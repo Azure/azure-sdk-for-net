@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<int> boostRUs = default;
+            int? boostRUs = default;
             IDictionary<string, MongoDBDatabaseSettings> databases = default;
-            Optional<MongoDBReplication> replication = default;
+            MongoDBReplication? replication = default;
             MongoDBConnectionInfo source = default;
             MongoDBConnectionInfo target = default;
-            Optional<MongoDBThrottlingSettings> throttling = default;
+            MongoDBThrottlingSettings throttling = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MongoDBMigrationSettings(
-                Optional.ToNullable(boostRUs),
+                boostRUs,
                 databases,
-                Optional.ToNullable(replication),
+                replication,
                 source,
                 target,
-                throttling.Value,
+                throttling,
                 serializedAdditionalRawData);
         }
 
