@@ -6,18 +6,18 @@ products:
 - azure
 - azure-cognitive-services
 - azure-health-insights
-name: Azure Health Insights - Clinical Matching samples for .NET
-description: Samples for the Azure.Health.Insights.ClinicalMatching client library
+name: Azure Health Insights - Radiology Insights samples for .NET
+description: Samples for the Azure.Health.Insights.RadiologyInsights client library
 ---
 
-# Azure Health Insights ClinicalMatching client SDK Samples
-These code samples show common scenario operations with the Azure Health Insights ClinicalMatching client library.
+# Azure Health Insights RadiologyInsights client SDK Samples
+These code samples show common scenario operations with the Azure Health Insights RadiologyInsights client library.
 
 |**Sample Name**|**Description**|
 |----------------|-------------|
-|[Sample01_MatchTrials][sample_get_all_matching_clinical_trials_for_a_specific_patient] |Get all matching clinical trials for a specific patient. (sync)|
-|[Sample01_MatchTrialsAsync][sample_get_all_matching_clinical_trials_for_a_specific_patient_async] |Get all matching clinical trials for a specific patient. (async)|
+|[Sample01_CriticalResultSample][sample_get_critical_result_sync] |Get all Critical Result Inferences and show the description. (sync)|
+|[Sample01_CriticalResultSampleAsync][sample_get_critical_result_async] |Get all Critical Result Inferences and show the description. (async)|
 
 <!-- LINKS -->
-[sample_get_all_matching_clinical_trials_for_a_specific_patient]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/samples/Sample01_MatchTrials.md
-[sample_get_all_matching_clinical_trials_for_a_specific_patient_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/samples/Sample01_MatchTrialsAsync.md
+[sample_get_critical_result_sync]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/samples/Sample01_CriticalResultSample.md
+[sample_get_critical_result_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/samples/Sample01_CriticalResultSampleAsync.md
