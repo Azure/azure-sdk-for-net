@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Net.Http;
 
@@ -42,7 +43,8 @@ namespace Azure.Core.Pipeline
             {
                 HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
                 string clientRequestId = httpMessage.Request.ClientRequestId;
-                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, httpMessage.Response);
+                PipelineResponse pipelineResponse = message.Response!;
+                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, pipelineResponse);
             }
         }
     }
