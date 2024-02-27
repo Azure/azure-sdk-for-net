@@ -75,8 +75,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static new RequestContent Create(BinaryData content)
-            => new MemoryContent(content.ToMemory());
+        public static new RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.
@@ -151,33 +150,6 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
-
-        /// <summary>
-        /// This adapter adapts the ClientModel BinaryContent type to the
-        /// Azure.Core RequestContent interface, so that it can be used as
-        /// though it were a RequestContent in Azure.Core.
-        /// </summary>
-        private sealed class BinaryContentAdapter : RequestContent
-        {
-            private readonly BinaryContent _content;
-
-            public BinaryContentAdapter(BinaryContent content)
-            {
-                _content = content;
-            }
-
-            public override void Dispose()
-                => _content?.Dispose();
-
-            public override bool TryComputeLength(out long length)
-                => _content.TryComputeLength(out length);
-
-            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
-                => _content.WriteTo(stream, cancellationToken);
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
-                => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-        }
 
         private sealed class StreamContent : RequestContent
         {
@@ -360,6 +332,33 @@ namespace Azure.Core
                 _data.WriteTo(stream);
                 return Task.CompletedTask;
             }
+        }
+
+        /// <summary>
+        /// This adapter adapts the ClientModel BinaryContent type to the
+        /// Azure.Core RequestContent interface, so that it can be used as
+        /// though it were a RequestContent in Azure.Core.
+        /// </summary>
+        private sealed class BinaryContentAdapter : RequestContent
+        {
+            private readonly BinaryContent _content;
+
+            public BinaryContentAdapter(BinaryContent content)
+            {
+                _content = content;
+            }
+
+            public override void Dispose()
+                => _content?.Dispose();
+
+            public override bool TryComputeLength(out long length)
+                => _content.TryComputeLength(out length);
+
+            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+                => _content.WriteTo(stream, cancellationToken);
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+                => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
     }
 }
