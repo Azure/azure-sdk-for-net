@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -20,8 +21,11 @@ namespace Azure
     {
         /// <summary>
         /// Creates an instance of <see cref="Response{T}"/> with no value
-        /// or <see cref="Response"/>.  It is not intended for this constructor
-        /// to be called.
+        /// or <see cref="Response"/>. It is not intended for this constructor
+        /// to be called, as it will create an instance of
+        /// <see cref="Response{T}"/> with null <see cref="Value"/> and
+        /// <see cref="Response"/>, neither of which is intended usage of this
+        /// type.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected Response() : base()
@@ -33,10 +37,14 @@ namespace Azure
         }
 
         /// <summary>
-        /// TBD.
+        /// Creates an instance of <see cref="Response{T}"/> from the provided
+        /// <paramref name="value"/> and <paramref name="response"/>.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="response"></param>
+        /// <param name="value">The value to return from
+        /// <see cref="ClientResult{T}.Value"/> on the created instance.</param>
+        /// <param name="response">The <see cref="Response"/> to return from
+        /// <see cref="NullableResponse{T}.GetRawResponse"/> on the created
+        /// instance.</param>
         protected Response(T value, Response response) : base(value, response) { }
 
         /// <inheritdoc />
