@@ -218,64 +218,6 @@ namespace Azure
                 : base(value, response) { }
         }
 
-        internal class AzureCoreDefaultResponse : Response
-        {
-            private readonly string DefaultMessage = "Types derived from abstract Response<T> must provide an implementation of the virtual GetRawResponse method that returns a non-null Response value.";
-
-            public override string ClientRequestId
-            {
-                get => throw new NotSupportedException(DefaultMessage);
-                set => throw new NotSupportedException(DefaultMessage);
-            }
-
-            public override int Status => throw new NotSupportedException(DefaultMessage);
-
-            public override string ReasonPhrase => throw new NotSupportedException(DefaultMessage);
-
-            public override Stream? ContentStream
-            {
-                get => throw new NotSupportedException(DefaultMessage);
-                set => throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected override PipelineResponseHeaders HeadersCore
-                => throw new NotSupportedException(DefaultMessage);
-
-            public override void Dispose()
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected internal override bool ContainsHeader(string name)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            public override BinaryData BufferContent(CancellationToken cancellationToken = default)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-
-            public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
-        }
         #endregion
     }
 }

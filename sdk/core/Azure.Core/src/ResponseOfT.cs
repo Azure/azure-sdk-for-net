@@ -19,10 +19,12 @@ namespace Azure
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
-        /// TBD.
+        /// Creates an instance of <see cref="Response{T}"/> with no value
+        /// or <see cref="Response"/>.  It is not intended for this constructor
+        /// to be called.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected Response() : base(default, DefaultResponse)
+        protected Response() : base()
         {
             // Added for back-compat with GA APIs.  Any type that derives from
             // Response<T> must provide an implementation for GetRawResponse that
