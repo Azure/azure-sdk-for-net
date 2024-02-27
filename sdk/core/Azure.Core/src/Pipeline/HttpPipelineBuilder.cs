@@ -16,9 +16,9 @@ namespace Azure.Core.Pipeline
         private static int DefaultPolicyCount = 8;
 
         /// <summary>
-        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, user provided policies from <paramref name="options"/> and client provided per call policies.
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, user-provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
-        /// <param name="options">The user provided client options object.</param>
+        /// <param name="options">The user-provided client options object.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryPolicies)
@@ -27,9 +27,9 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, user provided policies from <paramref name="options"/> and client provided per call policies.
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, user-provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
-        /// <param name="options">The user provided client options object.</param>
+        /// <param name="options">The user-provided client options object.</param>
         /// <param name="perCallPolicies">Client provided per-call policies.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <param name="responseClassifier">The client provided response classifier.</param>
@@ -49,12 +49,12 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, user provided policies from <paramref name="options"/>, client provided per call policies, and the supplied <see cref="HttpPipelineTransportOptions"/>.
+        /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, user-provided policies from <paramref name="options"/>, client provided per call policies, and the supplied <see cref="HttpPipelineTransportOptions"/>.
         /// </summary>
-        /// <param name="options">The user provided client options object.</param>
+        /// <param name="options">The user-provided client options object.</param>
         /// <param name="perCallPolicies">Client provided per-call policies.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
-        /// <param name="transportOptions">The user provided transport options which will be applied to the default transport. Note: If a custom transport has been supplied via the <paramref name="options"/>, these <paramref name="transportOptions"/> will be ignored.</param>
+        /// <param name="transportOptions">The user-provided transport options which will be applied to the default transport. Note: If a custom transport has been supplied via the <paramref name="options"/>, these <paramref name="transportOptions"/> will be ignored.</param>
         /// <param name="responseClassifier">The client provided response classifier.</param>
         /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions transportOptions, ResponseClassifier? responseClassifier)
@@ -69,7 +69,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, user provided policies from <paramref name="options"/> and client provided per call policies.
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, user-provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
         /// <param name="options">The configuration options used to build the <see cref="HttpPipeline"/></param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
@@ -80,10 +80,10 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, user provided policies from <paramref name="options"/>, client provided per call policies, and the supplied <see cref="HttpPipelineTransportOptions"/>.
+        /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, user-provided policies from <paramref name="options"/>, client provided per call policies, and the supplied <see cref="HttpPipelineTransportOptions"/>.
         /// </summary>
         /// <param name="options">The configuration options used to build the <see cref="DisposableHttpPipeline"/></param>
-        /// <param name="transportOptions">The user provided transport options which will be applied to the default transport. Note: If a custom transport has been supplied via the <paramref name="options"/>, these <paramref name="transportOptions"/> will be ignored.</param>
+        /// <param name="transportOptions">The user-provided transport options which will be applied to the default transport. Note: If a custom transport has been supplied via the <paramref name="options"/>, these <paramref name="transportOptions"/> will be ignored.</param>
         /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
         public static DisposableHttpPipeline Build(HttpPipelineOptions options, HttpPipelineTransportOptions transportOptions)
         {

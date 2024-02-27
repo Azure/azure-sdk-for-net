@@ -106,11 +106,10 @@ namespace Azure.Core.Buffers
                         break;
                     await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationToken).ConfigureAwait(false);
                 }
-
-                await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
             }
             finally
             {
+                await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
                 ArrayPool<byte>.Shared.Return(buffer);
             }
         }
@@ -127,11 +126,10 @@ namespace Azure.Core.Buffers
                     cancellationToken.ThrowIfCancellationRequested();
                     destination.Write(buffer, 0, read);
                 }
-
-                destination.Flush();
             }
             finally
             {
+                destination.Flush();
                 ArrayPool<byte>.Shared.Return(buffer);
             }
         }
